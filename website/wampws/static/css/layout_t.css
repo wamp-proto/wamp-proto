@@ -1,0 +1,412 @@
+/*
+ Styles for WAMP.ws Microsite on Tavendo
+
+ Color Scheme:
+
+ grey:         #788192
+
+ */
+
+html,
+body
+{
+   height: 100%;
+   min-width: 100%;
+   overflow: visible;
+
+	margin: 0px;
+   padding: 0px;
+   border: 0px;
+   outline: 0px;
+}
+
+body
+{
+   position: relative;
+   background-color: #fff;
+   color: #788192;
+
+   font-family: "Segoe UI", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
+   font-weight: normal;
+   font-size: 16px;
+}
+
+h1
+{
+   font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;
+   font-weight: 500;
+
+   font-size: 24px;
+   margin-left: 32px;
+   line-height: 1.4em;
+}
+
+h1 b
+{
+   font-family: 'HelveticaNeue-Bold',Helvetica,Arial,sans-serif;
+   font-weight: 900;
+}
+
+.intro
+{
+   font-size: 28px;
+   margin-left: 60px;
+}
+
+.intro_sub
+{
+   float: right;
+   font-size: 22px;
+   margin-top: 40px;
+   font-style: italic;
+}
+
+h2
+{
+   font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;
+   font-weight: 300;
+   font-size: 18px;
+   margin-left: 32px;
+   margin-top: 2em;
+   line-height: 1.4em;
+}
+
+h3
+{
+   font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;
+   font-weight: 300;
+   font-size: 24px;
+   margin-left: 32px;
+   line-height: 1.4em;
+}
+
+a
+{
+   color: #788192;
+   text-decoration: none;
+}
+
+a:visited
+{
+   color: #788192;
+}
+
+a:hover
+{
+   color: #788192;
+}
+
+#topband
+{
+   width: 100%;
+   height: 60px;
+/*
+   background-color: #788192;
+*/
+}
+
+#logo_wrapper
+{
+   position: relative;
+   overflow: visible;
+   min-width: 960px;
+   width: 100%;
+   height: 240px;
+   background-image: url("../img/grid.png");
+   background-repeat: repeat;
+}
+
+#logo_block
+{
+   position: relative;
+   overflow: visible;
+   width: 940px;
+   min-width: 600px;
+   height: 240px;
+   margin: auto;
+}
+
+#logo
+{
+   position: absolute;
+   top: 24px;
+   left: 0;
+}
+
+#navbar
+{
+   clear: both;
+   position: absolute;
+   bottom: 16px;
+   right: 0;
+
+   font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;
+   font-weight: 900;
+
+   font-family: 'HelveticaNeue-Bold',Helvetica,Arial,sans-serif;
+   font-weight: 900;
+
+   font-size: 22px;
+
+   color: #fff;
+}
+
+
+#navbar .navitem_selected
+{
+   color: #788192;
+}
+
+#navbar .navitem
+{
+   color: #fff;
+}
+
+#navbar a
+{
+   text-decoration: none;
+   margin-left: 20px;
+}
+
+#navbar a:visited
+{
+}
+
+#navbar a:hover
+{
+   color: #788192;
+}
+
+#content_wrapper
+{
+   margin-top: 60px;
+   position: relative;
+   width: 100%;
+}
+
+#content_block
+{
+   width: 940px;
+   min-width: 600px;
+   margin: auto;
+   line-height: 1.6em;
+}
+
+p
+{
+   width: 95%;
+   padding-left: 3em;
+   padding-right: 2em;
+}
+
+ul
+{
+   padding-left: 6em;
+}
+
+#content_block .impl_list {
+   margin-left: 60px;
+   padding-left: 30px;
+}
+
+#implist_wrapper {
+   margin: 30px auto 0 auto;
+   width: 600px;
+}
+
+.implist {
+   float: left;
+   width: 300px;
+}
+
+.implist ul {
+   margin: 8px 0 0 0;
+   padding: 0 0 0 20px;;
+}
+
+.implist ul li {
+   background-image: url("../img/li_edge.png");
+   background-position: 0 0.6em;
+   background-repeat: no-repeat;
+   list-style-type: none;
+   line-height: 1.8em;
+   padding-left: 16px;
+}
+
+.implist a {
+   text-decoration: none;
+}
+
+
+#footer_wrapper {
+   margin-top: 60px;
+   position: relative;
+   width: 100%;
+   font-size: 12px;
+   line-height: 20px;
+   color: #bbb;
+   padding-bottom: 30px;
+}
+
+/* UP buttons */
+
+.up_button
+{
+   float: right;
+   border-radius: 4px;
+   padding: 1px 15px;
+   background-color: #DDD;
+   color: #788192;
+   text-decoration: none;
+   font-size: 0.8em;
+}
+
+.up_button:visited
+{
+   background-color: #DDD;
+   color: #788192;
+}
+
+.up_button:hover
+{
+   color: #FFF;
+   background-color: #788192;
+   box-shadow: 0px 0px 12px #333;
+   -moz-box-shadow: 0px 0px 12px #333;
+   -webkit-box-shadow: 0px 0px 12px #333;
+	filter: progid:DXImageTransform.Microsoft.Shadow(color='#333333', Direction=0, Strength=3);
+   text-decoration: none;
+}
+
+
+
+/****** specification   *****/
+
+.developertable
+{
+   background-color: #fff;
+   border-collapse: separate;
+   border-spacing: 0px;
+   margin: 3em auto 3em auto;
+   box-shadow: 0 0 8px 2px #788192;
+}
+
+.developertable th
+{
+   /*
+   border: 1px solid white;
+   */
+   padding: 7px 22px;
+   min-width: 20px;
+   background-color: #788192;
+   color: #fff;
+   font-weight: normal;
+   text-align: left;
+}
+
+.developertable td
+{
+   padding: 7px 22px;
+   min-width: 20px;
+}
+
+.message
+{
+   font-family: monospace;
+   font-size: 18px;
+   font-weight: bold;
+   color: #788192;
+   background-color: #fff;
+   width: 95%;
+   margin: 2em auto 2em auto;
+/*   margin: 0 0 0 3em;
+   border: solid 1px #788192;
+
+*/
+   padding: 10px 0 10px 0.6em;
+   box-shadow: 0 0 8px 2px #788192;
+}
+
+.message_part
+{
+   font-family: monospace;
+   color: #788192;
+   background-color: #ddd;
+   padding: 3px 5px;
+}
+
+#spec {
+   width: 85%;
+   margin: auto;
+}
+
+#spec a {
+   text-decoration: underline;
+}
+
+#spec a.up_button
+{
+   text-decoration: none;
+}
+
+#spec h1 {
+   margin-top: 3em;
+}
+
+#spec h1.title {
+   font-size: 34px;
+}
+
+#spec span.uri {
+   font-size: 16px;
+   font-family: monospace;
+}
+
+#spec h2 {
+   margin-top: 4em;
+}
+
+#spec ol.refs {
+   margin-left: 3em;
+   line-height: 3em;
+}
+
+/***** FAQ ****/
+
+#faq_wrapper
+{
+   width: 80%;
+   margin: 0 auto;
+}
+
+
+
+/****** css for sticky footer ****/
+/*** outer wrapper takes viewport height as minimum
+ * central wrapper has a padding at the bottom which ensures that the footer does not overlap any content
+ * footer is positioned after the outer wrappper, but moved up its height so that it is actually in the viewport *****/
+
+#sticky_footer_outer_wrapper
+{
+   min-height: 100%;
+   min-width: 100%;
+   position: relative;
+   overflow: visible;
+}
+
+#sticky_footer_central_content_wrapper
+{
+   position: relative;
+   overflow: visible;
+   padding-bottom: 160px; /* must be same height as the footer */
+}
+
+#footer_wrapper
+{
+   position: relative;
+   margin-top: -160px;
+   height: 120px;
+   clear: both;
+   overflow: visible;
+   padding: 40px 0 0;
+}

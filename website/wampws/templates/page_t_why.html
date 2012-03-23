@@ -1,0 +1,21 @@
+{% extends "layout_t.html" %}
+
+{% block content %}
+
+<p>
+   <a href="http://tools.ietf.org/html/rfc6455">The WebSocket Protocol</a>
+   is already built into modern browsers and provides full-duplex,
+   low-latency communication.
+   However, as such, it is quite low-level. Web apps often have
+   a need for higher level messaging patterns such as Publish & Subscribe (PubSub)
+   or Remote Procedure Calls (RPC).
+   This is where <i>The WebSocket Application Messaging Protocol</i> enters.
+</p>
+<p>
+   WAMP runs on top of raw WebSocket and provides PubSub and RPC.
+   Technically, WAMP is a proper WebSocket <i>subprotocol</i> that uses JSON as
+   message serialization format. WAMP was designed to be easy to use and
+   simple to implement.
+</p>
+
+{% endblock%}

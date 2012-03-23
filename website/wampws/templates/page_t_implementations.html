@@ -1,0 +1,35 @@
+{% extends "layout_t.html" %}
+
+{% block content %}
+
+<p>
+   WAMP is implemented in a growing list of <i>client libraries</i>,
+   <i>server frameworks</i> and <i>servers</i>:
+</p>
+
+<div id="implist_wrapper">
+   <div class="implist">
+      <i>Server</i>
+      <ul>
+         <li><a href="http://autobahn.ws">Autobahn.ws</a></li>
+         <li><a href="http://autobahn.ws/developers/autobahnpython">AutobahnPython</a></li>
+      </ul>
+   </div>
+   <div class="implist">
+      <i>Client</i>
+      <ul>
+         <li><a href="http://autobahn.ws/developers/autobahnjs">AutobahnJS</a></li>
+         <li><a href="http://autobahn.ws/developers/autobahnandroid">AutobahnAndroid</a></li>
+         <li><a href="http://autobahn.ws/developers/autobahnpython">AutobahnPython</a></li>
+      </ul>
+   </div>
+</div>
+
+<div style="clear: both;"></div>
+
+<p style="color: #aaa; font-size: 12px; margin-top: 65px; float: right; width: 280px; line-height: 1.2em;">
+   Want your WAMP implementation listed here?<br/>
+   Join the <a href="https://groups.google.com/group/wampws" target="_blank">WAMP group</a> and introduce your project.
+</p>
+
+{% endblock%}
