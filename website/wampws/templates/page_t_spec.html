@@ -268,30 +268,38 @@
 
       <a name="subscribe"></a>
       <h2>SUBSCRIBE Message</h2>
-      <p>Write me.</p>
+      <p>A client requests access to a valid <span class="message_part">topicURI</span> (or CURIE from Prefix) to receive events published to the given <span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_SUBSCRIBE , topicURI ]</p>
+
+      <p>Upon a successful subscription the session will start receiving messages in the EVENT in the context of the <span class="message_part">topicURI</span>.
+      The request is asynchronous, the server will not return an acknowledgement of the subscription.</p>
+
       <a class="up_button" href="#top">Up</a>
       <br/>
 
       <a name="unsubscribe"></a>
       <h2>UNSUBSCRIBE Message</h2>
-      <p>Write me.</p>
+      <p>Calling unsubscribe on a <span class="message_part">topicURI</span> informs the server to stop delivering messages to 
+      the client previously subscribed to that<span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_UNSUBSCRIBE , topicURI ]</p>
       <a class="up_button" href="#top">Up</a>
       <br/>
 
       <a name="publish"></a>
       <h2>PUBLISH Message</h2>
-      <p>Write me.</p>
+      <p>The client will send an event to all clients connected to the server who have subscribed to the <span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_PUBLISH , topicURI , event ]</p>
       <p class="message">[ TYPE_ID_PUBLISH , topicURI , event , excludeMe ]</p>
       <p class="message">[ TYPE_ID_PUBLISH , topicURI , event , exclude , eligible ]</p>
+      <p>If the client publishing their message to <span class="message_part">topicURI</span> has also Subscribed to that <span class="message_part">topicURI</span> they can opt to not receive
+      their published event by passing the optional parameter <span class="message_part">excludeMe</span> to TRUE.</p>
       <a class="up_button" href="#top">Up</a>
       <br/>
 
       <a name="event"></a>
       <h2>EVENT Message</h2>
-      <p>Write me.</p>
+      <p>Upon Subscribing to a <span class="message_part">topicURI</span> the client will be receiving asynchronous events, such as another client publishing to the <span class="message_part">topicURI</span>, 
+      which will be received in an <span class="message_part">event</span> string.</p>
       <p class="message">[ TYPE_ID_EVENT , topicURI , event ]</p>
       <a class="up_button" href="#top">Up</a>
       <br/>
