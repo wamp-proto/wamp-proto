@@ -1,0 +1,3 @@
+[submodule "website/wampws/static/deps/syntaxhighlighter"]
+	path = website/wampws/static/deps/syntaxhighlighter
+	url = git://github.com/alexgorbatchev/SyntaxHighlighter.git
