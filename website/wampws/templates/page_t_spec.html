@@ -1,4 +1,4 @@
-{% extends "layout_t.html" %}
+{% extends "layout_ts.html" %}
 
 {% block content %}
 
@@ -112,6 +112,45 @@
 
       <p>The <span class="message_part">procURI</span> is a string that identifies the remote procedure to be called and
       MUST be a valid <a href="#curie">URI or CURIE</a>.</p>
+
+      <div class="msgex">
+         <span class="message_part">CALL</span> message for RPC with no arguments
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [2, "Xjmad8lo9", "http://example.com/api#howdy"]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">CALL</span> message for RPC with 2 arguments
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [2, "Xjmad8lo9", "http://example.com/api#add2", 23, 99]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">CALL</span> message for RPC with 1 complex, object argument
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [2, "8mDD-0223ccx", "http://example.com/api#storeMeal",
+               {
+                  "category": "dinner",
+                  "calories": 2309
+               }]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">CALL</span> message for RPC with 1 argument, value being null
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [2, "Xjmad8lo9", "http://example.com/api#woooat", null]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">CALL</span> message for RPC with 1 argument, value being a list of integers
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [2, "Xjmad8lo9", "http://example.com/api#sum", [9, 1, 3, 4]]
+         </pre>
+      </div>
 
       <p>When the execution of the remote procedure finishes, the server responds by sending a message of type
       <span class="message_part">CALLRESULT</span> or <span class="message_part">CALLERROR</span>.</p>
@@ -279,7 +318,7 @@
 
       <a name="unsubscribe"></a>
       <h2>UNSUBSCRIBE Message</h2>
-      <p>Calling unsubscribe on a <span class="message_part">topicURI</span> informs the server to stop delivering messages to 
+      <p>Calling unsubscribe on a <span class="message_part">topicURI</span> informs the server to stop delivering messages to
       the client previously subscribed to that<span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_UNSUBSCRIBE , topicURI ]</p>
       <a class="up_button" href="#top">Up</a>
@@ -298,7 +337,7 @@
 
       <a name="event"></a>
       <h2>EVENT Message</h2>
-      <p>Upon Subscribing to a <span class="message_part">topicURI</span> the client will be receiving asynchronous events, such as another client publishing to the <span class="message_part">topicURI</span>, 
+      <p>Upon Subscribing to a <span class="message_part">topicURI</span> the client will be receiving asynchronous events, such as another client publishing to the <span class="message_part">topicURI</span>,
       which will be received in an <span class="message_part">event</span> string.</p>
       <p class="message">[ TYPE_ID_EVENT , topicURI , event ]</p>
       <a class="up_button" href="#top">Up</a>

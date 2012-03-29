@@ -1,0 +1,103 @@
+/****** specification   *****/
+
+.syntaxhighlighter
+{
+   padding-bottom: 1px !important;
+}
+
+.developertable
+{
+   background-color: #fff;
+   border-collapse: separate;
+   border-spacing: 0px;
+   margin: 3em auto 3em auto;
+   box-shadow: 0 0 8px 2px #788192;
+}
+
+.developertable th
+{
+   /*
+   border: 1px solid white;
+   */
+   padding: 7px 22px;
+   min-width: 20px;
+   background-color: #788192;
+   color: #fff;
+   font-weight: normal;
+   text-align: left;
+}
+
+.developertable td
+{
+   padding: 7px 22px;
+   min-width: 20px;
+}
+
+.message
+{
+   font-family: monospace;
+   font-size: 18px;
+   font-weight: bold;
+   color: #788192;
+   background-color: #fff;
+   width: 95%;
+   margin: 2em auto 2em auto;
+   padding: 10px 0 10px 0.6em;
+   box-shadow: 0 0 8px 2px #788192;
+}
+
+.message_part
+{
+   font-family: monospace;
+   font-weight: normal;
+   color: #788192;
+   background-color: #ddd;
+   padding: 3px 5px;
+}
+
+.msgex
+{
+   margin-left: 100px;
+   margin-top: 60px;
+   margin-bottom: 60px;
+   padding-left: 20px;
+   border-left: solid 6px #75b73a;
+   color: #75b73a;
+   font-weight: 600;
+}
+
+#spec {
+   width: 85%;
+   margin: auto;
+}
+
+#spec a {
+   text-decoration: underline;
+}
+
+#spec a.up_button
+{
+   text-decoration: none;
+}
+
+#spec h1 {
+   margin-top: 3em;
+}
+
+#spec h1.title {
+   font-size: 34px;
+}
+
+#spec span.uri {
+   font-size: 16px;
+   font-family: monospace;
+}
+
+#spec h2 {
+   margin-top: 4em;
+}
+
+#spec ol.refs {
+   margin-left: 3em;
+   line-height: 3em;
+}

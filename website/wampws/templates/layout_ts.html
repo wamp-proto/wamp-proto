@@ -1,0 +1,17 @@
+{% extends "layout_t.html" %}
+
+{% block header %}
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/layout_ts.css') }}">
+
+   <link href="{{ url_for('static', filename='deps/syntaxhighlighter/styles/shCore.css') }}" rel="stylesheet" type="text/css" />
+   <link href="{{ url_for('static', filename='deps/syntaxhighlighter/styles/shThemeDefault.css') }}" rel="stylesheet" type="text/css" />
+
+   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/XRegExp.js') }}" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/shCore.js') }}" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/shBrushJScript.js') }}" type="text/javascript"></script>
+   <script type="text/javascript">
+     SyntaxHighlighter.all()
+   </script>
+
+{% endblock %}
