@@ -13,7 +13,7 @@
          Messaging Protocol.
          Nevertheless, the text should be sufficient for developers to create
          interoperable implementations. The text describes version <b>1</b> of the protocol
-         and specific features are still subject to change.
+         and specific features are still subject to change in WAMP v2.
       </p>
 
       <h1>Building Blocks</h1>
@@ -32,22 +32,22 @@
 
       <p>
          <b>Transport</b><br/>
-         A reliable, ordered, full-duplex message channel is
-         assumed.
+         A reliable, ordered, full-duplex message channel is assumed.
          The default binding is <i>WebSocket</i> as <i>Transport</i>.
       </p>
 
       <p>
          <b>Serialization</b><br/>
          A message payload serialization format is assumed that at least provides:
-         integers, strings, lists and maps.
+         integers, strings and lists.
          The default binding is <i>JSON</i> as <i>Serialization</i>.
       </p>
 
       <p>
          <b>IDs</b><br/>
          An ID space that allows global assignment and resolution is assumed.
-         The default binding is <i>URIs</i> as <i>IDs</i>.
+         The default binding is <i>URIs</i> from the HTTP scheme as <i>IDs</i>
+         for both topics and procedures.
       </p>
 
 
@@ -116,21 +116,21 @@
       <div class="msgex">
          <span class="message_part">CALL</span> message for RPC with no arguments
          <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [2, "Xjmad8lo9", "http://example.com/api#howdy"]
+            [2, "7DK6TdN4wLiUJgNM", "http://example.com/api#howdy"]
          </pre>
       </div>
 
       <div class="msgex">
-         <span class="message_part">CALL</span> message for RPC with 2 arguments
+         <span class="message_part">CALL</span> message for RPC with 2 arguments, using CURIE
          <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [2, "Xjmad8lo9", "http://example.com/api#add2", 23, 99]
+            [2, "Yp9EFZt9DFkuKndg", "api:add2", 23, 99]
          </pre>
       </div>
 
       <div class="msgex">
          <span class="message_part">CALL</span> message for RPC with 1 complex, object argument
          <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [2, "8mDD-0223ccx", "http://example.com/api#storeMeal",
+            [2, "J5DkZJgByutvaDWc", "http://example.com/api#storeMeal",
                {
                   "category": "dinner",
                   "calories": 2309
@@ -141,14 +141,28 @@
       <div class="msgex">
          <span class="message_part">CALL</span> message for RPC with 1 argument, value being null
          <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [2, "Xjmad8lo9", "http://example.com/api#woooat", null]
+            [2, "Dns3wuQo0ipOX1Xc", "http://example.com/api#woooat", null]
          </pre>
       </div>
 
       <div class="msgex">
-         <span class="message_part">CALL</span> message for RPC with 1 argument, value being a list of integers
+         <span class="message_part">CALL</span> message for RPC with 1 argument, value being a list of integers, using CURIE
          <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [2, "Xjmad8lo9", "http://example.com/api#sum", [9, 1, 3, 4]]
+            [2, "M0nncaH0ywCSYzRv", "api:sum", [9, 1, 3, 4]]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">CALL</span> message for RPC with 1 argument, value being a list of integers, using CURIE
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [2, "ujL7WKGXCn8bkvFV", "keyvalue:set",
+               "foobar",
+               {
+                  "value1": "23",
+                  "value2": "singsing",
+                  "value3": true,
+                  "modified": "2012-03-29T10:29:16.625Z"
+               }]
          </pre>
       </div>
 
@@ -179,8 +193,36 @@
       <p>The <span class="message_part">result</span> is always present and can be any JSON serializable value, include the JSON
       value <i>null</i>.</p>
 
+      <i>Examples</i>
+      <div class="msgex">
+         <span class="message_part">CALLRESULT</span> message with 'null' result
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [3, "CcDnuI2bl2oLGBzO", null]
+         </pre>
+      </div>
+      <div class="msgex">
+         <span class="message_part">CALLRESULT</span> message with a 'string' result
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [3, "otZom9UsJhrnzvLa", "Awesome result .."]
+         </pre>
+      </div>
+      <div class="msgex">
+         <span class="message_part">CALLRESULT</span> message with a complex object result
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [3, "CcDnuI2bl2oLGBzO",
+               {
+                  "value3": true,
+                  "value2": "singsing",
+                  "value1": "23",
+                  "modified": "2012-03-29T10:29:16.625Z"
+               }]
+         </pre>
+      </div>
+
+
       <a class="up_button" href="#top">Up</a>
       <br/>
+
 
       <a name="call_error"></a>
       <h2>CALLERROR Message</h2>
@@ -210,6 +252,35 @@
          If <span class="message_part">errorDetails</span> is present, it MUST be not null, and is used
          to communicate application error details, defined by the <span class="message_part">errorURI</span>.
       </p>
+
+      <div class="msgex">
+         <span class="message_part">CALLERROR</span> message with generic error
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [4, "gwbN3EDtFv6JvNV5",
+               "http://autobahn.tavendo.de/error#generic",
+               "math domain error"]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">CALLERROR</span> message with specific error and integer in error details
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [4, "7bVW5pv8r60ZeL6u",
+               "http://example.com/error#number_too_big",
+               "1001 too big for me, max is 1000",
+               1000]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">CALLERROR</span> message with list of integers in error details
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [4, "AStPd8RS60pfYP8c",
+               "http://example.com/error#invalid_numbers",
+               "one or more numbers are multiples of 3",
+               [0, 3]]
+         </pre>
+      </div>
 
       <a class="up_button" href="#top">Up</a>
       <br/>
@@ -253,6 +324,13 @@
          use to disclose it's version, software, platform or identity.
       </p>
 
+      <div class="msgex">
+         <span class="message_part">WELCOME</span> message: session ID = "v59mbCGDXZ7WTyxB"
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [0, "v59mbCGDXZ7WTyxB", 1, "Autobahn/0.5.1"]
+         </pre>
+      </div>
+
 
       <a name="prefix"></a>
       <h2>PREFIX Message</h2>
@@ -277,6 +355,21 @@
       <p>To establish such agreement, a client sends a <span class="message_part">PREFIX</span> message</p>
       <p class="message">[ TYPE_ID_PREFIX , prefix , URI ]</p>
       <p>to the server.</p>
+
+      <div class="msgex">
+         <span class="message_part">PREFIX</span> message
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [1, "calc", "http://example.com/simple/calc#"]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">PREFIX</span> message
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [1, "keyvalue", "http://example.com/simple/keyvalue#"]
+         </pre>
+      </div>
+
 
       <p>The agreement is per-connection, and has a lifetime starting with the server receiving a
       <span class="message_part">PREFIX</span> message establishing a prefix-to-URI mapping, and ending
@@ -305,6 +398,25 @@
          <li><span class="message_part">EVENT</span></li>
       </ul>
 
+      <p>
+         Upon subscribing to a topic via the <span class="message_part">SUBSCRIBE</span> message,
+         a client will be receiving asynchronous events published to the respective topic via
+         the <span class="message_part">EVENT</span> message. Clients publish to a topic via
+         the <span class="message_part">PUBLISH</span> message.
+         An subscription lasts for the duration of a session, unless a client opts out from
+         a previous subscription via the <span class="message_part">UNSUBSCRIBE</span> message.
+      </p>
+
+      <p>
+         A client may subscribe to zero, one or more topics, and clients publish to topics without
+         knowledge of subscribers.
+      </p>
+      <p>
+         WAMPv1 has no feedback mechanism for when a subscribe or publish fails, i.e. when
+         the subscription or publication is denied. When a client subscribes or publishes,
+         there is no error feedback and a failed action is just silently ignored by the server.
+      </p>
+
       <a name="subscribe"></a>
       <h2>SUBSCRIBE Message</h2>
       <p>A client requests access to a valid <span class="message_part">topicURI</span> (or CURIE from Prefix) to receive events published to the given <span class="message_part">topicURI</span>.</p>
@@ -312,6 +424,22 @@
 
       <p>Upon a successful subscription the session will start receiving messages in the EVENT in the context of the <span class="message_part">topicURI</span>.
       The request is asynchronous, the server will not return an acknowledgement of the subscription.</p>
+
+      <i>Examples</i>
+
+      <div class="msgex">
+         <span class="message_part">SUBSCRIBE</span> message with fully qualified URI
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [5, "http://example.com/simple"]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">SUBSCRIBE</span> message with CURIE
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [5, "event:myevent1"]
+         </pre>
+      </div>
 
       <a class="up_button" href="#top">Up</a>
       <br/>
@@ -321,6 +449,23 @@
       <p>Calling unsubscribe on a <span class="message_part">topicURI</span> informs the server to stop delivering messages to
       the client previously subscribed to that<span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_UNSUBSCRIBE , topicURI ]</p>
+
+      <i>Examples</i>
+
+      <div class="msgex">
+         <span class="message_part">UNSUBSCRIBE</span> message with fully qualified URI
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [6, "http://example.com/simple"]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">UNSUBSCRIBE</span> message with CURIE
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [6, "event:myevent1"]
+         </pre>
+      </div>
+
       <a class="up_button" href="#top">Up</a>
       <br/>
 
@@ -332,14 +477,110 @@
       <p class="message">[ TYPE_ID_PUBLISH , topicURI , event , exclude , eligible ]</p>
       <p>If the client publishing their message to <span class="message_part">topicURI</span> has also Subscribed to that <span class="message_part">topicURI</span> they can opt to not receive
       their published event by passing the optional parameter <span class="message_part">excludeMe</span> to TRUE.</p>
+
+      <i>Examples</i>
+
+      <div class="msgex">
+         <span class="message_part">PUBLISH</span> message with 'string' as payload
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [7, "http://example.com/simple", "Hello, world!"]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">PUBLISH</span> message with 'null' as payload
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [7, "http://example.com/simple", null]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">PUBLISH</span> message with complex object as payload
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [7, "http://example.com/event#myevent2",
+               {
+                  "rand": 0.09187032734575862,
+                  "flag": false,
+                  "num": 23,
+                  "name":
+                  "Kross",
+                  "created": "2012-03-29T10:41:09.864Z"
+               }]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">PUBLISH</span> message with exclude list
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [7, "event:myevent1",
+               "hello",
+               ["NwtXQ8rdfPsy-ewS", "dYqgDl0FthI6_hjb"]]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">PUBLISH</span> message with eligible list
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [7, "event:myevent1",
+               "hello",
+               [],
+               ["NwtXQ8rdfPsy-ewS"]]
+         </pre>
+      </div>
+
       <a class="up_button" href="#top">Up</a>
       <br/>
 
       <a name="event"></a>
       <h2>EVENT Message</h2>
-      <p>Upon Subscribing to a <span class="message_part">topicURI</span> the client will be receiving asynchronous events, such as another client publishing to the <span class="message_part">topicURI</span>,
-      which will be received in an <span class="message_part">event</span> string.</p>
+      <p>
+         Subscribers receive PubSub events published by subscribers via the
+         <span class="message_part">EVENT</span> message.
+         The <span class="message_part">EVENT</span> message contains the
+         <span class="message_part">topicURI</span>, the topic under which the
+         event was published, and <span class="message_part">event</span>, the
+         PubSub event payload.
+      </p>
+
       <p class="message">[ TYPE_ID_EVENT , topicURI , event ]</p>
+
+      <p>
+         The <span class="message_part">topicURI</span> MUST be a fully qualified
+         URI for the topic.
+         The <span class="message_part">event</span> payload MUST always be
+         present, and can be any simple or complex type or null.
+      </p>
+
+      <i>Examples</i>
+
+      <div class="msgex">
+         <span class="message_part">EVENT</span> message with 'string' as payload
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [8, "http://example.com/simple", "Hello, I am a simple event."]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">EVENT</span> message with 'null' as payload
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [8, "http://example.com/simple", null]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">EVENT</span> message with complex object payload
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [8, "http://example.com/event#myevent2",
+               {
+                  "rand": 0.09187032734575862,
+                  "flag": false,
+                  "num": 23,
+                  "name": "Kross",
+                  "created": "2012-03-29T10:41:09.864Z"
+               }]
+         </pre>
+      </div>
+
       <a class="up_button" href="#top">Up</a>
       <br/>
 
