@@ -59,6 +59,28 @@
       this is most easily done by providing something like 'some materials copied/adapted
       from' + a link to the WAMP website.
    </p>
+
+   <h2>Why does WAMP use URIs to identify RPC endpoints and PubSub topics?</h2><a name="why_uris"></a>
+   <p>
+      The benefits of using URIs (from the HTTP scheme) are:
+      <ul>
+         <li>well known hierarchical naming scheme</li>
+         <li>an established global name registry / arbitration system (DNS)</li>
+         <li>by virtue of the first two, ability to integrate apps from different vendors without naming conflicts</li>
+         <li>as a potential feature in the future: have the ability to make those URIs derefencable for obtaining metadata</li>
+      </ul>
+   </p>
+   <p>
+      URIs are mandatory for topic and procedures. The current AutobahnXX
+      implementations don't _yet_ enforce this, but will do so.
+   </p>
+   <p>
+      In your payloads (RPC args, PubSub event payload) you are free do
+      to anything of course.
+      We (at Tavendo) for our apps use URIs for anything which isn't a literal value,
+      that is all ID like things, vocabulary (verbs, adj, ..) describing
+      relations between entities .. everything.
+   </p>
 </div>
 
 {% endblock%}
