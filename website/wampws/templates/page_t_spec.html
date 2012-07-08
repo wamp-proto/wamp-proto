@@ -60,16 +60,15 @@
                </ul>
             </li>
             <li>
-               <a href="#rpc_messages">RPC Messages</a>
+               <a href="#rpc">Remote Procedure Calls</a>
                <ul>
-                  <li><a href="#"></a></li>
                   <li><a href="#call_message">CALL Message</a></li>
                   <li><a href="#callresult_message">CALLRESULT Message</a></li>
                   <li><a href="#callerror_message">CALLERROR Message</a></li>
                </ul>
             </li>
             <li>
-               <a href="#pubsub_messages">Publish &amp; Subscribe Messages</a>
+               <a href="#pubsub">Publish &amp; Subscribe</a>
                <ul>
                   <li><a href="#subscribe_message">SUBSCRIBE Message</a></li>
                   <li><a href="#unsubscribe_message">UNSUBSCRIBE Message</a></li>
@@ -187,6 +186,7 @@
       <ul>
          <li><span class="message_part">PREFIX</span></li>
       </ul>
+      {{up()}}
 
 
       <a name="welcome_message"></a>
@@ -275,8 +275,8 @@
 
 
 
-      <a name="rpc_messages"></a>
-      <h2>RPC Messages</h2>
+      <a name="rpc"></a>
+      <h2>Remote Procedure Calls</h2>
 
       <p>The Remote Procedure Call messaging pattern is realized with 3 messages:</p>
 
@@ -285,6 +285,7 @@
          <li><span class="message_part">CALLRESULT</span></li>
          <li><span class="message_part">CALLERROR</span></li>
       </ul>
+      {{up()}}
 
 
       <a name="call_message"></a>
@@ -477,8 +478,8 @@
       {{up()}}
 
 
-      <a name="pubsub_messages"></a>
-      <h2>Publish &amp; Subscribe Messages</h2>
+      <a name="pubsub"></a>
+      <h2>Publish &amp; Subscribe</h2>
 
       <p>The Publish &amp; Subscribe messaging pattern is realized with 4 messages:</p>
 
@@ -507,6 +508,7 @@
          the subscription or publication is denied. When a client subscribes or publishes,
          there is no error feedback and a failed action is just silently ignored by the server.
       </p>
+      {{up()}}
 
 
       <a name="subscribe_message"></a>
