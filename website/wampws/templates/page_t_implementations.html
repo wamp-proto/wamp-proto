@@ -1,35 +1,41 @@
 {% extends "layout_t.html" %}
 
+{% block header %}
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_implementations.css') }}">
+{% endblock%}
+
 {% block content %}
 
-<p>
-   WAMP is implemented in a growing list of <i>client libraries</i>,
-   <i>server frameworks</i> and <i>servers</i>:
-</p>
+<center>
+   WAMP is implemented in a growing list of <b>client</b>
+   and <b>server</b> libraries, frameworks and products:
+</center>
 
 <div id="implist_wrapper">
    <div class="implist">
-      <i>Server</i>
+      Server
       <ul>
-         <li><a href="http://autobahn.ws">Autobahn.ws</a></li>
-         <li><a href="http://autobahn.ws/developers/autobahnpython">AutobahnPython</a></li>
+         <li><a href="http://autobahn.ws/python">AutobahnPython</a></li>
+         <li><a href="http://www.tavendo.de/webmq">Tavendo WebMQ</a></li>
+         <li><a href="http://socketo.me/">Ratchet</a></li>
          <li><a href="https://github.com/nicokaiser/wamp.io">WAMP.IO</a></li>
-         <li><a href="https://github.com/cboden/Ratchet">Ratchet</a></li>
+         <li><a href="https://github.com/ghetolay/jwamp">JWamp</a></li>
       </ul>
    </div>
    <div class="implist">
-      <i>Client</i>
+      Client
       <ul>
-         <li><a href="http://autobahn.ws/developers/autobahnjs">AutobahnJS</a></li>
-         <li><a href="http://autobahn.ws/developers/autobahnandroid">AutobahnAndroid</a></li>
-         <li><a href="http://autobahn.ws/developers/autobahnpython">AutobahnPython</a></li>
+         <li><a href="http://autobahn.ws/js">AutobahnJS</a></li>
+         <li><a href="http://autobahn.ws/python">AutobahnPython</a></li>
+         <li><a href="http://autobahn.ws/android">AutobahnAndroid</a></li>
+         <li><a href="https://github.com/ghetolay/jwamp">JWamp</a></li>
       </ul>
    </div>
 </div>
 
 <div style="clear: both;"></div>
 
-<p style="color: #aaa; font-size: 12px; margin-top: 65px; float: right; width: 280px; line-height: 1.2em;">
+<p id="implementors_note">
    Want your WAMP implementation listed here?<br/>
    Join the <a href="https://groups.google.com/group/wampws" target="_blank">WAMP group</a> and introduce your project.
 </p>

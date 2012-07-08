@@ -1,10 +1,12 @@
 /*
- Styles for WAMP.ws Microsite on Tavendo
+ Styles for WAMP.ws
 
  Color Scheme:
 
- grey:         #788192
+ grey:         #7e8696
+ purple:       #fa72c6
 
+ dark purple:  #f10a9a
  */
 
 html,
@@ -24,7 +26,7 @@ body
 {
    position: relative;
    background-color: #fff;
-   color: #788192;
+   color: #7e8696;
 
    font-family: "Segoe UI", "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
    font-weight: normal;
@@ -33,7 +35,7 @@ body
 
 h1
 {
-   font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;
+   /*font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;*/
    font-weight: 500;
 
    font-size: 24px;
@@ -43,8 +45,14 @@ h1
 
 h1 b
 {
-   font-family: 'HelveticaNeue-Bold',Helvetica,Arial,sans-serif;
+   /*font-family: 'HelveticaNeue-Bold',Helvetica,Arial,sans-serif;*/
    font-weight: 900;
+}
+
+#tweetme {
+   position: absolute;
+   top: 24px;
+   right: 130px;
 }
 
 .intro
@@ -55,15 +63,20 @@ h1 b
 
 .intro_sub
 {
+   border-top: solid 6px #fa72c6;
+   width: 600px;
+   padding-right: 8px;
+   padding-top: 4px;
    float: right;
    font-size: 22px;
    margin-top: 40px;
    font-style: italic;
+   text-align: right;
 }
 
 h2
 {
-   font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;
+   /*font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;*/
    font-weight: 300;
    font-size: 18px;
    margin-left: 32px;
@@ -73,7 +86,7 @@ h2
 
 h3
 {
-   font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;
+   /*font-family: 'HelveticaNeue-Light',Helvetica,Arial,sans-serif;*/
    font-weight: 300;
    font-size: 24px;
    margin-left: 32px;
@@ -82,18 +95,24 @@ h3
 
 a
 {
-   color: #788192;
-   text-decoration: none;
+   color: #7e8696;
+   color: #f10a9a;
+   color: #fa72c6;
+   text-decoration: underline;
 }
 
 a:visited
 {
-   color: #788192;
+   color: #7e8696;
+   color: #f10a9a;
+   color: #fa72c6;
 }
 
 a:hover
 {
-   color: #788192;
+   color: #7e8696;
+   color: #fa72c6;
+   color: #f10a9a;
 }
 
 #topband
@@ -101,7 +120,7 @@ a:hover
    width: 100%;
    height: 60px;
 /*
-   background-color: #788192;
+   background-color: #7e8696;
 */
 }
 
@@ -140,16 +159,16 @@ a:hover
    bottom: 16px;
    right: 0;
 
-   font-family: 'HelveticaNeue-Bold',Helvetica,Arial,sans-serif;
-   font-weight: 900;
-   font-size: 22px;
+   /*font-family: 'HelveticaNeue-Bold',Helvetica,Arial,sans-serif;*/
+   font-weight: 600;
+   font-size: 18px;
    color: #fff;
 }
 
 
 #navbar .navitem_selected
 {
-   color: #788192;
+   color: #fa72c6;
 }
 
 #navbar .navitem
@@ -169,7 +188,7 @@ a:hover
 
 #navbar a:hover
 {
-   color: #788192;
+   color: #fa72c6;
 }
 
 #content_wrapper
@@ -199,40 +218,6 @@ ul
    padding-left: 6em;
 }
 
-#content_block .impl_list {
-   margin-left: 60px;
-   padding-left: 30px;
-}
-
-#implist_wrapper {
-   margin: 30px auto 0 auto;
-   width: 600px;
-}
-
-.implist {
-   float: left;
-   width: 300px;
-}
-
-.implist ul {
-   margin: 8px 0 0 0;
-   padding: 0 0 0 20px;;
-}
-
-.implist ul li {
-   background-image: url("../img/li_edge.png");
-   background-position: 0 0.6em;
-   background-repeat: no-repeat;
-   list-style-type: none;
-   line-height: 1.8em;
-   padding-left: 16px;
-}
-
-.implist a {
-   text-decoration: none;
-}
-
-
 #footer_wrapper {
    margin-top: 60px;
    position: relative;
@@ -251,7 +236,7 @@ ul
    border-radius: 4px;
    padding: 1px 15px;
    background-color: #DDD;
-   color: #788192;
+   color: #7e8696;
    text-decoration: none;
    font-size: 0.8em;
 }
@@ -259,13 +244,13 @@ ul
 .up_button:visited
 {
    background-color: #DDD;
-   color: #788192;
+   color: #7e8696;
 }
 
 .up_button:hover
 {
    color: #FFF;
-   background-color: #788192;
+   background-color: #7e8696;
    box-shadow: 0px 0px 12px #333;
    -moz-box-shadow: 0px 0px 12px #333;
    -webkit-box-shadow: 0px 0px 12px #333;
@@ -274,13 +259,39 @@ ul
 }
 
 
-/***** FAQ ****/
 
-#faq_wrapper
-{
-   width: 80%;
-   margin: 0 auto;
+.up {
+   width: 100%;
+   height: 30px;
 }
+
+.up > a
+{
+   float: right;
+   border-radius: 4px;
+   padding: 1px 15px;
+   background-color: #DDD;
+   color: #7e8696;
+   text-decoration: none;
+   font-size: 0.8em;
+}
+
+.up > a:visited
+{
+   background-color: #DDD;
+   color: #7e8696;
+}
+
+.up > a:hover
+{
+   color: #FFF;
+   background-color: #fa72c6;
+   box-shadow: 0px 0px 12px #333;
+   -moz-box-shadow: 0px 0px 12px #333;
+   -webkit-box-shadow: 0px 0px 12px #333;
+   text-decoration: none;
+}
+
 
 
 
@@ -313,3 +324,47 @@ ul
    overflow: visible;
    padding: 40px 0 0;
 }
+
+.fasttransition {
+   transition: all 0.1s ease-in-out;
+   -ms-transition: all 0.1s ease-in-out;
+   -webkit-transition: all 0.1s ease-in-out;
+   -moz-transition: all 0.1s ease-in-out;
+   -o-transition: all 0.1s ease-in-out;
+}
+
+.ctas {
+   /*margin-left: 220px;*/
+   margin: 60px auto 30px auto;
+   width: 440px;
+}
+
+a.cta_button
+{
+   display: block;
+   float: left;
+   padding: 12px 0px;
+   margin: 0;
+   margin-left: 40px;
+   width: 200px;
+   text-align: center;
+   vertical-align: middle;
+   border-radius: 24px;
+
+   color: #fff;
+   background-color: #fa72c6;
+
+   text-decoration: none;
+   font-size: 24px;
+   /*font-weight: 600;*/
+}
+
+a.cta_button:first-of-type {
+   margin-left: 0;
+}
+
+a.cta_button:hover {
+   background-color: #f10a9a;
+   color: #fff;
+}
+

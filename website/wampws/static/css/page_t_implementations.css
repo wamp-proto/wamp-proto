@@ -1,0 +1,49 @@
+#content_block .impl_list {
+   margin-left: 60px;
+   padding-left: 30px;
+}
+
+#implist_wrapper {
+   margin: 30px auto 0 auto;
+   width: 600px;
+}
+
+.implist {
+   float: left;
+   width: 300px;
+   font-size: 18px;
+}
+
+.implist ul {
+   margin: 8px 0 0 0;
+   padding: 0 0 0 20px;;
+}
+
+.implist ul li {
+   background-image: url("../img/li_edge.png");
+   background-position: 0 7px;
+   background-repeat: no-repeat;
+   list-style-type: none;
+   line-height: 1.8em;
+   padding-left: 16px;
+}
+
+.implist a {
+   text-decoration: none;
+}
+
+#implementors_note {
+   color: #fff;
+   background-color: #fa72c6;
+   padding: 16px;
+   border-radius: 12px;
+   font-size: 14px;
+   margin-top: 65px;
+   float: right;
+   width: 320px;
+   line-height: 1.2em;
+}
+
+#implementors_note a {
+   color: #fff;
+}

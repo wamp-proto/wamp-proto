@@ -71,15 +71,6 @@
    margin: auto;
 }
 
-#spec a {
-   text-decoration: underline;
-}
-
-#spec a.up_button
-{
-   text-decoration: none;
-}
-
 #spec h1 {
    margin-top: 3em;
 }

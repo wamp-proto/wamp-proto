@@ -47,6 +47,11 @@ def page_why():
    session['tab_selected'] = 'why'
    return render_template('page_t_why.html')
 
+@app.route('/getstarted')
+def page_getstarted():
+   session['tab_selected'] = 'getstarted'
+   return render_template('page_t_getstarted.html')
+
 @app.route('/faq')
 def page_faq():
    session['tab_selected'] = 'faq'

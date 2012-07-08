@@ -1,66 +1,130 @@
 {% extends "layout_t.html" %}
 
+{% block header %}
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_faq.css') }}">
+{% endblock%}
+
+
 {% block content %}
 
 <div id="faq_wrapper">
-   <h2>What is the legal status of WAMP?</h2>
-   <p>
-      WAMP is free - both as in beer and as in speech. Do with it what you like.
-      If WAMP fills your needs as it is, then the easiest thing is to just use it
-      without any changes. The more compatible implementations, the better for
-      interoperability. If your needs require modifications, or you want to start your
-      own development based on WAMP, then you are also free to do so.<br>
-      Whatever you do with WAMP - an announcement on the mailing list is always
-      welcome.
-   </p>
 
-   <h2>Are there any requirements if I use WAMP for my project?</h2>
-   <p>
-      WAMP is free to use for anybody, be it as part of an open source or a
-      commercial project. There are no strings attached here, no licenses to
-      pay, and no known other intellectual property (such as patents).<br>
-      If you do use WAMP for your project, then both a mention of this somewhere
-      in your project, and an announcement on the mailing list would be welcome.
-   </p>
+   <a name="top"></a>
+   <h1>Frequently Asked Questions</h1>
+   <br>
 
-   <h2>Why is WAMP trademarked?</h2>
-   <p>
-      The WAMP word- and desing mark are trademarked as a way to ensure that only
-      proper use is made of them. This is especially the case in regard to assurances
-      regarding compatibility. A trademark policy detailing correct use is in the works.
-      For now, and for a quick overview of the base principles of the trademark
-      policy, see the following question.
-   </p>
+   <div id="faq_toc">
+      <ul>
+         <li>
+            General
+            <ul>
+               <li><a href="#rpc">What is RPC?</a></li>
+               <li><a href="#pubsub">What is PubSub?</a></li>
+            </ul>
+         </li>
+         <li>
+            Protocol
+            <ul>
+               <li><a href="#why_rpc_and_pubsub">Why does WAMP provide RPC and PubSub in one protocol?</a></li>
+               <li><a href="#why_uris">Why does WAMP use URIs to identify RPC endpoints and PubSub topics?</a></li>
+            </ul>
+         </li>
+         <li>
+            Legal
+            <ul>
+               <li><a href="#legal_status">What is the legal status of WAMP?</a></li>
+               <li><a href="#requirements_for_use">Are there any requirements if I use WAMP for my project?</a></li>
+               <li><a href="#why_trademarking">Why is WAMP trademarked?</a></li>
+               <li><a href="#wamp_trademark_use">Who can use the WAMP word mark or the WAMP design mark?</a></li>
+               <li><a href="#website_copyright">What does the CC copyright on this website mean?</a></li>
+            </ul>
+         </li>
+      </ul>
+   </div>
 
-   <h2>Who can use the WAMP word mark or the WAMP design mark?</h2>
-   <p>
-      The fact that WAMP is a word mark does not prevent factual use. If you e.g.
-      announced that you were working on a WAMP implementation, or discussed details
-      of your implementation work, or recommended this website, these are all,
-      naturaly, entirely unproblematic uses.<br>
-      For any use of the word mark which could imply a direct endorsement, or other
-      official connection with the WAMP project, or when in doubt, please contact Tavendo.
-      The same goes for any use of the design mark (i.e. the WAMP logo at the top of
-      the project page).<br>
-      We will take a look as quickly as possible, and try to arrange a license if this should be
-      necessary. (And a license does not need to be a big deal.)
-   </p>
 
-   <h2>What does the CC copyright on this website mean?</h2>
-   <p>
-      The threshold for using WAMP should be as low as possible. This includes
-      the documentation for what you are doing. The CC BY license
-      simply means that you are free to use any materials on this website (with
-      the exception of the WAMP word mark or WAMP design mark) for your project.
-      You can copy & paste or edit anything you think useful to for e.g. your own project
-      website or your documentation. This applies irrespective of whether your
-      project is commercial or non-commercial.<br>
-      The only requirement is that you attribute this use. In an internet context,
-      this is most easily done by providing something like 'some materials copied/adapted
-      from' + a link to the WAMP website.
-   </p>
+   <h2>General</h2>
 
-   <h2>Why does WAMP use URIs to identify RPC endpoints and PubSub topics?</h2><a name="why_uris"></a>
+   <a name="rpc"></a>
+   <h3>What is RPC?</h3>
+   <p>
+      Remote Procedure Call (RPC) is a messaging pattern involving
+      peers to two roles: client and server.
+   </p>
+   <p>
+      A server provides methods or procedure to call under well
+      known endpoints.<br>
+      A client calls remote methods or procedures by providing
+      the method or procedure endpoint and any arguments for the call.<br>
+      The server will execute the method or procedure using the
+      supplied arguments to the call and return the result of the
+      call to the client.
+   </p>
+   {{up()}}
+
+
+   <a name="pubsub"></a>
+   <h3>What is PubSub?</h3>
+   <p>
+      Publish &amp; Subscribe (PubSub) is a messaging pattern involving
+      peers of three roles: publisher, subscriber and broker.
+   </p>
+   <p>
+      A publisher sends (publishes) an event by providing a topic (aka channel)
+      as the abstract address, not a specific peer.<br>
+      A subscriber receives events by first providing topics (aka channels)
+      he is interested. Subsequently, the subscriber will receive any
+      events publishes to that topic.<br>
+      The broker sits between publishers and subscribers and mediates
+      messages publishes to subscribers. A broker will maintain lists
+      of subscribers per topic so it can dispatch new published events
+      to the appropriate subscribers.<br>
+   </p>
+   <p>
+      A broker may also dispatch events on it's own, for example
+      when the broker also acts as an RPC server and a method
+      executed on the server should trigger a PubSub event.
+   </p>
+   <p>
+      In summary, PubSub decouples publishers and receivers via an
+      intermediary, the broker.
+   </p>
+   {{up()}}
+
+
+   <h2>Protocol</h2>
+
+   <a name="why_rpc_and_pubsub"></a>
+   <h3>Why does WAMP provide RPC and PubSub in one protocol?</h3>
+   <p>
+      Imagine the following situation: a client want to perform some
+      action on a server. The client also wants to get notified
+      when another clients performs the action.<br>
+      For example, in a Web application for managing service tickets,
+      a client might perform the action "create new ticket", and
+      get notified via events of "new ticket created".
+   </p>
+   <p>
+      A natural approach to realize above would use RPC for
+      performing actions, and PubSub for notifications.<br>
+      With the service ticket Web app, the client would subscribe
+      to the topic "OnTicketCreated", and perform it's actions
+      by calling "createTicket". The server side implementation of
+      "createTicket" would not only perform the action of creating
+      a new ticket, but also dispatch a PubSub event on the
+      topic "OnTicketCreated" with the details of the new ticket.
+   </p>
+   <p>
+      Now, a protocol suitable for realizing above will naturally
+      need to provide both RPC and PubSub messaging patterns.<br>
+      WAMP was designed exactly with above in mind, so it
+      provides you with one protocol for both RPC and PubSub.
+   </p>
+   {{up()}}
+
+
+   <a name="why_uris"></a>
+   <h3>Why does WAMP use URIs to identify RPC endpoints and PubSub topics?</h3>
    <p>
       The benefits of using URIs (from the HTTP scheme) are:
       <ul>
@@ -81,6 +145,82 @@
       that is all ID like things, vocabulary (verbs, adj, ..) describing
       relations between entities .. everything.
    </p>
+   {{up()}}
+
+
+   <h2>Legal</h2>
+
+   <a name="legal_status"></a>
+   <h3>What is the legal status of WAMP?</h3>
+   <p>
+      WAMP is free - both as in beer and as in speech. Do with it what you like.
+      If WAMP fills your needs as it is, then the easiest thing is to just use it
+      without any changes. The more compatible implementations, the better for
+      interoperability. If your needs require modifications, or you want to start your
+      own development based on WAMP, then you are also free to do so.<br>
+      Whatever you do with WAMP - an announcement on the mailing list is always
+      welcome.
+   </p>
+   {{up()}}
+
+
+   <a name="requirements_for_use"></a>
+   <h3>Are there any requirements if I use WAMP for my project?</h3>
+   <p>
+      WAMP is free to use for anybody, be it as part of an open source or a
+      commercial project. There are no strings attached here, no licenses to
+      pay, and no known other intellectual property (such as patents).<br>
+      If you do use WAMP for your project, then both a mention of this somewhere
+      in your project, and an announcement on the mailing list would be welcome.
+   </p>
+   {{up()}}
+
+
+   <a name="why_trademarking"></a>
+   <h3>Why is WAMP trademarked?</h3>
+   <p>
+      The WAMP word- and desing mark are trademarked as a way to ensure that only
+      proper use is made of them. This is especially the case in regard to assurances
+      regarding compatibility. A trademark policy detailing correct use is in the works.
+      For now, and for a quick overview of the base principles of the trademark
+      policy, see the following question.
+   </p>
+   {{up()}}
+
+
+   <a name="wamp_trademark_use"></a>
+   <h3>Who can use the WAMP word mark or the WAMP design mark?</h3>
+   <p>
+      The fact that WAMP is a word mark does not prevent factual use. If you e.g.
+      announced that you were working on a WAMP implementation, or discussed details
+      of your implementation work, or recommended this website, these are all,
+      naturaly, entirely unproblematic uses.<br>
+      For any use of the word mark which could imply a direct endorsement, or other
+      official connection with the WAMP project, or when in doubt, please contact Tavendo.
+      The same goes for any use of the design mark (i.e. the WAMP logo at the top of
+      the project page).<br>
+      We will take a look as quickly as possible, and try to arrange a license if this should be
+      necessary. (And a license does not need to be a big deal.)
+   </p>
+   {{up()}}
+
+
+   <a name="website_copyright"></a>
+   <h3>What does the CC copyright on this website mean?</h3>
+   <p>
+      The threshold for using WAMP should be as low as possible. This includes
+      the documentation for what you are doing. The CC BY license
+      simply means that you are free to use any materials on this website (with
+      the exception of the WAMP word mark or WAMP design mark) for your project.
+      You can copy & paste or edit anything you think useful to for e.g. your own project
+      website or your documentation. This applies irrespective of whether your
+      project is commercial or non-commercial.<br>
+      The only requirement is that you attribute this use. In an internet context,
+      this is most easily done by providing something like 'some materials copied/adapted
+      from' + a link to the WAMP website.
+   </p>
+   {{up()}}
+
 </div>
 
 {% endblock%}

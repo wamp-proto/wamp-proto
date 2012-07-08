@@ -29,51 +29,64 @@
    </head>
    <body>
 
-   <div id="sticky_footer_outer_wrapper">
+      {% macro up() -%}
+         <div class="up">
+            <a href="#top">Up</a>
+         </div>
+      {%- endmacro %}
 
-      <div id="sticky_footer_central_content_wrapper">
+      <div id="sticky_footer_outer_wrapper">
 
-         <div id="topband"></div>
+         <div id="sticky_footer_central_content_wrapper">
 
-         <div id="logo_wrapper">
-            <div id="logo_block">
-               <div id="logo">
-                  <a href="/"><img src="{{ url_for('static', filename = 'img/logo.png') }}" width="624" height="136" border="0" alt="WAMP - The WebSocket Application Messaging Protocol"></img></a>
-               </div>
-               <div id="navbar">
-                  <a href="{{ url_for('page_why') }}" {% if session['tab_selected'] == 'why' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Why?</a>
-                  <a href="{{ url_for('page_implementations') }}" {% if session['tab_selected'] == 'implementations' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Implementations</a>
-                  <a href="{{ url_for('page_spec') }}" {% if session['tab_selected'] == 'spec' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Specification</a>
-                  <a href="{{ url_for('page_faq') }}" {% if session['tab_selected'] == 'faq' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>FAQ</a>
+            <div id="topband"></div>
+
+            <div id="logo_wrapper">
+               <div id="logo_block">
+                  <div id="logo">
+                     <a href="/"><img src="{{ url_for('static', filename = 'img/logo.png') }}" width="624" height="136" border="0" alt="WAMP - The WebSocket Application Messaging Protocol"></img></a>
+                  </div>
+                  <div id="navbar">
+                     <a href="{{ url_for('page_home') }}" {% if session['tab_selected'] == 'home' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Home</a>
+                     <a href="{{ url_for('page_why') }}" {% if session['tab_selected'] == 'why' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Why?</a>
+                     <a href="{{ url_for('page_getstarted') }}" {% if session['tab_selected'] == 'getstarted' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Get Started</a>
+                     <a href="{{ url_for('page_implementations') }}" {% if session['tab_selected'] == 'implementations' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Implementations</a>
+                     <a href="{{ url_for('page_spec') }}" {% if session['tab_selected'] == 'spec' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Specification</a>
+                     <a href="{{ url_for('page_faq') }}" {% if session['tab_selected'] == 'faq' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>FAQ</a>
+                  </div>
                </div>
             </div>
-         </div>
 
-         <div id="content_wrapper">
-            <div id="content_block">
+            <div id="content_wrapper">
+               <div id="content_block">
 
-               {% block content %}{% endblock %}
+                  {% block content %}{% endblock %}
 
+               </div>
             </div>
-         </div>
 
-         <div style="clear: both;"></div>
+            <div style="clear: both;"></div>
+         </div>
       </div>
-   </div>
 
-   <div id="footer_wrapper">
-      <center>
-         WAMP&#8482; The WebSocket Application Messaging Protocol - Asynchronous RPC/PubSub over WebSocket.
-      </center>
-      <center>
-         "WAMP" and the <img src="{{ url_for('static', filename = 'img/logo_tiny.png') }}" width="60" height="12" border="0" alt="WAMP - The WebSocket Application Messaging Protocol"></img>
-         logo are trademarks of <a href="http://www.tavendo.de">Tavendo GmbH</a>.
-         All other trademarks are those of their respective companies.
-      </center>
-      <center>
-         Copyright &copy; 2012, Tavendo GmbH, content licensed under <span style="font-size: 14px;"><a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons CC-BY</a></span>.
-      </center>
-   </div>
+      <div id="footer_wrapper">
+         <center>
+            WAMP&#8482; The WebSocket Application Messaging Protocol - Asynchronous RPC and PubSub over WebSocket.
+         </center>
+         <center>
+            WAMP and the <img style="position: relative; top: 3px;" src="{{ url_for('static', filename = 'img/logo_tiny.png') }}" width="60" height="16" border="0" alt="WAMP - The WebSocket Application Messaging Protocol"></img>
+            logo are trademarks of <a href="http://www.tavendo.de">Tavendo GmbH</a>.
+            All other trademarks are those of their respective companies.
+         </center>
+         <center>
+            Copyright &copy; 2012, Tavendo GmbH, content licensed under <span style="font-size: 14px;"><a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons CC-BY</a></span>.
+         </center>
+      </div>
+
+      <div id="tweetme">
+         <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://wamp.ws" data-text="WAMP - an open WebSocket subprotocol that provides two asynchronous messaging patterns: RPC and PubSub." data-count="none" data-hashtags="websocket">Tweet</a>
+         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      </div>
 
    </body>
 </html>
