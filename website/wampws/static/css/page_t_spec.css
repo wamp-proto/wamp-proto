@@ -21,7 +21,7 @@
    */
    padding: 7px 22px;
    min-width: 20px;
-   background-color: #788192;
+   background-color: #fa72c6;
    color: #fff;
    font-weight: normal;
    text-align: left;
@@ -35,20 +35,24 @@
 
 .message
 {
-   font-family: monospace;
+   font-family: Consolas, monospace;
    font-size: 18px;
    font-weight: bold;
-   color: #788192;
-   background-color: #fff;
+   color: #fff;
+   background-color: #fa72c6;
    width: 95%;
    margin: 2em auto 2em auto;
    padding: 10px 0 10px 0.6em;
+   border-radius: 18px;
+   /*
    box-shadow: 0 0 8px 2px #788192;
+   */
+   /*  #788192; */
 }
 
 .message_part
 {
-   font-family: monospace;
+   font-family: Consolas, monospace;
    font-weight: normal;
    color: #788192;
    background-color: #ddd;
@@ -57,38 +61,21 @@
 
 .msgex
 {
-   margin-left: 100px;
+   margin-left: 30px;
    margin-top: 60px;
    margin-bottom: 60px;
    padding-left: 20px;
-   border-left: solid 6px #75b73a;
+   border-left: solid 8px #fa72c6;
    color: #75b73a;
    font-weight: 600;
 }
 
-#spec {
-   width: 85%;
-   margin: auto;
-}
-
-#spec h1 {
-   margin-top: 3em;
-}
-
-#spec h1.title {
-   font-size: 34px;
-}
-
-#spec span.uri {
+#page_wrapper span.uri {
    font-size: 16px;
-   font-family: monospace;
+   font-family: Consolas, monospace;
 }
 
-#spec h2 {
-   margin-top: 4em;
-}
-
-#spec ol.refs {
+#page_wrapper ol.refs {
    margin-left: 3em;
    line-height: 3em;
 }

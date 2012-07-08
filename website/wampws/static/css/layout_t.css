@@ -49,33 +49,54 @@ a:hover
    color: #f10a9a;
 }
 
-
-
-h1 {
+h1
+{
    font-size: 32px;
    font-weight: 500;
 }
 
-h2 {
+h2
+{
    margin-top: 60px;
-   border-top: solid 1px #fa72c6;
+   margin-bottom: 20px;
+   border-top: solid 2px #fa72c6;
    font-size: 24px;
+   padding-top: 8px;
    padding-left: 12px;
    font-weight: 500;
 }
 
-h3 {
+h3
+{
    font-size: 16px;
    color: #fa72c6;
    padding-left: 0;
    margin-top: 60px;
 }
 
-h2 + a + h3 {
+h2 + a + h3
+{
    margin-top: 16px;
 }
 
-#tweetme {
+ul
+{
+   margin: 8px 0 0 0;
+   padding: 0 0 0 20px;;
+}
+
+ul li
+{
+   background-image: url("../img/li_edge.png");
+   background-position: 0 8px;
+   background-repeat: no-repeat;
+   list-style-type: none;
+   line-height: 1.8em;
+   padding-left: 16px;
+}
+
+#tweetme
+{
    position: absolute;
    top: 24px;
    right: 130px;
@@ -215,6 +236,44 @@ h2 + a + h3 {
    text-decoration: none;
 }
 
+#toc {
+   line-height: 1.8em;
+   margin-left: 32px;
+   padding-bottom: 60px;
+   margin-bottom: 60px;
+}
+
+#toc ul {
+   margin: 0;
+   padding: 0;
+}
+
+#toc ul > li {
+   border-top: solid 1px #fa72c6;
+   list-style-type: none;
+   font-size: 18px;
+   margin-bottom: 32px;
+   padding-left: 8px;
+   background-image: none;
+}
+
+#toc ul > li > ul {
+   border: none;
+   margin-left: 8px;
+   margin-top: 8px;
+}
+
+#toc ul > li > ul > li {
+   border: none;
+   margin: 0;
+   list-style-type: none;
+   font-size: 16px;
+   background-image: none;
+}
+
+#toc a {
+   text-decoration: none;
+}
 
 
 

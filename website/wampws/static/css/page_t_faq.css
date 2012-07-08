@@ -14,8 +14,9 @@
    border-top: solid 1px #fa72c6;
    list-style-type: none;
    font-size: 18px;
-   margin-bottom: 24px;
+   margin-bottom: 32px;
    padding-left: 8px;
+   background-image: none;
 }
 
 #faq_toc ul > li > ul {
@@ -29,6 +30,7 @@
    margin: 0;
    list-style-type: none;
    font-size: 16px;
+   background-image: none;
 }
 
 #faq_toc a {

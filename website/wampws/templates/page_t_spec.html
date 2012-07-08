@@ -1,22 +1,97 @@
-{% extends "layout_ts.html" %}
+{% extends "layout_t.html" %}
+
+{% block header %}
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_spec.css') }}">
+
+   <link href="{{ url_for('static', filename='deps/syntaxhighlighter/styles/shCore.css') }}" rel="stylesheet" type="text/css" />
+   <link href="{{ url_for('static', filename='deps/syntaxhighlighter/styles/shThemeDefault.css') }}" rel="stylesheet" type="text/css" />
+
+   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/XRegExp.js') }}" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/shCore.js') }}" type="text/javascript"></script>
+   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/shBrushJScript.js') }}" type="text/javascript"></script>
+   <script type="text/javascript">
+     SyntaxHighlighter.all()
+   </script>
+
+{% endblock %}
 
 {% block content %}
 
-   <div id="spec">
+   <div id="page_wrapper">
 
       <a name="top"></a>
-
       <h1 class="title">The WebSocket Application Messaging Protocol</h1>
 
       <p>
-         The following is a deliberately short and informal definition of WAMP - The WebSocket Application
+         The following is an informal definition of WAMP - The WebSocket Application
          Messaging Protocol.
-         Nevertheless, the text should be sufficient for developers to create
-         interoperable implementations. The text describes version <b>1</b> of the protocol
-         and specific features are still subject to change in WAMP v2.
+         The text describes version <b>1</b> of the protocol and should be sufficient
+         for developers to create interoperable implementations.
+         Specific features are subject to change in WAMP v2.
       </p>
 
-      <h1>Building Blocks</h1>
+      <br>
+
+      <div id="toc">
+         <ul>
+            <li>
+               <a href="#overview">Overview</a>
+               <ul>
+                  <li>
+                     <a href="#building_blocks">Building Blocks</a>
+                  </li>
+                  <li>
+                     <a href="#payload_format">Payload Format</a>
+                  </li>
+                  <li>
+                     <a href="#message_types">Message Types</a>
+                  </li>
+                  <li>
+                     <a href="#uris_and_curies">URIs and CURIEs</a>
+                  </li>
+               </ul>
+            </li>
+            <li>
+               <a href="#auxiliary_messages">Auxiliary Messages</a>
+               <ul>
+                  <li><a href="#welcome_message">WELCOME Message</a></li>
+                  <li><a href="#prefix_message">PREFIX Message</a></li>
+               </ul>
+            </li>
+            <li>
+               <a href="#rpc_messages">RPC Messages</a>
+               <ul>
+                  <li><a href="#"></a></li>
+                  <li><a href="#call_message">CALL Message</a></li>
+                  <li><a href="#callresult_message">CALLRESULT Message</a></li>
+                  <li><a href="#callerror_message">CALLERROR Message</a></li>
+               </ul>
+            </li>
+            <li>
+               <a href="#pubsub_messages">Publish &amp; Subscribe Messages</a>
+               <ul>
+                  <li><a href="#subscribe_message">SUBSCRIBE Message</a></li>
+                  <li><a href="#unsubscribe_message">UNSUBSCRIBE Message</a></li>
+                  <li><a href="#publish_message">PUBLISH Message</a></li>
+                  <li><a href="#event_message">EVENT Message</a></li>
+               </ul>
+            </li>
+            <li>
+               <a href="#references">References</a>
+            </li>
+         </ul>
+      </div>
+
+
+      <a name="overview"></a>
+      <h2>Overview</h2>
+      <p>
+      </p>
+
+
+      <a name="building_blocks"></a>
+      <h3>Building Blocks</h3>
       <p>
          WAMP is based on established Web standards:
          <ul>
@@ -49,17 +124,22 @@
          The default binding is <i>URIs</i> from the HTTP scheme as <i>IDs</i>
          for both topics and procedures.
       </p>
+      {{up()}}
 
 
-      <h1>Payload Format</h1>
+      <a name="payload_format"></a>
+      <h3>Payload Format</h3>
       <p>
          All messages are transmitted as <a href="http://tools.ietf.org/html/rfc6455" target="_blank">WebSocket</a>
          messages of payload type <i>text</i>, and hence
          <a href="http://tools.ietf.org/html/rfc3629" target="_blank">UTF-8</a> encoded,
          with the payload being valid <a href="http://tools.ietf.org/html/rfc4627" target="_blank">JSON</a>.
       </p>
+      {{up()}}
 
-      <h1>Message Types</h1>
+
+      <a name="message_types"></a>
+      <h3>Message Types</h3>
 
       <p>
          WAMP defines the message types which are used in the communication between two
@@ -82,10 +162,123 @@
          <tr><td><a href="#publish">PUBLISH</a></td><td>7</td><td>Client-to-server</td><td>PubSub</td></tr>
          <tr><td><a href="#event">EVENT</a></td><td>8</td><td>Server-to-client</td><td>PubSub</td></tr>
       </table>
+      {{up()}}
 
-      <h1>Request &amp; Response</h1>
 
-      <p>The Request &amp; Response (or Remote Procedure Call = RPC) messaging pattern is realized with 3 messages:</p>
+      <a name="uris_and_curies"></a>
+      <h3>URIs and CURIEs</h3>
+      <p>Write me.</p>
+      {{up()}}
+
+
+
+      <a name="auxiliary_messages"></a>
+      <h2>Auxiliary Messages</h2>
+
+      <p>The first server-to-client message sent by a WAMP server is always</p>
+      <ul>
+         <li><span class="message_part">WELCOME</span></li>
+      </ul>
+
+      <p>
+         With both messaging patterns, a client MAY use the following
+         client-to-server message:
+      </p>
+      <ul>
+         <li><span class="message_part">PREFIX</span></li>
+      </ul>
+
+
+      <a name="welcome_message"></a>
+      <h3>WELCOME Message</h3>
+      <p>
+         When a WAMP client connects to a WAMP server, the very first message sent
+         by the server is always a
+      </p>
+      <p class="message">[ TYPE_ID_WELCOME , sessionId , protocolVersion, serverIdent ]</p>
+      <p>
+         message. The <span class="message_part">sessionId</span> is a string that is
+         randomly generated by the server and unique to the specific WAMP session.
+         The <span class="message_part">sessionId</span> can be used for at least two
+         situations: 1) specifying lists of excluded or eligible clients when publishing
+         event and 2) in the context of performing authentication or authorization.
+      </p>
+      <p>
+         The <span class="message_part">protocolVersion</span> is an integer
+         that gives the WAMP protocol version the server speaks, currently it MUST be 1.
+      </p>
+      <p>
+         The <span class="message_part">serverIdent</span> is a string the server may
+         use to disclose it's version, software, platform or identity.
+      </p>
+
+      <div class="msgex">
+         <span class="message_part">WELCOME</span> message: session ID = "v59mbCGDXZ7WTyxB"
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [0, "v59mbCGDXZ7WTyxB", 1, "Autobahn/0.5.1"]
+         </pre>
+      </div>
+      {{up()}}
+
+
+      <a name="prefix_message"></a>
+      <h3>PREFIX Message</h3>
+      <p>Both <i>procedures</i> (and <i>errors</i>) in RPC and <i>topics</i> in PubSub are identified using <a href="#curie">URIs or CURIEs</a>.
+      Whenever a URI is used, full identification of the procedure/topic is provided by this URI.
+      However, URIs can get long, which means tedious to input for developers, and also resulting in
+      considerable volume on wire, when many small messages are exchanged.</p>
+      <p>To counter that, URIs MAY be abbreviated using the CURIE (Compact URI Expression) syntax.
+      For example, the (full) URI:</p>
+
+      <center><span class="uri">http://example.com/simple/calc#square</span></center>
+
+      <p>may be abbreviated as</p>
+
+      <center><span class="uri">calc:square</span></center>
+
+      <p>when it was previously agreed that the <i>prefix</i> <span class="uri">calc</span> is meant to stand for
+
+      <center><span class="uri">http://example.com/simple/calc#</span></center>
+      <br/>
+
+      <p>To establish such agreement, a client sends a <span class="message_part">PREFIX</span> message</p>
+      <p class="message">[ TYPE_ID_PREFIX , prefix , URI ]</p>
+      <p>to the server.</p>
+
+      <div class="msgex">
+         <span class="message_part">PREFIX</span> message
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [1, "calc", "http://example.com/simple/calc#"]
+         </pre>
+      </div>
+
+      <div class="msgex">
+         <span class="message_part">PREFIX</span> message
+         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
+            [1, "keyvalue", "http://example.com/simple/keyvalue#"]
+         </pre>
+      </div>
+
+
+      <p>The agreement is per-connection, and has a lifetime starting with the server receiving a
+      <span class="message_part">PREFIX</span> message establishing a prefix-to-URI mapping, and ending
+      with the WebSocket connection.</p>
+
+      <p>The message is a JSON list consisting of <span class="message_part">TYPE_ID_PREFIX</span>, the message type ID as an integer, followed
+      by the <span class="message_part">prefix</span>, a string to be used as prefix,
+      followed by <span class="message_part">URI</span>, the URI which is subsequently to be abbreviated using the prefix.</p>
+
+      <p>Both the <span class="message_part">prefix</span> and the <span class="message_part">URI</span> MUST follow the requirements as
+      set forth in <a href="#curie">URIs or CURIEs</a></p>
+
+      {{up()}}
+
+
+
+      <a name="rpc_messages"></a>
+      <h2>RPC Messages</h2>
+
+      <p>The Remote Procedure Call messaging pattern is realized with 3 messages:</p>
 
       <ul>
          <li><span class="message_part">CALL</span></li>
@@ -93,8 +286,9 @@
          <li><span class="message_part">CALLERROR</span></li>
       </ul>
 
-      <a name="call"></a>
-      <h2>CALL Message</h2>
+
+      <a name="call_message"></a>
+      <h3>CALL Message</h3>
 
       <p>
          A client initiates a RPC by sending a message
@@ -176,8 +370,8 @@
       {{up()}}
 
 
-      <a name="call_result"></a>
-      <h2>CALLRESULT Message</h2>
+      <a name="callresult_message"></a>
+      <h3>CALLRESULT Message</h3>
 
       <p>
          When the execution of the remote procedure finishes successfully, the server responds by
@@ -219,13 +413,11 @@
          </pre>
       </div>
 
-
       {{up()}}
 
 
-
-      <a name="call_error"></a>
-      <h2>CALLERROR Message</h2>
+      <a name="callerror_message"></a>
+      <h3>CALLERROR Message</h3>
 
       <p>
          When the remote procedure call could not be executed, an error or exception occurred during the execution
@@ -285,109 +477,8 @@
       {{up()}}
 
 
-
-      <h1>Auxiliary</h1>
-
-      <p>The first server-to-client message sent by a WAMP server is always</p>
-      <ul>
-         <li><span class="message_part">WELCOME</span></li>
-      </ul>
-
-      <p>
-         With both messaging patterns, a client MAY use the following
-         client-to-server message:
-      </p>
-      <ul>
-         <li><span class="message_part">PREFIX</span></li>
-      </ul>
-
-      <a name="welcome"></a>
-      <h2>WELCOME Message</h2>
-      <p>
-         When a WAMP client connects to a WAMP server, the very first message sent
-         by the server is always a
-      </p>
-      <p class="message">[ TYPE_ID_WELCOME , sessionId , protocolVersion, serverIdent ]</p>
-      <p>
-         message. The <span class="message_part">sessionId</span> is a string that is
-         randomly generated by the server and unique to the specific WAMP session.
-         The <span class="message_part">sessionId</span> can be used for at least two
-         situations: 1) specifying lists of excluded or eligible clients when publishing
-         event and 2) in the context of performing authentication or authorization.
-      </p>
-      <p>
-         The <span class="message_part">protocolVersion</span> is an integer
-         that gives the WAMP protocol version the server speaks, currently it MUST be 1.
-      </p>
-      <p>
-         The <span class="message_part">serverIdent</span> is a string the server may
-         use to disclose it's version, software, platform or identity.
-      </p>
-
-      <div class="msgex">
-         <span class="message_part">WELCOME</span> message: session ID = "v59mbCGDXZ7WTyxB"
-         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [0, "v59mbCGDXZ7WTyxB", 1, "Autobahn/0.5.1"]
-         </pre>
-      </div>
-
-
-      <a name="prefix"></a>
-      <h2>PREFIX Message</h2>
-      <p>Both <i>procedures</i> (and <i>errors</i>) in RPC and <i>topics</i> in PubSub are identified using <a href="#curie">URIs or CURIEs</a>.
-      Whenever a URI is used, full identification of the procedure/topic is provided by this URI.
-      However, URIs can get long, which means tedious to input for developers, and also resulting in
-      considerable volume on wire, when many small messages are exchanged.</p>
-      <p>To counter that, URIs MAY be abbreviated using the CURIE (Compact URI Expression) syntax.
-      For example, the (full) URI:</p>
-
-      <center><span class="uri">http://example.com/simple/calc#square</span></center>
-
-      <p>may be abbreviated as</p>
-
-      <center><span class="uri">calc:square</span></center>
-
-      <p>when it was previously agreed that the <i>prefix</i> <span class="uri">calc</span> is meant to stand for
-
-      <center><span class="uri">http://example.com/simple/calc#</span></center>
-      <br/>
-
-      <p>To establish such agreement, a client sends a <span class="message_part">PREFIX</span> message</p>
-      <p class="message">[ TYPE_ID_PREFIX , prefix , URI ]</p>
-      <p>to the server.</p>
-
-      <div class="msgex">
-         <span class="message_part">PREFIX</span> message
-         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [1, "calc", "http://example.com/simple/calc#"]
-         </pre>
-      </div>
-
-      <div class="msgex">
-         <span class="message_part">PREFIX</span> message
-         <pre class="brush: javascript; toolbar: false; auto-links: false; gutter: false;">
-            [1, "keyvalue", "http://example.com/simple/keyvalue#"]
-         </pre>
-      </div>
-
-
-      <p>The agreement is per-connection, and has a lifetime starting with the server receiving a
-      <span class="message_part">PREFIX</span> message establishing a prefix-to-URI mapping, and ending
-      with the WebSocket connection.</p>
-
-      <p>The message is a JSON list consisting of <span class="message_part">TYPE_ID_PREFIX</span>, the message type ID as an integer, followed
-      by the <span class="message_part">prefix</span>, a string to be used as prefix,
-      followed by <span class="message_part">URI</span>, the URI which is subsequently to be abbreviated using the prefix.</p>
-
-      <p>Both the <span class="message_part">prefix</span> and the <span class="message_part">URI</span> MUST follow the requirements as
-      set forth in <a href="#curie">URIs or CURIEs</a></p>
-
-
-      {{up()}}
-
-
-
-      <h1>Publish &amp; Subscribe</h1>
+      <a name="pubsub_messages"></a>
+      <h2>Publish &amp; Subscribe Messages</h2>
 
       <p>The Publish &amp; Subscribe messaging pattern is realized with 4 messages:</p>
 
@@ -417,8 +508,9 @@
          there is no error feedback and a failed action is just silently ignored by the server.
       </p>
 
-      <a name="subscribe"></a>
-      <h2>SUBSCRIBE Message</h2>
+
+      <a name="subscribe_message"></a>
+      <h3>SUBSCRIBE Message</h3>
       <p>A client requests access to a valid <span class="message_part">topicURI</span> (or CURIE from Prefix) to receive events published to the given <span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_SUBSCRIBE , topicURI ]</p>
 
@@ -444,10 +536,10 @@
       {{up()}}
 
 
-      <a name="unsubscribe"></a>
-      <h2>UNSUBSCRIBE Message</h2>
+      <a name="unsubscribe_message"></a>
+      <h3>UNSUBSCRIBE Message</h3>
       <p>Calling unsubscribe on a <span class="message_part">topicURI</span> informs the server to stop delivering messages to
-      the client previously subscribed to that<span class="message_part">topicURI</span>.</p>
+      the client previously subscribed to that <span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_UNSUBSCRIBE , topicURI ]</p>
 
       <i>Examples</i>
@@ -469,8 +561,8 @@
       {{up()}}
 
 
-      <a name="publish"></a>
-      <h2>PUBLISH Message</h2>
+      <a name="publish_message"></a>
+      <h3>PUBLISH Message</h3>
       <p>The client will send an event to all clients connected to the server who have subscribed to the <span class="message_part">topicURI</span>.</p>
       <p class="message">[ TYPE_ID_PUBLISH , topicURI , event ]</p>
       <p class="message">[ TYPE_ID_PUBLISH , topicURI , event , excludeMe ]</p>
@@ -531,8 +623,8 @@
       {{up()}}
 
 
-      <a name="event"></a>
-      <h2>EVENT Message</h2>
+      <a name="event_message"></a>
+      <h3>EVENT Message</h3>
       <p>
          Subscribers receive PubSub events published by subscribers via the
          <span class="message_part">EVENT</span> message.
@@ -584,15 +676,8 @@
       {{up()}}
 
 
-
-      <a name="curie"></a>
-      <h1>URIs and CURIEs</h1>
-      <p>Write me.</p>
-      {{up()}}
-
-
-
-      <h1>References</h1>
+      <a name="references"></a>
+      <h2>References</h2>
 
       <ol class="refs">
          <li>
@@ -611,6 +696,7 @@
             <a href="http://www.w3.org/TR/curie/" target="_blank">CURIE Syntax 1.0</a>
          </li>
       </ol>
+      {{up()}}
 
    </div>
 
