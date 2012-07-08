@@ -6,38 +6,46 @@
 
 {% block content %}
 
-<center>
-   WAMP is implemented in a growing list of <b>client</b>
-   and <b>server</b> libraries, frameworks and products:
-</center>
+<div id="page_wrapper">
 
-<div id="implist_wrapper">
-   <div class="implist">
-      Server
-      <ul>
-         <li><a href="http://autobahn.ws/python">AutobahnPython</a></li>
-         <li><a href="http://www.tavendo.de/webmq">Tavendo WebMQ</a></li>
-         <li><a href="http://socketo.me/">Ratchet</a></li>
-         <li><a href="https://github.com/nicokaiser/wamp.io">WAMP.IO</a></li>
-         <li><a href="https://github.com/ghetolay/jwamp">JWamp</a></li>
-      </ul>
+   <h1>Implementations</h1>
+
+   <p>Get started with WAMP using one of the following implementations:</p>
+
+   <div id="implist_wrapper">
+      <div class="implist">
+         Client Libraries
+         <ul>
+            <li><a href="http://autobahn.ws/js">AutobahnJS</a></li>
+            <li><a href="http://autobahn.ws/python">AutobahnPython</a></li>
+            <li><a href="http://autobahn.ws/android">AutobahnAndroid</a></li>
+            <li><a href="https://github.com/ghetolay/jwamp">JWamp</a></li>
+         </ul>
+      </div>
+      <div class="implist">
+         Server Frameworks
+         <ul>
+            <li><a href="http://autobahn.ws/python">AutobahnPython</a></li>
+            <li><a href="http://socketo.me/">Ratchet</a></li>
+            <li><a href="https://github.com/nicokaiser/wamp.io">WAMP.IO</a></li>
+            <li><a href="https://github.com/ghetolay/jwamp">JWamp</a></li>
+         </ul>
+      </div>
+      <div class="implist">
+         Complete Products
+         <ul>
+            <li><a href="http://www.tavendo.de/webmq">Tavendo WebMQ</a></li>
+         </ul>
+      </div>
    </div>
-   <div class="implist">
-      Client
-      <ul>
-         <li><a href="http://autobahn.ws/js">AutobahnJS</a></li>
-         <li><a href="http://autobahn.ws/python">AutobahnPython</a></li>
-         <li><a href="http://autobahn.ws/android">AutobahnAndroid</a></li>
-         <li><a href="https://github.com/ghetolay/jwamp">JWamp</a></li>
-      </ul>
-   </div>
+
+   <div style="clear: both;"></div>
+
+   <p id="implementors_note">
+      Want your WAMP implementation listed here?<br/>
+      Join the <a href="https://groups.google.com/group/wampws" target="_blank">WAMP group</a> and introduce your project.
+   </p>
+
 </div>
-
-<div style="clear: both;"></div>
-
-<p id="implementors_note">
-   Want your WAMP implementation listed here?<br/>
-   Join the <a href="https://groups.google.com/group/wampws" target="_blank">WAMP group</a> and introduce your project.
-</p>
 
 {% endblock%}

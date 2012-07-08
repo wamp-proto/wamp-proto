@@ -2,20 +2,48 @@
 
 {% block content %}
 
-<p>
-   <a href="http://tools.ietf.org/html/rfc6455">The WebSocket Protocol</a>
-   is already built into modern browsers and provides full-duplex,
-   low-latency communication.
-   However, as such, it is quite low-level. Web apps often have
-   a need for higher level messaging patterns such as Publish & Subscribe (PubSub)
-   or Remote Procedure Calls (RPC).
-   This is where <i>The WebSocket Application Messaging Protocol</i> enters.
-</p>
-<p>
-   WAMP runs on top of raw WebSocket and provides PubSub and RPC.
-   Technically, WAMP is a proper WebSocket <i>subprotocol</i> that uses JSON as
-   message serialization format. WAMP was designed to be easy to use and
-   simple to implement.
-</p>
+<div id="page_wrapper">
+
+   <h1>Why WAMP?</h1>
+
+   <p>
+      <a href="http://tools.ietf.org/html/rfc6455">The WebSocket Protocol</a>
+      is already built into modern browsers and provides bidirectional,
+      low-latency message-based communication.
+      However, as such, WebSocket it is quite low-level and only provides raw
+      messaging.
+
+   <p>
+      Modern Web applications often have a need for <strong>higher level messaging patterns</strong>
+      such as
+   </p>
+
+   <ul>
+      <li><strong>Publish & Subscribe</strong> (PubSub)</li>
+      <li><strong>Remote Procedure Calls</strong> (RPC)</li>
+   </ul>
+
+   <p>
+      This is where <i>The WebSocket Application Messaging Protocol (WAMP)</i> enters.
+      WAMP adds the higher level messaging patterns of RPC and PubSub to WebSocket.
+   </p>
+
+   <p>
+      Technically, WAMP is a <strong>proper WebSocket subprotocol</strong> (runs on top of WebSocket)
+      that uses <strong>JSON</strong> as message serialization format.
+   </p>
+
+   <p>
+      WAMP embraces open Web standards and was designed to be easy to use and
+      simple to implement.
+   </p>
+
+   <ul>
+      <li><a href="{{url_for('page_faq')}}#rpc">What is RPC?</a></li>
+      <li><a href="{{url_for('page_faq')}}#pubsub">What is PubSub?</a></li>
+      <li><a href="{{url_for('page_faq')}}#why_rpc_and_pubsub">Why RPC and PubSub in one protocol?</a></li>
+   </ul>
+
+</div>
 
 {% endblock%}

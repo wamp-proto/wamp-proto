@@ -1,9 +1,3 @@
-#faq_wrapper
-{
-   width: 80%;
-   margin: 0 auto;
-}
-
 #faq_toc {
    line-height: 1.8em;
    margin-left: 32px;
@@ -39,27 +33,4 @@
 
 #faq_toc a {
    text-decoration: none;
-}
-
-
-h1 {
-   font-size: 32px;
-}
-
-h2 {
-   margin-top: 60px;
-   border-top: solid 1px #fa72c6;
-   font-size: 24px;
-   padding-left: 12px;
-}
-
-h3 {
-   font-size: 16px;
-   color: #fa72c6;
-   padding-left: 12px;
-   margin-top: 60px;
-}
-
-h2 + a + h3 {
-   margin-top: 16px;
 }

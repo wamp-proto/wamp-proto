@@ -5,12 +5,12 @@
 
 #implist_wrapper {
    margin: 30px auto 0 auto;
-   width: 600px;
+   width: 720px;
 }
 
 .implist {
    float: left;
-   width: 300px;
+   width: 240px;
    font-size: 18px;
 }
 
@@ -21,7 +21,7 @@
 
 .implist ul li {
    background-image: url("../img/li_edge.png");
-   background-position: 0 7px;
+   background-position: 0 8px;
    background-repeat: no-repeat;
    list-style-type: none;
    line-height: 1.8em;

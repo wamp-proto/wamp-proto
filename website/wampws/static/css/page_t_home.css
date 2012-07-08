@@ -1,0 +1,60 @@
+.intro
+{
+   font-size: 28px;
+   margin-left: 60px;
+   line-height: 1.4em;
+}
+
+.intro b
+{
+   font-weight: 900;
+}
+
+.intro_sub
+{
+   border-top: solid 6px #fa72c6;
+   width: 600px;
+   padding-right: 8px;
+   padding-top: 4px;
+   float: right;
+   font-size: 22px;
+   font-weight: 500;
+   line-height: 1.4em;
+   margin-top: 40px;
+   font-style: italic;
+   text-align: right;
+}
+
+.ctas
+{
+   margin: 60px auto 30px auto;
+   width: 440px;
+}
+
+a.cta_button
+{
+   display: block;
+   float: left;
+   padding: 12px 0px;
+   margin: 0;
+   margin-left: 40px;
+   width: 200px;
+   text-align: center;
+   vertical-align: middle;
+   border-radius: 24px;
+
+   color: #fff;
+   background-color: #fa72c6;
+
+   text-decoration: none;
+   font-size: 24px;
+}
+
+a.cta_button:first-of-type {
+   margin-left: 0;
+}
+
+a.cta_button:hover {
+   background-color: #f10a9a;
+   color: #fff;
+}

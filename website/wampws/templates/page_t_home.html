@@ -1,22 +1,26 @@
 {% extends "layout_t.html" %}
 
+{% block header %}
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_home.css') }}">
+{% endblock%}
+
 {% block content %}
 
-<h1 class="intro">
-   WAMP is an open <a href="http://tools.ietf.org/html/rfc6455" target="_blank">WebSocket</a> subprotocol that provides two asynchronous
-   messaging patterns: <a href="{{ url_for('page_faq')}}#rpc"><b>RPC</b></a> and <a href="{{ url_for('page_faq')}}#pubsub"><b>PubSub</b></a>.
-</h1>
+   <h1 class="intro">
+      WAMP is an open <a href="http://tools.ietf.org/html/rfc6455" target="_blank">WebSocket</a> subprotocol that provides two asynchronous
+      messaging patterns: <a href="{{ url_for('page_faq')}}#rpc"><b>RPC</b></a> and <a href="{{ url_for('page_faq')}}#pubsub"><b>PubSub</b></a>.
+   </h1>
 
-<h1 class="intro_sub">
-   WAMP is easy to use, simple to implement and based on<br/>
-   modern Web standards: WebSocket, JSON and URIs.
-</h1>
+   <h1 class="intro_sub">
+      WAMP is easy to use, simple to implement and based on<br/>
+      modern Web standards: WebSocket, JSON and URIs.
+   </h1>
 
-<div style="clear: both;"></div>
+   <div style="clear: both;"></div>
 
-<div class="ctas">
-   <a class="cta_button fasttransition" href="{{ url_for('page_why')}}">Why?</a>
-   <a class="cta_button fasttransition" href="{{ url_for('page_getstarted')}}">Get started!</a>
-</div>
+   <div class="ctas">
+      <a class="cta_button fasttransition" href="{{ url_for('page_why')}}">Why?</a>
+      <a class="cta_button fasttransition" href="{{ url_for('page_implementations')}}">Get started!</a>
+   </div>
 
 {% endblock%}
