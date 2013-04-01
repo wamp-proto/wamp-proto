@@ -54,20 +54,24 @@ WAMP message types are identified using the following values:
 
 ## WAMP URIs
 
-WAMP reserves the [*https://api.wamp.ws*](http://wamp.ws) namespace for identifying WAMP builtin RPC endpoints and topic. WAMP predefines the following URIs:
+### Predefined URIs
 
-* WAMP-CRA authentication methods:
-  * [https://api.wamp.ws/procedure#authRequ](http://wamp.ws)
-  * [https://api.wamp.ws/procedure#auth](http://wamp.ws)
-* WAMP reflection methods:
-  * [https://api.wamp.ws/procedure#listProcedures](http://wamp.ws)
-  * [https://api.wamp.ws/procedure#listTopics](http://wamp.ws)
-  * [https://api.wamp.ws/procedure#describeProcedure](http://wamp.ws)
-  * [https://api.wamp.ws/procedure#describeTopic](http://wamp.ws)
-* WAMP meta topics:
-  * [https://api.wamp.ws/metatopic#onSub](http://wamp.ws)
-* WAMP errors:
-  * [https://api.wamp.ws/error#InvalidArgument](http://wamp.ws)
+WAMP reserves the [*http(s)://api.wamp.ws*](https://wamp.ws) namespace for identifying WAMP builtin RPC endpoints, PubSub topics, metaevents and errors.
+
+WAMP predefines the following URIs:
+
+* WAMP Authentication API:
+  * [https://api.wamp.ws/procedure#requestAuthentication](https://api.wamp.ws/procedure#requestAuthentication)
+  * [https://api.wamp.ws/procedure#authenticate](https://api.wamp.ws/procedure#authenticate)
+* WAMP Reflection API:
+  * [https://api.wamp.ws/procedure#listProcedures](https://api.wamp.ws/procedure#listProcedures)
+  * [https://api.wamp.ws/procedure#listTopics](https://api.wamp.ws/procedure#listTopics)
+  * [https://api.wamp.ws/procedure#describeProcedure](https://api.wamp.ws/procedure#describeProcedure)
+  * [https://api.wamp.ws/procedure#describeTopic](https://api.wamp.ws/procedure#describeTopic)
+* WAMP PubSub Metatopics:
+  * [https://api.wamp.ws/metatopic#onSub](https://api.wamp.ws/metatopic#onSub)
+* WAMP Errors:
+  * [https://api.wamp.ws/error#InvalidArgument](https://api.wamp.ws/error#InvalidArgument)
 
 
 ## WAMP Reflection
