@@ -41,29 +41,16 @@ WAMP message types are identified using the following values:
 
 	MessageType|integer : 
 
-    HELLO         : 1
-  	HEARTBEAT	  : 2
-  	CALL	      : 3
-  	CALL_RESULT	  : 4
-  	CALL_PROGRESS : 5
-  	CALL_ERROR	  : 6
-  	CALL_CANCEL	  : 7
-  	SUBSCRIBE	  : 8
-  	UNSUBSCRIBE	  : 9
-  	PUBLISH	      : 10
-  	PUBLISH_ACK	  : 11
-  	EVENT	      : 12
-  	METAEVENT	  : 13
-
-
-## No polymorphic messages
-
-WAMPv2 only uses messages that a polymorphic in the *number* of arguments.
-
-This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
-
-Adressed issues: [https://github.com/tavendo/wamp/issues/5](https://github.com/tavendo/wamp/issues/5)
-
+        HELLO         : 1        CALL          : 3        SUBSCRIBE     : 8
+      	HEARTBEAT     : 2        CALL_RESULT   : 4        UNSUBSCRIBE   : 9
+                                 CALL_PROGRESS : 5        PUBLISH       : 10
+                                 CALL_ERROR    : 6        PUBLISH_ACK   : 11
+      	                         CALL_CANCEL   : 7        EVENT         : 12
+                                                          METAEVENT     : 13
+    
+> WAMP only uses messages that a polymorphic in the *number* of arguments.
+> This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+> 
 
 ## WAMP URIs
 
