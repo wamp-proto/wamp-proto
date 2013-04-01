@@ -2,7 +2,7 @@
 
 ## WAMP Messages
 
-WAMP RPC and PubSub are provided via the following messages which are explained in detail in the further sections.
+WAMP RPC and PubSub are provided via the following messages which are explained in detail in the further sections:
 
 1. **Auxiliary**
 
@@ -36,6 +36,34 @@ WAMP RPC and PubSub are provided via the following messages which are explained 
         [EVENT,        Topic|uri, Event|object, EventDetails|dict]
         [METAEVENT,    Topic|uri, Metatopic|uri]
         [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|object]
+
+WAMP message types are identified using the following values:
+
+	MessageType|integer : 
+
+    HELLO         : 1
+  	HEARTBEAT	  : 2
+  	CALL	      : 3
+  	CALL_RESULT	  : 4
+  	CALL_PROGRESS : 5
+  	CALL_ERROR	  : 6
+  	CALL_CANCEL	  : 7
+  	SUBSCRIBE	  : 8
+  	UNSUBSCRIBE	  : 9
+  	PUBLISH	      : 10
+  	PUBLISH_ACK	  : 11
+  	EVENT	      : 12
+  	METAEVENT	  : 13
+
+
+## No polymorphic messages
+
+WAMPv2 only uses messages that a polymorphic in the *number* of arguments.
+
+This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+
+Adressed issues: [https://github.com/tavendo/wamp/issues/5](https://github.com/tavendo/wamp/issues/5)
+
 
 ## WAMP URIs
 
@@ -98,29 +126,6 @@ WAMP predefines the following RPC endpoints for performing *Challenge-Response* 
 
 
 
-WAMP message types are identified using the following values:
-
-	MessageType|integer : 
-
-    HELLO         : 1
-  	HEARTBEAT	  : 2
-  	CALL	      : 3
-  	CALL_RESULT	  : 4
-  	CALL_PROGRESS : 5
-  	CALL_ERROR	  : 6
-  	CALL_CANCEL	  : 7
-  	SUBSCRIBE	  : 8
-  	UNSUBSCRIBE	  : 9
-  	PUBLISH	      : 10
-  	PUBLISH_ACK	  : 11
-  	EVENT	      : 12
-  	METAEVENT	  : 13
-
-
-## No polymorphic messages
-
-Simple to implement, and simple to code for rigorous message format checking.
-Efficient, streamlined message parsing and checking control flow.
 
     AttributeId|integer :
 
