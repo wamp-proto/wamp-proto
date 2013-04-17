@@ -48,7 +48,11 @@ The main binding for WAMP is to run over WebSocket using text-based, JSON serial
 
 Other possible transports include plain TCP and HTTP-based fallbacks.
 
-Other serialization formats include Bencode and Messagepack.
+Other serialization formats include [Bencode](http://en.wikipedia.org/wiki/Bencode) and [MessagePack](http://msgpack.org/).
+
+Problems:
+Bencode does not support null
+MessagePack has [no string type](https://github.com/msgpack/msgpack/issues/121) - it does not differentiate strings and byte sequences.
 
 Uses only
 
@@ -77,78 +81,83 @@ A `list` with a first element `MessageType` followed by zero or more message typ
 
 ### Overview
 
-WAMP defines the following message types which are explained in detail in the further sections:
+WAMP defines the following messages which are explained in detail in the further sections.
 
-* **Auxiliary**
+________
 
-        [HELLO,        SessionID|string, HelloDetails|dict]
+**Auxiliary**
 
-        [HEARTBEAT,    HeartbeatSequenceNo|integer]
-        [HEARTBEAT,    HeartbeatSequenceNo|integer, DiscardMe|string]
+ Direction: *Any-to-Any*
 
-        [GOODBYE,      GoodbyeDetails|dict]
+    [HELLO,        SessionID|string, HelloDetails|dict]
     
-* **RPC**
-
- * Caller-to-proxy:
-
-            [CALL,          CallID|string, Endpoint|uri]
-            [CALL,          CallID|string, Endpoint|uri, Arguments|list]
-            [CALL,          CallID|string, Endpoint|uri, Arguments|list, CallOptions|dict]
-
-            [CALL_CANCEL,   CallID|string]
-            [CALL_CANCEL,   CallID|string, CallCancelOptions|dict]
+    [HEARTBEAT,    HeartbeatSequenceNo|integer]
+    [HEARTBEAT,    HeartbeatSequenceNo|integer, DiscardMe|string]
     
- * Proxy-to-caller:
+    [GOODBYE,      GoodbyeDetails|dict]
+________  
+**RPC**
 
-            [CALL_PROGRESS, CallID|string]
-            [CALL_PROGRESS, CallID|string, CallProgress|object]
+Direction: *Caller-to-Callee*
 
-            [CALL_RESULT,   CallID|string]
-            [CALL_RESULT,   CallID|string, CallResult|object]
+    [CALL,          CallID|string, Endpoint|uri]
+    [CALL,          CallID|string, Endpoint|uri, Arguments|list]
+    [CALL,          CallID|string, Endpoint|uri, Arguments|list, CallOptions|dict]
 
-            [CALL_ERROR,    CallID|string, Error|uri]
-            [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string]
-            [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string, ErrorDetails|object]
+    [CALL_CANCEL,   CallID|string]
+    [CALL_CANCEL,   CallID|string, CallCancelOptions|dict]
     
-* **PubSub**
+Direction: *Callee-to-Caller*
 
- * Consumer-to-broker:
+    [CALL_PROGRESS, CallID|string]
+    [CALL_PROGRESS, CallID|string, CallProgress|any]
 
+    [CALL_RESULT,   CallID|string]
+    [CALL_RESULT,   CallID|string, CallResult|any]
 
-            [SUBSCRIBE,    Topic|uri]
-            [SUBSCRIBE,    Topic|uri, SubscribeOptions|dict]
-
-            [UNSUBSCRIBE,  Topic|uri]
-            [UNSUBSCRIBE,  Topic|uri, UnsubscribeOptions|dict]
-
-            [PUBLISH,      Topic|uri]
-            [PUBLISH,      Topic|uri, Event|object]
-            [PUBLISH,      Topic|uri, Event|object, PublishOptions|dict]
-
- * Broker-to-consumer:
-
-            [EVENT,        Topic|uri]
-            [EVENT,        Topic|uri, Event|object]
-            [EVENT,        Topic|uri, Event|object, EventDetails|dict]
-
-            [METAEVENT,    Topic|uri, Metatopic|uri]
-            [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|object]
-
-            [PUBLISH_ACK,  HeartbeatSequenceNo|integer]
+    [CALL_ERROR,    CallID|string, Error|uri]
+    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string]
+    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string, ErrorDetails|any]
+________
     
-*Note: Polymorphism*
+**PubSub**
 
-> For a given message type, WAMP only uses messages that are polymorphic in the *number* of message arguments. The message type and the message length uniquely determine the type and semantics of the message arguments.
-> This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+Direction: *Subscriber-to-Broker*
 
+    [SUBSCRIBE,    Topic|uri]
+    [SUBSCRIBE,    Topic|uri, SubscribeOptions|dict]
 
-*Note: Extensibility*
-> Some WAMP messages provide options or details with type of dictionary.
-> This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes.
-> 
+    [UNSUBSCRIBE,  Topic|uri]
+    [UNSUBSCRIBE,  Topic|uri, UnsubscribeOptions|dict]
 
-### Message Types
+Direction: *Publisher-to-Broker*
+
+    [PUBLISH,      Topic|uri]
+    [PUBLISH,      Topic|uri, Event|any]
+    [PUBLISH,      Topic|uri, Event|any, PublishOptions|dict]
+
+Direction: *Broker-to-Subscriber*
+
+    [EVENT,        Topic|uri]
+    [EVENT,        Topic|uri, Event|any]
+    [EVENT,        Topic|uri, Event|any, EventDetails|dict]
+
+    [METAEVENT,    Topic|uri, Metatopic|uri]
+    [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|any]
+
+Direction: *Broker-to-Publisher*
+
+    [PUBLISH_ACK,  HeartbeatSequenceNo|integer]
+________
+
+The notation `Argument|type` denotes an message argument named `Argument` of type `type`:
+
+ * `integer`: a (non-negative) integer
+ * `string`: any (UTF-8) string, including the empty string
+ * `id`: a random string
+ * `uri`: a string that is a valid URI under the HTTP or HTTPS schemes, possibly with a fragment part, but without a query part.
+ * `dict`: a dictionary (map)
+ * `list`: a list (array)
 
 WAMP message types are identified using the following values:
 
@@ -162,6 +171,14 @@ WAMP message types are identified using the following values:
       	                         CALL_ERROR    : 32 + 2        METAEVENT     : 128 + 1
                                                                PUBLISH_ACK   : 128 + 2
 
+    
+> **Polymorphism**. For a given message type, WAMP only uses messages that are polymorphic in the *number* of message arguments. The message type and the message length uniquely determine the type and semantics of the message arguments.
+> This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+
+
+> **Extensibility**. Some WAMP messages provide options or details with type of dictionary.
+> This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes.
+> 
 
 ## Sessions
 
@@ -274,7 +291,7 @@ An RPC is called outstanding (from the point of view of the *Caller*), when a (f
 
 When the execution of the remote procedure finishes successfully, the *Callee* responds by sending a 
 
-    [CALL_RESULT,   CallID|string, CallResult|object]
+    [CALL_RESULT,   CallID|string, CallResult|any]
 
 message to the *Caller*.
 
@@ -286,7 +303,7 @@ When the remote procedure call could not be executed, an error or exception occu
 
     [CALL_ERROR,    CallID|string, Error|uri]
     [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string]
-    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string, ErrorDetails|object]
+    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string, ErrorDetails|any]
 
 The message is a JSON list consisting of `CALL_ERROR`, the message type ID as an integer, followed by the `CallID`, the call correlation string that was randomly generated by the client, followed by `Error`, an URI identifying the error, followed by `ErrorMessage`, a string with an error description.
 
@@ -299,7 +316,7 @@ If `ErrorDetails` is present, it MUST be not null, and is used to communicate ap
 
 A *Callee* can return *progressive results* via
 
-    [CALL_PROGRESS, CallID|string, CallProgress|object]
+    [CALL_PROGRESS, CallID|string, CallProgress|any]
 
 In any case, exactly one of `CALL_RESULT` or `CALL_ERROR` will be sent.
 
@@ -398,8 +415,8 @@ Calling unsubscribe on a topicURI informs the server to stop delivering messages
 
 The client will send an event to all clients connected to the server who have subscribed to the topicURI.
 
-    [PUBLISH,      Topic|uri, Event|object]
-    [PUBLISH,      Topic|uri, Event|object, PublishOptions|dict]   
+    [PUBLISH,      Topic|uri, Event|any]
+    [PUBLISH,      Topic|uri, Event|any, PublishOptions|dict]   
 
 If the client publishing their message to topicURI has also Subscribed to that topicURI they can opt to not receive their published event by passing the optional parameter excludeMe to TRUE.
 
@@ -414,8 +431,8 @@ If the client publishing their message to topicURI has also Subscribed to that t
 Subscribers receive PubSub events published by subscribers via the EVENT message. The EVENT message contains the topicURI, the topic under which the event was published, and event, the PubSub event payload. 
 
     [EVENT,        Topic|uri]
-    [EVENT,        Topic|uri, Event|object]
-    [EVENT,        Topic|uri, Event|object, EventDetails|dict]
+    [EVENT,        Topic|uri, Event|any]
+    [EVENT,        Topic|uri, Event|any, EventDetails|dict]
 
 The topicURI MUST be a fully qualified URI for the topic. The event payload MUST always be present, and can be any simple or complex type or null. 
 
@@ -432,7 +449,7 @@ Since WAMP presumes an ordered transport, hearbeat and publish event messages ar
 Publish: returns deferred, that fires when the expiration sequence number of heartbeats arrived. At each point in time, there is only one deferred active. Multiple application 
 handlers attach to those deferreds.
 
-    [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|object]
+    [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|any]
 
 
 ## WAMP URIs
@@ -523,3 +540,13 @@ WAMP predefines the following RPC endpoints for performing *Challenge-Response* 
 ### PubSub
 
 Write me.
+
+
+## References
+
+1. [The WebSocket Protocol](http://tools.ietf.org/html/rfc6455)
+2. [UTF-8, a transformation format of ISO 10646](http://tools.ietf.org/html/rfc3629)
+3. [The application/json Media Type for JavaScript Object Notation (JSON)](http://tools.ietf.org/html/rfc4627)
+4. [Uniform Resource Identifier (URI): Generic Syntax, RFC 3986](http://tools.ietf.org/html/rfc3986)
+5. [The application/json Media Type for JavaScript Object Notation (JSON)](http://tools.ietf.org/html/rfc4627)
+6. [MessagePack Format specification](http://wiki.msgpack.org/display/MSGPACK/Format+specification)
