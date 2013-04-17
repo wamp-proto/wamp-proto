@@ -10,7 +10,7 @@
 
 .implist {
    float: left;
-   width: 240px;
+   width: 360px;
    font-size: 18px;
 }
 
@@ -26,6 +26,10 @@
    list-style-type: none;
    line-height: 1.8em;
    padding-left: 16px;
+}
+
+small {
+   color: #000;
 }
 
 .implist a {
