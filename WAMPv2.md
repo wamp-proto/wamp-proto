@@ -69,86 +69,32 @@ In particular, WAMP *itself* does not use the following JSON types:
 
 Applications may of course use those types in *payloads*.
 
+## Feature Announcement
+
+instead of protocol version negotiation, feature announcement
+
+allows for
+graceful degration
+only implement subsets of functionality
+
+## WAMP Roles
+
+ * Caller
+ * Callee
+ * Subscriber
+ * Publisher
+ * Broker
 
 
 ## WAMP Messages
+
+### Overview
 
 All WAMP messages are of the same structure:
 
     [MessageType|integer, ... zero or more message type specific arguments ...]
 
 A `list` with a first element `MessageType` followed by zero or more message type specific arguments.
-
-### Overview
-
-WAMP defines the following messages which are explained in detail in the further sections.
-
-________
-
-**Auxiliary**
-
- Direction: *Any-to-Any*
-
-    [HELLO,        SessionID|string, HelloDetails|dict]
-    
-    [HEARTBEAT,    HeartbeatSequenceNo|integer]
-    [HEARTBEAT,    HeartbeatSequenceNo|integer, DiscardMe|string]
-    
-    [GOODBYE,      GoodbyeDetails|dict]
-________  
-**RPC**
-
-Direction: *Caller-to-Callee*
-
-    [CALL,          CallID|string, Endpoint|uri]
-    [CALL,          CallID|string, Endpoint|uri, Arguments|list]
-    [CALL,          CallID|string, Endpoint|uri, Arguments|list, CallOptions|dict]
-
-    [CALL_CANCEL,   CallID|string]
-    [CALL_CANCEL,   CallID|string, CallCancelOptions|dict]
-    
-Direction: *Callee-to-Caller*
-
-    [CALL_PROGRESS, CallID|string]
-    [CALL_PROGRESS, CallID|string, CallProgress|any]
-
-    [CALL_RESULT,   CallID|string]
-    [CALL_RESULT,   CallID|string, CallResult|any]
-
-    [CALL_ERROR,    CallID|string, Error|uri]
-    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string]
-    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string, ErrorDetails|any]
-________
-    
-**PubSub**
-
-Direction: *Subscriber-to-Broker*
-
-    [SUBSCRIBE,    Topic|uri]
-    [SUBSCRIBE,    Topic|uri, SubscribeOptions|dict]
-
-    [UNSUBSCRIBE,  Topic|uri]
-    [UNSUBSCRIBE,  Topic|uri, UnsubscribeOptions|dict]
-
-Direction: *Publisher-to-Broker*
-
-    [PUBLISH,      Topic|uri]
-    [PUBLISH,      Topic|uri, Event|any]
-    [PUBLISH,      Topic|uri, Event|any, PublishOptions|dict]
-
-Direction: *Broker-to-Subscriber*
-
-    [EVENT,        Topic|uri]
-    [EVENT,        Topic|uri, Event|any]
-    [EVENT,        Topic|uri, Event|any, EventDetails|dict]
-
-    [METAEVENT,    Topic|uri, Metatopic|uri]
-    [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|any]
-
-Direction: *Broker-to-Publisher*
-
-    [PUBLISH_ACK,  HeartbeatSequenceNo|integer]
-________
 
 The notation `Argument|type` denotes an message argument named `Argument` of type `type`:
 
@@ -158,6 +104,68 @@ The notation `Argument|type` denotes an message argument named `Argument` of typ
  * `uri`: a string that is a valid URI under the HTTP or HTTPS schemes, possibly with a fragment part, but without a query part.
  * `dict`: a dictionary (map)
  * `list`: a list (array)
+
+WAMP defines the following messages which are explained in detail in the further sections.
+
+________
+
+**Auxiliary**
+
+ Direction: *Any-to-Any*
+
+    [HELLO,        SessionID|string, HelloDetails|dict]    
+    [HEARTBEAT,    HeartbeatSequenceNo|integer]
+    [HEARTBEAT,    HeartbeatSequenceNo|integer, DiscardMe|string]    
+    [GOODBYE,      GoodbyeDetails|dict]
+________  
+**RPC**
+
+Direction: *Caller-to-Callee*
+
+    [CALL,          CallID|string, Endpoint|uri]
+    [CALL,          CallID|string, Endpoint|uri, Arguments|list]
+    [CALL,          CallID|string, Endpoint|uri, Arguments|list, CallOptions|dict]
+    [CALL_CANCEL,   CallID|string]
+    [CALL_CANCEL,   CallID|string, CallCancelOptions|dict]
+    
+Direction: *Callee-to-Caller*
+
+    [CALL_PROGRESS, CallID|string]
+    [CALL_PROGRESS, CallID|string, CallProgress|any]
+    [CALL_RESULT,   CallID|string]
+    [CALL_RESULT,   CallID|string, CallResult|any]
+    [CALL_ERROR,    CallID|string, Error|uri]
+    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string]
+    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string, ErrorDetails|any]
+________
+    
+**PubSub**
+
+Direction: *Publisher-to-Broker*
+
+    [PUBLISH,      Topic|uri]
+    [PUBLISH,      Topic|uri, Event|any]
+    [PUBLISH,      Topic|uri, Event|any, PublishOptions|dict]
+
+Direction: *Broker-to-Publisher*
+
+    [PUBLISH_ACK,  HeartbeatSequenceNo|integer]
+
+Direction: *Subscriber-to-Broker*
+
+    [SUBSCRIBE,    Topic|uri]
+    [SUBSCRIBE,    Topic|uri, SubscribeOptions|dict]
+    [UNSUBSCRIBE,  Topic|uri]
+    [UNSUBSCRIBE,  Topic|uri, UnsubscribeOptions|dict]
+
+Direction: *Broker-to-Subscriber*
+
+    [EVENT,        Topic|uri]
+    [EVENT,        Topic|uri, Event|any]
+    [EVENT,        Topic|uri, Event|any, EventDetails|dict]
+    [METAEVENT,    Topic|uri, Metatopic|uri]
+    [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|any]
+________
 
 WAMP message types are identified using the following values:
 
