@@ -1,18 +1,10 @@
 # WAMPv2
 
-- intro
-- aux
-- rpc
-- pubsub
-- misc
+## Introduction
 
+WAMP is an open WebSocket subprotocol that provides two asynchronous messaging patterns: RPC and PubSub.
 
-### Structured exceptions idioms
-
-
-## Overview
-
-### Building Blocks
+## Building Blocks
 
 WAMP is based on established Web standards:
 
@@ -22,52 +14,58 @@ WAMP is based on established Web standards:
 
 Though WAMP is currently defined with respect to above concrete standards, effectively it only makes the following assumptions.
 
-**Transport**
 
-A reliable, ordered, full-duplex message channel is assumed. The default binding is WebSocket as Transport.
+### Transport
 
-**Serialization**
+A *transport* with the following characteristics is assumed:
 
-A message payload serialization format is assumed that at least provides: integers, strings, lists and dictionaries. The default binding is JSON as Serialization.
+  1. reliable
+  2. message-based
+  3. ordered
+  4. full-duplex
 
-**IDs**
-
-An ID space that allows global assignment and resolution is assumed. The default binding is URIs from the HTTP scheme as IDs for both topics and procedures. 
-
-Payload Format
-
-All messages are transmitted as WebSocket messages of payload type text, and hence UTF-8 encoded, with the payload being valid JSON. 
+The default binding is WebSocket as Transport. Other transports might be defined in the future.
 
 
+### Serialization
 
+Issue: [here](https://github.com/tavendo/wamp/issues/4).
 
-
-WAMP runs over an ordered, reliable, full-duplex, message-based transport. The message payload
-
-The main binding for WAMP is to run over WebSocket using text-based, JSON serialization for WAMP messages.
-
-Other possible transports include plain TCP and HTTP-based fallbacks.
-
-Other serialization formats include [Bencode](http://en.wikipedia.org/wiki/Bencode) and [MessagePack](http://msgpack.org/).
-
-Problems:
-Bencode does not support null
-MessagePack has [no string type](https://github.com/msgpack/msgpack/issues/121) - it does not differentiate strings and byte sequences.
-
-Uses only
+A *transport message serialization format* is assumed that at least provides:
 
   * `integer`
   * `string`
   * `list`
   * `dict`
 
-In particular, WAMP *itself* does not use the following JSON types:
+types.
+
+The default binding is JSON as Serialization.
+
+Hence, WAMP *itself* does not use the following JSON types:
 
   * `number` (non-integer)
   * `bool`
   * `null`
 
-Applications may of course use those types in *payloads*.
+Applications MAY use those types in *application payloads* (e.g. for event payloads or call arguments and results).
+
+
+### Identifier
+
+An ID space that allows global assignment (to organization or persons) and conflict resolution is assumed.
+
+The default binding is URIs from the HTTP or HTTPS scheme as IDs for both topics and procedures.
+
+
+### Summary
+
+The currently defined WAMP binding:
+
+**WAMP over WebSocket using text (UTF-8) messages with JSON serialization and HTTP(S) URIs for IDs**.
+
+_________
+
 
 ## Feature Announcement
 
@@ -115,7 +113,7 @@ ________
 
     [HELLO,        SessionID|string, HelloDetails|dict]    
     [HEARTBEAT,    HeartbeatSequenceNo|integer]
-    [HEARTBEAT,    HeartbeatSequenceNo|integer, DiscardMe|string]    
+    [HEARTBEAT,    HeartbeatSequenceNo|integer, DiscardMe|string]
     [GOODBYE,      GoodbyeDetails|dict]
 ________  
 **RPC**
@@ -237,6 +235,15 @@ Role announcement?
     Roles = {"Callee": 1}
 
 
+## Heartbeats
+
+Issue: [here](https://github.com/tavendo/wamp/issues/3).
+
+They serve 2 purposes:
+
+  * Make it possible to automatically / adaptively keep the radio state on a mobile connection in low-latency, active state
+  * Communicate heartbeat sequence numbers which are used for `PUBLISH_ACK`.
+
 
 ## Remote Procedure Calls
 
@@ -322,11 +329,13 @@ If `ErrorDetails` is present, it MUST be not null, and is used to communicate ap
 
 ### The CALL_PROGRESS Message
 
+Issue: [here](https://github.com/tavendo/wamp/issues/17).
+
 A *Callee* can return *progressive results* via
 
     [CALL_PROGRESS, CallID|string, CallProgress|any]
 
-In any case, exactly one of `CALL_RESULT` or `CALL_ERROR` will be sent.
+In any case, exactly one of `CALL_RESULT` or `CALL_ERROR` will be sent in the end.
 
 
 ### CALL_CANCEL
@@ -416,8 +425,20 @@ Calling unsubscribe on a topicURI informs the server to stop delivering messages
     [UNSUBSCRIBE,  Topic|uri, UnsubscribeOptions|dict]
 
 
+**Pattern-based Subscriptions**
+
+Issue: [here](https://github.com/tavendo/wamp/issues/10).
+
+A PubSub consumer may subscribe to topics based on a pattern. This can be useful to reduce the number of individual subscriptions (the number of sent `SUBSCRIBE` messages) and to subscribe to topics the consumer does not know exactly.
+
 	SubscribeOptions   = {MATCH: ('exact' | 'prefix' | 'wildcard')|string}
 	UnsubscribeOptions = {MATCH: ('exact' | 'prefix' | 'wildcard')|string}
+
+* There is no set semantics.
+* To unsubscribe, the exact same pattern must be given.
+* Consumer needs to rematch based on his pattern (the `EVENT` does contain the fully qualified topic, but not the pattern that led to the dispatch).
+* wildcard: only "\*" as path components (that is between 2 "/") will be allowed. And "*" must be matched by a non-empty string without "/".
+
 
 ### Publish Message
 
@@ -532,7 +553,7 @@ WAMP predefines the following RPC endpoints for performing *Challenge-Response* 
 
 ### Auxiliary
 
- 1. `PREFIX` message deprecated
+ 1. `PREFIX` message deprecated (see issue [here](https://github.com/tavendo/wamp/issues/8)).
  2. `WELCOME` message deprecated, instead ..
  3. New (symmetric) `HELLO` message
  4. New `GOODBYE` message
@@ -558,3 +579,7 @@ Write me.
 4. [Uniform Resource Identifier (URI): Generic Syntax, RFC 3986](http://tools.ietf.org/html/rfc3986)
 5. [The application/json Media Type for JavaScript Object Notation (JSON)](http://tools.ietf.org/html/rfc4627)
 6. [MessagePack Format specification](http://wiki.msgpack.org/display/MSGPACK/Format+specification)
+
+
+
+### Structured exceptions idioms
