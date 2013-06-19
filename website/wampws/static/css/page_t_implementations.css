@@ -4,6 +4,7 @@
 }
 
 #implist_wrapper {
+   position: relative;
    margin: 30px auto 0 auto;
    width: 720px;
 }
@@ -37,15 +38,17 @@ small {
 }
 
 #implementors_note {
+   width: 80%;
+   margin: auto;
+
+   padding: 8px 2em 8px 2em;
+   border-radius: 12px;
+
+   font-size: 14px;
+   line-height: 1.2em;
+
    color: #fff;
    background-color: #fa72c6;
-   padding: 16px;
-   border-radius: 12px;
-   font-size: 14px;
-   margin-top: 65px;
-   float: right;
-   width: 320px;
-   line-height: 1.2em;
 }
 
 #implementors_note a {
