@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+      {
+         "name": "WAMP",
+         "path": ".",
+         "folder_exclude_patterns": [],
+         "file_exclude_patterns": []
+      }
+	],
+	"settings":
+	{
+		"default_encoding": "UTF-8",
+		"detect_indentation": false,
+		"ensure_newline_at_eof_on_save": true,
+		"tab_size": 3,
+		"translate_tabs_to_spaces": true,
+		"trim_trailing_white_space_on_save": true,
+		"use_tab_stops": true
+	}
+}
