@@ -3,16 +3,24 @@ all:
 	@echo ""
 	@echo "  clean"
 	@echo "  deploy"
-	@echo "  cleandeploy"
+	@echo "  freeze"
+	@echo "  test"
+	@echo "  test_frozen"
 	@echo ""
 
+deploy: clean freeze upload
+
 clean:
-	echo "Cleaning "wamp.ws" website .."
-	sudo rm -rf /usr/local/www/wamp
-	sudo mkdir /usr/local/www/wamp
+	rm -rf website/wampws/build
 
-deploy:
-	echo "Deploying "wamp.ws" website .."
-	sudo cp -R website/* /usr/local/www/wamp
+freeze:
+	python website/wampws/__init__.py -f
 
-cleandeploy: clean deploy
+upload:
+	python website/wampws/upload.py --bucket "wamp.ws" --directory "build"
+
+test:
+	python website/wampws/__init__.py -d
+
+test_frozen:
+	python website/wampws/__init__.py -f -d

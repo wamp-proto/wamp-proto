@@ -1,38 +1,28 @@
-The WebSocket Application Messaging Protocol
-============================================
+# The WebSocket Application Messaging Protocol
 
-WAMP(http://wamp.ws) is an open WebSocket subprotocol that provides
-two asynchronous messaging patterns:
+[WAMP](http://wamp.ws) is an open WebSocket subprotocol that provides two asynchronous messaging patterns:
 
-  * RPC and
-  * PubSub
+  * Remote Procedure Calls
+  * Publish and Subscribe
 
+Find out more on the [Web site](http://wamp.ws) or get in touch on the [mailing list](https://groups.google.com/group/wampws).
 
-Mailing List
-------------
+## Web site development
 
-   https://groups.google.com/group/wampws
+The Web site is built using [Flask](http://flask.pocoo.org/) and [Jinja2](http://jinja.pocoo.org/docs/) templating, and then frozen for production into a set of static files using [Frozen-Flask](http://pythonhosted.org/Frozen-Flask/).
 
+To install relevant stuff:
 
-Web Site
---------
+    easy_install flask
+	easy_install frozen-flask
 
-Developing and testing the Web site content is easy. The Web site is
-built using Flask http://flask.pocoo.org/
+To test:
 
-Just do:
+      make test
 
-      easy_install flask
+This will run Flask via a WSGI server based Twisted Web.
 
-then:
+To deploy the Web site to Amazon S3 (only relevant for those authorized):
 
-      cd website/wampws
-      python __init__.py -d -s
-
-This will run Flask via a WSGI server based on standard Python socketserver.
-
-Note. This server sometimes does hang etc. If you leave out the "-s", then
-it will run under Twisted. You need to have that of course, then.
-The "-d" makes Flask automatically reload changed stuff (debug). This _only_
-works with socketserver, not Twisted.
+	make deploy
 

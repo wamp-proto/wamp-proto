@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-##  Copyright 2012 Tavendo GmbH
+##  Copyright (C) 2012-2013 Tavendo GmbH
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -42,30 +42,31 @@ def page_home():
    session['tab_selected'] = 'home'
    return render_template('page_t_home.html')
 
-@app.route('/why')
+@app.route('/why/')
 def page_why():
    session['tab_selected'] = 'why'
    return render_template('page_t_why.html')
 
-@app.route('/faq')
+@app.route('/faq/')
 def page_faq():
    session['tab_selected'] = 'faq'
    return render_template('page_t_faq.html')
 
-@app.route('/implementations')
+@app.route('/implementations/')
 def page_implementations():
    session['tab_selected'] = 'implementations'
    return render_template('page_t_implementations.html')
 
-@app.route('/spec')
+@app.route('/spec/')
 def page_spec():
    session['tab_selected'] = 'spec'
    return render_template('page_t_spec.html')
 
 
+
 if __name__ == "__main__":
 
-   parser = OptionParser ()
+   parser = OptionParser()
 
    parser.add_option ("-d",
                       "--debug",
@@ -73,6 +74,13 @@ if __name__ == "__main__":
                       action = "store_true",
                       default = False,
                       help = "Enable debug mode for Flask")
+
+   parser.add_option ("-f",
+                      "--freeze",
+                      dest = "freeze",
+                      action = "store_true",
+                      default = False,
+                      help = "Freeze website using Frozen-Flask")
 
    parser.add_option ("-s",
                       "--socketserver",
@@ -89,21 +97,42 @@ if __name__ == "__main__":
 
    (options, args) = parser.parse_args ()
 
-   if options.socketserver:
-      print "Running Flask under standard Python SocketServer"
-      app.run(host = "0.0.0.0", port = int(options.port), debug = options.debug)
-   else:
-      print "Running Flask under Twisted server"
-      import sys
-      from twisted.python import log
-      from twisted.internet import reactor
-      from twisted.web.server import Site
-      from twisted.web.wsgi import WSGIResource
+   if options.freeze:
 
-      app.debug = options.debug
+      from flask_frozen import Freezer
+      freezer = Freezer(app)
+      freezer.freeze()
+
       if options.debug:
+         import sys, os
+         from twisted.python import log
          log.startLogging(sys.stdout)
-      resource = WSGIResource(reactor, reactor.getThreadPool(), app)
-      site = Site(resource)
-      reactor.listenTCP(int(options.port), site)
-      reactor.run()
+
+         from twisted.internet import reactor
+         from twisted.web.server import Site
+         from twisted.web.static import File
+
+         resource = File(os.path.join(os.path.dirname(__file__), 'build'))
+         site = Site(resource)
+         reactor.listenTCP(int(options.port), site)
+         reactor.run()
+
+   else:
+      if options.socketserver:
+         print "Running Flask under standard Python SocketServer"
+         app.run(host = "0.0.0.0", port = int(options.port), debug = options.debug)
+      else:
+         print "Running Flask under Twisted server"
+         import sys
+         from twisted.python import log
+         from twisted.internet import reactor
+         from twisted.web.server import Site
+         from twisted.web.wsgi import WSGIResource
+
+         app.debug = options.debug
+         if options.debug:
+            log.startLogging(sys.stdout)
+         resource = WSGIResource(reactor, reactor.getThreadPool(), app)
+         site = Site(resource)
+         reactor.listenTCP(int(options.port), site)
+         reactor.run()
