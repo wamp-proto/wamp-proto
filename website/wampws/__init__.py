@@ -42,6 +42,11 @@ def page_home():
    session['tab_selected'] = 'home'
    return render_template('page_t_home.html')
 
+@app.route('/impressum/')
+def page_impressum():
+   session['tab_selected'] = 'impressum'
+   return render_template('page_t_impressum.html')
+
 @app.route('/why/')
 def page_why():
    session['tab_selected'] = 'why'

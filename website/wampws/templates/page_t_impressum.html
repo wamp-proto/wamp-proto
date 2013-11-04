@@ -1,0 +1,82 @@
+{% extends "layout_t.html" %}
+
+{% block header %}
+
+   <meta name="description" content="legal notice / Anbieterkennzeichnung">
+
+   <style type="text/css">
+      body {
+
+      }
+
+      #home_central_wrapper {
+         width: 50%;
+         min-width: 500px;
+         margin: 0 auto;
+      }
+
+      h2 {
+         color: #fff;
+      }
+
+      td {
+         padding: 0.5em 1em 0.5em 0;
+         vertical-align: top;
+      }
+
+      td:first-of-type {
+         font-weight: bold;
+      }
+
+   </style>
+
+{% endblock%}
+
+{% block content %}
+
+   <div id="home_central_wrapper">
+
+      <p>
+         Since we are hosting this website, as a German company we are required to provide the information below.
+      </p>
+      <p>
+         Any communication regarding the WAMP open source project itself should be made using the <a href="https://groups.google.com/group/wampws">WAMP group</a>.
+      </p>
+
+      <h2>Impressum</h2>
+      <table>
+         <tr>
+            <td>Firma</td>
+            <td>Tavendo GmbH</td>
+         </tr>
+         <tr>
+            <td>Adresse</td>
+            <td>
+               Am Weihersbach 13<br>
+               91074 Herzogenaurach
+            </td>
+         </tr>
+         <tr>
+            <td>Handelsregister</td>
+            <td>HRB 10365 Fürth</td>
+         </tr>
+         <tr>
+            <td>Email</td>
+            <td>contact (at) tavendo.de</td>
+         </tr>
+         <tr>
+            <td>Fax</td>
+            <td>+49.700.46 828 36 36</td>
+         </tr>
+         <tr>
+            <td>UStId</td>
+            <td>DE246462916</td>
+         </tr>
+         <tr>
+            <td>Gesch&auml;ftsf&uuml;hrer</td>
+            <td>Tobias Oberstein</td>
+         </tr>
+      </table>
+   </div>
+
+{% endblock%}
