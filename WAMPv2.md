@@ -77,11 +77,31 @@ only implement subsets of functionality
 
 ## WAMP Roles
 
- * Caller
- * Callee
- * Subscriber
- * Publisher
- * Broker
+Callers and Callees talk to Dealers.
+Subscribers and Publishers talk to Brokers.
+
+
+ * RPC
+   * Caller
+     * Sends: CALL
+     * Receives: RESULT
+   * Callee
+     * Sends: CALLRESULT, PROVIDE, UNPROVIDE
+     * Receives: INVOKE
+   * Dealer
+     * Sends: RESULT, CALL
+     * Receives: CALL
+
+ * PubSub
+   * Subscriber
+     * Sends: SUBSCRIBE, UNSUBSCRIBE
+     * Receives: EVENT 
+   * Publisher
+     * Sends: PUBLISH
+     * Receives: - 
+   * Broker
+     * Sends: EVENT, PUBLISH, SUBSCRIBE, UNSUBSCRIBE
+     * Receives: PUBLISH, SUBSCRIBE, UNSUBSCRIBE 
 
 
 ## WAMP Messages
@@ -119,6 +139,9 @@ ________
 **RPC**
 
 Direction: *Caller-to-Callee*
+
+    [PROVIDE,       Endpoint|uri]
+    [PROVIDE,       Endpoint|uri, SessionID|string, Hops|integer]
 
     [CALL,          CallID|string, Endpoint|uri]
     [CALL,          CallID|string, Endpoint|uri, Arguments|list]
