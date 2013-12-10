@@ -141,23 +141,28 @@ ________
 Direction: *Caller-to-Callee*
 
     [PROVIDE,       Endpoint|uri]
-    [PROVIDE,       Endpoint|uri, SessionID|string, Hops|integer]
+    [PROVIDE,       Endpoint|uri, ProvideOptions|dict]
+
+    [UNPROVIDE,     Endpoint|uri]
+    [UNPROVIDE,     Endpoint|uri, UnprovideOptions|dict]
 
     [CALL,          CallID|string, Endpoint|uri]
     [CALL,          CallID|string, Endpoint|uri, Arguments|list]
     [CALL,          CallID|string, Endpoint|uri, Arguments|list, CallOptions|dict]
-    [CALL_CANCEL,   CallID|string]
-    [CALL_CANCEL,   CallID|string, CallCancelOptions|dict]
+
+    [CANCEL_CALL,   CallID|string]
+    [CANCEL_CALL,   CallID|string, CancelCallOptions|dict]
     
 Direction: *Callee-to-Caller*
 
     [CALL_PROGRESS, CallID|string]
     [CALL_PROGRESS, CallID|string, CallProgress|any]
+
     [CALL_RESULT,   CallID|string]
     [CALL_RESULT,   CallID|string, CallResult|any]
+
     [CALL_ERROR,    CallID|string, Error|uri]
-    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string]
-    [CALL_ERROR,    CallID|string, Error|uri, ErrorMessage|string, ErrorDetails|any]
+    [CALL_ERROR,    CallID|string, Error|uri, ErrorDetails|dict]
 ________
     
 **PubSub**
@@ -192,13 +197,26 @@ WAMP message types are identified using the following values:
 
 	MessageType|integer : 
 
-        HELLO         : 0        CALL          : 16 + 0        SUBSCRIBE     :  64 + 0
-      	HEARTBEAT     : 1        CALL_CANCEL   : 16 + 1        UNSUBSCRIBE   :  64 + 1
-        GOODBYE       : 2                                      PUBLISH       :  64 + 2
-                                 CALL_RESULT   : 32 + 0
-                                 CALL_PROGRESS : 32 + 1        EVENT         : 128 + 0
-      	                         CALL_ERROR    : 32 + 2        METAEVENT     : 128 + 1
-                                                               PUBLISH_ACK   : 128 + 2
+        HELLO         : 0        
+     	HEARTBEAT     : 1
+        GOODBYE       : 2   
+ 
+		CALL          : 16 + 0 
+        CALL_CANCEL   : 16 + 1 
+
+     	PROVIDE       : 32 + 0
+     	UNPROVIDE     : 32 + 1 
+     	CALL_RESULT   : 32 + 2
+     	CALL_PROGRESS : 32 + 3 
+        CALL_ERROR    : 32 + 4
+
+       	SUBSCRIBE     : 64 + 0
+       	UNSUBSCRIBE   : 64 + 1
+       	PUBLISH       : 64 + 2
+
+       	EVENT         : 128 + 0
+        METAEVENT     : 128 + 1
+        PUBLISH_ACK   : 128 + 2
 
     
 > **Polymorphism**. For a given message type, WAMP only uses messages that are polymorphic in the *number* of message arguments. The message type and the message length uniquely determine the type and semantics of the message arguments.
@@ -392,7 +410,7 @@ A `CALL` message can carry *options* that control certain advanced RPC features.
 `TIMEOUT` allows to issue a RPC that is *automatically* canceled by the *callee* after the 
 specified time.
 
-The timeout is an integer and specifies the call timeout in seconds.
+The timeout is an integer and specifies the call timeout in `ms`.
 
 A timeout of `0` deactivates automatic call timeout. This is also the default value.
 
