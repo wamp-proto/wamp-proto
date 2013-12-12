@@ -140,8 +140,11 @@ ________
 
 Direction: *Caller-to-Callee*
 
-    [PROVIDE,       Endpoint|uri]
-    [PROVIDE,       Endpoint|uri, ProvideOptions|dict]
+    [PROVIDE,       Request|id, Endpoint|uri]
+    [PROVIDE,       Request|id, Endpoint|uri, Details|dict]
+	[PROVISIONED,   Request|id, Provision|id]
+
+Details: Signature, Help
 
     [UNPROVIDE,     Endpoint|uri]
     [UNPROVIDE,     Endpoint|uri, UnprovideOptions|dict]
@@ -179,18 +182,31 @@ Direction: *Broker-to-Publisher*
 
 Direction: *Subscriber-to-Broker*
 
-    [SUBSCRIBE,    Topic|uri]
-    [SUBSCRIBE,    Topic|uri, SubscribeOptions|dict]
-    [UNSUBSCRIBE,  Topic|uri]
-    [UNSUBSCRIBE,  Topic|uri, UnsubscribeOptions|dict]
+    [SUBSCRIBE,    		Request|id, Topic|uri]
+    [SUBSCRIBE,    		Request|id, Topic|uri, Options|dict]
+
+    [SUBSCRIBED,   		Request|id, Subscription|id]
+
+    [SUBSCRIBE_ERROR,   Request|id, Error|uri]
+    [SUBSCRIBE_ERROR,	Request|id, Error|uri, Details|dict]
+
+    [UNSUBSCRIBE,  		Request|id, Subscription|id]
+
+    [UNSUBSCRIBED, 		Request|id, Subscription|id]
+
+    [UNSUBSCRIBE_ERROR,	Request|id, Error|uri]
+    [UNSUBSCRIBE_ERROR,	Request|id, Error|uri, Details|dict]
+
 
 Direction: *Broker-to-Subscriber*
 
-    [EVENT,        Topic|uri]
-    [EVENT,        Topic|uri, Event|any]
-    [EVENT,        Topic|uri, Event|any, EventDetails|dict]
-    [METAEVENT,    Topic|uri, Metatopic|uri]
-    [METAEVENT,    Topic|uri, Metatopic|uri, MetaEvent|any]
+    [EVENT,        		Subscription|id, Topic|uri]
+    [EVENT,        		Subscription|id, Topic|uri, Event|any]
+    [EVENT,        		Subscription|id, Topic|uri, Event|any, Details|dict]
+
+    [METAEVENT,    		Subscription|id, Topic|uri, Metatopic|uri]
+    [METAEVENT,    		Subscription|id, Topic|uri, Metatopic|uri, MetaEvent|any]
+
 ________
 
 WAMP message types are identified using the following values:
