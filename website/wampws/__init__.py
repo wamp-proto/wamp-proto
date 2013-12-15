@@ -16,6 +16,10 @@
 ##
 ###############################################################################
 
+## make sure we serve the right MIME type for SVG!
+##
+import mimetypes
+mimetypes.add_type('image/svg+xml', '.svg')
 
 import uuid
 
@@ -67,6 +71,10 @@ def page_spec():
    session['tab_selected'] = 'spec'
    return render_template('page_t_spec.html')
 
+@app.route('/spec2/')
+def page_spec2():
+   session['tab_selected'] = 'spec'
+   return render_template('page_t_specv2.html')
 
 
 if __name__ == "__main__":
