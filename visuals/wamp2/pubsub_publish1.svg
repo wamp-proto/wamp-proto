@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1011.6211"
+   height="347.15332"
+   id="svg3534"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="pubsub_publish1.svg">
+  <defs
+     id="defs3536" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="470.61999"
+     inkscape:cy="139.77226"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1440"
+     inkscape:window-height="838"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3539">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(145.9592,-126.07604)">
+    <g
+       id="g3677"
+       transform="translate(-150.77365,114.16686)">
+      <path
+         id="path3679"
+         d="m 484.92188,76.40625 0,282.65625 14.14062,0 0,-282.65625 -14.14062,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3681"
+         d="m 57.34375,76.40625 0,282.65625 14.21875,0 0,-282.65625 -14.21875,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3683"
+         d="m 931.40625,76.40625 0,282.65625 14.14063,0 0,-282.65625 -14.14063,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3685"
+         d="m 72.265625,122.8125 398.749995,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3687"
+         d="m 469.375,116.25 13.20312,6.5625 -13.20312,6.64062 0,-13.20312 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3689"
+         d="m 241.71875,93.90625 0,20 71.32813,0 0,-20 -71.32813,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3691"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="108.75"
+         x="241.25"
+         xml:space="preserve">PUBLISH</text>
+      <path
+         id="path3693"
+         d="m 499.92188,232.65625 419.92187,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3695"
+         d="m 918.20312,226.09375 13.20313,6.5625 -13.20313,6.64063 0,-13.20313 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3697"
+         d="m 687.89062,203.75 0,20 55.54688,0 0,-20 -55.54688,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3699"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="218.75"
+         x="687.5"
+         xml:space="preserve">EVENT</text>
+      <path
+         id="path3701"
+         d="m 482.57812,187.8125 -398.82812,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3703"
+         d="m 85.46875,194.375 -13.203125,-6.5625 13.203125,-6.64062 0,13.20312 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3705"
+         d="m 180.15625,158.90625 0,20 194.45313,0 0,-20 -194.45313,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3707"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="173.75"
+         x="180"
+         xml:space="preserve">PUBLISH ACK or ERROR</text>
+      <text
+         id="text3709"
+         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.75"
+         x="2.5"
+         xml:space="preserve">Publisher</text>
+      <text
+         id="text3711"
+         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.75"
+         x="872.5"
+         xml:space="preserve">Subscriber</text>
+      <text
+         id="text3713"
+         style="font-size:30px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.75"
+         x="443.75"
+         xml:space="preserve">Broker</text>
+    </g>
+  </g>
+</svg>

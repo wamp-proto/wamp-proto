@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="944.88281"
+   height="494.80957"
+   id="svg3086"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="Neues Dokument 3">
+  <defs
+     id="defs3088" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="513.57409"
+     inkscape:cy="272.39241"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1440"
+     inkscape:window-height="838"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3091">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(203.86993,-36.385966)">
+    <g
+       id="g3098"
+       transform="translate(-207.86407,24.476786)">
+      <path
+         id="path3100"
+         d="m 908.04688,128.75 -419.92188,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3102"
+         d="m 489.76562,135.3125 -13.20312,-6.5625 13.20312,-6.64062 0,13.20312 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3104"
+         d="m 654.76562,99.84375 0,20 75.07813,0 0,-20 -75.07813,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3106"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="115"
+         x="655"
+         xml:space="preserve">PROVIDE</text>
+      <path
+         id="path3108"
+         d="m 461.5625,76.40625 0,430.3125 14.14062,0 0,-430.3125 -14.14062,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3110"
+         d="m 33.984375,76.40625 0,430.3125 14.21875,0 0,-430.3125 -14.21875,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3112"
+         d="m 908.04688,76.40625 0,430.3125 14.14062,0 0,-430.3125 -14.14062,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3114"
+         d="m 908.04688,388.59375 -419.92188,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3116"
+         d="m 489.76562,395.15625 -13.20312,-6.5625 13.20312,-6.64063 0,13.20313 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3118"
+         d="m 642.73438,359.6875 0,20 99.14062,0 0,-20 -99.14062,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3120"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="375"
+         x="642.5"
+         xml:space="preserve">UNPROVIDE</text>
+      <text
+         id="text3122"
+         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.75"
+         x="2.5"
+         xml:space="preserve">Caller</text>
+      <text
+         id="text3124"
+         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.75"
+         x="865"
+         xml:space="preserve">Callee</text>
+      <text
+         id="text3126"
+         style="font-size:30px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.75"
+         x="422.5"
+         xml:space="preserve">Dealer</text>
+      <path
+         id="path3128"
+         d="m 476.5625,199.60938 419.92188,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3130"
+         d="m 894.84375,192.96875 13.20313,6.64063 -13.20313,6.5625 0,-13.20313 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3132"
+         d="m 570.07812,170.70312 0,20 244.45313,0 0,-20 -244.45313,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3134"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="186.25"
+         x="570"
+         xml:space="preserve">PROVIDE SUCCESS or ERROR</text>
+      <path
+         id="path3136"
+         d="m 476.5625,459.45312 419.92188,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3138"
+         d="m 894.84375,452.8125 13.20313,6.64062 -13.20313,6.5625 0,-13.20312 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3140"
+         d="m 558.04688,430.54688 0,20 268.51562,0 0,-20 -268.51562,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3142"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="445"
+         x="557.5"
+         xml:space="preserve">UNPROVIDE SUCCESS or ERROR</text>
+    </g>
+  </g>
+</svg>

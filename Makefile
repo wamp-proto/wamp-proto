@@ -1,17 +1,22 @@
 all:
 	@echo "Targets:"
 	@echo ""
-	@echo "  clean"
-	@echo "  deploy"
-	@echo "  freeze"
-	@echo "  test"
-	@echo "  test_frozen"
+	@echo "   clean               Cleanup"
+	@echo "   img                 Generate optimized and compressed images"
+	@echo "   freeze              Freeze dynamic Web site into static pages"
+	@echo "   test                Test dynamic Web site (Twisted)"
+	@echo "   test_frozen         Test frozen Web site (Twisted)"
+	@echo "   upload              Upload frozen Web site to S3"
 	@echo ""
 
-deploy: clean freeze upload
+deploy: clean img freeze upload
 
 clean:
 	rm -rf website/wampws/build
+	scons -uc
+
+img:
+	scons
 
 freeze:
 	python website/wampws/__init__.py -f
