@@ -151,7 +151,7 @@ Details: Signature, Help
 
     [CALL,          CallID|string, Endpoint|uri]
     [CALL,          CallID|string, Endpoint|uri, Arguments|list]
-    [CALL,          CallID|string, Endpoint|uri, Arguments|list, CallOptions|dict]
+    [CALL,          CallID|string, Endpoint|uri, CallOptions|dict, Arguments|list]
 
     [CANCEL_CALL,   CallID|string]
     [CANCEL_CALL,   CallID|string, CancelCallOptions|dict]
@@ -174,7 +174,7 @@ Direction: *Publisher-to-Broker*
 
     [PUBLISH,      Topic|uri]
     [PUBLISH,      Topic|uri, Event|any]
-    [PUBLISH,      Topic|uri, Event|any, PublishOptions|dict]
+    [PUBLISH,      Topic|uri, PublishOptions|dict, Event|any]
 
 Direction: *Broker-to-Publisher*
 
