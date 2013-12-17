@@ -13,9 +13,9 @@ WAMP ("The WebSocket Application Messaging Protocol") is an open application mes
 
 WAMP is defined with respect to the following building blocks 
 
-   1. namespace
-   2. serialization
-   3. transport
+   1. Namespace
+   2. Serialization
+   3. Transport
 
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
 
@@ -50,7 +50,7 @@ A message *serialization* format is assumed that (at least) provides the followi
 
 WAMP *itself* only uses above types. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization supports.
 
-WAMPv2 specifies two bindings for message *serialization*:
+WAMPv2 defines two bindings for message *serialization*:
 
  1. [JSON](http://www.json.org/)
  2. [MsgPack](http://msgpack.org/)
@@ -59,6 +59,7 @@ WAMPv2 specifies two bindings for message *serialization*:
 > * With MsgPack, the [version 5](https://github.com/msgpack/msgpack/blob/master/spec.md) MUST BE supported - which is able to differentiate between strings and binary values.
 > 
 
+Other bindings for *serialization* may be defined in future WAMP versions.
 
 ### Transport
 
@@ -92,35 +93,50 @@ Besides the WebSocket transport, the following WAMP transports are under develop
 Other transports might be defined in the future.
 
 
-## Feature Announcement
+## Peer Roles
 
-instead of protocol version negotiation, feature announcement
+A transport connect two WAMP peers and provides a channel over which WAMP messages can flow in both directions.
 
-allows for
-graceful degration
-only implement subsets of functionality
+A WAMP peer can have one or more of the following roles.
 
-## WAMP Roles
+**RPC**
 
-Callers and Callees talk to Dealers.
-Subscribers and Publishers talk to Brokers.
+1. Callee
+2. Caller
+3. Dealer
 
-WAMPv2 makes this fully symmetric by defining 3 roles for each RPC and PubSub:
+*Callee*s register procedures they provide with *Dealer*s.
 
-RPC:
-1. caller
-2. callee
-3. dealer
+*Caller*s initiate procedure calls first to *Dealer*s.
 
-PubSub:
-1. subscriber
-2. publisher
-3. broker
+*Dealer*s route call incoming from *Caller*s to *Callee*s implementing the procedure called.
 
-Dealer are responsible for call routing, whereas brokers are responsible for event routing.
+**PubSub**
+
+1. Subscriber
+2. Publisher
+3. Broker
+
+*Subscriber*s subscribe to topics they are interested in with *Broker*s.
+
+*Publisher*s publish events to topics at *Broker*s.
+
+*Broker*s route events incoming from *Publisher*s to *Subscriber*s subscribed to the topic published to.
+
+### Decoupling
+
+*Dealers* are responsible for call routing decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing decoupling *Publishers* from *Subscribers*.
+
+### Symmetry
+
+It's important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishes a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
+
+### Peers with multiple Roles
+
+Peers might implement more than one role: e.g. a peer might act as `Caller`, `Publisher` and `Subscriber` at the same time. Another peer might act as both a `Broker` and a `Dealer`. And a `Dealer` might also act as a `Callee`. With the latter, a peer might "route" an incoming call directly to an implementing endpoint within the same program (and hence no actual messaging is happening).
 
 
-## WAMP Messages
+## Messages
 
 ### Overview
 
@@ -135,19 +151,16 @@ The notation `Element|type` denotes a message element named `Element` of type `t
  * `integer`: a non-negative integer
  * `string`: any UTF8-encoded string, including the empty string
  * `id`: a random (positive) integer
- * `uri`: an UTF8- and percent-encoded string that is a valid URI (*)
+ * `uri`: an UTF8- and percent-encoded string that is a valid URI
  * `dict`: a dictionary (map) with `string` typed keys
  * `list`: a list (array)
-
-> *: URIs as used in the WAMP protocol MUST conform to [RFC3986](http://tools.ietf.org/html/rfc3986), MUST be from the `HTTP` scheme, MAY contain a fragment part, but MUST NOT contain query parts.
-> 
 
 WAMP defines the following messages which are explained in detail in the further sections.
 
 
-#### Session Management
+### Session Management
 
-*Any-to-Any:*
+#### Any-to-Any
 
     [HELLO,        		Session|id]
     [HELLO,        		Session|id, Details|dict]
@@ -155,26 +168,26 @@ WAMP defines the following messages which are explained in detail in the further
     [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer]
     [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
-#### Publish & Subscribe
+### Publish & Subscribe
 
-*Publisher-to-Broker:*
+#### Publisher-to-Broker
 
     [PUBLISH,      		Request|id, Topic|uri]
     [PUBLISH,      		Request|id, Topic|uri, Event|any]
     [PUBLISH,      		Request|id, Topic|uri, Options|dict, Event|any]
 
-*Broker-to-Publisher:*
+#### Broker-to-Publisher
 
     [PUBLISHED,  		Request|id]
 
-*Subscriber-to-Broker:*
+#### Subscriber-to-Broker
 
     [SUBSCRIBE,    		Request|id, Topic|uri]
     [SUBSCRIBE,    		Request|id, Topic|uri, Options|dict]
     [UNSUBSCRIBE,  		Request|id, Subscription|id]
     [UNSUBSCRIBE,  		Request|id, Subscription|id, Options|dict]
 
-*Broker-to-Subscriber:*
+#### Broker-to-Subscriber
 
     [SUBSCRIBED,   		Request|id, Subscription|id]
     [UNSUBSCRIBED, 		Request|id]
@@ -184,9 +197,9 @@ WAMP defines the following messages which are explained in detail in the further
     [METAEVENT,    		Subscription|id, Metatopic|uri]
     [METAEVENT,    		Subscription|id, Metatopic|uri, Details|dict]
 
-#### Remote Procedure Calls
+### Remote Procedure Calls
 
-*Caller-to-Dealer:*
+#### Caller-to-Dealer
 
     [CALL,         		Request|id, Procedure|uri]
     [CALL,         		Request|id, Procedure|uri, Arguments|list]
@@ -194,7 +207,7 @@ WAMP defines the following messages which are explained in detail in the further
     [CANCEL_CALL,  		Request|id]
     [CANCEL_CALL,  		Request|id, Options|dict]
     
-*Dealer-to-Caller:*
+#### Dealer-to-Caller
 
     [CALL_PROGRESS,		Request|id]
     [CALL_PROGRESS, 	Request|id, Progress|any]
@@ -203,14 +216,14 @@ WAMP defines the following messages which are explained in detail in the further
     [CALL_ERROR,    	Request|id, Error|uri]
     [CALL_ERROR,    	Request|id, Error|uri, Exception|any]
 
-*Callee-to-Dealer:*
+#### Callee-to-Dealer
 
     [EXPORT,       		Request|id, Procedure|uri]
     [EXPORT,       		Request|id, Procedure|uri, Options|dict]
     [UNEXPORT,     		Request|id, Endpoint|id]
     [UNEXPORT,     		Request|id, Endpoint|id, Options|dict]
 
-*Dealer-to-Callee:*
+#### Dealer-to-Callee
 
 	[EXPORTED,     		Request|id, Endpoint|id]
     [UNEXPORTED,   		Request|id]
@@ -221,6 +234,18 @@ WAMP defines the following messages which are explained in detail in the further
 
 
 ________
+
+
+
+## Feature Announcement
+
+instead of protocol version negotiation, feature announcement
+
+allows for
+graceful degration
+only implement subsets of functionality
+
+
 
 WAMP message types are identified using the following values:
 
