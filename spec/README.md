@@ -277,7 +277,15 @@ The `HELLO.Details` is an optional
 
 Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` message MAY disclose the WAMP implementation in use to it's peer:
 
-    HELLO.Details = {"agent": Agent|string}
+    HELLO.Details.agent|string
+
+*Example*
+
+    [1, 9129137332]
+
+*Example*
+
+    [1, 9129137332, {"agent": "AutobahnPython-0.7.0"}]
 
 A WAMP session starts it's lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by using the
 
@@ -286,6 +294,17 @@ A WAMP session starts it's lifetime when both peers have received `HELLO` from t
 
 message.
 
+    GOODBYE.Details.reason|uri
+    GOODBYE.Details.message|string
+
+*Example*
+
+    [8]
+
+*Example*
+
+    [8, {"reason": "http://api.wamp.ws/error#protocolViolation",
+         "message": "Topic in SUBSCRIBE not a valid URI."}]
 
 ### Heartbeats
 
