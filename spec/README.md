@@ -170,76 +170,87 @@ WAMP defines the following messages which are explained in detail in the further
 
 #### Any-to-Any
 
-    [HELLO,        		Session|id]
-    [HELLO,        		Session|id, Details|dict]
+    [HELLO,        			Session|id]
+    [HELLO,        			Session|id, Details|dict]
     [GOODBYE]
-    [GOODBYE,      		Details|dict]
-    [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer]
-    [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
+    [GOODBYE,      			Details|dict]
+    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer]
+    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
 ### Publish & Subscribe
 
 #### Publisher-to-Broker
 
-    [PUBLISH,      		Request|id, Topic|uri]
-    [PUBLISH,      		Request|id, Topic|uri, Event|any]
-    [PUBLISH,      		Request|id, Topic|uri, Options|dict, Event|any]
+    [PUBLISH,      			Request|id, Topic|uri]
+    [PUBLISH,      			Request|id, Topic|uri, Event|any]
+    [PUBLISH,      			Request|id, Topic|uri, Options|dict, Event|any]
 
 #### Broker-to-Publisher
 
-    [PUBLISHED,  		Request|id]
+    [PUBLISHED,  			PUBLISH.Request|id]
+    [PUBLISH_ERROR, 		PUBLISH.Request|id, Error|uri]
 
 #### Subscriber-to-Broker
 
-    [SUBSCRIBE,    		Request|id, Topic|uri]
-    [SUBSCRIBE,    		Request|id, Topic|uri, Options|dict]
-    [UNSUBSCRIBE,  		Request|id, Subscription|id]
-    [UNSUBSCRIBE,  		Request|id, Subscription|id, Options|dict]
+    [SUBSCRIBE,    			Request|id, Topic|uri]
+    [SUBSCRIBE,    			Request|id, Topic|uri, Options|dict]
+    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id]
+    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id, Options|dict]
 
 #### Broker-to-Subscriber
 
-    [SUBSCRIBED,   		Request|id, Subscription|id]
-    [UNSUBSCRIBED, 		Request|id]
-    [EVENT,        		Subscription|id, Topic|uri]
-    [EVENT,        		Subscription|id, Topic|uri, Event|any]
-    [EVENT,        		Subscription|id, Topic|uri, Details|dict, Event|any]
-    [METAEVENT,    		Subscription|id, Metatopic|uri]
-    [METAEVENT,    		Subscription|id, Metatopic|uri, Details|dict]
+    [SUBSCRIBED,   			SUBSCRIBE.Request|id, Subscription|id]
+    [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
+    [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
+    [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
+    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri]
+    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri, Event|any]
+    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri, Details|dict, Event|any]
+    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri]
+    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri, Details|dict]
 
 ### Remote Procedure Calls
 
 #### Caller-to-Dealer
 
-    [CALL,         		Request|id, Procedure|uri]
-    [CALL,         		Request|id, Procedure|uri, Arguments|list]
-    [CALL,         		Request|id, Procedure|uri, Options|dict, Arguments|list]
-    [CANCEL_CALL,  		Request|id]
-    [CANCEL_CALL,  		Request|id, Options|dict]
+    [CALL,         			Request|id, Procedure|uri]
+    [CALL,         			Request|id, Procedure|uri, Arguments|list]
+    [CALL,         			Request|id, Procedure|uri, Options|dict, Arguments|list]
+    [CANCEL_CALL,  			CALL.Request|id]
+    [CANCEL_CALL,  			CALL.Request|id, Options|dict]
     
 #### Dealer-to-Caller
 
-    [CALL_PROGRESS,		Request|id]
-    [CALL_PROGRESS, 	Request|id, Progress|any]
-    [CALL_RESULT,   	Request|id]
-    [CALL_RESULT,   	Request|id, Result|any]
-    [CALL_ERROR,    	Request|id, Error|uri]
-    [CALL_ERROR,    	Request|id, Error|uri, Exception|any]
+    [CALL_PROGRESS,			CALL.Request|id]
+    [CALL_PROGRESS, 		CALL.Request|id, Progress|any]
+    [CALL_RESULT,   		CALL.Request|id]
+    [CALL_RESULT,   		CALL.Request|id, Result|any]
+    [CALL_ERROR,    		CALL.Request|id, Error|uri]
+    [CALL_ERROR,    		CALL.Request|id, Error|uri, Exception|any]
 
 #### Callee-to-Dealer
 
-    [EXPORT,       		Request|id, Procedure|uri]
-    [EXPORT,       		Request|id, Procedure|uri, Options|dict]
-    [UNEXPORT,     		Request|id, Endpoint|id]
-    [UNEXPORT,     		Request|id, Endpoint|id, Options|dict]
+    [EXPORT,       			Request|id, Procedure|uri]
+    [EXPORT,       			Request|id, Procedure|uri, Options|dict]
+    [UNEXPORT,     			Request|id, EXPORTED.Endpoint|id]
+    [UNEXPORT,     			Request|id, EXPORTED.Endpoint|id, Options|dict]
+    [INVOCATION_PROGRESS,	INVOCATION.Request|id]
+    [INVOCATION_PROGRESS, 	INVOCATION.Request|id, Progress|any]
+    [INVOCATION_RESULT,   	INVOCATION.Request|id]
+    [INVOCATION_RESULT,   	INVOCATION.Request|id, Result|any]
+    [INVOCATION_ERROR,    	INVOCATION.Request|id, Error|uri]
+    [INVOCATION_ERROR,    	INVOCATION.Request|id, Error|uri, Exception|any]
 
 #### Dealer-to-Callee
 
-	[EXPORTED,     		Request|id, Endpoint|id]
-    [UNEXPORTED,   		Request|id]
-    [INVOCATION,   		Request|id, Endpoint|id]
-    [INVOCATION,   		Request|id, Endpoint|id, Arguments|list]
-    [INVOCATION_CANCEL,	Request|id]
-    [INVOCATION_CANCEL,	Request|id, Options|dict]
+	[EXPORTED,     			EXPORT.Request|id, Endpoint|id]
+    [EXPORT_ERROR, 			EXPORT.Request|id, Error|uri]
+    [UNEXPORTED,   			UNEXPORT.Request|id]
+    [UNEXPORT_ERROR, 		UNEXPORT.Request|id, Error|uri]
+    [INVOCATION,   			Request|id, EXPORTED.Endpoint|id]
+    [INVOCATION,   			Request|id, EXPORTED.Endpoint|id, Arguments|list]
+    [CANCEL_INVOCATION,		INVOCATION.Request|id]
+    [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
 
 ## Session Management
@@ -248,8 +259,8 @@ WAMP defines the following messages which are explained in detail in the further
 
 When a WAMP session starts, the peers introduce themselves to each other by sending a
 
-    [HELLO,        		Session|id]
-    [HELLO,        		Session|id, Details|dict]
+    [HELLO,        			Session|id]
+    [HELLO,        			Session|id, Details|dict]
 
 message.
 
@@ -271,7 +282,7 @@ Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` messa
 A WAMP session starts it's lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by using the
 
     [GOODBYE]
-    [GOODBYE,      		Details|dict]
+    [GOODBYE,      			Details|dict]
 
 message.
 
@@ -280,8 +291,8 @@ message.
 
 A peer MAY send a `HEARTBEAT` message at any time:
 
-    [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer]
-    [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
+    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer]
+    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
 The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing hearbeat sequence number in the same message.
 
