@@ -125,87 +125,80 @@ The notation `Argument|type` denotes an message argument named `Argument` of typ
 
 WAMP defines the following messages which are explained in detail in the further sections.
 
-________
 
-**Auxiliary**
+**Session Management**
 
- Direction: *Any-to-Any*
+*Any-to-Any*
 
-    [HELLO,        SessionID|string, HelloDetails|dict]    
-    [HEARTBEAT,    HeartbeatSequenceNo|integer]
-    [HEARTBEAT,    HeartbeatSequenceNo|integer, DiscardMe|string]
-    [GOODBYE,      GoodbyeDetails|dict]
-________  
-**RPC**
+    [HELLO,        		Session|id]
+    [HELLO,        		Session|id, Details|dict]
+    [GOODBYE,      		Details|dict]
+    [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer]
 
-Direction: *Caller-to-Callee*
+**Publish & Subscribe**
 
-    [PROVIDE,       Request|id, Endpoint|uri]
-    [PROVIDE,       Request|id, Endpoint|uri, Details|dict]
-	[PROVISIONED,   Request|id, Provision|id]
+*Publisher-to-Broker*
 
-Details: Signature, Help
+    [PUBLISH,      		Request|id, Topic|uri]
+    [PUBLISH,      		Request|id, Topic|uri, Event|any]
+    [PUBLISH,      		Request|id, Topic|uri, Options|dict, Event|any]
 
-    [UNPROVIDE,     Endpoint|uri]
-    [UNPROVIDE,     Endpoint|uri, UnprovideOptions|dict]
+*Broker-to-Publisher*
 
-    [CALL,          CallID|string, Endpoint|uri]
-    [CALL,          CallID|string, Endpoint|uri, Arguments|list]
-    [CALL,          CallID|string, Endpoint|uri, CallOptions|dict, Arguments|list]
+    [PUBLISHED,  		Request|id]
 
-    [CANCEL_CALL,   CallID|string]
-    [CANCEL_CALL,   CallID|string, CancelCallOptions|dict]
-    
-Direction: *Callee-to-Caller*
-
-    [CALL_PROGRESS, CallID|string]
-    [CALL_PROGRESS, CallID|string, CallProgress|any]
-
-    [CALL_RESULT,   CallID|string]
-    [CALL_RESULT,   CallID|string, CallResult|any]
-
-    [CALL_ERROR,    CallID|string, Error|uri]
-    [CALL_ERROR,    CallID|string, Error|uri, ErrorDetails|dict]
-________
-    
-**PubSub**
-
-Direction: *Publisher-to-Broker*
-
-    [PUBLISH,      Topic|uri]
-    [PUBLISH,      Topic|uri, Event|any]
-    [PUBLISH,      Topic|uri, PublishOptions|dict, Event|any]
-
-Direction: *Broker-to-Publisher*
-
-    [PUBLISH_ACK,  HeartbeatSequenceNo|integer]
-
-Direction: *Subscriber-to-Broker*
+*Subscriber-to-Broker*
 
     [SUBSCRIBE,    		Request|id, Topic|uri]
     [SUBSCRIBE,    		Request|id, Topic|uri, Options|dict]
+    [UNSUBSCRIBE,  		Request|id, Subscription|id]
+    [UNSUBSCRIBE,  		Request|id, Subscription|id, Options|dict]
+
+*Broker-to-Subscriber*
 
     [SUBSCRIBED,   		Request|id, Subscription|id]
-
-    [SUBSCRIBE_ERROR,   Request|id, Error|uri]
-    [SUBSCRIBE_ERROR,	Request|id, Error|uri, Details|dict]
-
-    [UNSUBSCRIBE,  		Request|id, Subscription|id]
-
-    [UNSUBSCRIBED, 		Request|id, Subscription|id]
-
-    [UNSUBSCRIBE_ERROR,	Request|id, Error|uri]
-    [UNSUBSCRIBE_ERROR,	Request|id, Error|uri, Details|dict]
-
-
-Direction: *Broker-to-Subscriber*
-
+    [UNSUBSCRIBED, 		Request|id]
     [EVENT,        		Subscription|id, Topic|uri]
     [EVENT,        		Subscription|id, Topic|uri, Event|any]
-    [EVENT,        		Subscription|id, Topic|uri, Event|any, Details|dict]
+    [EVENT,        		Subscription|id, Topic|uri, Details|dict, Event|any]
+    [METAEVENT,    		Subscription|id, Metatopic|uri]
+    [METAEVENT,    		Subscription|id, Metatopic|uri, Details|dict]
 
-    [METAEVENT,    		Subscription|id, Topic|uri, Metatopic|uri]
-    [METAEVENT,    		Subscription|id, Topic|uri, Metatopic|uri, MetaEvent|any]
+**Remote Procedure Calls**
+
+*Caller-to-Dealer*
+
+    [CALL,         		Request|id, Procedure|uri]
+    [CALL,         		Request|id, Procedure|uri, Arguments|list]
+    [CALL,         		Request|id, Procedure|uri, Options|dict, Arguments|list]
+    [CANCEL_CALL,  		Request|id]
+    [CANCEL_CALL,  		Request|id, Options|dict]
+    
+*Dealer-to-Caller*
+
+    [CALL_PROGRESS,		Request|id]
+    [CALL_PROGRESS, 	Request|id, CallProgress|any]
+    [CALL_RESULT,   	Request|id]
+    [CALL_RESULT,   	Request|id, CallResult|any]
+    [CALL_ERROR,    	Request|id, Error|uri]
+    [CALL_ERROR,    	Request|id, Error|uri, Details|dict]
+
+*Callee-to-Dealer*
+
+    [EXPORT,       		Request|id, Procedure|uri]
+    [EXPORT,       		Request|id, Procedure|uri, Options|dict]
+    [UNEXPORT,     		Request|id, Endpoint|id]
+    [UNEXPORT,     		Request|id, Endpoint|id, Options|dict]
+
+*Dealer-to-Callee*
+
+	[EXPORTED,     		Request|id, Endpoint|id]
+    [UNEXPORTED,   		Request|id]
+    [INVOCATION,   		Request|id, Endpoint|id]
+    [INVOCATION,   		Request|id, Endpoint|id, Arguments|list]
+    [INVOCATION_CANCEL,	Request|id]
+    [INVOCATION_CANCEL,	Request|id, Options|dict]
+
 
 ________
 
