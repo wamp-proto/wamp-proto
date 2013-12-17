@@ -1,70 +1,95 @@
-# WAMPv2
+# WAMP v2 Specification
+
+This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
 ## Introduction
 
-WAMP is an open WebSocket subprotocol that provides two asynchronous messaging patterns: RPC and PubSub.
+WAMP ("The WebSocket Application Messaging Protocol") is an open application messaging protocol that provides two asynchronous messaging patterns:
+
+ * Remote Procedure Calls
+ * Publish & Subscribe
 
 ## Building Blocks
 
-WAMP is based on established Web standards:
+WAMP is defined with respect to the following building blocks 
 
-   * WebSocket
-   * JSON
-   * URIs
+   1. namespace
+   2. serialization
+   3. transport
 
-Though WAMP is currently defined with respect to above concrete standards, effectively it only makes the following assumptions.
+For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
 
+### Namespace
 
-### Transport
+WAMP needs to identify **procedures** for *Remote Procedure Calls* and **topics** for *Publish & Subscribe*.
 
-A *transport* with the following characteristics is assumed:
+A (single) *namespace* with the following characteristics is assumed:
 
-  1. reliable
-  2. message-based
-  3. ordered
-  4. full-duplex
+ * string-based
+ * hierarchical
+ * global assignment and conflict resolution
 
-The default binding is WebSocket as Transport. Other transports might be defined in the future.
+The default *namespace* binding for WAMPv2 (and in fact the only currently defined) is URIs as used on the Web:
+
+Identifiers as used in the WAMP protocol are URIs which MUST conform to [RFC3986](http://tools.ietf.org/html/rfc3986), MUST be from the `HTTP` scheme, MAY contain a fragment part, but MUST NOT contain query parts.
+
+> It's important to note that WAMP only uses `http` scheme URIs as *identifiers*, **not** resource locators (URLs). The use of the `http` scheme does **not** imply use of `http` as a transport protocol.
+> 
 
 
 ### Serialization
 
-Issue: [here](https://github.com/tavendo/wamp/issues/4).
+WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
 
-A *transport message serialization format* is assumed that at least provides:
+A message *serialization* format is assumed that (at least) provides the following types:
 
-  * `integer`
-  * `string`
+  * `integer` (non-negative)
+  * `string` (UTF8 encoded)
   * `list`
-  * `dict`
+  * `dict` (with string keys)
 
-types.
+WAMP *itself* only uses above types. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization supports.
 
-The default binding is JSON as Serialization.
+WAMPv2 specifies two bindings for message *serialization*:
 
-Hence, WAMP *itself* does not use the following JSON types:
+ 1. [JSON](http://www.json.org/)
+ 2. [MsgPack](http://msgpack.org/)
 
-  * `number` (non-integer)
-  * `bool`
-  * `null`
-
-Applications MAY use those types in *application payloads* (e.g. for event payloads or call arguments and results).
-
-
-### Identifier
-
-An ID space that allows global assignment (to organization or persons) and conflict resolution is assumed.
-
-The default binding is URIs from the HTTP or HTTPS scheme as IDs for both topics and procedures.
+> * As noted above, WAMP *itself* does only use a subset of types - e.g. it does not use the JSON types `number` (non-integer), `bool` and `null`.
+> * With MsgPack, the [version 5](https://github.com/msgpack/msgpack/blob/master/spec.md) MUST BE supported - which is able to differentiate between strings and binary values.
+> 
 
 
-### Summary
+### Transport
 
-The currently defined WAMP binding:
+WAMP assumes a *transport* with the following characteristics:
 
-**WAMP over WebSocket using text (UTF-8) messages with JSON serialization and HTTP(S) URIs for IDs**.
+  1. message-based
+  2. reliable
+  3. ordered
+  4. full-duplex
 
-_________
+The default transport binding is [WebSocket](http://tools.ietf.org/html/rfc6455). With WebSocket, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
+
+The WAMP protocol MUST BE negotiated during the opening WebSocket handshakes between peers using the WebSocket subprotocol negotiation mechanism.
+
+WAMPv2 uses the following WebSocket subprotocol identifiers:
+
+ * `wamp.2.json`
+ * `wamp.2.msgpack`
+
+With `wamp.2.json`, all WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
+
+With `wamp.2.msgpack`, all WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
+
+With both WAMP WebSocket subprotocols, the namespace binding MUST BE URIs from the HTTP scheme as described above.
+
+Besides the WebSocket transport, the following WAMP transports are under development:
+
+ * HTTP 1.0/1.1 long-polling
+ * HTTP 2.0 ("SPDY")
+
+Other transports might be defined in the future.
 
 
 ## Feature Announcement
@@ -80,28 +105,19 @@ only implement subsets of functionality
 Callers and Callees talk to Dealers.
 Subscribers and Publishers talk to Brokers.
 
+WAMPv2 makes this fully symmetric by defining 3 roles for each RPC and PubSub:
 
- * RPC
-   * Caller
-     * Sends: CALL
-     * Receives: RESULT
-   * Callee
-     * Sends: CALLRESULT, PROVIDE, UNPROVIDE
-     * Receives: INVOKE
-   * Dealer
-     * Sends: RESULT, CALL
-     * Receives: CALL
+RPC:
+1. caller
+2. callee
+3. dealer
 
- * PubSub
-   * Subscriber
-     * Sends: SUBSCRIBE, UNSUBSCRIBE
-     * Receives: EVENT 
-   * Publisher
-     * Sends: PUBLISH
-     * Receives: - 
-   * Broker
-     * Sends: EVENT, PUBLISH, SUBSCRIBE, UNSUBSCRIBE
-     * Receives: PUBLISH, SUBSCRIBE, UNSUBSCRIBE 
+PubSub:
+1. subscriber
+2. publisher
+3. broker
+
+Dealer are responsible for call routing, whereas brokers are responsible for event routing.
 
 
 ## WAMP Messages
@@ -110,51 +126,55 @@ Subscribers and Publishers talk to Brokers.
 
 All WAMP messages are of the same structure:
 
-    [MessageType|integer, ... zero or more message type specific arguments ...]
+    [MessageType|integer, ... one or more message type specific arguments ...]
 
-A `list` with a first element `MessageType` followed by zero or more message type specific arguments.
+A `list` with a first element `MessageType` followed by one or more message type specific elements.
 
-The notation `Argument|type` denotes an message argument named `Argument` of type `type`:
+The notation `Element|type` denotes a message element named `Element` of type `type`:
 
- * `integer`: a (non-negative) integer
- * `string`: any (UTF-8) string, including the empty string
- * `id`: a random string
- * `uri`: a string that is a valid URI under the HTTP or HTTPS schemes, possibly with a fragment part, but without a query part.
- * `dict`: a dictionary (map)
+ * `integer`: a non-negative integer
+ * `string`: any UTF8-encoded string, including the empty string
+ * `id`: a random (positive) integer
+ * `uri`: an UTF8- and percent-encoded string that is a valid URI (*)
+ * `dict`: a dictionary (map) with `string` typed keys
  * `list`: a list (array)
+
+> *: URIs as used in the WAMP protocol MUST conform to [RFC3986](http://tools.ietf.org/html/rfc3986), MUST be from the `HTTP` scheme, MAY contain a fragment part, but MUST NOT contain query parts.
+> 
 
 WAMP defines the following messages which are explained in detail in the further sections.
 
 
-**Session Management**
+#### Session Management
 
-*Any-to-Any*
+*Any-to-Any:*
 
     [HELLO,        		Session|id]
     [HELLO,        		Session|id, Details|dict]
     [GOODBYE,      		Details|dict]
     [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer]
+    [HEARTBEAT,    		IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
-**Publish & Subscribe**
+#### Publish & Subscribe
 
-*Publisher-to-Broker*
+*Publisher-to-Broker:*
 
     [PUBLISH,      		Request|id, Topic|uri]
     [PUBLISH,      		Request|id, Topic|uri, Event|any]
     [PUBLISH,      		Request|id, Topic|uri, Options|dict, Event|any]
 
-*Broker-to-Publisher*
+*Broker-to-Publisher:*
 
     [PUBLISHED,  		Request|id]
 
-*Subscriber-to-Broker*
+*Subscriber-to-Broker:*
 
     [SUBSCRIBE,    		Request|id, Topic|uri]
     [SUBSCRIBE,    		Request|id, Topic|uri, Options|dict]
     [UNSUBSCRIBE,  		Request|id, Subscription|id]
     [UNSUBSCRIBE,  		Request|id, Subscription|id, Options|dict]
 
-*Broker-to-Subscriber*
+*Broker-to-Subscriber:*
 
     [SUBSCRIBED,   		Request|id, Subscription|id]
     [UNSUBSCRIBED, 		Request|id]
@@ -164,9 +184,9 @@ WAMP defines the following messages which are explained in detail in the further
     [METAEVENT,    		Subscription|id, Metatopic|uri]
     [METAEVENT,    		Subscription|id, Metatopic|uri, Details|dict]
 
-**Remote Procedure Calls**
+#### Remote Procedure Calls
 
-*Caller-to-Dealer*
+*Caller-to-Dealer:*
 
     [CALL,         		Request|id, Procedure|uri]
     [CALL,         		Request|id, Procedure|uri, Arguments|list]
@@ -174,23 +194,23 @@ WAMP defines the following messages which are explained in detail in the further
     [CANCEL_CALL,  		Request|id]
     [CANCEL_CALL,  		Request|id, Options|dict]
     
-*Dealer-to-Caller*
+*Dealer-to-Caller:*
 
     [CALL_PROGRESS,		Request|id]
-    [CALL_PROGRESS, 	Request|id, CallProgress|any]
+    [CALL_PROGRESS, 	Request|id, Progress|any]
     [CALL_RESULT,   	Request|id]
-    [CALL_RESULT,   	Request|id, CallResult|any]
+    [CALL_RESULT,   	Request|id, Result|any]
     [CALL_ERROR,    	Request|id, Error|uri]
-    [CALL_ERROR,    	Request|id, Error|uri, Details|dict]
+    [CALL_ERROR,    	Request|id, Error|uri, Exception|any]
 
-*Callee-to-Dealer*
+*Callee-to-Dealer:*
 
     [EXPORT,       		Request|id, Procedure|uri]
     [EXPORT,       		Request|id, Procedure|uri, Options|dict]
     [UNEXPORT,     		Request|id, Endpoint|id]
     [UNEXPORT,     		Request|id, Endpoint|id, Options|dict]
 
-*Dealer-to-Callee*
+*Dealer-to-Callee:*
 
 	[EXPORTED,     		Request|id, Endpoint|id]
     [UNEXPORTED,   		Request|id]
@@ -231,10 +251,22 @@ WAMP message types are identified using the following values:
 > **Polymorphism**. For a given message type, WAMP only uses messages that are polymorphic in the *number* of message arguments. The message type and the message length uniquely determine the type and semantics of the message arguments.
 > This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
 
+There is however another requirement (desirable goal) in WAMPv2: the *application* payload (that is call arguments, returns, event payload etc) must be at the end of the WAMP message list. The reason is: *brokers* and *dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows brokers/dealers skip parsing altogether. This improves efficiency/performance and probably even allows to transport application encrypted payload transparently.
 
 > **Extensibility**. Some WAMP messages provide options or details with type of dictionary.
 > This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes.
 > 
+
+
+Session lifetime:
+ * starts with HELLO
+ * ends with GOODBYE or close of transport
+
+
+Authentication is a complex area: some apps might want to leverage authentication information coming from the transport underlying WAMP (e.g. cookies or TLS client cert auth), other apps might want to do their own authentication on top of WAMP. So I still don't think it's a good idea to put that into WAMP wire level protocol.
+
+
+
 
 ## Sessions
 
@@ -293,6 +325,10 @@ They serve 2 purposes:
 
   * Make it possible to automatically / adaptively keep the radio state on a mobile connection in low-latency, active state
   * Communicate heartbeat sequence numbers which are used for `PUBLISH_ACK`.
+
+The heartbeat allows to notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing hearbeat sequence number in the same message.
+
+It also allows to inject discarded payload for the radio channel thingy discussed above.
 
 
 ## Remote Procedure Calls
@@ -505,6 +541,24 @@ A PubSub consumer may subscribe to topics based on a pattern. This can be useful
 * To unsubscribe, the exact same pattern must be given.
 * Consumer needs to rematch based on his pattern (the `EVENT` does contain the fully qualified topic, but not the pattern that led to the dispatch).
 * wildcard: only "\*" as path components (that is between 2 "/") will be allowed. And "*" must be matched by a non-empty string without "/".
+
+
+WAMPv2 solves this as follows
+
+1. Subscriber subscribes to some topic or pattern via `options`
+
+         [SUBSCRIBE,    		Request|id, Topic|uri, Options|dict]
+
+2. The broker now acknowledges the subscription
+
+          [SUBSCRIBED,   		Request|id, Subscription|id]
+
+3. Later, when an event is delivered, the broker sends:
+
+          [EVENT,        		Subscription|id, Topic|uri, Event|any]
+
+The broker not only communicates the (concrete) `topic` under which is the event was published, but also the `subscription` under which the subscriber receives that event.
+
 
 
 ### Publish Message
