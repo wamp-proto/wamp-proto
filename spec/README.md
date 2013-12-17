@@ -304,11 +304,23 @@ They serve 2 purposes:
 
 ## Remote Procedure Calls
 
-The *Remote Procedure Call* (RPC) messaging pattern involves two WAMP peers: a *Caller* and a *Callee*.
-A WAMP peer that acts as a *Callee* exposes procedures to be called by WAMP peers that act as *Caller*s.
+The *Remote Procedure Call* (RPC) messaging pattern involves three WAMP roles:
 
-A procedure that is exposed to be called via WAMP is said to be *exported*. An exported procedure is also called *(RPC) endpoint*.
-A procedure is always exported under an URI and the respective endpoint can be identified by said URI.
+ 1. *Caller*
+ 2. *Dealer*
+ 3. *Callee*
+
+A WAMP peer that acts as a *Callee* **provides** procedures for calling by WAMP peers that act as *Callers*. *Callers* and *Callees* are decoupled by *Dealers*. Dealers are responsible for routing calls and call return successes and errors.
+
+> Note that a WAMP peer might act as *Dealer* and *Callee* at the same time. Such a peer might route incoming calls internally to implementing procedures. This is the only architecture that was possible with WAMPv1. With WAMPv2 this is still possible, but addtitionally, the *Callee* can be external to the *Dealer*, which allows for more flexible application architecures.
+> 
+
+
+A procedure that is provided by a *Callee* to be called via WAMP by *Callers* is said to be *exported*. An exported procedure is called **RPC endpoint**.
+
+A procedure is always exported under a fully qualified URI and the respective endpoint can be identified by said URI.
+
+There might be more than one endpoint exported under a given URI.
 
 A *Caller* provides the URI of the RPC endpoint to identify the procedure to be called and any arguments for the call.
 The *Callee* will execute the procedure using the arguments supplied with the call and return the result of the call or an error to the *Caller*. 
@@ -330,10 +342,8 @@ The *Remote Procedure Call* messaging pattern is realized with the following WAM
 ### The CALL Message
 
 Inline-style: 
-![alt text](rpc_call1.png "Logo Title Text 1")
+![alt text](figure/rpc_call1.png "RPC Message Flow: Calls")
 
-Inline-style: 
-![alt text](rpc_call1.svg "Logo Title Text 1")
 
 
 A *Caller* initiates a RPC by sending a
