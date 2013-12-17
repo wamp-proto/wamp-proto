@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" viewBox="0 0 964.88 367.15">
+<g transform="translate(388.16 -197.36)">
+<g transform="translate(-382.15 195.45)">
+<path d="m461.56 76.406v282.66h14.141v-282.66h-14.141z" fill-rule="evenodd" fill="#fa72c6"/>
+<path d="m33.984 76.406v282.66h14.219v-282.66h-14.219z" fill-rule="evenodd" fill="#fa72c6"/>
+<path d="m908.05 76.406v282.66h14.141v-282.66h-14.141z" fill-rule="evenodd" fill="#fa72c6"/>
+<path stroke-linejoin="round" d="m48.906 122.81h398.75" stroke="#000" stroke-linecap="round" stroke-width="3.5938px" fill="none"/>
+<path d="m446.02 116.25 13.203 6.5625-13.203 6.6406v-13.203z" fill-rule="evenodd"/>
+<path d="m233.2 93.906v20h41.641v-20h-41.641z" fill-rule="evenodd" fill="#fff"/>
+<text xml:space="preserve" font-size="16.25px" y="108.75" x="233.75" font-family="Arial" fill="#000000">CALL</text>
+<path stroke-linejoin="round" d="m476.56 145h419.92" stroke="#000" stroke-linecap="round" stroke-width="3.5938px" fill="none"/>
+<path d="m894.84 138.44 13.203 6.5625-13.203 6.6406v-13.203z" fill-rule="evenodd"/>
+<path d="m640.47 116.09v20h103.67v-20h-103.67z" fill-rule="evenodd" fill="#fff"/>
+<text xml:space="preserve" font-size="16.25px" y="131.25" x="640" font-family="Arial" fill="#000000">INVOCATION</text>
+<path stroke-linejoin="round" d="m908.05 271.95h-419.92" stroke="#000" stroke-linecap="round" stroke-width="3.5938px" fill="none"/>
+<path d="m489.77 278.59-13.203-6.6406 13.203-6.5625v13.203z" fill-rule="evenodd"/>
+<path d="m563.12 243.05v20h258.36v-20h-258.36z" fill-rule="evenodd" fill="#fff"/>
+<text xml:space="preserve" font-size="16.25px" y="257.5" x="562.5" font-family="Arial" fill="#000000">INVOCATION RESULT or ERROR</text>
+<path stroke-linejoin="round" d="m459.22 294.14h-398.83" stroke="#000" stroke-linecap="round" stroke-width="3.5938px" fill="none"/>
+<path d="m62.109 300.78-13.203-6.6406 13.203-6.5625v13.203z" fill-rule="evenodd"/>
+<path d="m155.86 265.23v20h196.33v-20h-196.33z" fill-rule="evenodd" fill="#fff"/>
+<text xml:space="preserve" font-size="16.25px" y="280" x="156.25" font-family="Arial" fill="#000000">CALL RESULT or ERROR</text>
+<text xml:space="preserve" font-size="30px" y="33.75" x="2.5" font-family="Arial" fill="#000000">Caller</text>
+<text xml:space="preserve" font-size="30px" y="33.75" x="865" font-family="Arial" fill="#000000">Callee</text>
+<text font-weight="bold" xml:space="preserve" font-size="30px" y="33.75" x="422.5" font-family="Arial" fill="#000000">Dealer</text>
+</g>
+</g>
+</svg>

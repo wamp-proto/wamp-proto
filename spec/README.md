@@ -329,6 +329,13 @@ The *Remote Procedure Call* messaging pattern is realized with the following WAM
 
 ### The CALL Message
 
+Inline-style: 
+![alt text](rpc_call1.png "Logo Title Text 1")
+
+Inline-style: 
+![alt text](rpc_call1.svg "Logo Title Text 1")
+
+
 A *Caller* initiates a RPC by sending a
 
     [CALL,          CallID|string, Endpoint|uri, Arguments|list]
