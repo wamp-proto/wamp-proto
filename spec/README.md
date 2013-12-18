@@ -324,6 +324,95 @@ The `HEARTBEAT.Discard` is an arbitrary string discarded by the peer. It can be 
 Incoming heartbeats are not required to be answered by an outgoing heartbeat, but sending of hearbeats is under independent control with each peer.
 
 
+## Publish & Subscribe
+
+### Subscribing and Unsubscribing
+
+The message flow between *Subscribers* and a *Broker* for subscribing and unsubscribing involves the following messages:
+
+ 1. `SUBSCRIBE`
+ 2. `SUBSCRIBED`
+ 3. `SUBSCRIBE_ERROR`
+ 4. `UNSUBSCRIBE`
+ 5. `UNSUBSCRIBED`
+ 6. `UNSUBSCRIBE_ERROR`
+
+![alt text](figure/pubsub_subscribe1.png "RPC Message Flow: Calls")
+
+A *Subscriber* communicates it's interest in a topic to a *Broker* by sending a `SUBSCRIBE` message:
+
+    [SUBSCRIBE,    			Request|id, Topic|uri]
+    [SUBSCRIBE,    			Request|id, Topic|uri, Options|dict]
+
+The `Request` is a random ID used to correlate the *Broker's* response with the request. If the *Broker* is able to fulfil and allowing the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
+
+    [SUBSCRIBED,   			SUBSCRIBE.Request|id, Subscription|id]
+
+The `SUBSCRIBE.Request` is the ID from the original request. `Subscription` is a ID chosen by the *Broker* for the subscription.
+
+> Note. The `Subscription` ID chosen by the broker may be unique only for the `Topic` (and possibly other information from `Options`, such as the topic pattern matching method to be used). The ID might be the same for any *Subscriber* for the same `Topic`. This allows the *Broker* to only serialize an event to be delivered once for all actual receivers of the event.
+> 
+
+When the request for subscription cannot be fulfilled by the broker, the broker sends back a `SUBSCRIBE_ERROR` message to the *Subscriber*
+
+    [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
+
+The `SUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled:
+
+    http://api.wamp.ws/error#NotAuthorized
+
+When a *Subscriber* is no longer interested in receiving events for a subscription it send an `UNSUBSCRIBE` message
+
+    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id]
+    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id, Options|dict]
+
+The `Request` is a random ID used to correlate the *Broker's* response with the request. The `SUBSCRIBED.Subscription` is the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
+
+Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to the *Subscriber*
+
+    [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
+
+When the request failed, the *Broker* sends an `UNSUBSCRIBE_ERROR`
+
+    [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
+
+The `UNSUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled:
+
+    http://api.wamp.ws/error#NoSuchSubscription
+
+
+### Publishing
+
+The message flow between *Publishers*, a *Broker* and *Subscribers* for publishing and dispatching events involves the following messages:
+
+ 1. `PUBLISH`
+ 2. `PUBLISHED`
+ 3. `PUBLISH_ERROR`
+ 4. `EVENT`
+
+![alt text](figure/pubsub_publish1.png "RPC Message Flow: Calls")
+
+When a *Broker* dispatches an event, it will determine a list of actual receivers for that event based on subscribers and possibly other information in the event (such as exclude and eligible receivers).
+
+When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send the *Subscriber* an `EVENT` message:
+
+    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri]
+    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri, Event|any]
+    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri, Details|dict, Event|any]
+
+The `SUBSCRIBED.Subscription` is the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
+
+
+### Pattern-based Subscriptions
+
+
+### Metaevents
+
+    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri]
+    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri, Details|dict]
+
+
+
 ![alt text](figure/rpc_call1.png "RPC Message Flow: Calls")
 
 ![alt text](figure/rpc_call2.png "RPC Message Flow: Calls")
@@ -338,11 +427,7 @@ Incoming heartbeats are not required to be answered by an outgoing heartbeat, bu
 
 ![alt text](figure/rpc_provide2.png "RPC Message Flow: Calls")
 
-![alt text](figure/pubsub_subscribe1.png "RPC Message Flow: Calls")
-
 ![alt text](figure/pubsub_subscribe2.png "RPC Message Flow: Calls")
-
-![alt text](figure/pubsub_publish1.png "RPC Message Flow: Calls")
 
 ![alt text](figure/pubsub_publish2.png "RPC Message Flow: Calls")
 
