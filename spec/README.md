@@ -230,10 +230,10 @@ WAMP defines the following messages which are explained in detail in the further
 
 #### Callee-to-Dealer
 
-    [EXPORT,       			Request|id, Procedure|uri]
-    [EXPORT,       			Request|id, Procedure|uri, Options|dict]
-    [UNEXPORT,     			Request|id, EXPORTED.Endpoint|id]
-    [UNEXPORT,     			Request|id, EXPORTED.Endpoint|id, Options|dict]
+    [REGISTER,     			Request|id, Procedure|uri]
+    [REGISTER,     			Request|id, Procedure|uri, Options|dict]
+    [UNREGISTER,    		Request|id, REGISTERED.Registration|id]
+    [UNREGISTER,     		Request|id, REGISTERED.Registration|id, Options|dict]
     [INVOCATION_PROGRESS,	INVOCATION.Request|id]
     [INVOCATION_PROGRESS, 	INVOCATION.Request|id, Progress|any]
     [INVOCATION_RESULT,   	INVOCATION.Request|id]
@@ -243,12 +243,12 @@ WAMP defines the following messages which are explained in detail in the further
 
 #### Dealer-to-Callee
 
-	[EXPORTED,     			EXPORT.Request|id, Endpoint|id]
-    [EXPORT_ERROR, 			EXPORT.Request|id, Error|uri]
-    [UNEXPORTED,   			UNEXPORT.Request|id]
-    [UNEXPORT_ERROR, 		UNEXPORT.Request|id, Error|uri]
-    [INVOCATION,   			Request|id, EXPORTED.Endpoint|id]
-    [INVOCATION,   			Request|id, EXPORTED.Endpoint|id, Arguments|list]
+	[REGISTERED,     		REGISTER.Request|id, Registration|id]
+    [REGISTER_ERROR, 		REGISTER.Request|id, Error|uri]
+    [UNREGISTERED,   		UNREGISTER.Request|id]
+    [UNREGISTER_ERROR, 		UNREGISTER.Request|id, Error|uri]
+    [INVOCATION,   			Request|id, REGISTERED.Registration|id]
+    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Arguments|list]
     [CANCEL_INVOCATION,		INVOCATION.Request|id]
     [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
