@@ -268,6 +268,47 @@ WAMP defines the following messages which are explained in detail in the further
     [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
 
+## Message Type Codes
+
+	HELLO					:=  1
+	GOODBYE					:=  2
+	HEARTBEAT				:=  3
+
+	SUBSCRIBE				:= 10
+	SUBSCRIBED				:= 11
+	SUBSCRIBE_ERROR			:= 12
+	
+	UNSUBSCRIBE				:= 20
+	UNSUBSCRIBED			:= 21
+	UNSUBSCRIBE_ERROR		:= 22
+	
+	PUBLISH					:= 30
+	PUBLISHED				:= 31
+	PUBLISH_ERROR			:= 32
+
+	EVENT					:= 40
+	METAEVENT				:= 41
+	
+	REGISTER				:= 50
+	REGISTERED				:= 51
+	REGISTER_ERROR			:= 52
+
+	UNREGISTER				:= 60
+	UNREGISTERED			:= 61
+	UNREGISTER_ERROR		:= 62
+
+	CALL					:= 70
+	CANCEL_CALL				:= 71
+	CALL_PROGRESS			:= 72
+	CALL_RESULT				:= 73
+	CALL_ERROR				:= 74
+
+	INVOCATION				:= 80
+	CANCEL_INVOCATION		:= 81
+	INVOCATION_PROGRESS		:= 82
+	INVOCATION_RESULT		:= 83
+	INVOCATION_ERROR		:= 84
+
 ## Session Management
 
 ### Hello and Goodbye
@@ -357,13 +398,28 @@ The message flow between *Subscribers* and a *Broker* for subscribing and unsubs
 A *Subscriber* communicates it's interest in a topic to a *Broker* by sending a `SUBSCRIBE` message:
 
     [SUBSCRIBE,    			Request|id, Topic|uri]
+
+The `Request` is a random ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
+
+*Example*
+
+	[10, 713845233, "com.myapp.mytopic1"]
+
+A `SUBSCRIBE` message MAY contain an `Options` element
+
     [SUBSCRIBE,    			Request|id, Topic|uri, Options|dict]
 
-The `Request` is a random ID used to correlate the *Broker's* response with the request. If the *Broker* is able to fulfil and allowing the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
+The `SUBSCRIBE.Options` is a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
+
+If the *Broker* is able to fulfil and allowing the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
 
     [SUBSCRIBED,   			SUBSCRIBE.Request|id, Subscription|id]
 
 The `SUBSCRIBE.Request` is the ID from the original request. `Subscription` is a ID chosen by the *Broker* for the subscription.
+
+*Example*
+
+	[11, 713845233, 5512315355]
 
 > Note. The `Subscription` ID chosen by the broker may be unique only for the `Topic` (and possibly other information from `Options`, such as the topic pattern matching method to be used). The ID might be the same for any *Subscriber* for the same `Topic`. This allows the *Broker* to only serialize an event to be delivered once for all actual receivers of the event.
 > 
@@ -372,29 +428,40 @@ When the request for subscription cannot be fulfilled by the broker, the broker 
 
     [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
 
-The `SUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled:
+The `SUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled.
 
-    wamp.error.notauthorized
+*Example*
+
+	[12, 713845233, "wamp.error.notauthorized"]
 
 When a *Subscriber* is no longer interested in receiving events for a subscription it send an `UNSUBSCRIBE` message
 
     [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id]
-    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id, Options|dict]
 
-The `Request` is a random ID used to correlate the *Broker's* response with the request. The `SUBSCRIBED.Subscription` is the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
+The `Request` is a random ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request. The `SUBSCRIBED.Subscription` is the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
+
+*Example*
+
+	[20, 85346237, 5512315355]
 
 Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to the *Subscriber*
 
     [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
 
+*Example*
+
+	[21, 85346237]
+
 When the request failed, the *Broker* sends an `UNSUBSCRIBE_ERROR`
 
     [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
 
-The `UNSUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled:
+The `UNSUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled.
 
-    wamp.error.nosuchsubscription
+*Example*
 
+	[22, 85346237, "wamp.error.nosuchsubscription"]
+ 
 
 ### Publishing
 
@@ -419,6 +486,10 @@ The `SUBSCRIBED.Subscription` is the ID for the subscription originally handed o
 
 
 ### Pattern-based Subscriptions
+
+*Example*
+
+	[10, 912873614, "com.myapp.topic.emergency", {"match": "prefix"}]
 
 
 ### Metaevents
