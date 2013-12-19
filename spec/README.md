@@ -397,25 +397,22 @@ The message flow between *Subscribers* and a *Broker* for subscribing and unsubs
 
 A *Subscriber* communicates it's interest in a topic to a *Broker* by sending a `SUBSCRIBE` message:
 
-    [SUBSCRIBE,    			Request|id, Topic|uri]
+    [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
-The `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
+ * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
+ * `SUBSCRIBE.Options` is a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
+ * `Topic` is the topic the *Subscriber* wants to subscribe to.
 
 *Example*
 
-	[10, 713845233, "com.myapp.mytopic1"]
-
-A `SUBSCRIBE` message MAY contain an `Options` element
-
-    [SUBSCRIBE,    			Request|id, Topic|uri, Options|dict]
-
-The `SUBSCRIBE.Options` is a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
+	[10, 713845233, {}, "com.myapp.mytopic1"]
 
 If the *Broker* is able to fulfil and allowing the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
 
-    [SUBSCRIBED,   			SUBSCRIBE.Request|id, Subscription|id]
+    [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
-The `SUBSCRIBE.Request` is the ID from the original request. `Subscription` is a ID chosen by the *Broker* for the subscription.
+ * `SUBSCRIBE.Request` is the ID from the original request.
+ * `Subscription` is a ID chosen by the *Broker* for the subscription.
 
 *Example*
 
@@ -426,9 +423,10 @@ The `SUBSCRIBE.Request` is the ID from the original request. `Subscription` is a
 
 When the request for subscription cannot be fulfilled by the broker, the broker sends back a `SUBSCRIBE_ERROR` message to the *Subscriber*
 
-    [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
+    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri]
 
-The `SUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled.
+ * `SUBSCRIBE.Request` is the ID from the original request.
+ * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
@@ -436,7 +434,7 @@ The `SUBSCRIBE.Request` is the ID from the original request. `Error` is an URI t
 
 When a *Subscriber* is no longer interested in receiving events for a subscription it send an `UNSUBSCRIBE` message
 
-    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id]
+    [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
 The `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request. The `SUBSCRIBED.Subscription` is the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
 
@@ -446,7 +444,9 @@ The `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to c
 
 Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to the *Subscriber*
 
-    [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
+    [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
+
+ * `UNSUBSCRIBE.Request` is the ID from the original request.
 
 *Example*
 
@@ -454,9 +454,10 @@ Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to 
 
 When the request failed, the *Broker* sends an `UNSUBSCRIBE_ERROR`
 
-    [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
+    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri]
 
-The `UNSUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled.
+ * `UNSUBSCRIBE.Request` is the ID from the original request.
+ * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
@@ -476,39 +477,30 @@ The message flow between *Publishers*, a *Broker* and *Subscribers* for publishi
 
 When a *Publisher* wishes to publish an event to some topic, it sends a `PUBLISH` message to a *Broker*:
 
-    [PUBLISH,      			Request|id, Topic|uri, Event|any]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Event|any]
 
-The `Request` is a random, ephemeral ID chosen by the *Publisher* and used to correlate the *Broker's* response with the request. The `Event` is an arbitrary application-level event payload.
-
-*Example*
-
-    [30, 239714735, "com.myapp.mytopic1", "Hello, world!"]
+ * `Request` is a random, ephemeral ID chosen by the *Publisher* and used to correlate the *Broker's* response with the request.
+ * `Options` is a dictionary that allows to provide additional publication request details in a extensible way. This is described further below.
+ * `Event` is an arbitrary application-level event payload.
 
 *Example*
 
-    [30, 239714735, "com.myapp.mytopic1", {"color": "orange", "sizes": [23, 42, 7]}]
-
-The `Event` payload MAY be ommitted when there is no need for event payload
-
-    [PUBLISH,      			Request|id, Topic|uri]
+    [30, 239714735, {}, "com.myapp.mytopic1", "Hello, world!"]
 
 *Example*
 
-    [30, 239714735, "com.myapp.mysignal1"]
+    [30, 239714735, {}, "com.myapp.mytopic1", {"color": "orange", "sizes": [23, 42, 7]}]
 
-A `PUBLISH` message MAY contain an `Options` element
+*Example*
 
-    [PUBLISH,      			Request|id, Topic|uri, Options|dict, Event|any]
-
-The `PUBLISH.Options` is a dictionary that allows to provide additional publication request details in a extensible way. This is described further below.
-
-> Note that when `Options` is to be provided, the `Event` payload cannot be ommitted.
+    [30, 239714735, {}, "com.myapp.mytopic1", null]
 
 If the *Broker* is able to fulfill and allowing the publication, it answers by sending a `PUBLISHED` message to the *Publisher*:
 
-    [PUBLISHED,  			PUBLISH.Request|id, Publication|id]
+    [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
-The `PUBLISH.Request` is the ID from the original publication request. `Publication` is a ID chosen by the Broker for the publication.
+ * `PUBLISH.Request` is the ID from the original publication request.
+ * `Publication` is a ID chosen by the Broker for the publication.
 
 *Example*
 
@@ -516,9 +508,10 @@ The `PUBLISH.Request` is the ID from the original publication request. `Publicat
 
 When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back a `PUBLISH_ERROR` message to the *Publisher*
 
-    [PUBLISH_ERROR, 		PUBLISH.Request|id, Error|uri]
+    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri]
 
-The `PUBLISH.Request` is the ID from the original publication request. `Error` is an URI that gives the error of why the request could not be fulfilled.
+ * `PUBLISH.Request` is the ID from the original publication request.
+ * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
@@ -528,21 +521,25 @@ When a publication is successful and a *Broker* dispatches the event, it will de
 
 When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send the *Subscriber* an `EVENT` message:
 
-    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, PUBLISH.Topic|uri, PUBLISH.Event|any]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Topic|uri, PUBLISH.Event|any]
 
-The `SUBSCRIBED.Subscription` is the ID for the subscription under which the *Subscriber* receives the event - the ID for the subscription originally handed out by the *Broker* to the *Subscriber*. The `PUBLISHED.Publication` is the ID of the publication of the published event. The `PUBLISH.Topic` is the original topic under which the *Publisher* published the event. And `PUBLISH.Event` is the application-level payload the event has been published with.
+ * `SUBSCRIBED.Subscription` is the ID for the subscription under which the *Subscriber* receives the event - the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
+ * `PUBLISHED.Publication` is the ID of the publication of the published event.
+ * `Details` is a dictionary that allows the *Broker* to provide additional event details in a extensible way. This is described further below.
+ * `PUBLISH.Topic` is the original topic under which the *Publisher* published the event. And `PUBLISH.Event` is the application-level payload the event has been published with.
+ * `PUBLISH.Event` is the application-level event payload that was provided with the original publication request.
 
 *Example*
 
-	[40, 5512315355, 4429313566, "com.myapp.mytopic1", "Hello, world!"]
+	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", "Hello, world!"]
 
+*Example*
 
-Blabla.
+	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", {"color": "orange", "sizes": [23, 42, 7]}]
 
-    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, PUBLISH.Topic|uri]
-    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, PUBLISH.Topic|uri, Details|dict, PUBLISH.Event|any]
+*Example*
 
-> Note that when `Options` is to be provided, the `Event` payload cannot be ommitted.
+	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", null]
 
 
 ### Pattern-based Subscriptions
