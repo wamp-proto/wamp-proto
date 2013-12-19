@@ -678,7 +678,7 @@ The message flow between *Callees* and a *Dealer* for registering and unregister
  5. `UNREGISTERED`
  6. `UNREGISTER_ERROR`
 
-![alt text](figure/rpc_provide1.png "RPC: Registering and Unregistering")
+![alt text](figure/rpc_register1.png "RPC: Registering and Unregistering")
 
 A *Callee* announces the availability of an endpoint implementing a procedure with a *Dealer* by sending a `REGISTER` message:
 
