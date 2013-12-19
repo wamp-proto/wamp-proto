@@ -15,44 +15,10 @@ WAMP ("The WebSocket Application Messaging Protocol") is an open application mes
 
 WAMP is defined with respect to the following building blocks 
 
-   1. Namespace
-   2. Serialization
-   3. Transport
+   1. Serialization
+   2. Transport
 
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
-
-
-### Namespace
-
-WAMP needs to identify **procedures** for *Remote Procedure Calls* and **topics** for *Publish & Subscribe*.
-
-A (single) *namespace* with the following characteristics is assumed:
-
- * string-based
- * hierarchical
- * global assignment and conflict resolution
-
-The default *namespace* binding for WAMPv2 (and in fact the only currently defined) is URIs as used on the Web:
-
-Identifiers as used in the WAMP protocol are URIs which MUST conform to [RFC3986](http://tools.ietf.org/html/rfc3986), MUST be from the `HTTP` scheme, MAY contain a fragment part, but MUST NOT contain query parts.
-
-> It's important to note that WAMP only uses `http` scheme URIs as *identifiers*, **not** resource locators (URLs). The use of the `http` scheme does **not** imply use of `http` as a transport protocol.
-> 
-
-	http://wamp.ws/error#NotAuthorized
-
-or
-
-	wamp.error.notauthorized
-
-or
-
-	ws.wamp.error.notauthorized
-
-
-http://docs.oracle.com/javase/specs/jls/se5.0/html/packages.html#7.7
-http://en.wikipedia.org/wiki/Java_package
-http://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html
 
 
 ### Serialization
@@ -62,11 +28,11 @@ WAMP is a message based protocol that requires serialization of messages to octe
 A message *serialization* format is assumed that (at least) provides the following types:
 
   * `integer` (non-negative)
-  * `string` (UTF8 encoded)
+  * `string` (UTF-8 encoded Unicode)
   * `list`
   * `dict` (with string keys)
 
-WAMP *itself* only uses above types. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization supports.
+WAMP *itself* only uses above types. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
 
 WAMPv2 defines two bindings for message *serialization*:
 
@@ -105,17 +71,14 @@ With `wamp.2.json`, all WebSocket messages MUST BE of type **text** (UTF8 encode
 
 With `wamp.2.msgpack`, all WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
 
-With both WAMP WebSocket subprotocols, the namespace binding MUST BE URIs from the HTTP scheme as described above.
-
 
 #### Other Transports
 
 Besides the WebSocket transport, the following WAMP transports are under development:
 
  * HTTP 1.0/1.1 long-polling
- * HTTP 2.0 ("SPDY")
 
-Other transports might be defined in the future.
+Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
 
 
 ## Peer Roles
@@ -148,17 +111,64 @@ A WAMP peer can have one or more of the following roles.
 
 *Brokers* route events incoming from *Publishers* to *Subscribers* subscribed to the topic published to.
 
+
 ### Decoupling
 
 *Dealers* are responsible for call routing decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing decoupling *Publishers* from *Subscribers*.
+
 
 ### Symmetry
 
 It's important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishes a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
 
+
 ### Peers with multiple Roles
 
 Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*. And a *Dealer* might also act as a *Callee*. With the latter, a peer might "route" an incoming call directly to an implementing endpoint within the same program (and hence no actual messaging over a transport is happening).
+
+
+## URIs
+
+WAMP needs to identify *persistent* resources like:
+
+  * Topics
+  * Procedures
+  * Errors
+
+These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MUST BE UTF-8 encoded Unicode strings.
+
+*Examples*
+
+	com.myapp.mytopic1
+	com.myapp.myprocedure1
+	com.myapp.mymodule.somerror
+
+The URIs are understood to form a global, hierarchical namespace for WAMP. To avoid resource naming conflicts, we follow the package naming convention from Java where URIs SHOULD begin with (reversed) domain names owned by the organization defining the URI.
+
+URI components (the parts between between `.`) MUST NOT contain `.` and MUST NOT be empty (zero-length strings).
+
+> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions.
+> 
+
+URI components SHOULD match the regular expression `[a-z][a-z0-9_]*` (that is start with a letter, followed by zero or more letters, digits or `_`).
+
+> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics and procedures to the language enviroment in a transparent way. 
+
+Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
+
+
+## IDs
+
+WAMP needs to identify *ephemeral* "things" like:
+
+ * Requests
+ * Subscriptions
+ * Registrations
+
+These are identified in WAMP using IDs that are (positive) integers between (inclusive) `0` and `2^53` (`9007199254740992L`) and which MUST BE drawn *randomly* from a *uniform distribution* over the specified range.
+
+> The reason to choose the specific upper bound is that `2^53` is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range. 
+> 
 
 
 ## Messages
@@ -172,9 +182,9 @@ All WAMP messages are of the same structure - a `list` with a first element `Mes
 The notation `Element|type` denotes a message element named `Element` of type `type`, where `type` is one of:
 
  * `integer`: a non-negative integer
- * `string`: any UTF8-encoded string, including the empty string
- * `id`: a random (positive) integer
- * `uri`: an UTF8- and percent-encoded string that is a valid URI
+ * `string`: any UTF8-encoded Unicode string, including the empty string
+ * `id`: an integer ID as defined above
+ * `uri`: a string URI as defined above
  * `dict`: a dictionary (map) with `string` typed keys
  * `list`: a list (array)
 
@@ -651,3 +661,6 @@ Metaevents are always generated by the *Broker* itself:
 3. [The WebSocket Protocol](http://tools.ietf.org/html/rfc6455)
 4. [The application/json Media Type for JavaScript Object Notation (JSON)](http://tools.ietf.org/html/rfc4627)
 5. [MessagePack Format specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
+http://docs.oracle.com/javase/specs/jls/se5.0/html/packages.html#7.7
+http://en.wikipedia.org/wiki/Java_package
+http://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html
