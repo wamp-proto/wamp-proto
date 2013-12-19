@@ -39,6 +39,21 @@ Identifiers as used in the WAMP protocol are URIs which MUST conform to [RFC3986
 > It's important to note that WAMP only uses `http` scheme URIs as *identifiers*, **not** resource locators (URLs). The use of the `http` scheme does **not** imply use of `http` as a transport protocol.
 > 
 
+	http://wamp.ws/error#NotAuthorized
+
+or
+
+	wamp.error.notauthorized
+
+or
+
+	ws.wamp.error.notauthorized
+
+
+http://docs.oracle.com/javase/specs/jls/se5.0/html/packages.html#7.7
+http://en.wikipedia.org/wiki/Java_package
+http://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html
+
 
 ### Serialization
 
@@ -359,7 +374,7 @@ When the request for subscription cannot be fulfilled by the broker, the broker 
 
 The `SUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled:
 
-    http://api.wamp.ws/error#NotAuthorized
+    wamp.error.notauthorized
 
 When a *Subscriber* is no longer interested in receiving events for a subscription it send an `UNSUBSCRIBE` message
 
@@ -378,7 +393,7 @@ When the request failed, the *Broker* sends an `UNSUBSCRIBE_ERROR`
 
 The `UNSUBSCRIBE.Request` is the ID from the original request. `Error` is an URI that gives the error of why the request could not be fulfilled:
 
-    http://api.wamp.ws/error#NoSuchSubscription
+    wamp.error.nosuchsubscription
 
 
 ### Publishing
