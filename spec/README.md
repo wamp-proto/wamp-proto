@@ -5,7 +5,7 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
 ## Introduction
 
-WAMP ("The WebSocket Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns in one protocol:
+WAMP ("The WebSocket Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns within one protocol:
 
  * Publish & Subscribe
  * Remote Procedure Calls
@@ -256,7 +256,8 @@ WAMP defines the following messages which are explained in detail in the further
     [REGISTER_ERROR, 		REGISTER.Request|id, Error|uri]
     [UNREGISTERED,   		UNREGISTER.Request|id]
     [UNREGISTER_ERROR, 		UNREGISTER.Request|id, Error|uri]
-    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Options|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Options|dict,
+								CALL.Arguments|list, CALL.ArgumentsKw|dict]
     [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
 
@@ -760,12 +761,13 @@ The message flow between *Callers*, a *Dealer* and *Callees* for calling remote 
 
 ![alt text](figure/rpc_call1.png "RPC: Calling")
 
-When a *Callee* wishes to call a remote procedure, it send a `CALL` message to a *Dealer*:
+When a *Callee* wishes to call a remote procedure, it sends a `CALL` message to a *Dealer*:
 
     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
 
  * `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
  * `Options` is a dictionary that allows to provide additional call request details in an extensible way. This is described further below.
+ * `Procedure` the URI of the procedure to be called.
  * `Arguments` is a list of positional call arguments (each of arbitrary type). The list may be of zero length.
  * `ArgumentsKw` is a dictionary of keyword call arguments (each of arbitrary type). The dictionary may be empty.
 
