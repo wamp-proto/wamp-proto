@@ -185,32 +185,25 @@ WAMP defines the following messages which are explained in detail in the further
 
 #### Any-to-Any
 
-    [HELLO,        			Session|id]
     [HELLO,        			Session|id, Details|dict]
-    [GOODBYE]
     [GOODBYE,      			Details|dict]
-    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer]
     [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
 ### Publish & Subscribe
 
 #### Publisher-to-Broker
 
-    [PUBLISH,      			Request|id, Topic|uri]
-    [PUBLISH,      			Request|id, Topic|uri, Event|any]
-    [PUBLISH,      			Request|id, Topic|uri, Options|dict, Event|any]
+    [PUBLISH,      			Request|id, Options|dict, Topic|uri, Event|any]
 
 #### Broker-to-Publisher
 
-    [PUBLISHED,  			PUBLISH.Request|id]
+    [PUBLISHED,  			PUBLISH.Request|id, Publication|id]
     [PUBLISH_ERROR, 		PUBLISH.Request|id, Error|uri]
 
 #### Subscriber-to-Broker
 
-    [SUBSCRIBE,    			Request|id, Topic|uri]
-    [SUBSCRIBE,    			Request|id, Topic|uri, Options|dict]
+    [SUBSCRIBE,    			Request|id, Options|dict, Topic|uri]
     [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id]
-    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id, Options|dict]
 
 #### Broker-to-Subscriber
 
@@ -218,42 +211,28 @@ WAMP defines the following messages which are explained in detail in the further
     [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
     [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
     [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
-    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri]
-    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri, Event|any]
-    [EVENT,        			SUBSCRIBED.Subscription|id, Topic|uri, Details|dict, Event|any]
-    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri]
-    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri, Details|dict]
+    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Topic|uri, PUBLISH.Event|any]
+    [METAEVENT,    			SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
 
 ### Remote Procedure Calls
 
 #### Caller-to-Dealer
 
-    [CALL,         			Request|id, Procedure|uri]
-    [CALL,         			Request|id, Procedure|uri, Arguments|list]
-    [CALL,         			Request|id, Procedure|uri, Options|dict, Arguments|list]
-    [CANCEL_CALL,  			CALL.Request|id]
+    [CALL,         			Request|id, Procedure|uri, Options|dict, Arguments|list, ArgumentsKw|dict]
     [CANCEL_CALL,  			CALL.Request|id, Options|dict]
     
 #### Dealer-to-Caller
 
-    [CALL_PROGRESS,			CALL.Request|id]
-    [CALL_PROGRESS, 		CALL.Request|id, Progress|any]
-    [CALL_RESULT,   		CALL.Request|id]
-    [CALL_RESULT,   		CALL.Request|id, Result|any]
-    [CALL_ERROR,    		CALL.Request|id, Error|uri]
+    [CALL_PROGRESS, 		CALL.Request|id, Progress|list, ProgressKw|dict]
+    [CALL_RESULT,   		CALL.Request|id, Result|list, ResultKw|dict]
     [CALL_ERROR,    		CALL.Request|id, Error|uri, Exception|any]
 
 #### Callee-to-Dealer
 
-    [REGISTER,     			Request|id, Procedure|uri]
-    [REGISTER,     			Request|id, Procedure|uri, Options|dict]
+    [REGISTER,     			Request|id, Options|dict, Procedure|uri]
     [UNREGISTER,    		Request|id, REGISTERED.Registration|id]
-    [UNREGISTER,     		Request|id, REGISTERED.Registration|id, Options|dict]
-    [INVOCATION_PROGRESS,	INVOCATION.Request|id]
-    [INVOCATION_PROGRESS, 	INVOCATION.Request|id, Progress|any]
-    [INVOCATION_RESULT,   	INVOCATION.Request|id]
-    [INVOCATION_RESULT,   	INVOCATION.Request|id, Result|any]
-    [INVOCATION_ERROR,    	INVOCATION.Request|id, Error|uri]
+    [INVOCATION_PROGRESS, 	INVOCATION.Request|id, Progress|list, ProgressKw|dict]
+    [INVOCATION_RESULT,   	INVOCATION.Request|id, Result|list, ResultKw|dict]
     [INVOCATION_ERROR,    	INVOCATION.Request|id, Error|uri, Exception|any]
 
 #### Dealer-to-Callee
@@ -262,9 +241,7 @@ WAMP defines the following messages which are explained in detail in the further
     [REGISTER_ERROR, 		REGISTER.Request|id, Error|uri]
     [UNREGISTERED,   		UNREGISTER.Request|id]
     [UNREGISTER_ERROR, 		UNREGISTER.Request|id, Error|uri]
-    [INVOCATION,   			Request|id, REGISTERED.Registration|id]
-    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Arguments|list]
-    [CANCEL_INVOCATION,		INVOCATION.Request|id]
+    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Options|dict, Arguments|list, ArgumentsKw|dict]
     [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
 
@@ -564,15 +541,24 @@ The *Broker* will dispatch events published only to *Subscribers* that are not e
 
 *Example*
 
-    [30, 239714735, {"exclude": [7891255, 1245751]}, "com.myapp.mytopic1", "Hello, world!"]
+    [30, 239714735,
+		{"exclude": [7891255, 1245751]},
+		"com.myapp.mytopic1",
+		"Hello, world!"]
  
 *Example*
 
-    [30, 239714735, {"eligible": [7891255, 1245751]}, "com.myapp.mytopic1", "Hello, world!"]
+    [30, 239714735,
+		{"eligible": [7891255, 1245751]},
+		"com.myapp.mytopic1",
+		"Hello, world!"]
 
 *Example*
 
-    [30, 239714735, {"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]}, "com.myapp.mytopic1", "Hello, world!"]
+    [30, 239714735,
+		{"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
+		"com.myapp.mytopic1",
+		"Hello, world!"]
 
 
 ### Publisher Identification
@@ -581,13 +567,19 @@ A *Publisher* MAY request the disclosure of it's identity (it's WAMP session ID)
 
 *Example*
 
-    [30, 239714735, {"discloseme": 1}, "com.myapp.mytopic1", "Hello, world!"]
+    [30, 239714735,
+		{"discloseme": 1},
+		"com.myapp.mytopic1",
+		"Hello, world!"]
 
 If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`. 
 
 *Example*
 
-	[40, 5512315355, 4429313566, {"publisher": 3335656}, "com.myapp.mytopic1", "Hello, world!"]
+	[40, 5512315355, 4429313566,
+		{"publisher": 3335656},
+		"com.myapp.mytopic1",
+		"Hello, world!"]
 
 Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
 
