@@ -25,8 +25,8 @@ SVG_FILES = ['pubsub_publish1.svg',
              'rpc_cancel1.svg',
              'rpc_cancel2.svg',
              'rpc_progress1.svg',
-             'rpc_provide1.svg',
-             'rpc_provide2.svg']
+             'rpc_register1.svg',
+             'rpc_register2.svg']
 
 IMG_SOURCE_DIR = "visuals/wamp2"
 IMG_GEN_DIR    = "website/wampws/static/img/gen"
