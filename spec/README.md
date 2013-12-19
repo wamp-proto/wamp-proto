@@ -5,10 +5,10 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
 ## Introduction
 
-WAMP ("The WebSocket Application Messaging Protocol") is an open application messaging protocol that provides two asynchronous messaging patterns:
+WAMP ("The WebSocket Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns in one protocol:
 
- * Remote Procedure Calls
  * Publish & Subscribe
+ * Remote Procedure Calls
 
 
 ## Building Blocks
@@ -60,16 +60,16 @@ WAMP assumes a *transport* with the following characteristics:
 
 The default transport binding is [WebSocket](http://tools.ietf.org/html/rfc6455). With WebSocket, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
 
-The WAMP protocol MUST BE negotiated during the opening WebSocket handshakes between peers using the WebSocket subprotocol negotiation mechanism.
+The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between peers using the WebSocket subprotocol negotiation mechanism.
 
 WAMPv2 uses the following WebSocket subprotocol identifiers:
 
  * `wamp.2.json`
  * `wamp.2.msgpack`
 
-With `wamp.2.json`, all WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
+With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
 
-With `wamp.2.msgpack`, all WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
+With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
 
 
 #### Other Transports
@@ -97,7 +97,7 @@ A WAMP peer can have one or more of the following roles.
 
 *Callers* initiate procedure calls first to *Dealers*.
 
-*Dealers* route call incoming from *Callers* to *Callees* implementing the procedure called.
+*Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called.
 
 **PubSub**
 
@@ -147,12 +147,12 @@ The URIs are understood to form a global, hierarchical namespace for WAMP. To av
 
 URI components (the parts between between `.`) MUST NOT contain `.` and MUST NOT be empty (zero-length strings).
 
-> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions.
+> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions.
 > 
 
 URI components SHOULD match the regular expression `[a-z][a-z0-9_]*` (that is start with a letter, followed by zero or more letters, digits or `_`).
 
-> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics and procedures to the language enviroment in a transparent way. 
+> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language enviroment in a completely transparent way. 
 
 Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
 
@@ -182,11 +182,15 @@ All WAMP messages are of the same structure - a `list` with a first element `Mes
 The notation `Element|type` denotes a message element named `Element` of type `type`, where `type` is one of:
 
  * `integer`: a non-negative integer
- * `string`: any UTF8-encoded Unicode string, including the empty string
+ * `string`: any UTF-8 encoded Unicode string, including the empty string
  * `id`: an integer ID as defined above
  * `uri`: a string URI as defined above
- * `dict`: a dictionary (map) with `string` typed keys
+ * `dict`: a dictionary (map)
  * `list`: a list (array)
+ * `any`: any scalar or complex type the serialization supports
+
+> Keys with above `dicts` MUST BE of type `string` and SHOULD match the regular expression `[a-z][a-z0-9_]*`
+> 
 
 WAMP defines the following messages which are explained in detail in the further sections.
 
@@ -297,27 +301,26 @@ WAMP defines the following messages which are explained in detail in the further
 	INVOCATION_RESULT		:= 83
 	INVOCATION_ERROR		:= 84
 
+
 ## Session Management
 
 ### Hello and Goodbye
 
-When a WAMP session starts, the peers introduce themselves to each other by sending a
+When a WAMP session starts, the peers introduce themselves to each other by sending a `HELLO` message. The `HELLO` message MUST be the very first message sent by each of the two peers after the transport has been established:
 
-    [HELLO,        			Session|id]
-    [HELLO,        			Session|id, Details|dict]
+    [HELLO, Session|id, Details|dict]
 
-message.
-
-The `HELLO` message MUST be the very first message sent by each of the two peers after the transport has been established.
-
-The `HELLO.Session` MUST BE a randomly generated ID specific to the WAMP session for each direction. Each peer tells it connected peer the `Session` ID under which it is identified (for the lifetime of the WAMP session). 
+ * `Session` MUST BE a randomly generated ID specific to the WAMP session for each direction. Each peer tells it connected peer the `Session` ID under which it is identified (for the lifetime of the WAMP session). 
+ * `Details` is a dictionary that allows to provide additional opening information (see below).
 
 The `HELLO.Session` can (later) be used for:
 
  * specifying lists of excluded or eligible receivers when publishing events
  * in the context of performing authentication or authorization 
 
-The `HELLO.Details` is an optional 
+*Example*
+
+    [1, 9129137332, {}]
 
 Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` message MAY disclose the WAMP implementation in use to it's peer:
 
@@ -325,45 +328,44 @@ Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` messa
 
 *Example*
 
-    [1, 9129137332]
-
-*Example*
-
     [1, 9129137332, {"agent": "AutobahnPython-0.7.0"}]
 
-A WAMP session starts it's lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by using the
+A WAMP session starts it's lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by sending the `GOODBYE` message
 
-    [GOODBYE]
-    [GOODBYE,      			Details|dict]
+    [GOODBYE, Details|dict]
 
-message.
+ * `Details` is a dictionary that allows to provide additional closing information, like
 
     GOODBYE.Details.reason|uri
     GOODBYE.Details.message|string
 
 *Example*
 
-    [8]
+	[2, {}]
 
 *Example*
 
-    [8, {"reason": "http://api.wamp.ws/error#protocolViolation",
-         "message": "Topic in SUBSCRIBE not a valid URI."}]
+    [2, {"reason": "wamp.error.system_shutdown", "message": "The host is shutting down now."}]
+
+*Example*
+
+    [2, {"reason": "wamp.error.protocol_violation", "message": "Invalid type for 'topic' in SUBSCRIBE."}]
+
 
 ### Heartbeats
 
-A peer MAY send a `HEARTBEAT` message at any time:
-
-    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer]
-    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
-
 The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing hearbeat sequence number in the same message.
 
-The `HEARTBEAT.OutgoingSeq` MUST start with `1` and be incremented by `1` for each `HEARTBEAT` a peer sends.
- 
-The `HEARTBEAT.IncomingSeq` MUST BE the sequence number from the last received heartbeat for which all previously received WAMP messages have been processed.
+A peer MAY send a `HEARTBEAT` message at any time:
 
-The `HEARTBEAT.Discard` is an arbitrary string discarded by the peer. It can be used to exhibit some traffic volume e.g. to keep mobile radio channels in a low-latency, high-power state. The string SHOULD be a random string (otherwise compressing transports might compress away the traffic volume).
+    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
+
+ * `HEARTBEAT.OutgoingSeq` MUST start with `1` and be incremented by `1` for each `HEARTBEAT` a peer sends.
+ * `HEARTBEAT.IncomingSeq` MUST BE the sequence number from the last received heartbeat for which all previously received WAMP messages have been processed.
+ *  `HEARTBEAT.Discard` is an arbitrary string discarded by the peer.
+
+> The `HEARTBEAT.Discard` can be used to exhibit some traffic volume e.g. to keep mobile radio channels in a low-latency, high-power state. The string SHOULD be a random string (otherwise compressing transports might compress away the traffic volume).
+> 
 
 Incoming heartbeats are not required to be answered by an outgoing heartbeat, but sending of hearbeats is under independent control with each peer.
 
@@ -418,7 +420,7 @@ When the request for subscription cannot be fulfilled by the broker, the broker 
 
 *Example*
 
-	[12, 713845233, "wamp.error.notauthorized"]
+	[12, 713845233, "wamp.error.not_authorized"]
 
 When a *Subscriber* is no longer interested in receiving events for a subscription it sends an `UNSUBSCRIBE` message
 
@@ -450,7 +452,7 @@ When the request failed, the *Broker* sends an `UNSUBSCRIBE_ERROR`
 
 *Example*
 
-	[22, 85346237, "wamp.error.nosuchsubscription"]
+	[22, 85346237, "wamp.error.no_such_subscription"]
  
 
 ### Publishing
@@ -504,7 +506,7 @@ When the request for publication cannot be fulfilled by the *Broker*, the *Broke
 
 *Example*
 
-    [32, 239714735, "wamp.error.notauthorized"]
+    [32, 239714735, "wamp.error.not_authorized"]
 
 When a publication is successful and a *Broker* dispatches the event, it will determine a list of actual receivers for the event based on subscribers for the topic published to and possibly other information in the event (such as exclude and eligible receivers).
 
@@ -537,7 +539,7 @@ By default, a *Publisher* of an event will not receive an event published itself
 
 *Example*
 
-    [30, 239714735, {"excludeme": 0}, "com.myapp.mytopic1", "Hello, world!"]
+    [30, 239714735, {"exclude_me": 0}, "com.myapp.mytopic1", "Hello, world!"]
 
 
 ### Exclude and Eligible
@@ -554,43 +556,34 @@ The *Broker* will dispatch events published only to *Subscribers* that are not e
 
     [30, 239714735,
 		{"exclude": [7891255, 1245751]},
-		"com.myapp.mytopic1",
-		"Hello, world!"]
+		"com.myapp.mytopic1", "Hello, world!"]
  
 *Example*
 
     [30, 239714735,
 		{"eligible": [7891255, 1245751]},
-		"com.myapp.mytopic1",
-		"Hello, world!"]
+		"com.myapp.mytopic1", "Hello, world!"]
 
 *Example*
 
     [30, 239714735,
 		{"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
-		"com.myapp.mytopic1",
-		"Hello, world!"]
+		"com.myapp.mytopic1", "Hello, world!"]
 
 
 ### Publisher Identification
 
-A *Publisher* MAY request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event via `PUBLISH.Options.discloseme|int`:
+A *Publisher* MAY request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event via `PUBLISH.Options.disclose_me|int`:
 
 *Example*
 
-    [30, 239714735,
-		{"discloseme": 1},
-		"com.myapp.mytopic1",
-		"Hello, world!"]
+    [30, 239714735, {"disclose_me": 1}, "com.myapp.mytopic1", "Hello, world!"]
 
 If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`. 
 
 *Example*
 
-	[40, 5512315355, 4429313566,
-		{"publisher": 3335656},
-		"com.myapp.mytopic1",
-		"Hello, world!"]
+	[40, 5512315355, 4429313566, {"publisher": 3335656}, "com.myapp.mytopic1", "Hello, world!"]
 
 Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
 
@@ -598,7 +591,19 @@ A *Broker* MAY deny a *Publisher's* request to disclose it's identity
 
 *Example*
 
-    [32, 239714735, "wamp.error.discloseme.notallowed"]
+    [32, 239714735, "wamp.error.disclose_me.not_allowed"]
+
+
+### Trust Level
+
+A *Broker* may be configured to automatically assign *trust levels* to events published by *Publishers* according to the *Broker* configuration on a per-topic basis and/or depending on the application defined role of the (authenticated) *Publisher*.
+
+A *Broker* must use `Details.trustlevel|integer` in an `EVENT` message sent to a *Subscriber*. The trustlevel `0` means lowest trust, and higher integers represent (application-defined) higher levels of trust.
+
+*Example*
+
+	[40, 5512315355, 4429313566, {"trustlevel": 2}, "com.myapp.mytopic1", "Hello, world!"]
+
 
 
 ### Pattern-based Subscriptions
@@ -632,6 +637,16 @@ Metaevents are always generated by the *Broker* itself:
 *Example*
 
 	[41, 5512315355, 35262477, "wamp.metatopic.subscriber.left", 71254637]
+
+
+Getting initial (current) list of subscribers
+
+
+	[10, 713845233,
+         {"metatopics": ["wamp.metatopic.subscriber.current",
+                         "wamp.metatopic.subscriber.joined",
+                         "wamp.metatopic.subscriber.left"]},
+         "com.myapp.mytopic1"]
 
 
 ![alt text](figure/rpc_call1.png "RPC Message Flow: Calls")
