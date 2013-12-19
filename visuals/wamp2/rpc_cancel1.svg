@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="964.88281"
-   height="443.9502"
+   width="965.41425"
+   height="444.18866"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="491.72675"
-     inkscape:cy="239.26208"
+     inkscape:zoom="0.7"
+     inkscape:cx="574.10588"
+     inkscape:cy="425.46562"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -34,10 +34,10 @@
      fit-margin-left="10"
      fit-margin-right="10"
      fit-margin-bottom="10"
-     inkscape:window-width="1680"
-     inkscape:window-height="988"
-     inkscape:window-x="-8"
-     inkscape:window-y="320"
+     inkscape:window-width="1050"
+     inkscape:window-height="1658"
+     inkscape:window-x="1672"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -55,169 +55,217 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(816.72712,-73.244226)">
+     transform="translate(842.29139,-130.81438)">
     <g
-       id="g2989"
-       transform="translate(-810.72126,71.335046)">
-      <path
-         id="path2991"
-         d="m 461.5625,76.40625 0,359.45313 14.14062,0 0,-359.45313 -14.14062,0 z"
-         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path2993"
-         d="m 33.984375,76.40625 0,359.45313 14.21875,0 0,-359.45313 -14.21875,0 z"
-         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path2995"
-         d="m 908.04688,76.40625 0,359.45313 14.14062,0 0,-359.45313 -14.14062,0 z"
-         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path2997"
-         d="m 48.90625,151.71875 398.75,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path2999"
-         d="m 446.01562,145.15625 13.20313,6.5625 -13.20313,6.64063 0,-13.20313 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3001"
-         d="m 233.20312,122.8125 0,20 41.64063,0 0,-20 -41.64063,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <text
-         id="text3003"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="137.5"
-         x="233.75"
-         xml:space="preserve">CALL</text>
-      <path
-         id="path3005"
-         d="m 476.5625,173.90625 419.92188,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3007"
-         d="m 894.84375,167.34375 13.20313,6.5625 -13.20313,6.64063 0,-13.20313 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3009"
-         d="m 640.46875,145 0,20 103.67187,0 0,-20 -103.67187,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <text
-         id="text3011"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="160"
-         x="640"
-         xml:space="preserve">INVOCATION</text>
-      <text
-         id="text3013"
-         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="33.75"
-         x="2.5"
-         xml:space="preserve">Caller</text>
-      <text
-         id="text3015"
-         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="33.75"
-         x="865"
-         xml:space="preserve">Callee</text>
-      <text
-         id="text3017"
-         style="font-size:30px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="33.75"
-         x="422.5"
-         xml:space="preserve">Dealer</text>
+       id="g3017"
+       transform="translate(-836.28778,128.8985)">
       <path
          id="path3019"
-         d="m 908.59375,341.32812 -419.84375,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         d="m 461.82212,76.449227 0,359.655313 14.14858,0 0,-359.655313 -14.14858,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3021"
-         d="m 490.39062,347.96875 -13.20312,-6.64063 13.20312,-6.5625 0,13.20313 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 34.00349,76.449227 0,359.655313 14.226748,0 0,-359.655313 -14.226748,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3023"
-         d="m 608.59375,312.42188 0,20 168.59375,0 0,-20 -168.59375,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         d="m 908.55763,76.449227 0,359.655313 14.14858,0 0,-359.655313 -14.14858,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
-      <text
-         id="text3025"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="327.5"
-         x="608.75"
-         xml:space="preserve">INVOCATION ERROR</text>
+      <path
+         id="path3025"
+         d="m 48.933759,151.80409 398.974291,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
       <path
          id="path3027"
-         d="m 459.76562,364.92188 -398.749995,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         d="m 446.2665,145.2379 13.21055,6.56619 -13.21055,6.64436 0,-13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3029"
-         d="m 62.65625,371.5625 -13.203125,-6.64062 13.203125,-6.5625 0,13.20312 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3031"
-         d="m 201.40625,336.09375 0,20 106.48437,0 0,-20 -106.48437,0 z"
+         d="m 233.3343,122.88158 0,20.01125 41.66404,0 0,-20.01125 -41.66404,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3033"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="351.25"
-         x="201.25"
-         xml:space="preserve">CALL ERROR</text>
+         id="text3031"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="137.57735"
+         x="233.88148"
+         xml:space="preserve">CALL</text>
+      <path
+         id="path3033"
+         d="m 476.83056,174.00407 420.15807,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
       <path
          id="path3035"
-         d="m 51.796875,246.875 398.828125,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         d="m 895.34708,167.43788 13.21055,6.56619 -13.21055,6.64436 0,-13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3037"
-         d="m 448.98438,240.23438 13.20312,6.64062 -13.20312,6.5625 0,-13.20312 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3039"
-         d="m 200,217.96875 0,20 113.98438,0 0,-20 -113.98438,0 z"
+         d="m 640.829,145.08156 0,20.01125 103.73019,0 0,-20.01125 -103.73019,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
+      <text
+         id="text3039"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="160.09"
+         x="640.35999"
+         xml:space="preserve">INVOCATION</text>
       <text
          id="text3041"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="232.5"
-         x="200"
-         xml:space="preserve">CANCEL CALL</text>
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="2.5014062"
+         xml:space="preserve">Caller</text>
+      <text
+         id="text3043"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="865.48651"
+         xml:space="preserve">Callee</text>
+      <text
+         id="text3045"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="425.23904"
+         xml:space="preserve">Dealer</text>
       <path
-         id="path3043"
-         d="m 477.1875,270.46875 419.84375,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3047"
+         d="m 909.10481,341.52011 -420.0799,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3045"
-         d="m 895.39062,263.90625 13.20313,6.5625 -13.20313,6.5625 0,-13.125 z"
+         id="path3049"
+         d="m 490.66646,348.16447 -13.21055,-6.64436 13.21055,-6.56619 0,13.21055 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3047"
-         d="m 604.92188,241.5625 0,20 175.9375,0 0,-20 -175.9375,0 z"
+         id="path3051"
+         d="m 606.66917,312.59761 0,20.01124 173.22238,0 0,-20.01124 -173.22238,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3049"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="256.25"
-         x="605"
-         xml:space="preserve">CANCEL INVOCATION</text>
+         id="text3053"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="327.6842"
+         x="606.591"
+         xml:space="preserve">INVOCATION</text>
+      <text
+         id="text3055"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="327.6842"
+         x="710.39935"
+         xml:space="preserve">_</text>
+      <text
+         id="text3057"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="327.6842"
+         x="719.1543"
+         xml:space="preserve">ERROR</text>
+      <path
+         id="path3059"
+         d="m 460.02423,365.12714 -398.974285,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3061"
+         d="m 62.691493,371.7715 -13.210552,-6.64436 13.210552,-6.5662 0,13.21056 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3063"
+         d="m 199.17447,336.2828 0,20.01124 111.2344,0 0,-20.01124 -111.2344,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3065"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="351.44757"
+         x="198.86179"
+         xml:space="preserve">CALL</text>
+      <text
+         id="text3067"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="351.44757"
+         x="241.3857"
+         xml:space="preserve">_</text>
+      <text
+         id="text3069"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="351.44757"
+         x="250.14063"
+         xml:space="preserve">ERROR</text>
+      <path
+         id="path3071"
+         d="m 51.82601,247.01386 399.05246,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3073"
+         d="m 449.23692,240.3695 13.21055,6.64436 -13.21055,6.56619 0,-13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3075"
+         d="m 197.8456,218.09135 0,20.01125 118.58228,0 0,-20.01125 -118.58228,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3077"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="232.63078"
+         x="197.61108"
+         xml:space="preserve">CANCEL</text>
+      <text
+         id="text3079"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="232.63078"
+         x="265.14905"
+         xml:space="preserve">_</text>
+      <text
+         id="text3081"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="232.63078"
+         x="275.15469"
+         xml:space="preserve">CALL</text>
+      <path
+         id="path3083"
+         d="m 477.45591,270.62088 420.0799,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3085"
+         d="m 895.89426,264.05469 13.21055,6.56619 -13.21055,6.56619 0,-13.13238 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3087"
+         d="m 602.91706,241.69837 0,20.01125 180.7266,0 0,-20.01125 -180.7266,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3089"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="256.39413"
+         x="602.83887"
+         xml:space="preserve">CANCEL</text>
+      <text
+         id="text3091"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="256.39413"
+         x="670.37683"
+         xml:space="preserve">_</text>
+      <text
+         id="text3093"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="256.39413"
+         x="680.38251"
+         xml:space="preserve">INVOCATION</text>
     </g>
   </g>
 </svg>

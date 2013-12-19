@@ -238,9 +238,9 @@ WAMP defines the following messages which are explained in detail in the further
     
 #### Dealer-to-Caller
 
-    [CALL_PROGRESS, 		CALL.Request|id, Progress|list, ProgressKw|dict]
-    [CALL_RESULT,   		CALL.Request|id, Result|list, ResultKw|dict]
-    [CALL_ERROR,    		CALL.Request|id, Error|uri, Exception|any]
+    [CALL_PROGRESS, 		CALL.Request|id, INVOCATION_PROGRESS.Progress|list, INVOCATION_PROGRESS.ProgressKw|dict]
+    [CALL_RESULT,   		CALL.Request|id, INVOCATION_RESULT.Result|list, INVOCATION_RESULT.ResultKw|dict]
+    [CALL_ERROR,    		CALL.Request|id, INVOCATION_ERROR.Error|uri, INVOCATION_ERROR.Exception|any]
 
 #### Callee-to-Dealer
 
@@ -256,7 +256,7 @@ WAMP defines the following messages which are explained in detail in the further
     [REGISTER_ERROR, 		REGISTER.Request|id, Error|uri]
     [UNREGISTERED,   		UNREGISTER.Request|id]
     [UNREGISTER_ERROR, 		UNREGISTER.Request|id, Error|uri]
-    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Options|dict, Arguments|list, ArgumentsKw|dict]
+    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Options|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
     [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
 

@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="964.88281"
-   height="622.23145"
+   width="965.41425"
+   height="622.57019"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="458.38363"
-     inkscape:cy="298.46037"
+     inkscape:zoom="0.7"
+     inkscape:cx="503.86676"
+     inkscape:cy="-2.4206192"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -34,10 +34,10 @@
      fit-margin-left="10"
      fit-margin-right="10"
      fit-margin-bottom="10"
-     inkscape:window-width="1680"
-     inkscape:window-height="988"
-     inkscape:window-x="-8"
-     inkscape:window-y="320"
+     inkscape:window-width="1050"
+     inkscape:window-height="1658"
+     inkscape:window-x="1672"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -55,222 +55,318 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(385.29855,-86.960748)">
+     transform="translate(413.71996,34.950046)">
     <g
-       id="g2989"
-       transform="translate(-379.29269,85.051568)">
+       id="g3027"
+       transform="translate(-407.71635,-36.865926)">
       <path
-         id="path2991"
-         d="m 460.9375,70.859375 0,543.281245 14.21875,0 0,-543.281245 -14.21875,0 z"
+         id="path3029"
+         d="m 461.19677,70.899232 0,543.586838 14.22674,0 0,-543.586838 -14.22674,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path2993"
-         d="m 33.4375,70.859375 0,543.281245 14.140625,0 0,-543.281245 -14.140625,0 z"
+         id="path3031"
+         d="m 33.456308,70.899232 0,543.586838 14.148579,0 0,-543.586838 -14.148579,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path2995"
-         d="m 907.42188,70.859375 0,543.281245 14.14062,0 0,-543.281245 -14.14062,0 z"
+         id="path3033"
+         d="m 907.93228,70.899232 0,543.586838 14.14858,0 0,-543.586838 -14.14858,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
-      <path
-         id="path2997"
-         d="m 48.28125,144.84375 398.75,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path2999"
-         d="m 445.39062,138.20312 13.20313,6.64063 -13.20313,6.5625 0,-13.20313 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3001"
-         d="m 232.57812,115.9375 0,20 41.71876,0 0,-20 -41.71876,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <text
-         id="text3003"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="131.25"
-         x="232.5"
-         xml:space="preserve">CALL</text>
-      <path
-         id="path3005"
-         d="m 476.01562,167.03125 419.84376,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3007"
-         d="m 894.21875,160.39062 13.20313,6.64063 -13.20313,6.5625 0,-13.20313 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3009"
-         d="m 639.84375,138.125 0,20 103.75,0 0,-20 -103.75,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <text
-         id="text3011"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="152.5"
-         x="640"
-         xml:space="preserve">INVOCATION</text>
-      <path
-         id="path3013"
-         d="m 907.42188,506.95312 -419.84376,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3015"
-         d="m 489.21875,513.51562 -13.20313,-6.5625 13.20313,-6.5625 0,13.125 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3017"
-         d="m 562.5,478.04688 0,20 258.35938,0 0,-20 -258.35938,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <text
-         id="text3019"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="492.5"
-         x="562.5"
-         xml:space="preserve">INVOCATION RESULT or ERROR</text>
-      <path
-         id="path3021"
-         d="m 458.59375,529.14062 -398.75,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3023"
-         d="m 61.484375,535.70312 -13.203125,-6.5625 13.203125,-6.5625 0,13.125 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <path
-         id="path3025"
-         d="m 155.23438,500.23438 0,20 196.40624,0 0,-20 -196.40624,0 z"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
-         inkscape:connector-curvature="0" />
-      <text
-         id="text3027"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="515"
-         x="155"
-         xml:space="preserve">CALL RESULT or ERROR</text>
-      <text
-         id="text3029"
-         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="33.75"
-         x="2.5"
-         xml:space="preserve">Caller</text>
-      <text
-         id="text3031"
-         style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="33.75"
-         x="865"
-         xml:space="preserve">Callee</text>
-      <text
-         id="text3033"
-         style="font-size:30px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="33.75"
-         x="422.5"
-         xml:space="preserve">Dealer</text>
       <path
          id="path3035"
-         d="m 907.42188,374.14062 -419.84376,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         d="m 48.308407,144.92522 398.974283,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3037"
-         d="m 489.21875,380.70312 -13.20313,-6.5625 13.20313,-6.64062 0,13.20312 z"
+         d="m 445.64115,138.28086 13.21055,6.64436 -13.21055,6.56619 0,-13.21055 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3039"
-         d="m 590.3125,345.23438 0,20 202.8125,0 0,-20 -202.8125,0 z"
+         d="m 232.70894,116.00271 0,20.01125 41.74222,0 0,-20.01125 -41.74222,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3041"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="360"
-         x="590"
-         xml:space="preserve">INVOCATION PROGRESS</text>
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="131.32384"
+         x="232.63078"
+         xml:space="preserve">CALL</text>
       <path
          id="path3043"
-         d="m 458.59375,396.32812 -398.75,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         d="m 476.28337,167.1252 420.07991,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3045"
-         d="m 61.484375,402.89062 -13.203125,-6.5625 13.203125,-6.64062 0,13.20312 z"
+         d="m 894.72173,160.48084 13.21055,6.64436 -13.21055,6.56619 0,-13.21055 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3047"
-         d="m 183.04688,367.42188 0,20 140.78124,0 0,-20 -140.78124,0 z"
+         d="m 640.20365,138.20269 0,20.01125 103.80835,0 0,-20.01125 -103.80835,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3049"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="382.5"
-         x="182.5"
-         xml:space="preserve">CALL PROGRESS</text>
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="152.58578"
+         x="640.35999"
+         xml:space="preserve">INVOCATION</text>
       <path
          id="path3051"
-         d="m 904.21875,307.57812 -419.92187,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         d="m 907.93228,507.23827 -420.0799,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3053"
-         d="m 486.01562,314.14062 -13.20312,-6.5625 13.20312,-6.64062 0,13.20312 z"
+         d="m 489.49392,513.80447 -13.21055,-6.5662 13.21055,-6.56619 0,13.13239 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3055"
-         d="m 587.10938,278.67188 0,20 202.8125,0 0,-20 -202.8125,0 z"
+         d="m 504.03335,478.31577 0,20.01124 376.14895,0 0,-20.01124 -376.14895,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3057"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="293.75"
-         x="587.5"
-         xml:space="preserve">INVOCATION PROGRESS</text>
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="492.77701"
+         x="504.03336"
+         xml:space="preserve">INVOCATION</text>
+      <text
+         id="text3059"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="492.77701"
+         x="607.84167"
+         xml:space="preserve">_</text>
+      <text
+         id="text3061"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="492.77701"
+         x="616.59662"
+         xml:space="preserve">RESULT or INVOCATION</text>
+      <text
+         id="text3063"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="492.77701"
+         x="810.45563"
+         xml:space="preserve">_</text>
+      <text
+         id="text3065"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="492.77701"
+         x="820.46124"
+         xml:space="preserve">ERROR</text>
       <path
-         id="path3059"
-         d="m 455.54688,329.76562 -398.750005,0"
-         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3067"
+         d="m 458.8517,529.43825 -398.974289,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3061"
-         d="m 58.4375,336.32812 -13.203125,-6.5625 13.203125,-6.64062 0,13.20312 z"
+         id="path3069"
+         d="m 61.518959,536.00445 -13.210552,-6.5662 13.210552,-6.56619 0,13.13239 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3063"
-         d="m 180,300.85938 0,20 140.78125,0 0,-20 -140.78125,0 z"
+         id="path3071"
+         d="m 127.57172,500.51575 0,20.01124 252.09484,0 0,-20.01124 -252.09484,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3065"
-         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="316.25"
-         x="180"
-         xml:space="preserve">CALL PROGRESS</text>
+         id="text3073"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="515.28967"
+         x="127.57172"
+         xml:space="preserve">CALL</text>
       <text
-         id="text3067"
-         style="font-size:16.25px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="432.5"
-         x="686.25"
+         id="text3075"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="515.28967"
+         x="168.84492"
+         xml:space="preserve">_</text>
+      <text
+         id="text3077"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="515.28967"
+         x="178.85054"
+         xml:space="preserve">RESULT or CALL</text>
+      <text
+         id="text3079"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="515.28967"
+         x="310.17438"
+         xml:space="preserve">_</text>
+      <text
+         id="text3081"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="515.28967"
+         x="318.92929"
+         xml:space="preserve">ERROR</text>
+      <text
+         id="text3083"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="2.5014062"
+         xml:space="preserve">Caller</text>
+      <text
+         id="text3085"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="865.48651"
+         xml:space="preserve">Callee</text>
+      <text
+         id="text3087"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="425.23904"
+         xml:space="preserve">Dealer</text>
+      <path
+         id="path3089"
+         d="m 907.93228,374.35107 -420.0799,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3091"
+         d="m 489.49392,380.91726 -13.21055,-6.56619 13.21055,-6.64436 0,13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3093"
+         d="m 588.29947,345.42856 0,20.01125 207.61671,0 0,-20.01125 -207.61671,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3095"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="360.20248"
+         x="587.83044"
+         xml:space="preserve">INVOCATION</text>
+      <text
+         id="text3097"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="360.20248"
+         x="691.63879"
+         xml:space="preserve">_</text>
+      <text
+         id="text3099"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="360.20248"
+         x="701.64447"
+         xml:space="preserve">PROGRESS</text>
+      <path
+         id="path3101"
+         d="m 458.8517,396.55105 -398.974289,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3103"
+         d="m 61.518959,403.11724 -13.210552,-6.56619 13.210552,-6.64436 0,13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3105"
+         d="m 180.80477,367.62854 0,20.01125 145.55057,0 0,-20.01125 -145.55057,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3107"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="382.71515"
+         x="181.35194"
+         xml:space="preserve">CALL</text>
+      <text
+         id="text3109"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="382.71515"
+         x="222.62515"
+         xml:space="preserve">_</text>
+      <text
+         id="text3111"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="382.71515"
+         x="231.38007"
+         xml:space="preserve">PROGRESS</text>
+      <path
+         id="path3113"
+         d="m 904.72735,307.75113 -420.15807,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3115"
+         d="m 486.289,314.31732 -13.21055,-6.56619 13.21055,-6.64436 0,13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3117"
+         d="m 585.09454,278.82862 0,20.01125 207.53855,0 0,-20.01125 -207.53855,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3119"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="293.91522"
+         x="585.32904"
+         xml:space="preserve">INVOCATION</text>
+      <text
+         id="text3121"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="293.91522"
+         x="689.13739"
+         xml:space="preserve">_</text>
+      <text
+         id="text3123"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="293.91522"
+         x="697.89233"
+         xml:space="preserve">PROGRESS</text>
+      <path
+         id="path3125"
+         d="m 455.80311,329.95111 -398.974288,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3127"
+         d="m 58.47037,336.5173 -13.210552,-6.56619 13.210552,-6.64436 0,13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3129"
+         d="m 177.75618,301.0286 0,20.01125 145.55057,0 0,-20.01125 -145.55057,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3131"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="316.42789"
+         x="177.59984"
+         xml:space="preserve">CALL</text>
+      <text
+         id="text3133"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="316.42789"
+         x="218.87305"
+         xml:space="preserve">_</text>
+      <text
+         id="text3135"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="316.42789"
+         x="228.87868"
+         xml:space="preserve">PROGRESS</text>
+      <text
+         id="text3137"
+         style="font-size:16.25914001px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="432.74326"
+         x="686.63599"
          xml:space="preserve">. . .</text>
       <text
-         id="text3069"
-         style="font-size:16.25px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="455"
-         x="236.25"
+         id="text3139"
+         style="font-size:16.25914001px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="455.25592"
+         x="236.38289"
          xml:space="preserve">. . .</text>
     </g>
   </g>
