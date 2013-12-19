@@ -400,7 +400,7 @@ A *Subscriber* communicates it's interest in a topic to a *Broker* by sending a 
     [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
  * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
- * `SUBSCRIBE.Options` is a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
+ * `Options` is a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
  * `Topic` is the topic the *Subscriber* wants to subscribe to.
 
 *Example*
@@ -412,13 +412,13 @@ If the *Broker* is able to fulfil and allowing the subscription, it answers by s
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
  * `SUBSCRIBE.Request` is the ID from the original request.
- * `Subscription` is a ID chosen by the *Broker* for the subscription.
+ * `Subscription` is an ID chosen by the *Broker* for the subscription.
 
 *Example*
 
 	[11, 713845233, 5512315355]
 
-> Note. The `Subscription` ID chosen by the broker may be unique only for the `Topic` (and possibly other information from `Options`, such as the topic pattern matching method to be used). The ID might be the same for any *Subscriber* for the same `Topic`. This allows the *Broker* to only serialize an event to be delivered once for all actual receivers of the event.
+> Note. The `Subscription` ID chosen by the broker may be unique only for the `Topic` (and possibly other information from `Options`, such as the topic pattern matching method to be used). The ID might be the same for any *Subscriber* for the same `Topic`. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
 > 
 
 When the request for subscription cannot be fulfilled by the broker, the broker sends back a `SUBSCRIBE_ERROR` message to the *Subscriber*
@@ -432,11 +432,12 @@ When the request for subscription cannot be fulfilled by the broker, the broker 
 
 	[12, 713845233, "wamp.error.notauthorized"]
 
-When a *Subscriber* is no longer interested in receiving events for a subscription it send an `UNSUBSCRIBE` message
+When a *Subscriber* is no longer interested in receiving events for a subscription it sends an `UNSUBSCRIBE` message
 
     [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
-The `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request. The `SUBSCRIBED.Subscription` is the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
+ * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
+ * `SUBSCRIBED.Subscription` is the ID for the subscription to unscribe from, originally handed out by the *Broker* to the *Subscriber*.
 
 *Example*
 
@@ -480,7 +481,7 @@ When a *Publisher* wishes to publish an event to some topic, it sends a `PUBLISH
     [PUBLISH, Request|id, Options|dict, Topic|uri, Event|any]
 
  * `Request` is a random, ephemeral ID chosen by the *Publisher* and used to correlate the *Broker's* response with the request.
- * `Options` is a dictionary that allows to provide additional publication request details in a extensible way. This is described further below.
+ * `Options` is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.
  * `Event` is an arbitrary application-level event payload.
 
 *Example*
@@ -542,18 +543,92 @@ When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send 
 	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", null]
 
 
+### Publisher Exclusion
+
+By default, a *Publisher* of an event will not receive an event published itself, even when (also) subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via `PUBLISH.Options.excludeme`.
+
+*Example*
+
+    [30, 239714735, {"excludeme": 0}, "com.myapp.mytopic1", "Hello, world!"]
+
+
+### Exclude and Eligible
+
+A *Publisher* MAY restrict the receivers of an event beyond those subscribed via `PUBLISH.Options.exclude|list` and `PUBLISH.Options.eligible|list`.
+
+`PUBLISH.Options.exclude` is a list of WAMP session IDs providing an explicit list of (potential) *Subscribers* that won't receive a published event, even though they might be subscribed. In other words, a blacklist of (potential) *Subscribers*.
+
+`PUBLISH.Options.eligible` is a list of WAMP session IDs providing an explicit list of (potential) *Subscribers* that are allowed to receive a published event. In other words, a blacklist of (potential) *Subscribers*.
+
+The *Broker* will dispatch events published only to *Subscribers* that are not explicitly excluded and are explicitly eligible.
+
+*Example*
+
+    [30, 239714735, {"exclude": [7891255, 1245751]}, "com.myapp.mytopic1", "Hello, world!"]
+ 
+*Example*
+
+    [30, 239714735, {"eligible": [7891255, 1245751]}, "com.myapp.mytopic1", "Hello, world!"]
+
+*Example*
+
+    [30, 239714735, {"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]}, "com.myapp.mytopic1", "Hello, world!"]
+
+
+### Publisher Identification
+
+A *Publisher* MAY request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event via `PUBLISH.Options.discloseme|int`:
+
+*Example*
+
+    [30, 239714735, {"discloseme": 1}, "com.myapp.mytopic1", "Hello, world!"]
+
+If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`. 
+
+*Example*
+
+	[40, 5512315355, 4429313566, {"publisher": 3335656}, "com.myapp.mytopic1", "Hello, world!"]
+
+Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
+
+A *Broker* MAY deny a *Publisher's* request to disclose it's identity
+
+*Example*
+
+    [32, 239714735, "wamp.error.discloseme.notallowed"]
+
+
 ### Pattern-based Subscriptions
 
 *Example*
 
 	[10, 912873614, "com.myapp.topic.emergency", {"match": "prefix"}]
 
+*Example*
 
-### Metaevents
+	[10, 912873614, "com.myapp..userevent", {"match": "wildcard"}]
 
-    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri]
-    [METAEVENT,    			SUBSCRIBED.Subscription|id, Metatopic|uri, Details|dict]
 
+### Meta Events
+
+*Example*
+
+	[10, 713845233,
+         {"metatopics": ["wamp.metatopic.subscriber.joined",
+                         "wamp.metatopic.subscriber.left"]},
+         "com.myapp.mytopic1"]
+
+Metaevents are always generated by the *Broker* itself:
+
+    [METAEVENT, SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
+
+*Example*
+
+	[41, 5512315355, 71415664, "wamp.metatopic.subscriber.joined", 71254637]
+
+*Example*
+
+	[41, 5512315355, 35262477, "wamp.metatopic.subscriber.left", 71254637]
 
 
 ![alt text](figure/rpc_call1.png "RPC Message Flow: Calls")
