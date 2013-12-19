@@ -211,14 +211,15 @@ WAMP defines the following messages which are explained in detail in the further
     [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
     [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
     [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
-    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Topic|uri, PUBLISH.Event|any]
+    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+								PUBLISH.Topic|uri, PUBLISH.Event|any]
     [METAEVENT,    			SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
 
 ### Remote Procedure Calls
 
 #### Caller-to-Dealer
 
-    [CALL,         			Request|id, Procedure|uri, Options|dict, Arguments|list, ArgumentsKw|dict]
+    [CALL,         			Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
     [CANCEL_CALL,  			CALL.Request|id, Options|dict]
     
 #### Dealer-to-Caller
