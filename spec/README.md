@@ -307,12 +307,14 @@ WAMP defines the following messages which are explained in detail in the further
 
 ### Hello and Goodbye
 
-When a WAMP session starts, the peers introduce themselves to each other by sending a `HELLO` message. The `HELLO` message MUST be the very first message sent by each of the two peers after the transport has been established:
+When a WAMP session starts, the peers introduce themselves to each other by sending a `HELLO` message:
 
     [HELLO, Session|id, Details|dict]
 
  * `Session` MUST BE a randomly generated ID specific to the WAMP session for each direction. Each peer tells it connected peer the `Session` ID under which it is identified (for the lifetime of the WAMP session). 
  * `Details` is a dictionary that allows to provide additional opening information (see below).
+
+The `HELLO` message MUST be the very first message sent by each of the two peers after the transport has been established and a peer MUST wait for the `HELLO` message to be received from the other peer before performing anything else. It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the peer MUST fail the session if that happens.
 
 The `HELLO.Session` can (later) be used for:
 
@@ -321,7 +323,40 @@ The `HELLO.Session` can (later) be used for:
 
 *Example*
 
-    [1, 9129137332, {}]
+    [1, 9129137332, {... see below ...}]
+
+A WAMP peer MUST announce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+
+ * `publisher`
+ * `subscriber`
+ * `broker`
+ * `caller`
+ * `callee`
+ * `dealer`
+
+A peer can support any combination of above roles but MUST support at least one role.
+
+*Example: A peer that can act as Publisher and Subscriber, but only supports basic features.*
+
+	[1, 9129137332, {
+		"roles": {
+			"publisher": {},
+			"subscriber": {}
+		}
+	}]
+
+*Example: A peer that can act as a Broker and supports a couple of optional features.*
+
+	[1, 9129137332, {
+		"roles": {
+			"broker": {
+				"exclude": 1,
+			 	"eligible": 1,
+			 	"exclude_me": 1,
+			 	"disclose_me": 1
+			}
+     	}
+	}]
 
 Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` message MAY disclose the WAMP implementation in use to it's peer:
 
