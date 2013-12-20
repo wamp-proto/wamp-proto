@@ -5,7 +5,7 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
 ## Introduction
 
-WAMP ("The WebSocket Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns within one protocol:
+WAMP ("Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns within one protocol:
 
  * Publish & Subscribe
  * Remote Procedure Calls
@@ -481,7 +481,7 @@ When a *Subscriber* is no longer interested in receiving events for a subscripti
     [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
  * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
- * `SUBSCRIBED.Subscription` is the ID for the subscription to unscribe from, originally handed out by the *Broker* to the *Subscriber*.
+ * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubcribe from, originally handed out by the *Broker* to the *Subscriber*.
 
 *Example*
 
