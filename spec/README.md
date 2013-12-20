@@ -562,6 +562,10 @@ When the request for publication cannot be fulfilled by the *Broker*, the *Broke
 
     [32, 239714735, "wamp.error.not_authorized"]
 
+*Example*
+
+    [32, 239714735, "wamp.error.invalid_topic"]
+
 When a publication is successful and a *Broker* dispatches the event, it will determine a list of actual receivers for the event based on subscribers for the topic published to and possibly other information in the event (such as exclude and eligible receivers).
 
 When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send the *Subscriber* an `EVENT` message:
@@ -589,34 +593,42 @@ When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send 
 
 ### Publisher Exclusion
 
-By default, a *Publisher* of an event will not receive an event published itself, even when (also) subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via `PUBLISH.Options.excludeme`.
+By default, a *Publisher* of an event will **not** receive an event published itself, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via `PUBLISH.Options.exclude_me|integer`.
+
+`PUBLISH.Options.exclude_me` must be a `integer` with value either `0` or `1`. When publishing with `PUBLISH.Options.exclude_me == 0`, the *Publisher* of the event will receive that very event also if it is subscribed to the `Topic` published to.
 
 *Example*
 
     [30, 239714735, {"exclude_me": 0}, "com.myapp.mytopic1", "Hello, world!"]
+
+In this example, the *Publisher* will receive the published event also, if it is subscribed to `com.myapp.mytopic1`.
 
 
 ### Exclude and Eligible
 
 A *Publisher* MAY restrict the receivers of an event beyond those subscribed via `PUBLISH.Options.exclude|list` and `PUBLISH.Options.eligible|list`.
 
-`PUBLISH.Options.exclude` is a list of WAMP session IDs providing an explicit list of (potential) *Subscribers* that won't receive a published event, even though they might be subscribed. In other words, a blacklist of (potential) *Subscribers*.
+`PUBLISH.Options.exclude` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Subscribers* that won't receive a published event, even though they might be subscribed. In other words, `PUBLISH.Options.exclude` is a blacklist of (potential) *Subscribers*.
 
-`PUBLISH.Options.eligible` is a list of WAMP session IDs providing an explicit list of (potential) *Subscribers* that are allowed to receive a published event. In other words, a blacklist of (potential) *Subscribers*.
+`PUBLISH.Options.eligible` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Subscribers* that are allowed to receive a published event. In other words, `PUBLISH.Options.eligible` is a whitelist of (potential) *Subscribers*.
 
-The *Broker* will dispatch events published only to *Subscribers* that are not explicitly excluded and are explicitly eligible.
+The *Broker* will dispatch events published only to *Subscribers* that are not explicitly excluded via `PUBLISH.Options.exclude` **and** which are explicitly eligible via `PUBLISH.Options.eligible`.
 
 *Example*
 
     [30, 239714735,
 		{"exclude": [7891255, 1245751]},
 		"com.myapp.mytopic1", "Hello, world!"]
- 
+
+The above event will get dispatched to all *Subscribers* of `com.myapp.mytopic1`, but NOT WAMP sessions with IDs `7891255` or `1245751` (and also not the publishing session).
+
 *Example*
 
     [30, 239714735,
 		{"eligible": [7891255, 1245751]},
 		"com.myapp.mytopic1", "Hello, world!"]
+
+The above event will get dispatched to WAMP sessions with IDs `7891255` or `1245751` only - but only if those are subscribed to the topic `com.myapp.mytopic1`.
 
 *Example*
 
@@ -624,16 +636,18 @@ The *Broker* will dispatch events published only to *Subscribers* that are not e
 		{"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
 		"com.myapp.mytopic1", "Hello, world!"]
 
+The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912315` only (since `7891255` is excluded) - but only if those are subscribed to the topic `com.myapp.mytopic1`.
+
 
 ### Publisher Identification
 
-A *Publisher* MAY request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event via `PUBLISH.Options.disclose_me|int`:
+A *Publisher* MAY **request** the disclosure of it's identity (it's WAMP session ID) to receivers of a published event via `PUBLISH.Options.disclose_me|int`:
 
 *Example*
 
     [30, 239714735, {"disclose_me": 1}, "com.myapp.mytopic1", "Hello, world!"]
 
-If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`. 
+If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`:
 
 *Example*
 
@@ -641,7 +655,7 @@ If above event would have been published by a *Publisher* with WAMP session ID `
 
 Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
 
-A *Broker* MAY deny a *Publisher's* request to disclose it's identity
+A *Broker* MAY deny a *Publisher's* request to disclose it's identity:
 
 *Example*
 
@@ -658,18 +672,43 @@ A *Broker* must use `Details.trustlevel|integer` in an `EVENT` message sent to a
 
 	[40, 5512315355, 4429313566, {"trustlevel": 2}, "com.myapp.mytopic1", "Hello, world!"]
 
+In above event, the *Broker* has (by configuration and/or other information) deemed the event publication to be of `trustlevel == 2`.
 
 
 ### Pattern-based Subscriptions
 
+By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) matches *exactly* the topic subscribed to (`SUBSCRIBE.Topic`).
+
+If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, this matching can happen by
+
+ * prefix-matching policy
+ * wildcard-matching policy
+
+A *Subscriber* requests **prefix-matching policy** by setting `SUBSCRIBE.Options.match|string == "prefix"`.
+
 *Example*
 
-	[10, 912873614, "com.myapp.topic.emergency", {"match": "prefix"}]
+	[10, 912873614, {"match": "prefix"}, "com.myapp.topic.emergency"]
+
+When a **prefix-matching policy** is in place, any event with a topic that has `SUBSCRIBE.Topic` as a *prefix* will match the subscription, and potentially delivered to *Subscribers* on the subscription.
+
+In above example, events with `PUBLISH.Topic` e.g. `com.myapp.topic.emergency.11`, `com.myapp.topic.emergency-low`, `com.myapp.topic.emergency.category.severe` and `com.myapp.topic.emergency` will all apply for dispatching. An event with `PUBLISH.Topic` e.g. `com.myapp.topic.emergenc` will NOT apply.
+
+The *Broker* will apply the prefix-matching based on the UTF-8 encoded byte string for the `PUBLISH.Topic` and the `SUBSCRIBE.Topic`.
+
+A *Subscriber* requests **wildcard-matching policy** by setting `SUBSCRIBE.Options.match|string == "prefix"`.
+
+Wildcard-matching allows to provide wildcards for (whole) URI components.
 
 *Example*
 
-	[10, 912873614, "com.myapp..userevent", {"match": "wildcard"}]
+	[10, 912873614, {"match": "wildcard"}, "com.myapp..userevent"]
 
+In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with `PUBLISH.Topic` e.g. `com.myapp.foo.userevent`, `com.myapp.bar.userevent` or `com.myapp.a12.userevent` will all apply for dispatching. Events with `PUBLISH.Topic` e.g. `com.myapp.foo.userevent.bar`, `com.myapp.foo.user` or `com.myapp2.foo.userevent` will NOT apply for dispatching.
+
+When a single event matches more than one of a *Subscribers* subscriptions, the event will be delivered for each subscription. The *Subscriber* can detect the delivery of that same event on multiple subscriptions via `EVENT.PUBLISHED.Publication`, which will be identical.
+
+Since each *Subscribers* subscription "stands on it's own", there is no *set semantics* implied by pattern-based subscriptions. E.g. a *Subscriber* cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.
 
 
 ### Meta Events
