@@ -336,6 +336,10 @@ A WAMP peer MUST announce the roles it supports via `Hello.Details.roles|dict`, 
 
 A peer can support any combination of above roles but MUST support at least one role.
 
+Further *Publisher* and *Subscriber* peers can only talk to *Broker* peers, and *Caller* and *Callee* peers can only talk to *Dealer* peers.
+
+A *Publisher* peer cannot talk to another peer that only implements e.g. a *Callee* role.  
+
 *Example: A peer that can act as Publisher and Subscriber, but only supports basic features.*
 
 	[1, 9129137332, {
