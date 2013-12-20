@@ -16,7 +16,7 @@ There is however another requirement (desirable goal) in WAMPv2: the *applicatio
 > This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes.
 > 
 
-Authentication is a complex area: some apps might want to leverage authentication information coming from the transport underlying WAMP (e.g. cookies or TLS client cert auth), other apps might want to do their own authentication on top of WAMP. So I still don't think it's a good idea to put that into WAMP wire level protocol.
+
 
 
 A procedure that is provided by a *Callee* to be called via WAMP by *Callers* is said to be *exported*. An exported procedure is called **RPC endpoint**.
@@ -46,75 +46,4 @@ Results from the individual partitions are returned as progressive results via `
 In mode `"all"` the RPC is routed to all database instances holding data from partitions of the specified list.
 
 In mode `"any"` the RPC is routed to a single database instance, randomly selected from the instances holding data from partitions of the specified list.
-
-
-
-
-
-## WAMP URIs
-
-### Predefined URIs
-
-WAMP reserves the [*http(s)://api.wamp.ws*](https://wamp.ws) namespace for identifying WAMP builtin RPC endpoints, PubSub topics, metaevents and errors.
-
-WAMP predefines the following URIs:
-
-* WAMP Authentication API:
-  * [https://api.wamp.ws/procedure#requestAuthentication](https://api.wamp.ws/procedure#requestAuthentication)
-  * [https://api.wamp.ws/procedure#authenticate](https://api.wamp.ws/procedure#authenticate)
-* WAMP Reflection API:
-  * [https://api.wamp.ws/procedure#listProcedures](https://api.wamp.ws/procedure#listProcedures)
-  * [https://api.wamp.ws/procedure#listTopics](https://api.wamp.ws/procedure#listTopics)
-  * [https://api.wamp.ws/procedure#describeProcedure](https://api.wamp.ws/procedure#describeProcedure)
-  * [https://api.wamp.ws/procedure#describeTopic](https://api.wamp.ws/procedure#describeTopic)
-* WAMP PubSub Metatopics:
-  * [https://api.wamp.ws/metatopic#onSub](https://api.wamp.ws/metatopic#onSub)
-* WAMP Errors:
-  * [https://api.wamp.ws/error#InvalidArgument](https://api.wamp.ws/error#InvalidArgument)
-
-
-## WAMP Reflection
-
-*Reflection* denotes the ability of WAMP peers to examine the RPC endpoints and PubSub topics provided by other peers.
-
-I.e. a WAMP peer may be interested in retrieving a machine readable list and description of WAMP RPC endpoints and PubSub topics he is authorized to access in the context of a WAMP session.
-
-Reflection may be useful in the following cases:
-
-* documentation
-* discoverability
-* generating stubs and proxies
-
-> Reflection should be available both from within peers via the WAMP protocol, as well as over the Web via plain old HTTP/GET requests.
-> 
-
-
-With WAMP Challenge-Response Authentication, the client already gets a list of RPC endpoint URIs (and PubSub topics) he is authorized to use. WAMP-CRA is implemented on top of 2 predefined RPCs
-
-
-### Reflection via HTTP
-
-WAMP URIs used to identify application-specific or WAMP-predefined RPC endpoints and PubSub topics should be dereferencable via the HTTP or HTTPS protocols.
-
-E.g. when dereferencing the (predefined) topic URI [https://api.wamp.ws/metatopic#onSub](http://wamp.ws), you get back a human readable HTML document that describes the context and meaning of the *onSub* meta topic and structure of respective event payloads.
-
-When a `Content-Type` is specified while doing the HTTP/GET, machine readable reflection data about the API may be returned. I.e. the reflection information may be returned in JSON format.
-
-
-### Reflection via WAMP
-
-WAMP predefines the following RPC endpoints for performing run-time reflection on WAMP peers:
-
-  * [https://api.wamp.ws/procedure#listProcedures](https://api.wamp.ws/procedure#listProcedures)
-  * [https://api.wamp.ws/procedure#listTopics](https://api.wamp.ws/procedure#listTopics)
-  * [https://api.wamp.ws/procedure#describeProcedure](https://api.wamp.ws/procedure#describeProcedure)
-  * [https://api.wamp.ws/procedure#describeTopic](https://api.wamp.ws/procedure#describeTopic)
-
-
-## WAMP Authentication
-
-WAMP predefines the following RPC endpoints for performing *Challenge-Response* authentication of peers during a WAMP session:
-
-  * [https://api.wamp.ws/procedure#requestAuthentication](https://api.wamp.ws/procedure#authenticationRequest)
-  * [https://api.wamp.ws/procedure#authenticate](https://api.wamp.ws/procedure#authenticate)
 

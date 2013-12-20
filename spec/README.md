@@ -129,11 +129,11 @@ Peers might implement more than one role: e.g. a peer might act as *Caller*, *Pu
 
 ## URIs
 
-WAMP needs to identify *persistent* resources like:
+WAMP needs to identify the following *persistent* resources:
 
-  * Topics
-  * Procedures
-  * Errors
+  1. Topics
+  2. Procedures
+  3. Errors
 
 These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MUST BE UTF-8 encoded Unicode strings.
 
@@ -141,14 +141,20 @@ These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MU
 
 	com.myapp.mytopic1
 	com.myapp.myprocedure1
-	com.myapp.mymodule.somerror
+	com.myapp.myerror1
 
-The URIs are understood to form a global, hierarchical namespace for WAMP. To avoid resource naming conflicts, we follow the package naming convention from Java where URIs SHOULD begin with (reversed) domain names owned by the organization defining the URI.
+The URIs are understood to form a single, global, hierarchical namespace for WAMP.
+
+> The namespace is unified for topics, procedures and errors - these different resource types do NOT have separate namespaces.
+> 
+
+To avoid resource naming conflicts, we follow the package naming convention from Java where URIs SHOULD begin with (reversed) domain names owned by the organization defining the URI.
 
 URI components (the parts between between `.`) MUST NOT contain `.` and MUST NOT be empty (zero-length strings).
 
 > We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions.
-> 
+
+URIs MUST NOT contain `#`, which is reserved for internal use by *Dealers* and *Brokers*.
 
 URI components SHOULD match the regular expression `[a-z][a-z0-9_]*` (that is start with a letter, followed by zero or more letters, digits or `_`).
 
@@ -159,13 +165,15 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 
 ## IDs
 
-WAMP needs to identify *ephemeral* "things" like:
+WAMP needs to identify the following *ephemeral* entities:
 
- * Requests
- * Subscriptions
- * Registrations
+ 1. Sessions
+ 2. Requests
+ 3. Publications
+ 4. Subscriptions
+ 5. Registrations
 
-These are identified in WAMP using IDs that are (positive) integers between (inclusive) `0` and `2^53` (`9007199254740992L`) and which MUST BE drawn *randomly* from a *uniform distribution* over the specified range.
+These are identified in WAMP using IDs that are integers between (inclusive) `0` and `2^53` (`9007199254740992L`) and which MUST BE drawn *randomly* from a *uniform distribution* over the specified range.
 
 > The reason to choose the specific upper bound is that `2^53` is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range. 
 > 
@@ -1019,6 +1027,88 @@ Upon receiving an `INVOCATION_PROGRESS` message from a *Callee* (for a call that
 Nevertheless, a call will *always* end in either a `CALL_RESULT` or `CALL_ERROR` message being sent by the *Dealer* and received by the *Caller* and an invocation will *always* end in either a `INVOCATION_RESULT` or `INVOCATION_ERROR` message being sent by the *Callee* and received by the *Dealer*.
 
 In other words: `CALL_PROGRESS` and `INVOCATION_PROGRESS` messages may only be sent *during* a call or invocation is still on the fly.
+
+
+## Reflection
+
+*Reflection* denotes the ability of WAMP peers to examine the procedures, topics and errors provided or used by other peers.
+
+I.e. a WAMP *Caller*, *Callee*, *Subscriber* or *Publisher* may be interested in retrieving a machine readable list and description of WAMP procedures and topics it is authorized to access or provide in the context of a WAMP session with a *Dealer* or *Broker*.
+
+Reflection may be useful in the following cases:
+
+ * documentation
+ * discoverability
+ * generating stubs and proxies
+
+WAMP predefines the following procedures for performing run-time reflection on WAMP peers which act as *Brokers* and/or *Dealers*.
+
+Predefined WAMP reflection procedures to *list* resources by type:
+
+	wamp.reflection.topic.list
+	wamp.reflection.procedure.list
+	wamp.reflection.error.list
+
+Predefined WAMP reflection procedures to *describe* resources by type:
+
+	wamp.reflection.topic.describe
+	wamp.reflection.procedure.describe
+	wamp.reflection.error.describe
+
+A peer that acts as a *Broker* SHOULD announce support for the reflection API by sending
+
+	HELLO.Details.roles.broker.reflection|integer == 1
+
+A peer that acts as a *Dealer* SHOULD announce support for the reflection API by sending
+
+	HELLO.Details.roles.dealer.reflection|integer == 1
+
+> Since *Brokers* might provide (broker) procedures and *Dealers* might provide (dealer) topics, both SHOULD implement the complete API above (even if the peer only implements one of *Broker* or *Dealer* roles).
+> 
+
+
+## Authentication
+
+Authentication is a complex area.
+
+Some applications might want to leverage authentication information coming from the transport underlying WAMP, e.g. HTTP cookies or TLS certificates.
+
+Some transports might imply trust or implicit authentication by their very nature, e.g. Unix domain sockets with appropriate file system permissions in place.
+
+Other application might want to perform their own authentication using external mechanisms (completely outside and independent of WAMP).
+
+Some applications might want to perform their own authentication schemes by using basic WAMP mechanisms, e.g. by using application-defined remote procedure calls.
+
+And some applications might want to use a transport independent scheme, nevertheless predefined by WAMP.
+
+
+### TLS Certificate-based Authentication
+
+When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
+
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
+
+
+### HTTP Cookie-based Authentication
+
+When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
+
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
+
+
+### WAMP-CRA Authentication
+
+WAMP Challenge Response (WAMP-CRA) is a WAMP level authentication procedure implemented on top of standard, predefined WAMP RPC procedures.
+
+A peer may authenticate to it's other peer via calling the following procedures
+
+	wamp.cra.request
+	wamp.cra.authenticate
+
+WAMP-CRA defines the following errors
+
+	wamp.cra.error.authentication_failed
+	wamp.cra.error.anonymous_not_allowed
 
 
 ## References
