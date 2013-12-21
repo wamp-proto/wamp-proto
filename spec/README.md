@@ -811,7 +811,8 @@ Metatopics
 
 A *Broker* may allow to retrieve the current list of *Subscribers* for a subscription.
 
-A *Broker* that implements *subscriber list* as indicated by `HELLO.roles.broker.subscriberlist == 1` provides the following builtin procedures.
+A *Broker* that implements *subscriber list* must (also) announce role `HELLO.roles.callee`, indicate `HELLO.roles.broker.subscriberlist == 1` and provide the following (builtin) procedures.
+
 
 A *Caller* (that is also a *Subscriber*) can request the current list of subscribers for a subscription (it is subscribed to) by calling the *Broker* procedure
 
@@ -825,9 +826,17 @@ and `Result = sessions|list` where
 
  * `sessions` is a list of WAMP session IDs currently subscribed to the given subscription.
 
+A call to `wamp.broker.subscriber.list` may fail with
 
-FIXME: What if we have multiple *Brokers* (a cluster)?
-FIXME: Should we allow "paging" (`offset|integer` and `limit|integer` arguments)?
+	wamp.error.no_such_subscription
+	wamp.error.not_authorized
+
+
+*FIXME*
+
+ 1. What if we have multiple *Brokers* (a cluster)?
+ 2. Should we allow "paging" (`offset|integer` and `limit|integer` arguments)?
+ 3. Should we allow *Subscribers* to list subscribers for subscription it is not itself subscribed to?
 
 
 ### Event History
@@ -838,7 +847,7 @@ The *Broker* may allow for configuration on a per-topic basis.
 
 The event history may be transient or persistent message history (surviving *Broker* restarts).
 
-A *Broker* that implements *event history* as indicated by `HELLO.roles.broker.history == 1` provides the following builtin procedures.
+A *Broker* that implements *event history* must (also) announce role `HELLO.roles.callee`, indicate `HELLO.roles.broker.history == 1` and provide the following (builtin) procedures.
 
 A *Caller* can request message history by calling the *Broker* procedure
 
@@ -867,9 +876,12 @@ with `Arguments = [topic|uri, publication|id]`
  * `topic` is the topic to retrieve event history for
  * `publication` indicates the number of last N events to retrieve
 
-FIXME: Should we use `topic|uri` or `subscription|id` in `Arguments`?
-FIXME: Can `wamp.topic.history.after` be implemented (efficiently) at all?
-FIXME: How does that interact with pattern-based subscriptions?
+
+*FIXME*
+
+ 1. Should we use `topic|uri` or `subscription|id` in `Arguments`?
+ 2. Can `wamp.topic.history.after` be implemented (efficiently) at all?
+ 3. How does that interact with pattern-based subscriptions?
 
 
 ## Remote Procedure Calls
@@ -1120,7 +1132,9 @@ In other words: `CALL_PROGRESS` and `INVOCATION_PROGRESS` messages may only be s
 
 If the *Caller* does not support *progressive calls* (as indicated by `HELLO.Details.roles.caller.progressive == 0`), the *Dealer* will gather all individual results receveived by the *Callee* via `INVOCATION_PROGRESS` and the final `INVOCATION_RESULT` into a list and return that as the single result to the *Caller*
 
-FIXME: How to handle `ResultKw` in this context?
+*FIXME*
+
+ 1. How to handle `ResultKw` in this context?
 
 
 ### Distributed Calls
