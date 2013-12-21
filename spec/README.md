@@ -2,6 +2,10 @@
 
 This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
+## FIXME
+
+ 1. application payload types (use "embedded" / "transparent" serialization)?
+ 2. *Broker-to-Broker* and *Dealer-to-Dealer* message flows
 
 ## Introduction
 
