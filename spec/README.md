@@ -5,10 +5,14 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
 ## Introduction
 
-WAMP ("Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns within one protocol:
+WAMP ("Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
 
  * Publish & Subscribe
  * Remote Procedure Calls
+
+WAMP can run over different *transports*, including [WebSocket](http://tools.ietf.org/html/rfc6455), where it is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
+
+WAMP also supports different *serialization*, including JSON and MsgPack.
 
 
 ## Building Blocks
@@ -603,20 +607,7 @@ When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send 
 	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", null]
 
 
-### Publisher Exclusion
-
-By default, a *Publisher* of an event will **not** receive an event published itself, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via `PUBLISH.Options.exclude_me|integer`.
-
-`PUBLISH.Options.exclude_me` must be a `integer` with value either `0` or `1`. When publishing with `PUBLISH.Options.exclude_me == 0`, the *Publisher* of the event will receive that very event also if it is subscribed to the `Topic` published to.
-
-*Example*
-
-    [30, 239714735, {"exclude_me": 0}, "com.myapp.mytopic1", "Hello, world!"]
-
-In this example, the *Publisher* will receive the published event also, if it is subscribed to `com.myapp.mytopic1`.
-
-
-### Exclude and Eligible
+### Receiver Black- and Whitelisting
 
 A *Publisher* MAY restrict the receivers of an event beyond those subscribed via `PUBLISH.Options.exclude|list` and `PUBLISH.Options.eligible|list`.
 
@@ -651,6 +642,19 @@ The above event will get dispatched to WAMP sessions with IDs `7891255` or `1245
 The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912315` only (since `7891255` is excluded) - but only if those are subscribed to the topic `com.myapp.mytopic1`.
 
 
+### Publisher Exclusion
+
+By default, a *Publisher* of an event will **not** receive an event published itself, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via `PUBLISH.Options.exclude_me|integer`.
+
+`PUBLISH.Options.exclude_me` must be a `integer` with value either `0` or `1`. When publishing with `PUBLISH.Options.exclude_me == 0`, the *Publisher* of the event will receive that very event also if it is subscribed to the `Topic` published to.
+
+*Example*
+
+    [30, 239714735, {"exclude_me": 0}, "com.myapp.mytopic1", "Hello, world!"]
+
+In this example, the *Publisher* will receive the published event also, if it is subscribed to `com.myapp.mytopic1`.
+
+
 ### Publisher Identification
 
 A *Publisher* MAY **request** the disclosure of it's identity (it's WAMP session ID) to receivers of a published event via `PUBLISH.Options.disclose_me|integer`:
@@ -674,7 +678,7 @@ A *Broker* MAY deny a *Publisher's* request to disclose it's identity:
     [32, 239714735, "wamp.error.disclose_me.not_allowed"]
 
 
-### Trust Level
+### Publication Trust Levels
 
 A *Broker* may be configured to automatically assign *trust levels* to events published by *Publishers* according to the *Broker* configuration on a per-topic basis and/or depending on the application defined role of the (authenticated) *Publisher*.
 
@@ -725,6 +729,28 @@ In above subscription request, the 3rd URI component is empty, which signals a w
 When a single event matches more than one of a *Subscribers* subscriptions, the event will be delivered for each subscription. The *Subscriber* can detect the delivery of that same event on multiple subscriptions via `EVENT.PUBLISHED.Publication`, which will be identical.
 
 Since each *Subscribers* subscription "stands on it's own", there is no *set semantics* implied by pattern-based subscriptions. E.g. a *Subscriber* cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.
+
+
+### Partitioned Subscriptions & Publications
+
+Resource keys: `PUBLISH.Options.rkey|string` is a stable, technical **resource key**.
+
+> E.g. if your sensor as a unique serial identifier, you can use that.
+
+
+*Example*
+
+    [30, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.temperature", 33.9]
+
+
+Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
+
+> E.g. if your backend process runs on a dedicated host, you can use it's hostname.
+
+
+*Example*
+
+	[10, 912873614, {"match": "wildcard", "nkey": "node23"}, "com.myapp.sensor..temperature"]
 
 
 ### Meta Events
@@ -780,6 +806,47 @@ Metatopics
     wamp.metatopic.publication.error.not_authorized
     wamp.metatopic.publication.statistic.total
 
+
+### Event History
+
+Instead of complex QoS for message delivery, a *Broker* may provide *message history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
+
+The *Broker* may allow for configuration on a per-topic basis.
+
+The event history may be transient or persistent message history (surviving *Broker* restarts).
+
+A *Broker* that implements *event history* as indicated by `HELLO.roles.broker.history == 1` provides the following builtin procedures.
+
+A *Caller* can request message history by calling the *Broker* procedure
+
+	wamp.topic.history.last
+
+with `Arguments = [topic|uri, limit|integer]` where
+
+ * `topic` is the topic to retrieve event history for
+ * `limit` indicates the number of last N events to retrieve
+
+or by calling
+
+	wamp.topic.history.since
+
+with `Arguments = [topic|uri, timestamp|string]` where
+
+ * `topic` is the topic to retrieve event history for
+ * `timestamp` indicates the UTC timestamp since when to retrieve the events in the ISO-8601 format `yyyy-MM-ddThh:mm:ss:SSSZ` (e.g. `"2013-12-21T13:43:11:000Z"`)
+
+or by calling
+
+	wamp.topic.history.after
+
+with `Arguments = [topic|uri, publication|id]`
+
+ * `topic` is the topic to retrieve event history for
+ * `publication` indicates the number of last N events to retrieve
+
+
+FIXME: Can `wamp.topic.history.after` be implemented (efficiently) at all?
+FIXME: How does that interact with pattern-based subscriptions?
 
 
 ## Remote Procedure Calls
@@ -864,7 +931,7 @@ When the unregistration request failed, the *Dealer* send an `UNREGISTER_ERROR` 
 	[62, 788923562, "wamp.error.no_such_registration"]
 
 
-## Calling
+### Calling
 
 The message flow between *Callers*, a *Dealer* and *Callees* for calling remote procedures involves the following messages:
 
@@ -960,7 +1027,7 @@ If the original call already failed at the *Dealer* **before** the call would ha
 	[74, 7814135, "wamp.error.no_such_procedure", null]
 
 
-## Call Timeouts
+### Call Timeouts
 
 A *Caller* might want to issue a call providing a *timeout* for the call to finish.
 
@@ -977,7 +1044,7 @@ In fact, a timeout timer might run at three places:
  * *Callee*
 
 
-## Canceling Calls
+### Canceling Calls
 
 A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
 
@@ -1007,7 +1074,7 @@ Options:
 	CANCEL_CALL.Options.mode|string == "skip" | "kill" | "killnowait"
 
 
-## Progressive Call Results
+### Progressive Call Results
 
 A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
 
@@ -1028,6 +1095,56 @@ Nevertheless, a call will *always* end in either a `CALL_RESULT` or `CALL_ERROR`
 
 In other words: `CALL_PROGRESS` and `INVOCATION_PROGRESS` messages may only be sent *during* a call or invocation is still on the fly.
 
+If the *Caller* does not support *progressive calls* (as indicated by `HELLO.Details.roles.caller.progressive == 0`), the *Dealer* will gather all individual results receveived by the *Callee* via `INVOCATION_PROGRESS` and the final `INVOCATION_RESULT` into a list and return that as the single result to the *Caller*
+
+FIXME: How to handle `ResultKw` in this context?
+
+
+### Distributed Calls
+
+*Partitioned Calls* allows to run a call issued by a *Caller* on one or more endpoints implementing the called procedure.
+
+* all
+* any
+* partition
+
+
+`CALL.Options.runon|string := "all" or "any" or "partition"`
+`CALL.Options.runmode|string := "gather" or "progressive"`
+`CALL.Options.rkey|string`
+
+
+#### "Any" Calls
+
+If `CALL.Options.runon == "any"`, the call will be routed to one *randomly* selected *Callee* that registered an implementing endpoint for the called procedure. The call will then proceed as for standard (non-distributed) calls.
+
+
+#### "All" Calls
+
+If `CALL.Options.runon == "all"`, the call will be routed to all *Callees* that registered an implementing endpoint for the called procedure. The calls will run in parallel and asynchronously.
+
+If `CALL.Options.runmode == "gather"` (the default, when `CALL.Options.runmode` is missing), the *Dealer* will gather the individual results received via `INVOCATION_RESULT` messages from *Callees* into a single list, and return that in `CALL_RESULT` to the original *Caller* - when all results have been received.
+
+If `CALL.Options.runmode == "progressive"`, the *Dealer* will call each endpoint via a standard `INVOCATION` message and immediately forward individual results received via `INVOCATION_RESULT` messages from the *Callees* as `CALL_PROGRESS` messages to the original *Caller* and send a final `CALL_RESULT` message (with empty result) when all individual results have been received.
+
+If any of the individual `INVOCATION`s returns an `INVOCATION_ERROR`, the further behavior depends on ..
+
+Fail immediate:
+
+The *Dealer* will immediately return a `CALL_ERROR` message to the *Caller* with the error from the `INVOCATION_RESULT` message of the respective failing call. It will further send `CANCEL_INVOCATION` messages to all *Callees* for which it not yet has received a response, and ignore any `INVOCATION_RESULT` or `INVOCATION_ERROR` messages it might receive subsequently for the pending calls.
+
+The *Dealer* will accumulate ..
+
+
+#### "Partitioned" Calls
+
+If `CALL.Options.runmode == "partition"`, then `CALL.Options.rkey` MUST be present.
+
+The call is then routed to all endpoints that were registered ..
+
+The call is then processed as for "All" Calls.
+
+ 
 
 ## Reflection
 
@@ -1137,6 +1254,9 @@ The peer then signs the authentication challenge and calls
 3. [The WebSocket Protocol](http://tools.ietf.org/html/rfc6455)
 4. [The application/json Media Type for JavaScript Object Notation (JSON)](http://tools.ietf.org/html/rfc4627)
 5. [MessagePack Format specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
+6. [Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web (1997)](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.23.3738) 
+7. [Web Caching with Consistent Hashing](http://www8.org/w8-papers/2a-webserver/caching/paper2.html)
+
 
 <!--
 ![alt text](figure/rpc_call2.png "RPC Message Flow: Calls")
