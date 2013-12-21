@@ -807,6 +807,29 @@ Metatopics
     wamp.metatopic.publication.statistic.total
 
 
+### Subscriber List
+
+A *Broker* may allow to retrieve the current list of *Subscribers* for a subscription.
+
+A *Broker* that implements *subscriber list* as indicated by `HELLO.roles.broker.subscriberlist == 1` provides the following builtin procedures.
+
+A *Caller* (that is also a *Subscriber*) can request the current list of subscribers for a subscription (it is subscribed to) by calling the *Broker* procedure
+
+	wamp.broker.subscriber.list
+
+with `Arguments = [subscription|id]` where
+
+ * `subscription` is the ID of the subscription as returned from `SUBSCRIBED.Subscription`
+
+and `Result = sessions|list` where
+
+ * `sessions` is a list of WAMP session IDs currently subscribed to the given subscription.
+
+
+FIXME: What if we have multiple *Brokers* (a cluster)?
+FIXME: Should we allow "paging" (`offset|integer` and `limit|integer` arguments)?
+
+
 ### Event History
 
 Instead of complex QoS for message delivery, a *Broker* may provide *message history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
@@ -844,7 +867,7 @@ with `Arguments = [topic|uri, publication|id]`
  * `topic` is the topic to retrieve event history for
  * `publication` indicates the number of last N events to retrieve
 
-
+FIXME: Should we use `topic|uri` or `subscription|id` in `Arguments`?
 FIXME: Can `wamp.topic.history.after` be implemented (efficiently) at all?
 FIXME: How does that interact with pattern-based subscriptions?
 
