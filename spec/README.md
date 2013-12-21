@@ -204,6 +204,16 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 > Keys with above `dicts` MUST BE of type `string` and SHOULD match the regular expression `[a-z][a-z0-9_]*`
 > 
 
+**Extensibility**
+Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes.
+
+**Polymorphism**
+For a given `MessageType`, the number of expected elements is uniquely defined. Hence there is no polymorphic messages in WAMP at all. This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+
+**Structure**
+The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
+
+**Message Types**
 WAMP defines the following messages which are explained in detail in the further sections.
 
 
@@ -351,6 +361,14 @@ A peer can support any combination of above roles but MUST support at least one 
 Further *Publisher* and *Subscriber* peers can only talk to *Broker* peers, and *Caller* and *Callee* peers can only talk to *Dealer* peers.
 
 A *Publisher* peer cannot talk to another peer that only implements e.g. a *Callee* role.  
+
+The `<role>|dict` is a dictionary describing features supported by the peer for that role.
+
+The use of *feature announcement* in WAMP allows for
+
+ * only implement subsets of functionality
+ * graceful degration
+
 
 *Example: A peer that can act as Publisher and Subscriber, but only supports basic features.*
 
