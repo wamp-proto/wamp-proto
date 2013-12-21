@@ -1107,8 +1107,27 @@ A peer may authenticate to it's other peer via calling the following procedures
 
 WAMP-CRA defines the following errors
 
+	wamp.error.invalid_argument
+	wamp.cra.error.no_such_authkey
 	wamp.cra.error.authentication_failed
 	wamp.cra.error.anonymous_not_allowed
+	wamp.cra.error.already_authenticated
+	wamp.cra.error.authentication_already_requested
+
+A peer starts WAMP-CRA authentication by calling
+
+	wamp.cra.request
+
+with `Arguments = [auth_key|string, auth_extra|dict]` where
+
+ * `auth_key` is the authentication key, e.g. an application or user identifier, possibly the empty string for "authenticating" as anonymous
+ * `auth_extra` is a dictionary of extra authentication information, possibly empty
+
+The other peer then computes an authentication challenge. WRITEME.
+
+The peer then signs the authentication challenge and calls
+
+	wamp.cra.authenticate
 
 
 ## References
