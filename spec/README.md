@@ -269,8 +269,7 @@ WAMP defines the following messages which are explained in detail in the further
     [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
     [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
     [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
-    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-								PUBLISH.Topic|uri, PUBLISH.Event|any]
+    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Event|any]
     [METAEVENT,    			SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
 
 ### Remote Procedure Calls
@@ -301,7 +300,7 @@ WAMP defines the following messages which are explained in detail in the further
     [UNREGISTERED,   		UNREGISTER.Request|id]
     [UNREGISTER_ERROR, 		UNREGISTER.Request|id, Error|uri]
     [INVOCATION,   			Request|id, REGISTERED.Registration|id, Details|dict,
-								CALL.Procedure|uri, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+								CALL.Arguments|list, CALL.ArgumentsKw|dict]
     [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
 
@@ -626,25 +625,25 @@ When a publication is successful and a *Broker* dispatches the event, it will de
 
 When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send the *Subscriber* an `EVENT` message:
 
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Topic|uri, PUBLISH.Event|any]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Event|any]
 
  * `SUBSCRIBED.Subscription` is the ID for the subscription under which the *Subscriber* receives the event - the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
  * `PUBLISHED.Publication` is the ID of the publication of the published event.
  * `Details` is a dictionary that allows the *Broker* to provide additional event details in a extensible way. This is described further below.
- * `PUBLISH.Topic` is the original topic under which the *Publisher* published the event. And `PUBLISH.Event` is the application-level payload the event has been published with.
+`PUBLISH.Event` is the application-level payload the event has been published with.
  * `PUBLISH.Event` is the application-level event payload that was provided with the original publication request.
 
 *Example*
 
-	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", "Hello, world!"]
+	[40, 5512315355, 4429313566, {}, "Hello, world!"]
 
 *Example*
 
-	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", {"color": "orange", "sizes": [23, 42, 7]}]
+	[40, 5512315355, 4429313566, {}, {"color": "orange", "sizes": [23, 42, 7]}]
 
 *Example*
 
-	[40, 5512315355, 4429313566, {}, "com.myapp.mytopic1", null]
+	[40, 5512315355, 4429313566, {}, null]
 
 
 ### Receiver Black- and Whitelisting
@@ -707,7 +706,7 @@ If above event would have been published by a *Publisher* with WAMP session ID `
 
 *Example*
 
-	[40, 5512315355, 4429313566, {"publisher": 3335656}, "com.myapp.mytopic1", "Hello, world!"]
+	[40, 5512315355, 4429313566, {"publisher": 3335656}, "Hello, world!"]
 
 Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
 
@@ -726,7 +725,7 @@ A *Broker* must use `Details.trustlevel|integer` in an `EVENT` message sent to a
 
 *Example*
 
-	[40, 5512315355, 4429313566, {"trustlevel": 2}, "com.myapp.mytopic1", "Hello, world!"]
+	[40, 5512315355, 4429313566, {"trustlevel": 2}, "Hello, world!"]
 
 In above event, the *Broker* has (by configuration and/or other information) deemed the event publication to be of `trustlevel == 2`.
 
@@ -769,6 +768,8 @@ In above subscription request, the 3rd URI component is empty, which signals a w
 When a single event matches more than one of a *Subscribers* subscriptions, the event will be delivered for each subscription. The *Subscriber* can detect the delivery of that same event on multiple subscriptions via `EVENT.PUBLISHED.Publication`, which will be identical.
 
 Since each *Subscribers* subscription "stands on it's own", there is no *set semantics* implied by pattern-based subscriptions. E.g. a *Subscriber* cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.
+
+If a subscription was established with a pattern-based matching policy, a *Broker* MUST supply the original `PUBLISH.Topic` as provided by the *Publisher* in `EVENT.Details.topic` to the *Subscribers*. 
 
 
 ### Partitioned Subscriptions & Publications
@@ -1050,18 +1051,17 @@ When a *Callee* wishes to call a remote procedure, it sends a `CALL` message to 
 If the *Dealer* is able to fullfill (mediate) and allowing the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
- 		CALL.Procedure|uri, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+		CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
  * `Request` is a random, ephemeral ID chosen by the *Dealer* and used to correlate the *Callee's* response with the request.
  * `REGISTERED.Registration` is the registration ID under which the procedure was registered at the *Dealer*.
  * `Details` is a dictionary that allows to provide additional invocation request details in an extensible way. This is described further below.
- * `CALL.Procedure` is the original procedure as provided by the *Caller*.
  * `CALL.Arguments` is the original list of positional call arguments as provided by the *Caller*.
  * `CALL.ArgumentsKw` is the original dictionary of keyword call arguments as provided by the *Caller*.
 
 *Example*
 
-	[80, 6131533, 9823526, {}, "com.myapp.echo", ["Hello, world!"], {}]
+	[80, 6131533, 9823526, {}, ["Hello, world!"], {}]
 
 If the *Callee* is able to successfully process and finish the execution of the call, it answers by sending a `INVOCATION_RESULT` message to the *Dealer*:
 
@@ -1264,6 +1264,8 @@ When a single call matches more than one of a *Callees* registrations, the call 
 FIXME: The *Callee* can detect the invocation of that same call on multiple registrations via `INVOCATION.CALL.Request`, which will be identical.
 
 Since each *Callees* registrations "stands on it's own", there is no *set semantics* implied by pattern-based registrations. E.g. a *Callee* cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.
+
+If an endpoint was registered with a pattern-based matching policy, a *Dealer* MUST supply the original `CALL.Procedure` as provided by the *Caller* in `INVOCATION.Details.procedure` to the *Callee*. 
 
 
 ### Caller Identification
