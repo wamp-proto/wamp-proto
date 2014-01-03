@@ -1061,7 +1061,7 @@ If the *Dealer* is able to fullfill (mediate) and allowing the call, it sends a 
 
 *Example*
 
-	[80, 6131533, 9823526, {}, "com.myapp.myprocedure1", ["Hello, world!"], {}]
+	[80, 6131533, 9823526, {}, "com.myapp.echo", ["Hello, world!"], {}]
 
 If the *Callee* is able to successfully process and finish the execution of the call, it answers by sending a `INVOCATION_RESULT` message to the *Dealer*:
 
@@ -1264,7 +1264,31 @@ When a single call matches more than one of a *Callees* registrations, the call 
 FIXME: The *Callee* can detect the invocation of that same call on multiple registrations via `INVOCATION.CALL.Request`, which will be identical.
 
 Since each *Callees* registrations "stands on it's own", there is no *set semantics* implied by pattern-based registrations. E.g. a *Callee* cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.
- 
+
+
+### Caller Identification
+
+A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via `CALL.Options.disclose_me|integer`:
+
+*Example*
+
+	[70, 7814135, {"disclose_me": 1}, "com.myapp.echo", ["Hello, world!"], {}]
+
+If above call would have been issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* would send an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
+
+*Example*
+
+	[80, 6131533, 9823526, {"caller": 3335656}, "com.myapp.echo", ["Hello, world!"], {}]
+
+Note that a *Dealer* MAY disclose the identity of a *Caller* even without the *Caller* having explicitly requested to do so when the *Dealer* configuration (for the called procedure) is setup to do so.
+
+A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
+
+*Example*
+
+    [32, 7814135, "wamp.error.disclose_me.not_allowed"]
+
+
 
 ## Reflection
 
