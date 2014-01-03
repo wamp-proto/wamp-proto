@@ -300,8 +300,8 @@ WAMP defines the following messages which are explained in detail in the further
     [REGISTER_ERROR, 		REGISTER.Request|id, Error|uri]
     [UNREGISTERED,   		UNREGISTER.Request|id]
     [UNREGISTER_ERROR, 		UNREGISTER.Request|id, Error|uri]
-    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Options|dict,
-								CALL.Arguments|list, CALL.ArgumentsKw|dict]
+    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Details|dict,
+								CALL.Procedure|uri, CALL.Arguments|list, CALL.ArgumentsKw|dict]
     [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
 
 
@@ -756,7 +756,7 @@ In above example, events with `PUBLISH.Topic` e.g. `com.myapp.topic.emergency.11
 
 The *Broker* will apply the prefix-matching based on the UTF-8 encoded byte string for the `PUBLISH.Topic` and the `SUBSCRIBE.Topic`.
 
-A *Subscriber* requests **wildcard-matching policy** with a subscription request by setting `SUBSCRIBE.Options.match|string == "prefix"`.
+A *Subscriber* requests **wildcard-matching policy** with a subscription request by setting `SUBSCRIBE.Options.match|string == "wildcard"`.
 
 Wildcard-matching allows to provide wildcards for **whole** URI components.
 
@@ -1049,17 +1049,19 @@ When a *Callee* wishes to call a remote procedure, it sends a `CALL` message to 
 
 If the *Dealer* is able to fullfill (mediate) and allowing the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
-    [INVOCATION, Request|id, REGISTERED.Registration|id, Options|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+ 		CALL.Procedure|uri, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
  * `Request` is a random, ephemeral ID chosen by the *Dealer* and used to correlate the *Callee's* response with the request.
  * `REGISTERED.Registration` is the registration ID under which the procedure was registered at the *Dealer*.
- * `Options` is a dictionary that allows to provide additional invocation request details in an extensible way. This is described further below.
+ * `Details` is a dictionary that allows to provide additional invocation request details in an extensible way. This is described further below.
+ * `CALL.Procedure` is the original procedure as provided by the *Caller*.
  * `CALL.Arguments` is the original list of positional call arguments as provided by the *Caller*.
  * `CALL.ArgumentsKw` is the original dictionary of keyword call arguments as provided by the *Caller*.
 
 *Example*
 
-	[80, 6131533, 9823526, {}, ["Hello, world!"], {}]
+	[80, 6131533, 9823526, {}, "com.myapp.myprocedure1", ["Hello, world!"], {}]
 
 If the *Callee* is able to successfully process and finish the execution of the call, it answers by sending a `INVOCATION_RESULT` message to the *Dealer*:
 
@@ -1221,6 +1223,47 @@ The call is then routed to all endpoints that were registered ..
 
 The call is then processed as for "All" Calls.
 
+
+### Pattern-based Registrations
+
+By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) matches *exactly* the endpoint registered (`REGISTER.Procedure`).
+
+A *Callee* might want to register procedures based on a *pattern*. This can be useful to reduce the number of individual registrations to be set up.
+
+If the *Dealer* and the *Callee* support **pattern-based registrations**, this matching can happen by
+
+ * prefix-matching policy
+ * wildcard-matching policy
+
+*Dealers* and *Callees* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
+
+A *Callee* requests **prefix-matching policy** with a registration request by setting `REGISTER.Options.match|string == "prefix"`.
+
+*Example*
+
+	[50, 612352435, {"match": "prefix"}, "com.myapp.myobject1"]
+
+When a **prefix-matching policy** is in place, any call with a procedure that has `REGISTER.Procedure` as a *prefix* will match the registration, and potentially be routed to *Callees* on taht registration.
+
+In above example, calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1`, `com.myapp.myobject1-mysubobject1`, `com.myapp.myobject1.mysubobject1.myprocedure1` and `com.myapp.myobject1` will all apply for call routing. A call with `CALL.Procedure` e.g. `com.myapp.myobject2` or `com.myapp.myobject` will NOT apply.
+
+The *Dealer* will apply the prefix-matching based on the UTF-8 encoded byte string for the `CALL.Procedure` and the `REGISTER.Procedure`.
+
+A *Callee* requests **wildcard-matching policy** with a registration request by setting `REGISTER.Options.match|string == "wildcard"`.
+
+Wildcard-matching allows to provide wildcards for **whole** URI components.
+
+*Example*
+
+	[50, 612352435, {"match": "wildcard"}, "com.myapp..myprocedure1"]
+
+In above registration request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1` or `com.myapp.myobject2.myprocedure1` will all apply for call routing. Calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1.mysubprocedure1`, `com.myapp.myobject1.myprocedure2` or `com.myapp2.myobject1.myprocedure1` will NOT apply for call routing.
+
+When a single call matches more than one of a *Callees* registrations, the call MAY be routed for invocation on multiple registrations, depending on call settings.
+
+FIXME: The *Callee* can detect the invocation of that same call on multiple registrations via `INVOCATION.CALL.Request`, which will be identical.
+
+Since each *Callees* registrations "stands on it's own", there is no *set semantics* implied by pattern-based registrations. E.g. a *Callee* cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.
  
 
 ## Reflection
