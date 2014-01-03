@@ -97,9 +97,9 @@ A WAMP peer can have one or more of the following roles.
 
 **RPC**
 
-1. Callee
-2. Caller
-3. Dealer
+1. *Callee*
+2. *Caller*
+3. *Dealer*
 
 *Callees* register procedures they provide with *Dealers*.
 
@@ -109,9 +109,9 @@ A WAMP peer can have one or more of the following roles.
 
 **PubSub**
 
-1. Subscriber
-2. Publisher
-3. Broker
+1. *Subscriber*
+2. *Publisher*
+3. *Broker*
 
 *Subscribers* subscribe to topics they are interested in with *Brokers*.
 
@@ -123,6 +123,24 @@ A WAMP peer can have one or more of the following roles.
 ### Decoupling
 
 *Dealers* are responsible for call routing decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing decoupling *Publishers* from *Subscribers*.
+
+
+### Application Code
+
+WAMP is designed for application code to run inside peers of the roles:
+
+1. *Callee* and *Caller*
+2. *Publisher* and *Subscriber*
+ 
+*Brokers* and *Dealers* are responsible for generic call and event routing and SHOULD NOT run application code. The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application.
+
+*Brokers* and *Dealers* however might differ in these features:
+
+* clustering
+* high-availability and scale-out
+* message persistence
+* authorization schemes
+* management and monitoring
 
 
 ### Symmetry
