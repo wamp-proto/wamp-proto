@@ -1289,6 +1289,35 @@ A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
     [32, 7814135, "wamp.error.disclose_me.not_allowed"]
 
 
+## Ordering Guarantees
+
+### Publish & Subscribe Ordering
+
+Regarding **Publish & Subscribe**, the ordering guarantees are as follows:
+
+If *Subscriber A* is subscribed to both **Topic 1** and **Topic 2**, and *Publisher B* first publishes an **Event 1** to **Topic 1** and then an **Event 2** to **Topic 2**, then *Subscriber A* will first receive **Event 1** and then **Event 2**. This also holds if **Topic 1** and **Topic 2** are identical.
+
+In other words, WAMP guarantees ordering of events between any given *pair* of *Publisher* and *Subscriber*.
+
+Further, if *Subscriber A* subscribes to **Topic 1**, the `SUBSCRIBED` message will be sent by *Broker* to *Subscriber A* before any `EVENT` message for **Topic 1**.
+
+In general, `SUBSCRIBE` is asynchronous, and there is no guarantee on order of return for multiple `SUBSCRIBEs`. The first `SUBSCRIBE` might require the *Broker* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
+
+
+### Remote Procedure Call Ordering
+
+Regarding **Remote Procedure Calls**, the ordering guarantees are as follows:
+
+If *Callee A* has registered endpoints for both **Procedure 1** and **Procedure 2**, and *Caller B* first issues a **Call 1** to **Procedure 1** and then a **Call 2** to **Procedure 2**, and both calls are routed to *Callee A*, then *Callee A* will first receive an invocation corresponding to **Call 1** and then **Call 2**. This also holds if **Procedure 1** and **Procedure 2** are identical.
+
+In other words, WAMP guarantees ordering of invocations between any given *pair* of *Caller* and *Callee*.
+
+In general, there are no guarantees on the order of call results and errors in relation to calls, since the execution of calls upon invocation of endpoints in *Callees* is asynchronous. A first call might require an expensive, long-running computation, whereas a second, subsequent call might finish immediately.
+
+Further, if *Callee A* registers for **Procedure 1**, the `REGISTERED` message will be sent by *Dealer* to *Callee A* before any `INVOCATION` message for **Procedure 1**.
+
+In general, `REGISTER` is asynchronous, and there is no guarantee on order of return for multiple `REGISTERs`. The first `REGISTER` might require the *Dealer* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
+
 
 ## Reflection
 
