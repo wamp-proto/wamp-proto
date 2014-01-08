@@ -85,76 +85,6 @@ A JSON string is deserialized using the following procedure:
 2. If the string starts with a `\0` character, decode the rest (after the first character) using Base64 to a byte array
 3. Otherwise, return the Unicode string
 
-Here is a complete example in **Python** showing how byte arrays are converted to and from JSON:
-
-```python
-import os, base64, json, sys, binascii
-PY3 = sys.version_info >= (3,)
-if PY3:
-   unicode = str
-
-data_in = os.urandom(16)
-print("In:   {}".format(binascii.hexlify(data_in)))
-
-## encoding
-encoded = json.dumps('\0' + base64.b64encode(data_in).decode('ascii'))
-
-print("JSON: {}".format(encoded))
-
-## decoding
-decoded = json.loads(encoded)
-if type(decoded) == unicode:
-   if decoded[0] == '\0':
-      data_out = base64.b64decode(decoded[1:])
-   else:
-      data_out = decoded
-
-print("Out:  {}".format(binascii.hexlify(data_out)))
-
-assert(data_out == data_in)
-```
-
-Here is a complete example in **JavaScript** showing how byte arrays are converted to and from JSON:
-
-```javascript
-var data_in = new Uint8Array(new ArrayBuffer(16));
-
-// initialize test data
-for (var i = 0; i < data_in.length; ++i) {
-   data_in[i] = i;
-}
-console.log(data_in);
-
-// convert byte array to raw string
-var raw_out = '';
-for (var i = 0; i < data_in.length; ++i) {
-   raw_out += String.fromCharCode(data_in[i]);
-}
-
-// base64 encode raw string, prepend with \0 and serialize to JSON
-var encoded = JSON.stringify("\0" + window.btoa(raw_out));
-console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw==" 
-
-// unserialize from JSON
-var decoded = JSON.parse(encoded);
-
-var data_out;
-if (decoded.charCodeAt(0) === 0) {
-   // strip first character and decode base64 to raw string
-   var raw = window.atob(decoded.substring(1));
-
-   // convert raw string to byte array
-   var data_out = new Uint8Array(new ArrayBuffer(raw.length));
-   for (var i = 0; i < raw.length; ++i) {
-      data_out[i] = raw.charCodeAt(i);
-   }
-} else {
-   data_out = decoded;
-}
-
-console.log(data_out);
-```
-
 
 ### Transport
 
@@ -1522,6 +1452,85 @@ The other peer then computes an authentication challenge. WRITEME.
 The peer then signs the authentication challenge and calls
 
 	wamp.cra.authenticate
+
+
+## Appendix
+
+### Byte Array Conversion
+
+#### Python
+
+Here is a complete example in **Python** showing how byte arrays are converted to and from JSON:
+
+```python
+import os, base64, json, sys, binascii
+PY3 = sys.version_info >= (3,)
+if PY3:
+   unicode = str
+
+data_in = os.urandom(16)
+print("In:   {}".format(binascii.hexlify(data_in)))
+
+## encoding
+encoded = json.dumps('\0' + base64.b64encode(data_in).decode('ascii'))
+
+print("JSON: {}".format(encoded))
+
+## decoding
+decoded = json.loads(encoded)
+if type(decoded) == unicode:
+   if decoded[0] == '\0':
+      data_out = base64.b64decode(decoded[1:])
+   else:
+      data_out = decoded
+
+print("Out:  {}".format(binascii.hexlify(data_out)))
+
+assert(data_out == data_in)
+```
+
+#### JavaScript
+
+Here is a complete example in **JavaScript** showing how byte arrays are converted to and from JSON:
+
+```javascript
+var data_in = new Uint8Array(new ArrayBuffer(16));
+
+// initialize test data
+for (var i = 0; i < data_in.length; ++i) {
+   data_in[i] = i;
+}
+console.log(data_in);
+
+// convert byte array to raw string
+var raw_out = '';
+for (var i = 0; i < data_in.length; ++i) {
+   raw_out += String.fromCharCode(data_in[i]);
+}
+
+// base64 encode raw string, prepend with \0 and serialize to JSON
+var encoded = JSON.stringify("\0" + window.btoa(raw_out));
+console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw==" 
+
+// unserialize from JSON
+var decoded = JSON.parse(encoded);
+
+var data_out;
+if (decoded.charCodeAt(0) === 0) {
+   // strip first character and decode base64 to raw string
+   var raw = window.atob(decoded.substring(1));
+
+   // convert raw string to byte array
+   var data_out = new Uint8Array(new ArrayBuffer(raw.length));
+   for (var i = 0; i < raw.length; ++i) {
+      data_out[i] = raw.charCodeAt(i);
+   }
+} else {
+   data_out = decoded;
+}
+
+console.log(data_out);
+```
 
 
 ## References
