@@ -53,6 +53,66 @@ WAMPv2 defines two bindings for message *serialization*:
 
 Other bindings for *serialization* may be defined in future WAMP versions.
 
+#### Conversion
+
+A MsgPack byte array is converted to a JSON string as follows:
+
+1. convert the byte array to a Base64 encoded string
+2. prepend the string with a `\0` character
+
+*Example*
+
+Consider the byte array (hex representation):
+
+	10e3ff9053075c526f5fc06d4fe37cdb
+
+This will get converted to Base64
+
+	EOP/kFMHXFJvX8BtT+N82w==
+
+prepended with `\0` 
+
+	\x00EOP/kFMHXFJvX8BtT+N82w==
+
+and serialized to a JSON string
+
+	"\\u0000EOP/kFMHXFJvX8BtT+N82w=="
+
+A JSON string is deserialized using the following procedure:
+
+1. Unserialize a JSON string to a host language Unicode string
+2. If the string starts with a `\0` character, decode the rest (after the first character) using Base64 to a byte array
+3. Otherwise, return the Unicode string
+
+Here is a complete example in Python for showing how byte arrays are converted to and from JSON:
+
+```python
+import os, base64, json, sys, binascii
+PY3 = sys.version_info >= (3,)
+if PY3:
+   unicode = str
+
+data_in = os.urandom(16)
+print("In:   {}".format(binascii.hexlify(data_in)))
+
+## encoding
+encoded = json.dumps('\0' + base64.b64encode(data_in).decode('ascii'))
+
+print("JSON: {}".format(encoded))
+
+## decoding
+decoded = json.loads(encoded)
+if type(decoded) == unicode:
+   if decoded[0] == '\0':
+      data_out = base64.b64decode(decoded[1:])
+   else:
+      data_out = decoded
+
+print("Out:  {}".format(binascii.hexlify(data_out)))
+
+assert(data_out == data_in)
+```
+
 
 ### Transport
 
