@@ -273,36 +273,89 @@ WAMP defines the following messages which are explained in detail in the further
 
 ### Session Management
 
-#### Any-to-Any
+*Any-to-Any*
 
-    [HELLO,        			Session|id, Details|dict]
-    [GOODBYE,      			Details|dict]
-    [HEARTBEAT,    			IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
+    [HELLO, Session|id, Details|dict]
+    [GOODBYE, Details|dict]
+    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
-### Publish & Subscribe
+### Publish
 
-#### Publisher-to-Broker
+*Publisher-to-Broker*
 
-    [PUBLISH,      			Request|id, Options|dict, Topic|uri, Event|any]
+One of the following three forms of **`PUBLISH`** request:
 
-#### Broker-to-Publisher
+    [PUBLISH, Request|id, Options|dict, Topic|uri]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|list]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|list, PayloadKW|dict]
 
-    [PUBLISHED,  			PUBLISH.Request|id, Publication|id]
-    [PUBLISH_ERROR, 		PUBLISH.Request|id, Error|uri]
+*Broker-to-Publisher*
 
-#### Subscriber-to-Broker
+In case of success, the following **`PUBLISHED`** response:
 
-    [SUBSCRIBE,    			Request|id, Options|dict, Topic|uri]
-    [UNSUBSCRIBE,  			Request|id, SUBSCRIBED.Subscription|id]
+    [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
-#### Broker-to-Subscriber
+In case of error, one of the following three forms of **`ERROR`** reponse:
 
-    [SUBSCRIBED,   			SUBSCRIBE.Request|id, Subscription|id]
-    [SUBSCRIBE_ERROR, 		SUBSCRIBE.Request|id, Error|uri]
-    [UNSUBSCRIBED, 			UNSUBSCRIBE.Request|id]
-    [UNSUBSCRIBE_ERROR, 	UNSUBSCRIBE.Request|id, Error|uri]
-    [EVENT,        			SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Event|any]
-    [METAEVENT,    			SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
+    [ERROR, PUBLISH.Request|id, Error|uri]
+    [ERROR, PUBLISH.Request|id, Error|uri, Exception|list]
+    [ERROR, PUBLISH.Request|id, Error|uri, Exception|list, ExceptionKW|dict]
+
+### Subscribe
+
+*Subscribe-to-Broker*
+
+The following **`SUBSCRIBE`** request:
+
+    [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+
+*Broker-to-Subscribe*
+
+In case of success, the following **`SUBSCRIBED`** response:
+
+    [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
+
+In case of error, one of the following three forms of **`ERROR`** reponse:
+
+    [ERROR, SUBSCRIBE.Request|id, Error|uri]
+    [ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list]
+    [ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKW|dict]
+
+### Unsubscribe
+
+*Subscriber-to-Broker*
+
+The following **`UNSUBSCRIBE`** request:
+
+    [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
+
+*Broker-to-Subscriber*
+
+In case of success, the following **`UNSUBSCRIBED`** response:
+
+    [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
+
+In case of error, one of the following three forms of **`ERROR`** reponse:
+
+    [ERROR, UNSUBSCRIBE.Request|id, Error|uri]
+    [ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list]
+    [ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKW|dict]
+
+### Event
+
+*Broker-to-Subscriber*
+
+One of the following three forms of **`EVENT`** notification:
+
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Payload|list]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Payload|list, PUBLISH.PayloadKw|dict]
+
+### Meta Event
+
+*Broker-to-Subscriber*
+
+    [METAEVENT, SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
 
 ### Remote Procedure Calls
 
