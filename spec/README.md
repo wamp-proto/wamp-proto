@@ -287,7 +287,7 @@ One of the following three forms of **`PUBLISH`** request:
 
     [PUBLISH, Request|id, Options|dict, Topic|uri]
     [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|list]
-    [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|list, PayloadKW|dict]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|list, PayloadKw|dict]
 
 *Broker-to-Publisher*
 
@@ -295,11 +295,11 @@ In case of success, the following **`PUBLISHED`** response:
 
     [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
-In case of error, one of the following three forms of **`ERROR`** reponse:
+In case of error, one of the following three forms of **`PUBLISH_ERROR`** response:
 
-    [ERROR, PUBLISH.Request|id, Error|uri]
-    [ERROR, PUBLISH.Request|id, Error|uri, Exception|list]
-    [ERROR, PUBLISH.Request|id, Error|uri, Exception|list, ExceptionKW|dict]
+    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri]
+    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri, Exception|list]
+    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri, Exception|list, ExceptionKw|dict]
 
 ### Subscribe
 
@@ -315,11 +315,11 @@ In case of success, the following **`SUBSCRIBED`** response:
 
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
-In case of error, one of the following three forms of **`ERROR`** reponse:
+In case of error, one of the following three forms of **`SUBSCRIBE_ERROR`** response:
 
-    [ERROR, SUBSCRIBE.Request|id, Error|uri]
-    [ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list]
-    [ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKW|dict]
+    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri]
+    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list]
+    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKw|dict]
 
 ### Unsubscribe
 
@@ -335,11 +335,11 @@ In case of success, the following **`UNSUBSCRIBED`** response:
 
     [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
-In case of error, one of the following three forms of **`ERROR`** reponse:
+In case of error, one of the following three forms of **`UNSUBSCRIBE_ERROR`** response:
 
-    [ERROR, UNSUBSCRIBE.Request|id, Error|uri]
-    [ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list]
-    [ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKW|dict]
+    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri]
+    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list]
+    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKw|dict]
 
 ### Event
 
@@ -357,36 +357,121 @@ One of the following three forms of **`EVENT`** notification:
 
     [METAEVENT, SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
 
-### Remote Procedure Calls
+### Call
 
-#### Caller-to-Dealer
+*Caller-to-Dealer*
 
-    [CALL,         			Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
-    [CANCEL_CALL,  			CALL.Request|id, Options|dict]
-    
-#### Dealer-to-Caller
+One of the following three forms of **`CALL`** request:
 
-    [CALL_PROGRESS, 		CALL.Request|id, INVOCATION_PROGRESS.Progress|list, INVOCATION_PROGRESS.ProgressKw|dict]
-    [CALL_RESULT,   		CALL.Request|id, INVOCATION_RESULT.Result|list, INVOCATION_RESULT.ResultKw|dict]
-    [CALL_ERROR,    		CALL.Request|id, INVOCATION_ERROR.Error|uri, INVOCATION_ERROR.Exception|any]
+    [CALL, Request|id, Options|dict, Procedure|uri]
+    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
 
-#### Callee-to-Dealer
+*Dealer-to-Caller*
 
-    [REGISTER,     			Request|id, Options|dict, Procedure|uri]
-    [UNREGISTER,    		Request|id, REGISTERED.Registration|id]
-    [INVOCATION_PROGRESS, 	INVOCATION.Request|id, Progress|list, ProgressKw|dict]
-    [INVOCATION_RESULT,   	INVOCATION.Request|id, Result|list, ResultKw|dict]
-    [INVOCATION_ERROR,    	INVOCATION.Request|id, Error|uri, Exception|any]
+If the call yields progressive results, one of the following three forms of **`CALL_PROGRESS`**, possibly multiple times:
 
-#### Dealer-to-Callee
+    [CALL_PROGRESS, CALL.Request|id, INVOCATION_PROGRESS.Details|dict]
+    [CALL_PROGRESS, CALL.Request|id, INVOCATION_PROGRESS.Details|dict, INVOCATION_PROGRESS.Progress|list]
+    [CALL_PROGRESS, CALL.Request|id, INVOCATION_PROGRESS.Details|dict, INVOCATION_PROGRESS.Progress|list, INVOCATION_PROGRESS.ProgressKw|dict]
 
-	[REGISTERED,     		REGISTER.Request|id, Registration|id]
-    [REGISTER_ERROR, 		REGISTER.Request|id, Error|uri]
-    [UNREGISTERED,   		UNREGISTER.Request|id]
-    [UNREGISTER_ERROR, 		UNREGISTER.Request|id, Error|uri]
-    [INVOCATION,   			Request|id, REGISTERED.Registration|id, Details|dict,
-								CALL.Arguments|list, CALL.ArgumentsKw|dict]
-    [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
+If the call is successful, one of the following three forms of **`CALL_RESULT`**:
+
+    [CALL_RESULT, CALL.Request|id, INVOCATION_RESULT.Details|dict]
+    [CALL_RESULT, CALL.Request|id, INVOCATION_RESULT.Details|dict, INVOCATION_RESULT.Result|list]
+    [CALL_RESULT, CALL.Request|id, INVOCATION_RESULT.Details|dict, INVOCATION_RESULT.Result|list, INVOCATION_RESULT.ResultKw|dict]
+
+If the call fails, one of the following three forms of **`CALL_ERROR`**:
+
+    [CALL_ERROR, CALL.Request|id, INVOCATION_ERROR.Error|uri]
+    [CALL_ERROR, CALL.Request|id, INVOCATION_ERROR.Error|uri, INVOCATION_ERROR.Exception|list]
+    [CALL_ERROR, CALL.Request|id, INVOCATION_ERROR.Error|uri, INVOCATION_ERROR.Exception|list, INVOCATION_ERROR.ExceptionKw|dict]
+
+
+### Register
+
+*Callee-to-Dealer*
+
+The following `REGISTER` request:
+
+    [REGISTER, Request|id, Options|dict, Procedure|uri]
+
+*Dealer-to-Callee*
+
+In case of success, the following `REGISTERED` response:
+
+	[REGISTERED, REGISTER.Request|id, Registration|id]
+
+In case of error, one of the following three forms of `REGISTER_ERROR`:
+
+    [REGISTER_ERROR, REGISTER.Request|id, Error|uri]
+    [REGISTER_ERROR, REGISTER.Request|id, Error|uri, Exception|list]
+    [REGISTER_ERROR, REGISTER.Request|id, Error|uri, Exception|list, Exception|dict]
+
+
+### Unregister
+
+*Callee-to-Dealer*
+
+The following `UNREGISTER` request:
+
+    [UNREGISTER, Request|id, REGISTERED.Registration|id]
+
+*Dealer-to-Callee*
+
+In case of success, the following `UNREGISTERED` response:
+
+    [UNREGISTERED, UNREGISTER.Request|id]
+
+In case of error, one of the following three forms of `UNREGISTER_ERRROR` response:
+
+    [UNREGISTER_ERROR, UNREGISTER.Request|id, Error|uri]
+    [UNREGISTER_ERROR, UNREGISTER.Request|id, Error|uri, Exception|list]
+    [UNREGISTER_ERROR, UNREGISTER.Request|id, Error|uri, Exception|list, Exception|dict]
+
+
+### Invocation
+
+*Dealer-to-Callee*
+
+One of the following three forms of `INVOCATION` request:
+
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+
+*Callee-to-Dealer**
+
+If the invocation yields progressive results, one of the following three forms of **`INVOCATION_PROGRESS`**, possibly multiple times:
+
+    [INVOCATION_PROGRESS, INVOCATION.Request|id, Details|dict]
+    [INVOCATION_PROGRESS, INVOCATION.Request|id, Details|dict, Progress|list]
+    [INVOCATION_PROGRESS, INVOCATION.Request|id, Details|dict, Progress|list, INVOCATION_PROGRESS.ProgressKw|dict]
+
+If the invoation is successful, one of the following three forms of **`INVOCATION_RESULT`**:
+
+    [INVOCATION_RESULT, INVOCATION.Request|id, Details|dict]
+    [INVOCATION_RESULT, INVOCATION.Request|id, Details|dict, Result|list]
+    [INVOCATION_RESULT, INVOCATION.Request|id, Details|dict, Result|list, ResultKw|dict]
+
+If the invocation fails, one of the following three forms of **`INVOCATION_ERROR`**:
+
+    [INVOCATION_ERROR, INVOCATION.Request|id, Error|uri]
+    [INVOCATION_ERROR, INVOCATION.Request|id, Error|uri, Exception|list]
+    [INVOCATION_ERROR, INVOCATION.Request|id, Error|uri, Exception|list, Exception|dict]
+
+
+### Cancel Call
+
+*Caller-to-Dealer*
+
+The following **`CANCEL_CALL`** request:
+
+    [CANCEL_CALL, CALL.Request|id, Options|dict]
+
+*Dealer-to-Callee*
+
+    [CANCEL_INVOCATION,	INVOCATION.Request|id, Options|dict]
 
 
 ## Message Type Codes
