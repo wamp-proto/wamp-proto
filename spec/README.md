@@ -278,29 +278,25 @@ WAMP defines the following messages which are explained in detail in the further
 |  1   | `HELLO`        | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 |  2   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 |  3   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|      |                |             |          |              |          |          |          |
-| 10   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
-|      |                |             |          |              |          |          |          |
-| 20   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
-| 21   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 30   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
-| 31   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
-| 32   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
-| 33   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
-| 34   | `EVENT`        |             | Tx       | Rx           |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 40   | `CALL`         |             |          |              | Tx       | Rx       |          |
-| 41   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
-| 42   | `RESULT`       |             |          |              | Rx       | Tx       |          |
-|      |                |             |          |              |          |          |          |
-| 50   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
-| 51   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
-| 52   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
-| 53   | `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
-| 54   | `INVOCATION`   |             |          |              |          | Tx       | Rx       |
-| 55   | `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
-| 56   | `YIELD`        |             |          |              |          | Rx       | Tx       |
+|  4   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
+| Code | Message        | *Publisher* | *Broker* | *Subscriber* | *Caller* | *Dealer* | *Callee* |
+| 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
+| 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
+| 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
+| 33   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
+| 34   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
+| 35   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
+| 36   | `EVENT`        |             | Tx       | Rx           |          |          |          |
+| 48   | `CALL`         |             |          |              | Tx       | Rx       |          |
+| 49   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
+| 50   | `RESULT`       |             |          |              | Rx       | Tx       |          |
+| 64   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
+| 65   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
+| 66   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
+| 67   | `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
+| 68   | `INVOCATION`   |             |          |              |          | Tx       | Rx       |
+| 69   | `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
+| 70   | `YIELD`        |             |          |              |          | Rx       | Tx       |
 
 
 ### Session Management
