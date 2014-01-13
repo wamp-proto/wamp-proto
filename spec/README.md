@@ -273,7 +273,7 @@ WAMP defines the following messages which are explained in detail in the further
 
 ### Direction
 
-| Code | Message        | *Publisher* | *Broker* | *Subscriber* | *Caller* | *Dealer* | *Callee* |
+| Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|-------------|----------|--------------|----------|----------|----------|
 |  1   | `HELLO`        | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 |  2   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
