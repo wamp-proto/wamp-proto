@@ -279,7 +279,7 @@ WAMP defines the following messages which are explained in detail in the further
 |  2   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 |  3   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 |  4   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
-| Code | Message        | *Publisher* | *Broker* | *Subscriber* | *Caller* | *Dealer* | *Callee* |
+|      |                | *Publisher* | *Broker* |              |          |          |          |
 | 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
 | 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
 | 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
