@@ -271,6 +271,33 @@ The *application* payload (that is call arguments, call results, event payload e
 WAMP defines the following messages which are explained in detail in the further sections.
 
 
+### Direction
+
+| Message        | *Publisher* | *Broker* | *Subscriber* | *Caller* | *Dealer* | *Callee* |
+|----------------|-------------|----------|--------------|----------|----------|----------|
+| `HELLO`        | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+| `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+| `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+| `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
+| `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
+| `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
+| `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
+| `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
+| `PUBLISH`      | Tx          | Rx       |              |          |          |          |
+| `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
+| `EVENT`        |             | Tx       | Rx           |          |          |          |
+| `REGISTER`     |             |          |              |          | Rx       | Tx       |
+| `REGISTERED`   |             |          |              |          | Tx       | Rx       |
+| `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
+| `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
+| `CALL`         |             |          |              | Tx       | Rx       |          |
+| `CANCEL`       |             |          |              | Tx       | Rx       |          |
+| `RESULT`       |             |          |              | Rx       | Tx       |          |
+| `INVOCATION`   |             |          |              |          | Tx       | Rx       |
+| `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
+| `YIELD`        |             |          |              |          | Rx       | Tx       |
+
+
 ### Session Management
 
 *Any-to-Any*
@@ -301,6 +328,7 @@ In case of error, one of the following three forms of **`PUBLISH_ERROR`** respon
     [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri, Exception|list]
     [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri, Exception|list, ExceptionKw|dict]
 
+
 ### Subscribe
 
 *Subscribe-to-Broker*
@@ -315,11 +343,12 @@ In case of success, the following **`SUBSCRIBED`** response:
 
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
-In case of error, one of the following three forms of **`SUBSCRIBE_ERROR`** response:
+In case of error, one of the following three forms of **`ERROR`** response:
 
-    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri]
-    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list]
-    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKw|dict]
+    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri]
+    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri, Arguments|list]
+    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+
 
 ### Unsubscribe
 
