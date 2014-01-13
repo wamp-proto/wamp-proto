@@ -279,17 +279,20 @@ WAMP defines the following messages which are explained in detail in the further
 |  2   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 |  3   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 |  4   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
-|      |                | *Publisher* | *Broker* |              |          |          |          |
+|      |                |             |          |              |          |          |          |
 | 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
 | 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
+|      |                |             |          |              |          |          |          |
 | 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
 | 33   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
 | 34   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
 | 35   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
 | 36   | `EVENT`        |             | Tx       | Rx           |          |          |          |
+|      |                |             |          |              |          |          |          |
 | 48   | `CALL`         |             |          |              | Tx       | Rx       |          |
 | 49   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
 | 50   | `RESULT`       |             |          |              | Rx       | Tx       |          |
+|      |                |             |          |              |          |          |          |
 | 64   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
 | 65   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
 | 66   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
