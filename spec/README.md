@@ -2,11 +2,6 @@
 
 This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
-## FIXME
-
- 1. application payload types (use "embedded" / "transparent" serialization)?
- 2. *Broker-to-Broker* and *Dealer-to-Dealer* message flows
-
 ## Introduction
 
 WAMP ("Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
