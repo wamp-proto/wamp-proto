@@ -1,10 +1,19 @@
 # WAMP v2 Specification
 
-This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
+This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
 
 1. [Introduction](#introduction)
-2. [Building Blocks](#building-blocks)
-3. 
+2. [Identifiers](#identifiers)
+2. [Serializations](#serializations)
+2. [Transports](#transports)
+2. [Messages](#messages)
+2. [Session Management](#session-management)
+2. [Publish & Subscribe](#publish--subscribe)
+3. [Remote Procedure Calls](#remote-procedure-calls)
+3. [Ordering Guarantees](#ordering-guarantees)
+3. [Reflection](#reflection)
+3. [Authentication](#authentication)
+3. [Appendix](#appendix)
 
 
 ## Introduction
@@ -92,8 +101,9 @@ WAMP is defined with respect to the following building blocks
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
 
 
+## Identifiers
 
-## URIs
+### URIs
 
 WAMP needs to identify the following *persistent* resources:
 
@@ -128,8 +138,7 @@ URI components SHOULD match the regular expression `[a-z][a-z0-9_]*` (that is st
 
 Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
 
-
-## IDs
+### IDs
 
 WAMP needs to identify the following *ephemeral* entities:
 
@@ -145,7 +154,7 @@ These are identified in WAMP using IDs that are integers between (inclusive) `0`
 > 
 
 
-## Serialization
+## Serializations
 
 WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
 
