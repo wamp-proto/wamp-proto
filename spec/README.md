@@ -250,7 +250,7 @@ The notation `Element|type` denotes a message element named `Element` of type `t
  * `list`: a list (array)
 
 > **Extensibility**
-> Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys with above `Options` and `Details` MUST BE of type `string` and SHOULD match the regular expression `[a-z][a-z0-9_]*`
+> Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
 > 
 > **Polymorphism**
 > For a given `MessageType` and number of message elements is uniquely defines the expected types. Hence there is no polymorphic messages in WAMP. This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
@@ -258,11 +258,11 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 > **Structure**
 > The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
 > 
-> **Message Types**
-> WAMP defines the following messages which are explained in detail in the further sections.
-> 
 
 ### Message Format
+
+WAMP defines the following messages which are explained in detail in the following sections.
+
 
 #### `HELLO`
 
