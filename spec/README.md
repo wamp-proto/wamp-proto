@@ -24,16 +24,15 @@ WAMP ("The Web Application Messaging Protocol") is an open application communica
  * Remote Procedure Calls
 
 WAMP can run over different *transports*, including [WebSocket](http://tools.ietf.org/html/rfc6455), where it is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
-
 WAMP also supports different *serializations*, including JSON and MsgPack.
 
 ### Peers and Roles
 
-A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions. A WAMP peer can have one or more of the following roles.
+A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions. A WAMP peer can have one *or more* of the following roles.
 
 **Remote Procedure Call Roles**
 
-The Remote Procedure Call messaging involves peers of three roles:
+The Remote Procedure Call messaging pattern involves peers of three roles:
 
 1. *Callee*
 2. *Caller*
@@ -57,11 +56,11 @@ where
 
  * *Subscribers* subscribe to topics they are interested in with *Brokers*.
  * *Publishers* publish events to topics at *Brokers*.
- * *Brokers* route events incoming from *Publishers* to *Subscribers* subscribed to the topic published to.
+ * *Brokers* route events incoming from *Publishers* to *Subscribers* interested in the topic published to.
 
 **Decoupling**
 
-In WAMP, *Dealers* are responsible for call routing decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing decoupling *Publishers* from *Subscribers*.
+In WAMP, *Dealers* are responsible for call routing, decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing, decoupling *Publishers* from *Subscribers*.
 
 **Peers with multiple Roles**
 
@@ -80,6 +79,9 @@ WAMP is designed for application code to run inside peers of the roles:
 2. *Publisher* and *Subscriber*
  
 *Brokers* and *Dealers* are responsible for **generic call and event routing** and SHOULD NOT run application code.
+
+> However, a *program* that implements the *Dealer* role might at the same time implement a builtin *Callee*. It is the *Dealer* and *Broker* that SHOULD be generic, not the program. 
+> 
 
 The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application. *Brokers* and *Dealers* however might differ in these features:
 
@@ -289,15 +291,15 @@ The notation `Element|type` denotes a message element named `Element` of type `t
  * `dict`: a dictionary (map)
  * `list`: a list (array)
 
-> **Extensibility**
-> Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
-> 
-> **Polymorphism**
-> For a given `MessageType` and number of message elements is uniquely defines the expected types. Hence there is no polymorphic messages in WAMP. This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
-> 
-> **Structure**
-> The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
-> 
+**Extensibility**
+Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
+
+**Polymorphism**
+For a given `MessageType` and number of message elements is uniquely defines the expected types. Hence there is no polymorphic messages in WAMP. This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+
+**Structure**
+The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
+
 
 ### Message Definitions
 
@@ -410,7 +412,7 @@ WAMP defines the following messages which are explained in detail in the followi
 
 ### Message Codes and Direction
 
-The following table lists the message type code for the 21 messages defined in WAMPv2 and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role. 
+The following table lists the message type code for **all 21 messages defined in WAMPv2** and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role. 
 
 
 | Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
@@ -738,11 +740,13 @@ When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send 
 
 or
 
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|any]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+		PUBLISH.Arguments|any]
 
 or
 
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|any, PUBLISH.ArgumentKw|dict]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+		PUBLISH.Arguments|any, PUBLISH.ArgumentKw|dict]
 
 where
 
@@ -816,11 +820,11 @@ In this example, the *Publisher* will receive the published event also, if it is
 
 ### Publisher Identification
 
-A *Publisher* MAY **request** the disclosure of it's identity (it's WAMP session ID) to receivers of a published event via `PUBLISH.Options.disclose_me|integer`:
+A *Publisher* may request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event by setting `PUBLISH.Options.disclose_me|bool := true`:
 
 *Example*
 
-    [16, 239714735, {"disclose_me": 1}, "com.myapp.mytopic1", ["Hello, world!"]]
+    [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1", ["Hello, world!"]]
 
 If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`:
 
@@ -830,7 +834,7 @@ If above event would have been published by a *Publisher* with WAMP session ID `
 
 Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
 
-A *Broker* MAY deny a *Publisher's* request to disclose it's identity:
+Also note that a *Broker* may deny a *Publisher's* request to disclose it's identity:
 
 *Example*
 
