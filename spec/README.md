@@ -820,7 +820,9 @@ In this example, the *Publisher* will receive the published event also, if it is
 
 ### Publisher Identification
 
-A *Publisher* may request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event by setting `PUBLISH.Options.disclose_me|bool := true`:
+A *Publisher* may request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event by setting 
+
+	PUBLISH.Options.disclose_me|bool := true
 
 *Example*
 
@@ -832,13 +834,14 @@ If above event would have been published by a *Publisher* with WAMP session ID `
 
 	[36, 5512315355, 4429313566, {"publisher": 3335656}, ["Hello, world!"]]
 
-Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
-
-Also note that a *Broker* may deny a *Publisher's* request to disclose it's identity:
+Note that a *Broker* may deny a *Publisher's* request to disclose it's identity:
 
 *Example*
 
     [4, 239714735, {}, "wamp.error.disclose_me.not_allowed"]
+
+A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
+
 
 
 ### Publication Trust Levels
