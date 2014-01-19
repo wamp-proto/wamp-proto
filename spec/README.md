@@ -80,6 +80,8 @@ A JSON string is deserialized using the following procedure:
 2. If the string starts with a `\0` character, decode the rest (after the first character) using Base64 to a byte array
 3. Otherwise, return the Unicode string
 
+The appendix contains complete code examples in Python and JavaScript for conversion between MsgPack and JSON.
+
 
 ### Transport
 
@@ -93,7 +95,11 @@ WAMP assumes a *transport* with the following characteristics:
 
 #### WebSocket Transport
 
-The default transport binding is [WebSocket](http://tools.ietf.org/html/rfc6455). With WebSocket, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
+The default transport binding is [WebSocket](http://tools.ietf.org/html/rfc6455).
+
+##### Unbatched
+
+With WebSocket in unbatched mode, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
 
 The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between peers using the WebSocket subprotocol negotiation mechanism.
 
@@ -105,6 +111,17 @@ WAMPv2 uses the following WebSocket subprotocol identifiers:
 With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
 
 With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
+
+##### Batched
+
+WAMPv2 allows to batch multiple WAMP message into a single WebSocket message if the following subprotocols have been negotiated:
+
+ * `wamp.2.json.batched`
+ * `wamp.2.msgpack.batched`
+
+Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ("record delimiter") to *each* serialized messages, an packing a sequence of such serialized messages into a single WebSocket message.
+
+Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message.
 
 
 #### Other Transports
@@ -369,6 +386,9 @@ WAMP defines the following messages which are explained in detail in the followi
 
 
 ### Message Codes and Direction
+
+The following table lists the message type code for the 21 messages defined in WAMPv2 and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role. 
+
 
 | Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|-------------|----------|--------------|----------|----------|----------|
