@@ -2,6 +2,11 @@
 
 This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol.
 
+1. [Introduction](#introduction)
+2. [Building Blocks](#building-blocks)
+3. 
+
+
 ## Introduction
 
 WAMP ("Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
@@ -13,127 +18,7 @@ WAMP can run over different *transports*, including [WebSocket](http://tools.iet
 
 WAMP also supports different *serialization*, including JSON and MsgPack.
 
-
-## Building Blocks
-
-WAMP is defined with respect to the following building blocks 
-
-   1. Serialization
-   2. Transport
-
-For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
-
-
-### Serialization
-
-WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
-
-A message *serialization* format is assumed that (at least) provides the following types:
-
-  * `integer` (non-negative)
-  * `string` (UTF-8 encoded Unicode)
-  * `list`
-  * `dict` (with string keys)
-
-WAMP *itself* only uses above types. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
-
-WAMPv2 defines two bindings for message *serialization*:
-
- 1. [JSON](http://www.json.org/)
- 2. [MsgPack](http://msgpack.org/)
-
-> * As noted above, WAMP *itself* does only use a subset of types - e.g. it does not use the JSON types `number` (non-integer), `bool` and `null`.
-> * With MsgPack, the [version 5](https://github.com/msgpack/msgpack/blob/master/spec.md) MUST BE supported - which is able to differentiate between strings and binary values.
-> 
-
-Other bindings for *serialization* may be defined in future WAMP versions.
-
-#### Conversion
-
-A MsgPack **byte array** is converted to a JSON string as follows:
-
-1. convert the byte array to a Base64 encoded (host language) string
-2. prepend the string with a `\0` character
-3. serialize the string to a JSON string
-
-*Example*
-
-Consider the byte array (hex representation):
-
-	10e3ff9053075c526f5fc06d4fe37cdb
-
-This will get converted to Base64
-
-	EOP/kFMHXFJvX8BtT+N82w==
-
-prepended with `\0` 
-
-	\x00EOP/kFMHXFJvX8BtT+N82w==
-
-and serialized to a JSON string
-
-	"\\u0000EOP/kFMHXFJvX8BtT+N82w=="
-
-A JSON string is deserialized using the following procedure:
-
-1. Unserialize a JSON string to a host language (Unicode) string
-2. If the string starts with a `\0` character, decode the rest (after the first character) using Base64 to a byte array
-3. Otherwise, return the Unicode string
-
-The appendix contains complete code examples in Python and JavaScript for conversion between MsgPack and JSON.
-
-
-### Transport
-
-WAMP assumes a *transport* with the following characteristics:
-
-  1. message-based
-  2. reliable
-  3. ordered
-  4. full-duplex
-
-
-#### WebSocket Transport
-
-The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
-
-##### Unbatched
-
-With WebSocket in unbatched mode, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
-
-The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between peers using the WebSocket subprotocol negotiation mechanism.
-
-WAMPv2 uses the following WebSocket subprotocol identifiers:
-
- * `wamp.2.json`
- * `wamp.2.msgpack`
-
-With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
-
-With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
-
-##### Batched
-
-WAMPv2 allows to batch multiple WAMP message into a single WebSocket message if the following subprotocols have been negotiated:
-
- * `wamp.2.json.batched`
- * `wamp.2.msgpack.batched`
-
-Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ("record delimiter") to *each* serialized messages, an packing a sequence of such serialized messages into a single WebSocket message.
-
-Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message.
-
-
-#### Other Transports
-
-Besides the WebSocket transport, the following WAMP transports are under development:
-
- * HTTP 1.0/1.1 long-polling
-
-Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
-
-
-## Peer Roles
+### Peer Roles
 
 A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions.
 
@@ -197,6 +82,17 @@ It's important to note that though the establishment of a transport connection m
 Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*. And a *Dealer* might also act as a *Callee*. With the latter, a peer might "route" an incoming call directly to an implementing endpoint within the same program (and hence no actual messaging over a transport is happening).
 
 
+### Building Blocks
+
+WAMP is defined with respect to the following building blocks 
+
+   1. Serialization
+   2. Transport
+
+For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
+
+
+
 ## URIs
 
 WAMP needs to identify the following *persistent* resources:
@@ -249,6 +145,124 @@ These are identified in WAMP using IDs that are integers between (inclusive) `0`
 > 
 
 
+## Serialization
+
+WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
+
+A message *serialization* format is assumed that (at least) provides the following types:
+
+  * `integer` (non-negative)
+  * `string` (UTF-8 encoded Unicode)
+  * `list`
+  * `dict` (with string keys)
+
+WAMP *itself* only uses above types. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
+
+WAMPv2 defines two bindings for message *serialization*:
+
+ 1. [JSON](http://www.json.org/)
+ 2. [MsgPack](http://msgpack.org/)
+
+> * As noted above, WAMP *itself* does only use a subset of types - e.g. it does not use the JSON types `number` (non-integer), `bool` and `null`.
+> * With MsgPack, the [version 5](https://github.com/msgpack/msgpack/blob/master/spec.md) MUST BE supported - which is able to differentiate between strings and binary values.
+> 
+
+Other bindings for *serialization* may be defined in future WAMP versions.
+
+### JSON
+
+Write me.
+
+### MsgPack
+
+Write me.
+
+### JSON-MsgPack Conversion
+
+A MsgPack **byte array** is converted to a JSON string as follows:
+
+1. convert the byte array to a Base64 encoded (host language) string
+2. prepend the string with a `\0` character
+3. serialize the string to a JSON string
+
+*Example*
+
+Consider the byte array (hex representation):
+
+	10e3ff9053075c526f5fc06d4fe37cdb
+
+This will get converted to Base64
+
+	EOP/kFMHXFJvX8BtT+N82w==
+
+prepended with `\0` 
+
+	\x00EOP/kFMHXFJvX8BtT+N82w==
+
+and serialized to a JSON string
+
+	"\\u0000EOP/kFMHXFJvX8BtT+N82w=="
+
+A JSON string is deserialized using the following procedure:
+
+1. Unserialize a JSON string to a host language (Unicode) string
+2. If the string starts with a `\0` character, decode the rest (after the first character) using Base64 to a byte array
+3. Otherwise, return the Unicode string
+
+The appendix contains complete code examples in Python and JavaScript for conversion between MsgPack and JSON.
+
+
+## Transports
+
+WAMP assumes a *transport* with the following characteristics:
+
+  1. message-based
+  2. reliable
+  3. ordered
+  4. full-duplex
+
+
+### WebSocket Transport
+
+The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
+
+#### Unbatched WebSocket Transport
+
+With WebSocket in unbatched mode, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
+
+The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between peers using the WebSocket subprotocol negotiation mechanism.
+
+WAMPv2 uses the following WebSocket subprotocol identifiers:
+
+ * `wamp.2.json`
+ * `wamp.2.msgpack`
+
+With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
+
+With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
+
+#### Batched WebSocket Traansport
+
+WAMPv2 allows to batch multiple WAMP message into a single WebSocket message if the following subprotocols have been negotiated:
+
+ * `wamp.2.json.batched`
+ * `wamp.2.msgpack.batched`
+
+Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ("record delimiter") to *each* serialized messages, an packing a sequence of such serialized messages into a single WebSocket message.
+
+Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message.
+
+
+### Other Transports
+
+Besides the WebSocket transport, the following WAMP transports are under development:
+
+ * HTTP 1.0/1.1 long-polling
+
+Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
+
+
+
 ## Messages
 
 ### Overview
@@ -276,7 +290,7 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 > The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
 > 
 
-### Message Format
+### Message Definitions
 
 WAMP defines the following messages which are explained in detail in the following sections.
 
