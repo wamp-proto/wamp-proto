@@ -606,6 +606,8 @@ A *Subscriber* communicates it's interest in a topic to a *Broker* by sending a 
 
     [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
+where
+
  * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
  * `Options` is a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
  * `Topic` is the topic the *Subscriber* wants to subscribe to.
@@ -617,6 +619,8 @@ A *Subscriber* communicates it's interest in a topic to a *Broker* by sending a 
 If the *Broker* is able to fulfil and allowing the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
 
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
+
+where
 
  * `SUBSCRIBE.Request` is the ID from the original request.
  * `Subscription` is an ID chosen by the *Broker* for the subscription.
@@ -632,6 +636,8 @@ When the request for subscription cannot be fulfilled by the *Broker*, the *Brok
 
     [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri]
 
+where
+
  * `SUBSCRIBE.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
@@ -642,6 +648,8 @@ When the request for subscription cannot be fulfilled by the *Broker*, the *Brok
 When a *Subscriber* is no longer interested in receiving events for a subscription it sends an `UNSUBSCRIBE` message
 
     [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
+
+where
 
  * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
  * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubcribe from, originally handed out by the *Broker* to the *Subscriber*.
@@ -654,6 +662,8 @@ Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to 
 
     [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
+where
+
  * `UNSUBSCRIBE.Request` is the ID from the original request.
 
 *Example*
@@ -663,6 +673,8 @@ Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to 
 When the request failed, the *Broker* sends an `ERROR`
 
     [ERROR, UNSUBSCRIBE.Request|id, Details|dict, Error|uri]
+
+where
 
  * `UNSUBSCRIBE.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
@@ -695,6 +707,8 @@ or
 
 	[PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
+where
+
  * `Request` is a random, ephemeral ID chosen by the *Publisher* and used to correlate the *Broker's* response with the request.
  * `Options` is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.
  * `Topic` is the topic published to.
@@ -717,6 +731,8 @@ If the *Broker* is able to fulfill and allowing the publication, it answers by s
 
     [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
+where
+
  * `PUBLISH.Request` is the ID from the original publication request.
  * `Publication` is a ID chosen by the Broker for the publication.
 
@@ -727,6 +743,8 @@ If the *Broker* is able to fulfill and allowing the publication, it answers by s
 When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Publisher*
 
     [ERROR, PUBLISH.Request|id, Details|dict, Error|uri]
+
+where
 
  * `PUBLISH.Request` is the ID from the original publication request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
@@ -780,8 +798,8 @@ where
 
 A *Publisher* may restrict the receivers of an event beyond those subscribed via
 
- * `PUBLISH.Options.exclude|list` and
- * `PUBLISH.Options.eligible|list`.
+ * `PUBLISH.Options.exclude|list`
+ * `PUBLISH.Options.eligible|list`
 
 `PUBLISH.Options.exclude` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Subscribers* that won't receive a published event, even though they might be subscribed. In other words, `PUBLISH.Options.exclude` is a blacklist of (potential) *Subscribers*.
 
@@ -811,9 +829,11 @@ The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912
 
 ### Publisher Exclusion
 
-By default, a *Publisher* of an event will **not** itself receive an event published, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via `PUBLISH.Options.exclude_me|bool`.
+By default, a *Publisher* of an event will **not** itself receive an event published, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via
 
-When publishing with `PUBLISH.Options.exclude_me := false`, the *Publisher* of the event will receive that very event also if it is subscribed to the `Topic` published to.
+	PUBLISH.Options.exclude_me|bool
+
+When publishing with `PUBLISH.Options.exclude_me := false`, the *Publisher* of the event will receive that very event also - if it is subscribed to the `Topic` published to.
 
 *Example*
 
@@ -851,7 +871,11 @@ A *Broker* may also (automatically) disclose the identity of a *Publisher* even 
 
 A *Broker* may be configured to automatically assign *trust levels* to events published by *Publishers* according to the *Broker* configuration on a per-topic basis and/or depending on the application defined role of the (authenticated) *Publisher*.
 
-A *Broker* supporting trust level will use `Details.trustlevel|integer` in an `EVENT` message sent to a *Subscriber*. The trustlevel `0` means lowest trust, and higher integers represent (application-defined) higher levels of trust.
+A *Broker* supporting trust level will provide
+
+	Details.trustlevel|integer
+
+in an `EVENT` message sent to a *Subscriber*. The trustlevel `0` means lowest trust, and higher integers represent (application-defined) higher levels of trust.
 
 *Example*
 
@@ -885,12 +909,12 @@ When a **prefix-matching policy** is in place, any event with a topic that has `
 
 In above example, events with `PUBLISH.Topic` e.g.
 
- * `com.myapp.topic.emergency.11`,
- * `com.myapp.topic.emergency-low`,
- * `com.myapp.topic.emergency.category.severe` and
+ * `com.myapp.topic.emergency.11`
+ * `com.myapp.topic.emergency-low`
+ * `com.myapp.topic.emergency.category.severe`
  * `com.myapp.topic.emergency`
 
-will all apply for dispatching. An event with `PUBLISH.Topic` e.g. `com.myapp.topic.emergenc` will NOT apply.
+will all apply for dispatching. An event with `PUBLISH.Topic` e.g. `com.myapp.topic.emerge` will not apply.
 
 The *Broker* will apply the prefix-matching based on the UTF-8 encoded byte string for the `PUBLISH.Topic` and the `SUBSCRIBE.Topic`.
 
@@ -906,23 +930,27 @@ Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with `PUBLISH.Topic` e.g.
 
- * `com.myapp.foo.userevent`,
- * `com.myapp.bar.userevent` or
+ * `com.myapp.foo.userevent`
+ * `com.myapp.bar.userevent`
  * `com.myapp.a12.userevent`
 
 will all apply for dispatching. Events with `PUBLISH.Topic` e.g.
 
- * `com.myapp.foo.userevent.bar`,
- * `com.myapp.foo.user` or
+ * `com.myapp.foo.userevent.bar`
+ * `com.myapp.foo.user`
  * `com.myapp2.foo.userevent`
 
-will NOT apply for dispatching.
+will not apply for dispatching.
 
 When a single event matches more than one of a *Subscriber's* subscriptions, the event will be delivered for each subscription. The *Subscriber* can detect the delivery of that same event on multiple subscriptions via `EVENT.PUBLISHED.Publication`, which will be identical.
 
 Since each *Subscriber's* subscription "stands on it's own", there is no *set semantics* implied by pattern-based subscriptions. E.g. a *Subscriber* cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.
 
-If a subscription was established with a pattern-based matching policy, a *Broker* MUST supply the original `PUBLISH.Topic` as provided by the *Publisher* in `EVENT.Details.topic` to the *Subscribers*. 
+If a subscription was established with a pattern-based matching policy, a *Broker* MUST supply the original `PUBLISH.Topic` as provided by the *Publisher* in
+
+	EVENT.Details.topic|uri
+
+to the *Subscribers*. 
 
 
 ### Partitioned Subscriptions & Publications
@@ -1083,6 +1111,8 @@ A *Callee* announces the availability of an endpoint implementing a procedure wi
 
     [REGISTER, Request|id, Options|dict, Procedure|uri]
 
+where
+
  * `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
  * `Options` is a dictionary that allows to provide additional registration request details in a extensible way. This is described further below.
  * `Procedure`is the procedure the *Callee* wants to register
@@ -1094,6 +1124,8 @@ A *Callee* announces the availability of an endpoint implementing a procedure wi
 If the *Dealer* is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
 
 	[REGISTERED, REGISTER.Request|id, Registration|id]
+
+where
 
  * `REGISTER.Request` is the ID from the original request.
  *  `Registration` is an ID chosen by the *Dealer* for the registration.
@@ -1113,9 +1145,11 @@ When the request for registration cannot be fullfilled by the *Dealer*, the *Dea
 
 	[4, 25349185, {}, "wamp.error.procedure_already_exists"]
 
-When a *Callee* is no longer willing to provide an implementation of the registered procedure, it send an `UNREGISTER` message to the *Dealer*:
+When a *Callee* is no longer willing to provide an implementation of the registered procedure, it sends an `UNREGISTER` message to the *Dealer*:
 
     [UNREGISTER, Request|id, REGISTERED.Registration|id]
+
+where
 
  * `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
  * `REGISTERED.Registration` is the ID for the registration to revoke, originally handed out by the *Dealer* to the *Callee*.
@@ -1128,6 +1162,8 @@ Upon successful unregistration, the *Dealer* send an `UNREGISTERED` message to t
 
     [UNREGISTERED, UNREGISTER.Request|id]
 
+where
+
  * `UNREGISTER.Request` is the ID from the original request.
 
 *Example*
@@ -1137,6 +1173,8 @@ Upon successful unregistration, the *Dealer* send an `UNREGISTERED` message to t
 When the unregistration request failed, the *Dealer* send an `ERROR` message:
 
     [ERROR, UNREGISTER.Request|id, Details|dict, Error|uri]
+
+where
 
  * `UNREGISTER.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
@@ -1182,15 +1220,15 @@ where
 
 *Example*
 
+	[48, 7814135, {}, "com.myapp.ping"]
+
+*Example*
+
 	[48, 7814135, {}, "com.myapp.echo", ["Hello, world!"]]
 
 *Example*
 
 	[48, 7814135, {}, "com.myapp.add2", [23, 7]]
-
-*Example*
-
-	[48, 7814135, {}, "com.myapp.ping"]
 
 *Example*
 
@@ -1202,13 +1240,11 @@ If the *Dealer* is able to fullfill (mediate) and allowing the call, it sends a 
 
 or
 
-    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
-		CALL.Arguments|list]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list]
 
 or
 
-    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
-		CALL.Arguments|list, CALL.ArgumentsKw|dict]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 where
 
@@ -1309,7 +1345,11 @@ A *Caller* might want to issue a call providing a *timeout* for the call to fini
 
 A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
 
-A *Callee* specifies a timeout by providing `CALL.Options.timeout|integer` in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value. 
+A *Callee* specifies a timeout by providing
+
+	CALL.Options.timeout|integer
+
+in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value. 
 
 The timeout option is a companion to, but slightly different from the `CANCEL` and `INTERRUPT` messages that allow a *Caller* and *Dealer* to **actively** cancel a call or invocation.
 
@@ -1356,15 +1396,23 @@ A procedure implemented by a *Callee* and registered at a *Dealer* may produce p
 
 ![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
 
-An implementing procedure produces progressive results by sending `YIELD` messages to the *Dealer* with `YIELD.Options.progress == 1`.
+An implementing procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
 
-Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == 1` (for a call that is still ongoing), the *Dealer* will immediately send a `RESULT` message to the original *Caller* with `RESULT.Details.progress == 1`.
+	YIELD.Options.progress|bool := true
+
+Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will immediately send a `RESULT` message to the original *Caller* with
+
+	RESULT.Details.progress|bool := true
 
 Nevertheless, a call will *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller* and an invocation will *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
 
-In other words: `YIELD` with `YIELD.Options.progress == 1` and `RESULT` with `RESULT.Details.progress == 1` messages may only be sent *during* a call or invocation is still on the fly.
+In other words: `YIELD` with `YIELD.Options.progress == true` and `RESULT` with `RESULT.Details.progress == true` messages may only be sent *during* a call or invocation is still on the fly.
 
-If the *Caller* does not support *progressive calls* (as indicated by `HELLO.Details.roles.caller.progressive == 0`), the *Dealer* will gather all individual results receveived by the *Callee* via `YIELD` with `YIELD.Options.progress == 1` and the final `YIELD` into a list and return that as the single result to the *Caller*
+If the *Caller* does not support *progressive calls*, as indicated by
+
+	HELLO.Details.roles.caller.progressive == false
+
+the *Dealer* will gather all individual results receveived by the *Callee* via `YIELD` with `YIELD.Options.progress == true` and the final `YIELD` into a list and return that as the single result to the *Caller*
 
 *FIXME*
 
@@ -1429,7 +1477,9 @@ If the *Dealer* and the *Callee* support **pattern-based registrations**, this m
 
 *Dealers* and *Callees* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
 
-A *Callee* requests **prefix-matching policy** with a registration request by setting `REGISTER.Options.match|string == "prefix"`.
+A *Callee* requests **prefix-matching policy** with a registration request by setting
+
+	REGISTER.Options.match|string := "prefix"
 
 *Example*
 
@@ -1437,11 +1487,25 @@ A *Callee* requests **prefix-matching policy** with a registration request by se
 
 When a **prefix-matching policy** is in place, any call with a procedure that has `REGISTER.Procedure` as a *prefix* will match the registration, and potentially be routed to *Callees* on taht registration.
 
-In above example, calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1`, `com.myapp.myobject1-mysubobject1`, `com.myapp.myobject1.mysubobject1.myprocedure1` and `com.myapp.myobject1` will all apply for call routing. A call with `CALL.Procedure` e.g. `com.myapp.myobject2` or `com.myapp.myobject` will NOT apply.
+In above example, calls with `CALL.Procedure` e.g.
+
+ * `com.myapp.myobject1.myprocedure1`
+ * `com.myapp.myobject1-mysubobject1`
+ * `com.myapp.myobject1.mysubobject1.myprocedure1`
+ * `com.myapp.myobject1`
+
+will all apply for call routing. A call with `CALL.Procedure` e.g.
+
+ * `com.myapp.myobject2`
+ * `com.myapp.myobject`
+
+will not apply.
 
 The *Dealer* will apply the prefix-matching based on the UTF-8 encoded byte string for the `CALL.Procedure` and the `REGISTER.Procedure`.
 
-A *Callee* requests **wildcard-matching policy** with a registration request by setting `REGISTER.Options.match|string == "wildcard"`.
+A *Callee* requests **wildcard-matching policy** with a registration request by setting
+
+	REGISTER.Options.match|string := "wildcard"
 
 Wildcard-matching allows to provide wildcards for **whole** URI components.
 
@@ -1449,7 +1513,18 @@ Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 	[64, 612352435, {"match": "wildcard"}, "com.myapp..myprocedure1"]
 
-In above registration request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1` or `com.myapp.myobject2.myprocedure1` will all apply for call routing. Calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1.mysubprocedure1`, `com.myapp.myobject1.myprocedure2` or `com.myapp2.myobject1.myprocedure1` will NOT apply for call routing.
+In above registration request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, calls with `CALL.Procedure` e.g.
+
+ * `com.myapp.myobject1.myprocedure1`
+ * `com.myapp.myobject2.myprocedure1`
+
+will all apply for call routing. Calls with `CALL.Procedure` e.g.
+
+ * `com.myapp.myobject1.myprocedure1.mysubprocedure1`
+ * `com.myapp.myobject1.myprocedure2`
+ * `com.myapp2.myobject1.myprocedure1`
+
+will not apply for call routing.
 
 When a single call matches more than one of a *Callees* registrations, the call MAY be routed for invocation on multiple registrations, depending on call settings.
 
@@ -1462,11 +1537,13 @@ If an endpoint was registered with a pattern-based matching policy, a *Dealer* M
 
 ### Caller Identification
 
-A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via `CALL.Options.disclose_me|integer`:
+A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via 
+
+	CALL.Options.disclose_me|bool := true
 
 *Example*
 
-	[48, 7814135, {"disclose_me": 1}, "com.myapp.echo", ["Hello, world!"]]
+	[48, 7814135, {"disclose_me": true}, "com.myapp.echo", ["Hello, world!"]]
 
 If above call would have been issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* would send an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
 
@@ -1541,11 +1618,11 @@ Predefined WAMP reflection procedures to *describe* resources by type:
 
 A peer that acts as a *Broker* SHOULD announce support for the reflection API by sending
 
-	HELLO.Details.roles.broker.reflection|integer == 1
+	HELLO.Details.roles.broker.reflection|bool := true
 
 A peer that acts as a *Dealer* SHOULD announce support for the reflection API by sending
 
-	HELLO.Details.roles.dealer.reflection|integer == 1
+	HELLO.Details.roles.dealer.reflection|bool := true
 
 > Since *Brokers* might provide (broker) procedures and *Dealers* might provide (dealer) topics, both SHOULD implement the complete API above (even if the peer only implements one of *Broker* or *Dealer* roles).
 > 
@@ -1692,8 +1769,7 @@ if (decoded.charCodeAt(0) === 0) {
 console.log(data_out);
 ```
 
-
-## References
+### References
 
 1. [Uniform Resource Identifier (URI): Generic Syntax, RFC 3986](http://tools.ietf.org/html/rfc3986)
 2. [UTF-8, a transformation format of ISO 10646](http://tools.ietf.org/html/rfc3629)
@@ -1702,15 +1778,3 @@ console.log(data_out);
 5. [MessagePack Format specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
 6. [Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web (1997)](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.23.3738) 
 7. [Web Caching with Consistent Hashing](http://www8.org/w8-papers/2a-webserver/caching/paper2.html)
-
-
-<!--
-![alt text](figure/rpc_call2.png "RPC Message Flow: Calls")
-![alt text](figure/rpc_provide2.png "RPC Message Flow: Calls")
-![alt text](figure/pubsub_subscribe2.png "RPC Message Flow: Calls")
-![alt text](figure/pubsub_publish2.png "RPC Message Flow: Calls")
-
-http://docs.oracle.com/javase/specs/jls/se5.0/html/packages.html#7.7
-http://en.wikipedia.org/wiki/Java_package
-http://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html
--->
