@@ -248,54 +248,19 @@ The notation `Element|type` denotes a message element named `Element` of type `t
  * `uri`: a string URI as defined above
  * `dict`: a dictionary (map)
  * `list`: a list (array)
- * `any`: any scalar or complex type the serialization supports
 
-> Keys with above `dicts` MUST BE of type `string` and SHOULD match the regular expression `[a-z][a-z0-9_]*`
+> **Extensibility**
+> Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys with above `Options` and `Details` MUST BE of type `string` and SHOULD match the regular expression `[a-z][a-z0-9_]*`
 > 
-
-**Extensibility**
-Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes.
-
-**Polymorphism**
-For a given `MessageType`, the number of expected elements is uniquely defined. Hence there is no polymorphic messages in WAMP at all. This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
-
-**Structure**
-The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
-
-**Message Types**
-WAMP defines the following messages which are explained in detail in the further sections.
-
-
-### Message Codes and Direction
-
-| Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|------|----------------|-------------|----------|--------------|----------|----------|----------|
-|  1   | `HELLO`        | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  2   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  3   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  4   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
-|      |                |             |          |              |          |          |          |
-| 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
-| 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
-| 33   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
-| 34   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
-| 35   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
-| 36   | `EVENT`        |             | Tx       | Rx           |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 48   | `CALL`         |             |          |              | Tx       | Rx       |          |
-| 49   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
-| 50   | `RESULT`       |             |          |              | Rx       | Tx       |          |
-|      |                |             |          |              |          |          |          |
-| 64   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
-| 65   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
-| 66   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
-| 67   | `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
-| 68   | `INVOCATION`   |             |          |              |          | Tx       | Rx       |
-| 69   | `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
-| 70   | `YIELD`        |             |          |              |          | Rx       | Tx       |
-
+> **Polymorphism**
+> For a given `MessageType` and number of message elements is uniquely defines the expected types. Hence there is no polymorphic messages in WAMP. This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+> 
+> **Structure**
+> The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
+> 
+> **Message Types**
+> WAMP defines the following messages which are explained in detail in the further sections.
+> 
 
 ### Message Format
 
@@ -347,8 +312,10 @@ WAMP defines the following messages which are explained in detail in the further
 #### `EVENT`
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+		PUBLISH.Arguments|list]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+		PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 
 #### `CALL`
 
@@ -381,8 +348,10 @@ WAMP defines the following messages which are explained in detail in the further
 #### `INVOCATION`
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
-    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list]
-    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+		CALL.Arguments|list]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+		CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 #### `YIELD`
 
@@ -397,6 +366,37 @@ WAMP defines the following messages which are explained in detail in the further
 #### `INTERRUPT`
 
     [INTERRUPT, INVOCATION.Request|id, Options|dict]
+
+
+### Message Codes and Direction
+
+| Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|------|----------------|-------------|----------|--------------|----------|----------|----------|
+|  1   | `HELLO`        | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  2   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  3   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  4   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
+|      |                |             |          |              |          |          |          |
+| 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
+| 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
+|      |                |             |          |              |          |          |          |
+| 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
+| 33   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
+| 34   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
+| 35   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
+| 36   | `EVENT`        |             | Tx       | Rx           |          |          |          |
+|      |                |             |          |              |          |          |          |
+| 48   | `CALL`         |             |          |              | Tx       | Rx       |          |
+| 49   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
+| 50   | `RESULT`       |             |          |              | Rx       | Tx       |          |
+|      |                |             |          |              |          |          |          |
+| 64   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
+| 65   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
+| 66   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
+| 67   | `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
+| 68   | `INVOCATION`   |             |          |              |          | Tx       | Rx       |
+| 69   | `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
+| 70   | `YIELD`        |             |          |              |          | Rx       | Tx       |
 
 
 
