@@ -18,22 +18,22 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
 
 ## Introduction
 
-WAMP ("Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
+WAMP ("The Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
 
  * Publish & Subscribe
  * Remote Procedure Calls
 
 WAMP can run over different *transports*, including [WebSocket](http://tools.ietf.org/html/rfc6455), where it is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 
-WAMP also supports different *serialization*, including JSON and MsgPack.
+WAMP also supports different *serializations*, including JSON and MsgPack.
 
 ### Peers and Roles
 
-A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions.
+A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions. A WAMP peer can have one or more of the following roles.
 
-A WAMP peer can have one or more of the following roles.
+**Remote Procedure Call Roles**
 
-**RPC Roles**
+The Remote Procedure Call messaging involves peers of three roles:
 
 1. *Callee*
 2. *Caller*
@@ -45,7 +45,9 @@ where
  * *Callers* initiate procedure calls first to *Dealers*.
  * *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called.
 
-**PubSub Roles**
+**Publish & Subscribe Roles**
+
+The Publish & Subscribe messaging pattern involves peers of three roles:
 
 1. *Subscriber*
 2. *Publisher*
@@ -61,13 +63,13 @@ where
 
 In WAMP, *Dealers* are responsible for call routing decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing decoupling *Publishers* from *Subscribers*.
 
-**Symmetry**
-
-It's important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishes a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
-
 **Peers with multiple Roles**
 
 Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*. And a *Dealer* might also act as a *Callee*. With the latter, a peer might "route" an incoming call directly to an implementing endpoint within the same program (and hence no actual messaging over a transport is happening).
+
+**Symmetry**
+
+It's important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishes a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
 
 
 ### Application Code
@@ -77,9 +79,9 @@ WAMP is designed for application code to run inside peers of the roles:
 1. *Callee* and *Caller*
 2. *Publisher* and *Subscriber*
  
-*Brokers* and *Dealers* are responsible for generic call and event routing and SHOULD NOT run application code. The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application.
+*Brokers* and *Dealers* are responsible for **generic call and event routing** and SHOULD NOT run application code.
 
-*Brokers* and *Dealers* however might differ in these features:
+The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application. *Brokers* and *Dealers* however might differ in these features:
 
 * clustering
 * high-availability and scale-out
