@@ -95,7 +95,7 @@ WAMP assumes a *transport* with the following characteristics:
 
 #### WebSocket Transport
 
-The default transport binding is [WebSocket](http://tools.ietf.org/html/rfc6455).
+The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
 
 ##### Unbatched
 
@@ -525,6 +525,10 @@ The heartbeat allows to keep network intermediaries from closing the underlying 
 
 A peer MAY send a `HEARTBEAT` message at any time:
 
+    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer]
+
+or
+
     [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
  * `HEARTBEAT.OutgoingSeq` MUST start with `1` and be incremented by `1` for each `HEARTBEAT` a peer sends.
@@ -536,11 +540,11 @@ A peer MAY send a `HEARTBEAT` message at any time:
 
 *Example*
 
-	[3, 0, 1, ""]
+	[3, 0, 1]
 
 *Example*
 
-	[3, 23, 5, ""]
+	[3, 23, 5]
 
 *Example*
 
@@ -557,10 +561,9 @@ The message flow between *Subscribers* and a *Broker* for subscribing and unsubs
 
  1. `SUBSCRIBE`
  2. `SUBSCRIBED`
- 3. `SUBSCRIBE_ERROR`
- 4. `UNSUBSCRIBE`
- 5. `UNSUBSCRIBED`
- 6. `UNSUBSCRIBE_ERROR`
+ 3. `UNSUBSCRIBE`
+ 4. `UNSUBSCRIBED`
+ 5. `ERROR`
 
 ![alt text](figure/pubsub_subscribe1.png "PubSub: Subscribing and Unsubscribing")
 
@@ -578,7 +581,7 @@ A client may subscribe to zero, one or more topics, and clients publish to topic
 
 *Example*
 
-	[10, 713845233, {}, "com.myapp.mytopic1"]
+	[32, 713845233, {}, "com.myapp.mytopic1"]
 
 If the *Broker* is able to fulfil and allowing the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
 
@@ -589,21 +592,21 @@ If the *Broker* is able to fulfil and allowing the subscription, it answers by s
 
 *Example*
 
-	[11, 713845233, 5512315355]
+	[33, 713845233, 5512315355]
 
 > Note. The `Subscription` ID chosen by the broker may be unique only for the `Topic` (and possibly other information from `Options`, such as the topic pattern matching method to be used). The ID might be the same for any *Subscriber* for the same `Topic`. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
 > 
 
-When the request for subscription cannot be fulfilled by the *Broker*, the *Broker* sends back a `SUBSCRIBE_ERROR` message to the *Subscriber*
+When the request for subscription cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Subscriber*
 
-    [SUBSCRIBE_ERROR, SUBSCRIBE.Request|id, Error|uri]
+    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri]
 
  * `SUBSCRIBE.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
-	[12, 713845233, "wamp.error.not_authorized"]
+	[4, 713845233, {}, "wamp.error.not_authorized"]
 
 When a *Subscriber* is no longer interested in receiving events for a subscription it sends an `UNSUBSCRIBE` message
 
@@ -614,7 +617,7 @@ When a *Subscriber* is no longer interested in receiving events for a subscripti
 
 *Example*
 
-	[20, 85346237, 5512315355]
+	[34, 85346237, 5512315355]
 
 Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to the *Subscriber*
 
@@ -624,18 +627,18 @@ Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to 
 
 *Example*
 
-	[21, 85346237]
+	[35, 85346237]
 
-When the request failed, the *Broker* sends an `UNSUBSCRIBE_ERROR`
+When the request failed, the *Broker* sends an `ERROR`
 
-    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri]
+    [ERROR, UNSUBSCRIBE.Request|id, Details|dict, Error|uri]
 
  * `UNSUBSCRIBE.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
-	[22, 85346237, "wamp.error.no_such_subscription"]
+	[4, 85346237, {}, "wamp.error.no_such_subscription"]
  
 
 ### Publishing
@@ -644,30 +647,39 @@ The message flow between *Publishers*, a *Broker* and *Subscribers* for publishi
 
  1. `PUBLISH`
  2. `PUBLISHED`
- 3. `PUBLISH_ERROR`
- 4. `EVENT`
+ 3. `EVENT`
+ 4. `ERROR`
 
 ![alt text](figure/pubsub_publish1.png "PubSub: Publishing and Receiving")
 
 When a *Publisher* wishes to publish an event to some topic, it sends a `PUBLISH` message to a *Broker*:
 
-    [PUBLISH, Request|id, Options|dict, Topic|uri, Event|any]
+    [PUBLISH, Request|id, Options|dict, Topic|uri]
+
+or
+
+	[PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
+
+or
+
+	[PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
  * `Request` is a random, ephemeral ID chosen by the *Publisher* and used to correlate the *Broker's* response with the request.
  * `Options` is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.
- * `Event` is an arbitrary application-level event payload.
+ * `Arguments` is an (optional) arbitrary application-level event payload, provided as positional arguments.
+ * `ArgumentsKw` is an (optional) arbitrary application-level event payload, provided as keyword arguments.
 
 *Example*
 
-    [30, 239714735, {}, "com.myapp.mytopic1", "Hello, world!"]
+    [16, 239714735, {}, "com.myapp.mytopic1", ["Hello, world!"]]
 
 *Example*
 
-    [30, 239714735, {}, "com.myapp.mytopic1", {"color": "orange", "sizes": [23, 42, 7]}]
+    [16, 239714735, {}, "com.myapp.mytopic1", [], {"color": "orange", "sizes": [23, 42, 7]}]
 
 *Example*
 
-    [30, 239714735, {}, "com.myapp.mytopic1", null]
+    [16, 239714735, {}, "com.myapp.mytopic1"]
 
 If the *Broker* is able to fulfill and allowing the publication, it answers by sending a `PUBLISHED` message to the *Publisher*:
 
@@ -678,46 +690,57 @@ If the *Broker* is able to fulfill and allowing the publication, it answers by s
 
 *Example*
 
-    [31, 239714735, 4429313566]
+    [17, 239714735, 4429313566]
 
-When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back a `PUBLISH_ERROR` message to the *Publisher*
+When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Publisher*
 
-    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri]
+    [ERROR, PUBLISH.Request|id, Details|dict, Error|uri]
 
  * `PUBLISH.Request` is the ID from the original publication request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
-    [32, 239714735, "wamp.error.not_authorized"]
+    [4, 239714735, {}, "wamp.error.not_authorized"]
 
 *Example*
 
-    [32, 239714735, "wamp.error.invalid_topic"]
+    [4, 239714735, {}, "wamp.error.invalid_topic"]
 
 When a publication is successful and a *Broker* dispatches the event, it will determine a list of actual receivers for the event based on subscribers for the topic published to and possibly other information in the event (such as exclude and eligible receivers).
 
 When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send the *Subscriber* an `EVENT` message:
 
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Event|any]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
+
+or
+
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|any]
+
+or
+
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|any, PUBLISH.ArgumentKw|dict]
+
+where
 
  * `SUBSCRIBED.Subscription` is the ID for the subscription under which the *Subscriber* receives the event - the ID for the subscription originally handed out by the *Broker* to the *Subscriber*.
  * `PUBLISHED.Publication` is the ID of the publication of the published event.
  * `Details` is a dictionary that allows the *Broker* to provide additional event details in a extensible way. This is described further below.
 `PUBLISH.Event` is the application-level payload the event has been published with.
- * `PUBLISH.Event` is the application-level event payload that was provided with the original publication request.
+ * `PUBLISH.Arguments` is the application-level event payload that was provided with the original publication request.
+ * `PUBLISH.ArgumentKw` is the application-level event payload that was provided with the original publication request.
 
 *Example*
 
-	[40, 5512315355, 4429313566, {}, "Hello, world!"]
+	[36, 5512315355, 4429313566, {}, ["Hello, world!"]]
 
 *Example*
 
-	[40, 5512315355, 4429313566, {}, {"color": "orange", "sizes": [23, 42, 7]}]
+	[36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]
 
 *Example*
 
-	[40, 5512315355, 4429313566, {}, null]
+	[36, 5512315355, 4429313566, {}]
 
 
 ### Receiver Black- and Whitelisting
@@ -732,25 +755,25 @@ The *Broker* will dispatch events published only to *Subscribers* that are not e
 
 *Example*
 
-    [30, 239714735,
+    [16, 239714735,
 		{"exclude": [7891255, 1245751]},
-		"com.myapp.mytopic1", "Hello, world!"]
+		"com.myapp.mytopic1", ["Hello, world!"]]
 
 The above event will get dispatched to all *Subscribers* of `com.myapp.mytopic1`, but NOT WAMP sessions with IDs `7891255` or `1245751` (and also not the publishing session).
 
 *Example*
 
-    [30, 239714735,
+    [16, 239714735,
 		{"eligible": [7891255, 1245751]},
-		"com.myapp.mytopic1", "Hello, world!"]
+		"com.myapp.mytopic1", ["Hello, world!"]]
 
 The above event will get dispatched to WAMP sessions with IDs `7891255` or `1245751` only - but only if those are subscribed to the topic `com.myapp.mytopic1`.
 
 *Example*
 
-    [30, 239714735,
+    [16, 239714735,
 		{"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
-		"com.myapp.mytopic1", "Hello, world!"]
+		"com.myapp.mytopic1", ["Hello, world!"]]
 
 The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912315` only (since `7891255` is excluded) - but only if those are subscribed to the topic `com.myapp.mytopic1`.
 
@@ -763,7 +786,7 @@ By default, a *Publisher* of an event will **not** receive an event published it
 
 *Example*
 
-    [30, 239714735, {"exclude_me": 0}, "com.myapp.mytopic1", "Hello, world!"]
+    [16, 239714735, {"exclude_me": 0}, "com.myapp.mytopic1", ["Hello, world!"]]
 
 In this example, the *Publisher* will receive the published event also, if it is subscribed to `com.myapp.mytopic1`.
 
@@ -774,13 +797,13 @@ A *Publisher* MAY **request** the disclosure of it's identity (it's WAMP session
 
 *Example*
 
-    [30, 239714735, {"disclose_me": 1}, "com.myapp.mytopic1", "Hello, world!"]
+    [16, 239714735, {"disclose_me": 1}, "com.myapp.mytopic1", ["Hello, world!"]]
 
 If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`:
 
 *Example*
 
-	[40, 5512315355, 4429313566, {"publisher": 3335656}, "Hello, world!"]
+	[36, 5512315355, 4429313566, {"publisher": 3335656}, ["Hello, world!"]]
 
 Note that a *Broker* MAY disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
 
@@ -788,7 +811,7 @@ A *Broker* MAY deny a *Publisher's* request to disclose it's identity:
 
 *Example*
 
-    [32, 239714735, "wamp.error.disclose_me.not_allowed"]
+    [4, 239714735, {}, "wamp.error.disclose_me.not_allowed"]
 
 
 ### Publication Trust Levels
@@ -799,7 +822,7 @@ A *Broker* must use `Details.trustlevel|integer` in an `EVENT` message sent to a
 
 *Example*
 
-	[40, 5512315355, 4429313566, {"trustlevel": 2}, "Hello, world!"]
+	[36, 5512315355, 4429313566, {"trustlevel": 2}, ["Hello, world!"]]
 
 In above event, the *Broker* has (by configuration and/or other information) deemed the event publication to be of `trustlevel == 2`.
 
@@ -821,7 +844,7 @@ A *Subscriber* requests **prefix-matching policy** with a subscription request b
 
 *Example*
 
-	[10, 912873614, {"match": "prefix"}, "com.myapp.topic.emergency"]
+	[32, 912873614, {"match": "prefix"}, "com.myapp.topic.emergency"]
 
 When a **prefix-matching policy** is in place, any event with a topic that has `SUBSCRIBE.Topic` as a *prefix* will match the subscription, and potentially delivered to *Subscribers* on the subscription.
 
@@ -835,7 +858,7 @@ Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 *Example*
 
-	[10, 912873614, {"match": "wildcard"}, "com.myapp..userevent"]
+	[32, 912873614, {"match": "wildcard"}, "com.myapp..userevent"]
 
 In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with `PUBLISH.Topic` e.g. `com.myapp.foo.userevent`, `com.myapp.bar.userevent` or `com.myapp.a12.userevent` will all apply for dispatching. Events with `PUBLISH.Topic` e.g. `com.myapp.foo.userevent.bar`, `com.myapp.foo.user` or `com.myapp2.foo.userevent` will NOT apply for dispatching.
 
@@ -855,7 +878,7 @@ Resource keys: `PUBLISH.Options.rkey|string` is a stable, technical **resource k
 
 *Example*
 
-    [30, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.temperature", 33.9]
+    [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.temperature", [33.9]]
 
 
 Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
@@ -865,14 +888,14 @@ Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
 
 *Example*
 
-	[10, 912873614, {"match": "wildcard", "nkey": "node23"}, "com.myapp.sensor..temperature"]
+	[32, 912873614, {"match": "wildcard", "nkey": "node23"}, "com.myapp.sensor..temperature"]
 
 
 ### Meta Events
 
 *Example*
 
-	[10, 713845233,
+	[32, 713845233,
          {"metatopics": ["wamp.metatopic.subscriber.add",
                          "wamp.metatopic.subscriber.remove"]},
          "com.myapp.mytopic1"]
@@ -881,7 +904,7 @@ If above subscription request by a *Subscriber 1* succeeds, the *Broker* will di
 
 *Example*
 
-	[10, 713845233,
+	[32, 713845233,
          {"metatopics": ["wamp.metatopic.subscriber.add",
                          "wamp.metatopic.subscriber.remove"],
           "metaonly": 1},
@@ -890,36 +913,23 @@ If above subscription request by a *Subscriber 1* succeeds, the *Broker* will di
 This subscription works like the previous one, except that "normal" events on the topic `com.myapp.mytopic1` will NOT be dispatched to *Subscriber 1*. Consequently, it is called a "Meta Event only subscription".
 
 
-Metaevents are always generated by the *Broker* itself:
+Metaevents are always generated by the *Broker* itself and do not contain application payload:
 
-    [METAEVENT, SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
-
-*Example*
-
-	[41, 5512315355, 71415664, "wamp.metatopic.subscriber.add", 71254637]
+	[EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
 
 *Example*
 
-	[41, 5512315355, 35262477, "wamp.metatopic.subscriber.remove", 71254637]
+	[36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.add", "session": 9712478}]
+
+*Example*
+
+	[36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.remove", "session": 9712478}]
 
 
-Getting initial (current) list of subscribers
+The following metatopics are currently defined:
 
-
-	[10, 713845233,
-         {"metatopics": ["wamp.metatopic.subscriber.current",
-                         "wamp.metatopic.subscriber.add",
-                         "wamp.metatopic.subscriber.remove"]},
-         "com.myapp.mytopic1"]
-
-
-Metatopics
-
-    wamp.metatopic.subscriber.add
-    wamp.metatopic.subscriber.remove
-	wamp.metatopic.subscriber.current
-    wamp.metatopic.publication.error.not_authorized
-    wamp.metatopic.publication.statistic.total
+ 1. `wamp.metatopic.subscriber.add`: A new subscriber is added to the subscription.
+ 2. `wamp.metatopic.subscriber.remove`: A subscriber is removed from the subscription.
 
 
 ### Subscriber List
@@ -1007,10 +1017,9 @@ The message flow between *Callees* and a *Dealer* for registering and unregister
 
  1. `REGISTER`
  2. `REGISTERED`
- 3. `REGISTER_ERROR`
  4. `UNREGISTER`
  5. `UNREGISTERED`
- 6. `UNREGISTER_ERROR`
+ 6. `ERROR`
 
 ![alt text](figure/rpc_register1.png "RPC: Registering and Unregistering")
 
@@ -1024,7 +1033,7 @@ A *Callee* announces the availability of an endpoint implementing a procedure wi
 
 *Example*
 
-	[50, 25349185, {}, "com.myapp.myprocedure1"]
+	[64, 25349185, {}, "com.myapp.myprocedure1"]
 
 If the *Dealer* is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
 
@@ -1035,18 +1044,18 @@ If the *Dealer* is able to fulfill and allowing the registration, it answers by 
 
 *Example*
 
-	[51, 25349185, 2103333224]
+	[65, 25349185, 2103333224]
 
-When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* send back a `REGISTER_ERROR` message to the *Callee*:
+When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* send back a `ERROR` message to the *Callee*:
 
-    [REGISTER_ERROR, REGISTER.Request|id, Error|uri]
+    [ERROR, REGISTER.Request|id, Details|dict, Error|uri]
 
  * `REGISTER.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
-	[52, 25349185, "wamp.error.procedure_already_exists"]
+	[4, 25349185, {}, "wamp.error.procedure_already_exists"]
 
 When a *Callee* is no longer willing to provide an implementation of the registered procedure, it send an `UNREGISTER` message to the *Dealer*:
 
@@ -1057,7 +1066,7 @@ When a *Callee* is no longer willing to provide an implementation of the registe
 
 *Example*
 
-	[60, 788923562, 2103333224]
+	[66, 788923562, 2103333224]
 
 Upon successful unregistration, the *Dealer* send an `UNREGISTERED` message to the *Callee*:
 
@@ -1067,18 +1076,18 @@ Upon successful unregistration, the *Dealer* send an `UNREGISTERED` message to t
 
 *Example*
 
-	[61, 788923562]
+	[67, 788923562]
 
-When the unregistration request failed, the *Dealer* send an `UNREGISTER_ERROR` message:
+When the unregistration request failed, the *Dealer* send an `ERROR` message:
 
-    [UNREGISTER_ERROR, UNREGISTER.Request|id, Error|uri]
+    [ERROR, UNREGISTER.Request|id, Details|dict, Error|uri]
 
  * `UNREGISTER.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
-	[62, 788923562, "wamp.error.no_such_registration"]
+	[4, 788923562, {}, "wamp.error.no_such_registration"]
 
 
 ### Calling
@@ -1086,11 +1095,10 @@ When the unregistration request failed, the *Dealer* send an `UNREGISTER_ERROR` 
 The message flow between *Callers*, a *Dealer* and *Callees* for calling remote procedures involves the following messages:
 
  1. `CALL`
- 1. `INVOCATION`
- 1. `INVOCATION_RESULT`
- 1. `INVOCATION_ERROR`
- 1. `CALL_RESULT`
- 1. `CALL_ERROR`
+ 2. `RESULT`
+ 3. `INVOCATION`
+ 4. `YIELD`
+ 5. `ERROR`
 
 ![alt text](figure/rpc_call1.png "RPC: Calling")
 
@@ -1098,7 +1106,17 @@ The execution of remote procedure calls is asynchronous, and there may be more t
 
 When a *Callee* wishes to call a remote procedure, it sends a `CALL` message to a *Dealer*:
 
+    [CALL, Request|id, Options|dict, Procedure|uri]
+
+or
+
+    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+
+or
+
     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
+
+where
 
  * `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
  * `Options` is a dictionary that allows to provide additional call request details in an extensible way. This is described further below.
@@ -1108,24 +1126,35 @@ When a *Callee* wishes to call a remote procedure, it sends a `CALL` message to 
 
 *Example*
 
-	[70, 7814135, {}, "com.myapp.echo", ["Hello, world!"], {}]
+	[48, 7814135, {}, "com.myapp.echo", ["Hello, world!"]]
 
 *Example*
 
-	[70, 7814135, {}, "com.myapp.add2", [23, 7], {}]
+	[48, 7814135, {}, "com.myapp.add2", [23, 7]]
 
 *Example*
 
-	[70, 7814135, {}, "com.myapp.ping", [], {}]
+	[48, 7814135, {}, "com.myapp.ping"]
 
 *Example*
 
-	[70, 7814135, {}, "com.myapp.user.new", ["johnny"], {"forname": "John", "surname": "Doe"}]
+	[48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"forname": "John", "surname": "Doe"}]
 
 If the *Dealer* is able to fullfill (mediate) and allowing the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
+
+or
+
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+		CALL.Arguments|list]
+
+or
+
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
 		CALL.Arguments|list, CALL.ArgumentsKw|dict]
+
+where
 
  * `Request` is a random, ephemeral ID chosen by the *Dealer* and used to correlate the *Callee's* response with the request.
  * `REGISTERED.Registration` is the registration ID under which the procedure was registered at the *Dealer*.
@@ -1135,47 +1164,87 @@ If the *Dealer* is able to fullfill (mediate) and allowing the call, it sends a 
 
 *Example*
 
-	[80, 6131533, 9823526, {}, ["Hello, world!"], {}]
+	[68, 6131533, 9823526, {}, ["Hello, world!"]]
 
-If the *Callee* is able to successfully process and finish the execution of the call, it answers by sending a `INVOCATION_RESULT` message to the *Dealer*:
+If the *Callee* is able to successfully process and finish the execution of the call, it answers by sending a `YIELD` message to the *Dealer*:
 
-    [INVOCATION_RESULT, INVOCATION.Request|id, Result|list, ResultKw|dict]
+    [YIELD, INVOCATION.Request|id, Options|dict]
+
+or
+
+    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
+
+or
+
+    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
+
+where
 
  * `INVOCATION.Request` is the ID from the original invocation request.
- * `Result` is a list of positional result elements (each of arbitrary type). The list may be of zero length.
- * `ResultKw` is a dictionary of keyword result elements (each of arbitrary type). The dictionary may be empty.
+ * `Arguments` is a list of positional result elements (each of arbitrary type). The list may be of zero length.
+ * `ArgumentsKw` is a dictionary of keyword result elements (each of arbitrary type). The dictionary may be empty.
 
-The *Dealer* will then send a `CALL_RESULT` message to the original *Caller*:
+The *Dealer* will then send a `RESULT` message to the original *Caller*:
 
-    [CALL_RESULT, CALL.Request|id, INVOCATION_RESULT.Result|list, INVOCATION_RESULT.ResultKw|dict]
+    [RESULT, CALL.Request|id, Details|dict]
+
+or
+
+    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
+
+or
+
+    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
+
+where
 
  * `CALL.Request` is the ID from the original call request.
- * `INVOCATION_RESULT.Result` is the original list of positional result elements as returned by the *Callee*.
- * `INVOCATION_RESULT.ResultKw` is the original dictionary of keyword result elements as returned by the *Callee*.
+ * `YIELD.Arguments` is the original list of positional result elements as returned by the *Callee*.
+ * `YIELD.ArgumentsKw` is the original dictionary of keyword result elements as returned by the *Callee*.
 
-If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `INVOCATION_ERROR` message to the *Dealer*:
+If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `ERROR` message to the *Dealer*:
 
-    [INVOCATION_ERROR, INVOCATION.Request|id, Error|uri, Exception|any]
+	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri]
+
+or
+
+	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
+
+or
+
+	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+
+where
 
  * `INVOCATION.Request` is the ID from the original call request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
  * `Exception` is an arbitrary application-defined error payload (possible empty, that is `null`).
 
-The *Dealer* will then send a `CALL_ERROR` message to the original *Caller*:
+The *Dealer* will then send a `ERROR` message to the original *Caller*:
 
-    [CALL_ERROR, CALL.Request|id, INVOCATION_ERROR.Error|uri, INVOCATION_ERROR.Exception|any]
+	[ERROR, CALL.Request|id, Details|dict, Error|uri]
+
+or
+
+	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
+
+or
+
+	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+
+where
 
  * `CALL.Request` is the ID from the original call request.
  * `INVOCATION_ERROR.Error` is the original error URI as returned by the *Callee* to the *Dealer*.
  * `INVOCATION_ERROR.Exception` is the original error payload as returned by the *Callee* to the *Dealer*.
 
-If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `CALL_ERROR` message to the *Caller*:
+If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
 
-    [CALL_ERROR, CALL.Request|id, Error|uri, Exception|null]
+	[ERROR, CALL.Request|id, Details|dict, Error|uri]
 
 *Example*
 
-	[74, 7814135, "wamp.error.no_such_procedure", null]
+	[4, 7814135, {}, "wamp.error.no_such_procedure"]
 
 
 ### Call Timeouts
@@ -1186,7 +1255,7 @@ A *timeout* allows to **automatically** cancel a call after a specified time eit
 
 A *Callee* specifies a timeout by providing `CALL.Options.timeout|integer` in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value. 
 
-The timeout option is a companion to, but slightly different from the `CANCEL_CALL` and `CANCEL_INVOCATION` messages that allow a *Caller* and *Broker* to **actively** cancel a call.
+The timeout option is a companion to, but slightly different from the `CANCEL` and `INTERRUPT` messages that allow a *Caller* and *Dealer* to **actively** cancel a call or invocation.
 
 In fact, a timeout timer might run at three places:
 
@@ -1201,8 +1270,8 @@ A *Caller* might want to actively cancel a call that was issued, but not has yet
 
 The message flow between *Callers*, a *Dealer* and *Callees* for canceling remote procedure calls involves the following messages:
 
- * `CANCEL_CALL`
- * `CANCEL_INVOCATION`
+ * `CANCEL`
+ * `INTERRUPT`
 
 A call may be cancelled at the *Callee*
 
@@ -1212,17 +1281,17 @@ A call may be cancelled at the *Dealer*
 
 ![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
 
-A *Callee* cancels an remote procedure call initiated (but not yet finished) by sending a `CANCEL_CALL` message to the *Dealer*:
+A *Callee* cancels an remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
 
-    [CANCEL_CALL, CALL.Request|id, Options|dict]
+    [CANCEL, CALL.Request|id, Options|dict]
 
-A *Dealer* cancels an invocation of an endpoint initiated (but not yet finished) by sending a `CANCEL_INVOCATION` message to the *Callee*:
+A *Dealer* cancels an invocation of an endpoint initiated (but not yet finished) by sending a `INTERRUPT` message to the *Callee*:
 
-    [CANCEL_INVOCATION,		INVOCATION.Request|id, Options|dict]
+    [INTERRUPT, INVOCATION.Request|id, Options|dict]
 
 Options:
 
-	CANCEL_CALL.Options.mode|string == "skip" | "kill" | "killnowait"
+	CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
 
 
 ### Progressive Call Results

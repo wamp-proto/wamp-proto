@@ -14,7 +14,7 @@
    id="svg3086"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="rpc_provide1.svg">
+   sodipodi:docname="rpc_register1.svg">
   <defs
      id="defs3088" />
   <sodipodi:namedview
@@ -24,9 +24,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="444.04479"
-     inkscape:cy="104.46927"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="449.5548"
+     inkscape:cy="214.09861"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -34,10 +34,10 @@
      fit-margin-left="10"
      fit-margin-right="10"
      fit-margin-bottom="10"
-     inkscape:window-width="1050"
-     inkscape:window-height="1658"
-     inkscape:window-x="1672"
-     inkscape:window-y="-8"
+     inkscape:window-width="1680"
+     inkscape:window-height="988"
+     inkscape:window-x="-8"
+     inkscape:window-y="320"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata3091">
@@ -57,116 +57,104 @@
      id="layer1"
      transform="translate(130.86277,27.776981)">
     <g
-       id="g3009"
-       transform="translate(-124.85916,-29.692861)">
+       id="g3013"
+       transform="translate(-125.72352,-30.747967)">
       <path
-         id="path3011"
+         id="path3015"
          d="m 908.55763,128.82242 -420.15807,0"
          style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3013"
+         id="path3017"
          d="m 490.04111,135.38861 -13.21055,-6.56619 13.21055,-6.64436 0,13.21055 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3015"
+         id="path3019"
          d="m 650.05293,99.89991 0,20.01125 85.28232,0 0,-20.01125 -85.28232,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3017"
+         id="text3021"
          style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="115.06468"
          x="650.3656"
          xml:space="preserve">REGISTER</text>
       <path
-         id="path3019"
+         id="path3023"
          d="m 461.82212,76.449227 0,430.554543 14.14858,0 0,-430.554543 -14.14858,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3021"
+         id="path3025"
          d="m 34.00349,76.449227 0,430.554543 14.226748,0 0,-430.554543 -14.226748,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3023"
+         id="path3027"
          d="m 908.55763,76.449227 0,430.554543 14.14858,0 0,-430.554543 -14.14858,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3025"
+         id="path3029"
          d="m 908.55763,388.81233 -420.15807,0"
          style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3027"
+         id="path3031"
          d="m 490.04111,395.37852 -13.21055,-6.56619 13.21055,-6.64437 0,13.21056 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3029"
+         id="path3033"
          d="m 638.01492,359.88982 0,20.01125 109.35835,0 0,-20.01125 -109.35835,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3031"
+         id="text3035"
          style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="375.21094"
          x="637.85858"
          xml:space="preserve">UNREGISTER</text>
       <text
-         id="text3033"
+         id="text3037"
          style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="33.768986"
          x="2.5014062"
          xml:space="preserve">Caller</text>
       <text
-         id="text3035"
+         id="text3039"
          style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="33.768986"
          x="865.48651"
          xml:space="preserve">Callee</text>
       <text
-         id="text3037"
+         id="text3041"
          style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="33.768986"
          x="425.23904"
          xml:space="preserve">Dealer</text>
       <path
-         id="path3039"
+         id="path3043"
          d="m 476.83056,199.72165 420.15807,0"
          style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3041"
+         id="path3045"
          d="m 895.34708,193.07729 13.21055,6.64436 -13.21055,6.56619 0,-13.21055 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3043"
-         d="m 549.05866,170.79914 0,20.01125 287.27087,0 0,-20.01125 -287.27087,0 z"
+         id="path3047"
+         d="m 596.35087,170.79914 0,20.01125 192.68645,0 0,-20.01125 -192.68645,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
-      <text
-         id="text3045"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="186.35477"
-         x="549.05865"
-         xml:space="preserve">REGISTERED or REGISTER</text>
-      <text
-         id="text3047"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="186.35477"
-         x="766.68103"
-         xml:space="preserve">_</text>
       <text
          id="text3049"
          style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="186.35477"
-         x="775.43591"
-         xml:space="preserve">ERROR</text>
+         x="596.58539"
+         xml:space="preserve">REGISTERED or ERROR</text>
       <path
          id="path3051"
          d="m 476.83056,459.71156 420.15807,0"
@@ -179,27 +167,15 @@
          inkscape:connector-curvature="0" />
       <path
          id="path3055"
-         d="m 524.98262,430.78905 0,20.01125 335.42294,0 0,-20.01125 -335.42294,0 z"
+         d="m 584.31285,430.78905 0,20.01125 216.76248,0 0,-20.01125 -216.76248,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3057"
          style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="445.25031"
-         x="525.29529"
-         xml:space="preserve">UNREGISTERED or UNREGISTER</text>
-      <text
-         id="text3059"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="445.25031"
-         x="790.44434"
-         xml:space="preserve">_</text>
-      <text
-         id="text3061"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="445.25031"
-         x="800.44995"
-         xml:space="preserve">ERROR</text>
+         x="584.07837"
+         xml:space="preserve">UNREGISTERED or ERROR</text>
     </g>
   </g>
 </svg>
