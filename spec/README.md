@@ -1298,28 +1298,21 @@ Options:
 
 A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
 
- * `INVOCATION_PROGRESS`
- * `CALL_PROGRESS`
-
 ![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
 
-An implementing procedure produces progressive results by sending `INVOCATION_PROGRESS` messages to the *Dealer*
+An implementing procedure produces progressive results by sending `YIELD` messages to the *Dealer* with `YIELD.Options.progress == 1`.
 
-    [INVOCATION_PROGRESS, INVOCATION.Request|id, Progress|list, ProgressKw|dict]
+Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == 1` (for a call that is still ongoing), the *Dealer* will immediately send a `RESULT` message to the original *Caller* with `RESULT.Details.progress == 1`.
 
-Upon receiving an `INVOCATION_PROGRESS` message from a *Callee* (for a call that is still ongoing), the *Dealer* will immediately send a `CALL_PROGRESS` message to the original *Caller*:
+Nevertheless, a call will *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller* and an invocation will *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
 
-    [CALL_PROGRESS, CALL.Request|id, INVOCATION_PROGRESS.Progress|list, INVOCATION_PROGRESS.ProgressKw|dict]
+In other words: `YIELD` with `YIELD.Options.progress == 1` and `RESULT` with `RESULT.Details.progress == 1` messages may only be sent *during* a call or invocation is still on the fly.
 
-Nevertheless, a call will *always* end in either a `CALL_RESULT` or `CALL_ERROR` message being sent by the *Dealer* and received by the *Caller* and an invocation will *always* end in either a `INVOCATION_RESULT` or `INVOCATION_ERROR` message being sent by the *Callee* and received by the *Dealer*.
-
-In other words: `CALL_PROGRESS` and `INVOCATION_PROGRESS` messages may only be sent *during* a call or invocation is still on the fly.
-
-If the *Caller* does not support *progressive calls* (as indicated by `HELLO.Details.roles.caller.progressive == 0`), the *Dealer* will gather all individual results receveived by the *Callee* via `INVOCATION_PROGRESS` and the final `INVOCATION_RESULT` into a list and return that as the single result to the *Caller*
+If the *Caller* does not support *progressive calls* (as indicated by `HELLO.Details.roles.caller.progressive == 0`), the *Dealer* will gather all individual results receveived by the *Callee* via `YIELD` with `YIELD.Options.progress == 1` and the final `YIELD` into a list and return that as the single result to the *Caller*
 
 *FIXME*
 
- 1. How to handle `ResultKw` in this context?
+ 1. How to handle `ArgumentsKw` in this context?
 
 
 ### Distributed Calls
@@ -1345,15 +1338,15 @@ If `CALL.Options.runon == "any"`, the call will be routed to one *randomly* sele
 
 If `CALL.Options.runon == "all"`, the call will be routed to all *Callees* that registered an implementing endpoint for the called procedure. The calls will run in parallel and asynchronously.
 
-If `CALL.Options.runmode == "gather"` (the default, when `CALL.Options.runmode` is missing), the *Dealer* will gather the individual results received via `INVOCATION_RESULT` messages from *Callees* into a single list, and return that in `CALL_RESULT` to the original *Caller* - when all results have been received.
+If `CALL.Options.runmode == "gather"` (the default, when `CALL.Options.runmode` is missing), the *Dealer* will gather the individual results received via `YIELD` messages from *Callees* into a single list, and return that in `RESULT` to the original *Caller* - when all results have been received.
 
-If `CALL.Options.runmode == "progressive"`, the *Dealer* will call each endpoint via a standard `INVOCATION` message and immediately forward individual results received via `INVOCATION_RESULT` messages from the *Callees* as `CALL_PROGRESS` messages to the original *Caller* and send a final `CALL_RESULT` message (with empty result) when all individual results have been received.
+If `CALL.Options.runmode == "progressive"`, the *Dealer* will call each endpoint via a standard `INVOCATION` message and immediately forward individual results received via `YIELD` messages from the *Callees* as progressive `RESULT` messages (`RESULT.Details.progress == 1`) to the original *Caller* and send a final `RESULT` message (with empty result) when all individual results have been received.
 
-If any of the individual `INVOCATION`s returns an `INVOCATION_ERROR`, the further behavior depends on ..
+If any of the individual `INVOCATION`s returns an `ERROR`, the further behavior depends on ..
 
 Fail immediate:
 
-The *Dealer* will immediately return a `CALL_ERROR` message to the *Caller* with the error from the `INVOCATION_RESULT` message of the respective failing call. It will further send `CANCEL_INVOCATION` messages to all *Callees* for which it not yet has received a response, and ignore any `INVOCATION_RESULT` or `INVOCATION_ERROR` messages it might receive subsequently for the pending calls.
+The *Dealer* will immediately return a `ERROR` message to the *Caller* with the error from the `ERROR` message of the respective failing invocation. It will further send `INTERRUPT` messages to all *Callees* for which it not yet has received a response, and ignore any `YIELD` or `ERROR` messages it might receive subsequently for the pending invocations.
 
 The *Dealer* will accumulate ..
 
@@ -1384,7 +1377,7 @@ A *Callee* requests **prefix-matching policy** with a registration request by se
 
 *Example*
 
-	[50, 612352435, {"match": "prefix"}, "com.myapp.myobject1"]
+	[64, 612352435, {"match": "prefix"}, "com.myapp.myobject1"]
 
 When a **prefix-matching policy** is in place, any call with a procedure that has `REGISTER.Procedure` as a *prefix* will match the registration, and potentially be routed to *Callees* on taht registration.
 
@@ -1398,7 +1391,7 @@ Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 *Example*
 
-	[50, 612352435, {"match": "wildcard"}, "com.myapp..myprocedure1"]
+	[64, 612352435, {"match": "wildcard"}, "com.myapp..myprocedure1"]
 
 In above registration request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1` or `com.myapp.myobject2.myprocedure1` will all apply for call routing. Calls with `CALL.Procedure` e.g. `com.myapp.myobject1.myprocedure1.mysubprocedure1`, `com.myapp.myobject1.myprocedure2` or `com.myapp2.myobject1.myprocedure1` will NOT apply for call routing.
 
@@ -1417,13 +1410,13 @@ A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID
 
 *Example*
 
-	[70, 7814135, {"disclose_me": 1}, "com.myapp.echo", ["Hello, world!"], {}]
+	[48, 7814135, {"disclose_me": 1}, "com.myapp.echo", ["Hello, world!"]]
 
 If above call would have been issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* would send an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
 
 *Example*
 
-	[80, 6131533, 9823526, {"caller": 3335656}, "com.myapp.echo", ["Hello, world!"], {}]
+	[68, 6131533, 9823526, {"caller": 3335656}, ["Hello, world!"]]
 
 Note that a *Dealer* MAY disclose the identity of a *Caller* even without the *Caller* having explicitly requested to do so when the *Dealer* configuration (for the called procedure) is setup to do so.
 
@@ -1431,7 +1424,7 @@ A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
 
 *Example*
 
-    [32, 7814135, "wamp.error.disclose_me.not_allowed"]
+    [4, 7814135, "wamp.error.disclose_me.not_allowed"]
 
 
 ## Ordering Guarantees
