@@ -266,7 +266,7 @@ The *application* payload (that is call arguments, call results, event payload e
 WAMP defines the following messages which are explained in detail in the further sections.
 
 
-### Direction
+### Message Codes and Direction
 
 | Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|-------------|----------|--------------|----------|----------|----------|
@@ -297,251 +297,107 @@ WAMP defines the following messages which are explained in detail in the further
 | 70   | `YIELD`        |             |          |              |          | Rx       | Tx       |
 
 
-### Session Management
+### Message Format
 
-*Any-to-Any*
+#### `HELLO`
 
     [HELLO, Session|id, Details|dict]
+
+#### `GOODBYE`
+
     [GOODBYE, Details|dict]
+
+#### `HEARTBEAT`
+
+    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer
     [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
-### Publish
+#### `ERROR`
 
-*Publisher-to-Broker*
+    [ERROR, Request|id, Details|dict, Error|uri]
+    [ERROR, Request|id, Details|dict, Error|uri, Arguments|list]
+    [ERROR, Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
-One of the following three forms of **`PUBLISH`** request:
+#### `PUBLISH`
 
     [PUBLISH, Request|id, Options|dict, Topic|uri]
-    [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|list]
-    [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|list, PayloadKw|dict]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
-*Broker-to-Publisher*
-
-In case of success, the following **`PUBLISHED`** response:
+#### `PUBLISHED`
 
     [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
-In case of error, one of the following three forms of **`PUBLISH_ERROR`** response:
-
-    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri]
-    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri, Exception|list]
-    [PUBLISH_ERROR, PUBLISH.Request|id, Error|uri, Exception|list, ExceptionKw|dict]
-
-
-### Subscribe
-
-*Subscribe-to-Broker*
-
-The following **`SUBSCRIBE`** request:
+#### `SUBSCRIBE`
 
     [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
-*Broker-to-Subscribe*
-
-In case of success, the following **`SUBSCRIBED`** response:
+#### `SUBSCRIBED`
 
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
-In case of error, one of the following three forms of **`ERROR`** response:
-
-    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri]
-    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri, Arguments|list]
-    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
-
-
-### Unsubscribe
-
-*Subscriber-to-Broker*
-
-The following **`UNSUBSCRIBE`** request:
+#### `UNSUBSCRIBE`
 
     [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
-*Broker-to-Subscriber*
-
-In case of success, the following **`UNSUBSCRIBED`** response:
+#### `UNSUBSCRIBED`
 
     [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
-In case of error, one of the following three forms of **`UNSUBSCRIBE_ERROR`** response:
-
-    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri]
-    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list]
-    [UNSUBSCRIBE_ERROR, UNSUBSCRIBE.Request|id, Error|uri, Exception|list, ExceptionKw|dict]
-
-### Event
-
-*Broker-to-Subscriber*
-
-One of the following three forms of **`EVENT`** notification:
+#### `EVENT`
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Payload|list]
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Payload|list, PUBLISH.PayloadKw|dict]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 
-### Meta Event
-
-*Broker-to-Subscriber*
-
-    [METAEVENT, SUBSCRIBED.Subscription|id, Publication|id, MetaTopic|uri, MetaEvent|any]
-
-### Call
-
-*Caller-to-Dealer*
-
-One of the following three forms of **`CALL`** request:
+#### `CALL`
 
     [CALL, Request|id, Options|dict, Procedure|uri]
     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
 
-*Dealer-to-Caller*
+#### `RESULT`
 
-If the call yields progressive results, one of the following three forms of **`CALL_PROGRESS`**, possibly multiple times:
+    [RESULT, CALL.Request|id, Details|dict]
+    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
+    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
 
-    [CALL_PROGRESS, CALL.Request|id, INVOCATION_PROGRESS.Details|dict]
-    [CALL_PROGRESS, CALL.Request|id, INVOCATION_PROGRESS.Details|dict, INVOCATION_PROGRESS.Progress|list]
-    [CALL_PROGRESS, CALL.Request|id, INVOCATION_PROGRESS.Details|dict, INVOCATION_PROGRESS.Progress|list, INVOCATION_PROGRESS.ProgressKw|dict]
-
-If the call is successful, one of the following three forms of **`CALL_RESULT`**:
-
-    [CALL_RESULT, CALL.Request|id, INVOCATION_RESULT.Details|dict]
-    [CALL_RESULT, CALL.Request|id, INVOCATION_RESULT.Details|dict, INVOCATION_RESULT.Result|list]
-    [CALL_RESULT, CALL.Request|id, INVOCATION_RESULT.Details|dict, INVOCATION_RESULT.Result|list, INVOCATION_RESULT.ResultKw|dict]
-
-If the call fails, one of the following three forms of **`CALL_ERROR`**:
-
-    [CALL_ERROR, CALL.Request|id, INVOCATION_ERROR.Error|uri]
-    [CALL_ERROR, CALL.Request|id, INVOCATION_ERROR.Error|uri, INVOCATION_ERROR.Exception|list]
-    [CALL_ERROR, CALL.Request|id, INVOCATION_ERROR.Error|uri, INVOCATION_ERROR.Exception|list, INVOCATION_ERROR.ExceptionKw|dict]
-
-
-### Register
-
-*Callee-to-Dealer*
-
-The following `REGISTER` request:
+#### `REGISTER`
 
     [REGISTER, Request|id, Options|dict, Procedure|uri]
 
-*Dealer-to-Callee*
-
-In case of success, the following `REGISTERED` response:
+#### `REGISTERED`
 
 	[REGISTERED, REGISTER.Request|id, Registration|id]
 
-In case of error, one of the following three forms of `REGISTER_ERROR`:
-
-    [REGISTER_ERROR, REGISTER.Request|id, Error|uri]
-    [REGISTER_ERROR, REGISTER.Request|id, Error|uri, Exception|list]
-    [REGISTER_ERROR, REGISTER.Request|id, Error|uri, Exception|list, Exception|dict]
-
-
-### Unregister
-
-*Callee-to-Dealer*
-
-The following `UNREGISTER` request:
+#### `UNREGISTER`
 
     [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
-*Dealer-to-Callee*
-
-In case of success, the following `UNREGISTERED` response:
+#### `UNREGISTERED`
 
     [UNREGISTERED, UNREGISTER.Request|id]
 
-In case of error, one of the following three forms of `UNREGISTER_ERRROR` response:
-
-    [UNREGISTER_ERROR, UNREGISTER.Request|id, Error|uri]
-    [UNREGISTER_ERROR, UNREGISTER.Request|id, Error|uri, Exception|list]
-    [UNREGISTER_ERROR, UNREGISTER.Request|id, Error|uri, Exception|list, Exception|dict]
-
-
-### Invocation
-
-*Dealer-to-Callee*
-
-One of the following three forms of `INVOCATION` request:
+#### `INVOCATION`
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list]
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
-*Callee-to-Dealer**
+#### `YIELD`
 
-If the invocation yields progressive results, one of the following three forms of **`INVOCATION_PROGRESS`**, possibly multiple times:
+	[YIELD, INVOCATION.Request|id, Options|dict]
+    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
+    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
 
-    [INVOCATION_PROGRESS, INVOCATION.Request|id, Details|dict]
-    [INVOCATION_PROGRESS, INVOCATION.Request|id, Details|dict, Progress|list]
-    [INVOCATION_PROGRESS, INVOCATION.Request|id, Details|dict, Progress|list, INVOCATION_PROGRESS.ProgressKw|dict]
+#### `CANCEL`
 
-If the invoation is successful, one of the following three forms of **`INVOCATION_RESULT`**:
+    [CANCEL, CALL.Request|id, Options|dict]
 
-    [INVOCATION_RESULT, INVOCATION.Request|id, Details|dict]
-    [INVOCATION_RESULT, INVOCATION.Request|id, Details|dict, Result|list]
-    [INVOCATION_RESULT, INVOCATION.Request|id, Details|dict, Result|list, ResultKw|dict]
+#### `INTERRUPT`
 
-If the invocation fails, one of the following three forms of **`INVOCATION_ERROR`**:
+    [INTERRUPT, INVOCATION.Request|id, Options|dict]
 
-    [INVOCATION_ERROR, INVOCATION.Request|id, Error|uri]
-    [INVOCATION_ERROR, INVOCATION.Request|id, Error|uri, Exception|list]
-    [INVOCATION_ERROR, INVOCATION.Request|id, Error|uri, Exception|list, Exception|dict]
-
-
-### Cancel Call
-
-*Caller-to-Dealer*
-
-The following **`CANCEL_CALL`** request:
-
-    [CANCEL_CALL, CALL.Request|id, Options|dict]
-
-*Dealer-to-Callee*
-
-    [CANCEL_INVOCATION,	INVOCATION.Request|id, Options|dict]
-
-
-## Message Type Codes
-
-	HELLO					:=  1
-	GOODBYE					:=  2
-	HEARTBEAT				:=  3
-
-	SUBSCRIBE				:= 10
-	SUBSCRIBED				:= 11
-	SUBSCRIBE_ERROR			:= 12
-	
-	UNSUBSCRIBE				:= 20
-	UNSUBSCRIBED			:= 21
-	UNSUBSCRIBE_ERROR		:= 22
-	
-	PUBLISH					:= 30
-	PUBLISHED				:= 31
-	PUBLISH_ERROR			:= 32
-
-	EVENT					:= 40
-	METAEVENT				:= 41
-	
-	REGISTER				:= 50
-	REGISTERED				:= 51
-	REGISTER_ERROR			:= 52
-
-	UNREGISTER				:= 60
-	UNREGISTERED			:= 61
-	UNREGISTER_ERROR		:= 62
-
-	CALL					:= 70
-	CANCEL_CALL				:= 71
-	CALL_PROGRESS			:= 72
-	CALL_RESULT				:= 73
-	CALL_ERROR				:= 74
-
-	INVOCATION				:= 80
-	CANCEL_INVOCATION		:= 81
-	INVOCATION_PROGRESS		:= 82
-	INVOCATION_RESULT		:= 83
-	INVOCATION_ERROR		:= 84
 
 
 ## Session Management
