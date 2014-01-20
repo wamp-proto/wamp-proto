@@ -445,10 +445,8 @@ WAMP defines the following messages which are explained in detail in the followi
 #### `INVOCATION`
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
-    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
-		CALL.Arguments|list]
-    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
-		CALL.Arguments|list, CALL.ArgumentsKw|dict]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list]
+    [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 #### `YIELD`
 
@@ -554,17 +552,42 @@ The use of *feature announcement* in WAMP allows for
 		}
 	}]
 
-*Example: A peer that can act as a Broker and supports a couple of optional features.*
+*Example: A peer that can act as a Broker and supports all advanced features.*
 
 	[1, 9129137332, {
 		"roles": {
 			"broker": {
-				"exclude": 1,
-			 	"eligible": 1,
-			 	"exclude_me": 1,
-			 	"disclose_me": 1
+				"features": {
+					"subscriber_blackwhite_listing":	true,
+					"publisher_exclusion": 				true,
+					"publisher_identification": 		true,
+					"publication_trustlevels": 			true,
+					"pattern_based_subscription": 		true,
+					"partitioned_pubsub": 				true,
+					"subscriber_metaevents": 			true,
+					"subscriber_list": 					true,
+					"event_history": 					true
+				}
 			}
-     	}
+	}]
+
+*Example: A peer that can act as a Dealer and supports all advanced features.*
+
+	[1, 9129137332, {
+		"roles": {
+			"dealer": {
+				"features": {
+					"callee_blackwhite_listing":		true,
+					"caller_exclusion": 				true,
+					"caller_identification": 			true,
+					"call_trustlevels": 				true,
+					"pattern_based_registration": 		true,
+					"partitioned_rpc": 					true,
+					"call_timeout": 					true,
+					"call_canceling": 					true,
+					"progressive_call_results": 		true
+				}
+			}
 	}]
 
 Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` message MAY disclose the WAMP implementation in use to it's peer:
@@ -929,7 +952,7 @@ A *Publisher* may request the disclosure of it's identity (it's WAMP session ID)
 
     [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1", ["Hello, world!"]]
 
-If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `Details.publisher`:
+If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `EVENT.Details.publisher`:
 
 *Example*
 
