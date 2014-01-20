@@ -1,6 +1,12 @@
-# WAMP v2 Specification
+# The Web Application Messaging Protocol
 
-This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
+This document specifies version 2 of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
+
+Document Revision: **draft-1**, 2014/01/20
+
+----------
+
+**Contents**
 
 1. [Introduction](#introduction)
     * [Peers and Roles](#peers-and-roles)
