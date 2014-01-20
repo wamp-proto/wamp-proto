@@ -3,17 +3,56 @@
 This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
 
 1. [Introduction](#introduction)
+    * [Peers and Roles](#peers-and-roles)
+    * [Application Code](#application-code)
+    * [Building Blocks](#building-blocks)
 2. [Identifiers](#identifiers)
-2. [Serializations](#serializations)
-2. [Transports](#transports)
-2. [Messages](#messages)
-2. [Session Management](#session-management)
-2. [Publish & Subscribe](#publish--subscribe)
-3. [Remote Procedure Calls](#remote-procedure-calls)
-3. [Ordering Guarantees](#ordering-guarantees)
-3. [Reflection](#reflection)
-3. [Authentication](#authentication)
-3. [Appendix](#appendix)
+    * [URIs](#uris)
+    * [IDs](#ids)
+3. [Serializations](#serializations)
+    * [JSON](#json)
+    * [MsgPack](#msgpack)
+4. [Transports](#transports)
+    * [WebSocket Transport](#websocket-transport)
+    * [Other Trasnports](#other-transports)
+5. [Messages](#messages)
+    * [Message Definitions](#message-definitions)
+    * [Message Codes and Direction](#message-codes-and-direction)
+6. [Session Management](#session-management)
+    * [Hello and Goodbye](#hello-and-goodbye)
+    * [Heartbeats](#heartbeats)
+7. [Publish & Subscribe](#publish--subscribe)
+    * [Subscribing and Unsubscribing](#subscribing-and-unsubscribing)
+    * [Publishing](#publishing)
+    * [Receiver Black- and Whitelisting](#receiver-black--and-whitelisting)
+    * [Publisher Exclusion](#publisher-exclusion)
+    * [Publisher Identification](#publisher-identification)
+    * [Publication Trust Levels](#publication-trust-levels)
+    * [Pattern-based Subscriptions](#pattern-based-subscriptions)
+    * [Partitioned Subscriptions & Publications](#partitioned-subscriptions--publications)
+    * [Meta Events](#meta-events)
+    * [Subscriber List](#subscriber-list)
+    * [Event History](#event-history)
+8. [Remote Procedure Calls](#remote-procedure-calls)
+    * [Registering and Unregistering](#registering-and-untergistering)
+    * [Calling](#calling)
+    * [Call Timeouts](#call-timeouts)
+    * [Canceling Calls](#canceling-calls)
+    * [Progressive Call Results](#progressive-calls-results)
+    * [Distributed Calls](#distributed-calls)
+    * [Pattern-based Registrations](#pattern-based-registrations)
+    * [Caller Identification](#caller-identification)
+9. [Ordering Guarantees](#ordering-guarantees)
+    * [Publish & Subscribe Ordering](#publish--subscribe-ordering)
+    * [Remote Procedure Call Ordering](#remote-procedure-call-ordering)
+10. [Reflection](#reflection)
+11. [Authentication](#authentication)
+    * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
+    * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
+    * [WAMP Challenge-Response Authentication](#wamp-challange-response-authentication)
+12. [Appendix](#appendix)
+    * [Byte Array Conversion](#byte-array-conversion)
+    * [References](#references)
 
 
 ## Introduction
@@ -254,7 +293,7 @@ With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and u
 
 #### Batched Transport
 
-WAMPv2 allows to batch multiple WAMP message into a single WebSocket message if one of the following subprotocols have been negotiated:
+WAMPv2 allows to batch one or more WAMP messages into a single WebSocket message if one of the following subprotocols have been negotiated:
 
  * `wamp.2.json.batched`
  * `wamp.2.msgpack.batched`
@@ -266,6 +305,10 @@ Batching with JSON works by serializing each WAMP message to JSON as normally, a
 Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
 
 	Length of Msg 1 serialization (int32) | serialized MsgPack WAMP Msg 1 | ... 
+
+With batched transport, even if only a single WAMP message is sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length 1.
+
+Sending a batch of length 0 (no WAMP message) is illegal and a peer MUST fail the transport upon receiving such a transport message.
 
 
 ### Other Transports
@@ -284,7 +327,7 @@ Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in t
 
 All WAMP messages are of the same structure, a `list` with a first element `MessageType` followed by one or more message type specific elements:
 
-    [MessageType|integer, ... zero or more message type specific elements ...]
+    [MessageType|integer, ... one or more message type specific elements ...]
 
 The notation `Element|type` denotes a message element named `Element` of type `type`, where `type` is one of:
 
@@ -359,10 +402,9 @@ WAMP defines the following messages which are explained in detail in the followi
 #### `EVENT`
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-		PUBLISH.Arguments|list]
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-		PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list,
+		PUBLISH.ArgumentsKw|dict]
 
 #### `CALL`
 
