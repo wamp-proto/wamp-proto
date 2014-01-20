@@ -23,7 +23,7 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
     * [Heartbeats](#heartbeats)
 7. [Publish & Subscribe](#publish--subscribe)
     * [Subscribing and Unsubscribing](#subscribing-and-unsubscribing)
-    * [Publishing](#publishing)
+    * [Publishing and Events](#publishing-and-events)
 8. [Advanced Publish & Subscribe](#advanced-publish--subscribe)
     * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting)
     * [Publisher Exclusion](#publisher-exclusion)
@@ -36,7 +36,7 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
     * [Event History](#event-history)
 9. [Remote Procedure Calls](#remote-procedure-calls)
     * [Registering and Unregistering](#registering-and-unregistering)
-    * [Calling](#calling)
+    * [Calling and Invocations](#calling-and-invocations)
 10. [Advanced Remote Procedure Calls](#advanced-remote-procedure-calls)
     * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
     * [Caller Exclusion](#caller-exclusion)
@@ -730,9 +730,9 @@ where
 	[4, 85346237, {}, "wamp.error.no_such_subscription"]
  
 
-### Publishing
+### Publishing and Events
 
-The message flow between *Publishers*, a *Broker* and *Subscribers* for publishing and dispatching events involves the following messages:
+The message flow between *Publishers*, a *Broker* and *Subscribers* for publishing to topics and dispatching events involves the following messages:
 
  1. `PUBLISH`
  2. `PUBLISHED`
@@ -1232,9 +1232,9 @@ where
 	[4, 788923562, {}, "wamp.error.no_such_registration"]
 
 
-### Calling
+### Calling and Invocations
 
-The message flow between *Callers*, a *Dealer* and *Callees* for calling remote procedures involves the following messages:
+The message flow between *Callers*, a *Dealer* and *Callees* for calling procedures and invoking endpoints involves the following messages:
 
  1. `CALL`
  2. `RESULT`
