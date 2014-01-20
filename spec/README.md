@@ -24,33 +24,40 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
 7. [Publish & Subscribe](#publish--subscribe)
     * [Subscribing and Unsubscribing](#subscribing-and-unsubscribing)
     * [Publishing](#publishing)
-    * [Receiver Black- and Whitelisting](#receiver-black--and-whitelisting)
+8. [Advanced Publish & Subscribe](#advanced-publish--subscribe)
+    * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting)
     * [Publisher Exclusion](#publisher-exclusion)
     * [Publisher Identification](#publisher-identification)
     * [Publication Trust Levels](#publication-trust-levels)
     * [Pattern-based Subscriptions](#pattern-based-subscriptions)
     * [Partitioned Subscriptions & Publications](#partitioned-subscriptions--publications)
-    * [Meta Events](#meta-events)
+    * [Subscriber Meta Events](#subscriber-meta-events)
     * [Subscriber List](#subscriber-list)
     * [Event History](#event-history)
-8. [Remote Procedure Calls](#remote-procedure-calls)
+9. [Remote Procedure Calls](#remote-procedure-calls)
     * [Registering and Unregistering](#registering-and-unregistering)
     * [Calling](#calling)
+10. [Advanced Remote Procedure Calls](#advanced-remote-procedure-calls)
+    * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
+    * [Caller Exclusion](#caller-exclusion)
     * [Caller Identification](#caller-identification)
+    * [Call Trust Levels](#call-trust-levels)
+    * [Pattern-based Registrations](#pattern-based-registrations)
+    * [Partitioned Registrations & Calls](#partitioned-registrations--calls)
+    * [Callee Meta Events](#callee-meta-events)
+    * [Callee List](#callee-list)
     * [Call Timeouts](#call-timeouts)
     * [Canceling Calls](#canceling-calls)
     * [Progressive Call Results](#progressive-call-results)
-    * [Pattern-based Registrations](#pattern-based-registrations)
-    * [Distributed Calls](#distributed-calls)
-9. [Ordering Guarantees](#ordering-guarantees)
+11. [Ordering Guarantees](#ordering-guarantees)
     * [Publish & Subscribe Ordering](#publish--subscribe-ordering)
     * [Remote Procedure Call Ordering](#remote-procedure-call-ordering)
-10. [Reflection](#reflection)
-11. [Authentication](#authentication)
+12. [Reflection](#reflection)
+13. [Authentication](#authentication)
     * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
     * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
-    * [WAMP Challenge-Response Authentication](#wamp-challange-response-authentication)
-12. [Appendix](#appendix)
+    * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
+14. [Appendix](#appendix)
     * [Byte Array Conversion](#byte-array-conversion)
     * [References](#references)
 
@@ -322,8 +329,6 @@ Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in t
 
 
 ## Messages
-
-### Overview
 
 All WAMP messages are of the same structure, a `list` with a first element `MessageType` followed by one or more message type specific elements:
 
@@ -916,7 +921,7 @@ A *Broker* may be configured to automatically assign *trust levels* to events pu
 
 A *Broker* supporting trust level will provide
 
-	Details.trustlevel|integer
+	EVENT.Details.trustlevel|integer
 
 in an `EVENT` message sent to a *Subscriber*. The trustlevel `0` means lowest trust, and higher integers represent (application-defined) higher levels of trust.
 
@@ -1382,6 +1387,54 @@ If the original call already failed at the *Dealer* **before** the call would ha
 	[4, 7814135, {}, "wamp.error.no_such_procedure"]
 
 
+### Endpoint Black- and Whitelisting
+
+A *Caller* may restrict the endpoints that will handle a call beyond those registered via
+
+ * `CALL.Options.exclude|list`
+ * `CALL.Options.eligible|list`
+
+`CALL.Options.exclude` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Callees* that won't be forwarded a call, even though they might be registered. In other words, `CALL.Options.exclude` is a blacklist of (potential) *Callees*.
+
+`CALL.Options.eligible` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Callees* that are (potentially) forwarded the call issued. In other words, `CALL.Options.eligible` is a whitelist of (potential) *Callees*.
+
+The *Dealer* will forward a call only to registered *Callees* that are not explicitly excluded via `CALL.Options.exclude` **and** which are explicitly eligible via `CALL.Options.eligible`.
+
+*Example*
+
+	[48, 7814135, {"exclude": [7891255, 1245751]}, "com.myapp.echo", ["Hello, world!"]]
+
+The above call will (potentially) get forwarded to all *Callees* of `com.myapp.echo`, but not WAMP sessions with IDs `7891255` or `1245751` (and also not the calling session).
+
+*Example*
+
+	[48, 7814135, {"eligible": [7891255, 1245751]}, "com.myapp.echo", ["Hello, world!"]]
+
+The above call will (potentially) get forwarded to WAMP sessions with IDs `7891255` or `1245751` only - but only if those are registered for the procedure `com.myapp.echo`.
+
+*Example*
+
+	[48, 7814135, {"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
+		"com.myapp.echo", ["Hello, world!"]]
+
+The above call will (potentially) get forwarded to WAMP sessions with IDs `1245751` or `9912315` only (since `7891255` is excluded) - but only if those are registered for the procedure `com.myapp.echo`.
+
+
+### Caller Exclusion
+
+By default, a *Caller* of a procedure will **never** itself be forwarded the call issued, even when registered for the `Procedure` the *Caller* is publishing to. This behavior can be overridden via
+
+	CALL.Options.exclude_me|bool
+
+When calling with `CALL.Options.exclude_me := false`, the *Caller* of the procedure might be forwarded the call issued - if it is registered for the `Procedure` called.
+
+*Example*
+
+	[48, 7814135, {"exclude_me": false}, "com.myapp.echo", ["Hello, world!"]]
+
+In this example, the *Caller* might be forwarded the call issued, if it is registered for `com.myapp.echo`.
+
+
 ### Caller Identification
 
 A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via 
@@ -1405,6 +1458,23 @@ A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
 *Example*
 
     [4, 7814135, "wamp.error.disclose_me.not_allowed"]
+
+
+### Call Trust Levels
+
+A *Dealer* may be configured to automatically assign *trust levels* to calls issued by *Callers* according to the *Dealer* configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) *Caller*.
+
+A *Dealer* supporting trust level will provide
+
+	INVOCATION.Details.trustlevel|integer
+
+in an `INVOCATION` message sent to a *Callee*. The trustlevel `0` means lowest trust, and higher integers represent (application-defined) higher levels of trust.
+
+*Example*
+
+	[68, 6131533, 9823526, {"trustlevel": 2}, ["Hello, world!"]]
+
+In above event, the *Dealer* has (by configuration and/or other information) deemed the call (and hence the invocation) to be of trustlevel `2`.
 
 
 ### Call Timeouts
