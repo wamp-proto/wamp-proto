@@ -863,7 +863,7 @@ Otherwise, the feature is assumed to be unsupported.
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.subscriber_blackwhite_listing := true
+	HELLO.Details.roles.<role>.features.subscriber_blackwhite_listing|bool := true
 
 If the feature is supported, a *Publisher* may restrict the actual receivers of an event beyond those subscribed via
 
@@ -900,7 +900,7 @@ The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.publisher_exclusion := true
+	HELLO.Details.roles.<role>.features.publisher_exclusion|bool := true
 
 By default, a *Publisher* of an event will **not** itself receive an event published, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via
 
@@ -919,7 +919,7 @@ In this example, the *Publisher* will receive the published event also, if it is
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Brokers* (`role := "broker"`) and *Subscribers* (`role := "subscriber"`) via
 
-	HELLO.Details.roles.<role>.features.publisher_identification := true
+	HELLO.Details.roles.<role>.features.publisher_identification|bool := true
 
 A *Publisher* may request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event by setting 
 
@@ -948,7 +948,7 @@ A *Broker* may also (automatically) disclose the identity of a *Publisher* even 
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.trustlevels := true
+	HELLO.Details.roles.<role>.features.publication_trustlevels|bool := true
 
 A *Broker* may be configured to automatically assign *trust levels* to events published by *Publishers* according to the *Broker* configuration on a per-topic basis and/or depending on the application defined role of the (authenticated) *Publisher*.
 
@@ -969,7 +969,7 @@ In above event, the *Broker* has (by configuration and/or other information) dee
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.pattern_based_subscription := true
+	HELLO.Details.roles.<role>.features.pattern_based_subscription|bool := true
 
 By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) matches *exactly* the topic subscribed to (`SUBSCRIBE.Topic`).
 
@@ -1042,7 +1042,7 @@ to the *Subscribers*.
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.partitioned_pubsub := true
+	HELLO.Details.roles.<role>.features.partitioned_pubsub|bool := true
 
 Resource keys: `PUBLISH.Options.rkey|string` is a stable, technical **resource key**.
 
@@ -1068,7 +1068,7 @@ Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.subscriber_metaevents := true
+	HELLO.Details.roles.<role>.features.subscriber_metaevents|bool := true
 
 *Example*
 
@@ -1113,7 +1113,7 @@ The following metatopics are currently defined:
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.subscriber_list := true
+	HELLO.Details.roles.<role>.features.subscriber_list|bool := true
 
 A *Broker* may allow to retrieve the current list of *Subscribers* for a subscription.
 
@@ -1149,7 +1149,7 @@ A call to `wamp.broker.subscriber.list` may fail with
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-	HELLO.Details.roles.<role>.features.event_history := true
+	HELLO.Details.roles.<role>.features.event_history|bool := true
 
 Instead of complex QoS for message delivery, a *Broker* may provide *message history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 
@@ -1458,7 +1458,7 @@ Otherwise, the feature is assumed to be unsupported.
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.callee_blackwhite_listing := true
+	HELLO.Details.roles.<role>.features.callee_blackwhite_listing|bool := true
 
 
 A *Caller* may restrict the endpoints that will handle a call beyond those registered via
@@ -1496,7 +1496,7 @@ The above call will (potentially) get forwarded to WAMP sessions with IDs `12457
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.caller_exclusion := true
+	HELLO.Details.roles.<role>.features.caller_exclusion|bool := true
 
 
 By default, a *Caller* of a procedure will **never** itself be forwarded the call issued, even when registered for the `Procedure` the *Caller* is publishing to. This behavior can be overridden via
@@ -1516,7 +1516,7 @@ In this example, the *Caller* might be forwarded the call issued, if it is regis
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.caller_identification := true
+	HELLO.Details.roles.<role>.features.caller_identification|bool := true
 
 
 A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via 
@@ -1546,7 +1546,7 @@ A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
 
 Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.call_trustlevels := true
+	HELLO.Details.roles.<role>.features.call_trustlevels|bool := true
 
 
 A *Dealer* may be configured to automatically assign *trust levels* to calls issued by *Callers* according to the *Dealer* configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) *Caller*.
@@ -1568,7 +1568,7 @@ In above event, the *Dealer* has (by configuration and/or other information) dee
 
 Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.pattern_based_registration := true
+	HELLO.Details.roles.<role>.features.pattern_based_registration|bool := true
 
 
 By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) matches *exactly* the endpoint registered (`REGISTER.Procedure`).
@@ -1644,7 +1644,7 @@ If an endpoint was registered with a pattern-based matching policy, a *Dealer* M
 
 Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.partitioned_rpc := true
+	HELLO.Details.roles.<role>.features.partitioned_rpc|bool := true
 
 
 *Partitioned Calls* allows to run a call issued by a *Caller* on one or more endpoints implementing the called procedure.
@@ -1692,6 +1692,10 @@ The call is then processed as for "All" Calls.
 
 ### Call Timeouts
 
+Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+	HELLO.Details.roles.<role>.features.call_timeout|bool := true
+
 A *Caller* might want to issue a call providing a *timeout* for the call to finish.
 
 A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
@@ -1715,7 +1719,7 @@ In fact, a timeout timer might run at three places:
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.call_canceling := true
+	HELLO.Details.roles.<role>.features.call_canceling|bool := true
 
 
 A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
@@ -1750,7 +1754,7 @@ Options:
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-	HELLO.Details.roles.<role>.features.progressive_call_results := true
+	HELLO.Details.roles.<role>.features.progressive_call_results|bool := true
 
 
 A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
