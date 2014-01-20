@@ -4,7 +4,6 @@ This document specifies version 2 of the [Web Application Messaging Protocol (WA
 
 Document Revision: **draft-1**, 2014/01/20
 
-----------
 
 **Contents**
 
@@ -848,6 +847,11 @@ where
 
 ## Advanced Publish & Subscribe
 
+All of the following advanced features for Publish & Subscribe are optional.
+
+If a WAMP implementation supports a specific advanced feature, it should announce support in the initial `HELLO`. Otherwise, the feature is assumed to be unsupported.
+
+
 ### Receiver Black- and Whitelisting
 
 A *Publisher* may restrict the receivers of an event beyond those subscribed via
@@ -1394,6 +1398,11 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 
 ## Advanced Remote Procedure Calls
+
+All of the following advanced features for Remote Procedure Calls are optional.
+
+If a WAMP implementation supports a specific advanced feature, it should announce support in the initial `HELLO`. Otherwise, the feature is assumed to be unsupported.
+
 
 ### Callee Black- and Whitelisting
 
