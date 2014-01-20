@@ -14,7 +14,7 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
     * [MsgPack](#msgpack)
 4. [Transports](#transports)
     * [WebSocket Transport](#websocket-transport)
-    * [Other Trasnports](#other-transports)
+    * [Other Transports](#other-transports)
 5. [Messages](#messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
@@ -34,14 +34,14 @@ This document specifies version 2 of the [WAMP](http://wamp.ws/) protocol:
     * [Subscriber List](#subscriber-list)
     * [Event History](#event-history)
 8. [Remote Procedure Calls](#remote-procedure-calls)
-    * [Registering and Unregistering](#registering-and-untergistering)
+    * [Registering and Unregistering](#registering-and-unregistering)
     * [Calling](#calling)
+    * [Caller Identification](#caller-identification)
     * [Call Timeouts](#call-timeouts)
     * [Canceling Calls](#canceling-calls)
-    * [Progressive Call Results](#progressive-calls-results)
-    * [Distributed Calls](#distributed-calls)
+    * [Progressive Call Results](#progressive-call-results)
     * [Pattern-based Registrations](#pattern-based-registrations)
-    * [Caller Identification](#caller-identification)
+    * [Distributed Calls](#distributed-calls)
 9. [Ordering Guarantees](#ordering-guarantees)
     * [Publish & Subscribe Ordering](#publish--subscribe-ordering)
     * [Remote Procedure Call Ordering](#remote-procedure-call-ordering)
@@ -1382,6 +1382,31 @@ If the original call already failed at the *Dealer* **before** the call would ha
 	[4, 7814135, {}, "wamp.error.no_such_procedure"]
 
 
+### Caller Identification
+
+A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via 
+
+	CALL.Options.disclose_me|bool := true
+
+*Example*
+
+	[48, 7814135, {"disclose_me": true}, "com.myapp.echo", ["Hello, world!"]]
+
+If above call would have been issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* would send an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
+
+*Example*
+
+	[68, 6131533, 9823526, {"caller": 3335656}, ["Hello, world!"]]
+
+Note that a *Dealer* MAY disclose the identity of a *Caller* even without the *Caller* having explicitly requested to do so when the *Dealer* configuration (for the called procedure) is setup to do so.
+
+A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
+
+*Example*
+
+    [4, 7814135, "wamp.error.disclose_me.not_allowed"]
+
+
 ### Call Timeouts
 
 A *Caller* might want to issue a call providing a *timeout* for the call to finish.
@@ -1462,51 +1487,6 @@ the *Dealer* will gather all individual results receveived by the *Callee* via `
  1. How to handle `ArgumentsKw` in this context?
 
 
-### Distributed Calls
-
-*Partitioned Calls* allows to run a call issued by a *Caller* on one or more endpoints implementing the called procedure.
-
-* all
-* any
-* partition
-
-
-`CALL.Options.runon|string := "all" or "any" or "partition"`
-`CALL.Options.runmode|string := "gather" or "progressive"`
-`CALL.Options.rkey|string`
-
-
-#### "Any" Calls
-
-If `CALL.Options.runon == "any"`, the call will be routed to one *randomly* selected *Callee* that registered an implementing endpoint for the called procedure. The call will then proceed as for standard (non-distributed) calls.
-
-
-#### "All" Calls
-
-If `CALL.Options.runon == "all"`, the call will be routed to all *Callees* that registered an implementing endpoint for the called procedure. The calls will run in parallel and asynchronously.
-
-If `CALL.Options.runmode == "gather"` (the default, when `CALL.Options.runmode` is missing), the *Dealer* will gather the individual results received via `YIELD` messages from *Callees* into a single list, and return that in `RESULT` to the original *Caller* - when all results have been received.
-
-If `CALL.Options.runmode == "progressive"`, the *Dealer* will call each endpoint via a standard `INVOCATION` message and immediately forward individual results received via `YIELD` messages from the *Callees* as progressive `RESULT` messages (`RESULT.Details.progress == 1`) to the original *Caller* and send a final `RESULT` message (with empty result) when all individual results have been received.
-
-If any of the individual `INVOCATION`s returns an `ERROR`, the further behavior depends on ..
-
-Fail immediate:
-
-The *Dealer* will immediately return a `ERROR` message to the *Caller* with the error from the `ERROR` message of the respective failing invocation. It will further send `INTERRUPT` messages to all *Callees* for which it not yet has received a response, and ignore any `YIELD` or `ERROR` messages it might receive subsequently for the pending invocations.
-
-The *Dealer* will accumulate ..
-
-
-#### "Partitioned" Calls
-
-If `CALL.Options.runmode == "partition"`, then `CALL.Options.rkey` MUST be present.
-
-The call is then routed to all endpoints that were registered ..
-
-The call is then processed as for "All" Calls.
-
-
 ### Pattern-based Registrations
 
 By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) matches *exactly* the endpoint registered (`REGISTER.Procedure`).
@@ -1578,29 +1558,51 @@ Since each *Callees* registrations "stands on it's own", there is no *set semant
 If an endpoint was registered with a pattern-based matching policy, a *Dealer* MUST supply the original `CALL.Procedure` as provided by the *Caller* in `INVOCATION.Details.procedure` to the *Callee*. 
 
 
-### Caller Identification
+### Distributed Calls
 
-A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via 
+*Partitioned Calls* allows to run a call issued by a *Caller* on one or more endpoints implementing the called procedure.
 
-	CALL.Options.disclose_me|bool := true
+* all
+* any
+* partition
 
-*Example*
 
-	[48, 7814135, {"disclose_me": true}, "com.myapp.echo", ["Hello, world!"]]
+`CALL.Options.runon|string := "all" or "any" or "partition"`
+`CALL.Options.runmode|string := "gather" or "progressive"`
+`CALL.Options.rkey|string`
 
-If above call would have been issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* would send an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
 
-*Example*
+#### "Any" Calls
 
-	[68, 6131533, 9823526, {"caller": 3335656}, ["Hello, world!"]]
+If `CALL.Options.runon == "any"`, the call will be routed to one *randomly* selected *Callee* that registered an implementing endpoint for the called procedure. The call will then proceed as for standard (non-distributed) calls.
 
-Note that a *Dealer* MAY disclose the identity of a *Caller* even without the *Caller* having explicitly requested to do so when the *Dealer* configuration (for the called procedure) is setup to do so.
 
-A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
+#### "All" Calls
 
-*Example*
+If `CALL.Options.runon == "all"`, the call will be routed to all *Callees* that registered an implementing endpoint for the called procedure. The calls will run in parallel and asynchronously.
 
-    [4, 7814135, "wamp.error.disclose_me.not_allowed"]
+If `CALL.Options.runmode == "gather"` (the default, when `CALL.Options.runmode` is missing), the *Dealer* will gather the individual results received via `YIELD` messages from *Callees* into a single list, and return that in `RESULT` to the original *Caller* - when all results have been received.
+
+If `CALL.Options.runmode == "progressive"`, the *Dealer* will call each endpoint via a standard `INVOCATION` message and immediately forward individual results received via `YIELD` messages from the *Callees* as progressive `RESULT` messages (`RESULT.Details.progress == 1`) to the original *Caller* and send a final `RESULT` message (with empty result) when all individual results have been received.
+
+If any of the individual `INVOCATION`s returns an `ERROR`, the further behavior depends on ..
+
+Fail immediate:
+
+The *Dealer* will immediately return a `ERROR` message to the *Caller* with the error from the `ERROR` message of the respective failing invocation. It will further send `INTERRUPT` messages to all *Callees* for which it not yet has received a response, and ignore any `YIELD` or `ERROR` messages it might receive subsequently for the pending invocations.
+
+The *Dealer* will accumulate ..
+
+
+#### "Partitioned" Calls
+
+If `CALL.Options.runmode == "partition"`, then `CALL.Options.rkey` MUST be present.
+
+The call is then routed to all endpoints that were registered ..
+
+The call is then processed as for "All" Calls.
+
+
 
 
 ## Ordering Guarantees
@@ -1700,7 +1702,7 @@ When running WAMP over WebSocket, the transport provides HTTP client cookies dur
 This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
 
 
-### WAMP-CRA Authentication
+### WAMP Challenge-Response Authentication
 
 WAMP Challenge Response (WAMP-CRA) is a WAMP level authentication procedure implemented on top of standard, predefined WAMP RPC procedures.
 
