@@ -164,33 +164,27 @@ A message *serialization* format is assumed that (at least) provides the followi
 
   * `integer` (non-negative)
   * `string` (UTF-8 encoded Unicode)
+  * `bool`
   * `list`
   * `dict` (with string keys)
 
-WAMP *itself* only uses above types. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
+> WAMP *itself* only uses above types, e.g. it does not use the JSON types `number` (non-integer) and `null`. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
+> 
 
 WAMPv2 defines two bindings for message *serialization*:
 
  1. [JSON](http://www.json.org/)
  2. [MsgPack](http://msgpack.org/)
 
-> * As noted above, WAMP *itself* does only use a subset of types - e.g. it does not use the JSON types `number` (non-integer), `bool` and `null`.
-> * With MsgPack, the [version 5](https://github.com/msgpack/msgpack/blob/master/spec.md) MUST BE supported - which is able to differentiate between strings and binary values.
-> 
-
 Other bindings for *serialization* may be defined in future WAMP versions.
 
 ### JSON
 
-Write me.
+With JSON serialization, each WAMP message is serialized according to the JSON specification as described in [RFC4627](http://www.ietf.org/rfc/rfc4627.txt).
 
-### MsgPack
+Further, binary data follows a convention for conversion to JSON strings.
 
-Write me.
-
-### JSON-MsgPack Conversion
-
-A MsgPack **byte array** is converted to a JSON string as follows:
+A **byte array** is converted to a **JSON string** as follows:
 
 1. convert the byte array to a Base64 encoded (host language) string
 2. prepend the string with a `\0` character
@@ -214,13 +208,19 @@ and serialized to a JSON string
 
 	"\\u0000EOP/kFMHXFJvX8BtT+N82w=="
 
-A JSON string is deserialized using the following procedure:
+A **JSON string** is deserialized to either a **string** or a **byte array** using the following procedure:
 
 1. Unserialize a JSON string to a host language (Unicode) string
-2. If the string starts with a `\0` character, decode the rest (after the first character) using Base64 to a byte array
+2. If the string starts with a `\0` character, interpret the rest (after the first character) as Base64 and decode to a byte array
 3. Otherwise, return the Unicode string
 
-The appendix contains complete code examples in Python and JavaScript for conversion between MsgPack and JSON.
+The appendix contains complete code examples in Python and JavaScript for conversion between byte arrays and JSON strings.
+
+### MsgPack
+
+With MsgPack serialization, each WAMP message is serialized according to the MsgPack specification as described in [here](https://github.com/msgpack/msgpack/blob/master/spec.md).
+
+The version 5 of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.
 
 
 ## Transports
@@ -230,20 +230,20 @@ WAMP assumes a *transport* with the following characteristics:
   1. message-based
   2. reliable
   3. ordered
-  4. full-duplex
+  4. bidirectional (full-duplex)
 
 
 ### WebSocket Transport
 
 The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
 
-#### Unbatched WebSocket Transport
+#### Unbatched Transport
 
-With WebSocket in unbatched mode, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
+With WebSocket in **unbatched mode**, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
 
 The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between peers using the WebSocket subprotocol negotiation mechanism.
 
-WAMPv2 uses the following WebSocket subprotocol identifiers:
+WAMPv2 uses the following WebSocket subprotocol identifiers for unbatched modes:
 
  * `wamp.2.json`
  * `wamp.2.msgpack`
@@ -252,7 +252,7 @@ With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 enco
 
 With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
 
-#### Batched WebSocket Transport
+#### Batched Transport
 
 WAMPv2 allows to batch multiple WAMP message into a single WebSocket message if one of the following subprotocols have been negotiated:
 
@@ -282,7 +282,7 @@ Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in t
 
 ### Overview
 
-All WAMP messages are of the same structure - a `list` with a first element `MessageType` followed by zero or more message type specific elements:
+All WAMP messages are of the same structure, a `list` with a first element `MessageType` followed by one or more message type specific elements:
 
     [MessageType|integer, ... zero or more message type specific elements ...]
 
@@ -290,8 +290,9 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 
  * `integer`: a non-negative integer
  * `string`: any UTF-8 encoded Unicode string, including the empty string
- * `id`: an integer ID as defined above
- * `uri`: a string URI as defined above
+ * `bool`: a boolean value (`true` or `false`)
+ * `id`: an integer ID as defined in [section IDs](#ids)
+ * `uri`: a string URI as defined in [section URIs](#uris)
  * `dict`: a dictionary (map)
  * `list`: a list (array)
 
