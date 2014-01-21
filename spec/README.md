@@ -1824,97 +1824,118 @@ A procedure implemented by a *Callee* and registered at a *Dealer* may produce p
 
 ![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
 
-An implementing procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
+A *Callee* indicates it's willingness to receive progressive results by setting
+
+	CALL.Options.receive_progress|bool := true
+
+*Example.* Caller-to-Dealer `CALL`
+
+	[48, 77133, {}, "com.myapp.compute_revenue", [2010, 2011, 2012]]
+
+A *Dealer* will forward the *Callee's* willingness to receive progressive results by setting
+
+	INVOCATION.Options.receive_progress|bool := true
+
+*Example.* Dealer-to-Callee `INVOCATION`
+
+	[68, 87683, 324, {}, [2010, 2011, 2012]]
+
+An endpoint implementing the procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
 
 	YIELD.Options.progress|bool := true
 
-*Example: Callee-to-Dealer progrssive `YIELDs`*
+*Example.* Callee-to-Dealer progressive `YIELDs`
 
-	[70, 87683, {"progress": true}, ["partial 1", 10]]
-	[70, 87683, {"progress": true}, ["partial 2", 20]]
+	[70, 87683, {"progress": true}, ["Y2010", 120]]
+	[70, 87683, {"progress": true}, ["Y2011", 205]]
 	...
 
-Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will immediately send a `RESULT` message to the original *Caller* with
+Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will **immediately** send a `RESULT` message to the original *Caller* with
 
 	RESULT.Details.progress|bool := true
 
-*Example: Dealer-to-Caller progressive `RESULTs`*
+*Example.* Dealer-to-Caller progressive `RESULTs`
 
-	[50, 77133, {"progress": true}, ["partial 1", 10]]
-	[50, 77133, {"progress": true}, ["partial 2", 20]]
+	[50, 77133, {"progress": true}, ["Y2010", 120]]
+	[50, 77133, {"progress": true}, ["Y2011", 205]]
 	...
 
 An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
 
-*Example: Callee-to-Dealer final `YIELD` ("RPC success")*
+*Example.* Callee-to-Dealer final `YIELD` ("RPC success")
 
-	[70, 87683, {}, ["final", 30]]
+	[70, 87683, {}, ["Total", 490]]
 
-*Example: Callee-to-Dealer final `ERROR` ("RPC failure")*
+*Example.* Callee-to-Dealer final `ERROR` ("RPC failure")
 
-	[4, 87683, {}, "com.myapp.error1"]
+	[4, 87683, {}, "com.myapp.invalid_revenue_year", [1830]]
 
 A call MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller*.
 
-*Example: Dealer-to-Caller final `RESULT` ("RPC success")*
+*Example.* Dealer-to-Caller final `RESULT` ("RPC success")
 
-	[50, 77133, {}, ["final", 30]]
+	[50, 77133, {}, ["Total", 490]]
 
-*Example: Dealer-to-Caller final `ERROR` ("RPC failure")*
+*Example.* Dealer-to-Caller final `ERROR` ("RPC failure")
 
-	[4, 87683, {}, "com.myapp.error1"]
+	[4, 77133, {}, "com.myapp.invalid_revenue_year", [1830]]
 
 In other words: `YIELD` with `YIELD.Options.progress == true` and `RESULT` with `RESULT.Details.progress == true` messages may only be sent *during* a call or invocation is still on the fly.
 
 The final `YIELD` and final `RESULT` may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.
 
-*Example: Callee-to-Dealer `YIELDs`*
+*Example.* Callee-to-Dealer `YIELDs`
 
-	[70, 87683, {"progress": true}, ["partial 1", 10]]
-	[70, 87683, {"progress": true}, ["partial 2", 20]]
+	[70, 87683, {"progress": true}, ["Y2010", 120]]
+	[70, 87683, {"progress": true}, ["Y2011", 205]]
     ...
-	[70, 87683, {"progress": true}, ["final", 30]]
+	[70, 87683, {"progress": true}, ["Total", 490]]
 	[70, 87683, {}]
 
-*Example: Dealer-to-Caller `RESULTs`*
+*Example.* Dealer-to-Caller `RESULTs`
 
-	[50, 77133, {"progress": true}, ["partial 1", 10]]
-	[50, 77133, {"progress": true}, ["partial 2", 20]]
+	[50, 77133, {"progress": true}, ["Y2010", 120]]
+	[50, 77133, {"progress": true}, ["Y2011", 205]]
     ...
-	[50, 77133, {"progress": true}, ["final", 30]]
+	[50, 77133, {"progress": true}, ["Total", 490]]
 	[50, 77133, {}]
 
 The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when those messages are only used to give an indication that the procedure is still running and working, and the actual result is completely delivered in the final `YIELD` and `RESULT`:
 
-*Example: Callee-to-Dealer `YIELDs`*
+*Example.* Callee-to-Dealer `YIELDs`
 
 	[70, 87683, {"progress": true}]
 	[70, 87683, {"progress": true}]
 	...
-	[70, 87683, {}, ["final", 30]]
+	[70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
 
-*Example: Dealer-to-Caller `RESULTs`*
+*Example.* Dealer-to-Caller `RESULTs`
 
 	[50, 77133, {"progress": true}]
 	[50, 77133, {"progress": true}]
 	...
-	[50, 77133, {}, ["final", 30]]
+	[50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
 
 Intermediate, progressive results and/or the final result MAY have different structure. The WAMP peer implementation is responsible for mapping everything into a form suitable for consumption in the host language.
 
-*Example: Callee-to-Dealer `YIELDs`*
+*Example.* Callee-to-Dealer `YIELDs`
 
 	[70, 87683, {"progress": true}, ["partial 1", 10]]
 	[70, 87683, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
     ...
 	[70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
 
-*Example: Dealer-to-Caller `RESULTs`*
+*Example.* Dealer-to-Caller `RESULTs`
 
 	[50, 77133, {"progress": true}, ["partial 1", 10]]
 	[50, 77133, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
     ...
 	[50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
+
+
+
+----------
+
 
 
 If the *Caller* does not support receiving *progressive calls*, as indicated by
@@ -1923,11 +1944,11 @@ If the *Caller* does not support receiving *progressive calls*, as indicated by
 
 and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
 
-*Example: Callee-to-Dealer `YIELD`*
+*Example.* Callee-to-Dealer `YIELD`
 
 	[70, 87683, {"progress": true}, ["partial 1", 10]]
 
-*Example: Dealer-to-Caller `ERROR`*
+*Example.* Dealer-to-Caller `ERROR`
 
 	[4, 87683, {}, "wamp.error.unsupported_feature.caller.progressive_call_result"]
 
@@ -1937,11 +1958,11 @@ If the *Dealer* does not support processing *progressive invocations*, as indica
 
 and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
 
-*Example: Callee-to-Dealer `YIELD`*
+*Example.* Callee-to-Dealer `YIELD`
 
 	[70, 87683, {"progress": true}, ["partial 1", 10]]
 
-*Example: Dealer-to-Caller `ERROR`*
+*Example.* Dealer-to-Caller `ERROR`
 
 	[4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
 
