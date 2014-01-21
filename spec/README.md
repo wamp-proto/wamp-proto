@@ -24,7 +24,8 @@ Document Revision: **draft-1**, 2014/01/20
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
 6. [Session Management](#session-management)
-    * [Hello and Goodbye](#hello-and-goodbye)
+    * [Session Establishment](#session-establishment)
+    * [Session Closing](#session-closing)
     * [Heartbeats](#heartbeats)
 7. [Publish & Subscribe](#publish--subscribe)
     * [Subscribing and Unsubscribing](#subscribing-and-unsubscribing)
@@ -500,9 +501,9 @@ The following table lists the message type code for **all 21 messages defined in
 
 ## Session Management
 
-### Hello and Goodbye
+### Session Establishment
 
-When a WAMP session starts, the peers introduce themselves to each other by sending a `HELLO` message:
+After the underlying transport has been opened, a WAMP session is established by the peers introduce themselves to each other by sending a `HELLO` message:
 
     [HELLO, Session|id, Details|dict]
 
@@ -510,6 +511,8 @@ When a WAMP session starts, the peers introduce themselves to each other by send
  * `Details` is a dictionary that allows to provide additional opening information (see below).
 
 The `HELLO` message MUST be the very first message sent by each of the two peers after the transport has been established and a peer MUST wait for the `HELLO` message to be received from the other peer before performing anything else. It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the peer MUST fail the session if that happens.
+
+**Session ID**
 
 The `HELLO.Session` can (later) be used for:
 
@@ -519,6 +522,8 @@ The `HELLO.Session` can (later) be used for:
 *Example*
 
     [1, 9129137332, {... see below ...}]
+
+**Roles and Features**
 
 A WAMP peer MUST announce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
@@ -590,6 +595,38 @@ The use of *feature announcement* in WAMP allows for
 			}
 	}]
 
+
+The complete list of *advanced features* currently defined per role is: 
+
+| Feature                       |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|-------------------------------|-------------|----------|--------------|----------|----------|----------|
+| **Remote Procedure Calls**    |             |          |              |          |          |          |
+| callee_blackwhite_listing     |             |          |              | X        | X        |          |
+| caller_exclusion              |             |          |              | X        | X        |          |
+| caller_identification         |             |          |              | X        | X        | X        |
+| call_trustlevels              |             |          |              |          | X        | X        |
+| pattern_based_registration    |             |          |              |          | X        | X        |
+| partitioned_rpc               |             |          |              | X        | X        | X        |
+| call_timeout                  |             |          |              | X        | X        | X        |
+| call_canceling                |             |          |              | X        | X        | X        |
+| progressive_call_results      |             |          |              | X        | X        | X        |
+|                               |             |          |              |          |          |          |
+| **Publish & Subscribe**       |             |          |              |          |          |          |
+| subscriber_blackwhite_listing | X           | X        |              |          |          |          |
+| publisher_exclusion           | X           | X        |              |          |          |          |
+| publisher_identification      | X           | X        | X            |          |          |          |
+| publication_trustlevels       |             | X        | X            |          |          |          |
+| pattern_based_subscription    |             | X        | X            |          |          |          |
+| partitioned_pubsub            | X           | X        | X            |          |          |          |
+| subscriber_metaevents         |             | X        | X            |          |          |          |
+| subscriber_list               |             | X        | X            |          |          |          |
+| event_history                 |             | X        | X            |          |          |          |
+
+
+**Network Agent**
+
+When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
+
 Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` message MAY disclose the WAMP implementation in use to it's peer:
 
     HELLO.Details.agent|string
@@ -598,11 +635,14 @@ Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` messa
 
     [1, 9129137332, {"agent": "AutobahnPython-0.7.0"}]
 
+
+### Session Closing
+
 A WAMP session starts it's lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by sending the `GOODBYE` message
 
     [GOODBYE, Details|dict]
 
- * `Details` is a dictionary that allows to provide additional closing information (see below).
+ * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
 
 *Example*
 
@@ -1665,7 +1705,7 @@ If an endpoint was registered with a pattern-based matching policy, a *Dealer* M
 
 ### Partitioned Registrations & Calls
 
-Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
 	HELLO.Details.roles.<role>.features.partitioned_rpc|bool := true
 
