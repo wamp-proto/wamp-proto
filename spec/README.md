@@ -1174,14 +1174,13 @@ The following metatopics are currently defined:
 
 ### Subscriber List
 
+A *Broker* may allow to retrieve the current list of *Subscribers* for a given subscription.
+
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
 	HELLO.Details.roles.<role>.features.subscriber_list|bool := true
 
-A *Broker* may allow to retrieve the current list of *Subscribers* for a subscription.
-
-A *Broker* that implements *subscriber list* must (also) announce role `HELLO.roles.callee`, indicate `HELLO.roles.broker.subscriberlist == 1` and provide the following (builtin) procedures.
-
+A *Broker* that implements *subscriber list* must (also) announce role `HELLO.roles.callee` and provide the following (builtin) procedures.
 
 A *Caller* (that is also a *Subscriber*) can request the current list of subscribers for a subscription (it is subscribed to) by calling the *Broker* procedure
 
@@ -1200,12 +1199,11 @@ A call to `wamp.broker.subscriber.list` may fail with
 	wamp.error.no_such_subscription
 	wamp.error.not_authorized
 
+**Open Issues**
 
-*FIXME*
-
- 1. What if we have multiple *Brokers* (a cluster)?
+ 1. What if we have multiple *Brokers* (a cluster)? The call would need to be forwarded.
  2. Should we allow "paging" (`offset|integer` and `limit|integer` arguments)?
- 3. Should we allow *Subscribers* to list subscribers for subscription it is not itself subscribed to?
+ 3. Should we allow *Subscribers* to list subscribers for subscription it is not itself subscribed to? How would the *Callee* know the subscription ID it wants to look up without subscribing?
 
 
 ### Event History
