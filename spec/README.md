@@ -300,6 +300,8 @@ WAMP assumes a *transport* with the following characteristics:
 
 The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
 
+![alt text](figure/sessions4.png "Transport and Session Lifetime")
+
 #### Unbatched Transport
 
 With WebSocket in **unbatched mode**, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
@@ -522,7 +524,13 @@ The message flow between *Peers* involves the following messages:
 1. `HELLO`
 2. `GOODBYE`
 
-![alt text](figure/hello.png "RPC: Registering and Unregistering")
+Successful session establishment:
+
+![alt text](figure/hello.png "WAMP Session success")
+
+Session denied by peer:
+
+![alt text](figure/hello_denied.png "WAMP Session denied")
 
 After the underlying transport has been opened, a WAMP session is established by the peers introduce themselves to each other by sending a `HELLO` message:
 
