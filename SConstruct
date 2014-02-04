@@ -18,6 +18,8 @@
 
 SVG_FILES = ['appcode.svg',
              'sessions.svg',
+             'sessions2.svg',
+             'sessions3.svg',
              'hello.svg',
              'hello_denied.svg',
              'pubsub_publish1.svg',

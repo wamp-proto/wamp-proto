@@ -84,7 +84,7 @@ WAMP also supports different *serializations*, including JSON and MsgPack.
  4. *Transport*: networking channel that carries one or more *Sessions*.
 
 
-![alt text](figure/sessions.png "Transports, Sessions and Peers")
+![alt text](figure/sessions2.png "Transports, Sessions and Peers")
 
 
 ### Peers and Roles
@@ -334,6 +334,7 @@ With batched transport, even if only a single WAMP message is sent in a WebSocke
 
 Sending a batch of length 0 (no WAMP message) is illegal and a peer MUST fail the transport upon receiving such a transport message.
 
+![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
 ### Other Transports
 
