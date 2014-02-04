@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-##  Copyright 2012-2013 Tavendo GmbH
+##  Copyright 2012-2014 Tavendo GmbH
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -16,7 +16,11 @@
 ##
 ###############################################################################
 
-SVG_FILES = ['pubsub_publish1.svg',
+SVG_FILES = ['appcode.svg',
+             'sessions.svg',
+             'hello.svg',
+             'hello_denied.svg',
+             'pubsub_publish1.svg',
              'pubsub_publish2.svg',
              'pubsub_subscribe1.svg',
              'pubsub_subscribe2.svg',

@@ -76,6 +76,17 @@ WAMP ("The Web Application Messaging Protocol") is an open application communica
 WAMP can run over different *transports*, including [WebSocket](http://tools.ietf.org/html/rfc6455), where it is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 WAMP also supports different *serializations*, including JSON and MsgPack.
 
+### Terms
+
+ 1. *Realm*: a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
+ 2. *Peer*: transient participant in a WAMP based application
+ 3. *Session*: transient conversation between two *Peers*; attached to a *Realm* and runs over a transport.
+ 4. *Transport*: networking channel that carries one or more *Sessions*.
+
+
+![alt text](figure/sessions.png "Transports, Sessions and Peers")
+
+
 ### Peers and Roles
 
 A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions. A WAMP peer can have one *or more* of the following roles.
@@ -129,6 +140,8 @@ WAMP is designed for application code to run inside peers of the roles:
 2. *Publisher* and *Subscriber*
  
 *Brokers* and *Dealers* are responsible for **generic call and event routing** and SHOULD NOT run application code.
+
+![alt text](figure/appcode.png "Application Code")
 
 > However, a *program* that implements the *Dealer* role might at the same time implement a builtin *Callee*. It is the *Dealer* and *Broker* that SHOULD be generic, not the program. 
 > 
@@ -378,9 +391,9 @@ WAMP defines the following messages which are explained in detail in the followi
 
 #### `ERROR`
 
-    [ERROR, Request|id, Details|dict, Error|uri]
-    [ERROR, Request|id, Details|dict, Error|uri, Arguments|list]
-    [ERROR, Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri]
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Arguments|list]
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
 #### `PUBLISH`
 
@@ -502,6 +515,13 @@ The following table lists the message type code for **all 21 messages defined in
 ## Session Management
 
 ### Session Establishment
+
+The message flow between *Peers* involves the following messages:
+
+1. `HELLO`
+2. `GOODBYE`
+
+![alt text](figure/hello.png "RPC: Registering and Unregistering")
 
 After the underlying transport has been opened, a WAMP session is established by the peers introduce themselves to each other by sending a `HELLO` message:
 
