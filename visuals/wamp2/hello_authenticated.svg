@@ -9,8 +9,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="981.10437"
-   height="374.47498"
+   width="979.66235"
+   height="500.41223"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
@@ -25,8 +25,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="506.32757"
-     inkscape:cy="177.85886"
+     inkscape:cx="597.97438"
+     inkscape:cy="203.72613"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -55,134 +55,175 @@
      inkscape:label="Ebene 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(176.25007,-476.56907)">
+     transform="translate(475.43165,294.97111)">
     <g
        id="g2989"
-       transform="translate(-168.15569,474.29368)">
+       transform="translate(-467.33538,-297.2465)">
       <path
          id="path2991"
-         d="m 849.29688,186.79688 -419.92188,0"
+         d="m 847.65625,186.79688 -419.84375,0"
          style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path2993"
-         d="m 431.09375,193.4375 -13.20313,-6.64062 13.20313,-6.5625 0,13.20312 z"
+         d="m 429.45312,193.4375 -13.20312,-6.64062 13.20312,-6.5625 0,13.20312 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path2995"
-         d="m 590.54688,157.89062 0,20 86.09374,0 0,-20 -86.09374,0 z"
+         d="m 581.48438,157.89062 0,20 100.9375,0 0,-20 -100.9375,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
          id="text2997"
          style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="172.5"
-         x="590"
-         xml:space="preserve">WELCOME</text>
+         x="581.25"
+         xml:space="preserve">CHALLENGE</text>
       <path
          id="path2999"
-         d="m 403.67188,76.40625 0,184.60937 14.21874,0 0,-184.60937 -14.21874,0 z"
+         d="m 402.10938,76.40625 0,304.29687 14.14062,0 0,-304.29687 -14.14062,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3001"
-         d="m 850.15625,76.40625 0,184.60937 14.14063,0 0,-184.60937 -14.14063,0 z"
+         d="m 848.51562,76.40625 0,304.29687 14.21876,0 0,-304.29687 -14.21876,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3003"
          style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="33.75"
-         x="805"
+         x="803.75"
          xml:space="preserve">Router</text>
       <text
          id="text3005"
          style="font-size:30px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="33.75"
-         x="351.25"
+         x="350"
          xml:space="preserve">Endpoint</text>
       <path
          id="path3007"
-         d="m 417.89062,111.25 417.03126,0"
-         style="fill:none;stroke:#000000;stroke-width:5.234375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         d="m 416.25,111.25 419.92188,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3009"
-         d="m 832.89062,103.04688 16.40626,8.20312 -16.40626,8.20312 0,-16.40624 z"
+         d="m 834.45312,104.60938 13.20313,6.64062 -13.20313,6.5625 0,-13.20312 z"
          style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3011"
-         d="m 606.25,82.34375 0,20 54.6875,0 0,-20 -54.6875,0 z"
+         d="m 604.60938,82.34375 0,20 54.6875,0 0,-20 -54.6875,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3013"
          style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="97.5"
-         x="606.25"
+         x="605"
          xml:space="preserve">HELLO</text>
       <path
          id="path3015"
-         d="m 337.57812,364.92188 141.71876,0"
+         d="m 335.9375,490.85938 141.71875,0"
          style="fill:none;stroke:#fa72c6;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3017"
-         d="m 819.45312,317.73438 141.71876,0"
+         d="m 817.8125,443.59375 141.71875,0"
          style="fill:none;stroke:#fa72c6;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3019"
-         d="m 479.29688,364.92188 340.15624,-47.1875"
+         d="M 477.65625,490.85938 817.8125,443.59375"
          style="fill:none;stroke:#fa72c6;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3021"
          style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="296.25"
-         x="601.25"
+         y="422.5"
+         x="598.75"
          xml:space="preserve">Session </text>
       <text
          id="text3023"
          style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="320"
-         x="586.25"
+         y="446.25"
+         x="583.75"
          xml:space="preserve">established</text>
       <path
          id="path3025"
-         d="M 148.59375,199.60938 644.60938,111.25"
+         d="m 148.59375,138.35938 198.4375,86.40624"
          style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3027"
-         d="m 2.109375,152.34375 0,94.53125 292.890625,0 0,-94.53125 -292.890625,0 z"
+         d="m 2.109375,91.171875 0,94.453125 292.890625,0 0,-94.453125 -292.890625,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
          id="path3029"
-         d="m 2.109375,246.875 292.890625,0 0,-94.53125 -292.890625,0 0,94.53125 z"
+         d="m 2.109375,185.625 292.890625,0 0,-94.453125 -292.890625,0 0,94.453125 z"
          style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
          id="text3031"
          style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="193.75"
-         x="15"
-         xml:space="preserve">Session establishment always </text>
+         y="132.5"
+         x="12.5"
+         xml:space="preserve">Authentication happens before </text>
       <text
          id="text3033"
          style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="217.5"
-         x="55"
-         xml:space="preserve">initiated by </text>
+         y="156.25"
+         x="30"
+         xml:space="preserve">Session attaches to Realm</text>
+      <path
+         id="path3035"
+         d="m 849.29688,342.89062 -419.92188,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3037"
+         d="m 431.09375,349.53125 -13.20313,-6.64063 13.20313,-6.5625 0,13.20313 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3039"
+         d="m 590.54688,313.98438 0,20 86.09374,0 0,-20 -86.09374,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
       <text
-         id="text3035"
-         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="217.5"
-         x="156.25"
-         xml:space="preserve">Endpoint</text>
+         id="text3041"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="328.75"
+         x="590"
+         xml:space="preserve">WELCOME</text>
+      <path
+         id="path3043"
+         d="m 417.89062,267.34375 419.84376,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59375px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3045"
+         d="m 836.09375,260.70312 13.20313,6.64063 -13.20313,6.5625 0,-13.20313 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3047"
+         d="m 569.6875,238.4375 0,20 127.8125,0 0,-20 -127.8125,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3049"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="253.75"
+         x="570"
+         xml:space="preserve">AUTHENTICATE</text>
+      <path
+         id="path3051"
+         d="m 382.42188,286.25 -11.79688,0 c -6.5625,0 -11.79688,-5.3125 -11.79688,-11.875 0,0 0,0 0,0 l 0,0 0,-37.73438 c 0,-6.5625 -5.3125,-11.875 -11.79687,-11.875 0,0 0,0 0,0 6.48437,0 11.79687,-5.23437 11.79687,-11.79687 0,0 0,0 0,0 l 0,0 0,-33.04687 c 0,-6.5625 5.23438,-11.79688 11.79688,-11.79688 0,0 0,0 0,0 l 0,0 11.79688,0"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
     </g>
   </g>
 </svg>

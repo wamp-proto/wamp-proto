@@ -482,15 +482,18 @@ WAMP defines the following messages which are explained in detail in the followi
 
 ### Message Codes and Direction
 
-The following table lists the message type code for **all 21 messages defined in WAMPv2** and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role. 
+The following table lists the message type code for **all 24 messages defined in WAMP v2** and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role. 
 
 
 | Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|-------------|----------|--------------|----------|----------|----------|
-|  1   | `HELLO`        | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  2   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  3   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  4   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
+|  1   | `HELLO`        | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  2   | `WELCOME`      | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  3   | `CHALLENGE`    | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  4   | `AUTHENTICATE` | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  5   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  6   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  7   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
 |      |                |             |          |              |          |          |          |
 | 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
 | 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
@@ -519,9 +522,12 @@ The following table lists the message type code for **all 21 messages defined in
 
 ### Session Establishment
 
-The message flow between *Peers* involves the following messages:
+The message flow between *Endpoints* and *Routers* for establishing and tearing down sessions involves the following messages:
 
 1. `HELLO`
+2. `WELCOME`
+3. `CHALLENGE`
+4. `AUTHENTICATE`
 2. `GOODBYE`
 
 Successful session establishment:
@@ -531,6 +537,8 @@ Successful session establishment:
 Session denied by peer:
 
 ![alt text](figure/hello_denied.png "WAMP Session denied")
+
+![alt text](figure/hello_authenticated.png "WAMP Session denied")
 
 After the underlying transport has been opened, a WAMP session is established by the peers introduce themselves to each other by sending a `HELLO` message:
 
