@@ -381,11 +381,23 @@ WAMP defines the following messages which are explained in detail in the followi
 
 #### `HELLO`
 
-    [HELLO, Session|id, Details|dict]
+    [HELLO, Realm|uri, Details|dict]
+
+#### `WELCOME`
+
+    [WELCOME, Session|id, Details|dict]
+
+#### `CHALLENGE`
+
+    [CHALLENGE, Challenge|string, Extra|dict]
+
+#### `AUTHENTICATE`
+
+    [AUTHENTICATE, Signature|string, Extra|dict]
 
 #### `GOODBYE`
 
-    [GOODBYE, Details|dict]
+    [GOODBYE, Reason|uri, Details|dict]
 
 #### `HEARTBEAT`
 
