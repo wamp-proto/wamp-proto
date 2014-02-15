@@ -73,7 +73,9 @@ WAMP ("The Web Application Messaging Protocol") is an open application communica
  * Publish & Subscribe
  * Remote Procedure Calls
 
-WAMP can run over different *transports*, including [WebSocket](http://tools.ietf.org/html/rfc6455), where it is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
+WAMP can run over different *transports*,
+??? which specifically - give me the full list ???
+-- For [WebSocket](http://tools.ietf.org/html/rfc6455), WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 WAMP also supports different *serializations*, including JSON and MsgPack.
 
 ### Terms
@@ -81,7 +83,7 @@ WAMP also supports different *serializations*, including JSON and MsgPack.
  1. *Realm*: a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
  2. *Peer*: transient participant in a WAMP based application
  3. *Session*: transient conversation between two *Peers*; attached to a *Realm* and runs over a transport.
- 4. *Transport*: networking channel that carries one or more *Sessions*.
+ 4. *Transport*: networking channel that carries a *Session*.
 
 
 ![alt text](figure/sessions2.png "Transports, Sessions and Peers")
@@ -138,13 +140,13 @@ WAMP is designed for application code to run inside peers of the roles:
 
 1. *Callee* and *Caller*
 2. *Publisher* and *Subscriber*
- 
+
 *Brokers* and *Dealers* are responsible for **generic call and event routing** and SHOULD NOT run application code.
 
 ![alt text](figure/appcode.png "Application Code")
 
-> However, a *program* that implements the *Dealer* role might at the same time implement a builtin *Callee*. It is the *Dealer* and *Broker* that SHOULD be generic, not the program. 
-> 
+> However, a *program* that implements the *Dealer* role might at the same time implement a built-in *Callee*. It is the *Dealer* and *Broker* that SHOULD be generic, not the program.
+>
 
 The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application. *Brokers* and *Dealers* however might differ in these features:
 
@@ -157,7 +159,7 @@ The idea is to be able to transparently switch *Broker* and *Dealer* implementat
 
 ### Building Blocks
 
-WAMP is defined with respect to the following building blocks 
+WAMP is defined with respect to the following building blocks
 
    1. Identifier
    2. Serialization
@@ -187,7 +189,7 @@ These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MU
 The URIs are understood to form a single, global, hierarchical namespace for WAMP.
 
 > The namespace is unified for topics, procedures and errors - these different resource types do NOT have separate namespaces.
-> 
+>
 
 To avoid resource naming conflicts, we follow the package naming convention from Java where URIs SHOULD begin with (reversed) domain names owned by the organization defining the URI.
 
@@ -199,9 +201,11 @@ URIs MUST NOT contain `#`, which is reserved for internal use by *Dealers* and *
 
 URI components SHOULD match the regular expression `[a-z][a-z0-9_]*` (that is start with a letter, followed by zero or more letters, digits or `_`).
 
-> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language enviroment in a completely transparent way. 
+> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language enviroment in a completely transparent way.
 
 Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
+
+--- need an example here ---
 
 ### IDs
 
@@ -215,8 +219,8 @@ WAMP needs to identify the following *ephemeral* entities:
 
 These are identified in WAMP using IDs that are integers between (inclusive) `0` and `2^53` (`9007199254740992L`) and which MUST BE drawn *randomly* from a *uniform distribution* over the specified range.
 
-> The reason to choose the specific upper bound is that `2^53` is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range. 
-> 
+> The reason to choose the specific upper bound is that `2^53` is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range.
+>
 
 
 ## Serializations
@@ -232,7 +236,7 @@ A message *serialization* format is assumed that (at least) provides the followi
   * `dict` (with string keys)
 
 > WAMP *itself* only uses above types, e.g. it does not use the JSON types `number` (non-integer) and `null`. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
-> 
+>
 
 WAMPv2 defines two bindings for message *serialization*:
 
@@ -263,7 +267,7 @@ This will get converted to Base64
 
 	EOP/kFMHXFJvX8BtT+N82w==
 
-prepended with `\0` 
+prepended with `\0`
 
 	\x00EOP/kFMHXFJvX8BtT+N82w==
 
@@ -330,7 +334,7 @@ Batching with JSON works by serializing each WAMP message to JSON as normally, a
 
 Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
 
-	Length of Msg 1 serialization (int32) | serialized MsgPack WAMP Msg 1 | ... 
+	Length of Msg 1 serialization (int32) | serialized MsgPack WAMP Msg 1 | ...
 
 With batched transport, even if only a single WAMP message is sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length 1.
 
@@ -338,11 +342,15 @@ Sending a batch of length 0 (no WAMP message) is illegal and a peer MUST fail th
 
 ![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
+
 ### Other Transports
 
 Besides the WebSocket transport, the following WAMP transports are under development:
 
  * HTTP 1.0/1.1 long-polling
+
+--- how does HTTP 1.0/1.1 work with the "bi-directional" requirement? ---
+--- http request for send, http request (long-polling) for server send---
 
 Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
 
@@ -368,10 +376,10 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
 
 **Polymorphism**
-For a given `MessageType` and number of message elements is uniquely defines the expected types. Hence there is no polymorphic messages in WAMP. This leads to message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+For a given `MessageType` and number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
 
 **Structure**
-The *application* payload (that is call arguments, call results, event payload etc) are always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) that application payloads. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* skip parsing altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
+The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
 
 
 ### Message Definitions
@@ -494,39 +502,39 @@ WAMP defines the following messages which are explained in detail in the followi
 
 ### Message Codes and Direction
 
-The following table lists the message type code for **all 24 messages defined in WAMP v2** and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role. 
+The following table lists the message type code for **all 24 messages defined in WAMP v2** and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
 
 
-| Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|------|----------------|-------------|----------|--------------|----------|----------|----------|
-|  1   | `HELLO`        | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
-|  2   | `WELCOME`      | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  3   | `CHALLENGE`    | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  4   | `AUTHENTICATE` | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
-|  5   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  6   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  7   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
-|      |                |             |          |              |          |          |          |
-| 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
-| 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
-| 33   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
-| 34   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
-| 35   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
-| 36   | `EVENT`        |             | Tx       | Rx           |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 48   | `CALL`         |             |          |              | Tx       | Rx       |          |
-| 49   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
-| 50   | `RESULT`       |             |          |              | Rx       | Tx       |          |
-|      |                |             |          |              |          |          |          |
-| 64   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
-| 65   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
-| 66   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
-| 67   | `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
-| 68   | `INVOCATION`   |             |          |              |          | Tx       | Rx       |
-| 69   | `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
-| 70   | `YIELD`        |             |          |              |          | Rx       | Tx       |
+| Code | Message        ||  Publisher  |  Broker  |  Subscriber  ||  Caller  |  Dealer  |  Callee  |
+|------|----------------||-------------|----------|--------------||----------|----------|----------|
+|  1   | `HELLO`        || Tx          | Rx       | Tx           || Tx       | Rx       | Tx       |
+|  2   | `WELCOME`      || Rx          | Tx       | Rx           || Rx       | Tx       | Rx       |
+|  3   | `CHALLENGE`    || Rx          | Tx       | Rx           || Rx       | Tx       | Rx       |
+|  4   | `AUTHENTICATE` || Tx          | Rx       | Tx           || Tx       | Rx       | Tx       |
+|  5   | `GOODBYE`      || Tx/Rx       | Tx/Rx    | Tx/Rx        || Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  6   | `HEARTBEAT`    || Tx/Rx       | Tx/Rx    | Tx/Rx        || Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  7   | `ERROR`        || Rx          | Tx       | Rx           || Rx       | Tx/Rx    | Tx/Rx    |
+|      |                ||             |          |              ||          |          |          |
+| 16   | `PUBLISH`      || Tx          | Rx       |              ||          |          |          |
+| 17   | `PUBLISHED`    || Rx          | Tx       |              ||          |          |          |
+|      |                ||             |          |              ||          |          |          |
+| 32   | `SUBSCRIBE`    ||             | Rx       | Tx           ||          |          |          |
+| 33   | `SUBSCRIBED`   ||             | Tx       | Rx           ||          |          |          |
+| 34   | `UNSUBSCRIBE`  ||             | Rx       | Tx           ||          |          |          |
+| 35   | `UNSUBSCRIBED` ||             | Tx       | Rx           ||          |          |          |
+| 36   | `EVENT`        ||             | Tx       | Rx           ||          |          |          |
+|      |                ||             |          |              ||          |          |          |
+| 48   | `CALL`         ||             |          |              || Tx       | Rx       |          |
+| 49   | `CANCEL`       ||             |          |              || Tx       | Rx       |          |
+| 50   | `RESULT`       ||             |          |              || Rx       | Tx       |          |
+|      |                ||             |          |              ||          |          |          |
+| 64   | `REGISTER`     ||             |          |              ||          | Rx       | Tx       |
+| 65   | `REGISTERED`   ||             |          |              ||          | Tx       | Rx       |
+| 66   | `UNREGISTER`   ||             |          |              ||          | Rx       | Tx       |
+| 67   | `UNREGISTERED` ||             |          |              ||          | Tx       | Rx       |
+| 68   | `INVOCATION`   ||             |          |              ||          | Tx       | Rx       |
+| 69   | `INTERRUPT`    ||             |          |              ||          | Tx       | Rx       |
+| 70   | `YIELD`        ||             |          |              ||          | Rx       | Tx       |
 
 
 
@@ -552,44 +560,90 @@ Session denied by peer:
 
 ![alt text](figure/hello_authenticated.png "WAMP Session denied")
 
-After the underlying transport has been opened, a WAMP session is established by the peers introduce themselves to each other by sending a `HELLO` message:
+--- description below is outdated, doesn't cover the realms, authentication etc. ---
 
-    [HELLO, Session|id, Details|dict]
+#### HELLO
 
- * `Session` MUST BE a randomly generated ID specific to the WAMP session for each direction. Each peer tells it connected peer the `Session` ID under which it is identified (for the lifetime of the WAMP session). 
+After the underlying transport has been opened, a establishment of a WAMP session is initiated by the the *Endpoint* sending a `HELLO` message to the *Router*
+
+    [HELLO, Realm|uri, Details|dict]
+
+
+ * `Realm` is a string identifying the WAMP routing and administrative domain for which the session is to be established.
  * `Details` is a dictionary that allows to provide additional opening information (see below).
 
-The `HELLO` message MUST be the very first message sent by each of the two peers after the transport has been established and a peer MUST wait for the `HELLO` message to be received from the other peer before performing anything else. It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the peer MUST fail the session if that happens.
-
-**Session ID**
-
-The `HELLO.Session` can (later) be used for:
-
- * specifying lists of excluded or eligible receivers when publishing events
- * in the context of performing authentication or authorization 
-
-*Example*
-
-    [1, 9129137332, {... see below ...}]
+The `HELLO` message MUST be the very first message sent after the transport has been established. It MUST be followed by a `WELCOME`, `CHALLENGE` or `GOODBYE` by the *Router*.
+It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Router* MUST fail the session if that happens.
 
 **Roles and Features**
 
-A WAMP peer MUST announce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+An *Endpoint* MUST annouce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
  * `publisher`
  * `subscriber`
- * `broker`
  * `caller`
  * `callee`
- * `dealer`
 
-A peer can support any combination of above roles but MUST support at least one role.
-
-Further *Publisher* and *Subscriber* peers can only talk to *Broker* peers, and *Caller* and *Callee* peers can only talk to *Dealer* peers.
-
-A *Publisher* peer cannot talk to another peer that only implements e.g. a *Callee* role.  
+An *Endpoint* can support any combination of above roles but MUST support at least one role.
 
 The `<role>|dict` is a dictionary describing features supported by the peer for that role.
+
+*Example: An *Endpoint* that implements the roles of Publisher and Subscriber, and only supports basic features.*
+
+   [1, 9129137332, {
+      "roles": {
+         "publisher": {},
+         "subscriber": {}
+      }
+   }]
+
+
+
+#### WELCOME
+
+A *Router* completes the establishment of a WAMP connection by sending a `WELCOME` message to the *Endpoint*.
+
+   [WELCOME, Session|id, Details|dict]
+
+ * `Session` MUST BE a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session. The `WELCOME.Session` can be used for specifying lists of excluded or eligible receivers when publishing events.
+ * `Details` is a dictionary that allows to provide additional information regarding the established session (see below). ---- add description of details ----
+
+A `WELCOME` message may be sent either in response to a `HELLO` message, if no authentication is required for the requested `Realm`, or in response to a successful `AUTHENTICATE`message.
+
+> Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. create the realm, or deny the establishment of the session.
+>
+
+**Roles and Features**
+
+A *Router* MUST annouce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+
+ * `broker`
+ * `dealer`
+
+A *Router* MUST support at least one role, and MAY support both roles.
+
+The `<role>|dict` is a dictionary describing features supported by the peer for that role.
+
+*Example: A *Router* implementing the role of Broker and supporting all advanced features.*
+
+   [1, 9129137332, {
+      "roles": {
+         "broker": {
+            "features": {
+               "subscriber_blackwhite_listing": true,
+               "publisher_exclusion":           true,
+               "publisher_identification":      true,
+               "publication_trustlevels":          true,
+               "pattern_based_subscription":       true,
+               "partitioned_pubsub":            true,
+               "subscriber_metaevents":         true,
+               "subscriber_list":               true,
+               "event_history":              true
+            }
+         }
+   }]
+
+*Feature Announcemenet and Advanced Features*
 
 The use of *feature announcement* in WAMP allows for
 
@@ -597,55 +651,7 @@ The use of *feature announcement* in WAMP allows for
  * graceful degration
 
 
-*Example: A peer that can act as Publisher and Subscriber, but only supports basic features.*
-
-	[1, 9129137332, {
-		"roles": {
-			"publisher": {},
-			"subscriber": {}
-		}
-	}]
-
-*Example: A peer that can act as a Broker and supports all advanced features.*
-
-	[1, 9129137332, {
-		"roles": {
-			"broker": {
-				"features": {
-					"subscriber_blackwhite_listing":	true,
-					"publisher_exclusion": 				true,
-					"publisher_identification": 		true,
-					"publication_trustlevels": 			true,
-					"pattern_based_subscription": 		true,
-					"partitioned_pubsub": 				true,
-					"subscriber_metaevents": 			true,
-					"subscriber_list": 					true,
-					"event_history": 					true
-				}
-			}
-	}]
-
-*Example: A peer that can act as a Dealer and supports all advanced features.*
-
-	[1, 9129137332, {
-		"roles": {
-			"dealer": {
-				"features": {
-					"callee_blackwhite_listing":		true,
-					"caller_exclusion": 				true,
-					"caller_identification": 			true,
-					"call_trustlevels": 				true,
-					"pattern_based_registration": 		true,
-					"partitioned_rpc": 					true,
-					"call_timeout": 					true,
-					"call_canceling": 					true,
-					"progressive_call_results": 		true
-				}
-			}
-	}]
-
-
-The complete list of *advanced features* currently defined per role is: 
+The complete list of *advanced features* currently defined per role is:
 
 | Feature                       |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |-------------------------------|-------------|----------|--------------|----------|----------|----------|
@@ -671,23 +677,55 @@ The complete list of *advanced features* currently defined per role is:
 | subscriber_list               |             | X        | X            |          |          |          |
 | event_history                 |             | X        | X            |          |          |          |
 
-
-**Network Agent**
+*Network Agent*
 
 When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
 
-Similar to what browsers do with the `User-Agent` HTTP header, the `HELLO` message MAY disclose the WAMP implementation in use to it's peer:
+Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
 
-    HELLO.Details.agent|string
+   HELLO.Details.agent|string
+
+   WELCOME.Details.agent|string
 
 *Example*
 
-    [1, 9129137332, {"agent": "AutobahnPython-0.7.0"}]
+   [1, 9129137332, {
+         "agent": "AutobahnPython-0.7.0",
+         "roles": {
+            "publisher": {}
+         }
+   }]
 
+#### CHALLENGE
+
+An authentication MAY be required for the establishment of a session. Such requirement may be based on the `Realm` the connection is requested for.
+
+To request authentication, the *Router* sends a `CHALLENGE` message to the *Endpoint*.
+
+    [CHALLENGE, Challenge|string, Extra|dict]
+
+* `Challenge` ---- ???? ----
+* `Extra` is a dictionary ---- ???? ----
+
+#### AUTHENTICATE
+
+In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION` message.
+
+    [AUTHENTICATE, Signature|string, Extra|dict]
+
+
+#### GOODBYE
+
+A *Router* denies the establishment of a WAMP session, or closes an existing WAMP session, by sending a 'GOODBYE' message.
+
+   [GOODBYE, Reason|uri, Details|dict]
+
+ * `Reason` MUST be an URI.
 
 ### Session Closing
 
-A WAMP session starts it's lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by sending the `GOODBYE` message
+A WAMP session starts its lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by sending the `GOODBYE` message
+--- needs to be udpated to include the HELLO/WELCOME + authentication flow ---
 
     [GOODBYE, Details|dict]
 
@@ -724,11 +762,11 @@ or
     [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
  * `HEARTBEAT.OutgoingSeq` MUST start with `1` and be incremented by `1` for each `HEARTBEAT` a peer sends.
- * `HEARTBEAT.IncomingSeq` MUST BE the sequence number from the last received heartbeat for which all previously received WAMP messages have been processed or `0` when no `HEARTBEAT` has still been received
+ * `HEARTBEAT.IncomingSeq` MUST BE the sequence number from the last received heartbeat for which all previously received WAMP messages have been processed or `0` when no `HEARTBEAT` has yet been received
  *  `HEARTBEAT.Discard` is an arbitrary string discarded by the peer.
 
-> The `HEARTBEAT.Discard` can be used to exhibit some traffic volume e.g. to keep mobile radio channels in a low-latency, high-power state. The string SHOULD be a random string (otherwise compressing transports might compress away the traffic volume).
-> 
+> The `HEARTBEAT.Discard` can be used to add some traffic volume to the HEARTBEAT message e.g. to keep mobile radio channels in a low-latency, high-power state. The string SHOULD be a random string (otherwise compressing transports might compress away the traffic volume).
+>
 
 *Example*
 
@@ -742,7 +780,7 @@ or
 
 	[3, 23, 5, "throw me away ... I am just noise"]
 
-Incoming heartbeats are not required to be answered by an outgoing heartbeat, but sending of hearbeats is under independent control with each peer.
+Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of hearbeats is under independent control with each peer.
 
 
 ## Publish & Subscribe
@@ -762,13 +800,16 @@ The message flow between *Subscribers* and a *Broker* for subscribing and unsubs
 
 ![alt text](figure/pubsub_subscribe1.png "PubSub: Subscribing and Unsubscribing")
 
-A client may subscribe to zero, one or more topics, and clients publish to topics without knowledge of subscribers.
+A *Subscriber* may subscribe to zero, one or more topics, and a *Publisher* publishes to topics without knowledge of subscribers.
 
-Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will be receiving asynchronous events published to the respective topic by *Publishers*.
+Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will receiving any future asynchronous events published to the respective topic by *Publishers*.
 
 A subscription lasts for the duration of a session, unless a *Subscriber* opts out from a previously established subscription via the `UNSUBSCRIBE` message.
 
-A *Subscriber* communicates it's interest in a topic to a *Broker* by sending a `SUBSCRIBE` message:
+
+#### SUBSCRIBE
+
+A *Subscriber* communicates its interest in a topic to a *Broker* by sending a `SUBSCRIBE` message:
 
     [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
@@ -782,7 +823,10 @@ where
 
 	[32, 713845233, {}, "com.myapp.mytopic1"]
 
-If the *Broker* is able to fulfil and allowing the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
+
+#### SUBSCRIBED
+
+If the *Broker* is able to fulfill and allow the subscription, it answers by sending a `SUBSCRIBED` message to the *Subscriber*
 
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
@@ -795,8 +839,10 @@ where
 
 	[33, 713845233, 5512315355]
 
-> Note. The `Subscription` ID chosen by the broker may be unique only for the `Topic` (and possibly other information from `Options`, such as the topic pattern matching method to be used). The ID might be the same for any *Subscriber* for the same `Topic`. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
-> 
+> Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the this `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
+>
+
+#### Subscription ERROR
 
 When the request for subscription cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Subscriber*
 
@@ -811,6 +857,9 @@ where
 
 	[4, 713845233, {}, "wamp.error.not_authorized"]
 
+
+#### UNSUBSCRIBE
+
 When a *Subscriber* is no longer interested in receiving events for a subscription it sends an `UNSUBSCRIBE` message
 
     [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
@@ -824,6 +873,8 @@ where
 
 	[34, 85346237, 5512315355]
 
+#### UNSUBSCRIBED
+
 Upon successful unsubscription, the *Broker* sends an `UNSUBSCRIBED` message to the *Subscriber*
 
     [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
@@ -836,7 +887,10 @@ where
 
 	[35, 85346237]
 
-When the request failed, the *Broker* sends an `ERROR`
+
+#### Unsubscribe ERROR
+
+When the request fails, the *Broker* sends an `ERROR`
 
     [ERROR, UNSUBSCRIBE.Request|id, Details|dict, Error|uri]
 
@@ -848,7 +902,7 @@ where
 *Example*
 
 	[4, 85346237, {}, "wamp.error.no_such_subscription"]
- 
+
 
 ### Publishing and Events
 
@@ -860,6 +914,8 @@ The message flow between *Publishers*, a *Broker* and *Subscribers* for publishi
  4. `ERROR`
 
 ![alt text](figure/pubsub_publish1.png "PubSub: Publishing and Receiving")
+
+#### PUBLISH
 
 When a *Publisher* wishes to publish an event to some topic, it sends a `PUBLISH` message to a *Broker*:
 
@@ -893,6 +949,9 @@ where
 
     [16, 239714735, {}, "com.myapp.mytopic1", [], {"color": "orange", "sizes": [23, 42, 7]}]
 
+
+#### PUBLISHED
+
 If the *Broker* is able to fulfill and allowing the publication, it answers by sending a `PUBLISHED` message to the *Publisher*:
 
     [PUBLISHED, PUBLISH.Request|id, Publication|id]
@@ -905,6 +964,8 @@ where
 *Example*
 
     [17, 239714735, 4429313566]
+
+#### Publish ERROR
 
 When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Publisher*
 
@@ -923,9 +984,11 @@ where
 
     [4, 239714735, {}, "wamp.error.invalid_topic"]
 
+#### EVENT
+
 When a publication is successful and a *Broker* dispatches the event, it will determine a list of actual receivers for the event based on subscribers for the topic published to and possibly other information in the event (such as exclude and eligible receivers).
 
-When a *Subscriber* was deemed to be an actual receiver, the *Broker* will send the *Subscriber* an `EVENT` message:
+When a *Subscriber* was is deemed to be an actual receiver, the *Broker* sends the *Subscriber* an `EVENT` message:
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
 
@@ -1033,7 +1096,7 @@ Support for this feature MUST be announced by *Publishers* (`role := "publisher"
 
 	HELLO.Details.roles.<role>.features.publisher_identification|bool := true
 
-A *Publisher* may request the disclosure of it's identity (it's WAMP session ID) to receivers of a published event by setting 
+A *Publisher* may request the disclosure of its identity (it's WAMP session ID) to receivers of a published event by setting
 
 	PUBLISH.Options.disclose_me|bool := true
 
@@ -1041,7 +1104,7 @@ A *Publisher* may request the disclosure of it's identity (it's WAMP session ID)
 
     [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1", ["Hello, world!"]]
 
-If above event would have been published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `EVENT.Details.publisher`:
+If above event were published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `EVENT.Details.publisher`:
 
 *Example*
 
@@ -1053,7 +1116,7 @@ Note that a *Broker* may deny a *Publisher's* request to disclose it's identity:
 
     [4, 239714735, {}, "wamp.error.disclose_me.not_allowed"]
 
-A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is setup to do so.
+A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is set up to do so.
 
 
 ### Publication Trust Levels
@@ -1147,7 +1210,7 @@ If a subscription was established with a pattern-based matching policy, a *Broke
 
 	EVENT.Details.topic|uri
 
-to the *Subscribers*. 
+to the *Subscribers*.
 
 
 ### Partitioned Subscriptions & Publications
@@ -1158,7 +1221,7 @@ Support for this feature MUST be announced by *Publishers* (`role := "publisher"
 
 Resource keys: `PUBLISH.Options.rkey|string` is a stable, technical **resource key**.
 
-> E.g. if your sensor as a unique serial identifier, you can use that.
+> E.g. if your sensor has a unique serial identifier, you can use that.
 
 
 *Example*
@@ -1168,7 +1231,7 @@ Resource keys: `PUBLISH.Options.rkey|string` is a stable, technical **resource k
 
 Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
 
-> E.g. if your backend process runs on a dedicated host, you can use it's hostname.
+> E.g. if your backend process runs on a dedicated host, you can use its hostname.
 
 
 *Example*
@@ -1294,7 +1357,7 @@ or by calling
 with `Arguments = [topic|uri, publication|id]`
 
  * `topic` is the topic to retrieve event history for
- * `publication` indicates the number of last N events to retrieve
+ * `publication` is the id of an event which marks the start of the events to retrieve from history
 
 
 *FIXME*
@@ -1629,7 +1692,7 @@ Support for this feature MUST be announced by *Callers* (`role := "caller"`), *C
 	HELLO.Details.roles.<role>.features.caller_identification|bool := true
 
 
-A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via 
+A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via
 
 	CALL.Options.disclose_me|bool := true
 
@@ -1747,7 +1810,7 @@ FIXME: The *Callee* can detect the invocation of that same call on multiple regi
 
 Since each *Callees* registrations "stands on it's own", there is no *set semantics* implied by pattern-based registrations. E.g. a *Callee* cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.
 
-If an endpoint was registered with a pattern-based matching policy, a *Dealer* MUST supply the original `CALL.Procedure` as provided by the *Caller* in `INVOCATION.Details.procedure` to the *Callee*. 
+If an endpoint was registered with a pattern-based matching policy, a *Dealer* MUST supply the original `CALL.Procedure` as provided by the *Caller* in `INVOCATION.Details.procedure` to the *Callee*.
 
 
 ### Partitioned Registrations & Calls
@@ -1814,7 +1877,7 @@ A *Callee* specifies a timeout by providing
 
 	CALL.Options.timeout|integer
 
-in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value. 
+in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value.
 
 The timeout option is a companion to, but slightly different from the `CANCEL` and `INTERRUPT` messages that allow a *Caller* and *Dealer* to **actively** cancel a call or invocation.
 
@@ -1993,7 +2056,7 @@ If a *Dealer* has not indicated support for progressive results or the *Dealer* 
 
 	wamp.error.unexpected_progress_in_yield
 
-If a *Caller* has not indicated support for progressive results and sends a `CALL` to the *Dealer* while setting `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call 
+If a *Caller* has not indicated support for progressive results and sends a `CALL` to the *Dealer* while setting `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call
 
 However, if a *Caller* has *not* indicated it's willingness to receive progressive results in a call, the *Dealer* MUST NOT send progressive `RESULTs`, and a *Callee* MUST NOT produce progressive `YIELDs`.
 
@@ -2114,7 +2177,7 @@ A peer that acts as a *Dealer* SHOULD announce support for the reflection API by
 	HELLO.Details.roles.dealer.reflection|bool := true
 
 > Since *Brokers* might provide (broker) procedures and *Dealers* might provide (dealer) topics, both SHOULD implement the complete API above (even if the peer only implements one of *Broker* or *Dealer* roles).
-> 
+>
 
 
 ## Authentication
@@ -2236,7 +2299,7 @@ for (var i = 0; i < data_in.length; ++i) {
 
 // base64 encode raw string, prepend with \0 and serialize to JSON
 var encoded = JSON.stringify("\0" + window.btoa(raw_out));
-console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw==" 
+console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="
 
 // unserialize from JSON
 var decoded = JSON.parse(encoded);
@@ -2265,5 +2328,5 @@ console.log(data_out);
 3. [The WebSocket Protocol](http://tools.ietf.org/html/rfc6455)
 4. [The application/json Media Type for JavaScript Object Notation (JSON)](http://tools.ietf.org/html/rfc4627)
 5. [MessagePack Format specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
-6. [Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web (1997)](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.23.3738) 
+6. [Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web (1997)](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.23.3738)
 7. [Web Caching with Consistent Hashing](http://www8.org/w8-papers/2a-webserver/caching/paper2.html)
