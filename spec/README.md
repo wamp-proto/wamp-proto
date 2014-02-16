@@ -403,6 +403,10 @@ WAMP defines the following messages which are explained in detail in the followi
 
     [AUTHENTICATE, Signature|string, Extra|dict]
 
+#### `ABORT`
+
+    [ABORT, Reason|uri, Details|dict]
+
 #### `GOODBYE`
 
     [GOODBYE, Reason|uri, Details|dict]
@@ -548,7 +552,7 @@ The message flow between *Endpoints* and *Routers* for establishing and tearing 
 2. `WELCOME`
 3. `CHALLENGE`
 4. `AUTHENTICATE`
-2. `GOODBYE`
+2. `ABORT`
 
 Successful session establishment:
 
@@ -560,14 +564,14 @@ Session denied by peer:
 
 ![alt text](figure/hello_authenticated.png "WAMP Session denied")
 
---- description below is outdated, doesn't cover the realms, authentication etc. ---
+A WAMP session starts its lifetime when the *Router* has sent a `WELCOME`message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `ABORT` message.
+
 
 #### HELLO
 
 After the underlying transport has been opened, a establishment of a WAMP session is initiated by the the *Endpoint* sending a `HELLO` message to the *Router*
 
     [HELLO, Realm|uri, Details|dict]
-
 
  * `Realm` is a string identifying the WAMP routing and administrative domain for which the session is to be established.
  * `Details` is a dictionary that allows to provide additional opening information (see below).
@@ -598,17 +602,16 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
    }]
 
 
-
 #### WELCOME
 
 A *Router* completes the establishment of a WAMP connection by sending a `WELCOME` message to the *Endpoint*.
 
    [WELCOME, Session|id, Details|dict]
 
- * `Session` MUST BE a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session. The `WELCOME.Session` can be used for specifying lists of excluded or eligible receivers when publishing events.
- * `Details` is a dictionary that allows to provide additional information regarding the established session (see below). ---- add description of details ----
+ * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session. The `WELCOME.Session` can be used for specifying lists of excluded or eligible receivers when publishing events (see below).
+ * `Details` is a dictionary that allows to provide additional information regarding the established session (see below).
 
-A `WELCOME` message may be sent either in response to a `HELLO` message, if no authentication is required for the requested `Realm`, or in response to a successful `AUTHENTICATE`message.
+A `WELCOME` message may be sent either directly in response to a `HELLO` message, if no authentication is required for the requested `Realm`, or in response to a successful `AUTHENTICATE`message.
 
 > Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. create the realm, or deny the establishment of the session.
 >
@@ -633,12 +636,12 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
                "subscriber_blackwhite_listing": true,
                "publisher_exclusion":           true,
                "publisher_identification":      true,
-               "publication_trustlevels":          true,
-               "pattern_based_subscription":       true,
+               "publication_trustlevels":       true,
+               "pattern_based_subscription":    true,
                "partitioned_pubsub":            true,
                "subscriber_metaevents":         true,
                "subscriber_list":               true,
-               "event_history":              true
+               "event_history":                 true
             }
          }
    }]
@@ -647,7 +650,7 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
 
 The use of *feature announcement* in WAMP allows for
 
- * only implement subsets of functionality
+ * only implementing subsets of functionality
  * graceful degration
 
 
@@ -714,39 +717,41 @@ In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION
     [AUTHENTICATE, Signature|string, Extra|dict]
 
 
-#### GOODBYE
+#### ABORT
 
-A *Router* denies the establishment of a WAMP session, or closes an existing WAMP session, by sending a 'GOODBYE' message.
+Both the *Router* and the *Endpoint* may abort the establishment of a WAMP session by sending an `ABORT` message.
 
-   [GOODBYE, Reason|uri, Details|dict]
+   [ABORT, Reason|uri, Details|dict]
 
  * `Reason` MUST be an URI.
-
-### Session Closing
-
-A WAMP session starts its lifetime when both peers have received `HELLO` from the other, and ends when the underlying transport closes or when the session is closed explicitly by sending the `GOODBYE` message
---- needs to be udpated to include the HELLO/WELCOME + authentication flow ---
-
-    [GOODBYE, Details|dict]
-
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
 
 *Example*
 
-	[2, {}]
+    [2, "wamp.error.nonexistent_realm", {"message": "The realm does not exist."}]
+---- ???? ----
 
-A peer MAY provide additional details of the reason of closing and a message (intended for logging or debugging purposes):
 
-    GOODBYE.Details.reason|uri
-    GOODBYE.Details.message|string
+### Session Closing
+
+A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Endpoint* and ends when the underlying transport closes or when the session is closed explicitly by a `GOODBYE` message sent by one peer and a `GOODBYE` message sent from the other peer in response.
+
+   [GOODBYE, Reason|uri, Details|dict]
+
+
+ * `Reason` MUST be an URI.
+ * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
 
 *Example*
 
-    [2, {"reason": "wamp.error.system_shutdown", "message": "The host is shutting down now."}]
+    [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
+    [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
+
+---- ???? peer echoes the message - maybe better a generic 'acknowledge goobye' ? ----
 
 *Example*
 
-    [2, {"reason": "wamp.error.protocol_violation", "message": "Invalid type for 'topic' in SUBSCRIBE."}]
+    [2, "wamp.error.protocol_violation", {"message": "Invalid type for 'topic' in SUBSCRIBE."}]
 
 
 ### Heartbeats
@@ -783,6 +788,8 @@ or
 Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of hearbeats is under independent control with each peer.
 
 
+
+
 ## Publish & Subscribe
 
 All of the following features for Publish & Subscribe are mandatory for WAMP implementations supporting the respective roles.
@@ -790,7 +797,7 @@ All of the following features for Publish & Subscribe are mandatory for WAMP imp
 
 ### Subscribing and Unsubscribing
 
-The message flow between *Subscribers* and a *Broker* for subscribing and unsubscribing involves the following messages:
+The message flow between *Enpoints* implementing the role of *Subscriber* and *Routers* implementing the role of *Broker* for subscribing and unsubscribing involves the following messages:
 
  1. `SUBSCRIBE`
  2. `SUBSCRIBED`
@@ -802,7 +809,7 @@ The message flow between *Subscribers* and a *Broker* for subscribing and unsubs
 
 A *Subscriber* may subscribe to zero, one or more topics, and a *Publisher* publishes to topics without knowledge of subscribers.
 
-Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will receiving any future asynchronous events published to the respective topic by *Publishers*.
+Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will receive any future asynchronous events published to the respective topic by *Publishers*.
 
 A subscription lasts for the duration of a session, unless a *Subscriber* opts out from a previously established subscription via the `UNSUBSCRIBE` message.
 
@@ -934,8 +941,8 @@ where
  * `Request` is a random, ephemeral ID chosen by the *Publisher* and used to correlate the *Broker's* response with the request.
  * `Options` is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.
  * `Topic` is the topic published to.
- * `Arguments` is an (optional) arbitrary application-level event payload, provided as positional arguments.
- * `ArgumentsKw` is an (optional) arbitrary application-level event payload, provided as keyword arguments.
+ * `Arguments` is list of application-level event payload elements. The list may be of zero length.
+ * `ArgumentsKw` is a dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
 
 *Example*
 
@@ -967,7 +974,7 @@ where
 
 #### Publish ERROR
 
-When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Publisher*
+When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back an `ERROR` message to the *Publisher*
 
     [ERROR, PUBLISH.Request|id, Details|dict, Error|uri]
 
@@ -986,21 +993,21 @@ where
 
 #### EVENT
 
-When a publication is successful and a *Broker* dispatches the event, it will determine a list of actual receivers for the event based on subscribers for the topic published to and possibly other information in the event (such as exclude and eligible receivers).
+When a publication is successful and a *Broker* dispatches the event, it determines a list of receivers for the event based on subscribers for the topic published to and, possibly, other information in the event (such as exclude and eligible receivers).
 
-When a *Subscriber* was is deemed to be an actual receiver, the *Broker* sends the *Subscriber* an `EVENT` message:
+When a *Subscriber* is deemed to be a receiver, the *Broker* sends the *Subscriber* an `EVENT` message:
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
 
 or
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-		PUBLISH.Arguments|any]
+		PUBLISH.Arguments|list]
 
 or
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-		PUBLISH.Arguments|any, PUBLISH.ArgumentKw|dict]
+		PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
 
 where
 
@@ -1040,12 +1047,12 @@ Support for this feature MUST be announced by *Publishers* (`role := "publisher"
 
 	HELLO.Details.roles.<role>.features.subscriber_blackwhite_listing|bool := true
 
-If the feature is supported, a *Publisher* may restrict the actual receivers of an event beyond those subscribed via
+If the feature is supported, a *Publisher* may restrict the actual receivers of an event from the group of subscribers through the use of
 
  * `PUBLISH.Options.exclude|list`
  * `PUBLISH.Options.eligible|list`
 
-`PUBLISH.Options.exclude` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Subscribers* that won't receive a published event, even though they might be subscribed. In other words, `PUBLISH.Options.exclude` is a blacklist of (potential) *Subscribers*.
+`PUBLISH.Options.exclude` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Subscribers* that won't receive a published event, even though they may be subscribed. In other words, `PUBLISH.Options.exclude` is a blacklist of (potential) *Subscribers*.
 
 `PUBLISH.Options.eligible` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Subscribers* that are allowed to receive a published event. In other words, `PUBLISH.Options.eligible` is a whitelist of (potential) *Subscribers*.
 
@@ -1081,13 +1088,13 @@ By default, a *Publisher* of an event will **not** itself receive an event publi
 
 	PUBLISH.Options.exclude_me|bool
 
-When publishing with `PUBLISH.Options.exclude_me := false`, the *Publisher* of the event will receive that very event also - if it is subscribed to the `Topic` published to.
+When publishing with `PUBLISH.Options.exclude_me := false`, the *Publisher* of the event will receive that event, if it is subscribed to the `Topic` published to.
 
 *Example*
 
     [16, 239714735, {"exclude_me": false}, "com.myapp.mytopic1", ["Hello, world!"]]
 
-In this example, the *Publisher* will receive the published event also, if it is subscribed to `com.myapp.mytopic1`.
+In this example, the *Publisher* will receive the published event, if it is subscribed to `com.myapp.mytopic1`.
 
 
 ### Publisher Identification
@@ -1096,7 +1103,7 @@ Support for this feature MUST be announced by *Publishers* (`role := "publisher"
 
 	HELLO.Details.roles.<role>.features.publisher_identification|bool := true
 
-A *Publisher* may request the disclosure of its identity (it's WAMP session ID) to receivers of a published event by setting
+A *Publisher* may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting
 
 	PUBLISH.Options.disclose_me|bool := true
 
@@ -1104,13 +1111,13 @@ A *Publisher* may request the disclosure of its identity (it's WAMP session ID) 
 
     [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1", ["Hello, world!"]]
 
-If above event were published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `EVENT.Details.publisher`:
+If above event is published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `EVENT.Details.publisher`:
 
 *Example*
 
 	[36, 5512315355, 4429313566, {"publisher": 3335656}, ["Hello, world!"]]
 
-Note that a *Broker* may deny a *Publisher's* request to disclose it's identity:
+Note that a *Broker* may deny a *Publisher's* request to disclose its identity:
 
 *Example*
 
@@ -1146,9 +1153,9 @@ Support for this feature MUST be announced by *Subscribers* (`role := "subscribe
 
 	HELLO.Details.roles.<role>.features.pattern_based_subscription|bool := true
 
-By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) matches *exactly* the topic subscribed to (`SUBSCRIBE.Topic`).
+By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) *exactly* matches the topic subscribed to (`SUBSCRIBE.Topic`).
 
-A *Subscriber* might want to subscribe to topics based on a *pattern*. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the *Subscriber* does not know in advance.
+A *Subscriber* might want to subscribe to topics based on a *pattern*. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the *Subscriber* is not aware of at the time of subscription, or which do not yet exist at this time.
 
 If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, this matching can happen by
 
@@ -1156,6 +1163,8 @@ If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, th
  * wildcard-matching policy
 
 *Brokers* and *Subscribers* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
+
+#### Prefix Matching
 
 A *Subscriber* requests **prefix-matching policy** with a subscription request by setting
 
@@ -1165,9 +1174,9 @@ A *Subscriber* requests **prefix-matching policy** with a subscription request b
 
 	[32, 912873614, {"match": "prefix"}, "com.myapp.topic.emergency"]
 
-When a **prefix-matching policy** is in place, any event with a topic that has `SUBSCRIBE.Topic` as a *prefix* will match the subscription, and potentially delivered to *Subscribers* on the subscription.
+When a **prefix-matching policy** is in place, any event with a topic that has `SUBSCRIBE.Topic` as a *prefix* will match the subscription, and potentially be delivered to *Subscribers* on the subscription.
 
-In above example, events with `PUBLISH.Topic` e.g.
+In the above example, events with `PUBLISH.Topic`
 
  * `com.myapp.topic.emergency.11`
  * `com.myapp.topic.emergency-low`
@@ -1177,6 +1186,8 @@ In above example, events with `PUBLISH.Topic` e.g.
 will all apply for dispatching. An event with `PUBLISH.Topic` e.g. `com.myapp.topic.emerge` will not apply.
 
 The *Broker* will apply the prefix-matching based on the UTF-8 encoded byte string for the `PUBLISH.Topic` and the `SUBSCRIBE.Topic`.
+
+#### Wildcard Matching
 
 A *Subscriber* requests **wildcard-matching policy** with a subscription request by setting
 
@@ -1188,13 +1199,13 @@ Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 	[32, 912873614, {"match": "wildcard"}, "com.myapp..userevent"]
 
-In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with `PUBLISH.Topic` e.g.
+In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with `PUBLISH.Topic`
 
  * `com.myapp.foo.userevent`
  * `com.myapp.bar.userevent`
  * `com.myapp.a12.userevent`
 
-will all apply for dispatching. Events with `PUBLISH.Topic` e.g.
+will all apply for dispatching. Events with `PUBLISH.Topic`
 
  * `com.myapp.foo.userevent.bar`
  * `com.myapp.foo.user`
@@ -1202,15 +1213,21 @@ will all apply for dispatching. Events with `PUBLISH.Topic` e.g.
 
 will not apply for dispatching.
 
+#### General
+
 When a single event matches more than one of a *Subscriber's* subscriptions, the event will be delivered for each subscription. The *Subscriber* can detect the delivery of that same event on multiple subscriptions via `EVENT.PUBLISHED.Publication`, which will be identical.
 
-Since each *Subscriber's* subscription "stands on it's own", there is no *set semantics* implied by pattern-based subscriptions. E.g. a *Subscriber* cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.
+Since each *Subscriber's* subscription "stands on its own", there is no *set semantics* implied by pattern-based subscriptions. E.g. a *Subscriber* cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.
 
 If a subscription was established with a pattern-based matching policy, a *Broker* MUST supply the original `PUBLISH.Topic` as provided by the *Publisher* in
 
 	EVENT.Details.topic|uri
 
 to the *Subscribers*.
+
+*Example*
+
+   [36, 5512315355, 4429313566, {"topic": "com.myapp.topic.emergency.category.severe" }, ["Hello, world!"]]
 
 
 ### Partitioned Subscriptions & Publications
@@ -1292,7 +1309,7 @@ Support for this feature MUST be announced by *Subscribers* (`role := "subscribe
 
 	HELLO.Details.roles.<role>.features.subscriber_list|bool := true
 
-A *Broker* that implements *subscriber list* must (also) announce role `HELLO.roles.callee` and provide the following (builtin) procedures.
+A *Broker* that implements *subscriber list* must (also) announce role `HELLO.roles.callee` and provide the following (built in) procedures.
 
 A *Caller* (that is also a *Subscriber*) can request the current list of subscribers for a subscription (it is subscribed to) by calling the *Broker* procedure
 
@@ -1316,6 +1333,10 @@ A call to `wamp.broker.subscriber.list` may fail with
  1. What if we have multiple *Brokers* (a cluster)? The call would need to be forwarded.
  2. Should we allow "paging" (`offset|integer` and `limit|integer` arguments)?
  3. Should we allow *Subscribers* to list subscribers for subscription it is not itself subscribed to? How would the *Callee* know the subscription ID it wants to look up without subscribing?
+ 4. Why retrieve the list for a subscription ID, when the interest may lie in how many subscribers there are to a topic, e.g. if a publisher wants to judge its current reach?
+ 5. The *Router* needs to implement a *Dealer* role as well in order to be able to route the RPC, since calls can only be addressed to *Dealers*.
+ 6. We should probably then also have a *Callee* as a separate peer. Otherwise we break the rule that peers can implement Broker/Dealer OR Caller/Callee/Subscriber/Publisher roles.
+ 7. If we have the separate *Callee*, then how does this get the list? One way would be using subscription meta-events.
 
 
 ### Event History
@@ -1363,8 +1384,11 @@ with `Arguments = [topic|uri, publication|id]`
 *FIXME*
 
  1. Should we use `topic|uri` or `subscription|id` in `Arguments`?
+      - Since we need to be able to get history for pattern-based subscriptions as well, a subscription|id makes more sense: create pattern-based subscription, then get the event history for this.
+      - The only restriction then is that we may not get event history without a current subscription covering the events. This is a minor inconvenience at worst.
  2. Can `wamp.topic.history.after` be implemented (efficiently) at all?
  3. How does that interact with pattern-based subscriptions?
+ 4. The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.
 
 
 ## Remote Procedure Calls
@@ -1384,6 +1408,8 @@ The message flow between *Callees* and a *Dealer* for registering and unregister
 
 ![alt text](figure/rpc_register1.png "RPC: Registering and Unregistering")
 
+#### REGISTER
+
 A *Callee* announces the availability of an endpoint implementing a procedure with a *Dealer* by sending a `REGISTER` message:
 
     [REGISTER, Request|id, Options|dict, Procedure|uri]
@@ -1398,6 +1424,8 @@ where
 
 	[64, 25349185, {}, "com.myapp.myprocedure1"]
 
+#### REGISTERED
+
 If the *Dealer* is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
 
 	[REGISTERED, REGISTER.Request|id, Registration|id]
@@ -1411,7 +1439,9 @@ where
 
 	[65, 25349185, 2103333224]
 
-When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* send back a `ERROR` message to the *Callee*:
+#### Register ERROR
+
+When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
 
     [ERROR, REGISTER.Request|id, Details|dict, Error|uri]
 
@@ -1421,6 +1451,8 @@ When the request for registration cannot be fullfilled by the *Dealer*, the *Dea
 *Example*
 
 	[4, 25349185, {}, "wamp.error.procedure_already_exists"]
+
+#### UNREGISTER
 
 When a *Callee* is no longer willing to provide an implementation of the registered procedure, it sends an `UNREGISTER` message to the *Dealer*:
 
@@ -1435,7 +1467,9 @@ where
 
 	[66, 788923562, 2103333224]
 
-Upon successful unregistration, the *Dealer* send an `UNREGISTERED` message to the *Callee*:
+#### UNREGISTERED
+
+Upon successful unregistration, the *Dealer* sends an `UNREGISTERED` message to the *Callee*:
 
     [UNREGISTERED, UNREGISTER.Request|id]
 
@@ -1447,7 +1481,9 @@ where
 
 	[67, 788923562]
 
-When the unregistration request failed, the *Dealer* send an `ERROR` message:
+#### Unregister ERROR
+
+When the unregistration request fails, the *Dealer* sends an `ERROR` message:
 
     [ERROR, UNREGISTER.Request|id, Details|dict, Error|uri]
 
@@ -1475,6 +1511,8 @@ The message flow between *Callers*, a *Dealer* and *Callees* for calling procedu
 
 The execution of remote procedure calls is asynchronous, and there may be more than one call outstanding. A call is called outstanding (from the point of view of the *Caller*), when a (final) result or error has not yet been received by the *Caller*.
 
+### CALL
+
 When a *Callee* wishes to call a remote procedure, it sends a `CALL` message to a *Dealer*:
 
     [CALL, Request|id, Options|dict, Procedure|uri]
@@ -1491,7 +1529,7 @@ where
 
  * `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
  * `Options` is a dictionary that allows to provide additional call request details in an extensible way. This is described further below.
- * `Procedure` the URI of the procedure to be called.
+ * `Procedure` is the URI of the procedure to be called.
  * `Arguments` is a list of positional call arguments (each of arbitrary type). The list may be of zero length.
  * `ArgumentsKw` is a dictionary of keyword call arguments (each of arbitrary type). The dictionary may be empty.
 
@@ -1509,9 +1547,11 @@ where
 
 *Example*
 
-	[48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"forname": "John", "surname": "Doe"}]
+	[48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"firstname": "John", "surname": "Doe"}]
 
-If the *Dealer* is able to fullfill (mediate) and allowing the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
+#### INVOCATION
+
+If the *Dealer* is able to fullfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
 
@@ -1535,6 +1575,8 @@ where
 
 	[68, 6131533, 9823526, {}, ["Hello, world!"]]
 
+#### YIELD
+
 If the *Callee* is able to successfully process and finish the execution of the call, it answers by sending a `YIELD` message to the *Dealer*:
 
     [YIELD, INVOCATION.Request|id, Options|dict]
@@ -1550,8 +1592,11 @@ or
 where
 
  * `INVOCATION.Request` is the ID from the original invocation request.
+ * `Options`is a dictionary that allows to provide additional options.
  * `Arguments` is a list of positional result elements (each of arbitrary type). The list may be of zero length.
  * `ArgumentsKw` is a dictionary of keyword result elements (each of arbitrary type). The dictionary may be empty.
+
+#### RESULT
 
 The *Dealer* will then send a `RESULT` message to the original *Caller*:
 
@@ -1568,8 +1613,12 @@ or
 where
 
  * `CALL.Request` is the ID from the original call request.
+ * `Details` is a dictionary of additional details. --- EXAMPLES ???? ----
  * `YIELD.Arguments` is the original list of positional result elements as returned by the *Callee*.
  * `YIELD.ArgumentsKw` is the original dictionary of keyword result elements as returned by the *Callee*.
+
+#### Invocation ERROR
+
 
 If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `ERROR` message to the *Dealer*:
 
@@ -1586,8 +1635,13 @@ or
 where
 
  * `INVOCATION.Request` is the ID from the original call request.
+ * `Details` is a dictionary containing detailed information about the error. ---- EXAMPLES ----
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
  * `Exception` is an arbitrary application-defined error payload (possible empty, that is `null`).
+
+--- EXAMPLES missing ----
+
+#### Call ERROR
 
 The *Dealer* will then send a `ERROR` message to the original *Caller*:
 
@@ -1604,8 +1658,12 @@ or
 where
 
  * `CALL.Request` is the ID from the original call request.
- * `INVOCATION_ERROR.Error` is the original error URI as returned by the *Callee* to the *Dealer*.
- * `INVOCATION_ERROR.Exception` is the original error payload as returned by the *Callee* to the *Dealer*.
+ * `Details` is a dictionary with additional error details. ---- EXAMPLES ???? ----
+ * `Error` is an URI identifying the type of error as returned by the *Callee* to the *Dealer*.
+ * `Arguments` is a list containing the original error payload list as returned by the *Callee* to the *Dealer*.
+ * `ArgumentsKw` is a dictionary containing the original error payload dictionary as returned by the *Callee* to the *Dealer*
+
+---- Examples missing ----
 
 If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
 
@@ -1639,7 +1697,7 @@ A *Caller* may restrict the endpoints that will handle a call beyond those regis
  * `CALL.Options.exclude|list`
  * `CALL.Options.eligible|list`
 
-`CALL.Options.exclude` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Callees* that won't be forwarded a call, even though they might be registered. In other words, `CALL.Options.exclude` is a blacklist of (potential) *Callees*.
+`CALL.Options.exclude` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Callees* that a call won't be forwarded to, even though they might be registered. In other words, `CALL.Options.exclude` is a blacklist of (potential) *Callees*.
 
 `CALL.Options.eligible` is a list of WAMP session IDs (`integer`s) providing an explicit list of (potential) *Callees* that are (potentially) forwarded the call issued. In other words, `CALL.Options.eligible` is a whitelist of (potential) *Callees*.
 
@@ -1692,7 +1750,7 @@ Support for this feature MUST be announced by *Callers* (`role := "caller"`), *C
 	HELLO.Details.roles.<role>.features.caller_identification|bool := true
 
 
-A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID) to endpoints of a routed call via
+A *Caller* MAY **request** the disclosure of its identity (its WAMP session ID) to endpoints of a routed call via
 
 	CALL.Options.disclose_me|bool := true
 
@@ -1700,7 +1758,7 @@ A *Caller* MAY **request** the disclosure of it's identity (it's WAMP session ID
 
 	[48, 7814135, {"disclose_me": true}, "com.myapp.echo", ["Hello, world!"]]
 
-If above call would have been issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* would send an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
+If above call is issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* sends an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
 
 *Example*
 
@@ -1708,7 +1766,7 @@ If above call would have been issued by a *Caller* with WAMP session ID `3335656
 
 Note that a *Dealer* MAY disclose the identity of a *Caller* even without the *Caller* having explicitly requested to do so when the *Dealer* configuration (for the called procedure) is setup to do so.
 
-A *Dealer* MAY deny a *Caller's* request to disclose it's identity:
+A *Dealer* MAY deny a *Caller's* request to disclose its identity:
 
 *Example*
 
@@ -1744,7 +1802,7 @@ Support for this feature MUST be announced by *Callees* (`role := "callee"`) and
 	HELLO.Details.roles.<role>.features.pattern_based_registration|bool := true
 
 
-By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) matches *exactly* the endpoint registered (`REGISTER.Procedure`).
+By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) *exactly* matches the endpoint registered (`REGISTER.Procedure`).
 
 A *Callee* might want to register procedures based on a *pattern*. This can be useful to reduce the number of individual registrations to be set up.
 
@@ -1755,6 +1813,8 @@ If the *Dealer* and the *Callee* support **pattern-based registrations**, this m
 
 *Dealers* and *Callees* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
 
+#### Prefix Matching
+
 A *Callee* requests **prefix-matching policy** with a registration request by setting
 
 	REGISTER.Options.match|string := "prefix"
@@ -1763,16 +1823,16 @@ A *Callee* requests **prefix-matching policy** with a registration request by se
 
 	[64, 612352435, {"match": "prefix"}, "com.myapp.myobject1"]
 
-When a **prefix-matching policy** is in place, any call with a procedure that has `REGISTER.Procedure` as a *prefix* will match the registration, and potentially be routed to *Callees* on taht registration.
+When a **prefix-matching policy** is in place, any call with a procedure that has `REGISTER.Procedure` as a *prefix* will match the registration, and potentially be routed to *Callees* on that registration.
 
-In above example, calls with `CALL.Procedure` e.g.
+In above example, the following calls with `CALL.Procedure`
 
  * `com.myapp.myobject1.myprocedure1`
  * `com.myapp.myobject1-mysubobject1`
  * `com.myapp.myobject1.mysubobject1.myprocedure1`
  * `com.myapp.myobject1`
 
-will all apply for call routing. A call with `CALL.Procedure` e.g.
+will all apply for call routing. A call with one of the following `CALL.Procedure`
 
  * `com.myapp.myobject2`
  * `com.myapp.myobject`
@@ -1780,6 +1840,8 @@ will all apply for call routing. A call with `CALL.Procedure` e.g.
 will not apply.
 
 The *Dealer* will apply the prefix-matching based on the UTF-8 encoded byte string for the `CALL.Procedure` and the `REGISTER.Procedure`.
+
+#### Wildcard Matching
 
 A *Callee* requests **wildcard-matching policy** with a registration request by setting
 
@@ -1791,7 +1853,7 @@ Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 	[64, 612352435, {"match": "wildcard"}, "com.myapp..myprocedure1"]
 
-In above registration request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, calls with `CALL.Procedure` e.g.
+In the above registration request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, calls with `CALL.Procedure` e.g.
 
  * `com.myapp.myobject1.myprocedure1`
  * `com.myapp.myobject2.myprocedure1`
@@ -1806,6 +1868,7 @@ will not apply for call routing.
 
 When a single call matches more than one of a *Callees* registrations, the call MAY be routed for invocation on multiple registrations, depending on call settings.
 
+--------------
 FIXME: The *Callee* can detect the invocation of that same call on multiple registrations via `INVOCATION.CALL.Request`, which will be identical.
 
 Since each *Callees* registrations "stands on it's own", there is no *set semantics* implied by pattern-based registrations. E.g. a *Callee* cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.
@@ -2211,9 +2274,11 @@ This transport-level authentication information may be forward to the WAMP level
 
 ### WAMP Challenge-Response Authentication
 
+---- now integrated into WAMP session establishment ? ----
+
 WAMP Challenge Response (WAMP-CRA) is a WAMP level authentication procedure implemented on top of standard, predefined WAMP RPC procedures.
 
-A peer may authenticate to it's other peer via calling the following procedures
+A peer may authenticate to its other peer via calling the following procedures
 
 	wamp.cra.request
 	wamp.cra.authenticate
