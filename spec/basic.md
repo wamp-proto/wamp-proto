@@ -1,15 +1,16 @@
-# The Web Application Messaging Protocol
+# The Web Application Messaging Protocol - Introdcution and Basic Features
 
 This document specifies version 2 of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
 Document Revision: **draft-1**, 2014/01/20
 
-This is the first part of the WAMP specificiation. It introduces the concepts and terminology, and describes basic features and aspects of the protocol and its usage.
+This is the first part of this document. It introduces the concepts and terminology, and describes the MANDATORY basic features and aspects of the protocol and its usage.
 
-The information in this part is sufficient for basic implementations covering a large number of use cases.
+The information in this part is sufficient for full basic implementations covering a large number of use cases.
 
-For a description of advanced features and usage, see the second part of the WAMP specification.
+This part is considered stable. Two implementations for all features described herein exist (AutobahnPython & AutobahnJS). Minor corrections and changes may, however, still occur.
 
+For a description of OTPIONAL advanced features and usage, see the second part of this document.
 
 **Contents**
 
@@ -26,7 +27,7 @@ For a description of advanced features and usage, see the second part of the WAM
 4. [Transports](#transports)
     * [WebSocket Transport](#websocket-transport)
     * [Other Transports](#other-transports)
-5. [Messages](#messages)
+5. [Mandatory Messages](#mandatory-messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
 6. [Session Management](#session-management)
@@ -41,11 +42,7 @@ For a description of advanced features and usage, see the second part of the WAM
 9. [Ordering Guarantees](#ordering-guarantees)
     * [Publish & Subscribe Ordering](#publish--subscribe-ordering)
     * [Remote Procedure Call Ordering](#remote-procedure-call-ordering)
-10. [Authentication](#authentication)
-    * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
-    * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
-    * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
-11. [Appendix](#appendix)
+10. [Appendix](#appendix)
     * [Byte Array Conversion](#byte-array-conversion)
     * [References](#references)
 
@@ -57,9 +54,8 @@ WAMP ("The Web Application Messaging Protocol") is an open application communica
  * Publish & Subscribe
  * Remote Procedure Calls
 
-WAMP can run over different *transports*,
-??? which specifically - give me the full list ???
--- For [WebSocket](http://tools.ietf.org/html/rfc6455), WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
+WAMP can run over different *transports*.
+For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 WAMP also supports different *serializations*, including JSON and MsgPack.
 
 ### Terms
@@ -75,29 +71,33 @@ WAMP also supports different *serializations*, including JSON and MsgPack.
 
 ### Peers and Roles
 
-A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions. A WAMP peer can have one *or more* of the following roles.
+A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions.
+
+A WAMP session connects an *Endpoint* and a *Router*
+
+A WAMP peer can have one *or more* roles.
 
 **Remote Procedure Call Roles**
 
 The Remote Procedure Call messaging pattern involves peers of three roles:
 
-1. *Callee*
-2. *Caller*
-3. *Dealer*
+1. *Callee* (Endpoint)
+2. *Caller* (Endpoint)
+3. *Dealer* (Router)
 
 where
 
  * *Callees* register procedures they provide with *Dealers*.
  * *Callers* initiate procedure calls first to *Dealers*.
- * *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called.
+ * *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
 
 **Publish & Subscribe Roles**
 
 The Publish & Subscribe messaging pattern involves peers of three roles:
 
-1. *Subscriber*
-2. *Publisher*
-3. *Broker*
+1. *Subscriber* (Endpoint)
+2. *Publisher* (Endpoint)
+3. *Broker* (Router)
 
 where
 
@@ -111,11 +111,13 @@ In WAMP, *Dealers* are responsible for call routing, decoupling *Callers* from *
 
 **Peers with multiple Roles**
 
-Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*. And a *Dealer* might also act as a *Callee*. With the latter, a peer might "route" an incoming call directly to an implementing endpoint within the same program (and hence no actual messaging over a transport is happening).
+Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*.
+
+While a *Router* may only act as a *Broker* and a *Dealer*, the system process the *Router* runs in may additionally implement an *Endpoint* with e.g. a *Callee* role. Here the *Router* may establish a connection with the *Endpoint* via WAMP direct calls and callbacks, so that no message serialization is necessary.
 
 **Symmetry**
 
-It's important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishes a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
+It is important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishes a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
 
 
 ### Application Code
@@ -132,7 +134,7 @@ WAMP is designed for application code to run inside peers of the roles:
 > However, a *program* that implements the *Dealer* role might at the same time implement a built-in *Callee*. It is the *Dealer* and *Broker* that SHOULD be generic, not the program.
 >
 
-The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application. *Brokers* and *Dealers* however might differ in these features:
+The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application. Specific *Broker* and *Dealer* implementations however might differ regarding these features:
 
 * clustering
 * high-availability and scale-out
@@ -166,9 +168,9 @@ These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MU
 
 *Examples*
 
-	com.myapp.mytopic1
-	com.myapp.myprocedure1
-	com.myapp.myerror1
+   com.myapp.mytopic1
+   com.myapp.myprocedure1
+   com.myapp.myerror1
 
 The URIs are understood to form a single, global, hierarchical namespace for WAMP.
 
@@ -189,7 +191,10 @@ URI components SHOULD match the regular expression `[a-z][a-z0-9_]*` (that is st
 
 Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
 
---- need an example here ---
+*Examples*
+
+   wamp.error.not_authorized
+   wamp.metatopic.subscriber.add
 
 ### IDs
 
@@ -233,39 +238,7 @@ Other bindings for *serialization* may be defined in future WAMP versions.
 
 With JSON serialization, each WAMP message is serialized according to the JSON specification as described in [RFC4627](http://www.ietf.org/rfc/rfc4627.txt).
 
-Further, binary data follows a convention for conversion to JSON strings.
-
-A **byte array** is converted to a **JSON string** as follows:
-
-1. convert the byte array to a Base64 encoded (host language) string
-2. prepend the string with a `\0` character
-3. serialize the string to a JSON string
-
-*Example*
-
-Consider the byte array (hex representation):
-
-	10e3ff9053075c526f5fc06d4fe37cdb
-
-This will get converted to Base64
-
-	EOP/kFMHXFJvX8BtT+N82w==
-
-prepended with `\0`
-
-	\x00EOP/kFMHXFJvX8BtT+N82w==
-
-and serialized to a JSON string
-
-	"\\u0000EOP/kFMHXFJvX8BtT+N82w=="
-
-A **JSON string** is deserialized to either a **string** or a **byte array** using the following procedure:
-
-1. Unserialize a JSON string to a host language (Unicode) string
-2. If the string starts with a `\0` character, interpret the rest (after the first character) as Base64 and decode to a byte array
-3. Otherwise, return the Unicode string
-
-The appendix contains complete code examples in Python and JavaScript for conversion between byte arrays and JSON strings.
+Further, binary data follows a convention for conversion to JSON strings. For details, see the Appendix.
 
 ### MsgPack
 
@@ -288,41 +261,11 @@ WAMP assumes a *transport* with the following characteristics:
 
 The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
 
+As a default, each WAMP message is transmitted as a separate WebSocket message.
+
+(For details on unbatched and batched modes, see part two of this spec.)
+
 ![alt text](figure/sessions4.png "Transport and Session Lifetime")
-
-#### Unbatched Transport
-
-With WebSocket in **unbatched mode**, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
-
-The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between peers using the WebSocket subprotocol negotiation mechanism.
-
-WAMPv2 uses the following WebSocket subprotocol identifiers for unbatched modes:
-
- * `wamp.2.json`
- * `wamp.2.msgpack`
-
-With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
-
-With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
-
-#### Batched Transport
-
-WAMPv2 allows to batch one or more WAMP messages into a single WebSocket message if one of the following subprotocols have been negotiated:
-
- * `wamp.2.json.batched`
- * `wamp.2.msgpack.batched`
-
-Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ([record separator](http://en.wikipedia.org/wiki/Record_separator#Field_separators)) byte `0x1e` to *each* serialized messages, and packing a sequence of such serialized messages into a single WebSocket message:
-
-	serialized JSON WAMP Msg 1 | 0x1e | serialized JSON WAMP Msg 2 | 0x1e | ...
-
-Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
-
-	Length of Msg 1 serialization (int32) | serialized MsgPack WAMP Msg 1 | ...
-
-With batched transport, even if only a single WAMP message is sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length 1.
-
-Sending a batch of length 0 (no WAMP message) is illegal and a peer MUST fail the transport upon receiving such a transport message.
 
 ![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
@@ -333,14 +276,12 @@ Besides the WebSocket transport, the following WAMP transports are under develop
 
  * HTTP 1.0/1.1 long-polling
 
---- how does HTTP 1.0/1.1 work with the "bi-directional" requirement? ---
---- http request for send, http request (long-polling) for server send---
+Here, the bi-directionality requirement for the transport is implemented by using long-polling for the server-side sending of messages.
 
 Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
 
 
-
-## Messages
+## Mandatory Messages
 
 All WAMP messages are of the same structure, a `list` with a first element `MessageType` followed by one or more message type specific elements:
 
@@ -365,11 +306,20 @@ For a given `MessageType` and number of message elements the expected types are 
 **Structure**
 The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
 
+*Examples* ----
+
+Subscription
+
+   [32, 713845233, {}, "com.myapp.mytopic1"]
+
 
 ### Message Definitions
 
-WAMP defines the following messages which are explained in detail in the following sections.
+WAMP defines the following MANDATORY messages which are explained in detail in the following sections.
 
+The messages for establishing a WAMP session are mandatory for all peers, i.e. an *Endpoint* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`,ABORT` and `GOODBYE
+
+All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Endpoint* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR`.
 
 #### `HELLO`
 
@@ -379,14 +329,6 @@ WAMP defines the following messages which are explained in detail in the followi
 
     [WELCOME, Session|id, Details|dict]
 
-#### `CHALLENGE`
-
-    [CHALLENGE, Challenge|string, Extra|dict]
-
-#### `AUTHENTICATE`
-
-    [AUTHENTICATE, Signature|string, Extra|dict]
-
 #### `ABORT`
 
     [ABORT, Reason|uri, Details|dict]
@@ -394,11 +336,6 @@ WAMP defines the following messages which are explained in detail in the followi
 #### `GOODBYE`
 
     [GOODBYE, Reason|uri, Details|dict]
-
-#### `HEARTBEAT`
-
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
 #### `ERROR`
 
@@ -437,7 +374,7 @@ WAMP defines the following messages which are explained in detail in the followi
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list,
-		PUBLISH.ArgumentsKw|dict]
+      PUBLISH.ArgumentsKw|dict]
 
 #### `CALL`
 
@@ -457,7 +394,7 @@ WAMP defines the following messages which are explained in detail in the followi
 
 #### `REGISTERED`
 
-	[REGISTERED, REGISTER.Request|id, Registration|id]
+   [REGISTERED, REGISTER.Request|id, Registration|id]
 
 #### `UNREGISTER`
 
@@ -475,22 +412,19 @@ WAMP defines the following messages which are explained in detail in the followi
 
 #### `YIELD`
 
-	[YIELD, INVOCATION.Request|id, Options|dict]
+   [YIELD, INVOCATION.Request|id, Options|dict]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
 
-#### `CANCEL`
-
-    [CANCEL, CALL.Request|id, Options|dict]
-
-#### `INTERRUPT`
-
-    [INTERRUPT, INVOCATION.Request|id, Options|dict]
 
 
 ### Message Codes and Direction
 
-The following table lists the message type code for **all 24 messages defined in WAMP v2** and their direction between peer roles. "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
+The following table lists the message type code for **all 24 messages defined in WAMP v2** and their direction between peer roles.
+
+"Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
+
+In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the *optional* messages described in part two of this document.
 
 
 | Code | Message        ||  Publisher  |  Broker  |  Subscriber  ||  Caller  |  Dealer  |  Callee  |
@@ -534,9 +468,7 @@ The message flow between *Endpoints* and *Routers* for establishing and tearing 
 
 1. `HELLO`
 2. `WELCOME`
-3. `CHALLENGE`
-4. `AUTHENTICATE`
-2. `ABORT`
+3. `ABORT`
 
 Successful session establishment:
 
@@ -548,7 +480,7 @@ Session denied by peer:
 
 ![alt text](figure/hello_authenticated.png "WAMP Session denied")
 
-A WAMP session starts its lifetime when the *Router* has sent a `WELCOME`message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `ABORT` message.
+A WAMP session starts its lifetime when the *Router* has sent a `WELCOME`message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message.
 
 
 #### HELLO
@@ -560,7 +492,8 @@ After the underlying transport has been opened, a establishment of a WAMP sessio
  * `Realm` is a string identifying the WAMP routing and administrative domain for which the session is to be established.
  * `Details` is a dictionary that allows to provide additional opening information (see below).
 
-The `HELLO` message MUST be the very first message sent after the transport has been established. It MUST be followed by a `WELCOME`, `CHALLENGE` or `GOODBYE` by the *Router*.
+The `HELLO` message MUST be the very first message sent after the transport has been established. It MUST be followed by a `WELCOME`, `ABORT`, or, with advanced implementations, a `CHALLENGE` by the *Router*.
+
 It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Router* MUST fail the session if that happens.
 
 **Roles and Features**
@@ -574,7 +507,7 @@ An *Endpoint* MUST annouce the roles it supports via `Hello.Details.roles|dict`,
 
 An *Endpoint* can support any combination of above roles but MUST support at least one role.
 
-The `<role>|dict` is a dictionary describing features supported by the peer for that role.
+The `<role>|dict` is a dictionary describing features supported by the peer for that role. In basic implementations, this will be empty.
 
 *Example: An *Endpoint* that implements the roles of Publisher and Subscriber, and only supports basic features.*
 
@@ -609,28 +542,17 @@ A *Router* MUST annouce the roles it supports via `Hello.Details.roles|dict`, wi
 
 A *Router* MUST support at least one role, and MAY support both roles.
 
-The `<role>|dict` is a dictionary describing features supported by the peer for that role.
+The `<role>|dict` is a dictionary describing features supported by the peer for that role. In basic implementations, this is empty.
 
-*Example: A *Router* implementing the role of Broker and supporting all advanced features.*
+*Example: A Router implementing the role of Broker and supporting only basic features.*
 
    [1, 9129137332, {
       "roles": {
-         "broker": {
-            "features": {
-               "subscriber_blackwhite_listing": true,
-               "publisher_exclusion":           true,
-               "publisher_identification":      true,
-               "publication_trustlevels":       true,
-               "pattern_based_subscription":    true,
-               "partitioned_pubsub":            true,
-               "subscriber_metaevents":         true,
-               "subscriber_list":               true,
-               "event_history":                 true
-            }
-         }
+         "broker": {}
+      }
    }]
 
-*Feature Announcemenet and Advanced Features*
+*Feature Announcemenet*
 
 The use of *feature announcement* in WAMP allows for
 
@@ -638,67 +560,7 @@ The use of *feature announcement* in WAMP allows for
  * graceful degration
 
 
-The complete list of *advanced features* currently defined per role is:
 
-| Feature                       |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|-------------------------------|-------------|----------|--------------|----------|----------|----------|
-| **Remote Procedure Calls**    |             |          |              |          |          |          |
-| callee_blackwhite_listing     |             |          |              | X        | X        |          |
-| caller_exclusion              |             |          |              | X        | X        |          |
-| caller_identification         |             |          |              | X        | X        | X        |
-| call_trustlevels              |             |          |              |          | X        | X        |
-| pattern_based_registration    |             |          |              |          | X        | X        |
-| partitioned_rpc               |             |          |              | X        | X        | X        |
-| call_timeout                  |             |          |              | X        | X        | X        |
-| call_canceling                |             |          |              | X        | X        | X        |
-| progressive_call_results      |             |          |              | X        | X        | X        |
-|                               |             |          |              |          |          |          |
-| **Publish & Subscribe**       |             |          |              |          |          |          |
-| subscriber_blackwhite_listing | X           | X        |              |          |          |          |
-| publisher_exclusion           | X           | X        |              |          |          |          |
-| publisher_identification      | X           | X        | X            |          |          |          |
-| publication_trustlevels       |             | X        | X            |          |          |          |
-| pattern_based_subscription    |             | X        | X            |          |          |          |
-| partitioned_pubsub            | X           | X        | X            |          |          |          |
-| subscriber_metaevents         |             | X        | X            |          |          |          |
-| subscriber_list               |             | X        | X            |          |          |          |
-| event_history                 |             | X        | X            |          |          |          |
-
-*Network Agent*
-
-When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
-
-Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
-
-   HELLO.Details.agent|string
-
-   WELCOME.Details.agent|string
-
-*Example*
-
-   [1, 9129137332, {
-         "agent": "AutobahnPython-0.7.0",
-         "roles": {
-            "publisher": {}
-         }
-   }]
-
-#### CHALLENGE
-
-An authentication MAY be required for the establishment of a session. Such requirement may be based on the `Realm` the connection is requested for.
-
-To request authentication, the *Router* sends a `CHALLENGE` message to the *Endpoint*.
-
-    [CHALLENGE, Challenge|string, Extra|dict]
-
-* `Challenge` ---- ???? ----
-* `Extra` is a dictionary ---- ???? ----
-
-#### AUTHENTICATE
-
-In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION` message.
-
-    [AUTHENTICATE, Signature|string, Extra|dict]
 
 
 #### ABORT
@@ -781,7 +643,7 @@ where
 
 *Example*
 
-	[32, 713845233, {}, "com.myapp.mytopic1"]
+   [32, 713845233, {}, "com.myapp.mytopic1"]
 
 
 #### SUBSCRIBED
@@ -797,7 +659,7 @@ where
 
 *Example*
 
-	[33, 713845233, 5512315355]
+   [33, 713845233, 5512315355]
 
 > Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the this `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
 >
@@ -815,7 +677,7 @@ where
 
 *Example*
 
-	[4, 713845233, {}, "wamp.error.not_authorized"]
+   [4, 713845233, {}, "wamp.error.not_authorized"]
 
 
 #### UNSUBSCRIBE
@@ -831,7 +693,7 @@ where
 
 *Example*
 
-	[34, 85346237, 5512315355]
+   [34, 85346237, 5512315355]
 
 #### UNSUBSCRIBED
 
@@ -845,7 +707,7 @@ where
 
 *Example*
 
-	[35, 85346237]
+   [35, 85346237]
 
 
 #### Unsubscribe ERROR
@@ -861,7 +723,7 @@ where
 
 *Example*
 
-	[4, 85346237, {}, "wamp.error.no_such_subscription"]
+   [4, 85346237, {}, "wamp.error.no_such_subscription"]
 
 
 ### Publishing and Events
@@ -883,11 +745,11 @@ When a *Publisher* wishes to publish an event to some topic, it sends a `PUBLISH
 
 or
 
-	[PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
+   [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
 
 or
 
-	[PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
+   [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -955,12 +817,12 @@ When a *Subscriber* is deemed to be a receiver, the *Broker* sends the *Subscrib
 or
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-		PUBLISH.Arguments|list]
+      PUBLISH.Arguments|list]
 
 or
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-		PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
+      PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
 
 where
 
@@ -972,15 +834,15 @@ where
 
 *Example*
 
-	[36, 5512315355, 4429313566, {}]
+   [36, 5512315355, 4429313566, {}]
 
 *Example*
 
-	[36, 5512315355, 4429313566, {}, ["Hello, world!"]]
+   [36, 5512315355, 4429313566, {}, ["Hello, world!"]]
 
 *Example*
 
-	[36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]
+   [36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]
 
 
 
@@ -1017,13 +879,13 @@ where
 
 *Example*
 
-	[64, 25349185, {}, "com.myapp.myprocedure1"]
+   [64, 25349185, {}, "com.myapp.myprocedure1"]
 
 #### REGISTERED
 
 If the *Dealer* is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
 
-	[REGISTERED, REGISTER.Request|id, Registration|id]
+   [REGISTERED, REGISTER.Request|id, Registration|id]
 
 where
 
@@ -1032,7 +894,7 @@ where
 
 *Example*
 
-	[65, 25349185, 2103333224]
+   [65, 25349185, 2103333224]
 
 #### Register ERROR
 
@@ -1045,7 +907,7 @@ When the request for registration cannot be fullfilled by the *Dealer*, the *Dea
 
 *Example*
 
-	[4, 25349185, {}, "wamp.error.procedure_already_exists"]
+   [4, 25349185, {}, "wamp.error.procedure_already_exists"]
 
 #### UNREGISTER
 
@@ -1060,7 +922,7 @@ where
 
 *Example*
 
-	[66, 788923562, 2103333224]
+   [66, 788923562, 2103333224]
 
 #### UNREGISTERED
 
@@ -1074,7 +936,7 @@ where
 
 *Example*
 
-	[67, 788923562]
+   [67, 788923562]
 
 #### Unregister ERROR
 
@@ -1089,7 +951,7 @@ where
 
 *Example*
 
-	[4, 788923562, {}, "wamp.error.no_such_registration"]
+   [4, 788923562, {}, "wamp.error.no_such_registration"]
 
 
 ### Calling and Invocations
@@ -1130,19 +992,19 @@ where
 
 *Example*
 
-	[48, 7814135, {}, "com.myapp.ping"]
+   [48, 7814135, {}, "com.myapp.ping"]
 
 *Example*
 
-	[48, 7814135, {}, "com.myapp.echo", ["Hello, world!"]]
+   [48, 7814135, {}, "com.myapp.echo", ["Hello, world!"]]
 
 *Example*
 
-	[48, 7814135, {}, "com.myapp.add2", [23, 7]]
+   [48, 7814135, {}, "com.myapp.add2", [23, 7]]
 
 *Example*
 
-	[48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"firstname": "John", "surname": "Doe"}]
+   [48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"firstname": "John", "surname": "Doe"}]
 
 #### INVOCATION
 
@@ -1168,7 +1030,7 @@ where
 
 *Example*
 
-	[68, 6131533, 9823526, {}, ["Hello, world!"]]
+   [68, 6131533, 9823526, {}, ["Hello, world!"]]
 
 #### YIELD
 
@@ -1217,15 +1079,15 @@ where
 
 If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `ERROR` message to the *Dealer*:
 
-	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri]
+   [ERROR, INVOCATION.Request|id, Details|dict, Error|uri]
 
 or
 
-	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
+   [ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
-	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+   [ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -1240,15 +1102,15 @@ where
 
 The *Dealer* will then send a `ERROR` message to the original *Caller*:
 
-	[ERROR, CALL.Request|id, Details|dict, Error|uri]
+   [ERROR, CALL.Request|id, Details|dict, Error|uri]
 
 or
 
-	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
+   [ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
-	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+   [ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -1262,11 +1124,11 @@ where
 
 If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
 
-	[ERROR, CALL.Request|id, Details|dict, Error|uri]
+   [ERROR, CALL.Request|id, Details|dict, Error|uri]
 
 *Example*
 
-	[4, 7814135, {}, "wamp.error.no_such_procedure"]
+   [4, 7814135, {}, "wamp.error.no_such_procedure"]
 
 
 
@@ -1303,72 +1165,119 @@ In general, `REGISTER` is asynchronous, and there is no guarantee on order of re
 
 
 
+## Appendix
 
-## Authentication
+### Binary conversion of JSON Strings
 
-Authentication is a complex area.
+Binary data follows a convention for conversion to JSON strings.
 
-Some applications might want to leverage authentication information coming from the transport underlying WAMP, e.g. HTTP cookies or TLS certificates.
+A **byte array** is converted to a **JSON string** as follows:
 
-Some transports might imply trust or implicit authentication by their very nature, e.g. Unix domain sockets with appropriate file system permissions in place.
+1. convert the byte array to a Base64 encoded (host language) string
+2. prepend the string with a `\0` character
+3. serialize the string to a JSON string
 
-Other application might want to perform their own authentication using external mechanisms (completely outside and independent of WAMP).
+*Example*
 
-Some applications might want to perform their own authentication schemes by using basic WAMP mechanisms, e.g. by using application-defined remote procedure calls.
+Consider the byte array (hex representation):
 
-And some applications might want to use a transport independent scheme, nevertheless predefined by WAMP.
+   10e3ff9053075c526f5fc06d4fe37cdb
 
+This will get converted to Base64
 
-### TLS Certificate-based Authentication
+   EOP/kFMHXFJvX8BtT+N82w==
 
-When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
+prepended with `\0`
 
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
+   \x00EOP/kFMHXFJvX8BtT+N82w==
 
+and serialized to a JSON string
 
-### HTTP Cookie-based Authentication
+   "\\u0000EOP/kFMHXFJvX8BtT+N82w=="
 
-When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
+A **JSON string** is deserialized to either a **string** or a **byte array** using the following procedure:
 
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
+1. Unserialize a JSON string to a host language (Unicode) string
+2. If the string starts with a `\0` character, interpret the rest (after the first character) as Base64 and decode to a byte array
+3. Otherwise, return the Unicode string
 
+Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.
 
-### WAMP Challenge-Response Authentication
+### Byte Array Conversion
 
----- now integrated into WAMP session establishment ? ----
+#### Python
 
-WAMP Challenge Response (WAMP-CRA) is a WAMP level authentication procedure implemented on top of standard, predefined WAMP RPC procedures.
+Here is a complete example in **Python** showing how byte arrays are converted to and from JSON:
 
-A peer may authenticate to its other peer via calling the following procedures
+```python
+import os, base64, json, sys, binascii
+PY3 = sys.version_info >= (3,)
+if PY3:
+   unicode = str
 
-	wamp.cra.request
-	wamp.cra.authenticate
+data_in = os.urandom(16)
+print("In:   {}".format(binascii.hexlify(data_in)))
 
-WAMP-CRA defines the following errors
+## encoding
+encoded = json.dumps('\0' + base64.b64encode(data_in).decode('ascii'))
 
-	wamp.error.invalid_argument
-	wamp.cra.error.no_such_authkey
-	wamp.cra.error.authentication_failed
-	wamp.cra.error.anonymous_not_allowed
-	wamp.cra.error.already_authenticated
-	wamp.cra.error.authentication_already_requested
+print("JSON: {}".format(encoded))
 
-A peer starts WAMP-CRA authentication by calling
+## decoding
+decoded = json.loads(encoded)
+if type(decoded) == unicode:
+   if decoded[0] == '\0':
+      data_out = base64.b64decode(decoded[1:])
+   else:
+      data_out = decoded
 
-	wamp.cra.request
+print("Out:  {}".format(binascii.hexlify(data_out)))
 
-with `Arguments = [auth_key|string, auth_extra|dict]` where
+assert(data_out == data_in)
+```
 
- * `auth_key` is the authentication key, e.g. an application or user identifier, possibly the empty string for "authenticating" as anonymous
- * `auth_extra` is a dictionary of extra authentication information, possibly empty
+#### JavaScript
 
-The other peer then computes an authentication challenge. WRITEME.
+Here is a complete example in **JavaScript** showing how byte arrays are converted to and from JSON:
 
-The peer then signs the authentication challenge and calls
+```javascript
+var data_in = new Uint8Array(new ArrayBuffer(16));
 
-	wamp.cra.authenticate
+// initialize test data
+for (var i = 0; i < data_in.length; ++i) {
+   data_in[i] = i;
+}
+console.log(data_in);
 
+// convert byte array to raw string
+var raw_out = '';
+for (var i = 0; i < data_in.length; ++i) {
+   raw_out += String.fromCharCode(data_in[i]);
+}
 
+// base64 encode raw string, prepend with \0 and serialize to JSON
+var encoded = JSON.stringify("\0" + window.btoa(raw_out));
+console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="
+
+// unserialize from JSON
+var decoded = JSON.parse(encoded);
+
+var data_out;
+if (decoded.charCodeAt(0) === 0) {
+   // strip first character and decode base64 to raw string
+   var raw = window.atob(decoded.substring(1));
+
+   // convert raw string to byte array
+   var data_out = new Uint8Array(new ArrayBuffer(raw.length));
+   for (var i = 0; i < raw.length; ++i) {
+      data_out[i] = raw.charCodeAt(i);
+   }
+} else {
+   data_out = decoded;
+}
+
+console.log(data_out);
+```
 
 
 ### References
