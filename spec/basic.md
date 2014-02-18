@@ -94,18 +94,6 @@ A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP m
 
 A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. A WAMP *Peer* can have one *or more* roles.
 
-A *Client* can implement any combination of the *Roles*:
-
- * *Callee*
- * *Caller*
- * *Publisher*
- * *Subscriber*
-
-A *Router* can implement the *Roles*:
-
- * *Dealer*
- * *Broker*
-
 **Remote Procedure Call Roles**
 
 The Remote Procedure Call messaging pattern involves peers of three roles:
@@ -117,9 +105,7 @@ The Remote Procedure Call messaging pattern involves peers of three roles:
 A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
 The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*. The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
 
- * *Callees* register procedures they provide with *Dealers*.
- * *Callers* initiate procedure calls first to *Dealers*.
- * *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
+*Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
 
 **Publish & Subscribe Roles**
 
@@ -135,6 +121,23 @@ where
  * *Publishers* publish events to topics at *Brokers*.
  * *Brokers* route events incoming from *Publishers* to *Subscribers* interested in the topic published to.
 
+**Supported Roles**
+
+A *Client* can implement any combination of the *Roles*:
+
+ * *Callee*
+ * *Caller*
+ * *Publisher*
+ * *Subscriber*
+
+and a *Router* can implement the *Roles*:
+
+ * *Dealer*
+ * *Broker*
+
+This document describes WAMP client-router communication. Direct client-client communication is not supported. Router-to-router communication is subject to router implementation specific definition.
+
+
 **Decoupling**
 
 In WAMP, *Dealers* are responsible for call routing, decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing, decoupling *Publishers* from *Subscribers*.
@@ -147,7 +150,9 @@ While a *Router* may only act as a *Broker* and a *Dealer*, the system process t
 
 **Symmetry**
 
-It is important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishing a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
+It is important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishing a TCP and WebSocket connection to a *server*), and clients establish sessions by joining realms on routers, WAMP itself is designed to be fully symmetric for application components. 
+
+After the transport and a session has been established, any application component may act as *Caller*, *Callee*, *Publisher* and *Subscriber* at the same time. *Routers* provide the fabric on top of which WAMP runs a symmetric application messaging service.
 
 
 ### Application Code
@@ -456,37 +461,36 @@ In order to provide a single, authoritative overview of *all* WAMP messages, thi
 
 
 
-| Code | Message        ||  Publisher  |  Broker  |  Subscriber  ||  Caller  |  Dealer  |  Callee  |
-|------|----------------||-------------|----------|--------------||----------|----------|----------|
-|  1   | `HELLO`        || Tx          | Rx       | Tx           || Tx       | Rx       | Tx       |
-|  2   | `WELCOME`      || Rx          | Tx       | Rx           || Rx       | Tx       | Rx       |
-|  3   | `CHALLENGE`    || Rx          | Tx       | Rx           || Rx       | Tx       | Rx       |
-|  4   | `AUTHENTICATE` || Tx          | Rx       | Tx           || Tx       | Rx       | Tx       |
-|  5   | `GOODBYE`      || Tx/Rx       | Tx/Rx    | Tx/Rx        || Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  6   | `HEARTBEAT`    || Tx/Rx       | Tx/Rx    | Tx/Rx        || Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  7   | `ERROR`        || Rx          | Tx       | Rx           || Rx       | Tx/Rx    | Tx/Rx    |
-|      |                ||             |          |              ||          |          |          |
-| 16   | `PUBLISH`      || Tx          | Rx       |              ||          |          |          |
-| 17   | `PUBLISHED`    || Rx          | Tx       |              ||          |          |          |
-|      |                ||             |          |              ||          |          |          |
-| 32   | `SUBSCRIBE`    ||             | Rx       | Tx           ||          |          |          |
-| 33   | `SUBSCRIBED`   ||             | Tx       | Rx           ||          |          |          |
-| 34   | `UNSUBSCRIBE`  ||             | Rx       | Tx           ||          |          |          |
-| 35   | `UNSUBSCRIBED` ||             | Tx       | Rx           ||          |          |          |
-| 36   | `EVENT`        ||             | Tx       | Rx           ||          |          |          |
-|      |                ||             |          |              ||          |          |          |
-| 48   | `CALL`         ||             |          |              || Tx       | Rx       |          |
-| 49   | `CANCEL`       ||             |          |              || Tx       | Rx       |          |
-| 50   | `RESULT`       ||             |          |              || Rx       | Tx       |          |
-|      |                ||             |          |              ||          |          |          |
-| 64   | `REGISTER`     ||             |          |              ||          | Rx       | Tx       |
-| 65   | `REGISTERED`   ||             |          |              ||          | Tx       | Rx       |
-| 66   | `UNREGISTER`   ||             |          |              ||          | Rx       | Tx       |
-| 67   | `UNREGISTERED` ||             |          |              ||          | Tx       | Rx       |
-| 68   | `INVOCATION`   ||             |          |              ||          | Tx       | Rx       |
-| 69   | `INTERRUPT`    ||             |          |              ||          | Tx       | Rx       |
-| 70   | `YIELD`        ||             |          |              ||          | Rx       | Tx       |
-
+| Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|------|----------------|-------------|----------|--------------|----------|----------|----------|
+|  1   | `HELLO`        | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  2   | `WELCOME`      | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  3   | `CHALLENGE`    | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  4   | `AUTHENTICATE` | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  5   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  6   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  7   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
+|      |                |             |          |              |          |          |          |
+| 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
+| 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
+|      |                |             |          |              |          |          |          |
+| 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
+| 33   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
+| 34   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
+| 35   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
+| 36   | `EVENT`        |             | Tx       | Rx           |          |          |          |
+|      |                |             |          |              |          |          |          |
+| 48   | `CALL`         |             |          |              | Tx       | Rx       |          |
+| 49   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
+| 50   | `RESULT`       |             |          |              | Rx       | Tx       |          |
+|      |                |             |          |              |          |          |          |
+| 64   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
+| 65   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
+| 66   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
+| 67   | `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
+| 68   | `INVOCATION`   |             |          |              |          | Tx       | Rx       |
+| 69   | `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
+| 70   | `YIELD`        |             |          |              |          | Rx       | Tx       |
 
 
 ## Session Management
@@ -538,12 +542,12 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
 
 *Example: An *Endpoint* that implements the roles of Publisher and Subscriber, and only supports basic features.*
 
-   [1, 9129137332, {
+	[1, 9129137332, {
       "roles": {
          "publisher": {},
          "subscriber": {}
       }
-   }]
+   	}]
 
 
 #### WELCOME
@@ -573,11 +577,11 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
 
 *Example: A Router implementing the role of Broker and supporting only basic features.*
 
-   [1, 9129137332, {
+   	[1, 9129137332, {
       "roles": {
          "broker": {}
       }
-   }]
+   	}]
 
 *Feature Announcemenet*
 
@@ -594,7 +598,7 @@ For a description of advanced features, see part 2 of this document.
 
 Both the *Router* and the *Endpoint* may abort the establishment of a WAMP session by sending an `ABORT` message.
 
-   [ABORT, Reason|uri, Details|dict]
+   	[ABORT, Reason|uri, Details|dict]
 
  * `Reason` MUST be an URI.
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
@@ -609,7 +613,7 @@ Both the *Router* and the *Endpoint* may abort the establishment of a WAMP sessi
 
 A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Endpoint* and ends when the underlying transport closes or when the session is closed explicitly by a `GOODBYE` message sent by one peer and a `GOODBYE` message sent from the other peer in response.
 
-   [GOODBYE, Reason|uri, Details|dict]
+   	[GOODBYE, Reason|uri, Details|dict]
 
 
  * `Reason` MUST be an URI.
@@ -617,7 +621,6 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
 
 *Example*
 
-    [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
     [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
 
 ---- ???? peer echoes the message - maybe better a generic 'acknowledge goobye' ? ----
@@ -667,7 +670,7 @@ where
 
 *Example*
 
-   [32, 713845233, {}, "com.myapp.mytopic1"]
+	[32, 713845233, {}, "com.myapp.mytopic1"]
 
 
 #### SUBSCRIBED
@@ -683,7 +686,7 @@ where
 
 *Example*
 
-   [33, 713845233, 5512315355]
+   	[33, 713845233, 5512315355]
 
 > Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the this `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
 >
@@ -701,7 +704,7 @@ where
 
 *Example*
 
-   [4, 713845233, {}, "wamp.error.not_authorized"]
+   	[4, 713845233, {}, "wamp.error.not_authorized"]
 
 
 #### UNSUBSCRIBE
@@ -717,7 +720,7 @@ where
 
 *Example*
 
-   [34, 85346237, 5512315355]
+   	[34, 85346237, 5512315355]
 
 #### UNSUBSCRIBED
 
@@ -731,7 +734,7 @@ where
 
 *Example*
 
-   [35, 85346237]
+   	[35, 85346237]
 
 
 #### Unsubscribe ERROR
@@ -747,7 +750,7 @@ where
 
 *Example*
 
-   [4, 85346237, {}, "wamp.error.no_such_subscription"]
+   	[4, 85346237, {}, "wamp.error.no_such_subscription"]
 
 
 ### Publishing and Events
@@ -769,11 +772,11 @@ When a *Publisher* wishes to publish an event to some topic, it sends a `PUBLISH
 
 or
 
-   [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
+   	[PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
 
 or
 
-   [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
+   	[PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -858,15 +861,15 @@ where
 
 *Example*
 
-   [36, 5512315355, 4429313566, {}]
+   	[36, 5512315355, 4429313566, {}]
 
 *Example*
 
-   [36, 5512315355, 4429313566, {}, ["Hello, world!"]]
+   	[36, 5512315355, 4429313566, {}, ["Hello, world!"]]
 
 *Example*
 
-   [36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]
+   	[36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]
 
 
 
@@ -903,13 +906,13 @@ where
 
 *Example*
 
-   [64, 25349185, {}, "com.myapp.myprocedure1"]
+   	[64, 25349185, {}, "com.myapp.myprocedure1"]
 
 #### REGISTERED
 
 If the *Dealer* is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
 
-   [REGISTERED, REGISTER.Request|id, Registration|id]
+   	[REGISTERED, REGISTER.Request|id, Registration|id]
 
 where
 
@@ -918,7 +921,7 @@ where
 
 *Example*
 
-   [65, 25349185, 2103333224]
+   	[65, 25349185, 2103333224]
 
 #### Register ERROR
 
@@ -931,7 +934,7 @@ When the request for registration cannot be fullfilled by the *Dealer*, the *Dea
 
 *Example*
 
-   [4, 25349185, {}, "wamp.error.procedure_already_exists"]
+   	[4, 25349185, {}, "wamp.error.procedure_already_exists"]
 
 #### UNREGISTER
 
@@ -946,7 +949,7 @@ where
 
 *Example*
 
-   [66, 788923562, 2103333224]
+   	[66, 788923562, 2103333224]
 
 #### UNREGISTERED
 
@@ -960,7 +963,7 @@ where
 
 *Example*
 
-   [67, 788923562]
+	[67, 788923562]
 
 #### Unregister ERROR
 
@@ -975,7 +978,7 @@ where
 
 *Example*
 
-   [4, 788923562, {}, "wamp.error.no_such_registration"]
+   	[4, 788923562, {}, "wamp.error.no_such_registration"]
 
 
 ### Calling and Invocations
@@ -1016,19 +1019,19 @@ where
 
 *Example*
 
-   [48, 7814135, {}, "com.myapp.ping"]
+   	[48, 7814135, {}, "com.myapp.ping"]
 
 *Example*
 
-   [48, 7814135, {}, "com.myapp.echo", ["Hello, world!"]]
+   	[48, 7814135, {}, "com.myapp.echo", ["Hello, world!"]]
 
 *Example*
 
-   [48, 7814135, {}, "com.myapp.add2", [23, 7]]
+   	[48, 7814135, {}, "com.myapp.add2", [23, 7]]
 
 *Example*
 
-   [48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"firstname": "John", "surname": "Doe"}]
+   	[48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"firstname": "John", "surname": "Doe"}]
 
 #### INVOCATION
 
@@ -1054,7 +1057,7 @@ where
 
 *Example*
 
-   [68, 6131533, 9823526, {}, ["Hello, world!"]]
+   	[68, 6131533, 9823526, {}, ["Hello, world!"]]
 
 #### YIELD
 
@@ -1103,15 +1106,15 @@ where
 
 If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `ERROR` message to the *Dealer*:
 
-   [ERROR, INVOCATION.Request|id, Details|dict, Error|uri]
+   	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri]
 
 or
 
-   [ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
+   	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
-   [ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+   	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -1126,15 +1129,15 @@ where
 
 The *Dealer* will then send a `ERROR` message to the original *Caller*:
 
-   [ERROR, CALL.Request|id, Details|dict, Error|uri]
+   	[ERROR, CALL.Request|id, Details|dict, Error|uri]
 
 or
 
-   [ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
+   	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
-   [ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+   	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -1148,11 +1151,11 @@ where
 
 If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
 
-   [ERROR, CALL.Request|id, Details|dict, Error|uri]
+   	[ERROR, CALL.Request|id, Details|dict, Error|uri]
 
 *Example*
 
-   [4, 7814135, {}, "wamp.error.no_such_procedure"]
+   	[4, 7814135, {}, "wamp.error.no_such_procedure"]
 
 
 
@@ -1205,19 +1208,19 @@ A **byte array** is converted to a **JSON string** as follows:
 
 Consider the byte array (hex representation):
 
-   10e3ff9053075c526f5fc06d4fe37cdb
+   	10e3ff9053075c526f5fc06d4fe37cdb
 
 This will get converted to Base64
 
-   EOP/kFMHXFJvX8BtT+N82w==
+   	EOP/kFMHXFJvX8BtT+N82w==
 
 prepended with `\0`
 
-   \x00EOP/kFMHXFJvX8BtT+N82w==
+   	\x00EOP/kFMHXFJvX8BtT+N82w==
 
 and serialized to a JSON string
 
-   "\\u0000EOP/kFMHXFJvX8BtT+N82w=="
+   	"\\u0000EOP/kFMHXFJvX8BtT+N82w=="
 
 A **JSON string** is deserialized to either a **string** or a **byte array** using the following procedure:
 
