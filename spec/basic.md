@@ -56,12 +56,20 @@ For *optional* advanced features and aspects of the protocol that are part of th
 
 ## Introduction
 
-WAMP ("The Web Application Messaging Protocol") is an application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
+WAMP ("The Web Application Messaging Protocol") is a communication protocol that enables distributed application archictectures, with application functionality spread across nodes and all application communication decoupled by messages routed via dedicated WAMP routers.
+
+WAMP provides applications with **two asynchronous messaging patterns within one** protocol:
 
  * Publish & Subscribe
  * Remote Procedure Calls
 
-WAMP allows distributed application archictectures, with functionality spread across nodes and communication decoupled by messages distributed and routed via dedicated router components.
+*Remote Procedure Call (RPC)* is a messaging pattern involving peers of three roles: *Caller*, *Dealer* and *Callee*.
+A *Callee* registers procedures with application code to call remotely from *Callers* under application defined, unique names ("Procedure URIs"). A *Dealer* provides the routing of calls and results between *Callers* and *Callees*.
+
+*Publish & Subscribe (PubSub* is a messaging pattern involving peers of three roles: *Publisher*, *Broker* and *Subscriber*.
+A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* provides the routing of events from *Publishers* to *Subscribers*.
+
+
 
 WAMP can run over different *transports*.
 For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
@@ -94,7 +102,8 @@ The Remote Procedure Call messaging pattern involves peers of three roles:
 2. *Caller* (Endpoint)
 3. *Dealer* (Router)
 
-where
+A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
+The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*. The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
 
  * *Callees* register procedures they provide with *Dealers*.
  * *Callers* initiate procedure calls first to *Dealers*.
