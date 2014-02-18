@@ -79,7 +79,9 @@ WAMP also supports different *serializations*, including JSON and MsgPack.
 A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions.
 
 <center>
-<img style="width: 560px;" src="figure/sessions2.png" alt="Transports, Sessions and Peers" class="imgCentered">
+<p style="width: 560px;">
+![](figure/sessions2.png)
+</a>
 </center>
 
  1. *Realm*: a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
