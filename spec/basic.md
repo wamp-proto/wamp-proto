@@ -1,17 +1,13 @@
 # The Web Application Messaging Protocol
-# Part 1: Introdcution and Basic Features
+# Part 1: Basic Profile
 
-This document specifies version 2 of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
+This document specifies the *basic profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **draft-2**, 2014/02/18
+Document Revision: **rc-1**, 2014/02/18
 
-This is part 1 of this document. It introduces the concepts and terminology, and describes the MANDATORY basic features and aspects of the protocol and its usage.
+Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
 
-The information in this part is self-contained and sufficient for full basic implementations covering a large number of use cases.
 
-This part is considered stable. Two implementations for all features described herein exist (AutobahnPython & AutobahnJS). Minor corrections and changes may, however, still occur.
-
-For a description of OTPIONAL advanced features and usage, see part 2 of this document.
 
 **Contents**
 
@@ -48,14 +44,24 @@ For a description of OTPIONAL advanced features and usage, see part 2 of this do
     * [References](#references)
 
 
+## Preface
+
+This is *part 1* of the WAMP specification. It introduces the concepts and terminology, and describes the *mandatory* basic features and aspects of the protocol and its usage which together constitute the **WAMP Basic Profile**.
+
+The information in this part is self-contained and sufficient for implementors of WAMP basic profile compliant and interoperable implementations.
+
+For *optional* advanced features and aspects of the protocol that are part of the **WAMP Advanced Profile**, please see
+ [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md)
+
+
 ## Introduction
 
-WAMP ("The Web Application Messaging Protocol") is an open application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
+WAMP ("The Web Application Messaging Protocol") is an application communication protocol that provides two asynchronous messaging patterns **within one** protocol:
 
  * Publish & Subscribe
  * Remote Procedure Calls
 
-WAMP allows distributed application archictectures, with functionality spread across nodes and communication decoupled via messages distributed and routed via dedicated router components.
+WAMP allows distributed application archictectures, with functionality spread across nodes and communication decoupled by messages distributed and routed via dedicated router components.
 
 WAMP can run over different *transports*.
 For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
@@ -311,7 +317,7 @@ The *application* payload (that is call arguments, call results, event payload e
 
 A `SUBSCRIBE` message:
 
-   [32, 713845233, {}, "com.myapp.mytopic1"]
+	[32, 713845233, {}, "com.myapp.mytopic1"]
 
 
 ### Message Definitions
