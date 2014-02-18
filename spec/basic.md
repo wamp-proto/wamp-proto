@@ -503,17 +503,6 @@ The message flow between *Endpoints* and *Routers* for establishing and tearing 
 2. `WELCOME`
 3. `ABORT`
 
-Successful session establishment:
-
-![alt text](figure/hello.png "WAMP Session success")
-
-Session denied by peer:
-
-![alt text](figure/hello_denied.png "WAMP Session denied")
-
-A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message.
-
-
 #### HELLO
 
 After the underlying transport has been opened, a establishment of a WAMP session is initiated by the the *Endpoint* sending a `HELLO` message to the *Router*
@@ -523,7 +512,12 @@ After the underlying transport has been opened, a establishment of a WAMP sessio
  * `Realm` is a string identifying the WAMP routing and administrative domain for which the session is to be established.
  * `Details` is a dictionary that allows to provide additional opening information (see below).
 
-The `HELLO` message MUST be the very first message sent after the transport has been established. In basic implementations without authentication it MUST be followed by a `WELCOME` or `ABORT` by the *Router*.
+The `HELLO` message MUST be the very first message sent after the transport has been established.
+In basic implementations without authentication it MUST be followed by a `WELCOME` or `ABORT` by the *Router*.
+
+![alt text](figure/hello.png "WAMP Session success")
+
+A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message.
 
 It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Router* MUST fail the session if that happens.
 
@@ -554,7 +548,7 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
 
 A *Router* completes the establishment of a WAMP connection by sending a `WELCOME` message to the *Endpoint*.
 
-   [WELCOME, Session|id, Details|dict]
+   	[WELCOME, Session|id, Details|dict]
 
  * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session. The `WELCOME.Session` can be used for specifying lists of excluded or eligible receivers when publishing events (see below).
  * `Details` is a dictionary that allows to provide additional information regarding the established session (see below).
@@ -596,7 +590,11 @@ For a description of advanced features, see part 2 of this document.
 
 #### ABORT
 
-Both the *Router* and the *Endpoint* may abort the establishment of a WAMP session by sending an `ABORT` message.
+Both the *Router* and the *Endpoint* may abort the establishment of a WAMP session 
+
+![alt text](figure/hello_denied.png "WAMP Session denied")
+
+by sending an `ABORT` message.
 
    	[ABORT, Reason|uri, Details|dict]
 
@@ -619,17 +617,31 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
  * `Reason` MUST be an URI.
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
 
-*Example*
+*Example*. One *Peer* initiates closing
 
     [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
 
----- ???? peer echoes the message - maybe better a generic 'acknowledge goobye' ? ----
+and the other peer replies
 
-*Example*
+	[2, "wamp.error.goodbye_and_out"]
+
+
+*Example*. One *Peer* initiates closing
+
+    [2, "wamp.error.close_realm", {}]
+
+and the other peer replies
+
+	[2, "wamp.error.goodbye_and_out"]
+
+
+*Example*. One *Peer* initiates closing
 
     [2, "wamp.error.protocol_violation", {"message": "Invalid type for 'topic' in SUBSCRIBE."}]
 
+and the other peer replies
 
+	[2, "wamp.error.goodbye_and_out"]
 
 
 ## Publish & Subscribe
@@ -1160,9 +1172,11 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 
 
-## Ordering Guarantees
+## Appendix
 
-### Publish & Subscribe Ordering
+### Ordering Guarantees
+
+#### Publish & Subscribe Ordering
 
 Regarding **Publish & Subscribe**, the ordering guarantees are as follows:
 
@@ -1175,7 +1189,7 @@ Further, if *Subscriber A* subscribes to **Topic 1**, the `SUBSCRIBED` message w
 In general, `SUBSCRIBE` is asynchronous, and there is no guarantee on order of return for multiple `SUBSCRIBEs`. The first `SUBSCRIBE` might require the *Broker* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
 
 
-### Remote Procedure Call Ordering
+#### Remote Procedure Call Ordering
 
 Regarding **Remote Procedure Calls**, the ordering guarantees are as follows:
 
@@ -1189,10 +1203,6 @@ Further, if *Callee A* registers for **Procedure 1**, the `REGISTERED` message w
 
 In general, `REGISTER` is asynchronous, and there is no guarantee on order of return for multiple `REGISTERs`. The first `REGISTER` might require the *Dealer* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
 
-
-
-
-## Appendix
 
 ### Binary conversion of JSON Strings
 
@@ -1229,8 +1239,6 @@ A **JSON string** is deserialized to either a **string** or a **byte array** usi
 3. Otherwise, return the Unicode string
 
 Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.
-
-### Byte Array Conversion
 
 #### Python
 
