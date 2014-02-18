@@ -46,11 +46,11 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 
 ## Preface
 
-This is *part 1* of the WAMP specification. It introduces the concepts and terminology, and describes the *mandatory* basic features and aspects of the protocol and its usage which together constitute the **WAMP Basic Profile**.
+This is *part 1* of the WAMP specification. It introduces the concepts and terminology, and describes the *mandatory* features and aspects of the protocol and its usage which together constitute the **WAMP Basic Profile**.
 
-The information in this part is self-contained and sufficient for implementors of WAMP basic profile compliant and interoperable implementations.
+The information in this part is considered self-contained and sufficient for implementors of WAMP basic profile compliant and interoperable implementations.
 
-For *optional* advanced features and aspects of the protocol that are part of the **WAMP Advanced Profile**, please see
+For *optional* features and aspects of the protocol that are part of the **WAMP Advanced Profile**, please see
  [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md)
 
 
@@ -75,24 +75,35 @@ WAMP can run over different *transports*.
 For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 WAMP also supports different *serializations*, including JSON and MsgPack.
 
-### Terms
+### Transports, Peers and Sessions
 
- 1. *Realm*: a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
- 2. *Peer*: transient participant in a WAMP based application
- 3. *Session*: transient conversation between two *Peers*; attached to a *Realm* and runs over a transport.
- 4. *Transport*: networking channel that carries a *Session*.
-
+A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions.
 
 ![alt text](figure/sessions2.png "Transports, Sessions and Peers")
 
+ 1. *Realm*: a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
+ 2. *Peer*: transient participant in a WAMP based application
+ 3. *Session*: transient conversation between two *Peers*; attached to a *Realm* and runs over a *Transport*.
+ 4. *Transport*: networking channel that carries a *Session*.
 
 ### Peers and Roles
 
-A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions.
+A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. A WAMP *Peer* can have one *or more* roles.
 
-A WAMP session connects a single *Endpoint* and a single *Router*
+A *Client* can implement any combination of the *Roles*:
 
-A WAMP peer can have one *or more* roles.
+ * *Callee*
+ * *Caller*
+ * *Publisher*
+ * *Subscriber*
+
+A *Router* can implement the *Roles*:
+
+ * *Dealer*
+ * *Broker*
+
+
+
 
 **Remote Procedure Call Roles**
 
