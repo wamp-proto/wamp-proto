@@ -1,16 +1,17 @@
-# The Web Application Messaging Protocol - Introdcution and Basic Features
+# The Web Application Messaging Protocol
+# Part 1: Introdcution and Basic Features
 
 This document specifies version 2 of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **draft-1**, 2014/01/20
+Document Revision: **draft-2**, 2014/02/18
 
-This is the first part of this document. It introduces the concepts and terminology, and describes the MANDATORY basic features and aspects of the protocol and its usage.
+This is part 1 of this document. It introduces the concepts and terminology, and describes the MANDATORY basic features and aspects of the protocol and its usage.
 
-The information in this part is sufficient for full basic implementations covering a large number of use cases.
+The information in this part is self-contained and sufficient for full basic implementations covering a large number of use cases.
 
 This part is considered stable. Two implementations for all features described herein exist (AutobahnPython & AutobahnJS). Minor corrections and changes may, however, still occur.
 
-For a description of OTPIONAL advanced features and usage, see the second part of this document.
+For a description of OTPIONAL advanced features and usage, see part 2 of this document.
 
 **Contents**
 
@@ -54,6 +55,8 @@ WAMP ("The Web Application Messaging Protocol") is an open application communica
  * Publish & Subscribe
  * Remote Procedure Calls
 
+WAMP allows distributed application archictectures, with functionality spread across nodes and communication decoupled via messages distributed and routed via dedicated router components.
+
 WAMP can run over different *transports*.
 For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 WAMP also supports different *serializations*, including JSON and MsgPack.
@@ -73,7 +76,7 @@ WAMP also supports different *serializations*, including JSON and MsgPack.
 
 A transport connects two WAMP peers and provides a channel over which WAMP messages for a *single* WAMP session can flow in both directions.
 
-A WAMP session connects an *Endpoint* and a *Router*
+A WAMP session connects a single *Endpoint* and a single *Router*
 
 A WAMP peer can have one *or more* roles.
 
@@ -117,17 +120,17 @@ While a *Router* may only act as a *Broker* and a *Dealer*, the system process t
 
 **Symmetry**
 
-It is important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishes a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
+It is important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishing a TCP and WebSocket connection to a *server*), WAMP itself is designed to be fully symmetric. After the transport has been established, both peers are equal in principle.
 
 
 ### Application Code
 
-WAMP is designed for application code to run inside peers of the roles:
+WAMP is designed for application code to run inside *Endpoints*, i.e. peers of the roles:
 
 1. *Callee* and *Caller*
 2. *Publisher* and *Subscriber*
 
-*Brokers* and *Dealers* are responsible for **generic call and event routing** and SHOULD NOT run application code.
+*Routers*, i.e. peers of the roles *Brokers* and *Dealers* are responsible for **generic call and event routing** and SHOULD NOT run application code.
 
 ![alt text](figure/appcode.png "Application Code")
 
@@ -181,7 +184,7 @@ To avoid resource naming conflicts, we follow the package naming convention from
 
 URI components (the parts between between `.`) MUST NOT contain `.` and MUST NOT be empty (zero-length strings).
 
-> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions.
+> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions. More about pattern-based subscriptions can be found in part 2 of this document.
 
 URIs MUST NOT contain `#`, which is reserved for internal use by *Dealers* and *Brokers*.
 
@@ -201,10 +204,10 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 WAMP needs to identify the following *ephemeral* entities:
 
  1. Sessions
- 2. Requests
+ 2. Subscriptions
  3. Publications
- 4. Subscriptions
- 5. Registrations
+ 4. Registrations
+ 5. Requests
 
 These are identified in WAMP using IDs that are integers between (inclusive) `0` and `2^53` (`9007199254740992L`) and which MUST BE drawn *randomly* from a *uniform distribution* over the specified range.
 
@@ -224,7 +227,7 @@ A message *serialization* format is assumed that (at least) provides the followi
   * `list`
   * `dict` (with string keys)
 
-> WAMP *itself* only uses above types, e.g. it does not use the JSON types `number` (non-integer) and `null`. The application payloads transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
+> WAMP *itself* only uses theabove types, e.g. it does not use the JSON types `number` (non-integer) and `null`. The *application payloads* transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
 >
 
 WAMPv2 defines two bindings for message *serialization*:
@@ -263,8 +266,6 @@ The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/ht
 
 As a default, each WAMP message is transmitted as a separate WebSocket message.
 
-(For details on unbatched and batched modes, see part two of this spec.)
-
 ![alt text](figure/sessions4.png "Transport and Session Lifetime")
 
 ![alt text](figure/sessions3.png "Transports, Sessions and Peers")
@@ -281,7 +282,7 @@ Here, the bi-directionality requirement for the transport is implemented by usin
 Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
 
 
-## Mandatory Messages
+## Messages
 
 All WAMP messages are of the same structure, a `list` with a first element `MessageType` followed by one or more message type specific elements:
 
@@ -306,9 +307,9 @@ For a given `MessageType` and number of message elements the expected types are 
 **Structure**
 The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
 
-*Examples* ----
+*Examples*
 
-Subscription
+A `SUBSCRIBE` message:
 
    [32, 713845233, {}, "com.myapp.mytopic1"]
 
@@ -317,9 +318,9 @@ Subscription
 
 WAMP defines the following MANDATORY messages which are explained in detail in the following sections.
 
-The messages for establishing a WAMP session are mandatory for all peers, i.e. an *Endpoint* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`,ABORT` and `GOODBYE
+The messages concerning the WAMP session itself are mandatory for all peers, i.e. an *Endpoint* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`, `ABORT` and `GOODBYE
 
-All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Endpoint* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR`.
+All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Endpoint* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
 
 #### `HELLO`
 
@@ -412,7 +413,7 @@ All other messages are mandatory *per role*, i.e. in an implementation which onl
 
 #### `YIELD`
 
-   [YIELD, INVOCATION.Request|id, Options|dict]
+    [YIELD, INVOCATION.Request|id, Options|dict]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
 
@@ -422,9 +423,10 @@ All other messages are mandatory *per role*, i.e. in an implementation which onl
 
 The following table lists the message type code for **all 24 messages defined in WAMP v2** and their direction between peer roles.
 
+In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the *mandatory* messages described here and the *optional* messages described in part 2 of this document.
+
 "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
 
-In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the *optional* messages described in part two of this document.
 
 
 | Code | Message        ||  Publisher  |  Broker  |  Subscriber  ||  Caller  |  Dealer  |  Callee  |
@@ -478,9 +480,7 @@ Session denied by peer:
 
 ![alt text](figure/hello_denied.png "WAMP Session denied")
 
-![alt text](figure/hello_authenticated.png "WAMP Session denied")
-
-A WAMP session starts its lifetime when the *Router* has sent a `WELCOME`message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message.
+A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message.
 
 
 #### HELLO
@@ -492,7 +492,7 @@ After the underlying transport has been opened, a establishment of a WAMP sessio
  * `Realm` is a string identifying the WAMP routing and administrative domain for which the session is to be established.
  * `Details` is a dictionary that allows to provide additional opening information (see below).
 
-The `HELLO` message MUST be the very first message sent after the transport has been established. It MUST be followed by a `WELCOME`, `ABORT`, or, with advanced implementations, a `CHALLENGE` by the *Router*.
+The `HELLO` message MUST be the very first message sent after the transport has been established. In basic implementations without authentication it MUST be followed by a `WELCOME` or `ABORT` by the *Router*.
 
 It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Router* MUST fail the session if that happens.
 
@@ -528,7 +528,7 @@ A *Router* completes the establishment of a WAMP connection by sending a `WELCOM
  * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session. The `WELCOME.Session` can be used for specifying lists of excluded or eligible receivers when publishing events (see below).
  * `Details` is a dictionary that allows to provide additional information regarding the established session (see below).
 
-A `WELCOME` message may be sent either directly in response to a `HELLO` message, if no authentication is required for the requested `Realm`, or in response to a successful `AUTHENTICATE`message.
+In basic implementations without authentication, a `WELCOME` MUST be sent directly in response to a `HELLO` message.
 
 > Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. create the realm, or deny the establishment of the session.
 >
@@ -559,7 +559,7 @@ The use of *feature announcement* in WAMP allows for
  * only implementing subsets of functionality
  * graceful degration
 
-
+For a description of advanced features, see part 2 of this document.
 
 
 
@@ -598,9 +598,6 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
 *Example*
 
     [2, "wamp.error.protocol_violation", {"message": "Invalid type for 'topic' in SUBSCRIBE."}]
-
-
-
 
 
 

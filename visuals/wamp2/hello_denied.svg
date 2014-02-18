@@ -28,14 +28,14 @@
      inkscape:cx="507.45503"
      inkscape:cy="168.77511"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g2989"
      showgrid="false"
      fit-margin-top="10"
      fit-margin-left="10"
      fit-margin-right="10"
      fit-margin-bottom="10"
-     inkscape:window-width="1440"
-     inkscape:window-height="838"
+     inkscape:window-width="1024"
+     inkscape:window-height="1258"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1" />
@@ -78,8 +78,8 @@
          id="text2997"
          style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
          y="172.5"
-         x="320"
-         xml:space="preserve">GOODBYE</text>
+         x="334"
+         xml:space="preserve">ABORT</text>
       <path
          id="path2999"
          d="m 132.1875,76.40625 0,153.125 14.21875,0 0,-153.125 -14.21875,0 z"

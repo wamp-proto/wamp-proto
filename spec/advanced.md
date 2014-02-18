@@ -1,14 +1,18 @@
-# The Web Application Messaging Protocol - Advanced Features and Aspects
+# The Web Application Messaging Protocol
+# Part 2: Advanced Features and Aspects
 
 This document specifies version 2 of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **draft-1**, 2014/01/20
+Document Revision: **draft-2**, 2014/02/18
 
-This is the second part of this document. It describes advanced features and aspects of the protocol and its usage.
+This is part 2 of this document. It describes advanced features and aspects of the protocol and its usage.
 
-This part is considered partially finished and unstable. Some features are presently underspecified. For others working implementations may already exist (e.g. in the AutobahnPython library). Features may yet be added or removed, and there is no guarantee that any existing feature in this part will remain unchanged.
+This part as a whole is considered partially finished and unstable. Some features are presently underspecified. Features may yet be added or removed, and there is no guarantee that an existing feature in this part will remain unchanged.
 
-For an introduction to the protocol, and a description of basic features and usage, see the first part of this document.
+Some features, however, are already fully specified and should remain unchanged. These are specifically marked as *STABLE*.
+
+
+For an introduction to the protocol, and a description of basic features and usage, see part 1 of this document.
 
 **Contents**
 
@@ -140,6 +144,8 @@ The message flow between *Endpoints* and *Routers* for establishing and tearing 
 
 1. `CHALLENGE`
 2. `AUTHENTICATE`
+
+![alt text](figure/hello_authenticated.png "WAMP Session denied")
 
 
 #### CHALLENGE
@@ -1160,6 +1166,10 @@ and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.pr
 
 
 ## Authentication
+
+
+
+![alt text](figure/hello_authenticated.png "WAMP Session denied")
 
 Authentication is a complex area.
 
