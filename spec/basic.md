@@ -827,6 +827,10 @@ where
  * `Arguments` is list of application-level event payload elements. The list may be of zero length.
  * `ArgumentsKw` is a dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
 
+If the *Broker* is able to fulfill and allowing the publication, the *Broker* will send the event to all current *Subscribers* of the topic of the published event.
+
+By default, publications are unacknowledged, and the *Broker* will not respond, whether the publication was successful indeed or not. This behavior can be changed with the option `PUBLISH.Options.acknowledge|bool` (see below).
+
 *Example*
 
     [16, 239714735, {}, "com.myapp.mytopic1"]
@@ -842,7 +846,7 @@ where
 
 #### PUBLISHED
 
-If the *Broker* is able to fulfill and allowing the publication, it answers by sending a `PUBLISHED` message to the *Publisher*:
+If the *Broker* is able to fulfill and allowing the publication, and `PUBLISH.Options.acknowledge == true`, the *Broker* replies by sending a `PUBLISHED` message to the *Publisher*:
 
     [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
@@ -852,8 +856,6 @@ where
  * `Publication` is a ID chosen by the Broker for the publication.
 
 
-The *Broker* will then send the event to all current *Subscribers* of the topic of the published event.
-
 *Example*
 
     [17, 239714735, 4429313566]
@@ -861,7 +863,7 @@ The *Broker* will then send the event to all current *Subscribers* of the topic 
 
 #### Publish ERROR
 
-When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back an `ERROR` message to the *Publisher*
+When the request for publication cannot be fulfilled by the *Broker*, and `PUBLISH.Options.acknowledge == true`, the *Broker* sends back an `ERROR` message to the *Publisher*
 
     [ERROR, PUBLISH, PUBLISH.Request|id, Details|dict, Error|uri]
 
@@ -881,7 +883,12 @@ where
 
 #### EVENT
 
-When a publication is successful and a *Broker* dispatches the event, it determines a list of receivers for the event based on subscribers for the topic published to and, possibly, other information in the event (such as exclude and eligible receivers).
+When a publication is successful and a *Broker* dispatches the event, it determines a list of receivers for the event based on *Subscribers* for the topic published to and, possibly, other information in the event.
+
+Note that the *Publisher* of an event will never receive the published event even if the *Publisher* is also a *Subscriber* of the topic published to.
+
+> WAMP Advanced Profile provides options for more detailed control over publication.
+> 
 
 When a *Subscriber* is deemed to be a receiver, the *Broker* sends the *Subscriber* an `EVENT` message:
 
