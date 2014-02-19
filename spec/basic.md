@@ -1181,8 +1181,8 @@ In other words, WAMP guarantees ordering of events between any given *pair* of *
 
 Further, if *Subscriber A* subscribes to **Topic 1**, the `SUBSCRIBED` message will be sent by *Broker* to *Subscriber A* before any `EVENT` message for **Topic 1**.
 
-In general, `SUBSCRIBE` is asynchronous, and there is no guarantee on order of return for multiple `SUBSCRIBEs`. The first `SUBSCRIBE` might require the *Broker* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
-
+> In general, `SUBSCRIBE` is asynchronous, and there is no guarantee on order of return for multiple `SUBSCRIBEs`. The first `SUBSCRIBE` might require the *Broker* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
+> 
 
 #### Remote Procedure Call Ordering
 
@@ -1196,8 +1196,8 @@ In general, there are no guarantees on the order of call results and errors in r
 
 Further, if *Callee A* registers for **Procedure 1**, the `REGISTERED` message will be sent by *Dealer* to *Callee A* before any `INVOCATION` message for **Procedure 1**.
 
-In general, `REGISTER` is asynchronous, and there is no guarantee on order of return for multiple `REGISTERs`. The first `REGISTER` might require the *Dealer* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
-
+> In general, `REGISTER` is asynchronous, and there is no guarantee on order of return for multiple `REGISTERs`. The first `REGISTER` might require the *Dealer* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
+> 
 
 ### Binary conversion of JSON Strings
 
@@ -1237,7 +1237,7 @@ Below are complete Python and JavaScript code examples for conversion between by
 
 #### Python
 
-Here is a complete example in **Python** showing how byte arrays are converted to and from JSON:
+Here is a complete example in Python showing how byte arrays are converted to and from JSON:
 
 ```python
 import os, base64, json, sys, binascii
@@ -1268,7 +1268,7 @@ assert(data_out == data_in)
 
 #### JavaScript
 
-Here is a complete example in **JavaScript** showing how byte arrays are converted to and from JSON:
+Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:
 
 ```javascript
 var data_in = new Uint8Array(new ArrayBuffer(16));
@@ -1317,5 +1317,3 @@ console.log(data_out);
 3. [The WebSocket Protocol](http://tools.ietf.org/html/rfc6455)
 4. [The application/json Media Type for JavaScript Object Notation (JSON)](http://tools.ietf.org/html/rfc4627)
 5. [MessagePack Format specification](https://github.com/msgpack/msgpack/blob/master/spec.md)
-6. [Consistent Hashing and Random Trees: Distributed Caching Protocols for Relieving Hot Spots on the World Wide Web (1997)](http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.23.3738)
-7. [Web Caching with Consistent Hashing](http://www8.org/w8-papers/2a-webserver/caching/paper2.html)
