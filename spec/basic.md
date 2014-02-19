@@ -1,7 +1,9 @@
 # The Web Application Messaging Protocol
 # Part 1: Basic Profile
 
-This document specifies the *basic profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
+This document specifies the *Basic Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
+
+For the *Advanced Profile*, please see here. [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md)
 
 Document Revision: **rc-1**, 2014/02/18
 
@@ -639,7 +641,7 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
 
 and the other peer replies
 
-	[6, "wamp.error.goodbye_and_out"]
+	[6, "wamp.error.goodbye_and_out", {}]
 
 
 *Example*. One *Peer* initiates closing
@@ -648,7 +650,7 @@ and the other peer replies
 
 and the other peer replies
 
-	[6, "wamp.error.goodbye_and_out"]
+	[6, "wamp.error.goodbye_and_out", {}]
 
 
 
@@ -1055,6 +1057,7 @@ where
 
    	[48, 7814135, {}, "com.myapp.user.new", ["johnny"], {"firstname": "John", "surname": "Doe"}]
 
+
 #### INVOCATION
 
 If the *Dealer* is able to fullfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
@@ -1079,7 +1082,20 @@ where
 
 *Example*
 
-   	[68, 6131533, 9823526, {}, ["Hello, world!"]]
+   	[68, 6131533, 9823526, {}]
+
+*Example*
+
+   	[68, 6131533, 9823527, {}, ["Hello, world!"]]
+
+*Example*
+
+   	[68, 6131533, 9823528, {}, [23, 7]]
+
+*Example*
+
+   	[68, 6131533, 9823529, {}, ["johnny"], {"firstname": "John", "surname": "Doe"}]
+
 
 #### YIELD
 
@@ -1102,6 +1118,24 @@ where
  * `Arguments` is a list of positional result elements (each of arbitrary type). The list may be of zero length.
  * `ArgumentsKw` is a dictionary of keyword result elements (each of arbitrary type). The dictionary may be empty.
 
+
+*Example*
+
+   	[70, 6131533, {}]
+
+*Example*
+
+   	[70, 6131533, {}, ["Hello, world!"]]
+
+*Example*
+
+   	[70, 6131533, {}, [30]]
+
+*Example*
+
+   	[70, 6131533, {}, [], {"userid": 123, "karma": 10}]
+
+
 #### RESULT
 
 The *Dealer* will then send a `RESULT` message to the original *Caller*:
@@ -1122,6 +1156,23 @@ where
  * `Details` is a dictionary of additional details. --- EXAMPLES ???? ----
  * `YIELD.Arguments` is the original list of positional result elements as returned by the *Callee*.
  * `YIELD.ArgumentsKw` is the original dictionary of keyword result elements as returned by the *Callee*.
+
+*Example*
+
+   	[50, 7814135, {}]
+
+*Example*
+
+   	[50, 7814135, {}, ["Hello, world!"]]
+
+*Example*
+
+   	[50, 7814135, {}, [30]]
+
+*Example*
+
+   	[50, 7814135, {}, [], {"userid": 123, "karma": 10}]
+
 
 #### Invocation ERROR
 
@@ -1145,7 +1196,11 @@ where
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
  * `Exception` is an arbitrary application-defined error payload (possible empty, that is `null`).
 
---- EXAMPLES missing ----
+*Example*
+
+   	[8, 68, 6131533, {}, "com.myapp.error.object_write_protected", ["Object is write protected."], {"severity": 3}]
+
+
 
 #### Call ERROR
 
@@ -1164,12 +1219,15 @@ or
 where
 
  * `CALL.Request` is the ID from the original call request.
- * `Details` is a dictionary with additional error details. ---- EXAMPLES ???? ----
+ * `Details` is a dictionary with additional error details.
  * `Error` is an URI identifying the type of error as returned by the *Callee* to the *Dealer*.
  * `Arguments` is a list containing the original error payload list as returned by the *Callee* to the *Dealer*.
  * `ArgumentsKw` is a dictionary containing the original error payload dictionary as returned by the *Callee* to the *Dealer*
 
----- Examples missing ----
+*Example*
+
+   	[8, 48, 7814135, {}, "com.myapp.error.object_write_protected",
+		["Sorry, but the object is write protected."]]
 
 If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
 
@@ -1177,14 +1235,18 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 *Example*
 
-   	[4, 7814135, {}, "wamp.error.no_such_procedure"]
-
+   	[8, 48, 7814135, {}, "wamp.error.no_such_procedure"]
 
 
 
 ## Appendix
 
 ### Ordering Guarantees
+
+All WAMP implementations, in particular *Routers* MUST support the following ordering guarantees.
+
+> WAMP Advanced Profile may provide applications options to relax ordering guarantees, in particular with distributed calls.
+> 
 
 #### Publish & Subscribe Ordering
 
@@ -1207,7 +1269,7 @@ If *Callee A* has registered endpoints for both **Procedure 1** and **Procedure 
 
 In other words, WAMP guarantees ordering of invocations between any given *pair* of *Caller* and *Callee*.
 
-In general, there are no guarantees on the order of call results and errors in relation to *different* calls, since the execution of calls upon different invocations of endpoints in *Callees* are running independently. A first call might require an expensive, long-running computation, whereas a second, subsequent call might finish immediately.
+There are no guarantees on the order of call results and errors in relation to *different* calls, since the execution of calls upon different invocations of endpoints in *Callees* are running independently. A first call might require an expensive, long-running computation, whereas a second, subsequent call might finish immediately.
 
 Further, if *Callee A* registers for **Procedure 1**, the `REGISTERED` message will be sent by *Dealer* to *Callee A* before any `INVOCATION` message for **Procedure 1**.
 
