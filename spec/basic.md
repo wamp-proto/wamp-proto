@@ -3,7 +3,7 @@
 
 This document specifies the *Basic Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-For the *Advanced Profile*, please see here. [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md)
+For the *Advanced Profile*, please see [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md).
 
 Document Revision: **rc-1**, 2014/02/18
 
@@ -645,6 +645,9 @@ No response to an `ABORT` message is expected.
 ### Session Closing
 
 A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Client* and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a `GOODBYE` message sent by one *Peer* and a `GOODBYE` message sent from the other *Peer* in response.
+
+![alt text](figure/goodbye.png "WAMP Session denied")
+
 
    	[GOODBYE, Reason|uri, Details|dict]
 
