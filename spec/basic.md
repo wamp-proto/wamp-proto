@@ -870,13 +870,11 @@ When a *Subscriber* is deemed to be a receiver, the *Broker* sends the *Subscrib
 
 or
 
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-      PUBLISH.Arguments|list]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
 
 or
 
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-      PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
 
 where
 
@@ -1153,7 +1151,7 @@ or
 where
 
  * `CALL.Request` is the ID from the original call request.
- * `Details` is a dictionary of additional details. --- EXAMPLES ???? ----
+ * `Details` is a dictionary of additional details.
  * `YIELD.Arguments` is the original list of positional result elements as returned by the *Callee*.
  * `YIELD.ArgumentsKw` is the original dictionary of keyword result elements as returned by the *Callee*.
 
@@ -1192,7 +1190,7 @@ or
 where
 
  * `INVOCATION.Request` is the ID from the original call request.
- * `Details` is a dictionary containing detailed information about the error. ---- EXAMPLES ----
+ * `Details` is a dictionary containing detailed information about the error.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
  * `Exception` is an arbitrary application-defined error payload (possible empty, that is `null`).
 
@@ -1226,8 +1224,7 @@ where
 
 *Example*
 
-   	[8, 48, 7814135, {}, "com.myapp.error.object_write_protected",
-		["Sorry, but the object is write protected."]]
+   	[8, 48, 7814135, {}, "com.myapp.error.object_write_protected", ["Sorry, but the object is write protected."]]
 
 If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
 
