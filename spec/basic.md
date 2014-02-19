@@ -453,55 +453,55 @@ All other messages are mandatory *per role*, i.e. in an implementation which onl
 
 ### Message Codes and Direction
 
-The following table lists the message type code for **all 24 messages defined in WAMP v2** and their direction between peer roles.
+The following table lists the message type code for **all 25 messages defined in WAMP v2** and their direction between peer roles.
 
 In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the *mandatory* messages described here and the *optional* messages described in part 2 of this document.
 
 "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
 
-
-
-| Code | Message        |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|------|----------------|-------------|----------|--------------|----------|----------|----------|
-|  1   | `HELLO`        | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
-|  2   | `WELCOME`      | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  3   | `CHALLENGE`    | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  4   | `AUTHENTICATE` | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
-|  5   | `GOODBYE`      | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  6   | `HEARTBEAT`    | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  7   | `ERROR`        | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
-|      |                |             |          |              |          |          |          |
-| 16   | `PUBLISH`      | Tx          | Rx       |              |          |          |          |
-| 17   | `PUBLISHED`    | Rx          | Tx       |              |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 32   | `SUBSCRIBE`    |             | Rx       | Tx           |          |          |          |
-| 33   | `SUBSCRIBED`   |             | Tx       | Rx           |          |          |          |
-| 34   | `UNSUBSCRIBE`  |             | Rx       | Tx           |          |          |          |
-| 35   | `UNSUBSCRIBED` |             | Tx       | Rx           |          |          |          |
-| 36   | `EVENT`        |             | Tx       | Rx           |          |          |          |
-|      |                |             |          |              |          |          |          |
-| 48   | `CALL`         |             |          |              | Tx       | Rx       |          |
-| 49   | `CANCEL`       |             |          |              | Tx       | Rx       |          |
-| 50   | `RESULT`       |             |          |              | Rx       | Tx       |          |
-|      |                |             |          |              |          |          |          |
-| 64   | `REGISTER`     |             |          |              |          | Rx       | Tx       |
-| 65   | `REGISTERED`   |             |          |              |          | Tx       | Rx       |
-| 66   | `UNREGISTER`   |             |          |              |          | Rx       | Tx       |
-| 67   | `UNREGISTERED` |             |          |              |          | Tx       | Rx       |
-| 68   | `INVOCATION`   |             |          |              |          | Tx       | Rx       |
-| 69   | `INTERRUPT`    |             |          |              |          | Tx       | Rx       |
-| 70   | `YIELD`        |             |          |              |          | Rx       | Tx       |
+| Code | Message        |  Profile |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
+|  1   | `HELLO`        |          | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  2   | `WELCOME`      |          | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  2   | `ABORT`        |          | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  3   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  4   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  5   | `GOODBYE`      |          | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  6   | `HEARTBEAT`    | advanced | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  7   | `ERROR`        |          | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
+|      |                |          |             |          |              |          |          |          |
+| 16   | `PUBLISH`      |          | Tx          | Rx       |              |          |          |          |
+| 17   | `PUBLISHED`    |          | Rx          | Tx       |              |          |          |          |
+|      |                |          |             |          |              |          |          |          |
+| 32   | `SUBSCRIBE`    |          |             | Rx       | Tx           |          |          |          |
+| 33   | `SUBSCRIBED`   |          |             | Tx       | Rx           |          |          |          |
+| 34   | `UNSUBSCRIBE`  |          |             | Rx       | Tx           |          |          |          |
+| 35   | `UNSUBSCRIBED` |          |             | Tx       | Rx           |          |          |          |
+| 36   | `EVENT`        |          |             | Tx       | Rx           |          |          |          |
+|      |                |          |             |          |              |          |          |          |
+| 48   | `CALL`         |          |             |          |              | Tx       | Rx       |          |
+| 49   | `CANCEL`       | advanced |             |          |              | Tx       | Rx       |          |
+| 50   | `RESULT`       |          |             |          |              | Rx       | Tx       |          |
+|      |                |          |             |          |              |          |          |          |
+| 64   | `REGISTER`     |          |             |          |              |          | Rx       | Tx       |
+| 65   | `REGISTERED`   |          |             |          |              |          | Tx       | Rx       |
+| 66   | `UNREGISTER`   |          |             |          |              |          | Rx       | Tx       |
+| 67   | `UNREGISTERED` |          |             |          |              |          | Tx       | Rx       |
+| 68   | `INVOCATION`   |          |             |          |              |          | Tx       | Rx       |
+| 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
+| 70   | `YIELD`        |          |             |          |              |          | Rx       | Tx       |
 
 
 ## Session Management
-
-### Session Establishment
 
 The message flow between *Endpoints* and *Routers* for establishing and tearing down sessions involves the following messages:
 
 1. `HELLO`
 2. `WELCOME`
 3. `ABORT`
+4. `GOODBYE`
+
+### Session Establishment
 
 #### HELLO
 
@@ -601,10 +601,11 @@ by sending an `ABORT` message.
  * `Reason` MUST be an URI.
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
 
+No response to a `ABORT` message is expected.
+
 *Example*
 
     [2, "wamp.error.nonexistent_realm", {"message": "The realm does not exist."}]
----- ???? ----
 
 
 ### Session Closing
@@ -612,7 +613,6 @@ by sending an `ABORT` message.
 A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Endpoint* and ends when the underlying transport closes or when the session is closed explicitly by a `GOODBYE` message sent by one peer and a `GOODBYE` message sent from the other peer in response.
 
    	[GOODBYE, Reason|uri, Details|dict]
-
 
  * `Reason` MUST be an URI.
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
