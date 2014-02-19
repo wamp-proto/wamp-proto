@@ -39,7 +39,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 
 This is *part 1* of the WAMP specification. It introduces the concepts and terminology, and describes the *mandatory* features and aspects of the protocol and its usage which together constitute the **WAMP Basic Profile**.
 
-The information in this part is considered self-contained and sufficient for implementors of WAMP basic profile compliant and interoperable implementations.
+The information in this part is considered self-contained and sufficient for implementors of WAMP Basic Profile compliant and interoperable implementations.
 
 For *optional* features and aspects of the protocol that are part of the **WAMP Advanced Profile**, please see
  [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md)
@@ -49,7 +49,7 @@ For *optional* features and aspects of the protocol that are part of the **WAMP 
 
 WAMP ("The Web Application Messaging Protocol") is a communication protocol that enables distributed application archictectures, with application functionality spread across nodes and all application communication decoupled by messages routed via dedicated WAMP routers.
 
-WAMP provides applications with **two asynchronous messaging patterns within one** protocol:
+At its core, WAMP provides applications with **two asynchronous messaging patterns within one** protocol:
 
  * Publish & Subscribe
  * Remote Procedure Calls
@@ -57,7 +57,7 @@ WAMP provides applications with **two asynchronous messaging patterns within one
 *Remote Procedure Call (RPC)* is a messaging pattern involving peers of three roles: *Caller*, *Dealer* and *Callee*.
 A *Callee* registers procedures with application code to call remotely from *Callers* under application defined, unique names ("Procedure URIs"). A *Dealer* provides the routing of calls and results between *Callers* and *Callees*.
 
-*Publish & Subscribe (PubSub* is a messaging pattern involving peers of three roles: *Publisher*, *Broker* and *Subscriber*.
+*Publish & Subscribe (PubSub)* is a messaging pattern involving peers of three roles: *Publisher*, *Broker* and *Subscriber*.
 A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* provides the routing of events from *Publishers* to *Subscribers*.
 
 
@@ -67,7 +67,7 @@ WAMP can run over different *transports*.
 For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 WAMP also supports different *serializations*, including JSON and MsgPack.
 
-A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions.
+A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions:
 
 <center>
 <p style="width: 560px;">
@@ -75,22 +75,28 @@ A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP m
 </a>
 </center>
 
- 1. *Realm*: a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
- 2. *Peer*: transient participant in a WAMP based application
- 3. *Session*: transient conversation between two *Peers*; attached to a *Realm* and runs over a *Transport*.
- 4. *Transport*: networking channel that carries a *Session*.
+*Transports* provide a networking channel to carry *Sessions* which must have the following characteristics:
+
+ * message based
+ * bidirectional
+ * reliable
+ * ordered
+
+A *Session* is the transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
+
+A *Realm* is a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
 
 
 ### Peers and Roles
 
-A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. A WAMP *Peer* can have one *or more* roles.
+A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. Each WAMP *Peer* can implement one or more roles.
 
 **Remote Procedure Call Roles**
 
-The Remote Procedure Call messaging pattern involves peers of three roles:
+The Remote Procedure Call messaging pattern involves peers of three different roles:
 
-1. *Callee* (Endpoint)
-2. *Caller* (Endpoint)
+1. *Callee* (Client)
+2. *Caller* (Client)
 3. *Dealer* (Router)
 
 A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
@@ -100,10 +106,10 @@ The *Callee* will execute the procedure using the supplied arguments to the call
 
 **Publish & Subscribe Roles**
 
-The Publish & Subscribe messaging pattern involves peers of three roles:
+The Publish & Subscribe messaging pattern involves peers of three different roles:
 
-1. *Subscriber* (Endpoint)
-2. *Publisher* (Endpoint)
+1. *Subscriber* (Client)
+2. *Publisher* (Client)
 3. *Broker* (Router)
 
 where
@@ -773,7 +779,7 @@ The message flow between *Publishers*, a *Broker* and *Subscribers* for publishi
 
 #### PUBLISH
 
-When a *Publisher* wishes to publish an event to some topic, it sends a `PUBLISH` message to a *Broker*:
+When a *Publisher* requests to publish an event to some topic, it sends a `PUBLISH` message to a *Broker*:
 
     [PUBLISH, Request|id, Options|dict, Topic|uri]
 
@@ -817,9 +823,13 @@ where
  * `PUBLISH.Request` is the ID from the original publication request.
  * `Publication` is a ID chosen by the Broker for the publication.
 
+
+The *Broker* will then send the event to all current *Subscribers* of the topic of the published event.
+
 *Example*
 
     [17, 239714735, 4429313566]
+
 
 #### Publish ERROR
 
@@ -839,6 +849,7 @@ where
 *Example*
 
     [4, 239714735, {}, "wamp.error.invalid_topic"]
+
 
 #### EVENT
 
@@ -879,12 +890,9 @@ where
    	[36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]
 
 
-
-
-
 ## Remote Procedure Calls
 
-All of the following features for Remote Procedure Calls are mandatory for WAMP implementations supporting the respective roles.
+All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles.
 
 
 ### Registering and Unregistering
@@ -1192,7 +1200,7 @@ If *Callee A* has registered endpoints for both **Procedure 1** and **Procedure 
 
 In other words, WAMP guarantees ordering of invocations between any given *pair* of *Caller* and *Callee*.
 
-In general, there are no guarantees on the order of call results and errors in relation to calls, since the execution of calls upon invocation of endpoints in *Callees* is asynchronous. A first call might require an expensive, long-running computation, whereas a second, subsequent call might finish immediately.
+In general, there are no guarantees on the order of call results and errors in relation to *different* calls, since the execution of calls upon different invocations of endpoints in *Callees* are running independently. A first call might require an expensive, long-running computation, whereas a second, subsequent call might finish immediately.
 
 Further, if *Callee A* registers for **Procedure 1**, the `REGISTERED` message will be sent by *Dealer* to *Callee A* before any `INVOCATION` message for **Procedure 1**.
 
