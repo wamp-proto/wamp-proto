@@ -7,27 +7,20 @@ Document Revision: **rc-1**, 2014/02/18
 
 Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
 
-
-
 **Contents**
 
 1. [Introduction](#introduction)
+    * [Transports, Peers and Sessions](#transports-peers-and-sessions)
     * [Peers and Roles](#peers-and-roles)
     * [Application Code](#application-code)
-    * [Building Blocks](#building-blocks)
-2. [Identifiers](#identifiers)
-    * [URIs](#uris)
-    * [IDs](#ids)
-3. [Serializations](#serializations)
-    * [JSON](#json)
-    * [MsgPack](#msgpack)
-4. [Transports](#transports)
-    * [WebSocket Transport](#websocket-transport)
-    * [Other Transports](#other-transports)
-5. [Mandatory Messages](#mandatory-messages)
+2. [Building Blocks](#building-blocks)
+    * [Identifiers](#identifiers)
+    * [Serializations](#serializations)
+    * [Transports](#transports)
+5. [Messages](#mandatory-messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
-6. [Session Management](#session-management)
+6. [Sessions](#session-management)
     * [Session Establishment](#session-establishment)
     * [Session Closing](#session-closing)
 7. [Publish & Subscribe](#publish--subscribe)
@@ -36,10 +29,8 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 8. [Remote Procedure Calls](#remote-procedure-calls)
     * [Registering and Unregistering](#registering-and-unregistering)
     * [Calling and Invocations](#calling-and-invocations)
-9. [Ordering Guarantees](#ordering-guarantees)
-    * [Publish & Subscribe Ordering](#publish--subscribe-ordering)
-    * [Remote Procedure Call Ordering](#remote-procedure-call-ordering)
 10. [Appendix](#appendix)
+    * [Ordering Guarantees](#ordering-guarantees)
     * [Byte Array Conversion](#byte-array-conversion)
     * [References](#references)
 
@@ -178,7 +169,7 @@ The idea is to be able to transparently switch *Broker* and *Dealer* implementat
 * management and monitoring
 
 
-### Building Blocks
+## Building Blocks
 
 WAMP is defined with respect to the following building blocks
 
@@ -189,9 +180,9 @@ WAMP is defined with respect to the following building blocks
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
 
 
-## Identifiers
+### Identifiers
 
-### URIs
+#### URIs
 
 WAMP needs to identify the following *persistent* resources:
 
@@ -231,7 +222,7 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 	wamp.error.not_authorized
    	wamp.metatopic.subscriber.add
 
-### IDs
+#### IDs
 
 WAMP needs to identify the following *ephemeral* entities:
 
@@ -247,7 +238,7 @@ These are identified in WAMP using IDs that are integers between (inclusive) `0`
 >
 
 
-## Serializations
+### Serializations
 
 WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
 
@@ -269,20 +260,20 @@ WAMPv2 defines two bindings for message *serialization*:
 
 Other bindings for *serialization* may be defined in future WAMP versions.
 
-### JSON
+#### JSON
 
 With JSON serialization, each WAMP message is serialized according to the JSON specification as described in [RFC4627](http://www.ietf.org/rfc/rfc4627.txt).
 
 Further, binary data follows a convention for conversion to JSON strings. For details, see the Appendix.
 
-### MsgPack
+#### MsgPack
 
 With MsgPack serialization, each WAMP message is serialized according to the MsgPack specification as described in [here](https://github.com/msgpack/msgpack/blob/master/spec.md).
 
 The version 5 of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.
 
 
-## Transports
+### Transports
 
 WAMP assumes a *transport* with the following characteristics:
 
@@ -292,7 +283,7 @@ WAMP assumes a *transport* with the following characteristics:
   4. bidirectional (full-duplex)
 
 
-### WebSocket Transport
+#### WebSocket Transport
 
 The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
 
