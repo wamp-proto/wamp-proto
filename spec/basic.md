@@ -354,96 +354,96 @@ The messages concerning the WAMP session itself are mandatory for all peers, i.e
 
 All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Endpoint* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
 
-#### `HELLO`
+#### HELLO
 
     [HELLO, Realm|uri, Details|dict]
 
-#### `WELCOME`
+#### WELCOME
 
     [WELCOME, Session|id, Details|dict]
 
-#### `ABORT`
+#### ABORT
 
     [ABORT, Reason|uri, Details|dict]
 
-#### `GOODBYE`
+#### GOODBYE
 
     [GOODBYE, Reason|uri, Details|dict]
 
-#### `ERROR`
+#### ERROR
 
     [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri]
     [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Arguments|list]
     [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
-#### `PUBLISH`
+#### PUBLISH
 
     [PUBLISH, Request|id, Options|dict, Topic|uri]
     [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
     [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
-#### `PUBLISHED`
+#### PUBLISHED
 
     [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
-#### `SUBSCRIBE`
+#### SUBSCRIBE
 
     [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
-#### `SUBSCRIBED`
+#### SUBSCRIBED
 
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
-#### `UNSUBSCRIBE`
+#### UNSUBSCRIBE
 
     [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
-#### `UNSUBSCRIBED`
+#### UNSUBSCRIBED
 
     [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
-#### `EVENT`
+#### EVENT
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list,
       PUBLISH.ArgumentsKw|dict]
 
-#### `CALL`
+#### CALL
 
     [CALL, Request|id, Options|dict, Procedure|uri]
     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
 
-#### `RESULT`
+#### RESULT
 
     [RESULT, CALL.Request|id, Details|dict]
     [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
     [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
 
-#### `REGISTER`
+#### REGISTER
 
     [REGISTER, Request|id, Options|dict, Procedure|uri]
 
-#### `REGISTERED`
+#### REGISTERED
 
-   [REGISTERED, REGISTER.Request|id, Registration|id]
+	[REGISTERED, REGISTER.Request|id, Registration|id]
 
-#### `UNREGISTER`
+#### UNREGISTER
 
     [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
-#### `UNREGISTERED`
+#### UNREGISTERED
 
     [UNREGISTERED, UNREGISTER.Request|id]
 
-#### `INVOCATION`
+#### INVOCATION
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list]
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
-#### `YIELD`
+#### YIELD
 
     [YIELD, INVOCATION.Request|id, Options|dict]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
@@ -523,7 +523,7 @@ It is a protocol error to receive a second `HELLO` message during the lifetime o
 
 **Roles and Features**
 
-A *Client* must annouce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+A *Client* must announce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
  * `publisher`
  * `subscriber`
@@ -560,7 +560,7 @@ In the WAMP Basic Profile without session authentication, a `WELCOME` message is
 
 **Roles and Features**
 
-A *Router* must annouce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+A *Router* must announce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
  * `broker`
  * `dealer`
@@ -576,16 +576,6 @@ The `<role>|dict` is a dictionary describing **features** supported by the peer 
           "broker": {}
        }
    	}]
-
-*Feature Announcemenet*
-
-The use of *feature announcement* in WAMP allows for
-
- * only implementing subsets of functionality
- * graceful degration
-
-For a description of advanced features, see part 2 of this document.
-
 
 
 #### ABORT
