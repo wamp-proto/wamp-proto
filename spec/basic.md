@@ -354,6 +354,11 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 
 WAMP defines the following messages which are explained in detail in the following sections.
 
+The messages concerning the WAMP session itself are mandatory for all *Peers*, i.e. a *Client* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`, `ABORT` and `GOODBYE`.
+
+All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Client* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
+
+
 #### HELLO
 
 Sent by a *Client* to initate opening of a WAMP session to a *Router*.
@@ -487,12 +492,6 @@ Actual yield from an endpoint send by a *Callee* to *Dealer*.
     [YIELD, INVOCATION.Request|id, Options|dict]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
-
-
-The messages concerning the WAMP session itself are mandatory for all *Peers*, i.e. a *Client* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`, `ABORT` and `GOODBYE`.
-
-All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Client* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
-
 
 
 ### Message Codes and Direction
