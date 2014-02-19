@@ -325,15 +325,15 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 
 	[32, 713845233, {}, "com.myapp.mytopic1"]
 
-**Extensibility**
-Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
-
-**Polymorphism**
-For a given `MessageType` and number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
-
-**Structure**
-The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
-
+> **Extensibility**
+> Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
+> 
+> **Polymorphism**
+> For a given `MessageType` and number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+> 
+> **Structure**
+> The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
+> 
 
 ### Message Definitions
 
@@ -341,21 +341,31 @@ WAMP defines the following messages which are explained in detail in the followi
 
 #### HELLO
 
+Sent by a *Client* to initate opening of a WAMP session to a *Router*.
+
     [HELLO, Realm|uri, Details|dict]
 
 #### WELCOME
+
+Sent by a *Router* to accept a *Client*. This starts a new WAMP session.
 
     [WELCOME, Session|id, Details|dict]
 
 #### ABORT
 
+Sent by a *Peer* to abort the opening of a WAMP session.
+
     [ABORT, Reason|uri, Details|dict]
 
 #### GOODBYE
 
+Sent by a *Peer* to close WAMP session and echoed by the receiving *Peer*. 
+
     [GOODBYE, Reason|uri, Details|dict]
 
 #### ERROR
+
+Error reply sent by a *Peer* as an error response to different kinds of requests.
 
     [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri]
     [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Arguments|list]
@@ -363,27 +373,39 @@ WAMP defines the following messages which are explained in detail in the followi
 
 #### PUBLISH
 
+Sent by a *Publisher* to a *Broker* to publish an event.
+
     [PUBLISH, Request|id, Options|dict, Topic|uri]
     [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
     [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, ArgumentsKw|dict]
 
 #### PUBLISHED
 
+Acknowledge sent by a *Broker* to a *Publisher* for acknowledged publications.
+
     [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
 #### SUBSCRIBE
+
+Subscribe request sent by a *Subscriber* to a *Broker* to subscribe to a topic. 
 
     [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
 #### SUBSCRIBED
 
+Acknowledge sent by a *Broker* to a *Subscriber* to acknowledge a subscription.
+
     [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
 #### UNSUBSCRIBE
 
+Unsubscribe request sent by a *Subscriber* to a *Broker* to unsubscribe a subscription.
+
     [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
 #### UNSUBSCRIBED
+
+Acknowledge sent by a *Broker* to a *Subscriber* to acknowledge unsubscription.
 
     [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
