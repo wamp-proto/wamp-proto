@@ -494,7 +494,7 @@ In order to provide a single, authoritative overview of *all* WAMP messages, thi
 
 ## Session Management
 
-The message flow between *Endpoints* and *Routers* for establishing and tearing down sessions involves the following messages:
+The message flow between *Clients* and *Routers* for opening and closing WAMP sessions involves the following messages:
 
 1. `HELLO`
 2. `WELCOME`
@@ -505,76 +505,76 @@ The message flow between *Endpoints* and *Routers* for establishing and tearing 
 
 #### HELLO
 
-After the underlying transport has been opened, a establishment of a WAMP session is initiated by the the *Endpoint* sending a `HELLO` message to the *Router*
+After the underlying transport has been established, opening of a WAMP session is initiated by the *Client* sending a `HELLO` message to the *Router*
 
     [HELLO, Realm|uri, Details|dict]
 
- * `Realm` is a string identifying the WAMP routing and administrative domain for which the session is to be established.
+ * `Realm` is a string identifying the realm this session should attach to
  * `Details` is a dictionary that allows to provide additional opening information (see below).
 
-The `HELLO` message MUST be the very first message sent after the transport has been established.
-In basic implementations without authentication it MUST be followed by a `WELCOME` or `ABORT` by the *Router*.
+The `HELLO` message MUST be the very first message sent by the *Client* after the transport has been established.
+In the WAMP Basic Profile without session authentication the *Router* will reply with a `WELCOME` or `ABORT` message.
 
 ![alt text](figure/hello.png "WAMP Session success")
 
-A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` message to the *Endpoint*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message.
+A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` message to the *Client*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message (see below).
 
-It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Router* MUST fail the session if that happens.
+It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Peer* must fail the session if that happens.
 
 **Roles and Features**
 
-An *Endpoint* MUST annouce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+A *Client* must annouce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
  * `publisher`
  * `subscriber`
  * `caller`
  * `callee`
 
-An *Endpoint* can support any combination of above roles but MUST support at least one role.
+A *Client* can support any combination of above roles but must support at least one role.
 
-The `<role>|dict` is a dictionary describing features supported by the peer for that role. In basic implementations, this will be empty.
+The `<role>|dict` is a dictionary describing **features** supported by the peer for that role. With WAMP Basic Profile implementations, this will be empty.
 
-*Example: An *Endpoint* that implements the roles of Publisher and Subscriber, and only supports basic features.*
+*Example: A Client that implements the Publisher and Subscriber roles of the WAMP Basic Profile.*
 
-	[1, 9129137332, {
-      "roles": {
-         "publisher": {},
-         "subscriber": {}
-      }
+	[1, "somerealm", {
+       "roles": {
+          "publisher": {},
+          "subscriber": {}
+       }
    	}]
 
 
 #### WELCOME
 
-A *Router* completes the establishment of a WAMP connection by sending a `WELCOME` message to the *Endpoint*.
+A *Router* completes the opening of a WAMP session by sending a `WELCOME` reply message to the *Client*.
 
    	[WELCOME, Session|id, Details|dict]
 
- * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session. The `WELCOME.Session` can be used for specifying lists of excluded or eligible receivers when publishing events (see below).
- * `Details` is a dictionary that allows to provide additional information regarding the established session (see below).
+ * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session.
+ * `Details` is a dictionary that allows to provide additional information regarding the open session (see below).
 
-In basic implementations without authentication, a `WELCOME` MUST be sent directly in response to a `HELLO` message.
+In the WAMP Basic Profile without session authentication, a `WELCOME` message is the first message sen by the *Router*, directly in response to a `HELLO` message received from the *Client*.
 
-> Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. create the realm, or deny the establishment of the session.
+> Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
 >
 
 **Roles and Features**
 
-A *Router* MUST annouce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+A *Router* must annouce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
  * `broker`
  * `dealer`
 
-A *Router* MUST support at least one role, and MAY support both roles.
+A *Router* must support at least one role, and may support both roles.
 
-The `<role>|dict` is a dictionary describing features supported by the peer for that role. In basic implementations, this is empty.
+The `<role>|dict` is a dictionary describing **features** supported by the peer for that role. With WAMP Basic Profile implementations, this will be empty.
 
-*Example: A Router implementing the role of Broker and supporting only basic features.*
+*Example: A Router implementing the Broker role of the WAMP Basic Profile.*
 
-   	[1, 9129137332, {
-      "roles": {
-         "broker": {}
-      }
+   	[2, 9129137332, {
+       "roles": {
+          "broker": {}
+       }
    	}]
 
 *Feature Announcemenet*
@@ -590,7 +590,7 @@ For a description of advanced features, see part 2 of this document.
 
 #### ABORT
 
-Both the *Router* and the *Endpoint* may abort the establishment of a WAMP session 
+Both the *Router* and the *Client* may abort the opening of a WAMP session 
 
 ![alt text](figure/hello_denied.png "WAMP Session denied")
 
@@ -601,7 +601,7 @@ by sending an `ABORT` message.
  * `Reason` MUST be an URI.
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
 
-No response to a `ABORT` message is expected.
+No response to an `ABORT` message is expected.
 
 *Example*
 
@@ -610,7 +610,7 @@ No response to a `ABORT` message is expected.
 
 ### Session Closing
 
-A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Endpoint* and ends when the underlying transport closes or when the session is closed explicitly by a `GOODBYE` message sent by one peer and a `GOODBYE` message sent from the other peer in response.
+A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Client* and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a `GOODBYE` message sent by one *Peer* and a `GOODBYE` message sent from the other *Peer* in response.
 
    	[GOODBYE, Reason|uri, Details|dict]
 
@@ -635,18 +635,10 @@ and the other peer replies
 	[2, "wamp.error.goodbye_and_out"]
 
 
-*Example*. One *Peer* initiates closing
-
-    [2, "wamp.error.protocol_violation", {"message": "Invalid type for 'topic' in SUBSCRIBE."}]
-
-and the other peer replies
-
-	[2, "wamp.error.goodbye_and_out"]
-
 
 ## Publish & Subscribe
 
-All of the following features for Publish & Subscribe are mandatory for WAMP implementations supporting the respective roles.
+All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles.
 
 
 ### Subscribing and Unsubscribing
