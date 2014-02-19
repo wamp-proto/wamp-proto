@@ -426,12 +426,15 @@ Acknowledge sent by a *Broker* to a *Subscriber* to acknowledge unsubscription.
 
 #### EVENT
 
+Event dispatched by *Broker* to *Subscribers* for subscription the event was matching.
+
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
-    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list,
-      PUBLISH.ArgumentsKw|dict]
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 
 #### CALL
+
+Call as originally issued by the *Caller* to the *Dealer*.
 
     [CALL, Request|id, Options|dict, Procedure|uri]
     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
@@ -439,33 +442,47 @@ Acknowledge sent by a *Broker* to a *Subscriber* to acknowledge unsubscription.
 
 #### RESULT
 
+Result of a call as returned by *Dealer* to *Caller*.
+
     [RESULT, CALL.Request|id, Details|dict]
     [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
     [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
 
 #### REGISTER
 
+A *Callees* request to register an endpoint at a *Dealer*.
+
     [REGISTER, Request|id, Options|dict, Procedure|uri]
 
 #### REGISTERED
+
+Acknowledge sent by a *Dealer* to a *Callee* for successful registration.
 
 	[REGISTERED, REGISTER.Request|id, Registration|id]
 
 #### UNREGISTER
 
+A *Callees* request to unregister a previsouly established registration.
+
     [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
 #### UNREGISTERED
 
+Acknowledge sent by a *Dealer* to a *Callee* for successful unregistration.
+
     [UNREGISTERED, UNREGISTER.Request|id]
 
 #### INVOCATION
+
+Actual invocation of an endpoint sent by *Dealer* to a *Callee*.
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list]
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 #### YIELD
+
+Actual yield from an endpoint send by a *Callee* to *Dealer*.
 
     [YIELD, INVOCATION.Request|id, Options|dict]
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
