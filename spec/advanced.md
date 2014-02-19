@@ -52,6 +52,21 @@ For an introduction to the protocol, and a description of basic features and usa
 
 ## Transports
 
+
+![alt text](figure/sessions3.png "Transports, Sessions and Peers")
+
+
+### Other Transports
+
+Besides the WebSocket transport, the following WAMP transports are under development:
+
+ * HTTP 1.0/1.1 long-polling
+
+Here, the bi-directionality requirement for the transport is implemented by using long-polling for the server-side sending of messages.
+
+Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
+
+
 ### WebSocket Transport Modes
 
 #### Unbatched Transport

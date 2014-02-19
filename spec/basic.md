@@ -203,9 +203,9 @@ These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MU
 
 *Examples*
 
-   com.myapp.mytopic1
-   com.myapp.myprocedure1
-   com.myapp.myerror1
+   	com.myapp.mytopic1
+   	com.myapp.myprocedure1
+   	com.myapp.myerror1
 
 The URIs are understood to form a single, global, hierarchical namespace for WAMP.
 
@@ -228,8 +228,8 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 
 *Examples*
 
-   wamp.error.not_authorized
-   wamp.metatopic.subscriber.add
+	wamp.error.not_authorized
+   	wamp.metatopic.subscriber.add
 
 ### IDs
 
@@ -296,22 +296,22 @@ WAMP assumes a *transport* with the following characteristics:
 
 The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
 
-As a default, each WAMP message is transmitted as a separate WebSocket message.
+With WebSocket in **unbatched mode**, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
+
+The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between *Peers* using the WebSocket subprotocol negotiation mechanism.
+
+WAMPv2 uses the following WebSocket subprotocol identifiers for unbatched modes:
+
+ * `wamp.2.json`
+ * `wamp.2.msgpack`
+
+With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
+
+With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
+
+The following sequence diagram shows the relation between the lifetime of a WebSocket transport and WAMP sessions:
 
 ![alt text](figure/sessions4.png "Transport and Session Lifetime")
-
-![alt text](figure/sessions3.png "Transports, Sessions and Peers")
-
-
-### Other Transports
-
-Besides the WebSocket transport, the following WAMP transports are under development:
-
- * HTTP 1.0/1.1 long-polling
-
-Here, the bi-directionality requirement for the transport is implemented by using long-polling for the server-side sending of messages.
-
-Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
 
 
 ## Messages
@@ -330,6 +330,10 @@ The notation `Element|type` denotes a message element named `Element` of type `t
  * `dict`: a dictionary (map)
  * `list`: a list (array)
 
+*Example* A `SUBSCRIBE` message:
+
+	[32, 713845233, {}, "com.myapp.mytopic1"]
+
 **Extensibility**
 Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
 
@@ -338,12 +342,6 @@ For a given `MessageType` and number of message elements the expected types are 
 
 **Structure**
 The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
-
-*Examples*
-
-A `SUBSCRIBE` message:
-
-	[32, 713845233, {}, "com.myapp.mytopic1"]
 
 
 ### Message Definitions
