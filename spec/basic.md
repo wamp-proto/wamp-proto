@@ -147,12 +147,12 @@ This document describes WAMP client-router communication. Direct client-client c
 
 Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*.
 
-While a *Router* may only act as a *Broker* and a *Dealer*, the system process the *Router* runs in may additionally implement an *Endpoint* with e.g. a *Callee* role. Here the *Router* may establish a connection with the *Endpoint* via WAMP direct calls and callbacks, so that no message serialization is necessary.
+While a *Router* may only act as a *Broker* and a *Dealer*, the system process the *Router* runs in may additionally implement an *Client* with e.g. a *Callee* role. Here the *Router* may establish a connection with the *Client* via WAMP direct calls and callbacks, so that no message serialization is necessary.
 
 
 **Symmetric Messaging**
 
-It is important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishing a TCP and WebSocket connection to a *server*), and clients establish sessions by joining realms on routers, WAMP itself is designed to be fully symmetric for application components. 
+It is important to note that though the establishment of a *Transport* might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and *Clients* establish sessions by attaching to *Realms* on *Routers*, WAMP itself is designed to be fully symmetric for application components. 
 
 After the transport and a session has been established, any application component may act as *Caller*, *Callee*, *Publisher* and *Subscriber* at the same time. *Routers* provide the fabric on top of which WAMP runs a symmetric application messaging service.
 
@@ -375,13 +375,13 @@ Sent by a *Router* to accept a *Client*. This starts a new WAMP session.
 
 Sent by a *Peer* to abort the opening of a WAMP session.
 
-    [ABORT, Reason|uri, Details|dict]
+    [ABORT, Details|dict, Reason|uri]
 
 #### GOODBYE
 
 Sent by a *Peer* to close WAMP session and echoed by the receiving *Peer*. 
 
-    [GOODBYE, Reason|uri, Details|dict]
+    [GOODBYE, Details|dict, Reason|uri]
 
 #### ERROR
 
@@ -630,7 +630,7 @@ Both the *Router* and the *Client* may abort the opening of a WAMP session
 
 by sending an `ABORT` message.
 
-   	[ABORT, Reason|uri, Details|dict]
+   	[ABORT, Details|dict, Reason|uri]
 
  * `Reason` MUST be an URI.
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
@@ -639,7 +639,7 @@ No response to an `ABORT` message is expected.
 
 *Example*
 
-    [3, "wamp.error.nonexistent_realm", {"message": "The realm does not exist."}]
+    [3, {"message": "The realm does not exist."}, "wamp.error.nonexistent_realm"]
 
 
 ### Session Closing
@@ -649,27 +649,27 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
 ![alt text](figure/goodbye.png "WAMP Session denied")
 
 
-   	[GOODBYE, Reason|uri, Details|dict]
+   	[GOODBYE, Details|dict, Reason|uri]
 
  * `Reason` MUST be an URI.
  * `Details` is a dictionary that allows to provide additional, optional closing information (see below).
 
 *Example*. One *Peer* initiates closing
 
-    [6, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
+    [6, {"message": "The host is shutting down now."}, "wamp.error.system_shutdown"]
 
 and the other peer replies
 
-	[6, "wamp.error.goodbye_and_out", {}]
+	[6, {}, "wamp.error.goodbye_and_out"]
 
 
 *Example*. One *Peer* initiates closing
 
-    [6, "wamp.error.close_realm", {}]
+    [6, {}, "wamp.error.close_realm"]
 
 and the other peer replies
 
-	[6, "wamp.error.goodbye_and_out", {}]
+	[6, {}, "wamp.error.goodbye_and_out"]
 
 
 

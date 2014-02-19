@@ -34,10 +34,10 @@
      fit-margin-left="10"
      fit-margin-bottom="10"
      fit-margin-right="10"
-     inkscape:window-width="1680"
-     inkscape:window-height="988"
+     inkscape:window-width="1440"
+     inkscape:window-height="838"
      inkscape:window-x="-8"
-     inkscape:window-y="320"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata7">
@@ -57,348 +57,348 @@
      id="layer1"
      transform="translate(368.10106,-239.05732)">
     <g
-       id="g3048"
-       transform="translate(-358.10836,247.31104)">
+       id="g3049"
+       transform="translate(-356.39071,246.38794)">
       <path
-         id="path3050"
-         d="m 935.68225,779.73521 c 13.05422,0 23.68519,-10.63097 23.68519,-23.68519 l 0,0 0,-297.7455 c 0,-13.05422 -10.63097,-23.68519 -23.68519,-23.68519 l 0,0 -909.964668,0 c -13.054213,0 -23.6070205,10.63097 -23.6070205,23.68519 l 0,0 0,297.7455 c 0,13.05422 10.5528075,23.68519 23.6070205,23.68519 l 0,0 909.964668,0 z"
+         id="path3051"
+         d="m 935.15625,779.29688 c 13.04687,0 23.67187,-10.625 23.67187,-23.67188 l 0,0 0,-297.57812 c 0,-13.04688 -10.625,-23.67188 -23.67187,-23.67188 l 0,0 -909.453125,0 c -13.046875,0 -23.59375,10.625 -23.59375,23.67188 l 0,0 0,297.57812 c 0,13.04688 10.546875,23.67188 23.59375,23.67188 l 0,0 909.453125,0 z"
          style="fill:#d9d9d9;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3052"
-         d="m 935.68225,779.73521 c 13.05422,0 23.68519,-10.63097 23.68519,-23.68519 l 0,0 0,-297.7455 c 0,-13.05422 -10.63097,-23.68519 -23.68519,-23.68519 l 0,0 -909.964668,0 c -13.054213,0 -23.6070205,10.63097 -23.6070205,23.68519 l 0,0 0,297.7455 c 0,13.05422 10.5528075,23.68519 23.6070205,23.68519 l 0,0 909.964668,0 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3053"
+         d="m 935.15625,779.29688 c 13.04687,0 23.67187,-10.625 23.67187,-23.67188 l 0,0 0,-297.57812 c 0,-13.04688 -10.625,-23.67188 -23.67187,-23.67188 l 0,0 -909.453125,0 c -13.046875,0 -23.59375,10.625 -23.59375,23.67188 l 0,0 0,297.57812 c 0,13.04688 10.546875,23.67188 23.59375,23.67188 l 0,0 909.453125,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3054"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="761.67816"
-         x="464.01086"
+         id="text3055"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="761.25"
+         x="463.75"
          xml:space="preserve">Host</text>
       <path
-         id="path3056"
-         d="m 935.68225,411.01231 c 13.05422,0 23.68519,-10.55281 23.68519,-23.60703 l 0,0 0,-290.788466 c 0,-13.054213 -10.63097,-23.607021 -23.68519,-23.607021 l -907.54143,0 c -13.054214,0 -23.6851902,10.552808 -23.6851902,23.607021 l 0,0 0,290.788466 c 0,13.05422 10.6309762,23.60703 23.6851902,23.60703 l 0,0 907.54143,0 z"
+         id="path3057"
+         d="m 935.15625,410.78125 c 13.04687,0 23.67187,-10.54687 23.67187,-23.59375 l 0,0 0,-290.625 c 0,-13.046875 -10.625,-23.59375 -23.67187,-23.59375 l -907.03125,0 c -13.046875,0 -23.671875,10.546875 -23.671875,23.59375 l 0,0 0,290.625 c 0,13.04688 10.625,23.59375 23.671875,23.59375 l 0,0 907.03125,0 z"
          style="fill:#d9d9d9;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3058"
-         d="m 935.68225,411.01231 c 13.05422,0 23.68519,-10.55281 23.68519,-23.60703 l 0,0 0,-290.788466 c 0,-13.054213 -10.63097,-23.607021 -23.68519,-23.607021 l -907.54143,0 c -13.054214,0 -23.6851902,10.552808 -23.6851902,23.607021 l 0,0 0,290.788466 c 0,13.05422 10.6309762,23.60703 23.6851902,23.60703 l 0,0 907.54143,0 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3059"
+         d="m 935.15625,410.78125 c 13.04687,0 23.67187,-10.54687 23.67187,-23.59375 l 0,0 0,-290.625 c 0,-13.046875 -10.625,-23.59375 -23.67187,-23.59375 l -907.03125,0 c -13.046875,0 -23.671875,10.546875 -23.671875,23.59375 l 0,0 0,290.625 c 0,13.04688 10.625,23.59375 23.671875,23.59375 l 0,0 907.03125,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3060"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="392.72076"
-         x="465.26154"
+         id="text3061"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="392.5"
+         x="465"
          xml:space="preserve">Host</text>
       <path
-         id="path3062"
-         d="m 841.176,340.11307 c 13.05421,0 23.60702,-10.63097 23.60702,-23.68519 l 0,0 0,-189.0125 c 0,-13.05422 -10.55281,-23.68519 -23.60702,-23.68519 l 0,0 -434.932,0 c -13.05421,0 -23.60702,10.63097 -23.60702,23.68519 l 0,0 0,189.0125 c 0,13.05422 10.55281,23.68519 23.60702,23.68519 l 434.932,0 z"
+         id="path3063"
+         d="m 840.70312,339.92188 c 13.04688,0 23.59376,-10.625 23.59376,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54688,-23.67187 -23.59376,-23.67187 l 0,0 -434.6875,0 c -13.04687,0 -23.59374,10.625 -23.59374,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.54687,23.67188 23.59374,23.67188 l 434.6875,0 z"
          style="fill:#a6a6a6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3064"
-         d="m 841.176,340.11307 c 13.05421,0 23.60702,-10.63097 23.60702,-23.68519 l 0,0 0,-189.0125 c 0,-13.05422 -10.55281,-23.68519 -23.60702,-23.68519 l 0,0 -434.932,0 c -13.05421,0 -23.60702,10.63097 -23.60702,23.68519 l 0,0 0,189.0125 c 0,13.05422 10.55281,23.68519 23.60702,23.68519 l 434.932,0 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3065"
+         d="m 840.70312,339.92188 c 13.04688,0 23.59376,-10.625 23.59376,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54688,-23.67187 -23.59376,-23.67187 l 0,0 -434.6875,0 c -13.04687,0 -23.59374,10.625 -23.59374,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.54687,23.67188 23.59374,23.67188 l 434.6875,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3066"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="321.43069"
-         x="566.56848"
+         id="text3067"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="321.25"
+         x="566.25"
          xml:space="preserve">Server Process</text>
       <path
-         id="path3068"
-         d="m 595.33467,725.32963 c 13.05422,0 23.68519,-10.55281 23.68519,-23.60702 l 0,0 0,-189.09068 c 0,-13.05421 -10.63097,-23.60702 -23.68519,-23.60702 l -189.09067,0 c -13.05421,0 -23.60702,10.55281 -23.60702,23.60702 l 0,189.09068 c 0,13.05421 10.55281,23.60702 23.60702,23.60702 l 0,0 189.09067,0 z"
+         id="path3069"
+         d="m 595,724.92188 c 13.04688,0 23.67188,-10.54688 23.67188,-23.59376 l 0,0 0,-188.98437 C 618.67188,499.29688 608.04688,488.75 595,488.75 l -188.98438,0 c -13.04687,0 -23.59374,10.54688 -23.59374,23.59375 l 0,188.98437 c 0,13.04688 10.54687,23.59376 23.59374,23.59376 l 0,0 188.98438,0 z"
          style="fill:#a6a6a6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3070"
-         d="m 595.33467,725.32963 c 13.05422,0 23.68519,-10.55281 23.68519,-23.60702 l 0,0 0,-189.09068 c 0,-13.05421 -10.63097,-23.60702 -23.68519,-23.60702 l -189.09067,0 c -13.05421,0 -23.60702,10.55281 -23.60702,23.60702 l 0,189.09068 c 0,13.05421 10.55281,23.60702 23.60702,23.60702 l 0,0 189.09067,0 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3071"
+         d="m 595,724.92188 c 13.04688,0 23.67188,-10.54688 23.67188,-23.59376 l 0,0 0,-188.98437 C 618.67188,499.29688 608.04688,488.75 595,488.75 l -188.98438,0 c -13.04687,0 -23.59374,10.54688 -23.59374,23.59375 l 0,188.98437 c 0,13.04688 10.54687,23.59376 23.59374,23.59376 l 0,0 188.98438,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3072"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="706.64728"
-         x="446.50101"
+         id="text3073"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="706.25"
+         x="446.25"
          xml:space="preserve">Client Process</text>
       <path
-         id="path3074"
-         d="m 406.244,127.41538 0,141.79846 189.09067,0 0,-141.79846 -189.09067,0 z"
+         id="path3075"
+         d="m 406.01562,127.34375 0,141.71875 188.98438,0 0,-141.71875 -188.98438,0 z"
          style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3076"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
-         y="203.86459"
-         x="470.26437"
+         id="text3077"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="203.75"
+         x="470"
          xml:space="preserve">Router</text>
       <path
-         id="path3078"
-         d="m 406.244,512.63193 0,141.79847 189.09067,0 0,-141.79847 -189.09067,0 z"
+         id="path3079"
+         d="m 406.01562,512.34375 0,141.71875 188.98438,0 0,-141.71875 -188.98438,0 z"
          style="fill:#595959;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3080"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
-         y="544.05585"
-         x="461.50943"
-         xml:space="preserve">Endpoint</text>
+         id="text3081"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="543.75"
+         x="475"
+         xml:space="preserve">Client</text>
       <path
-         id="path3082"
-         d="m 429.92919,592.98961 0,61.44079 141.79846,0 0,-61.44079 -141.79846,0 z"
+         id="path3083"
+         d="m 429.6875,592.65625 0,61.40625 141.71875,0 0,-61.40625 -141.71875,0 z"
          style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3084"
-         style="font-size:20.01124954px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="629.10364"
-         x="454.00522"
+         id="text3085"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="628.75"
+         x="453.75"
          xml:space="preserve">App Code</text>
       <path
-         id="path3086"
-         d="m 652.08533,127.41538 0,141.79846 189.09067,0 0,-141.79846 -189.09067,0 z"
+         id="path3087"
+         d="m 651.71875,127.34375 0,141.71875 188.98437,0 0,-141.71875 -188.98437,0 z"
          style="fill:#595959;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3088"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
-         y="158.83929"
-         x="706.64728"
-         xml:space="preserve">Endpoint</text>
+         id="text3089"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="158.75"
+         x="720"
+         xml:space="preserve">Client</text>
       <path
-         id="path3090"
-         d="m 675.69235,207.77305 0,61.44079 141.87663,0 0,-61.44079 -141.87663,0 z"
+         id="path3091"
+         d="m 675.3125,207.65625 0,61.40625 141.79688,0 0,-61.40625 -141.79688,0 z"
          style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3092"
-         style="font-size:20.01124954px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="243.8871"
-         x="699.14301"
+         id="text3093"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="243.75"
+         x="698.75"
          xml:space="preserve">App Code</text>
       <path
-         id="path3094"
-         d="m 500.82842,269.21384 0,243.41809"
-         style="fill:none;stroke:#fa72c6;stroke-width:6.80069828px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3095"
+         d="m 500.54688,269.0625 0,243.28125"
+         style="fill:none;stroke:#fa72c6;stroke-width:6.796875px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3096"
-         d="m 595.33467,198.31461 56.75066,0"
-         style="fill:none;stroke:#fa72c6;stroke-width:6.80069828px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3097"
+         d="m 595,198.20312 56.71875,0"
+         style="fill:none;stroke:#fa72c6;stroke-width:6.796875px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3098"
-         d="M 250.29696,479.56647 500.82842,465.33972"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3099"
+         d="M 250.15625,479.29688 500.54688,465.07812"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3100"
-         d="m 145.08156,455.88128 0,47.29221 210.35263,0 0,-47.29221 -210.35263,0 z"
+         id="path3101"
+         d="m 145,455.625 0,47.26562 210.23438,0 0,-47.26562 -210.23438,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3102"
-         d="m 145.08156,503.17349 210.35263,0 0,-47.29221 -210.35263,0 0,47.29221 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3103"
+         d="m 145,502.89062 210.23438,0 0,-47.26562 -210.23438,0 0,47.26562 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3104"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="474.01648"
-         x="183.85336"
+         id="text3105"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="473.75"
+         x="183.75"
          xml:space="preserve">Session runs over</text>
       <text
-         id="text3106"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="496.52914"
-         x="155.08717"
+         id="text3107"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="155"
          xml:space="preserve">WAMP</text>
       <text
-         id="text3108"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="496.52914"
-         x="207.61671"
+         id="text3109"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="207.5"
          xml:space="preserve">-</text>
       <text
-         id="text3110"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="496.52914"
-         x="212.61954"
+         id="text3111"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="212.5"
          xml:space="preserve">WebSocket </text>
       <text
-         id="text3112"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="496.52914"
-         x="302.67014"
+         id="text3113"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="302.5"
          xml:space="preserve">/ </text>
       <text
-         id="text3114"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="496.52914"
-         x="311.42508"
+         id="text3115"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="311.25"
          xml:space="preserve">TCP</text>
       <path
-         id="path3116"
-         d="M 669.82968,25.717582 623.71,198.31461"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3117"
+         d="M 669.45312,25.703125 623.35938,198.20312"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3118"
-         d="m 559.92414,2.1105615 0,47.2922105 219.81107,0 0,-47.2922105 -219.81107,0 z"
+         id="path3119"
+         d="m 521.17188,2.109375 0,47.265625 296.48437,0 0,-47.265625 -296.48437,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3120"
-         d="m 559.92414,49.402772 219.81107,0 0,-47.2922105 -219.81107,0 0,47.2922105 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3121"
+         d="m 521.17188,49.375 296.48437,0 0,-47.265625 -296.48437,0 0,47.265625 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3122"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="20.01125"
-         x="602.83887"
+         id="text3123"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="20"
+         x="602.5"
          xml:space="preserve">Session runs over</text>
       <text
-         id="text3124"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="43.774609"
-         x="577.82483"
-         xml:space="preserve">direct calls and callbacks</text>
+         id="text3125"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="548.75"
+         xml:space="preserve">WAMP direct calls and callbacks</text>
       <path
-         id="path3126"
-         d="m 297.58917,340.11307 c 13.05421,0 23.60702,-10.63097 23.60702,-23.68519 l 0,0 0,-189.0125 c 0,-13.05422 -10.55281,-23.68519 -23.60702,-23.68519 l -189.09068,0 c -13.05421,0 -23.685186,10.63097 -23.685186,23.68519 l 0,0 0,189.0125 c 0,13.05422 10.630976,23.68519 23.685186,23.68519 l 0,0 189.09068,0 z"
+         id="path3127"
+         d="m 297.42188,339.92188 c 13.04687,0 23.59374,-10.625 23.59374,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54687,-23.67187 -23.59374,-23.67187 l -188.98438,0 c -13.046875,0 -23.671875,10.625 -23.671875,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.625,23.67188 23.671875,23.67188 l 0,0 188.98438,0 z"
          style="fill:#a6a6a6;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3128"
-         d="m 297.58917,340.11307 c 13.05421,0 23.60702,-10.63097 23.60702,-23.68519 l 0,0 0,-189.0125 c 0,-13.05422 -10.55281,-23.68519 -23.60702,-23.68519 l -189.09068,0 c -13.05421,0 -23.685186,10.63097 -23.685186,23.68519 l 0,0 0,189.0125 c 0,13.05422 10.630976,23.68519 23.685186,23.68519 l 0,0 189.09068,0 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3129"
+         d="m 297.42188,339.92188 c 13.04687,0 23.59374,-10.625 23.59374,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54687,-23.67187 -23.59374,-23.67187 l -188.98438,0 c -13.046875,0 -23.671875,10.625 -23.671875,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.625,23.67188 23.671875,23.67188 l 0,0 188.98438,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3130"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="321.43069"
-         x="148.83366"
+         id="text3131"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="321.25"
+         x="148.75"
          xml:space="preserve">Client Process</text>
       <path
-         id="path3132"
-         d="m 108.49849,127.41538 0,141.79846 189.09068,0 0,-141.79846 -189.09068,0 z"
+         id="path3133"
+         d="m 108.4375,127.34375 0,141.71875 188.98438,0 0,-141.71875 -188.98438,0 z"
          style="fill:#595959;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3134"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
-         y="158.83929"
-         x="163.84212"
-         xml:space="preserve">Endpoint</text>
+         id="text3135"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="158.75"
+         x="177.5"
+         xml:space="preserve">Client</text>
       <path
-         id="path3136"
-         d="m 132.10551,207.77305 0,61.44079 141.79847,0 0,-61.44079 -141.79847,0 z"
+         id="path3137"
+         d="m 132.03125,207.65625 0,61.40625 141.71875,0 0,-61.40625 -141.71875,0 z"
          style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3138"
-         style="font-size:20.01124954px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="243.8871"
-         x="156.33789"
+         id="text3139"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="243.75"
+         x="156.25"
          xml:space="preserve">App Code</text>
       <path
-         id="path3140"
-         d="m 406.244,198.31461 -108.65483,0"
-         style="fill:none;stroke:#fa72c6;stroke-width:6.80069828px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3141"
+         d="m 406.01562,198.20312 -108.59374,0"
+         style="fill:none;stroke:#fa72c6;stroke-width:6.796875px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3142"
-         d="M 315.25535,25.717582 344.80321,198.31461"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3143"
+         d="M 315.07812,25.703125 344.60938,198.20312"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3144"
-         d="m 143.36184,2.1105615 0,47.2922105 343.86518,0 0,-47.2922105 -343.86518,0 z"
+         id="path3145"
+         d="m 143.28125,2.109375 0,47.265625 343.67187,0 0,-47.265625 -343.67187,0 z"
          style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3146"
-         d="m 143.36184,49.402772 343.86518,0 0,-47.2922105 -343.86518,0 0,47.2922105 z"
-         style="fill:none;stroke:#000000;stroke-width:0.3908447px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         id="path3147"
+         d="m 143.28125,49.375 343.67187,0 0,-47.265625 -343.67187,0 0,47.265625 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3148"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="20.01125"
-         x="248.88992"
+         id="text3149"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="20"
+         x="248.75"
          xml:space="preserve">Session runs over</text>
       <text
-         id="text3150"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="43.774609"
-         x="157.58859"
+         id="text3151"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="157.5"
          xml:space="preserve">WAMP</text>
       <text
-         id="text3152"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="43.774609"
-         x="208.86742"
+         id="text3153"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="208.75"
          xml:space="preserve">-</text>
       <text
-         id="text3154"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="43.774609"
-         x="215.12093"
+         id="text3155"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="215"
          xml:space="preserve">WebSocket </text>
       <text
-         id="text3156"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="43.774609"
-         x="305.17157"
+         id="text3157"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="305"
          xml:space="preserve">/ </text>
       <text
-         id="text3158"
-         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
-         y="43.774609"
-         x="313.92648"
+         id="text3159"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="313.75"
          xml:space="preserve">Unix Domain Sockets</text>
       <path
-         id="path3160"
-         d="m 719.46696,394.44049 0,146.56677 307.20394,0 0,-146.56677 -307.20394,0 z"
+         id="path3161"
+         d="m 719.0625,394.21875 0,146.48437 307.0313,0 0,-146.48437 -307.0313,0 z"
          style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <path
-         id="path3162"
-         d="m 705.24021,380.29191 0,146.4886 307.28209,0 0,-146.4886 -307.28209,0 z"
+         id="path3163"
+         d="m 704.84375,380.07812 0,146.40626 307.10935,0 0,-146.40626 -307.10935,0 z"
          style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
          inkscape:connector-curvature="0" />
       <text
-         id="text3164"
-         style="font-size:20.01124954px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="435.24469"
-         x="745.41907"
+         id="text3165"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="435"
+         x="745"
          xml:space="preserve">Application code</text>
       <text
-         id="text3166"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="435.24469"
-         x="911.76257"
+         id="text3167"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="435"
+         x="911.25"
          xml:space="preserve">can be </text>
       <text
-         id="text3168"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="459.00803"
-         x="716.65289"
+         id="text3169"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="458.75"
+         x="716.25"
          xml:space="preserve">deployed and distributed flexibly </text>
       <text
-         id="text3170"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="484.02209"
-         x="755.42468"
+         id="text3171"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="483.75"
+         x="755"
          xml:space="preserve">-</text>
       <text
-         id="text3172"
-         style="font-size:20.01124954px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
-         y="484.02209"
-         x="767.9317"
+         id="text3173"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="483.75"
+         x="767.5"
          xml:space="preserve">without code changes</text>
     </g>
   </g>
