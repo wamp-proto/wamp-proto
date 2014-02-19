@@ -337,11 +337,7 @@ The *application* payload (that is call arguments, call results, event payload e
 
 ### Message Definitions
 
-WAMP defines the following MANDATORY messages which are explained in detail in the following sections.
-
-The messages concerning the WAMP session itself are mandatory for all peers, i.e. an *Endpoint* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`, `ABORT` and `GOODBYE
-
-All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Endpoint* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
+WAMP defines the following messages which are explained in detail in the following sections.
 
 #### HELLO
 
@@ -439,14 +435,20 @@ All other messages are mandatory *per role*, i.e. in an implementation which onl
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
 
 
+The messages concerning the WAMP session itself are mandatory for all *Peers*, i.e. a *Client* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`, `ABORT` and `GOODBYE`.
+
+All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Client* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
+
+
 
 ### Message Codes and Direction
 
 The following table lists the message type code for **all 25 messages defined in WAMP v2** and their direction between peer roles.
 
-In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the *mandatory* messages described here and the *optional* messages described in part 2 of this document.
+> In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the messages *mandatory* for WAMP Basic Profile as well as optional messages from the WAMP Advanced Profile.
+> 
+> "Tx" indicates the message is sent by the respective role, and "Rx" indicates the message is received by the respective role.
 
-"Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
 
 | Code | Message        |  Profile |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
@@ -669,7 +671,7 @@ where
 
 *Example*
 
-   	[33, 713845233, 5512315355]
+	[33, 713845233, 5512315355]
 
 > Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the this `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
 >
