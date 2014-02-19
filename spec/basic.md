@@ -75,7 +75,7 @@ A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP m
 </a>
 </center>
 
-*Transports* provide a networking channel to carry *Sessions* which must have the following characteristics:
+*Transports* provide a networking channel to carry *Sessions* and must have the following characteristics:
 
  * message based
  * bidirectional
@@ -104,6 +104,9 @@ The *Callee* will execute the procedure using the supplied arguments to the call
 
 *Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
 
+*Dealers* are responsible for call routing, decoupling *Callers* from *Callees*.
+
+
 **Publish & Subscribe Roles**
 
 The Publish & Subscribe messaging pattern involves peers of three different roles:
@@ -117,6 +120,9 @@ where
  * *Subscribers* subscribe to topics they are interested in with *Brokers*.
  * *Publishers* publish events to topics at *Brokers*.
  * *Brokers* route events incoming from *Publishers* to *Subscribers* interested in the topic published to.
+
+*Brokers* are responsible for event routing, decoupling *Publishers* from *Subscribers*.
+
 
 **Supported Roles**
 
@@ -135,17 +141,14 @@ and a *Router* can implement the *Roles*:
 This document describes WAMP client-router communication. Direct client-client communication is not supported. Router-to-router communication is subject to router implementation specific definition.
 
 
-**Decoupling**
-
-In WAMP, *Dealers* are responsible for call routing, decoupling *Callers* from *Callees*, whereas *Brokers* are responsible for event routing, decoupling *Publishers* from *Subscribers*.
-
 **Peers with multiple Roles**
 
 Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*.
 
 While a *Router* may only act as a *Broker* and a *Dealer*, the system process the *Router* runs in may additionally implement an *Endpoint* with e.g. a *Callee* role. Here the *Router* may establish a connection with the *Endpoint* via WAMP direct calls and callbacks, so that no message serialization is necessary.
 
-**Symmetry**
+
+**Symmetric Messaging**
 
 It is important to note that though the establishment of a transport connection might have a inherent asymmetry (like a *client* establishing a TCP and WebSocket connection to a *server*), and clients establish sessions by joining realms on routers, WAMP itself is designed to be fully symmetric for application components. 
 
@@ -154,26 +157,30 @@ After the transport and a session has been established, any application componen
 
 ### Application Code
 
-WAMP is designed for application code to run inside *Endpoints*, i.e. peers of the roles:
+WAMP is designed for application code to run inside *Clients*, i.e. *Peers* of the roles:
 
 1. *Callee* and *Caller*
 2. *Publisher* and *Subscriber*
 
-*Routers*, i.e. peers of the roles *Brokers* and *Dealers* are responsible for **generic call and event routing** and SHOULD NOT run application code.
+*Routers*, i.e. *Peers* of the roles *Brokers* and *Dealers* are responsible for **generic call and event routing** and do not run application code.
 
 ![alt text](figure/appcode.png "Application Code")
 
-> However, a *program* that implements the *Dealer* role might at the same time implement a built-in *Callee*. It is the *Dealer* and *Broker* that SHOULD be generic, not the program.
+> Note that a **program** that implements the *Dealer* role might at the same time implement a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
 >
 
-The idea is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application. Specific *Broker* and *Dealer* implementations however might differ regarding these features:
+The goal is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application.
 
-* clustering
-* high-availability and scale-out
+Specific *Broker* and *Dealer* implementations however might differ regarding features like for example:
+
+* support for WAMP Advanced Profile
+* router networks (clustering and federation)
+* authentication and authorization schemes
 * message persistence
-* authorization schemes
 * management and monitoring
 
+> The definition and documentation of implementation specific *Router* features like above is outside the scope of this document.
+> 
 
 ## Building Blocks
 
@@ -338,7 +345,7 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 > For a given `MessageType` and number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
 > 
 > **Structure**
-> The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This improves efficiency/performance and probably even allows to transport encrypted application payloads transparently.
+> The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This can improve efficiency and performance.
 > 
 
 ### Message Definitions
@@ -482,12 +489,12 @@ The following table lists the message type code for **all 25 messages defined in
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
 |  1   | `HELLO`        |          | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
 |  2   | `WELCOME`      |          | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  2   | `ABORT`        |          | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  3   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  4   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
-|  5   | `GOODBYE`      |          | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  6   | `HEARTBEAT`    | advanced | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  7   | `ERROR`        |          | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
+|  3   | `ABORT`        |          | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  5   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  6   | `GOODBYE`      |          | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  7   | `HEARTBEAT`    | advanced | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|  8   | `ERROR`        |          | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
 |      |                |          |             |          |              |          |          |          |
 | 16   | `PUBLISH`      |          | Tx          | Rx       |              |          |          |          |
 | 17   | `PUBLISHED`    |          | Rx          | Tx       |              |          |          |          |
@@ -614,7 +621,7 @@ No response to an `ABORT` message is expected.
 
 *Example*
 
-    [2, "wamp.error.nonexistent_realm", {"message": "The realm does not exist."}]
+    [3, "wamp.error.nonexistent_realm", {"message": "The realm does not exist."}]
 
 
 ### Session Closing
@@ -628,20 +635,20 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
 
 *Example*. One *Peer* initiates closing
 
-    [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
+    [6, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
 
 and the other peer replies
 
-	[2, "wamp.error.goodbye_and_out"]
+	[6, "wamp.error.goodbye_and_out"]
 
 
 *Example*. One *Peer* initiates closing
 
-    [2, "wamp.error.close_realm", {}]
+    [6, "wamp.error.close_realm", {}]
 
 and the other peer replies
 
-	[2, "wamp.error.goodbye_and_out"]
+	[6, "wamp.error.goodbye_and_out"]
 
 
 
@@ -708,7 +715,7 @@ where
 
 When the request for subscription cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Subscriber*
 
-    [ERROR, SUBSCRIBE.Request|id, Details|dict, Error|uri]
+    [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict, Error|uri]
 
 where
 
@@ -717,7 +724,7 @@ where
 
 *Example*
 
-   	[4, 713845233, {}, "wamp.error.not_authorized"]
+   	[8, 32, 713845233, {}, "wamp.error.not_authorized"]
 
 
 #### UNSUBSCRIBE
@@ -754,7 +761,7 @@ where
 
 When the request fails, the *Broker* sends an `ERROR`
 
-    [ERROR, UNSUBSCRIBE.Request|id, Details|dict, Error|uri]
+    [ERROR, UNSUBSCRIBE, UNSUBSCRIBE.Request|id, Details|dict, Error|uri]
 
 where
 
@@ -763,7 +770,7 @@ where
 
 *Example*
 
-   	[4, 85346237, {}, "wamp.error.no_such_subscription"]
+   	[8, 34, 85346237, {}, "wamp.error.no_such_subscription"]
 
 
 ### Publishing and Events
@@ -835,7 +842,7 @@ The *Broker* will then send the event to all current *Subscribers* of the topic 
 
 When the request for publication cannot be fulfilled by the *Broker*, the *Broker* sends back an `ERROR` message to the *Publisher*
 
-    [ERROR, PUBLISH.Request|id, Details|dict, Error|uri]
+    [ERROR, PUBLISH, PUBLISH.Request|id, Details|dict, Error|uri]
 
 where
 
@@ -844,11 +851,11 @@ where
 
 *Example*
 
-    [4, 239714735, {}, "wamp.error.not_authorized"]
+    [8, 16, 239714735, {}, "wamp.error.not_authorized"]
 
 *Example*
 
-    [4, 239714735, {}, "wamp.error.invalid_topic"]
+    [8, 16, 239714735, {}, "wamp.error.invalid_topic"]
 
 
 #### EVENT
@@ -942,14 +949,14 @@ where
 
 When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
 
-    [ERROR, REGISTER.Request|id, Details|dict, Error|uri]
+    [ERROR, REGISTER, REGISTER.Request|id, Details|dict, Error|uri]
 
  * `REGISTER.Request` is the ID from the original request.
  * `Error` is an URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
-   	[4, 25349185, {}, "wamp.error.procedure_already_exists"]
+   	[8, 64, 25349185, {}, "wamp.error.procedure_already_exists"]
 
 #### UNREGISTER
 
@@ -984,7 +991,7 @@ where
 
 When the unregistration request fails, the *Dealer* sends an `ERROR` message:
 
-    [ERROR, UNREGISTER.Request|id, Details|dict, Error|uri]
+    [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict, Error|uri]
 
 where
 
@@ -993,7 +1000,7 @@ where
 
 *Example*
 
-   	[4, 788923562, {}, "wamp.error.no_such_registration"]
+   	[8, 66, 788923562, {}, "wamp.error.no_such_registration"]
 
 
 ### Calling and Invocations
@@ -1121,15 +1128,15 @@ where
 
 If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `ERROR` message to the *Dealer*:
 
-   	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri]
+   	[ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, Error|uri]
 
 or
 
-   	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
+   	[ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
-   	[ERROR, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+   	[ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -1144,15 +1151,15 @@ where
 
 The *Dealer* will then send a `ERROR` message to the original *Caller*:
 
-   	[ERROR, CALL.Request|id, Details|dict, Error|uri]
+   	[ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
 
 or
 
-   	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
+   	[ERROR, CALL, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
-   	[ERROR, CALL.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
+   	[ERROR, CALL, CALL.Request|id, Details|dict, Error|uri, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -1166,7 +1173,7 @@ where
 
 If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
 
-   	[ERROR, CALL.Request|id, Details|dict, Error|uri]
+   	[ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
 
 *Example*
 
