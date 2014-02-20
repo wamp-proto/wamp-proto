@@ -63,12 +63,9 @@ A *Callee* registers procedures with application code to call remotely from *Cal
 A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* performes the routing of events from *Publishers* to *Subscribers*.
 
 
-### Transports, Peers and Sessions
+### Realms, Sessions and Transports
 
-WAMP can run over different *transports*.
-For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
-WAMP also supports different *serializations*, including JSON and MsgPack.
-
+A *Realm* is a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
 A *Session* is the transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
 
 <center>
@@ -84,7 +81,9 @@ A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP m
  * reliable
  * ordered
 
-A *Realm* is a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
+WAMP can run over different *transports*.
+For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
+WAMP also supports different *serializations*, including JSON and MsgPack.
 
 
 ### Peers and Roles
