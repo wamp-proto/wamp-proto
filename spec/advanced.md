@@ -61,8 +61,6 @@ For an introduction to the protocol, and a description of basic features and usa
 
 ## Transports
 
-### Long-Poll Transport
-
 Besides the WebSocket transport, the following WAMP transports are under development:
 
  * HTTP 1.0/1.1 long-polling
@@ -70,6 +68,42 @@ Besides the WebSocket transport, the following WAMP transports are under develop
 Here, the bi-directionality requirement for the transport is implemented by using long-polling for the server-side sending of messages.
 
 Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
+
+### Long-Poll Transport
+
+With Long-Poll Transport, a *Client* sends a HTTP/GET request to a well-known URL, e.g.
+
+	http://mypp.com/longpoll/open?x=382913
+
+where `x` is just an arbitrary random number to make the request uncachable.
+
+Returned is a JSON document containing a WAMP session ID and potentially other information.
+
+As an implied side-effect, two HTTP endpoints are created
+
+	http://mypp.com/longpoll/session/<session_id>/receive
+	http://mypp.com/longpoll/session/<session_id>/send
+
+where `session_id` is the WAMP session ID returned from `open`, e.g.
+
+	http://mypp.com/longpoll/session/123456/receive
+	http://mypp.com/longpoll/session/123456/send
+
+The *Client* will then issue a HTTP/POST to
+
+	http://mypp.com/longpoll/session/123456/receive?x=912413
+
+When there are WAMP messages pending downstream, the request will return with a JSON serialized document containing a batch of WAMP messages received.
+
+For the uplink WAMP messages, the *Client* will issue HTTP/POST requests to
+
+	http://mypp.com/longpoll/session/123456/send?x=1814992
+
+with request body being a JSON serialized document containing a batch of WAMP messages to be sent.
+
+To orderly close a session, a *Client* will issue a HTTP/GET to 
+
+	http://mypp.com/longpoll/close?session=123456&x=812452224
 
 
 ### Batched Transport
@@ -94,9 +128,13 @@ Sending a batch of length 0 (no WAMP message) is illegal and a peer MUST fail th
 
 ### Multiplexed Transport
 
+A *Transport* may support the multiplexing of multiple logical channels over a single "physical" connection.
+
+By using such a *Transport*, multiple WAMP sessions can be transported over a single underlying connection at the same time.
+
 ![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
-
+As an example, the proposed WebSocket extension "permessage-priority" would allow creating multiple logical *Transports* for WAMP over a single underlying WebSocket connection.
 
 
 ## Optional Messages
