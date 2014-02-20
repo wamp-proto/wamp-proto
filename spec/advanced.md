@@ -135,6 +135,7 @@ The following table list the message type code for **the OPTIONAL messages** def
 
 > "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
 > 
+
 | Code | Message        |  Profile |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
 |  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
