@@ -66,7 +66,7 @@ A *Subscriber* subscribes to topics under application defined, unique names ("To
 ### Realms, Sessions and Transports
 
 A *Realm* is a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
-A *Session* is the transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
+A *Session* is a transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
 
 <center>
 <p style="width: 560px;">
