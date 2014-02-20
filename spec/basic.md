@@ -51,16 +51,16 @@ For *optional* features and aspects of the protocol that are part of the **WAMP 
 
 WAMP ("The Web Application Messaging Protocol") is a communication protocol that enables distributed application archictectures, with application functionality spread across nodes and all application communication decoupled by messages routed via dedicated WAMP routers.
 
-At its core, WAMP provides applications with **two asynchronous messaging patterns within one** protocol:
+At its core, WAMP provides applications with **two asynchronous messaging patterns within one unified protocol**:
 
  * Publish & Subscribe
  * Remote Procedure Calls
 
 *Remote Procedure Call (RPC)* is a messaging pattern involving peers of three roles: *Caller*, *Dealer* and *Callee*.
-A *Callee* registers procedures with application code to call remotely from *Callers* under application defined, unique names ("Procedure URIs"). A *Dealer* provides the routing of calls and results between *Callers* and *Callees*.
+A *Callee* registers procedures with application code to call remotely from *Callers* under application defined, unique names ("Procedure URIs"). A *Dealer* performes the routing of calls and results between *Callers* and *Callees*.
 
 *Publish & Subscribe (PubSub)* is a messaging pattern involving peers of three roles: *Publisher*, *Broker* and *Subscriber*.
-A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* provides the routing of events from *Publishers* to *Subscribers*.
+A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* performes the routing of events from *Publishers* to *Subscribers*.
 
 
 ### Transports, Peers and Sessions
@@ -102,12 +102,11 @@ The Remote Procedure Call messaging pattern involves peers of three different ro
 3. *Dealer* (Router)
 
 A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
-The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*. The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
+The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*. 
 
 *Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
 
-*Dealers* are responsible for call routing, decoupling *Callers* from *Callees*.
-
+The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
 
 **Publish & Subscribe Roles**
 
@@ -117,13 +116,11 @@ The Publish & Subscribe messaging pattern involves peers of three different role
 2. *Publisher* (Client)
 3. *Broker* (Router)
 
-where
+A *Publishers* publishes events to topics by providing the topic URI and any payload for the event. *Subscribers* of the topic will receive the event together with the event payload.
 
- * *Subscribers* subscribe to topics they are interested in with *Brokers*.
- * *Publishers* publish events to topics at *Brokers*.
- * *Brokers* route events incoming from *Publishers* to *Subscribers* interested in the topic published to.
+*Subscribers* subscribe to topics they are interested in at *Brokers*. *Publishers* initiate publication first at *Brokers*. *Brokers* route events incoming from *Publishers* to *Subscribers* that are subscribed to respective topics.
 
-*Brokers* are responsible for event routing, decoupling *Publishers* from *Subscribers*.
+The *Publisher* and *Subscriber* will usually run application code, while the *Broker* works as a generic router for events decoupling *Publishers* from *Subscribers*.
 
 
 **Supported Roles**
