@@ -198,15 +198,15 @@ or
 
 *Example*
 
-   [3, 0, 1]
+   	[3, 0, 1]
 
 *Example*
 
-   [3, 23, 5]
+   	[3, 23, 5]
 
 *Example*
 
-   [3, 23, 5, "throw me away ... I am just noise"]
+   	[3, 23, 5, "throw me away ... I am just noise"]
 
 Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of hearbeats is under independent control with each peer.
 
@@ -219,7 +219,7 @@ In addition to the *basic features* definded in the first part of this document,
 
 *Example: An Endpoint implementing the roles of Publisher and Subscriber and implementing some advanced features on the Publisher.*
 
-   [1, 9129137332, {
+   	[1, 9129137332, {
       "roles": {
          "publisher": {
             "features": {
@@ -231,11 +231,11 @@ In addition to the *basic features* definded in the first part of this document,
 
          }
       }
-   }]
+   	}]
 
 *Example: A Router implementing the role of Broker and supporting all advanced features.*
 
-   [1, 9129137332, {
+   	[1, 9129137332, {
       "roles": {
          "broker": {
             "features": {
@@ -250,7 +250,7 @@ In addition to the *basic features* definded in the first part of this document,
                "event_history":                 true
             }
          }
-   }]
+   	}]
 
 *Feature Announcemenet and Advanced Features*
 
@@ -292,18 +292,18 @@ When a software agent operates in a network protocol, it often identifies itself
 
 Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
 
-   HELLO.Details.agent|string
+   	HELLO.Details.agent|string
 
-   WELCOME.Details.agent|string
+   	WELCOME.Details.agent|string
 
 *Example*
 
-   [1, 9129137332, {
+   	[1, 9129137332, {
          "agent": "AutobahnPython-0.7.0",
          "roles": {
             "publisher": {}
          }
-   }]
+   	}]
 
 
 
@@ -314,7 +314,7 @@ All of the following advanced features for Publish & Subscribe are optional.
 
 If a WAMP implementation supports a specific advanced feature, it should announce support in the initial `HELLO` message:
 
-   HELLO.Details.roles.<role>.features.<feature>|bool := true
+   	HELLO.Details.roles.<role>.features.<feature>|bool := true
 
 Otherwise, the feature is assumed to be unsupported.
 
@@ -360,11 +360,11 @@ The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.publisher_exclusion|bool := true
+   	HELLO.Details.roles.<role>.features.publisher_exclusion|bool := true
 
 By default, a *Publisher* of an event will **not** itself receive an event published, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden via
 
-   PUBLISH.Options.exclude_me|bool
+   	PUBLISH.Options.exclude_me|bool
 
 When publishing with `PUBLISH.Options.exclude_me := false`, the *Publisher* of the event will receive that event, if it is subscribed to the `Topic` published to.
 
@@ -379,11 +379,11 @@ In this example, the *Publisher* will receive the published event, if it is subs
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Brokers* (`role := "broker"`) and *Subscribers* (`role := "subscriber"`) via
 
-   HELLO.Details.roles.<role>.features.publisher_identification|bool := true
+   	HELLO.Details.roles.<role>.features.publisher_identification|bool := true
 
 A *Publisher* may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting
 
-   PUBLISH.Options.disclose_me|bool := true
+   	PUBLISH.Options.disclose_me|bool := true
 
 *Example*
 
@@ -393,7 +393,7 @@ If above event is published by a *Publisher* with WAMP session ID `3335656`, the
 
 *Example*
 
-   [36, 5512315355, 4429313566, {"publisher": 3335656}, ["Hello, world!"]]
+   	[36, 5512315355, 4429313566, {"publisher": 3335656}, ["Hello, world!"]]
 
 Note that a *Broker* may deny a *Publisher's* request to disclose its identity:
 
@@ -408,19 +408,19 @@ A *Broker* may also (automatically) disclose the identity of a *Publisher* even 
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.publication_trustlevels|bool := true
+   	HELLO.Details.roles.<role>.features.publication_trustlevels|bool := true
 
 A *Broker* may be configured to automatically assign *trust levels* to events published by *Publishers* according to the *Broker* configuration on a per-topic basis and/or depending on the application defined role of the (authenticated) *Publisher*.
 
 A *Broker* supporting trust level will provide
 
-   EVENT.Details.trustlevel|integer
+   	EVENT.Details.trustlevel|integer
 
 in an `EVENT` message sent to a *Subscriber*. The trustlevel `0` means lowest trust, and higher integers represent (application-defined) higher levels of trust.
 
 *Example*
 
-   [36, 5512315355, 4429313566, {"trustlevel": 2}, ["Hello, world!"]]
+   	[36, 5512315355, 4429313566, {"trustlevel": 2}, ["Hello, world!"]]
 
 In above event, the *Broker* has (by configuration and/or other information) deemed the event publication to be of trustlevel `2`.
 
@@ -429,7 +429,7 @@ In above event, the *Broker* has (by configuration and/or other information) dee
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.pattern_based_subscription|bool := true
+   	HELLO.Details.roles.<role>.features.pattern_based_subscription|bool := true
 
 By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) *exactly* matches the topic subscribed to (`SUBSCRIBE.Topic`).
 
@@ -446,11 +446,11 @@ If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, th
 
 A *Subscriber* requests **prefix-matching policy** with a subscription request by setting
 
-   SUBSCRIBE.Options.match|string := "prefix"
+   	SUBSCRIBE.Options.match|string := "prefix"
 
 *Example*
 
-   [32, 912873614, {"match": "prefix"}, "com.myapp.topic.emergency"]
+   	[32, 912873614, {"match": "prefix"}, "com.myapp.topic.emergency"]
 
 When a **prefix-matching policy** is in place, any event with a topic that has `SUBSCRIBE.Topic` as a *prefix* will match the subscription, and potentially be delivered to *Subscribers* on the subscription.
 
@@ -469,13 +469,13 @@ The *Broker* will apply the prefix-matching based on the UTF-8 encoded byte stri
 
 A *Subscriber* requests **wildcard-matching policy** with a subscription request by setting
 
-   SUBSCRIBE.Options.match|string := "wildcard"
+   	SUBSCRIBE.Options.match|string := "wildcard"
 
 Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 *Example*
 
-   [32, 912873614, {"match": "wildcard"}, "com.myapp..userevent"]
+   	[32, 912873614, {"match": "wildcard"}, "com.myapp..userevent"]
 
 In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with `PUBLISH.Topic`
 
@@ -499,20 +499,20 @@ Since each *Subscriber's* subscription "stands on its own", there is no *set sem
 
 If a subscription was established with a pattern-based matching policy, a *Broker* MUST supply the original `PUBLISH.Topic` as provided by the *Publisher* in
 
-   EVENT.Details.topic|uri
+   	EVENT.Details.topic|uri
 
 to the *Subscribers*.
 
 *Example*
 
-   [36, 5512315355, 4429313566, {"topic": "com.myapp.topic.emergency.category.severe" }, ["Hello, world!"]]
+   	[36, 5512315355, 4429313566, {"topic": "com.myapp.topic.emergency.category.severe" }, ["Hello, world!"]]
 
 
 ### Partitioned Subscriptions & Publications
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.partitioned_pubsub|bool := true
+   	HELLO.Details.roles.<role>.features.partitioned_pubsub|bool := true
 
 Resource keys: `PUBLISH.Options.rkey|string` is a stable, technical **resource key**.
 
@@ -531,18 +531,18 @@ Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
 
 *Example*
 
-   [32, 912873614, {"match": "wildcard", "nkey": "node23"}, "com.myapp.sensor..temperature"]
+   	[32, 912873614, {"match": "wildcard", "nkey": "node23"}, "com.myapp.sensor..temperature"]
 
 
 ### Subscriber Meta Events
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.subscriber_metaevents|bool := true
+   	HELLO.Details.roles.<role>.features.subscriber_metaevents|bool := true
 
 *Example*
 
-   [32, 713845233,
+   	[32, 713845233,
          {"metatopics": ["wamp.metatopic.subscriber.add",
                          "wamp.metatopic.subscriber.remove"]},
          "com.myapp.mytopic1"]
@@ -551,7 +551,7 @@ If above subscription request by a *Subscriber 1* succeeds, the *Broker* will di
 
 *Example*
 
-   [32, 713845233,
+   	[32, 713845233,
          {"metatopics": ["wamp.metatopic.subscriber.add",
                          "wamp.metatopic.subscriber.remove"],
           "metaonly": 1},
@@ -562,15 +562,15 @@ This subscription works like the previous one, except that "normal" events on th
 
 Metaevents are always generated by the *Broker* itself and do not contain application payload:
 
-   [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
+   	[EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
 
 *Example*
 
-   [36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.add", "session": 9712478}]
+   	[36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.add", "session": 9712478}]
 
 *Example*
 
-   [36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.remove", "session": 9712478}]
+   	[36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.remove", "session": 9712478}]
 
 
 The following metatopics are currently defined:
@@ -585,13 +585,13 @@ A *Broker* may allow to retrieve the current list of *Subscribers* for a given s
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.subscriber_list|bool := true
+   	HELLO.Details.roles.<role>.features.subscriber_list|bool := true
 
 A *Broker* that implements *subscriber list* must (also) announce role `HELLO.roles.callee` and provide the following (built in) procedures.
 
 A *Caller* (that is also a *Subscriber*) can request the current list of subscribers for a subscription (it is subscribed to) by calling the *Broker* procedure
 
-   wamp.broker.subscriber.list
+   	wamp.broker.subscriber.list
 
 with `Arguments = [subscription|id]` where
 
@@ -603,8 +603,8 @@ and `Result = sessions|list` where
 
 A call to `wamp.broker.subscriber.list` may fail with
 
-   wamp.error.no_such_subscription
-   wamp.error.not_authorized
+   	wamp.error.no_such_subscription
+   	wamp.error.not_authorized
 
 **Open Issues**
 
@@ -621,7 +621,7 @@ A call to `wamp.broker.subscriber.list` may fail with
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.event_history|bool := true
+   	HELLO.Details.roles.<role>.features.event_history|bool := true
 
 Instead of complex QoS for message delivery, a *Broker* may provide *message history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 
@@ -633,7 +633,7 @@ A *Broker* that implements *event history* must (also) announce role `HELLO.role
 
 A *Caller* can request message history by calling the *Broker* procedure
 
-   wamp.topic.history.last
+   	wamp.topic.history.last
 
 with `Arguments = [topic|uri, limit|integer]` where
 
@@ -642,7 +642,7 @@ with `Arguments = [topic|uri, limit|integer]` where
 
 or by calling
 
-   wamp.topic.history.since
+   	wamp.topic.history.since
 
 with `Arguments = [topic|uri, timestamp|string]` where
 
@@ -651,7 +651,7 @@ with `Arguments = [topic|uri, timestamp|string]` where
 
 or by calling
 
-   wamp.topic.history.after
+   	wamp.topic.history.after
 
 with `Arguments = [topic|uri, publication|id]`
 
@@ -679,7 +679,7 @@ All of the following advanced features for Remote Procedure Calls are optional.
 
 If a WAMP implementation supports a specific advanced feature, it should announce support in the initial `HELLO` message:
 
-   HELLO.Details.roles.<role>.features.<feature>|bool := true
+   	HELLO.Details.roles.<role>.features.<feature>|bool := true
 
 Otherwise, the feature is assumed to be unsupported.
 
@@ -688,7 +688,7 @@ Otherwise, the feature is assumed to be unsupported.
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.callee_blackwhite_listing|bool := true
+   	HELLO.Details.roles.<role>.features.callee_blackwhite_listing|bool := true
 
 
 A *Caller* may restrict the endpoints that will handle a call beyond those registered via
@@ -704,19 +704,19 @@ The *Dealer* will forward a call only to registered *Callees* that are not expli
 
 *Example*
 
-   [48, 7814135, {"exclude": [7891255, 1245751]}, "com.myapp.echo", ["Hello, world!"]]
+   	[48, 7814135, {"exclude": [7891255, 1245751]}, "com.myapp.echo", ["Hello, world!"]]
 
 The above call will (potentially) get forwarded to all *Callees* of `com.myapp.echo`, but not WAMP sessions with IDs `7891255` or `1245751` (and also not the calling session).
 
 *Example*
 
-   [48, 7814135, {"eligible": [7891255, 1245751]}, "com.myapp.echo", ["Hello, world!"]]
+   	[48, 7814135, {"eligible": [7891255, 1245751]}, "com.myapp.echo", ["Hello, world!"]]
 
 The above call will (potentially) get forwarded to WAMP sessions with IDs `7891255` or `1245751` only - but only if those are registered for the procedure `com.myapp.echo`.
 
 *Example*
 
-   [48, 7814135, {"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
+   	[48, 7814135, {"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
       "com.myapp.echo", ["Hello, world!"]]
 
 The above call will (potentially) get forwarded to WAMP sessions with IDs `1245751` or `9912315` only (since `7891255` is excluded) - but only if those are registered for the procedure `com.myapp.echo`.
@@ -726,18 +726,18 @@ The above call will (potentially) get forwarded to WAMP sessions with IDs `12457
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.caller_exclusion|bool := true
+   	HELLO.Details.roles.<role>.features.caller_exclusion|bool := true
 
 
 By default, a *Caller* of a procedure will **never** itself be forwarded the call issued, even when registered for the `Procedure` the *Caller* is publishing to. This behavior can be overridden via
 
-   CALL.Options.exclude_me|bool
+   	CALL.Options.exclude_me|bool
 
 When calling with `CALL.Options.exclude_me := false`, the *Caller* of the procedure might be forwarded the call issued - if it is registered for the `Procedure` called.
 
 *Example*
 
-   [48, 7814135, {"exclude_me": false}, "com.myapp.echo", ["Hello, world!"]]
+   	[48, 7814135, {"exclude_me": false}, "com.myapp.echo", ["Hello, world!"]]
 
 In this example, the *Caller* might be forwarded the call issued, if it is registered for `com.myapp.echo`.
 
@@ -746,22 +746,22 @@ In this example, the *Caller* might be forwarded the call issued, if it is regis
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.caller_identification|bool := true
+   	HELLO.Details.roles.<role>.features.caller_identification|bool := true
 
 
 A *Caller* MAY **request** the disclosure of its identity (its WAMP session ID) to endpoints of a routed call via
 
-   CALL.Options.disclose_me|bool := true
+   	CALL.Options.disclose_me|bool := true
 
 *Example*
 
-   [48, 7814135, {"disclose_me": true}, "com.myapp.echo", ["Hello, world!"]]
+   	[48, 7814135, {"disclose_me": true}, "com.myapp.echo", ["Hello, world!"]]
 
 If above call is issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* sends an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
 
 *Example*
 
-   [68, 6131533, 9823526, {"caller": 3335656}, ["Hello, world!"]]
+   	[68, 6131533, 9823526, {"caller": 3335656}, ["Hello, world!"]]
 
 Note that a *Dealer* MAY disclose the identity of a *Caller* even without the *Caller* having explicitly requested to do so when the *Dealer* configuration (for the called procedure) is setup to do so.
 
@@ -776,20 +776,20 @@ A *Dealer* MAY deny a *Caller's* request to disclose its identity:
 
 Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.call_trustlevels|bool := true
+   	HELLO.Details.roles.<role>.features.call_trustlevels|bool := true
 
 
 A *Dealer* may be configured to automatically assign *trust levels* to calls issued by *Callers* according to the *Dealer* configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) *Caller*.
 
 A *Dealer* supporting trust level will provide
 
-   INVOCATION.Details.trustlevel|integer
+   	INVOCATION.Details.trustlevel|integer
 
 in an `INVOCATION` message sent to a *Callee*. The trustlevel `0` means lowest trust, and higher integers represent (application-defined) higher levels of trust.
 
 *Example*
 
-   [68, 6131533, 9823526, {"trustlevel": 2}, ["Hello, world!"]]
+   	[68, 6131533, 9823526, {"trustlevel": 2}, ["Hello, world!"]]
 
 In above event, the *Dealer* has (by configuration and/or other information) deemed the call (and hence the invocation) to be of trustlevel `2`.
 
@@ -798,7 +798,7 @@ In above event, the *Dealer* has (by configuration and/or other information) dee
 
 Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.pattern_based_registration|bool := true
+   	HELLO.Details.roles.<role>.features.pattern_based_registration|bool := true
 
 
 By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) *exactly* matches the endpoint registered (`REGISTER.Procedure`).
@@ -816,11 +816,11 @@ If the *Dealer* and the *Callee* support **pattern-based registrations**, this m
 
 A *Callee* requests **prefix-matching policy** with a registration request by setting
 
-   REGISTER.Options.match|string := "prefix"
+   	REGISTER.Options.match|string := "prefix"
 
 *Example*
 
-   [64, 612352435, {"match": "prefix"}, "com.myapp.myobject1"]
+   	[64, 612352435, {"match": "prefix"}, "com.myapp.myobject1"]
 
 When a **prefix-matching policy** is in place, any call with a procedure that has `REGISTER.Procedure` as a *prefix* will match the registration, and potentially be routed to *Callees* on that registration.
 
@@ -844,13 +844,13 @@ The *Dealer* will apply the prefix-matching based on the UTF-8 encoded byte stri
 
 A *Callee* requests **wildcard-matching policy** with a registration request by setting
 
-   REGISTER.Options.match|string := "wildcard"
+   	REGISTER.Options.match|string := "wildcard"
 
 Wildcard-matching allows to provide wildcards for **whole** URI components.
 
 *Example*
 
-   [64, 612352435, {"match": "wildcard"}, "com.myapp..myprocedure1"]
+   	[64, 612352435, {"match": "wildcard"}, "com.myapp..myprocedure1"]
 
 In the above registration request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, calls with `CALL.Procedure` e.g.
 
@@ -879,7 +879,7 @@ If an endpoint was registered with a pattern-based matching policy, a *Dealer* M
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.partitioned_rpc|bool := true
+   	HELLO.Details.roles.<role>.features.partitioned_rpc|bool := true
 
 
 *Partitioned Calls* allows to run a call issued by a *Caller* on one or more endpoints implementing the called procedure.
@@ -929,7 +929,7 @@ The call is then processed as for "All" Calls.
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.call_timeout|bool := true
+   	HELLO.Details.roles.<role>.features.call_timeout|bool := true
 
 A *Caller* might want to issue a call providing a *timeout* for the call to finish.
 
@@ -937,7 +937,7 @@ A *timeout* allows to **automatically** cancel a call after a specified time eit
 
 A *Callee* specifies a timeout by providing
 
-   CALL.Options.timeout|integer
+   	CALL.Options.timeout|integer
 
 in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value.
 
@@ -954,7 +954,7 @@ In fact, a timeout timer might run at three places:
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.call_canceling|bool := true
+   	HELLO.Details.roles.<role>.features.call_canceling|bool := true
 
 
 A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
@@ -982,14 +982,14 @@ A *Dealer* cancels an invocation of an endpoint initiated (but not yet finished)
 
 Options:
 
-   CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
+   	CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
 
 
 ### Progressive Call Results
 
 Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
-   HELLO.Details.roles.<role>.features.progressive_call_results|bool := true
+   	HELLO.Details.roles.<role>.features.progressive_call_results|bool := true
 
 
 A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
@@ -999,59 +999,59 @@ A procedure implemented by a *Callee* and registered at a *Dealer* may produce p
 
 A *Caller* indicates it's willingness to receive progressive results by setting
 
-   CALL.Options.receive_progress|bool := true
+   	CALL.Options.receive_progress|bool := true
 
 *Example.* Caller-to-Dealer `CALL`
 
-   [48, 77133, {"receive_progress": true}, "com.myapp.compute_revenue", [2010, 2011, 2012]]
+   	[48, 77133, {"receive_progress": true}, "com.myapp.compute_revenue", [2010, 2011, 2012]]
 
 If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
 
-   INVOCATION.Options.receive_progress|bool := true
+   	INVOCATION.Options.receive_progress|bool := true
 
 *Example.* Dealer-to-Callee `INVOCATION`
 
-   [68, 87683, 324, {"receive_progress": true}, [2010, 2011, 2012]]
+   	[68, 87683, 324, {"receive_progress": true}, [2010, 2011, 2012]]
 
 An endpoint implementing the procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
 
-   YIELD.Options.progress|bool := true
+   	YIELD.Options.progress|bool := true
 
 *Example.* Callee-to-Dealer progressive `YIELDs`
 
-   [70, 87683, {"progress": true}, ["Y2010", 120]]
-   [70, 87683, {"progress": true}, ["Y2011", 205]]
-   ...
+   	[70, 87683, {"progress": true}, ["Y2010", 120]]
+   	[70, 87683, {"progress": true}, ["Y2011", 205]]
+   	...
 
 Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will **immediately** send a `RESULT` message to the original *Caller* with
 
-   RESULT.Details.progress|bool := true
+   	RESULT.Details.progress|bool := true
 
 *Example.* Dealer-to-Caller progressive `RESULTs`
 
-   [50, 77133, {"progress": true}, ["Y2010", 120]]
-   [50, 77133, {"progress": true}, ["Y2011", 205]]
-   ...
+   	[50, 77133, {"progress": true}, ["Y2010", 120]]
+   	[50, 77133, {"progress": true}, ["Y2011", 205]]
+   	...
 
 An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
 
 *Example.* Callee-to-Dealer final `YIELD`
 
-   [70, 87683, {}, ["Total", 490]]
+   	[70, 87683, {}, ["Total", 490]]
 
 *Example.* Callee-to-Dealer final `ERROR`
 
-   [4, 87683, {}, "com.myapp.invalid_revenue_year", [1830]]
+   	[4, 87683, {}, "com.myapp.invalid_revenue_year", [1830]]
 
 A call MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller*.
 
 *Example.* Dealer-to-Caller final `RESULT`
 
-   [50, 77133, {}, ["Total", 490]]
+   	[50, 77133, {}, ["Total", 490]]
 
 *Example.* Dealer-to-Caller final `ERROR`
 
-   [4, 77133, {}, "com.myapp.invalid_revenue_year", [1830]]
+   	[4, 77133, {}, "com.myapp.invalid_revenue_year", [1830]]
 
 In other words: `YIELD` with `YIELD.Options.progress == true` and `RESULT` with `RESULT.Details.progress == true` messages may only be sent *during* a call or invocation is still ongoing.
 
@@ -1059,51 +1059,51 @@ The final `YIELD` and final `RESULT` may also be empty, e.g. when all actual res
 
 *Example.* Callee-to-Dealer `YIELDs`
 
-   [70, 87683, {"progress": true}, ["Y2010", 120]]
-   [70, 87683, {"progress": true}, ["Y2011", 205]]
-    ...
-   [70, 87683, {"progress": true}, ["Total", 490]]
-   [70, 87683, {}]
+   	[70, 87683, {"progress": true}, ["Y2010", 120]]
+   	[70, 87683, {"progress": true}, ["Y2011", 205]]
+   	 ...
+   	[70, 87683, {"progress": true}, ["Total", 490]]
+   	[70, 87683, {}]
 
 *Example.* Dealer-to-Caller `RESULTs`
 
-   [50, 77133, {"progress": true}, ["Y2010", 120]]
-   [50, 77133, {"progress": true}, ["Y2011", 205]]
-    ...
-   [50, 77133, {"progress": true}, ["Total", 490]]
-   [50, 77133, {}]
+   	[50, 77133, {"progress": true}, ["Y2010", 120]]
+   	[50, 77133, {"progress": true}, ["Y2011", 205]]
+   	 ...
+   	[50, 77133, {"progress": true}, ["Total", 490]]
+   	[50, 77133, {}]
 
 The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final `YIELD` and `RESULT`:
 
 *Example.* Callee-to-Dealer `YIELDs`
 
-   [70, 87683, {"progress": true}]
-   [70, 87683, {"progress": true}]
-   ...
-   [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
+   	[70, 87683, {"progress": true}]
+   	[70, 87683, {"progress": true}]
+   	...
+   	[70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
 
 *Example.* Dealer-to-Caller `RESULTs`
 
-   [50, 77133, {"progress": true}]
-   [50, 77133, {"progress": true}]
-   ...
-   [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
+   	[50, 77133, {"progress": true}]
+   	[50, 77133, {"progress": true}]
+   	...
+   	[50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
 
 Note that intermediate, progressive results and/or the final result MAY have different structure. The WAMP peer implementation is responsible for mapping everything into a form suitable for consumption in the host language.
 
 *Example.* Callee-to-Dealer `YIELDs`
 
-   [70, 87683, {"progress": true}, ["partial 1", 10]]
-   [70, 87683, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
-    ...
-   [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
+   	[70, 87683, {"progress": true}, ["partial 1", 10]]
+   	[70, 87683, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
+   	 ...
+   	[70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
 
 *Example.* Dealer-to-Caller `RESULTs`
 
-   [50, 77133, {"progress": true}, ["partial 1", 10]]
-   [50, 77133, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
-    ...
-   [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
+   	[50, 77133, {"progress": true}, ["partial 1", 10]]
+   	[50, 77133, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
+   	 ...
+   	[50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
 
 Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Options.receive_progress` are simply indications that the *Callee* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
 
@@ -1116,7 +1116,7 @@ If a *Caller* has not indicated support for progressive results or has sent a `C
 
 If a *Dealer* has not indicated support for progressive results or the *Dealer* has sent an `INVOCATION` to the *Callee* without setting `INVOCATION.Options.receive_progress == true`, and the *Callee* sends a progressive `YIELD`, the *Dealer* MUST fail the call with error
 
-   wamp.error.unexpected_progress_in_yield
+   	wamp.error.unexpected_progress_in_yield
 
 If a *Caller* has not indicated support for progressive results and sends a `CALL` to the *Dealer* while setting `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call
 
@@ -1133,43 +1133,43 @@ A *Callee* that does not support progressive results SHOULD ignore any `INVOCATI
 
 If a *Dealer* has not indicated support for progressive results, and it receives a `CALL` from a *Caller* with `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call with error
 
-   wamp.error.unsupported_feature.dealer.progressive_call_result
+   	wamp.error.unsupported_feature.dealer.progressive_call_result
 
 
 
 *Example.* Dealer-to-Caller `ERROR`
 
-   [4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
+   	[4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
 
 
 
 If the *Caller* does not support receiving *progressive calls*, as indicated by
 
-   HELLO.Details.roles.caller.features.progressive_call_results == false
+   	HELLO.Details.roles.caller.features.progressive_call_results == false
 
 and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
 
 *Example.* Callee-to-Dealer `YIELD`
 
-   [70, 87683, {"progress": true}, ["partial 1", 10]]
+   	[70, 87683, {"progress": true}, ["partial 1", 10]]
 
 *Example.* Dealer-to-Caller `ERROR`
 
-   [4, 87683, {}, "wamp.error.unsupported_feature.caller.progressive_call_result"]
+   	[4, 87683, {}, "wamp.error.unsupported_feature.caller.progressive_call_result"]
 
 If the *Dealer* does not support processing *progressive invocations*, as indicated by
 
-   HELLO.Details.roles.dealer.features.progressive_call_results == false
+   	HELLO.Details.roles.dealer.features.progressive_call_results == false
 
 and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
 
 *Example.* Callee-to-Dealer `YIELD`
 
-   [70, 87683, {"progress": true}, ["partial 1", 10]]
+   	[70, 87683, {"progress": true}, ["partial 1", 10]]
 
 *Example.* Dealer-to-Caller `ERROR`
 
-   [4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
+   	[4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
 
 -->
 
@@ -1215,21 +1215,21 @@ WAMP Challenge Response (WAMP-CRA) is a WAMP level authentication procedure impl
 
 A peer may authenticate to its other peer via calling the following procedures
 
-   wamp.cra.request
-   wamp.cra.authenticate
+   	wamp.cra.request
+   	wamp.cra.authenticate
 
 WAMP-CRA defines the following errors
 
-   wamp.error.invalid_argument
-   wamp.cra.error.no_such_authkey
-   wamp.cra.error.authentication_failed
-   wamp.cra.error.anonymous_not_allowed
-   wamp.cra.error.already_authenticated
-   wamp.cra.error.authentication_already_requested
+  	wamp.error.invalid_argument
+   	wamp.cra.error.no_such_authkey
+   	wamp.cra.error.authentication_failed
+   	wamp.cra.error.anonymous_not_allowed
+   	wamp.cra.error.already_authenticated
+   	wamp.cra.error.authentication_already_requested
 
 A peer starts WAMP-CRA authentication by calling
 
-   wamp.cra.request
+   	wamp.cra.request
 
 with `Arguments = [auth_key|string, auth_extra|dict]` where
 
@@ -1240,7 +1240,7 @@ The other peer then computes an authentication challenge. WRITEME.
 
 The peer then signs the authentication challenge and calls
 
-   wamp.cra.authenticate
+   	wamp.cra.authenticate
 
 
 
@@ -1263,23 +1263,23 @@ WAMP predefines the following procedures for performing run-time reflection on W
 
 Predefined WAMP reflection procedures to *list* resources by type:
 
-   wamp.reflection.topic.list
-   wamp.reflection.procedure.list
-   wamp.reflection.error.list
+   	wamp.reflection.topic.list
+   	wamp.reflection.procedure.list
+   	wamp.reflection.error.list
 
 Predefined WAMP reflection procedures to *describe* resources by type:
 
-   wamp.reflection.topic.describe
-   wamp.reflection.procedure.describe
-   wamp.reflection.error.describe
+   	wamp.reflection.topic.describe
+   	wamp.reflection.procedure.describe
+   	wamp.reflection.error.describe
 
 A peer that acts as a *Broker* SHOULD announce support for the reflection API by sending
 
-   HELLO.Details.roles.broker.reflection|bool := true
+   	HELLO.Details.roles.broker.reflection|bool := true
 
 A peer that acts as a *Dealer* SHOULD announce support for the reflection API by sending
 
-   HELLO.Details.roles.dealer.reflection|bool := true
+   	HELLO.Details.roles.dealer.reflection|bool := true
 
 > Since *Brokers* might provide (broker) procedures and *Dealers* might provide (dealer) topics, both SHOULD implement the complete API above (even if the peer only implements one of *Broker* or *Dealer* roles).
 >
