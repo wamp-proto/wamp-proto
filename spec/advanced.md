@@ -12,8 +12,8 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 **Contents**
 
 1. [Advanced Profile: Transports](#transports)
-   * [Batched Transport](#batched-transport)
    * [Long-Poll Transport](#long-poll-transport)
+   * [Batched Transport](#batched-transport)
    * [Multiplexed Transport](#multiplexed-transport)
 2. [Advanced Profile: Messages](#optional-messages)
     * [Message Definitions](#message-definitions)
@@ -49,14 +49,13 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 
 ## Preface
 
-This is part 2 of this document. It describes advanced features and aspects of the protocol and its usage.
+This is *part 2* of the WAMP specification. It describes advanced features and aspects of the protocol and its usage from the **WAMP Advanced Profile**.
 
 This part as a whole is considered partially finished and unstable. Some features are presently underspecified. Features may yet be added or removed, and there is no guarantee that an existing feature in this part will remain unchanged.
 
-Some features, however, are already fully specified and should remain unchanged. These are specifically marked as *STABLE*.
+Some features, however, are already specified and should remain unchanged. These are specifically marked as *STABLE*.
 
-
-For an introduction to the protocol, and a description of basic features and usage, see part 1 of this document.
+For an introduction to the protocol, and a description of basic features and usage that are part of the **WAMP Basic Profile**, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md)
 
 
 ## Transports
@@ -134,35 +133,45 @@ By using such a *Transport*, multiple WAMP sessions can be transported over a si
 
 ![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
-As an example, the proposed WebSocket extension "permessage-priority" would allow creating multiple logical *Transports* for WAMP over a single underlying WebSocket connection.
+As an example, the proposed [WebSocket extension "permessage-priority"](https://github.com/oberstet/permessage-priority/blob/master/draft-oberstein-hybi-permessage-priority.txt) would allow creating multiple logical *Transports* for WAMP over a single underlying WebSocket connection.
 
 
-## Optional Messages
+## Messages
 
-Optional messages are WAMP messages wuht a structure as described in part one of this document.
+WAMP Advanced Profile defines the following additional messages which are explained in detail in the following sections.
 
 ### Message Definitions
 
-WAMP defines the following OPTIONAL messages which are explained in detail in the following sections.
+The following 5 message types are used in the WAMP Advanced Profile.
 
 #### `CHALLENGE`
+
+During authenticated session establishment, a *Router* sends a challenge message.
 
     [CHALLENGE, Challenge|string, Extra|dict]
 
 #### `AUTHENTICATE`
 
+A *Client* having received a challenge is expected to respond by sending a signature or token.
+
     [AUTHENTICATE, Signature|string, Extra|dict]
 
 #### `HEARTBEAT`
+
+Each *Peer* can send heartbeats signaling WAMP message processing advance.
 
     [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer
     [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
 #### `CANCEL`
 
+A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
+
     [CANCEL, CALL.Request|id, Options|dict]
 
 #### `INTERRUPT`
+
+Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt to the *Callee*.
 
     [INTERRUPT, INVOCATION.Request|id, Options|dict]
 
@@ -187,7 +196,7 @@ The following table list the message type code for **the OPTIONAL messages** def
 
 ### Session Establishment
 
-The message flow between *Endpoints* and *Routers* for establishing and tearing down sessions MAY involve the following messages which authenticate a session:
+The message flow between *Clients* and *Routers* for establishing and tearing down sessions MAY involve the following messages which authenticate a session:
 
 1. `CHALLENGE`
 2. `AUTHENTICATE`
@@ -332,6 +341,8 @@ Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` 
 
    	HELLO.Details.agent|string
 
+and
+
    	WELCOME.Details.agent|string
 
 *Example*
@@ -352,7 +363,7 @@ All of the following advanced features for Publish & Subscribe are optional.
 
 If a WAMP implementation supports a specific advanced feature, it should announce support in the initial `HELLO` message:
 
-   	HELLO.Details.roles.<role>.features.<feature>|bool := true
+	HELLO.Details.roles.<role>.features.<feature>|bool := true
 
 Otherwise, the feature is assumed to be unsupported.
 
@@ -361,7 +372,7 @@ Otherwise, the feature is assumed to be unsupported.
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 
-   HELLO.Details.roles.<role>.features.subscriber_blackwhite_listing|bool := true
+   	HELLO.Details.roles.<role>.features.subscriber_blackwhite_listing|bool := true
 
 If the feature is supported, a *Publisher* may restrict the actual receivers of an event from the group of subscribers through the use of
 
@@ -388,8 +399,7 @@ The above event will get dispatched to WAMP sessions with IDs `7891255` or `1245
 
 *Example*
 
-    [16, 239714735, {"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]},
-      "com.myapp.mytopic1", ["Hello, world!"]]
+    [16, 239714735, {"exclude": [7891255], "eligible": [7891255, 1245751, 9912315]}, "com.myapp.mytopic1", ["Hello, world!"]]
 
 The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912315` only (since `7891255` is excluded) - but only if those are subscribed to the topic `com.myapp.mytopic1`.
 
