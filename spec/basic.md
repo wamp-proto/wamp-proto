@@ -363,13 +363,13 @@ Sent by a *Router* to accept a *Client*. This starts a new WAMP session.
 
 #### ABORT
 
-Sent by a *Peer* to abort the opening of a WAMP session.
+Sent by a *Peer* to abort the opening of a WAMP session. No response is expected.
 
     [ABORT, Details|dict, Reason|uri]
 
 #### GOODBYE
 
-Sent by a *Peer* to close WAMP session and echoed by the receiving *Peer*. 
+Sent by a *Peer* to close WAMP session. Must be echoed by the receiving *Peer*. 
 
     [GOODBYE, Details|dict, Reason|uri]
 
