@@ -1,9 +1,53 @@
 # The Web Application Messaging Protocol
-# Part 2: Advanced Features and Aspects
+# Part 2: Advanced Profile
 
-This document specifies version 2 of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
+This document specifies the *Advanced Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **draft-2**, 2014/02/18
+For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md).
+
+Document Revision: **alpha-1**, 2014/02/20
+
+Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+
+**Contents**
+
+1. [Advanced Profile: Transports](#transports)
+   * [Batched Transport](#batched-transport)
+   * [Long-Poll Transport](#long-poll-transport)
+   * [Multiplexed Transport](#multiplexed-transport)
+2. [Advanced Profile: Messages](#optional-messages)
+    * [Message Definitions](#message-definitions)
+    * [Message Codes and Direction](#message-codes-and-direction)
+3. [Advanced Profile: Session Management](#advanced-session-management)
+    * [Heartbeats](#heartbeats)
+4. [Advanced Profile: Publish & Subscribe](#advanced-publish--subscribe)
+    * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) [stable]
+    * [Publisher Exclusion](#publisher-exclusion) [stable]
+    * [Publisher Identification](#publisher-identification) [stable]
+    * [Publication Trust Levels](#publication-trust-levels)
+    * [Pattern-based Subscriptions](#pattern-based-subscriptions)
+    * [Distributed Subscriptions & Publications](#distributed-subscriptions--publications)
+    * [Subscriber Meta Events](#subscriber-meta-events)
+    * [Subscriber List](#subscriber-list)
+    * [Event History](#event-history)
+5. [Advanced Profile: Remote Procedure Calls](#advanced-remote-procedure-calls)
+    * [Caller Identification](#caller-identification) [stable]
+    * [Progressive Call Results](#progressive-call-results) [stable]
+    * [Canceling Calls](#canceling-calls) [stable]
+    * [Call Timeouts](#call-timeouts)
+    * [Call Trust Levels](#call-trust-levels)
+    * [Pattern-based Registrations](#pattern-based-registrations)
+    * [Distributed Registrations & Calls](#distributed-registrations--calls)
+    * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
+    * [Caller Exclusion](#caller-exclusion)
+6. [Authentication](#authentication)
+    * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
+    * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
+    * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
+7. [Reflection](#reflection)
+
+
+## Preface
 
 This is part 2 of this document. It describes advanced features and aspects of the protocol and its usage.
 
@@ -14,49 +58,10 @@ Some features, however, are already fully specified and should remain unchanged.
 
 For an introduction to the protocol, and a description of basic features and usage, see part 1 of this document.
 
-**Contents**
-
-1. [Transports](#transports)
-   * [WebSocket Transport Modes](#websocket-transport-modes)
-2. [Optional Messages](#optional-messages)
-    * [Message Definitions](#message-definitions)
-    * [Message Codes and Direction](#message-codes-and-direction)
-3. [Session Management](#advanced-session-management)
-    * [Heartbeats](#heartbeats)
-4. [Advanced Publish & Subscribe](#advanced-publish--subscribe)
-    * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting)
-    * [Publisher Exclusion](#publisher-exclusion)
-    * [Publisher Identification](#publisher-identification)
-    * [Publication Trust Levels](#publication-trust-levels)
-    * [Pattern-based Subscriptions](#pattern-based-subscriptions)
-    * [Partitioned Subscriptions & Publications](#partitioned-subscriptions--publications)
-    * [Subscriber Meta Events](#subscriber-meta-events)
-    * [Subscriber List](#subscriber-list)
-    * [Event History](#event-history)
-5. [Advanced Remote Procedure Calls](#advanced-remote-procedure-calls)
-    * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
-    * [Caller Exclusion](#caller-exclusion)
-    * [Caller Identification](#caller-identification)
-    * [Call Trust Levels](#call-trust-levels)
-    * [Pattern-based Registrations](#pattern-based-registrations)
-    * [Partitioned Registrations & Calls](#partitioned-registrations--calls)
-    * [Call Timeouts](#call-timeouts)
-    * [Canceling Calls](#canceling-calls)
-    * [Progressive Call Results](#progressive-call-results)
-6. [Authentication](#authentication)
-    * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
-    * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
-    * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
-7. [Reflection](#reflection)
-
 
 ## Transports
 
-
-![alt text](figure/sessions3.png "Transports, Sessions and Peers")
-
-
-### Other Transports
+### Long-Poll Transport
 
 Besides the WebSocket transport, the following WAMP transports are under development:
 
@@ -67,24 +72,7 @@ Here, the bi-directionality requirement for the transport is implemented by usin
 Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
 
 
-### WebSocket Transport Modes
-
-#### Unbatched Transport
-
-With WebSocket in **unbatched mode**, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
-
-The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between peers using the WebSocket subprotocol negotiation mechanism.
-
-WAMPv2 uses the following WebSocket subprotocol identifiers for unbatched modes:
-
- * `wamp.2.json`
- * `wamp.2.msgpack`
-
-With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
-
-With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
-
-#### Batched Transport
+### Batched Transport
 
 WAMPv2 allows to batch one or more WAMP messages into a single WebSocket message if one of the following subprotocols have been negotiated:
 
@@ -93,15 +81,20 @@ WAMPv2 allows to batch one or more WAMP messages into a single WebSocket message
 
 Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ([record separator](http://en.wikipedia.org/wiki/Record_separator#Field_separators)) byte `0x1e` to *each* serialized messages, and packing a sequence of such serialized messages into a single WebSocket message:
 
-   serialized JSON WAMP Msg 1 | 0x1e | serialized JSON WAMP Msg 2 | 0x1e | ...
+   	serialized JSON WAMP Msg 1 | 0x1e | serialized JSON WAMP Msg 2 | 0x1e | ...
 
 Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
 
-   Length of Msg 1 serialization (int32) | serialized MsgPack WAMP Msg 1 | ...
+   	Length of Msg 1 serialization (int32) | serialized MsgPack WAMP Msg 1 | ...
 
 With batched transport, even if only a single WAMP message is sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length 1.
 
 Sending a batch of length 0 (no WAMP message) is illegal and a peer MUST fail the transport upon receiving such a transport message.
+
+
+### Multiplexed Transport
+
+![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
 
 
@@ -140,15 +133,15 @@ WAMP defines the following OPTIONAL messages which are explained in detail in th
 
 The following table list the message type code for **the OPTIONAL messages** defined in this part of the document and their direction between peer roles.
 
-"Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
-
-| Code | Message        ||  Publisher  |  Broker  |  Subscriber  ||  Caller  |  Dealer  |  Callee  |
-|------|----------------||-------------|----------|--------------||----------|----------|----------|
-|  3   | `CHALLENGE`    || Rx          | Tx       | Rx           || Rx       | Tx       | Rx       |
-|  4   | `AUTHENTICATE` || Tx          | Rx       | Tx           || Tx       | Rx       | Tx       |
-|  6   | `HEARTBEAT`    || Tx/Rx       | Tx/Rx    | Tx/Rx        || Tx/Rx    | Tx/Rx    | Tx/Rx    |
-| 49   | `CANCEL`       ||             |          |              || Tx       | Rx       |          |
-| 69   | `INTERRUPT`    ||             |          |              ||          | Tx       | Rx       |
+> "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
+> 
+| Code | Message        |  Profile |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
+|  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  5   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
+|  7   | `HEARTBEAT`    | advanced | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+| 49   | `CANCEL`       | advanced |             |          |              | Tx       | Rx       |          |
+| 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
 
 
 ## Session Management
