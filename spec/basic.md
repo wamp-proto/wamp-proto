@@ -93,38 +93,6 @@ A *Realm* is a WAMP routing and administrative domain (optionally) protected by 
 
 A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. Each WAMP *Peer* can implement one or more roles.
 
-**Remote Procedure Call Roles**
-
-The Remote Procedure Call messaging pattern involves peers of three different roles:
-
-1. *Callee* (Client)
-2. *Caller* (Client)
-3. *Dealer* (Router)
-
-A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
-The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*. 
-
-*Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
-
-The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
-
-**Publish & Subscribe Roles**
-
-The Publish & Subscribe messaging pattern involves peers of three different roles:
-
-1. *Subscriber* (Client)
-2. *Publisher* (Client)
-3. *Broker* (Router)
-
-A *Publishers* publishes events to topics by providing the topic URI and any payload for the event. *Subscribers* of the topic will receive the event together with the event payload.
-
-*Subscribers* subscribe to topics they are interested in at *Brokers*. *Publishers* initiate publication first at *Brokers*. *Brokers* route events incoming from *Publishers* to *Subscribers* that are subscribed to respective topics.
-
-The *Publisher* and *Subscriber* will usually run application code, while the *Broker* works as a generic router for events decoupling *Publishers* from *Subscribers*.
-
-
-**Supported Roles**
-
 A *Client* can implement any combination of the *Roles*:
 
  * *Callee*
@@ -137,29 +105,56 @@ and a *Router* can implement the *Roles*:
  * *Dealer*
  * *Broker*
 
-This document describes WAMP client-router communication. Direct client-client communication is not supported. Router-to-router communication is subject to router implementation specific definition.
-
-
-**Peers with multiple Roles**
-
-Peers might implement more than one role: e.g. a peer might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another peer might act as both a *Broker* and a *Dealer*.
-
-While a *Router* may only act as a *Broker* and a *Dealer*, the system process the *Router* runs in may additionally implement an *Client* with e.g. a *Callee* role. Here the *Router* may establish a connection with the *Client* via WAMP direct calls and callbacks, so that no message serialization is necessary.
-
+> This document describes WAMP client-router communication. Direct client-client communication is not supported. Router-to-router communication is subject to router implementation specific definition.
+> 
 
 **Symmetric Messaging**
 
-It is important to note that though the establishment of a *Transport* might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and *Clients* establish sessions by attaching to *Realms* on *Routers*, WAMP itself is designed to be fully symmetric for application components. 
+It is important to note that though the establishment of a *Transport* might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and *Clients* establish WAMP sessions by attaching to *Realms* on *Routers*, WAMP itself is designed to be fully symmetric for application components. 
 
-After the transport and a session has been established, any application component may act as *Caller*, *Callee*, *Publisher* and *Subscriber* at the same time. *Routers* provide the fabric on top of which WAMP runs a symmetric application messaging service.
+After the transport and a session has been established, any application component may act as *Caller*, *Callee*, *Publisher* and *Subscriber* at the same time. And *Routers* provide the fabric on top of which WAMP runs a symmetric application messaging service.
+
+**Remote Procedure Call Roles**
+
+The Remote Procedure Call messaging pattern involves peers of three different roles:
+
+* *Callee (Client)*
+2. *Caller (Client)*
+3. *Dealer (Router)*
+
+A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
+The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*. 
+
+*Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
+
+The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
+
+**Publish & Subscribe Roles**
+
+The Publish & Subscribe messaging pattern involves peers of three different roles:
+
+* *Subscriber (Client)*
+2. *Publisher (Client)*
+3. *Broker (Router)*
+
+A *Publishers* publishes events to topics by providing the topic URI and any payload for the event. *Subscribers* of the topic will receive the event together with the event payload.
+
+*Subscribers* subscribe to topics they are interested in at *Brokers*. *Publishers* initiate publication first at *Brokers*. *Brokers* route events incoming from *Publishers* to *Subscribers* that are subscribed to respective topics.
+
+The *Publisher* and *Subscriber* will usually run application code, while the *Broker* works as a generic router for events decoupling *Publishers* from *Subscribers*.
+
+**Peers with multiple Roles**
+
+Note that *Peers* might implement more than one role: e.g. a *Peer* might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another *Peer* might act as both a *Broker* and a *Dealer*.
+
+**Routers with embedded Clients**
+
+While a *Router* may only act as a *Broker* and a *Dealer*, the program or system process the *Router* runs in may additionally implement a *Client* with e.g. a *Callee* role. Here the *Router* may establish an internal connection with the  embedded *Client* via WAMP direct calls and callbacks, so that no actual message serialization is necessary (see figure below).
 
 
 ### Application Code
 
-WAMP is designed for application code to run inside *Clients*, i.e. *Peers* of the roles:
-
-1. *Callee* and *Caller*
-2. *Publisher* and *Subscriber*
+WAMP is designed for application code to run inside *Clients*, i.e. *Peers* of the roles *Callee*, *Caller*, *Publisher* and *Subscriber*.
 
 *Routers*, i.e. *Peers* of the roles *Brokers* and *Dealers* are responsible for **generic call and event routing** and do not run application code.
 
