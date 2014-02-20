@@ -143,14 +143,15 @@ A *Publishers* publishes events to topics by providing the topic URI and any pay
 
 The *Publisher* and *Subscriber* will usually run application code, while the *Broker* works as a generic router for events decoupling *Publishers* from *Subscribers*.
 
-**Peers with multiple Roles**
+> **Peers with multiple Roles**
+> 
+> Note that *Peers* might implement more than one role: e.g. a *Peer* might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another *Peer* might act as both a *Broker* and a *Dealer*.
+> 
 
-Note that *Peers* might implement more than one role: e.g. a *Peer* might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another *Peer* might act as both a *Broker* and a *Dealer*.
-
-**Routers with embedded Clients**
-
-While a *Router* may only act as a *Broker* and a *Dealer*, the program or system process the *Router* runs in may additionally implement a *Client* with e.g. a *Callee* role. Here the *Router* may establish an internal connection with the  embedded *Client* via WAMP direct calls and callbacks, so that no actual message serialization is necessary (see figure below).
-
+> **Routers with embedded Clients**
+> 
+> While a *Router* may only act as a *Broker* and a *Dealer*, the program or system process the *Router* runs in may additionally implement a *Client* with e.g. a *Callee* role. Here the *Router* may establish an internal connection with the  embedded *Client* via WAMP direct calls and callbacks, so that no actual message serialization is necessary (see figure below).
+> 
 
 ### Application Code
 
@@ -158,14 +159,14 @@ WAMP is designed for application code to run inside *Clients*, i.e. *Peers* of t
 
 *Routers*, i.e. *Peers* of the roles *Brokers* and *Dealers* are responsible for **generic call and event routing** and do not run application code.
 
+This allows to transparently switch *Broker* and *Dealer* implementations without affecting the application and to distribute and deploy application components flexibly:
+
 ![alt text](figure/appcode.png "Application Code")
 
 > Note that a **program** that implements the *Dealer* role might at the same time implement a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
 >
 
-The goal is to be able to transparently switch *Broker* and *Dealer* implementations without affecting the application.
-
-Specific *Broker* and *Dealer* implementations however might differ regarding features like for example:
+Specific WAMP *Broker* and *Dealer* implementations might differ in aspects like e.g.:
 
 * support for WAMP Advanced Profile
 * router networks (clustering and federation)
@@ -173,8 +174,8 @@ Specific *Broker* and *Dealer* implementations however might differ regarding fe
 * message persistence
 * management and monitoring
 
-> The definition and documentation of implementation specific *Router* features like above is outside the scope of this document.
-> 
+The definition and documentation of implementation specific *Router* features like above is outside the scope of this document.
+
 
 ## Building Blocks
 
