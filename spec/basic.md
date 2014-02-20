@@ -69,7 +69,7 @@ WAMP can run over different *transports*.
 For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
 WAMP also supports different *serializations*, including JSON and MsgPack.
 
-A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions:
+A *Session* is the transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
 
 <center>
 <p style="width: 560px;">
@@ -77,14 +77,12 @@ A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP m
 </a>
 </center>
 
-*Transports* provide a networking channel to carry *Sessions* and must have the following characteristics:
+A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions. A *Transports*  must have the following characteristics:
 
  * message based
  * bidirectional
  * reliable
  * ordered
-
-A *Session* is the transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
 
 A *Realm* is a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
 
