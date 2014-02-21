@@ -57,7 +57,7 @@ At its core, WAMP provides applications with **two asynchronous messaging patter
  * Remote Procedure Calls
 
 *Remote Procedure Call (RPC)* is a messaging pattern involving peers of three roles: *Caller*, *Dealer* and *Callee*.
-A *Callee* registers procedures with application code to call remotely from *Callers* under application defined, unique names ("Procedure URIs"). A *Dealer* performes the routing of calls and results between *Callers* and *Callees*.
+A *Callee* registers procedures with application code to call remotely from *Callers* under application defined, unique names ("Procedure URIs"). A *Dealer* performs the routing of calls and results between *Callers* and *Callees*.
 
 *Publish & Subscribe (PubSub)* is a messaging pattern involving peers of three roles: *Publisher*, *Broker* and *Subscriber*.
 A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* performes the routing of events from *Publishers* to *Subscribers*.
@@ -74,7 +74,7 @@ A *Session* is a transient conversation between two *Peers* attached to a *Realm
 </a>
 </center>
 
-A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions. A *Transports*  must have the following characteristics:
+A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions. A *Transport*  must have the following characteristics:
 
  * message based
  * bidirectional
@@ -97,19 +97,19 @@ A *Client* can implement any combination of the *Roles*:
  * *Publisher*
  * *Subscriber*
 
-and a *Router* can implement the *Roles*:
+and a *Router* can implement either or both of the *Roles*:
 
  * *Dealer*
  * *Broker*
 
 > This document describes WAMP client-router communication. Direct client-client communication is not supported. Router-to-router communication is subject to router implementation specific definition.
-> 
+>
 
 **Symmetric Messaging**
 
-It is important to note that though the establishment of a *Transport* might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and *Clients* establish WAMP sessions by attaching to *Realms* on *Routers*, WAMP itself is designed to be fully symmetric for application components. 
+It is important to note that though the establishment of a *Transport* might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and *Clients* establish WAMP sessions by attaching to *Realms* on *Routers*, WAMP itself is designed to be fully symmetric for application components.
 
-After the transport and a session has been established, any application component may act as *Caller*, *Callee*, *Publisher* and *Subscriber* at the same time. And *Routers* provide the fabric on top of which WAMP runs a symmetric application messaging service.
+After the transport and a session have been established, any application component may act as *Caller*, *Callee*, *Publisher* and *Subscriber* at the same time. And *Routers* provide the fabric on top of which WAMP runs a symmetric application messaging service.
 
 **Remote Procedure Call Roles**
 
@@ -120,9 +120,9 @@ The Remote Procedure Call messaging pattern involves peers of three different ro
 3. *Dealer (Router)*
 
 A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
-The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*. 
+The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*.
 
-*Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, as well as call results back from *Callees* to *Callers*.
+*Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, and route call results back from *Callees* to *Callers*.
 
 The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
 
@@ -136,19 +136,19 @@ The Publish & Subscribe messaging pattern involves peers of three different role
 
 A *Publishers* publishes events to topics by providing the topic URI and any payload for the event. *Subscribers* of the topic will receive the event together with the event payload.
 
-*Subscribers* subscribe to topics they are interested in at *Brokers*. *Publishers* initiate publication first at *Brokers*. *Brokers* route events incoming from *Publishers* to *Subscribers* that are subscribed to respective topics.
+*Subscribers* subscribe to topics they are interested in with *Brokers*. *Publishers* initiate publication first at *Brokers*. *Brokers* route events incoming from *Publishers* to *Subscribers* that are subscribed to respective topics.
 
 The *Publisher* and *Subscriber* will usually run application code, while the *Broker* works as a generic router for events decoupling *Publishers* from *Subscribers*.
 
 > **Peers with multiple Roles**
-> 
+>
 > Note that *Peers* might implement more than one role: e.g. a *Peer* might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another *Peer* might act as both a *Broker* and a *Dealer*.
-> 
+>
 
 > **Routers with embedded Clients**
-> 
+>
 > While a *Router* may only act as a *Broker* and a *Dealer*, the program or system process the *Router* runs in may additionally implement a *Client* with e.g. a *Callee* role. Here the *Router* may establish an internal connection with the  embedded *Client* via WAMP direct calls and callbacks, so that no actual message serialization is necessary (see figure below).
-> 
+>
 
 ### Application Code
 
@@ -160,10 +160,10 @@ This allows to transparently switch *Broker* and *Dealer* implementations withou
 
 ![alt text](figure/appcode.png "Application Code")
 
-> Note that a **program** that implements the *Dealer* role might at the same time implement a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
+> Note that a **program** that implements e.g. the *Dealer* role might at the same time implement e.g. a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
 >
 
-Specific WAMP *Broker* and *Dealer* implementations might differ in aspects like e.g.:
+Specific WAMP *Broker* and *Dealer* implementations might differ in aspects such as:
 
 * support for WAMP Advanced Profile
 * router networks (clustering and federation)
@@ -212,7 +212,7 @@ To avoid resource naming conflicts, we follow the package naming convention from
 
 URI components (the parts between between `.`) MUST NOT contain `.` and MUST NOT be empty (zero-length strings).
 
-> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions. More about pattern-based subscriptions can be found in part 2 of this document.
+> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions. More about pattern-based subscriptions can be found in the specification for the [*Advanced Profile*](advanced.md).
 
 URIs MUST NOT contain `#`, which is reserved for internal use by *Dealers* and *Brokers*.
 
@@ -255,7 +255,7 @@ A message *serialization* format is assumed that (at least) provides the followi
   * `list`
   * `dict` (with string keys)
 
-> WAMP *itself* only uses theabove types, e.g. it does not use the JSON types `number` (non-integer) and `null`. The *application payloads* transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
+> WAMP *itself* only uses the above types, e.g. it does not use the JSON types `number` (non-integer) and `null`. The *application payloads* transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
 >
 
 WAMPv2 defines two bindings for message *serialization*:
@@ -332,13 +332,13 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 
 > **Extensibility**
 > Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST BE of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,15}*` for WAMP predefined keys. Implementation MAY use implementation-specific key which MUST match the regular expression `_[a-z0-9_]{2,15}*`.
-> 
+>
 > **Polymorphism**
 > For a given `MessageType` and number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
-> 
+>
 > **Structure**
 > The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This can improve efficiency and performance.
-> 
+>
 
 ### Message Definitions
 
@@ -369,7 +369,7 @@ Sent by a *Peer* to abort the opening of a WAMP session. No response is expected
 
 #### GOODBYE
 
-Sent by a *Peer* to close WAMP session. Must be echoed by the receiving *Peer*. 
+Sent by a *Peer* to close a WAMP session. Must be echoed by the receiving *Peer*.
 
     [GOODBYE, Details|dict, Reason|uri]
 
@@ -397,7 +397,7 @@ Acknowledge sent by a *Broker* to a *Publisher* for acknowledged publications.
 
 #### SUBSCRIBE
 
-Subscribe request sent by a *Subscriber* to a *Broker* to subscribe to a topic. 
+Subscribe request sent by a *Subscriber* to a *Broker* to subscribe to a topic.
 
     [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
@@ -489,7 +489,7 @@ Actual yield from an endpoint send by a *Callee* to *Dealer*.
 The following table lists the message type code for **all 25 messages defined in WAMP v2** and their direction between peer roles.
 
 > In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the messages *mandatory* for WAMP Basic Profile as well as optional messages from the WAMP Advanced Profile.
-> 
+>
 > "Tx" indicates the message is sent by the respective role, and "Rx" indicates the message is received by the respective role.
 
 
@@ -614,7 +614,7 @@ The `<role>|dict` is a dictionary describing **features** supported by the peer 
 
 #### ABORT
 
-Both the *Router* and the *Client* may abort the opening of a WAMP session 
+Both the *Router* and the *Client* may abort the opening of a WAMP session
 
 ![alt text](figure/hello_denied.png "WAMP Session denied")
 
@@ -719,12 +719,12 @@ where
 
 	[33, 713845233, 5512315355]
 
-> Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the this `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
+> Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
 >
 
 #### Subscription ERROR
 
-When the request for subscription cannot be fulfilled by the *Broker*, the *Broker* sends back a `ERROR` message to the *Subscriber*
+When the request for subscription cannot be fulfilled by the *Broker*, the *Broker* sends back an `ERROR` message to the *Subscriber*
 
     [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict, Error|uri]
 
@@ -814,8 +814,8 @@ where
  * `Request` is a random, ephemeral ID chosen by the *Publisher* and used to correlate the *Broker's* response with the request.
  * `Options` is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.
  * `Topic` is the topic published to.
- * `Arguments` is list of application-level event payload elements. The list may be of zero length.
- * `ArgumentsKw` is a dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
+ * `Arguments` is a list of application-level event payload elements. The list may be of zero length.
+ * `ArgumentsKw` is a an optional dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
 
 If the *Broker* is able to fulfill and allowing the publication, the *Broker* will send the event to all current *Subscribers* of the topic of the published event.
 
@@ -878,7 +878,7 @@ When a publication is successful and a *Broker* dispatches the event, it determi
 Note that the *Publisher* of an event will never receive the published event even if the *Publisher* is also a *Subscriber* of the topic published to.
 
 > WAMP Advanced Profile provides options for more detailed control over publication.
-> 
+>
 
 When a *Subscriber* is deemed to be a receiver, the *Broker* sends the *Subscriber* an `EVENT` message:
 
@@ -1259,7 +1259,7 @@ If the original call already failed at the *Dealer* **before** the call would ha
 All WAMP implementations, in particular *Routers* MUST support the following ordering guarantees.
 
 > WAMP Advanced Profile may provide applications options to relax ordering guarantees, in particular with distributed calls.
-> 
+>
 
 #### Publish & Subscribe Ordering
 
@@ -1271,8 +1271,8 @@ In other words, WAMP guarantees ordering of events between any given *pair* of *
 
 Further, if *Subscriber A* subscribes to **Topic 1**, the `SUBSCRIBED` message will be sent by *Broker* to *Subscriber A* before any `EVENT` message for **Topic 1**.
 
-> In general, `SUBSCRIBE` is asynchronous, and there is no guarantee on order of return for multiple `SUBSCRIBEs`. The first `SUBSCRIBE` might require the *Broker* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
-> 
+> In general, `SUBSCRIBE` is asynchronous, and there is no guarantee of order of return for multiple `SUBSCRIBEs`. The first `SUBSCRIBE` might require the *Broker* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
+>
 
 #### Remote Procedure Call Ordering
 
@@ -1287,7 +1287,7 @@ There are no guarantees on the order of call results and errors in relation to *
 Further, if *Callee A* registers for **Procedure 1**, the `REGISTERED` message will be sent by *Dealer* to *Callee A* before any `INVOCATION` message for **Procedure 1**.
 
 > In general, `REGISTER` is asynchronous, and there is no guarantee on order of return for multiple `REGISTERs`. The first `REGISTER` might require the *Dealer* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
-> 
+>
 
 ### Binary conversion of JSON Strings
 
