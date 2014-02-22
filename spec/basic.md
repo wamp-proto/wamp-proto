@@ -652,7 +652,7 @@ No response to an `ABORT` message is expected.
 
 *Example*
 
-    [3, {"message": "The realm does not exist."}, "wamp.error.nonexistent_realm"]
+    [3, {"message": "The realm does not exist."}, "wamp.error.no_such_realm"]
 
 
 ### Session Closing
@@ -1285,6 +1285,57 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 
 ## Appendix
+
+### Predefined URIs
+
+WAMP predefines the following URIs.
+
+#### Predefined Errors
+
+*Peer* is not authorized to access the given resource. This might be triggered by a session trying to join a realm, a publish, subscribe, register or call.
+
+	wamp.error.not_authorized
+
+*Peer* wanted to join a non-existing realm (and the *Router* did not allow to auto-create the realm).
+
+	wamp.error.no_such_realm
+
+The *Peer* is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
+
+	wamp.error.system_shutdown
+
+The *Peer* want to leave the realm - used as a `GOODBYE` reason.
+
+	wamp.error.close_realm
+
+A *Peer* acknowledges ending of a session - used as a `GOOBYE` reply reason.
+
+	wamp.error.goodbye_and_out
+
+A *Dealer* could not perform a call, since the procedure called does not exist.
+
+	wamp.error.no_such_procedure
+
+A *Broker* could not perform a unsubscribe, since the given subscription is not active.
+
+	wamp.error.no_such_subscription
+
+A *Dealer* could not perform a unregister, since the given registration is not active.
+
+	wamp.error.no_such_registration
+
+A call failed, since the given argument types or values are not acceptable to the called procedure.
+
+	wamp.error.invalid_argument
+
+A publish failed, since the given topic is not acceptable to the *Broker*.
+
+	wamp.error.invalid_topic
+
+A procedure could not be registered, since a procedure with the given URI is already registered (and the *Dealer* is not able to set up a distributed registration).
+
+	wamp.error.procedure_already_exists
+
 
 ### Ordering Guarantees
 
