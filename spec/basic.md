@@ -305,9 +305,25 @@ With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 enco
 
 With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
 
-The following sequence diagram shows the relation between the lifetime of a WebSocket transport and WAMP sessions:
+#### Transport and Session Lifetime
+
+The following sequence diagram shows the relation between the *lifetime* of a WebSocket transport and WAMP sessions:
 
 ![alt text](figure/sessions4.png "Transport and Session Lifetime")
+
+#### Supporting WAMP v1 and v2
+
+WAMP v1 only supports JSON over WebSocket as a transport, and uses the WebSocket subprotocol identifier `wamp`.
+
+Since WAMP v2 uses different WebSocket subprotocol identifiers, a WAMP implementation may support both protocol versions at the same time.
+
+A client that supports both WAMP versions can connect to a server requesting WebSocket subprotocols `["wamp.2.json", "wamp"]`.
+
+If the server only speaks WAMP v1, it'll answer chosing `wamp` as subprotocol. If the server speaks WAMP v2, it'll answer chosing `wamp.2.json`.
+
+The client can access the negotiated WebSocket subprotocol (and hence WAMP versio) right after the WebSocket connection has been established, and before even the first message is received (or sent).
+
+Since WAMP v1 has no notion of *Realms*, all WAMP v1 clients connected can be seens as being attached to an implicit "WAMP1" realm.
 
 
 ## Messages
@@ -555,7 +571,12 @@ A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` messag
 
 It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Peer* must fail the session if that happens.
 
-**Roles and Features**
+##### Client: Role and Feature Announcement
+
+WAMP uses *Role & Feature announcement* instead of *protocol versioning* to allow
+
+ * implementations only supporting subsets of functionality
+ * future extensibility
 
 A *Client* must announce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
@@ -566,7 +587,9 @@ A *Client* must announce the **roles** it supports via `Hello.Details.roles|dict
 
 A *Client* can support any combination of above roles but must support at least one role.
 
-The `<role>|dict` is a dictionary describing **features** supported by the peer for that role. With WAMP Basic Profile implementations, this will be empty.
+The `<role>|dict` is a dictionary describing **features** supported by the peer for that role.
+
+With WAMP Basic Profile implementations, the *Features* dictionaries per *Role* will be empty. With WAMP Advanced Profile implementations, the *Features* dictionaries will list the (advanved) features supported per *Role*.
 
 *Example: A Client that implements the Publisher and Subscriber roles of the WAMP Basic Profile.*
 
@@ -592,9 +615,11 @@ In the WAMP Basic Profile without session authentication, a `WELCOME` message is
 > Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
 >
 
-**Roles and Features**
+##### Router: Role and Feature Announcement
 
-A *Router* must announce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+Similar to `HELLO` announcing *Roles* and *Features* supported by a *Client* to a *Router*, a *Router* announces it's support to the *Client*  in an initial `WELCOME` message.
+
+A *Router* must announce the **roles** it supports via `Welcome.Details.roles|dict`, with a key mapping to a `Welcome.Details.roles.<role>|dict` where `<role>` can be:
 
  * `broker`
  * `dealer`
