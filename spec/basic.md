@@ -313,18 +313,16 @@ The following sequence diagram shows the relation between the *lifetime* of a We
 
 #### Supporting WAMP v1 and v2
 
-WAMP v1 only supports JSON over WebSocket as a transport, and uses the WebSocket subprotocol identifier `wamp`.
+WAMP v1 only supports JSON over WebSocket as a transport, and uses the WebSocket subprotocol identifier `wamp`. Since WAMP v2 uses different WebSocket subprotocol identifiers, a WAMP implementation may support both protocol versions at the same time.
 
-Since WAMP v2 uses different WebSocket subprotocol identifiers, a WAMP implementation may support both protocol versions at the same time.
+A client that supports both WAMP versions can connect to a server requesting WebSocket subprotocols `["wamp.2.json", "wamp"]`. If the server only speaks WAMP v1, it'll answer chosing `wamp` as subprotocol. If the server speaks WAMP v2, it'll answer chosing `wamp.2.json`.
 
-A client that supports both WAMP versions can connect to a server requesting WebSocket subprotocols `["wamp.2.json", "wamp"]`.
-
-If the server only speaks WAMP v1, it'll answer chosing `wamp` as subprotocol. If the server speaks WAMP v2, it'll answer chosing `wamp.2.json`.
-
-The client can access the negotiated WebSocket subprotocol (and hence WAMP versio) right after the WebSocket connection has been established, and before even the first message is received (or sent).
+The client can access the negotiated WebSocket subprotocol (and hence WAMP version) right after the WebSocket connection has been established, and before even the first message is received (or sent).
 
 Since WAMP v1 has no notion of *Realms*, all WAMP v1 clients connected can be seens as being attached to an implicit "WAMP1" realm.
 
+> Implementors are discouraged from implementing WAMP v1. This old protocol version should be considered deprecated.
+> 
 
 ## Messages
 
