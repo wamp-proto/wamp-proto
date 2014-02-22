@@ -5,14 +5,14 @@ This document specifies the *Basic Profile* of the [Web Application Messaging Pr
 
 For the *Advanced Profile*, please see [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md).
 
-Document Revision: **rc-1**, 2014/02/18
+Document Revision: **rc-2**, 2014/02/22
 
 Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
 
 **Contents**
 
 1. [Introduction](#introduction)
-    * [Transports, Peers and Sessions](#transports-peers-and-sessions)
+    * [Realms, Sessions and Transports](#realms-sessions-and-transports)
     * [Peers and Roles](#peers-and-roles)
     * [Application Code](#application-code)
 2. [Building Blocks](#building-blocks)
@@ -32,6 +32,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [Registering and Unregistering](#registering-and-unregistering)
     * [Calling and Invocations](#calling-and-invocations)
 10. [Appendix](#appendix)
+    * [Predefined URIs](#predefined-uris) 
     * [Ordering Guarantees](#ordering-guarantees)
     * [Byte Array Conversion](#byte-array-conversion)
     * [References](#references)
@@ -540,7 +541,7 @@ The following table lists the message type code for **all 25 messages defined in
 | 70   | `YIELD`        |          |             |          |              |          | Rx       | Tx       |
 
 
-## Session Management
+## Sessions
 
 The message flow between *Clients* and *Routers* for opening and closing WAMP sessions involves the following messages:
 
