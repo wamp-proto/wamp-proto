@@ -685,6 +685,15 @@ and the other peer replies
 	[6, {}, "wamp.error.goodbye_and_out"]
 
 
+#### Difference between ABORT and GOODBYE
+
+The differences between `ABORT` and `GOODBYE` messages are:
+
+1. `ABORT` gets sent only *before* a *Session* is established, while `GOODBYE` is sent only *after* a *Session* is already established.
+2. `ABORT` is never replied by a *Peer*, whereas `GOODBYE` must be replied by the receiving *Peer*
+
+> Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
+> 
 
 ## Publish & Subscribe
 
