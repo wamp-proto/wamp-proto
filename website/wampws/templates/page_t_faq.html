@@ -20,13 +20,7 @@
             <ul>
                <li><a href="#rpc">What is RPC?</a></li>
                <li><a href="#pubsub">What is PubSub?</a></li>
-            </ul>
-         </li>
-         <li>
-            Protocol
-            <ul>
                <li><a href="#why_rpc_and_pubsub">Why RPC and PubSub in one protocol?</a></li>
-               <li><a href="#why_uris">Why does WAMP use URIs to identify RPC endpoints and PubSub topics?</a></li>
             </ul>
          </li>
          <li>
@@ -48,17 +42,28 @@
    <a name="rpc"></a>
    <h3>What is RPC?</h3>
    <p>
-      Remote Procedure Call (RPC) is a messaging pattern involving
-      peers to two roles: client and server.
+      <b>Remote Procedure Call (RPC)</b> is a messaging pattern involving
+      peers of three roles:
+      <ol>
+         <li><i>Caller</i></li>
+         <li><i>Callee</i></li>
+         <li><i>Dealer</i></li>
+      </ol>
    </p>
    <p>
-      A server provides methods or procedure to call under well
-      known endpoints.<br>
-      A client calls remote methods or procedures by providing
-      the method or procedure endpoint and any arguments for the call.<br>
-      The server will execute the method or procedure using the
-      supplied arguments to the call and return the result of the
-      call to the client.
+      A <i>Caller</i> issues calls to remote procedures by providing the procedure URI
+      and any arguments for the call.
+      The <i>Callee</i> will execute the procedure using the supplied arguments to the
+      call and return the result of the call to the <i>Caller</i>.
+   </p>
+   <p>
+      <i>Callees</i> register procedures they provide with <i>Dealers</i>.
+      <i>Callers</i> initiate procedure calls first to <i>Dealers</i>.
+      <i>Dealers</i> route calls incoming from <i>Callers</i> to <i>Callees</i>
+      implementing the procedure called, and route call results back from <i>Callees</i> to <i>Callers</i>.
+   </p>
+   <p>
+      The <i>Caller</i> and <i>Callee</i> will usually run application code, while the <i>Dealer</i> works as a generic router for remote procedure calls decoupling <i>Callers</i> and <i>Callees</i>.
    </p>
    {{up()}}
 
@@ -67,83 +72,51 @@
    <h3>What is PubSub?</h3>
    <p>
       Publish &amp; Subscribe (PubSub) is a messaging pattern involving
-      peers of three roles: publisher, subscriber and broker.
+      peers of three roles:
+      <ol>
+         <li><i>Publisher</i></li>
+         <li><i>Subscriber</i></li>
+         <li><i>Broker</i></li>
+      </ol>
    </p>
    <p>
-      A publisher sends (publishes) an event by providing a topic (aka channel)
-      as the abstract address, not a specific peer.<br>
-      A subscriber receives events by first providing topics (aka channels)
-      he is interested. Subsequently, the subscriber will receive any
-      events publishes to that topic.<br>
-      The broker sits between publishers and subscribers and mediates
-      messages publishes to subscribers. A broker will maintain lists
-      of subscribers per topic so it can dispatch new published events
-      to the appropriate subscribers.<br>
+      A <i>Publishers</i> publishes events to topics by providing the topic URI and any payload for the event. <i>Subscribers</i> of the topic will receive the event together with the event payload.
    </p>
    <p>
-      A broker may also dispatch events on it's own, for example
-      when the broker also acts as an RPC server and a method
-      executed on the server should trigger a PubSub event.
+      <i>Subscribers</i> subscribe to topics they are interested in with <i>Brokers</i>. <i>Publishers</i> initiate publication first at <i>Brokers</i>. <i>Brokers</i> route events incoming from <i>Publishers</i> to <i>Subscribers</i> that are subscribed to respective topics.
    </p>
    <p>
-      In summary, PubSub decouples publishers and receivers via an
-      intermediary, the broker.
+      The <i>Publisher</i> and <i>Subscriber</i> will usually run application code, while the <i>Broker</i> works as a generic router for events decoupling <i>Publishers</i> from <i>Subscribers</i>.
    </p>
    {{up()}}
 
 
-   <h2>Protocol</h2>
-
    <a name="why_rpc_and_pubsub"></a>
    <h3>Why RPC and PubSub in one protocol?</h3>
    <p>
-      Imagine the following situation: a client want to perform some
-      action on a server. The client also wants to get notified
-      when another clients performs the action.<br>
+      Imagine the following situation: an application frontend want to perform
+      some action on an application backend server.
+      The frontend also wants to get notified
+      when another frontend performs the action on the backend.<br>
       For example, in a Web application for managing service tickets,
-      a client might perform the action "create new ticket", and
+      a frontend might perform the action "create new ticket", and
       get notified via events of "new ticket created".
    </p>
    <p>
       A natural approach to realize above would use RPC for
       performing actions, and PubSub for notifications.<br>
-      With the service ticket Web app, the client would subscribe
+      With the service ticket Web app, the frontend would subscribe
       to the topic "OnTicketCreated", and perform it's actions
-      by calling "createTicket". The server side implementation of
+      by calling "createTicket". The backends implementation of
       "createTicket" would not only perform the action of creating
-      a new ticket, but also dispatch a PubSub event on the
+      a new ticket, but also publish a event on the
       topic "OnTicketCreated" with the details of the new ticket.
    </p>
    <p>
       Now, a protocol suitable for realizing above will naturally
-      need to provide both RPC and PubSub messaging patterns.<br>
+      need to provide both RPC and PubSub messaging patterns.
       WAMP was designed exactly with above in mind, so it
-      provides you with one protocol for both RPC and PubSub.
-   </p>
-   {{up()}}
-
-
-   <a name="why_uris"></a>
-   <h3>Why does WAMP use URIs to identify RPC endpoints and PubSub topics?</h3>
-   <p>
-      The benefits of using URIs (from the HTTP scheme) are:
-      <ul>
-         <li>well known hierarchical naming scheme</li>
-         <li>an established global name registry / arbitration system (DNS)</li>
-         <li>by virtue of the first two, ability to integrate apps from different vendors without naming conflicts</li>
-         <li>as a potential feature in the future: have the ability to make those URIs derefencable for obtaining metadata</li>
-      </ul>
-   </p>
-   <p>
-      URIs are mandatory for topic and procedures. The current AutobahnXX
-      implementations don't _yet_ enforce this, but will do so.
-   </p>
-   <p>
-      In your payloads (RPC args, PubSub event payload) you are free do
-      to anything of course.
-      We (at Tavendo) for our apps use URIs for anything which isn't a literal value,
-      that is all ID like things, vocabulary (verbs, adj, ..) describing
-      relations between entities .. everything.
+      provides you with a unified protocol for both RPC and PubSub.
    </p>
    {{up()}}
 
@@ -179,7 +152,7 @@
    <a name="why_trademarking"></a>
    <h3>Why is WAMP trademarked?</h3>
    <p>
-      The WAMP word- and desing mark are trademarked as a way to ensure that only
+      The WAMP word- and design mark are trademarked as a way to ensure that only
       proper use is made of them. This is especially the case in regard to assurances
       regarding compatibility. A trademark policy detailing correct use is in the works.
       For now, and for a quick overview of the base principles of the trademark

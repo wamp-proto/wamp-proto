@@ -11,111 +11,107 @@
    <p style="font-size: 140%;">
       Get started with <a href="{{ url_for('page_spec') }}">WAMP</a> using your favorite language and framework.
    </p>
-   <p>
 
-      Want your WAMP implementation listed here? Please join the <a href="https://groups.google.com/group/wampws" target="_blank">WAMP group</a> and introduce your project.
-   </p>
-   <p>
-      Looking for WAMP version 1 implementations? Please see <a href="{{ url_for('page_implementations_wamp1') }}">here</a>.
-   </p>
-
-   <div id="implist_wrapper">
-      <h2>WAMP Libraries</h2>
-
-      <p style="font-size: 80%">
-         The following table lists <b>WAMP 2 compliant client library implementations</b>.
-         For each implementation, an "x" marks a WAMP role supported by
-         the implementation. The last column marks principle support
-         for features from WAMP "Advanced Profile".
-      </p>
-
-      <table class="wamp2_implementations">
-         <tr>
-            <td>Library</td>
-            <td>Language</td>
-            <td class="feature">Publisher</td>
-            <td class="feature">Subscriber</td>
-            <td class="feature">Caller</td>
-            <td class="feature">Callee</td>
-            <td>"Advanced Profile"</td>
-         </tr>
-
-         <tr>
-            <td><a href="https://github.com/tavendo/AutobahnPython"><b>Autobahn</b>|Python</a></td>
-            <td>Python</td>
-            <td>x</td>
-            <td>x</td>
-            <td>x</td>
-            <td>x</td>
-            <td>yes</td>
-         </tr>
-         <tr>
-            <td class="notes" colspan="7">Runs under Python 2 and 3, on Twisted and Asyncio</td>
-         </tr>
-
-         <tr>
-            <td><a href="https://github.com/tavendo/AutobahnJS"><b>Autobahn</b>|JS</a></td>
-            <td>JavaScript</td>
-            <td>x</td>
-            <td>x</td>
-            <td>x</td>
-            <td>x</td>
-            <td>yes</td>
-         </tr>
-         <tr>
-            <td class="notes" colspan="7">Runs in browsers and NodeJS</td>
-         </tr>
-
-         <tr>
-            <td><a href="https://github.com/tavendo/AutobahnPython"><b>Autobahn</b>|Android</a></td>
-            <td>Java</td>
-            <td colspan="4">upcoming</td>
-         </tr>
-         <tr>
-            <td class="notes" colspan="7">WAMP client library for native Android applications.</td>
-         </tr>
-      </table>
+   <div style="font-size: 80%; width: 95%; margin: auto;">
+      Notes:<br>
+      - Want your WAMP implementation listed here? Please join the <a href="https://groups.google.com/group/wampws" target="_blank">WAMP group</a> and introduce your project.<br>
+      - Looking for WAMP version 1 implementations? Please see <a href="{{ url_for('page_implementations_wamp1') }}">here</a>.
    </div>
 
-   <div id="implist_wrapper">
-      <h2>WAMP Routers</h2>
+   <h2>WAMP Libraries</h2>
 
-      <p style="font-size: 80%">
-         The following table lists <b>WAMP 2 compliant router implementations</b>.
-         For each implementation, an "x" marks a WAMP role supported by
-         the implementation. The last column marks principle support
-         for features from WAMP "Advanced Profile".
-      </p>
+   <p style="font-size: 80%">
+      The following table lists <b>WAMP 2 compliant client library implementations</b>.
+      For each implementation, an "x" marks a WAMP role supported by
+      the implementation. The last column marks principle support
+      for features from WAMP "Advanced Profile".
+   </p>
 
-      <table class="wamp2_implementations">
-         <tr>
-            <td>Router</td>
-            <td class="feature">Broker</td>
-            <td class="feature">Dealer</td>
-            <td>"Advanced Profile"</td>
-         </tr>
+   <table class="wamp2_implementations">
+      <tr>
+         <td>Library</td>
+         <td>Language</td>
+         <td class="feature">Publisher</td>
+         <td class="feature">Subscriber</td>
+         <td class="feature">Caller</td>
+         <td class="feature">Callee</td>
+         <td>"Advanced Profile"</td>
+      </tr>
 
-         <tr>
-            <td><a href="https://github.com/tavendo/AutobahnPython"><b>Autobahn</b>|Python</a></td>
-            <td>x</td>
-            <td>x</td>
-            <td>no</td>
-         </tr>
-         <tr>
-            <td class="notes" colspan="7">Autobahn|Python includes a "basic router".</td>
-         </tr>
+      <tr>
+         <td><a href="https://github.com/tavendo/AutobahnPython"><b>Autobahn</b>|Python</a></td>
+         <td>Python</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>yes</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">Runs under Python 2 and 3, on Twisted and Asyncio</td>
+      </tr>
 
-         <tr>
-            <td><a href="https://github.com/crossbario/crossbar"><b>Crossbar</b>.io</a></td>
-            <td>x</td>
-            <td>x</td>
-            <td>yes</td>
-         </tr>
-         <tr>
-            <td class="notes" colspan="7">Polyglot application router with clustering/federation support.</td>
-         </tr>
-      </table>
-   </div>
+      <tr>
+         <td><a href="https://github.com/tavendo/AutobahnJS"><b>Autobahn</b>|JS</a></td>
+         <td>JavaScript</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>yes</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">Runs in browsers and NodeJS</td>
+      </tr>
+
+      <tr>
+         <td><a href="https://github.com/tavendo/AutobahnPython"><b>Autobahn</b>|Android</a></td>
+         <td>Java</td>
+         <td colspan="5">upcoming</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">WAMP client library for native Android applications.</td>
+      </tr>
+   </table>
+
+
+   <h2>WAMP Routers</h2>
+
+   <p style="font-size: 80%">
+      The following table lists <b>WAMP 2 compliant router implementations</b>.
+      For each implementation, an "x" marks a WAMP role supported by
+      the implementation. The last column marks principle support
+      for features from WAMP "Advanced Profile".
+   </p>
+
+   <table class="wamp2_implementations">
+      <tr>
+         <td>Router</td>
+         <td class="feature">Broker</td>
+         <td class="feature">Dealer</td>
+         <td>"Advanced Profile"</td>
+      </tr>
+
+      <tr>
+         <td><a href="https://github.com/tavendo/AutobahnPython"><b>Autobahn</b>|Python</a></td>
+         <td>x</td>
+         <td>x</td>
+         <td>no</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="4">Autobahn|Python includes a "basic router".</td>
+      </tr>
+
+      <tr>
+         <td><a href="https://github.com/crossbario/crossbar"><b>Crossbar</b>.io</a></td>
+         <td>x</td>
+         <td>x</td>
+         <td>yes</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="4">Polyglot application router with clustering/federation support.</td>
+      </tr>
+   </table>
 
    <div style="clear: both;"></div>
 
