@@ -1,3 +1,39 @@
+.wamp2_implementations {
+   border-collapse: collapse;
+   border-spacing: 0 0;
+   border: 1px solid #fa72c6;
+}
+
+.wamp2_implementations tr:nth-child(1) {
+   background-color: #fa72c6;
+   color: #fff;
+}
+
+.wamp2_implementations td {
+   text-align: center;
+   padding: 4px 8px 4px 8px;
+}
+
+.wamp2_implementations td:nth-child(1) {
+   width: 220px;
+}
+
+.wamp2_implementations td:nth-child(1), td:nth-child(2), td:last-child {
+   text-align: left;
+}
+
+.wamp2_implementations td:nth-child(7) {
+}
+
+.wamp2_implementations td.feature {
+   width: 60px;
+   font-style: italic;
+}
+
+.wamp2_implementations td.notes {
+   font-size: 80%;
+}
+
 #content_block .impl_list {
    margin-left: 60px;
    padding-left: 30px;

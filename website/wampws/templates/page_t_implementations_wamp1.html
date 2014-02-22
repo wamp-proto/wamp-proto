@@ -1,0 +1,58 @@
+{% extends "layout_t.html" %}
+
+{% block header %}
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_implementations.css') }}">
+{% endblock%}
+
+{% block content %}
+
+<div id="page_wrapper">
+
+   <p style="font-size: 140%;">List of known <a href="{{ url_for('page_spec_wamp1') }}">WAMP 1</a> implementations:</p>
+
+   <div id="implist_wrapper">
+      <div class="implist">
+         Clients
+         <ul>
+            <li><a href="http://autobahn.ws/js">AutobahnJS <small>(JavaScript/Browser)</small></a></li>
+            <li><a href="http://autobahn.ws/python">AutobahnPython <small>(Python/Twisted)</small></a></li>
+            <li><a href="http://autobahn.ws/android">AutobahnAndroid <small>(Java/Android)</small></a></li>
+            <li><a href="https://github.com/ghetolay/jwamp">JWamp <small>(Java/Jetty)</small></a></li>
+            <li><a href="https://github.com/mogui/MDWamp">MDWamp <small>(ObjectiveC/iOS)</small></a></li>
+            <li><a href="https://github.com/ocroquette/wampoc">wampoc <small>(Java/Jetty)</small></a></li>
+            <li><a href="https://github.com/darkl/WampSharp">WampSharp <small>(C#/.NET)</small></a></li>
+            <li><a href="https://github.com/ysobolev/cupholder">cupholder <small>(CoffeeScript)</small></a></li>
+            <li><a href="https://github.com/jcelliott/turnpike">Turnpike<small> (Go)</small></a></li>
+            <li><a href="https://github.com/gavroche/php-websocket-client">php-websocket-client<small> (PHP)</small></a></li>
+            <li><a href="https://github.com/KSDaemon/wampy.js">wampy.js <small>(JavaScript/Browser)</small></a></li>
+         </ul>
+      </div>
+      <div class="implist">
+         Servers
+         <ul>
+            <li><a href="http://autobahn.ws/python">AutobahnPython <small>(Python/Twisted)</small></a></li>
+            <li><a href="http://www.tavendo.de/">WebMQ <small>(Integration Server)</small></a></li>
+            <li><a href="http://socketo.me/">Ratchet <small>(PHP/React)</small></a></li>
+            <li><a href="https://github.com/nicokaiser/wamp.io">WAMP.IO <small>(JavaScript/NodeJS)</small></a></li>
+            <li><a href="https://github.com/ghetolay/jwamp">JWamp <small>(Java/Jetty)</small></a></li>
+            <li><a href="https://github.com/thraaawn/tWAMP">tWAMP <small>(SourceMod/Half-Life 2)</small></a></li>
+            <li><a href="https://github.com/ocroquette/wampoc">wampoc <small>(Java/Jetty)</small></a></li>
+            <li><a href="https://github.com/blopker/WAMPlay">WAMPlay <small>(Java/Play Framework)</small></a></li>
+            <li><a href="https://github.com/bradylove/wamp-ruby">wamp-ruby <small>(Ruby/Faye)</small></a></li>
+            <li><a href="https://github.com/gmosx/dart-wamp">dart-wamp <small>(Dart)</small></a></li>
+            <li><a href="https://github.com/NeoXiD/iowamp">iowamp <small>(JavaScript/NodeJS)</small></a></li>
+            <li><a href="https://github.com/Horusiath/NWamp">NWamp <small>(C#/.NET)</small></a></li>
+            <li><a href="https://github.com/jcelliott/turnpike">Turnpike<small> (Go)</small></a></li>
+            <li><a href="http://cljwamp.us/">clj-wamp<small> (Clojure/HTTP Kit)</small></a></li>
+            <li><a href="https://github.com/darkl/WampSharp">WampSharp <small>(C#/.NET)</small></a></li>
+            <li><a href="https://github.com/yegorius/netty-wamp">netty-wamp <small>(Java/Netty)</small></a></li>
+            <li><a href="https://github.com/bbody/WAMPee7">WAMPee7 <small>(Java)</small></a></li>
+         </ul>
+      </div>
+   </div>
+
+   <div style="clear: both;"></div>
+
+</div>
+
+{% endblock%}

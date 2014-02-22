@@ -66,10 +66,20 @@ def page_implementations():
    session['tab_selected'] = 'implementations'
    return render_template('page_t_implementations.html')
 
+@app.route('/implementations/wamp1')
+def page_implementations_wamp1():
+   session['tab_selected'] = 'implementations'
+   return render_template('page_t_implementations_wamp1.html')
+
 @app.route('/spec/')
 def page_spec():
    session['tab_selected'] = 'spec'
    return render_template('page_t_spec.html')
+
+@app.route('/spec/wamp1')
+def page_spec_wamp1():
+   session['tab_selected'] = 'spec'
+   return render_template('page_t_spec_wamp1.html')
 
 
 if __name__ == "__main__":
