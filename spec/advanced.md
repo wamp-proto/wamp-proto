@@ -13,16 +13,16 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 
 **Contents**
 
-1. [Advanced Profile: Transports](#transports)
+1. [Transports](#transports)
    * [Long-Poll Transport](#long-poll-transport)
    * [Batched Transport](#batched-transport)
    * [Multiplexed Transport](#multiplexed-transport)
-2. [Advanced Profile: Messages](#optional-messages)
+2. [Messages](#messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
-3. [Advanced Profile: Session Management](#advanced-session-management)
+3. [Session Management](#session-management)
     * [Heartbeats](#heartbeats)
-4. [Advanced Profile: Publish & Subscribe](#advanced-publish--subscribe)
+4. [Publish & Subscribe](#publish--subscribe)
     * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) [stable]
     * [Publisher Exclusion](#publisher-exclusion) [stable]
     * [Publisher Identification](#publisher-identification) [stable]
@@ -32,7 +32,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [Subscriber Meta Events](#subscriber-meta-events)
     * [Subscriber List](#subscriber-list)
     * [Event History](#event-history)
-5. [Advanced Profile: Remote Procedure Calls](#advanced-remote-procedure-calls)
+5. [Remote Procedure Calls](#remote-procedure-calls)
     * [Caller Identification](#caller-identification) [stable]
     * [Progressive Call Results](#progressive-call-results) [stable]
     * [Canceling Calls](#canceling-calls) [stable]
@@ -359,7 +359,7 @@ and
 
 
 
-## Advanced Publish & Subscribe
+## Publish & Subscribe
 
 All of the following advanced features for Publish & Subscribe are optional.
 
@@ -723,7 +723,7 @@ with `Arguments = [topic|uri, publication|id]`
 
 
 
-## Advanced Remote Procedure Calls
+## Remote Procedure Calls
 
 All of the following advanced features for Remote Procedure Calls are optional.
 
