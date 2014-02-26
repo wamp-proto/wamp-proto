@@ -97,8 +97,6 @@ WAMP is currently defined for the following *serializations*:
 
 When the transport allows for - as is the case with WebSocket - WAMP lets you combine the transport with any serialization.
 
-> Support for efficient serialization formats, both text and binary, together with advanced transport level features like WebSocket compression, message batching, ...
-> 
 
 ### Peers and Roles
 
@@ -270,7 +268,7 @@ These are identified in WAMP using IDs that are integers between (inclusive) **0
 * IDs in the *router scope* can be chosen freely by the specific router implementation
 * IDs in the *session scope* SHOULD be incremented by 1 beginning with 1
 
-> The reason to choose the specific upper bound is that **2^53** is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range.
+> The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range.
 >
 
 ### Serializations
@@ -572,9 +570,7 @@ The following table lists the message type code for **all 25 messages defined in
 
 ### Extension Messages
 
-WAMP uses type codes from the core range [0, 255].
-
-Implementations MAY define and use implementation specific messages with message type codes from the extension message range [256, 1023].
+WAMP uses type codes from the core range [0, 255]. Implementations MAY define and use implementation specific messages with message type codes from the extension message range [256, 1023]. For example, a router MAY implement router-to-router communication by using extension messages.
 
 
 ## Sessions
@@ -598,6 +594,7 @@ After the underlying transport has been established, opening of a WAMP session i
  * `Details` is a dictionary that allows to provide additional opening information (see below).
 
 The `HELLO` message MUST be the very first message sent by the *Client* after the transport has been established.
+
 In the WAMP Basic Profile without session authentication the *Router* will reply with a `WELCOME` or `ABORT` message.
 
 ![alt text](figure/hello.png "WAMP Session success")
@@ -645,7 +642,7 @@ A *Router* completes the opening of a WAMP session by sending a `WELCOME` reply 
  * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session.
  * `Details` is a dictionary that allows to provide additional information regarding the open session (see below).
 
-In the WAMP Basic Profile without session authentication, a `WELCOME` message is the first message sen by the *Router*, directly in response to a `HELLO` message received from the *Client*.
+In the WAMP Basic Profile without session authentication, a `WELCOME` message is the first message sent by the *Router*, directly in response to a `HELLO` message received from the *Client*.
 
 > Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
 >
@@ -739,7 +736,7 @@ All of the following features for Publish & Subscribe are mandatory for WAMP Bas
 
 ### Subscribing and Unsubscribing
 
-The message flow between *Enpoints* implementing the role of *Subscriber* and *Routers* implementing the role of *Broker* for subscribing and unsubscribing involves the following messages:
+The message flow between *Clients* implementing the role of *Subscriber* and *Routers* implementing the role of *Broker* for subscribing and unsubscribing involves the following messages:
 
  1. `SUBSCRIBE`
  2. `SUBSCRIBED`
@@ -751,7 +748,7 @@ The message flow between *Enpoints* implementing the role of *Subscriber* and *R
 
 A *Subscriber* may subscribe to zero, one or more topics, and a *Publisher* publishes to topics without knowledge of subscribers.
 
-Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will receive any future asynchronous events published to the respective topic by *Publishers*.
+Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will receive any future events published to the respective topic by *Publishers*, and will receive those events asynchronously.
 
 A subscription lasts for the duration of a session, unless a *Subscriber* opts out from a previously established subscription via the `UNSUBSCRIBE` message.
 
@@ -934,10 +931,6 @@ where
 *Example*
 
     [8, 16, 239714735, {}, "wamp.error.not_authorized"]
-
-*Example*
-
-    [8, 16, 239714735, {}, "wamp.error.invalid_topic"]
 
 
 #### EVENT
