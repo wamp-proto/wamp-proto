@@ -1,13 +1,16 @@
 # The Web Application Messaging Protocol
-# Part 1: Basic Profile
 
 This document specifies the *Basic Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-For the *Advanced Profile*, please see [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md).
+Document Revision: **RC2**, 2014/02/26
 
-Document Revision: **rc-2**, 2014/02/22
+> For the *Advanced Profile*, please see [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md). For the (deprecated) WAMP version 1 specification, please see [here](http://wamp.ws/spec/wamp1/).
+> 
 
 Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+
+
+# Part 1: Basic Profile
 
 **Contents**
 
