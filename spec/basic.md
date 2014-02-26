@@ -88,9 +88,7 @@ WAMP can run over different *transports*. A *Transport* suitable for WAMP must h
  * reliable
  * ordered
 
-The default transport for WAMP is [WebSocket](http://tools.ietf.org/html/rfc6455), where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol.
-
-For other transports, please see the [Advanced Profile](advanced.md).
+The default transport for WAMP is [WebSocket](http://tools.ietf.org/html/rfc6455), where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol. For other transports, please see the [Advanced Profile](advanced.md).
 
 WAMP is currently defined for the following *serializations*:
 
@@ -118,7 +116,7 @@ and a *Router* can implement either or both of the *Roles*:
  * *Dealer*
  * *Broker*
 
-> This document describes WAMP client-router communication. Direct client-client communication is not supported by WAMP. Router-to-router communication is subject to router implementation specific definition.
+> This document describes WAMP as in client-to-router communication. Direct client-to-client communication is not supported by WAMP. Router-to-router communication MAY be defined by a specific router implementation.
 >
 
 **Symmetric Messaging**
@@ -392,18 +390,18 @@ WAMP defines the following messages which are explained in detail in the followi
 
 The messages concerning the WAMP session itself are mandatory for all *Peers*, i.e. a *Client* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`, `ABORT` and `GOODBYE`.
 
-All other messages are mandatory *per role*, i.e. in an implementation which only provides an *Client* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
+All other messages are mandatory *per role*, i.e. in an implementation which only provides a *Client* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
 
 
 #### HELLO
 
-Sent by a *Client* to initate opening of a WAMP session to a *Router*.
+Sent by a *Client* to initate opening of a WAMP session to a *Router* attaching to a *Realm*.
 
     [HELLO, Realm|uri, Details|dict]
 
 #### WELCOME
 
-Sent by a *Router* to accept a *Client*. This starts a new WAMP session.
+Sent by a *Router* to accept a *Client*. The WAMP session is now open.
 
     [WELCOME, Session|id, Details|dict]
 
@@ -415,7 +413,7 @@ Sent by a *Peer* to abort the opening of a WAMP session. No response is expected
 
 #### GOODBYE
 
-Sent by a *Peer* to close a WAMP session. Must be echoed by the receiving *Peer*.
+Sent by a *Peer* to close a previously opened WAMP session. Must be echoed by the receiving *Peer*.
 
     [GOODBYE, Details|dict, Reason|uri]
 
