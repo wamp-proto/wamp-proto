@@ -25,6 +25,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 5. [Messages](#mandatory-messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
+    * [Extension Messages](#extension-messages)
 6. [Sessions](#session-management)
     * [Session Establishment](#session-establishment)
     * [Session Closing](#session-closing)
@@ -78,17 +79,28 @@ A *Session* is a transient conversation between two *Peers* attached to a *Realm
 </a>
 </center>
 
-A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions. A *Transport*  must have the following characteristics:
+A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions.
+
+WAMP can run over different *transports*. A *Transport* suitable for WAMP must have the following characteristics:
 
  * message based
  * bidirectional
  * reliable
  * ordered
 
-WAMP can run over different *transports*.
-For [WebSocket](http://tools.ietf.org/html/rfc6455), its default transport, WAMP is defined as a proper, officially [registered WebSocket subprotocol](http://www.iana.org/assignments/websocket/websocket.xml).
-WAMP also supports different *serializations*, including JSON and MsgPack.
+The default transport for WAMP is [WebSocket](http://tools.ietf.org/html/rfc6455), where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol.
 
+For other transports, please see the [Advanced Profile](advanced.md).
+
+WAMP is currently defined for the following *serializations*:
+
+ * JSON
+ * MsgPack
+
+When the transport allows for - as is the case with WebSocket - WAMP lets you combine the transport with any serialization.
+
+> Support for efficient serialization formats, both text and binary, together with advanced transport level features like WebSocket compression, message batching, ...
+> 
 
 ### Peers and Roles
 
@@ -106,7 +118,7 @@ and a *Router* can implement either or both of the *Roles*:
  * *Dealer*
  * *Broker*
 
-> This document describes WAMP client-router communication. Direct client-client communication is not supported. Router-to-router communication is subject to router implementation specific definition.
+> This document describes WAMP client-router communication. Direct client-client communication is not supported by WAMP. Router-to-router communication is subject to router implementation specific definition.
 >
 
 **Symmetric Messaging**
@@ -246,19 +258,22 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 
 #### IDs
 
-WAMP needs to identify the following *ephemeral* entities:
+WAMP needs to identify the following *ephemeral* entities each in the scope noted:
 
- 1. Sessions
- 2. Subscriptions
- 3. Publications
- 4. Registrations
- 5. Requests
+1. Sessions *(global scope)*
+2. Publications *(global scope)*
+3. Subscriptions *(router scope)*
+4. Registrations *(router scope)*
+5. Requests *(session scope)*
 
-These are identified in WAMP using IDs that are integers between (inclusive) `0` and `2^53` (`9007199254740992L`) and which MUST BE drawn *randomly* from a *uniform distribution* over the specified range.
+These are identified in WAMP using IDs that are integers between (inclusive) **0** and **2^53** (9007199254740992):
 
-> The reason to choose the specific upper bound is that `2^53` is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range.
+* IDs in the *global scope* MUST be drawn *randomly* from a *uniform distribution* over the complete range [0, 2^53]
+* IDs in the *router scope* can be chosen freely by the specific router implementation
+* IDs in the *session scope* SHOULD be incremented by 1 beginning with 1
+
+> The reason to choose the specific upper bound is that **2^53** is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range.
 >
-
 
 ### Serializations
 
@@ -555,6 +570,13 @@ The following table lists the message type code for **all 25 messages defined in
 | 68   | `INVOCATION`   |          |             |          |              |          | Tx       | Rx       |
 | 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
 | 70   | `YIELD`        |          |             |          |              |          | Rx       | Tx       |
+
+
+### Extension Messages
+
+WAMP uses type codes from the core range [0, 255].
+
+Implementations MAY define and use implementation specific messages with message type codes from the extension message range [256, 1023].
 
 
 ## Sessions
