@@ -1097,7 +1097,7 @@ The execution of remote procedure calls is asynchronous, and there may be more t
 
 ### CALL
 
-When a *Callee* wishes to call a remote procedure, it sends a `CALL` message to a *Dealer*:
+When a *Caller* wishes to call a remote procedure, it sends a `CALL` message to a *Dealer*:
 
     [CALL, Request|id, Options|dict, Procedure|uri]
 
@@ -1111,7 +1111,7 @@ or
 
 where
 
- * `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
+ * `Request` is a random, ephemeral ID chosen by the *Caller* and used to correlate the *Dealer's* response with the request.
  * `Options` is a dictionary that allows to provide additional call request details in an extensible way. This is described further below.
  * `Procedure` is the URI of the procedure to be called.
  * `Arguments` is a list of positional call arguments (each of arbitrary type). The list may be of zero length.
