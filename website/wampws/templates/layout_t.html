@@ -28,6 +28,9 @@
 
       <!-- community widget iframe -->
 
+      <!-- general styles for the widget -->
+      <link rel="stylesheet" type="text/css" href="{{ session["widgeturl"] }}/css/parent.css" />
+      <!-- site-specific modifications -->
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/communitywidget.css') }}" />
 
       <iframe id="communityWidget" src="{{ session["widgeturl"] }}/index.html" frameborder="0"></iframe>
