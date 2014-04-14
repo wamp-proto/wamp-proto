@@ -35,7 +35,7 @@ app.secret_key = str(uuid.uuid4())
 @app.before_request
 def before_request():
    session["debug"] = app.debug
-   session["widgeturl"] = app.widgeturl
+   session["widgeturl"] = app.widgeturl # TRANSFER
 
 @app.after_request
 def after_request(response):
@@ -114,6 +114,7 @@ if __name__ == "__main__":
                       default = 8080,
                       help = "Listening port for Web server (i.e. 8090).")
 
+    # TRANSFER
    parser.add_option ("-w",
                       "--widgeturl",
                       dest = "widgeturl",
@@ -122,7 +123,7 @@ if __name__ == "__main__":
 
    (options, args) = parser.parse_args ()
 
-   app.widgeturl = options.widgeturl
+   app.widgeturl = options.widgeturl  # TRANSFER
 
    if options.freeze:
 
