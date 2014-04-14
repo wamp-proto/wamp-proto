@@ -35,6 +35,7 @@ app.secret_key = str(uuid.uuid4())
 @app.before_request
 def before_request():
    session["debug"] = app.debug
+   session["widgeturl"] = app.widgeturl
 
 @app.after_request
 def after_request(response):
@@ -113,7 +114,15 @@ if __name__ == "__main__":
                       default = 8080,
                       help = "Listening port for Web server (i.e. 8090).")
 
+   parser.add_option ("-w",
+                      "--widgeturl",
+                      dest = "widgeturl",
+                      default = "http://tavendo.com/webclan",
+                      help = "WebClan widget base URL.")
+
    (options, args) = parser.parse_args ()
+
+   app.widgeturl = options.widgeturl
 
    if options.freeze:
 

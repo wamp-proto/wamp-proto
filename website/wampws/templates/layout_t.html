@@ -29,10 +29,9 @@
       <!-- community widget iframe -->
 
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/communitywidget.css') }}" />
-      <!-- <iframe id="communityWidget" src="http://127.0.0.1:8090/widget/index.html" frameborder="0"></iframe> -->
-      <iframe id="communityWidget" src="http://192.168.1.147:8090/widget/index.html" frameborder="0"></iframe>
-      <!-- change url for production -->
-      <script src="{{ url_for('static', filename = 'js/communitywidget.js') }}"></script>
+
+      <iframe id="communityWidget" src="{{ session["widgeturl"] }}/index.html" frameborder="0"></iframe>
+      <script src="{{ session["widgeturl"] }}/js/parent.js"></script>
 
       {% macro up() -%}
          <div class="up">
