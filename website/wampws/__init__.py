@@ -118,7 +118,7 @@ if __name__ == "__main__":
    parser.add_option ("-w",
                       "--widgeturl",
                       dest = "widgeturl",
-                      default = "http://tavendo.com/webclan",
+                      default = "https://demo.crossbar.io/clandeckwidget",
                       help = "WebClan widget base URL.")
 
    (options, args) = parser.parse_args ()

@@ -1,5 +1,6 @@
 .intro
 {
+   position: relative;
    font-size: 28px;
    margin-left: 60px;
    line-height: 1.4em;
@@ -57,4 +58,9 @@ a.cta_button:first-of-type {
 a.cta_button:hover {
    background-color: #f10a9a;
    color: #fff;
+}
+
+#tweetme {
+   position: absolute;
+   right: 20px;
 }
