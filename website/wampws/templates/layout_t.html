@@ -32,8 +32,13 @@
       <link rel="stylesheet" type="text/css" href="{{ session["widgeturl"] }}/css/parent.css" />
       <!-- site-specific modifications -->
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/communitywidget.css') }}" />
-
-      <iframe id="communityWidget" src="{{ session["widgeturl"] }}/index.html" frameborder="0"></iframe>
+      <!-- base stylesheet to ensure non-Display if nothing loads -->
+      <style>
+         #communityWidget.nonDisplay {
+            display: none;
+         }
+      </style>
+      <iframe id="communityWidget" class="nonDisplay" src="{{ session["widgeturl"] }}/index.html" frameborder="0"></iframe>
       <script src="{{ session["widgeturl"] }}/js/parent.js"></script>
 
       {% macro up() -%}
