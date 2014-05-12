@@ -150,7 +150,7 @@ The following 5 message types are used in the WAMP Advanced Profile.
 
 During authenticated session establishment, a *Router* sends a challenge message.
 
-    [CHALLENGE, Challenge|string, Extra|dict]
+    [CHALLENGE, AuthMethod|string, Extra|dict]
 
 #### `AUTHENTICATE`
 
@@ -212,10 +212,8 @@ An authentication MAY be required for the establishment of a session. Such requi
 
 To request authentication, the *Router* sends a `CHALLENGE` message to the *Endpoint*.
 
-    [CHALLENGE, Challenge|string, Extra|dict]
+    [CHALLENGE, AuthMethod|string, Extra|dict]
 
-* `Challenge` ---- ???? ----
-* `Extra` is a dictionary ---- ???? ----
 
 #### AUTHENTICATE
 
@@ -1332,4 +1330,240 @@ A peer that acts as a *Dealer* SHOULD announce support for the reflection API by
    	HELLO.Details.roles.dealer.reflection|bool := true
 
 > Since *Brokers* might provide (broker) procedures and *Dealers* might provide (dealer) topics, both SHOULD implement the complete API above (even if the peer only implements one of *Broker* or *Dealer* roles).
->
+
+
+## Appendix
+
+### Authentication
+
+#### Example 1
+
+Client sends `HELLO` message:
+
+```javascript
+[
+   1, 
+   "com.tavendo.clandeck", 
+   {
+      "authmethods": [
+         "cookie", 
+         "anonymous"
+      ], 
+      "roles": {
+         "callee": {
+            "features": {
+               "progressive_call_results": true
+            }
+         }, 
+         "caller": {
+            "features": {
+               "caller_identification": true, 
+               "progressive_call_results": true
+            }
+         }, 
+         "publisher": {
+            "features": {
+               "publisher_exclusion": true, 
+               "publisher_identification": true, 
+               "subscriber_blackwhite_listing": true
+            }
+         }, 
+         "subscriber": {
+            "features": {
+               "publisher_identification": true
+            }
+         }
+      }
+   }
+]
+```
+
+Router sends `WELCOME` message:
+
+```javascript
+[
+   2, 
+   2134435219590102, 
+   {
+      "authid": "Z269J2NM6lWuB5UjxEH3cMHa", 
+      "authmethod": "anonymous", 
+      "authrole": "com.tavendo.community.role.anonymous", 
+      "roles": {
+         "broker": {
+            "features": {
+               "publisher_exclusion": true, 
+               "publisher_identification": true, 
+               "subscriber_blackwhite_listing": true
+            }
+         }, 
+         "dealer": {
+            "features": {
+               "caller_identification": true, 
+               "progressive_call_results": true
+            }
+         }
+      }
+   }
+]
+```
+
+#### Example 2
+
+Client sends `HELLO` message:
+
+```javascript
+[
+   1, 
+   "com.tavendo.clandeck", 
+   {
+      "authmethods": [
+         "cookie", 
+         "mozilla_persona"
+      ], 
+      "roles": {
+         "callee": {
+            "features": {
+               "progressive_call_results": true
+            }
+         }, 
+         "caller": {
+            "features": {
+               "caller_identification": true, 
+               "progressive_call_results": true
+            }
+         }, 
+         "publisher": {
+            "features": {
+               "publisher_exclusion": true, 
+               "publisher_identification": true, 
+               "subscriber_blackwhite_listing": true
+            }
+         }, 
+         "subscriber": {
+            "features": {
+               "publisher_identification": true
+            }
+         }
+      }
+   }
+]
+```
+
+Router sends `CHALLENGE` message:
+
+```javascript
+[
+   4, 
+   "mozilla-persona", 
+   {}
+]
+```
+
+Client sends `AUTHENTICATE` message:
+
+```javascript
+[
+   5,  "eyJhbGciOiJSUzI1NiJ9.eyJwdWJsaWMta2V5Ijp7ImFsZ29yaXRobSI6IkRTIiwieSI6ImE5NzBiNzRmYWVmMWVlNzhhZjAzODk2MWZhMGEwMWZhMGM1NTgwY2RiNWZiNTc4YTkzNDIwMjQ4ZTllZWE1ZTIzYzNhOTU1MmZiYjExMTk0ZjVjNTc4NjE3N2Y5OGNkZWEzNzA0MDBmYThmZjJhMzNhMWNiOTdmYmM2ZDUyZjRmNzVjNjAxMmVjZDQ3YThiNWY2ZGRhMjk0MjhmMzZmMWJiM2UyZDM5MjUzM2E2YTY5ODFmMjE5NjAwM2FiNDA0NjgxNjcxMjNmMDI3NWZjMjYyMjBlNzliZGM2ZDQ1ZTkxOWU4MzdkZmQ4ZTQ5NjZkNDQzZDRlYzhjMjYxNDljYjIiLCJwIjoiZmY2MDA0ODNkYjZhYmZjNWI0NWVhYjc4NTk0YjM1MzNkNTUwZDlmMWJmMmE5OTJhN2E4ZGFhNmRjMzRmODA0NWFkNGU2ZTBjNDI5ZDMzNGVlZWFhZWZkN2UyM2Q0ODEwYmUwMGU0Y2MxNDkyY2JhMzI1YmE4MWZmMmQ1YTViMzA1YThkMTdlYjNiZjRhMDZhMzQ5ZDM5MmUwMGQzMjk3NDRhNTE3OTM4MDM0NGU4MmExOGM0NzkzMzQzOGY4OTFlMjJhZWVmODEyZDY5YzhmNzVlMzI2Y2I3MGVhMDAwYzNmNzc2ZGZkYmQ2MDQ2MzhjMmVmNzE3ZmMyNmQwMmUxNyIsInEiOiJlMjFlMDRmOTExZDFlZDc5OTEwMDhlY2FhYjNiZjc3NTk4NDMwOWMzIiwiZyI6ImM1MmE0YTBmZjNiN2U2MWZkZjE4NjdjZTg0MTM4MzY5YTYxNTRmNGFmYTkyOTY2ZTNjODI3ZTI1Y2ZhNmNmNTA4YjkwZTVkZTQxOWUxMzM3ZTA3YTJlOWUyYTNjZDVkZWE3MDRkMTc1ZjhlYmY2YWYzOTdkNjllMTEwYjk2YWZiMTdjN2EwMzI1OTMyOWU0ODI5YjBkMDNiYmM3ODk2YjE1YjRhZGU1M2UxMzA4NThjYzM0ZDk2MjY5YWE4OTA0MWY0MDkxMzZjNzI0MmEzODg5NWM5ZDViY2NhZDRmMzg5YWYxZDdhNGJkMTM5OGJkMDcyZGZmYTg5NjIzMzM5N2EifSwicHJpbmNpcGFsIjp7ImVtYWlsIjoidG9iaWFzLm9iZXJzdGVpbkBnbWFpbC5jb20ifSwiaWF0IjoxMzk5OTA4NzgyMzkwLCJleHAiOjEzOTk5MTIzOTIzOTAsImlzcyI6ImdtYWlsLmxvZ2luLnBlcnNvbmEub3JnIn0.eWg3M1prvcTiiaihzOvjdoZb_m01xs3MokNTeYOMHRflJFe-R526WdGP0wnFTgTXs5nwLId3eLBQr425v3ImoVKVuzJjpib_tT_O38xKEmmA4RBaiDRk_WKFXh1vDvEa2G70fb_cyxrisCoPgScs5df6DWse6-DVI3h4rPpXIQCk04rawblCErcd28lBK7aJ2EKV4PRJFSRg8h59DUDpg7J0N5VCrBXMdgXNs9_fifWJFsW9YeQx-1xHHJkXV-I8NIrV2hVSBwtns6R0uKbHTmgMgWPqCjs1v8gUW_yi---OFnR2g_eoxKyUOyTNHkspi0yxmW208Ayve1jQkzz5Kg~eyJhbGciOiJEUzEyOCJ9.eyJleHAiOjEzOTk5MDg5MTI5MTEsImF1ZCI6Imh0dHBzOi8vMTI3LjAuMC4xOjgwOTAifQ.kjwsBOIf-vrriJ1gfJ4Xqlj3MA15UiWI5wm4rpedBv4B3_LpvxJgGA", 
+   {}
+]
+```
+
+Router sends `WELCOME` message:
+
+```javascript
+[
+   2, 
+   1665486214880871, 
+   {
+      "authid": "tobias.oberstein@gmail.com", 
+      "authmethod": "mozilla_persona", 
+      "authrole": "com.tavendo.community.role.user", 
+      "roles": {
+         "broker": {
+            "features": {
+               "publisher_exclusion": true, 
+               "publisher_identification": true, 
+               "subscriber_blackwhite_listing": true
+            }
+         }, 
+         "dealer": {
+            "features": {
+               "caller_identification": true, 
+               "progressive_call_results": true
+            }
+         }
+      }
+   }
+]
+```
+
+#### Example 3
+
+Client sends `HELLO` message:
+
+```javascript
+[
+   1, 
+   "com.tavendo.clandeck", 
+   {
+      "authmethods": [
+         "cookie", 
+         "anonymous"
+      ], 
+      "roles": {
+         "callee": {
+            "features": {
+               "progressive_call_results": true
+            }
+         }, 
+         "caller": {
+            "features": {
+               "caller_identification": true, 
+               "progressive_call_results": true
+            }
+         }, 
+         "publisher": {
+            "features": {
+               "publisher_exclusion": true, 
+               "publisher_identification": true, 
+               "subscriber_blackwhite_listing": true
+            }
+         }, 
+         "subscriber": {
+            "features": {
+               "publisher_identification": true
+            }
+         }
+      }
+   }
+]
+```
+
+Router sends `WELCOME` message:
+
+```javascript
+[
+   2, 
+   7286787554810878, 
+   {
+      "authid": "tobias.oberstein@gmail.com", 
+      "authmethod": "mozilla_persona", 
+      "authrole": "com.tavendo.community.role.user", 
+      "roles": {
+         "broker": {
+            "features": {
+               "publisher_exclusion": true, 
+               "publisher_identification": true, 
+               "subscriber_blackwhite_listing": true
+            }
+         }, 
+         "dealer": {
+            "features": {
+               "caller_identification": true, 
+               "progressive_call_results": true
+            }
+         }
+      }
+   }
+]
+```
