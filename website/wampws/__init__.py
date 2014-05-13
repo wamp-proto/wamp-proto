@@ -1,6 +1,6 @@
 ###############################################################################
 ##
-##  Copyright (C) 2012-2013 Tavendo GmbH
+##  Copyright (C) 2012-2014 Tavendo GmbH
 ##
 ##  Licensed under the Apache License, Version 2.0 (the "License");
 ##  you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 ##
 import mimetypes
 mimetypes.add_type('image/svg+xml', '.svg')
+mimetypes.add_type('text/javascript', '.jgz')
 
 import uuid
 
