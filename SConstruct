@@ -16,26 +16,38 @@
 ##
 ###############################################################################
 
-SVG_FILES = ['appcode.svg',
-             'sessions.svg',
-             'sessions2.svg',
-             'sessions3.svg',
-             'sessions4.svg',
-             'hello.svg',
-             'hello_denied.svg',
-             'hello_authenticated.svg',
-             'goodbye.svg',
-             'pubsub_publish1.svg',
-             'pubsub_publish2.svg',
-             'pubsub_subscribe1.svg',
-             'pubsub_subscribe2.svg',
-             'rpc_call1.svg',
-             'rpc_call2.svg',
-             'rpc_cancel1.svg',
-             'rpc_cancel2.svg',
-             'rpc_progress1.svg',
-             'rpc_register1.svg',
-             'rpc_register2.svg']
+SVG_FILES = [
+   ## Spec Figures
+   ##
+   'appcode.svg',
+   'sessions.svg',
+   'sessions2.svg',
+   'sessions3.svg',
+   'sessions4.svg',
+   'hello.svg',
+   'hello_denied.svg',
+   'hello_authenticated.svg',
+   'goodbye.svg',
+   'pubsub_publish1.svg',
+   'pubsub_publish2.svg',
+   'pubsub_subscribe1.svg',
+   'pubsub_subscribe2.svg',
+   'rpc_call1.svg',
+   'rpc_call2.svg',
+   'rpc_cancel1.svg',
+   'rpc_cancel2.svg',
+   'rpc_progress1.svg',
+   'rpc_register1.svg',
+   'rpc_register2.svg',
+
+   ## Unified Routing
+   ##
+   'unified_routing_broker_dealer.svg',
+   'unified_routing_pubsub_broker.svg',
+   'unified_routing_rpc_client_server.svg',
+   'unified_routing_rpc_dealer.svg',
+   'unified_routing_wamp_iot.svg',
+]
 
 IMG_SOURCE_DIR = "visuals/wamp2"
 IMG_GEN_DIR    = "website/wampws/static/img/gen"

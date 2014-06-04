@@ -7,11 +7,166 @@
    <h1>Why WAMP?</h1>
 
    <p>
+      WAMP provides <a href="#unified_routing">Unified Application Routing</a> in an open protocol
+      based on <a href="#websocket">WebSocket</a>.
+      Using WAMP you can build distributed systems out of application components which are
+      <b>loosely coupled</b> and communicate in (soft) <b>real-time</b>.
+   </p>
+
+   <p>
+      At it's core, WAMP offers two communication patterns for application components to talk
+      to each other: <a href="{{ url_for('page_faq')}}#pubsub">Publish &amp; Subscribe (PubSub)</a> and
+      <a href="{{ url_for('page_faq')}}#rpc">Remote Procedure Calls (RPC)</a>. We think applications often
+      have a natural <a href="{{ url_for('page_faq')}}#why_rpc_and_pubsub">need for both forms of communication</a>
+      and shouldn't be required to use different protocols/means for those. Which is why WAMP provides both.
+   </p>
+
+   <p>
+      While WAMP isn't exactly rocket science, we believe it's good engineering and a major
+      step forward in practice that allows developers to create more powerful applications
+      with less complexity and in less time.
+   </p>
+
+   <br><br>
+
+
+   <a name="unified_routing"></a>
+   <h1>Unified Application Routing</h1>
+   <p>
+      WAMP provides what we call <b>Unified Application Routing</b> for applications:
+      routing of both events (for <a href="{{ url_for('page_faq')}}#pubsub">PubSub</a>)
+      <i>and</i> routing of calls (for <a href="{{ url_for('page_faq')}}#rpc">RPC</a>)
+      between applications components in <i>one</i> protocol.
+   </p>
+
+   <p>
+      <b>Unified Routing</b> is probably best explained by contrasting it with legacy approaches. Lets take the
+      old "client-server" world. In the client-server model, a remote procedure call goes directly from
+      the <i>Caller</i> to the <i>Callee</i>:
+   </p>
+
+   <center style="margin: 3em 0 3em 0;">
+      <img width="392" src="{{ url_for('static', filename='img/gen/unified_routing_rpc_client_server.svg') }}" />
+      <p>Remote procedure calls in the <b>Client-Server</b> model</p>
+   </center>
+
+   <p>
+      In the client-server model, a <i>Caller</i> needs to have knowledge about where
+      the <i>Callee</i> resides and how to reach it.
+      This introduces a strong coupling between <i>Caller</i> and <i>Callee</i>. Which is bad, because
+      applications can quickly become complex and unmaintainable. We explain how WAMP fixes that in a minute.
+   </p>
+
+   <p>
+      The problems coming from strong coupling between application components were long recognized and this
+      (besides other requirements) lead to the publish-subscribe model.
+   </p>
+
+   <p>
+      In the publish-subscribe model a <i>Publisher</i> submits information to an abstract "topic", and
+      <i>Subscribers</i> only receive information indirectly by announcing their interest on a respective "topic".
+      Both do not know about each other. They are decoupled via the "topic" and via an intermediary
+      usually called <i>Broker</i>:
+   </p>
+
+   <center style="margin: 3em 0 3em 0;">
+      <img width="380" src="{{ url_for('static', filename='img/gen/unified_routing_pubsub_broker.svg') }}" />
+      <p>A Broker decouples <i>Publishers</i> and <i>Subscribers</i></p>
+   </center>
+
+   <p>
+      A <i>Broker</i> keeps a book of subscriptions: who is currently subscribed on which topic. When a <i>Subscriber</i>
+      publishes some information ("event") to a topic, the <i>Broker</i> will look up who is subscribed on
+      that topic. And then forward the information ("event") to all those <i>Subscribers</i>.
+   </p>
+
+   <p>
+      The act of determining receivers of information (independently of the information submitted) and forwarding
+      the information to receivers is called <i>routing</i>.
+   </p>
+
+   <p>
+      Now, WAMP translates the benefits of loose coupling to RPC. Different from the client-server model,
+      WAMP also decouples <i>Callers</i> and <i>Callees</i> by introducing an intermediary - the <i>Dealer</i>:
+   </p>
+
+   <center style="margin: 3em 0 3em 0;">
+      <img width="380" src="{{ url_for('static', filename='img/gen/unified_routing_rpc_dealer.svg') }}" />
+      <p>Remote procedure calls in the <b>Dealer</b> model</p>
+   </center>
+
+   <p>
+      Similar to a <i>Broker's</i> role with PubSub, the <i>Dealer</i> is responsible for routing a call
+      originating from the <i>Caller</i> to the <i>Callee</i> and route back results or errors vice-versa.
+      Both do not know about each other: where the peer resides and how to reach it. This knowledge is
+      encapsulated in the <i>Dealer</i>
+   </p>
+   <p>
+      With WAMP, a <i>Callee</i> registers a procedure at a <i>Dealer</i> under an abstract name (an URI
+      identifying the procedure). When a <i>Caller</i> wants to call a remote procedure, it talks to the
+      <i>Dealer</i> and only provides the procedure name plus any call arguments. The <i>Dealer</i> will
+      look up the procedure to be invoked in his book of registered procedures. The information from the
+      book includes where the <i>Callee</i> implementing the procedure resides, and how to reach it.
+   </p>
+
+   <p>
+      In effect, <i>Callers</i> and <i>Callees</i> are decoupled, and applications can use RPC and
+      still benefit from loose coupling.
+   </p>
+
+   <p>
+      What if you combine both? Routed RPC and PubSub? When you combine a <i>Broker</i> and a <i>Dealer</i>
+      you get what WAMP calls a <i>Router</i>:
+   </p>
+
+   <center style="margin: 3em 0 3em 0;">
+      <img width="569" src="{{ url_for('static', filename='img/gen/unified_routing_broker_dealer.svg') }}" />
+      <p>A <b>Router</b> combines a Broker and a Dealer</p>
+   </center>
+
+   <p>
+      A <i>Router</i> is capable of routing both calls and events, and hence can support flexible, decoupled
+      architectures that use both RPC and PubSub. We think this is new. And a good thing.
+   </p>
+
+   <p>
+      Here is an example. Imagine you have a small embedded device like an
+      <a href="http://tavendo.com/blog/post/arduino-yun-with-autobahn/">Arduino Yun</a> with sensors (like
+      a temperature sensor) and actuators (like a light or motor) connected. And you want to integrate
+      the device into an overall system with user facing frontend to control the actuators, and continously
+      process sensor values in a backend component.
+   </p>
+
+   <p>
+      Using WAMP, you can have a browser-based UI, the embedded device and your backend talk to each
+      other in real-time:
+   </p>
+
+   <center style="margin: 3em 0 3em 0;">
+      <img width="680" src="{{ url_for('static', filename='img/gen/unified_routing_wamp_iot.svg') }}" />
+   </center>
+
+   <p>
+      Switching on a light on the device from the browser-based UI is naturally done by calling a
+      remote procedure on the device (1). And the sensor values generated by the device continously
+      are naturally transmitted to the backend component (and possibly others) via publish &amp; subscribe (2).
+   </p>
+   <p>
+      So here you have it: one protocol fulfilling both needs.
+   </p>
+
+
+   <br><br>
+
+   <a name="websocket"></a>
+   <h1>WebSocket</h1>
+   <p>
       <a href="http://tools.ietf.org/html/rfc6455">The WebSocket Protocol</a>
       is already built into modern browsers and provides bidirectional,
       low-latency message-based communication.
       However, as such, WebSocket it is quite low-level and only provides raw
       messaging.
+   </p>
 
    <p>
       Modern Web applications often have a need for <strong>higher level messaging patterns</strong>
@@ -35,6 +190,8 @@
       WAMP embraces open Web standards and was designed to be easy to use and
       simple to implement.
    </p>
+
+   <br><br>
 
 </div>
 
