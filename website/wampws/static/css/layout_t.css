@@ -307,3 +307,9 @@ ul li
    -moz-transition: all 0.1s ease-in-out;
    -o-transition: all 0.1s ease-in-out;
 }
+
+#disqus {
+   width: 80%;
+   margin: 60px auto 40px auto;
+   color: #333;
+}
