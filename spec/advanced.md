@@ -72,39 +72,64 @@ Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in t
 
 ### Long-Poll Transport
 
-With Long-Poll Transport, a *Client* sends a HTTP/GET request to a well-known URL, e.g.
+With the *Long-Poll Transport*, a *Client* sends a HTTP/POST request to a well-known URL, e.g.
+
+	http://mypp.com/longpoll/open
+
+Here, `http://mypp.com/longpoll` is the base URL for the *Long-Poll Transport*.
+
+The request should have a `Content-Type` header set to `application/json` and contain a request body with a JSON document
+
+```javascript
+{
+   "protocols": ["wamp.2.json"]
+}
+``` 
+
+The (mandatory) `protocols` attribute specifies the protocols the client is willing to speak. The server will chose one from this list when establishing the session.
+
+The request path *MAY* contain a query parameter `x` with some random or sequentially incremented value: 
 
 	http://mypp.com/longpoll/open?x=382913
 
-where `x` is just an arbitrary random number to make the request uncachable.
+The value is ignored, but may help in certain situations to prevent intermediaries from caching the request.
 
-Returned is a JSON document containing a WAMP session ID and potentially other information.
+Returned is a JSON document containing a transport ID and the protocol to speak:
+
+```javascript
+{
+   "protocol": "wamp.2.json",
+   "transport": "kjmd3sBLOUnb3Fyr"
+}
+```
 
 As an implied side-effect, two HTTP endpoints are created
 
-	http://mypp.com/longpoll/session/<session_id>/receive
-	http://mypp.com/longpoll/session/<session_id>/send
+	http://mypp.com/longpoll/<transport_id>/receive
+	http://mypp.com/longpoll/<transport_id>/send
 
-where `session_id` is the WAMP session ID returned from `open`, e.g.
+where `transport_id` is the transport ID returned from `open`, e.g.
 
-	http://mypp.com/longpoll/session/123456/receive
-	http://mypp.com/longpoll/session/123456/send
+	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
+	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
-The *Client* will then issue a HTTP/POST to
+The *Client* will then issue a HTTP/POSTs to
 
-	http://mypp.com/longpoll/session/123456/receive?x=912413
+	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
 
-When there are WAMP messages pending downstream, the request will return with a JSON serialized document containing a batch of WAMP messages received.
+When there are WAMP messages pending downstream, the request will return with a batch of JSON serialized WAMP messages. 
 
-For the uplink WAMP messages, the *Client* will issue HTTP/POST requests to
+For the uplink WAMP messages, the *Client* will issue HTTP/POSTs to
 
-	http://mypp.com/longpoll/session/123456/send?x=1814992
+	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
-with request body being a JSON serialized document containing a batch of WAMP messages to be sent.
+with request body being a batch of JSON serialized WAMP messages.
 
-To orderly close a session, a *Client* will issue a HTTP/GET to 
+The batching is using the same scheme as with `wamp.2.json.batched` transport over WebSocket (see below).
 
-	http://mypp.com/longpoll/close?session=123456&x=812452224
+To orderly close a session, a *Client* will issue a HTTP/POST to 
+
+	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
 
 
 ### Batched Transport
