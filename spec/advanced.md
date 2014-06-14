@@ -113,23 +113,29 @@ where `transport_id` is the transport ID returned from `open`, e.g.
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
-The *Client* will then issue a HTTP/POSTs to
+The *Client* will then issue a HTTP/POSTs (with empty request body) to
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
 
-When there are WAMP messages pending downstream, the request will return with a batch of JSON serialized WAMP messages. 
-
-For the uplink WAMP messages, the *Client* will issue HTTP/POSTs to
+When there are WAMP messages pending downstream, the request will return with a batch of JSON serialized WAMP messages. For the uplink WAMP messages, the *Client* will issue HTTP/POSTs to
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
 with request body being a batch of JSON serialized WAMP messages.
 
-The batching is using the same scheme as with `wamp.2.json.batched` transport over WebSocket (see below).
+The batching is using the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
 
 To orderly close a session, a *Client* will issue a HTTP/POST to 
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
+
+with request body being a JSON document
+
+```javascript
+{
+   "reason": "wamp.close.normal"
+}
+```
 
 
 ### Batched Transport
