@@ -86,9 +86,11 @@ The request should have a `Content-Type` header set to `application/json` and co
 }
 ``` 
 
-The (mandatory) `protocols` attribute specifies the protocols the client is willing to speak. The server will chose one from this list when establishing the session.
+Alternatively, if the peer supports MsgPack, the request *MAY* have a `Content-Type` header set to `application/x-msgpack` and contain a request body with a MsgPack document similar to above.
 
-The request path *MAY* contain a query parameter `x` with some random or sequentially incremented value: 
+The (mandatory) `protocols` attribute specifies the protocols the client is willing to speak. The server will chose one from this list when establishing the session or fail the request when no protocol overlap was found.
+
+The request path with this and subsequently describe HTTP/POST requests *MAY* contain a query parameter `x` with some random or sequentially incremented value: 
 
 	http://mypp.com/longpoll/open?x=382913
 
@@ -113,17 +115,17 @@ where `transport_id` is the transport ID returned from `open`, e.g.
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
-The *Client* will then issue a HTTP/POSTs (with empty request body) to
+The *Client* will then issue HTTP/POST requests (with empty request body) to
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
 
-When there are WAMP messages pending downstream, the request will return with a batch of JSON serialized WAMP messages. For the uplink WAMP messages, the *Client* will issue HTTP/POSTs to
+When there are WAMP messages pending downstream, a request will return with a batch of JSON serialized WAMP messages. For sending WAMP messages, the *Client* will issue HTTP/POST requests to
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
 with request body being a batch of JSON serialized WAMP messages.
 
-The batching is using the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
+The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
 
 To orderly close a session, a *Client* will issue a HTTP/POST to 
 
