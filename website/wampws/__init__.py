@@ -56,22 +56,22 @@ def page_impressum():
 @app.route('/why/')
 def page_why():
    session['tab_selected'] = 'why'
-   return render_template('page_t_why.html')
+   return render_template('page_t_why.html', disqus = True)
 
 @app.route('/faq/')
 def page_faq():
    session['tab_selected'] = 'faq'
-   return render_template('page_t_faq.html')
+   return render_template('page_t_faq.html', disqus = True)
 
 @app.route('/implementations/')
 def page_implementations():
    session['tab_selected'] = 'implementations'
-   return render_template('page_t_implementations.html')
+   return render_template('page_t_implementations.html', disqus = True)
 
 @app.route('/implementations/wamp1/')
 def page_implementations_wamp1():
    session['tab_selected'] = 'implementations'
-   return render_template('page_t_implementations_wamp1.html')
+   return render_template('page_t_implementations_wamp1.html', disqus = True)
 
 @app.route('/spec/')
 def page_spec():

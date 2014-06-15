@@ -1,6 +1,9 @@
 {% extends "layout_t.html" %}
 
 {% block header %}
+   <title>WAMP Implementations</title>
+   <meta name="description" content="Libraries and routers implementing WAMP.">
+
    <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_implementations.css') }}">
 {% endblock%}
 
@@ -18,6 +21,7 @@
       - Looking for <b>WAMP version 1 implementations</b>? Please see <a href="{{ url_for('page_implementations_wamp1') }}">here</a>.
    </div>
 
+   <a name="libraries"></a>
    <h2>WAMP Libraries</h2>
 
    <p style="font-size: 80%">
@@ -98,9 +102,23 @@
       <tr>
          <td class="notes" colspan="7">WAMP Client library for browsers using callbacks. See <a href="https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs">here</a> for comparison to Autobahn|JS.</td>
       </tr>
+
+      <tr>
+         <td><a href="https://github.com/bwegh/erwa"><b>Erwa</b></a></td>
+         <td>Erlang</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>no</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">Erwa is a WAMP V2 implementation in Erlang, both peer and router.</td>
+      </tr>
    </table>
 
 
+   <a name="routers"></a>
    <h2>WAMP Routers</h2>
 
    <p style="font-size: 80%">
@@ -148,6 +166,15 @@
          <td class="notes" colspan="4">Router implementation in Lua, using the power of LUA Nginx module, Lua WebSocket addon, and Redis as cache store.</td>
       </tr>
 
+      <tr>
+         <td><a href="https://github.com/bwegh/erwa"><b>Erwa</b></a></td>
+         <td>x</td>
+         <td>x</td>
+         <td>no</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="4">Erwa is a WAMP V2 implementation in Erlang, both peer and router.</td>
+      </tr>
    </table>
 
    <div style="clear: both;"></div>

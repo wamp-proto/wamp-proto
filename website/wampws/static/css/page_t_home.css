@@ -13,15 +13,16 @@
 
 .intro_sub
 {
-   border-top: solid 6px #fa72c6;
-   width: 600px;
+   border-top: solid 4px #fa72c6;
+   width: 760px;
    padding-right: 8px;
    padding-top: 4px;
    float: right;
    font-size: 22px;
    font-weight: 500;
    line-height: 1.4em;
-   margin-top: 40px;
+   margin-top: 50px;
+   margin-bottom: 30px;
    font-style: italic;
    text-align: right;
 }
@@ -29,7 +30,7 @@
 .ctas
 {
    margin: 60px auto 30px auto;
-   width: 440px;
+   width: 660px;
 }
 
 a.cta_button
@@ -38,7 +39,7 @@ a.cta_button
    float: left;
    padding: 12px 0px;
    margin: 0;
-   margin-left: 40px;
+   margin-left: 20px;
    width: 200px;
    text-align: center;
    vertical-align: middle;

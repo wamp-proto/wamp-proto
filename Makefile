@@ -13,6 +13,7 @@ deploy: clean img freeze upload
 
 clean:
 	rm -rf website/wampws/build
+	rm -rf website/wampws/static/img/gen
 	scons -uc
 
 img:
@@ -25,6 +26,9 @@ upload:
 	python website/wampws/upload.py --bucket "wamp.ws" --directory "build"
 
 test:
+	python website/wampws/__init__.py -d --widgeturl ""
+
+test_widget:
 	python website/wampws/__init__.py -d --widgeturl "http://127.0.0.1:8090/widget"
 
 test_frozen:

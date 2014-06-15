@@ -1,6 +1,9 @@
 {% extends "layout_t.html" %}
 
 {% block header %}
+   <title>WAMP - Web Application Messaging Protocol</title>
+   <meta name="description" content="WAMP is an open WebSocket subprotocol that provides two application messaging patterns in one unified protocol: Remote Procedure Calls and Publish/Subscribe.">
+
    <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_home.css') }}">
 {% endblock%}
 
@@ -17,8 +20,7 @@
    </h1>
 
    <h1 class="intro_sub">
-      WAMP is easy to use, simple to implement and based on<br/>
-      modern Web standards: WebSocket, JSON and URIs.
+      Using WAMP you can build distributed systems out of application components which are <b>loosely coupled</b> and communicate in (soft) <b>real-time</b>.
    </h1>
 
    <div style="clear: both;"></div>
@@ -26,6 +28,7 @@
    <div class="ctas">
       <a class="cta_button fasttransition" href="{{ url_for('page_why')}}">Why?</a>
       <a class="cta_button fasttransition" href="{{ url_for('page_implementations')}}">Get started!</a>
+      <a class="cta_button fasttransition" href="https://groups.google.com/forum/#!forum/wampws">Contact us</a>
    </div>
 
 {% endblock%}
