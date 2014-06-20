@@ -1079,7 +1079,7 @@ A call may be cancelled at the *Dealer*
 
 ![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
 
-A *Callee* cancels an remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
+A *Caller* cancels a remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
 
     [CANCEL, CALL.Request|id, Options|dict]
 
