@@ -1342,7 +1342,9 @@ If the server is willing to let the client authenticate using WAMP-CRA, and the 
 ```javascript
 [4, "wampcra",
 	{
-		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\", \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\", \"authmethod\": \"wampcra\", \"session\": 3251278072152162}"
+		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                       \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\",
+                       \"authmethod\": \"wampcra\", \"session\": 3251278072152162}"
 	}
 ]
 ```
@@ -1392,20 +1394,44 @@ The `WELCOME.Details` again contain the actual authentication information active
 
 If the authentication fails, the server will response with an `ABORT` message.
 
+
+#### Server-side Verification
+
+The challenge sent during WAMP-CRA contains
+
+1. random information (the `nonce`) to make WAMP-CRA robust against replay attacks
+2. timestamp information (the `timestamp`) to allow WAMP-CRA timeout on authentication requests that took too long
+3. session information (the `session`) to bind the authentication to a WAMP session ID
+4. all the authentication information that relates to authorization like `authid` and `authrole`
+
+
+#### Three-legged Authentication
+
+The signing of the challenge sent by the server usually is done directly on the client. However, this is no strict requirement.
+
+E.g. a client might forward the challenge to another party (hence the "three-legged") for creating the signature. This can be used when the client was previously already authenticated to that third party, and WAMP-CRA should run piggy packed on that authentication.
+
+The third party would, upon receiving a signing request, simply check if the client is already authenticated, and if so, create a signature for WAMP-CRA.
+
+In this case, the secret is actually shared between the WAMP server who wants to authenticate clients using WAMP-CRA and the third party server, who shares a secret with the WAMP server.
+
+This scenario is also the reason the challenge sent with WAMP-CRA is not simply a random value, but a JSON serialized object containing sufficient authentication information for the thrid party to check.
+
+
 #### Password Salting
 
-WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret requires storage of that secret on the client and the server, and storing a password verbatim (unencrypted) is not recommended in general.
+WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret often requires storage of that secret on the client and the server - and storing a password verbatim (unencrypted) is not recommended in general.
 
-WAMP-CRA allows the use of salted passwords following the [PBKDF2](http://en.wikipedia.org/wiki/PBKDF2) key derivation scheme.
-
-With salted passwords, the password itself is never stored, but only a key derived from the password and a password salt. This derived key is then practically working as the new shared secret.
+WAMP-CRA allows the use of salted passwords following the [PBKDF2](http://en.wikipedia.org/wiki/PBKDF2) key derivation scheme. With salted passwords, the password itself is never stored, but only a key derived from the password and a password salt. This derived key is then practically working as the new shared secret.
 
 When the password is salted, the server will during WAMP-CRA send a `CHALLENGE` message containing additional information:
 
 ```javascript
 [4, "wampcra",
 	{
-		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\", \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\", \"authmethod\": \"wampcra\", \"session\": 3251278072152162}",
+		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                       \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\",
+                       \"authmethod\": \"wampcra\", \"session\": 3251278072152162}",
 		"salt": "salt123",
 		"keylen": 32,
 		"iterations": 1000
