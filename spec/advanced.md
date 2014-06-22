@@ -46,6 +46,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
     * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
     * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
+    * [One Time Token Authentication](#one-time-token-authentication)
 7. [Reflection](#reflection)
 
 
@@ -1316,41 +1317,109 @@ This transport-level authentication information may be forward to the WAMP level
 
 ### WAMP Challenge-Response Authentication
 
----- now integrated into WAMP session establishment ? ----
+WAMP Challenge-Response ("WAMP-CRA") authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a *secret*. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.
 
-WAMP Challenge Response (WAMP-CRA) is a WAMP level authentication procedure implemented on top of standard, predefined WAMP RPC procedures.
+A typical authentication begins with the client sending a `HELLO` message specifying the `wampcra` method as (one of) the authentication methods:
 
-A peer may authenticate to its other peer via calling the following procedures
+```javascript
+[1, "realm1",
+	{
+		"roles": ...,
+		"authmethods": ["wampcra"],
+		"authid": "peter"
+	}
+]
+```
 
-   	wamp.cra.request
-   	wamp.cra.authenticate
+The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For WAMP-CRA, this MUST include `"wampcra"`.
 
-WAMP-CRA defines the following errors
+The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-CRA, this MUST be provided.
 
-  	wamp.error.invalid_argument
-   	wamp.cra.error.no_such_authkey
-   	wamp.cra.error.authentication_failed
-   	wamp.cra.error.anonymous_not_allowed
-   	wamp.cra.error.already_authenticated
-   	wamp.cra.error.authentication_already_requested
+If the server is unwilling or unable to perform WAMP-CRA authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
 
-A peer starts WAMP-CRA authentication by calling
+If the server is willing to let the client authenticate using WAMP-CRA, and the server recognizes the provided `authid`, it'll send a `CHALLENGE` message:
 
-   	wamp.cra.request
+```javascript
+[4, "wampcra",
+	{
+		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\", \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\", \"authmethod\": \"wampcra\", \"session\": 3251278072152162}"
+	}
+]
+```
 
-with `Arguments = [auth_key|string, auth_extra|dict]` where
+The `CHALLENGE.Details.challenge|string` is a string the client needs to create a signature for. The string MUST BE a JSON serialized object which MUST contain:
 
- * `auth_key` is the authentication key, e.g. an application or user identifier, possibly the empty string for "authenticating" as anonymous
- * `auth_extra` is a dictionary of extra authentication information, possibly empty
+ 1. `authid|string`: The authentication ID the client will be authenticated as when the authentication succeeds.
+ 2. `authrole|string`: The authentication role the client will be authenticated as when the authentication succeeds.
+ 3. `authmethod|string`: The authentication methods, here `"wampcra"`
+ 4. `authprovider|string`: The actual provider of authentication. For WAMP-CRA, this can be freely chosen by the app, e.g. `userdb`.
+ 5. `nonce|string`: A random value.
+ 6. `timestamp|string`: The UTC timestamp (ISO8601 format) the authentication was started, e.g. `2014-06-22T16:51:41.643Z`.
+ 7. `session|int`: The WAMP session ID that will be assigned to the session once it is authenticated successfully.
 
-The other peer then computes an authentication challenge. WRITEME.
+The client needs to compute the signature as follows:
 
-The peer then signs the authentication challenge and calls
+	signature := HMAC[SHA256]_{secret} (challenge)
 
-   	wamp.cra.authenticate
+That is, compute the HMAC-SHA256 using the shared `secret` over the `challenge`.
+
+After computing the signature, the client will send an `AUTHENTICATE` message containing the signature:
+
+```javascript
+[5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
+```
+
+The server will then check if
+
+* the signature matches the one expected
+* the `AUTHENTICATE` message was sent in due time
+
+If the authentication succeeds, the server will finally respond with a `WELCOME` message:
+
+```javascript
+[2, 3251278072152162,
+	{
+		"authid": "peter",
+		"authrole": "user",
+		"authmethod": "wampcra",
+		"authprovider": "userdb",
+		"roles": ...
+	}
+]
+```
+
+The `WELCOME.Details` again contain the actual authentication information active.
+
+If the authentication fails, the server will response with an `ABORT` message.
+
+#### Password Salting
+
+WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret requires storage of that secret on the client and the server, and storing a password verbatim (unencrypted) is not recommended in general.
+
+WAMP-CRA allows the use of salted passwords following the [PBKDF2](http://en.wikipedia.org/wiki/PBKDF2) key derivation scheme.
+
+With salted passwords, the password itself is never stored, but only a key derived from the password and a password salt. This derived key is then practically working as the new shared secret.
+
+When the password is salted, the server will during WAMP-CRA send a `CHALLENGE` message containing additional information:
+
+```javascript
+[4, "wampcra",
+	{
+		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\", \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\", \"authmethod\": \"wampcra\", \"session\": 3251278072152162}",
+		"salt": "salt123",
+		"keylen": 32,
+		"iterations": 1000
+	}
+]
+```
+
+The `CHALLENGE.Details.salt|string` is the password salt in use. The `CHALLENGE.Details.keylen|int` and `CHALLENGE.Details.iterations|int` are parameters for the PBKDF2 algorithm.
 
 
 
+### One Time Token Authentication
+
+With *One Time Token* based authentication, the client needs to present the server a "token" (some string value) to authenticate itself. The 
 
 
 
