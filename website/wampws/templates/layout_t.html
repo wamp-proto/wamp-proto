@@ -59,6 +59,7 @@
                   <div id="navbar">
                      <a href="{{ url_for('page_home') }}" {% if session['tab_selected'] == 'home' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Home</a>
                      <a href="{{ url_for('page_why') }}" {% if session['tab_selected'] == 'why' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Why?</a>
+                     <a href="{{ url_for('page_compared') }}" {% if session['tab_selected'] == 'compared' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>How does it compare?</a>
                      <a href="{{ url_for('page_implementations') }}" {% if session['tab_selected'] == 'implementations' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Implementations</a>
                      <a href="{{ url_for('page_spec') }}" {% if session['tab_selected'] == 'spec' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Specification</a>
                      <a href="{{ url_for('page_faq') }}" {% if session['tab_selected'] == 'faq' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>FAQ</a>

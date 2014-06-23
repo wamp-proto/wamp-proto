@@ -58,6 +58,11 @@ def page_why():
    session['tab_selected'] = 'why'
    return render_template('page_t_why.html', disqus = True)
 
+@app.route('/compared/')
+def page_compared():
+   session['tab_selected'] = 'compared'
+   return render_template('page_t_compared.html', disqus = True)
+
 @app.route('/faq/')
 def page_faq():
    session['tab_selected'] = 'faq'
