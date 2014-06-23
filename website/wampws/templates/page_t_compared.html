@@ -3,17 +3,544 @@
 {% block header %}
    <title>WAMP Compared</title>
    <meta name="description" content="Comparison of WAMP with MQTT, STOMP, AMQP, XMPP and others.">
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_compared.css') }}">
 
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_implementations.css') }}">
+   <a id="top"></a>
 {% endblock%}
 
 {% block content %}
 
 <div id="page_wrapper">
 
+<!--
    <p>
-      Write me.
+      Open:
+       - third party implementations
+       - interopability
+       - no patents
+       - actively support 3rd party
+
+      Routed RPC: remote procedure calls without coupling
    </p>
+-->
+
+   <table id="comparison">
+      <tr>
+         <td>Technology</td>
+         <td>PubSub</td>
+         <td>RPC</td>
+         <td>Routed RPC</td>
+         <td>Web native</td>
+         <td>Cross Language</td>
+         <td>Open Standard</td>
+      </tr>
+
+      <tr style="border-bottom: 3px solid #fa72c6;">
+         <td><a href="/">WAMP</a></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#ajax">AJAX</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#amqp">AMQP</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#thrift">Apache Thrift</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#capnproto">Capn'n'Proto</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#comet">Comet</a></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#dds">OMG DDS</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#dbus">D-Bus</a></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#corba">CORBA</a></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#dcom">DCOM</a></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#jms">Java JMS</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#rmi">Java RMI</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#jsonrpc">JSON-RPC</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#mbws">MBWS</a></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#mqtt">MQTT</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#rest">REST</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#soap">SOAP</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#socketio">socket.io</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#sockjs">SockJS</a></td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+      <tr>
+         <td><a href="#stomp">STOMP</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#xmlrpc">XML-RPC</a></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#xmpp">XMPP</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+         <td>&#10004;</td>
+      </tr>
+
+      <tr>
+         <td><a href="#zmq">ZMQ</a></td>
+         <td>&#10004;</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>&#10004;</td>
+         <td></td>
+      </tr>
+
+   </table>
+
+
+   <a id="ajax"></a>
+   <div class="section">
+      <h1>AJAX</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="amqp"></a>
+   <div class="section">
+      <h1>AMQP</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">AMQP</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="thrift"></a>
+   <div class="section">
+      <h1>Apache Thrift</h1>
+      <p>
+         <a href="https://thrift.apache.org/">Apache Thrift</a> is a cross-language RPC system.
+         It uses a statically typed approach where procedures first need to be described using
+         an <a href="http://en.wikipedia.org/wiki/Interface_definition_language">Interface Definition Language</a>,
+         and then code for language specific bindings needs to be generated.
+      </p>
+      <p>
+         Compared to WAMP, Apache Thrift only provides RPC as an application messaging pattern, not PubSub.
+      </p>
+      <p>
+         While Thrift uses a statically typed approach involving IDLs and code generation, WAMP follows
+         a dynamic typing approach. There is no IDL and no code generation. Instead, WAMP will provide
+         <a href="https://github.com/tavendo/WAMP/blob/master/spec/advanced.md#reflection">run-time reflection</a>
+         capabilities instead.
+      </p>
+      <p>
+         Different from WAMP, Thrift also (only) runs over raw TCP and cannot (natively) run over the Web,
+         right into the browser. It is designed for communication within the data-center, between backend
+         components.
+      </p>
+      <p>
+         Similar to WAMP, Apache Thrift features different serialization formats, and also is able to
+         compress a transport (using zlib). WAMP currently offers two serializations (JSON and MsgPack)
+         and can run over standard, compressed WebSocket ("permessage-deflate") to further reduce wire traffic.
+      </p>
+      <p>
+         Apache Thrift currently has a lot more language bindings than WAMP and is used/pushed by Facebook.
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="capnproto"></a>
+   <div class="section">
+      <h1>Capn'n'Proto</h1>
+      <p>
+         <a href="http://kentonv.github.io/capnproto/">Capn'n'Proto</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="comet"></a>
+   <div class="section">
+      <h1>Comet</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Comet_(programming)">Comet</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+
+   <a id="dds"></a>
+   <div class="section">
+      <h1>OMG DDS</h1>
+      <p>
+         OMG's <a href="http://en.wikipedia.org/wiki/Data_Distribution_Service">Data Distribution Service</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="dbus"></a>
+   <div class="section">
+      <h1>D-Bus</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/D-Bus">D-Bus</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="corba"></a>
+   <div class="section">
+      <h1>CORBA</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Corba">CORBA</a> is a ...
+         CORBA Notification Services
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="dcom"></a>
+   <div class="section">
+      <h1>DCOM</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Dcom">DCOM</a> is a ...
+         <a href="http://msdn.microsoft.com/library/cc201989.aspx">specification</a>
+         COM+ Event Service
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="jms"></a>
+   <div class="section">
+      <h1>Java Message Service (JMS)</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Java_Message_Service">Java Message Service (JMS)</a> is
+         a Java <b>API</b> specification for an (abstract) PubSub service.
+         Programs are written in Java against the JMS API.
+         JMS does not provide RPC (but see <a href="#rmi">Java RMI</a>).
+      </p>
+      <p>
+         JMS does not guarantee interoperability between implementations, and the JMS-compliant messaging
+         system in use may need to be deployed on both client and server. 
+      </p>
+      <p>
+         In contrast, WAMP is a wire-level protocol specification. Conforming WAMP implementations will
+         be able to talk transparently to each other, and different implementations can be mixed and
+         matched in one larger system.
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="rmi"></a>
+   <div class="section">
+      <h1>Java RMI</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Java_remote_method_invocation">Java RMI</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="jsonrpc"></a>
+   <div class="section">
+      <h1>JSON-RPC</h1>
+      <p>
+         <a href="http://json-rpc.org/">JSON-RPC</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="mbws"></a>
+   <div class="section">
+      <h1>MBWS</h1>
+      <p>
+         <a href="https://tools.ietf.org/id/draft-hapner-hybi-messagebroker-subprotocol-03.html">MBWS</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="mqtt"></a>
+   <div class="section">
+      <h1>MQTT</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Mqtt">MQTT</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="rest"></a>
+   <div class="section">
+      <h1>REST</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a> is a ...
+      </p>
+   </div>
+
+   <a id="soap"></a>
+   <div class="section">
+      <h1>SOAP</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/SOAP">SOAP</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>      
+   </div>
+
+   <a id="socketio"></a>
+   <div class="section">
+      <h1>socket.io</h1>
+      <p>
+         <a href="http://socket.io/">socket.io</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="sockjs"></a>
+   <div class="section">
+      <h1>SockJS</h1>
+      <p>
+         <a href="https://github.com/sockjs">SockJS</a> is a WebSocket emulation/polyfill library
+         and provides a transport for raw, bidirectional, message-based communication between two
+         directly connected peers (a browser and a server).
+      </p>
+      <p>
+         The <a href="https://github.com/sockjs/sockjs-client">SockJS JavaScript client</a>
+         adds a WebSocket-like API for JavaScript in browsers lacking native WebSocket support.
+         The bidirectional communication capabilities of WebSocket are emulated using various
+         mechanism under the hood, including HTTP long-poll.
+         The <a href="http://sockjs.github.io/sockjs-protocol/sockjs-protocol-dev.html">"emulation" protocol(s)</a>
+         must be implemented on the server-side (available server implementations include NodeJS, Ruby and Erlang).
+      </p>
+      <p>
+         Compared to WAMP, SockJS is lower level in that it is only concerned about the <i>transport layer</i>.
+         It does not provide <i>application messaging patterns</i> like RPC or PubSub. 
+      </p>
+      <p>
+         WAMP also provides a <a href="https://github.com/tavendo/WAMP/blob/master/spec/advanced.md#long-poll-transport">HTTP Long-poll transport</a> as a fallback for browsers lacking native WebSocket support. There are fewer fallback variants
+         for WAMP than SockJS currently specified (only "long-poll"), but this transport also supports binary messages
+         and all WAMP serialization formats (JSON and MsgPack currently).
+         I am <a href="https://github.com/sockjs/sockjs-protocol/issues/74">unsure</a> if SockJS supports binary messages at all.
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="stomp"></a>
+   <div class="section">
+      <h1>STOMP</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Streaming_Text_Oriented_Messaging_Protocol">STOMP</a> is a ...
+         http://stomp.github.io/
+         http://jmesnil.net/stomp-websocket/doc/
+         http://stomp.github.io/stomp-specification-1.2.html
+      </p>
+      <a href="#top" class="top">Top</a>      
+   </div>
+
+   <a id="xmlrpc"></a>
+   <div class="section">
+      <h1>XML-RPC</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/XML-RPC">XML-RPC</a> is a ...
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="xmpp"></a>
+   <div class="section">
+      <h1>XMPP</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/XMPP">XMPP</a> is a ...
+         http://xmpp.org/extensions/xep-0009.html
+
+         XMPP is built for one-on-one communication, with “broadcasting” supported by a protocol extension called PubSub.
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
+
+   <a id="zmq"></a>
+   <div class="section">
+      <h1>ZMQ</h1>
+      <p>
+         <a href="http://en.wikipedia.org/wiki/Zero_MQ">ZMQ</a> is a light-weight,
+         high-performance library for messaging between application components.
+         It works without a server.
+         http://zeromq.org/whitepapers:brokerless
+      </p>
+      <p>
+         While ZMQ has a request-response message exchange pattern ("REQ-REP sockets"),
+         it does not support RPC out of the box. There exist libraries (e.g.
+         <a href="http://zerorpc.dotcloud.com/">ZeroRPC</a> by Docker or
+         <a href="https://github.com/thriftzmq/thriftzmq-java">ThriftZMQ</a>) that layer
+         on top of ZMQ to provide applications with first-class RPC services.
+      </p>
+      <a href="#top" class="top">Top</a>
+   </div>
 
 </div>
 
