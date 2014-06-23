@@ -21,8 +21,65 @@
        - actively support 3rd party
 
       Routed RPC: remote procedure calls without coupling
+
+      simplicity vs design-by-commitee
+
+      efficiency
    </p>
 -->
+
+   <p class="introline">
+      Alright. So how does WAMP stack up versus other technologies?<br>
+      Do we really need another wheel? Yes. Please read below to find out why we think so.
+   </p>
+   <br>
+
+   <p>
+      Below you'll find a table comparing WAMP to other technologies according to <b>six criteria</b>:
+      <ol>
+         <li>
+            <b>PubSub</b><br>
+            Does it support Publish &amp; Subscribe out of the box?
+         </li>
+         <li>
+            <b>RPC</b><br>
+            Does it support Remote Procedure Calls out of the box?
+         </li>
+         <li>
+            <b>Routed RPC</b><br>
+            Does it support <i>routed</i> (not only point-to-point) Remote Procedure Calls?
+         </li>
+         <li>
+            <b>Web native</b><br>
+            Does it run <i>natively</i> on the Web (without tunneling or bridging)?
+         </li>
+         <li>
+            <b>Cross Language</b><br>
+            Does it work from different programming languages and run-times?
+         </li>
+         <li>
+            <b>Open Standard</b><br>
+            Is there an open, official specification implemented by different vendors?
+         </li>
+      </ol>
+   </p>
+
+   <p class="inset">
+      See also:
+      <a href="https://into.aalto.fi/download/attachments/12324178/Huang_Fuguo_thesis_2.pdf">Web Technologies for the Internet of Things</a>
+      - A master thesis which contains a comparison of WAMP, MQTT, CoAP, REST, SOAP, STOMP and MBWS for IoT applications.
+   </p>
+
+<!--
+   <p class="citation">
+      "Moving onto the part of Internet of Things, we integrated a sensor (light sensor) and
+      an actuator (light switch/dimmer) into a web application. The major feature of the
+      sensor (sending data) and that of the actuator (commanding and coniguration) perfectly
+      match the massage patterns, Pub/Sub and RPC, which WAMP provides."
+   </p>      
+-->
+
+
 
    <table id="comparison">
       <tr>
@@ -272,7 +329,29 @@
    <div class="section">
       <h1>AJAX</h1>
       <p>
-         <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> is a ...
+         <a href="http://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> is neither a protocol nor
+         an API, but a programming pattern for JavaScript in browsers that uses HTTP requests
+         to realize RPC-like communication between frontends (browsers) and backends.
+      </p>
+      <p>
+         AJAX being a programming practice, isn't a complete RPC system either. You need to agree
+         upon how calls, results and errors are formatted and serialized.
+         See <a href="#jsonrpc">JSON-RPC</a> and <a href="#xmlrpc">XML-RPC</a>.
+      </p>
+      <p>
+         Even when you bake some RPC mechanism using AJAX techniques, this is point-to-point RPC:
+         calls aren't routed between different servers or application components, but strictly
+         travel from point (browser) to point (server the browser is connected to).
+      </p>
+      <p>
+         Further, AJAX does not provide PubSub - in fact, it doesn't address how to actively push any
+         kind of information from server to client (however, see <a href="#comet">Comet</a>).
+      </p>
+      <p>
+         Since AJAX uses plain HTTP for wrapping any kind of RPC-like messages, it suffers
+         from the overhead and limitations intrinsic to HTTP. E.g. you cannot have more than
+         6-8 concurrent RPCs, as browsers will limit the number of HTTP connections to a single
+         destination.
       </p>
       <a href="#top" class="top">Top</a>
    </div>

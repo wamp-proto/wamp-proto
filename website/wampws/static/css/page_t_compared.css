@@ -1,7 +1,19 @@
+.introline {
+   color: #fa72c6;
+   font-size: 20px;
+}
+
 .section {
    border-top: 1px solid #fa72c6;
    margin-top: 20px;
    margin-bottom: 60px;
+}
+
+.inset {
+   width: 90%;
+   margin: 40px auto 40px auto;
+   border: 1px solid #fa72c6;
+   padding: 10px;
 }
 
 #comparison {
