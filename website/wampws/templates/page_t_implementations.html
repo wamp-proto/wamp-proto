@@ -43,29 +43,12 @@
       </tr>
 
       <tr>
-         <td><a href="http://autobahn.ws/python"><b>Autobahn</b>|Python</a></td>
-         <td>Python</td>
-         <td>x</td>
-         <td>x</td>
-         <td>x</td>
-         <td>x</td>
-         <td>yes</td>
+         <td><a href="http://autobahn.ws/android"><b>Autobahn</b>|Android</a></td>
+         <td>Java</td>
+         <td colspan="5">upcoming</td>
       </tr>
       <tr>
-         <td class="notes" colspan="7">WAMP Client &amp; Router framework, runs under Python 2 and 3, on Twisted and Asyncio.</td>
-      </tr>
-
-      <tr>
-         <td><a href="http://autobahn.ws/js"><b>Autobahn</b>|JS</a></td>
-         <td>JavaScript</td>
-         <td>x</td>
-         <td>x</td>
-         <td>x</td>
-         <td>x</td>
-         <td>yes</td>
-      </tr>
-      <tr>
-         <td class="notes" colspan="7">WAMP Client library for browsers and NodeJS using Promises (when, Q, jQuery or ES6).</td>
+         <td class="notes" colspan="7">WAMP Client library for native Android applications.</td>
       </tr>
 
       <tr>
@@ -82,16 +65,7 @@
       </tr>
 
       <tr>
-         <td><a href="http://autobahn.ws/android"><b>Autobahn</b>|Android</a></td>
-         <td>Java</td>
-         <td colspan="5">upcoming</td>
-      </tr>
-      <tr>
-         <td class="notes" colspan="7">WAMP Client library for native Android applications.</td>
-      </tr>
-
-      <tr>
-         <td><a href="https://github.com/KSDaemon/wampy.js"><b>wampy</b>.js</a></td>
+         <td><a href="http://autobahn.ws/js"><b>Autobahn</b>|JS</a></td>
          <td>JavaScript</td>
          <td>x</td>
          <td>x</td>
@@ -100,7 +74,20 @@
          <td>yes</td>
       </tr>
       <tr>
-         <td class="notes" colspan="7">WAMP Client library for browsers using callbacks. See <a href="https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs">here</a> for comparison to Autobahn|JS.</td>
+         <td class="notes" colspan="7">WAMP Client library for browsers and NodeJS using Promises (when, Q, jQuery or ES6).</td>
+      </tr>
+
+      <tr>
+         <td><a href="http://autobahn.ws/python"><b>Autobahn</b>|Python</a></td>
+         <td>Python</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>yes</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">WAMP Client &amp; Router framework, runs under Python 2 and 3, on Twisted and Asyncio.</td>
       </tr>
 
       <tr>
@@ -117,6 +104,21 @@
       </tr>
 
       <tr>
+         <td><a href="https://github.com/mogui/MDWamp"><b>MDWamp</b></a></td>
+         <td>Objective-C</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>no</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">
+            MDWamp is WAMP client library for iOS apps that uses <a href="https://github.com/square/SocketRocket">SocketRocket</a> as underlying WebSocket implementation.
+         </td>
+      </tr>
+
+      <tr>
          <td><a href="https://github.com/voryx/Thruway"><b>Thruway</b></a></td>
          <td>PHP</td>
          <td>x</td>
@@ -128,6 +130,20 @@
       <tr>
          <td class="notes" colspan="7">Thruway is a Client and Server Library that aims to be compatible with the Autobahn project and WAMP2.</td>
       </tr>
+
+      <tr>
+         <td><a href="https://github.com/KSDaemon/wampy.js"><b>wampy</b>.js</a></td>
+         <td>JavaScript</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>yes</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">WAMP Client library for browsers using callbacks. See <a href="https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs">here</a> for comparison to Autobahn|JS.</td>
+      </tr>
+     
    </table>
 
    <a name="routers"></a>
@@ -155,7 +171,7 @@
          <td>no</td>
       </tr>
       <tr>
-         <td class="notes" colspan="4">Autobahn|Python includes a "basic router".</td>
+         <td class="notes" colspan="4">AutobahnPython includes a "basic router". For a full featured router, have a look at Crossbar.io</td>
       </tr>
 
       <tr>
@@ -165,17 +181,8 @@
          <td>yes</td>
       </tr>
       <tr>
-         <td class="notes" colspan="4">Router with database integration (PostgreSQL/Oracle), scalable clustering/federation and enterprise support by <a href="http://tavendo.com">Tavendo</a>.</td>
-      </tr>
-
-      <tr>
-         <td><a href="http://ksdaemon.github.io/wiola/"><b>Wiola</b></a></td>
-         <td>x</td>
-         <td>x</td>
-         <td>yes</td>
-      </tr>
-      <tr>
-         <td class="notes" colspan="4">Router implementation in Lua, using the power of LUA Nginx module, Lua WebSocket addon, and Redis as cache store.</td>
+         <td class="notes" colspan="4">
+            Advanced WAMP router written on top of Autobahn. Created and supported by <a href="http://tavendo.com">Tavendo</a>.</td>
       </tr>
 
       <tr>
@@ -197,6 +204,17 @@
       <tr>
          <td class="notes" colspan="4">Thruway is a Client and Server Library that aims to be compatible with the Autobahn project and WAMP2.</td>
       </tr>
+
+      <tr>
+         <td><a href="http://ksdaemon.github.io/wiola/"><b>Wiola</b></a></td>
+         <td>x</td>
+         <td>x</td>
+         <td>yes</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="4">Router implementation in Lua, using the power of LUA Nginx module, Lua WebSocket addon, and Redis as cache store.</td>
+      </tr>
+
    </table>
 
    <div style="clear: both;"></div>
