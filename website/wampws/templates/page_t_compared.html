@@ -539,14 +539,17 @@
          act as a Caller, Callee, Publisher and Subscriber, all at the same time.
          This works with all WAMP transports. WAMP has built transport independent addressing and routing right into the protocol.
       </p>
-      <a href="#top" class="top">Top</a>      
+      <a href="#top" class="top">Top</a>
    </div>
 
    <a id="socketio"></a>
    <div class="section">
       <h1>socket.io</h1>
       <p>
-         <a href="http://socket.io/">socket.io</a> is a ...
+         <a href="http://socket.io/">socket.io</a> is a client-server PubSub service implementaion, written in JavaScript. It uses node.js on server side, browser counter part and own communication protocol. Socket.IO uses WebSocket under the hood, when it's possible, but also has a polyfill as fallback.
+      </p>
+      <p>
+         Comparing to WAMP, library allows you to subscribe to different topics, has a broadcast messages and message namespaces, which works like a realms in WAMP. There is a posibility to transfer a binary data over socket.io connection, but that needs additional modules on both sides (<a href=“https://github.com/nkzawa/socket.io-stream”>socket.io-stream</a>) and additional amount of work for developers. They need to program that explicitly. Aslo, Socket.IO does not provide a RPC <i>application messaging pattern</i>.
       </p>
       <a href="#top" class="top">Top</a>
    </div>
