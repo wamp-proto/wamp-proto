@@ -500,10 +500,7 @@
    <div class="section">
       <h1>REST</h1>
       <p>
-         <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a> is neither a library, nor framework. It's a software architecturing style. REST stands for "Representational State Transfer".
-      </p>
-      <p>
-         REST assumes that data should be transfered over network in one of the standart formats like HTML, XML or JSON. REST architecture is based on 6 limitaions: 
+         <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a> is neither a library, nor protocol or framework. It's a software architecture style. REST stands for "Representational State Transfer" and assumes that data should be transfered over network in one of the standard formats like HTML, XML or JSON and follows an architecture based on 6 limitations: 
          <ul>
             <li>Uniform Interface</li>
             <li>Stateless</li>
@@ -514,13 +511,16 @@
          </ul>
       </p>
       <p>
-         In a World Wide Web, RESTful systems use URL for an information unit address, and http status codes for corresponding <a href=“http://en.wikipedia.org/wiki/Create,_read,_update_and_delete”>CRUD</a> operations.
+         In a World Wide Web, RESTful systems use URL for an information unit address, and http status codes for corresponding <a href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a> operations.
       </p>
       <p>
-         It is difficult to compare WAMP application protocol and a software architect paradigm. They both are a client-server, multilayered, can use different data presentation format. But one of the clearest difference is that WAMP is bidirectional, while REST pattern is not. In RESTful applications only client acts as initiator for data manipulations, and there is no options about how server can send data to client. In contrast to this, WAMP workflow allows data to be transfered to and form server.
+         It is difficult to compare the WAMP protocol and a software architecture paradigm. They both are multilayered and can use different data presentation format. But one of the clearest difference is that WAMP is bidirectional, while REST pattern is not. In RESTful applications only client acts as initiator for data manipulations, and there is no options about how server can send data to client. In contrast to this, WAMP workflow allows data to be transfered to and form server.
       </p>
       <p>
-         There is no problem to use WAMP and REST together. For example, you can make a basic CRUD-operations over HTTP using GET/POST/PUT/DELETE methods, and in parallel, use WAMP PubSub service for notifications about changes, and WAMP RPC's for making some explicit business logic operations (like sending sms, or batch picture resizing and so on).
+         Another difference is that REST deliberately uses URLs from the HTTP scheme which serve a dual function of <b>identifying</b> and <b>addressing</b> resources. With WAMP, URIs are formed <b>com.example.myprocedure</b> and only <b>identify</b>, but NOT address the procedure to be called. This means, the implementation of the procedure can reside anywhere - it's location is only known to the WAMP router. This provides location transparency for WAMP application components.
+      </p>
+      <p>
+         There is no problem to use WAMP and REST together. For example, you can make basic CRUD-operations over HTTP using GET/POST/PUT/DELETE methods, and in parallel, use WAMP PubSub service for notifications about changes, and WAMP RPC's for making some explicit business logic operations (like sending SMS, or batch picture resizing and so on).
       </p>
    </div>
 
@@ -566,10 +566,13 @@
    <div class="section">
       <h1>socket.io</h1>
       <p>
-         <a href="http://socket.io/">socket.io</a> is a client-server PubSub service implementaion, written in JavaScript. It uses node.js on server side, browser counter part and own communication protocol. Socket.IO uses WebSocket under the hood, when it's possible, but also has a polyfill as fallback.
+         <a href="http://socket.io/">socket.io</a> is a client-server PubSub service implementation written in JavaScript. It uses node.js on server side, browser counter part and own communication protocol. Socket.IO uses WebSocket under the hood, when it's possible, but also has a polyfill as fallback.
       </p>
       <p>
-         Comparing to WAMP, library allows you to subscribe to different topics, has a broadcast messages and message namespaces, which works like a realms in WAMP. There is a posibility to transfer a binary data over socket.io connection, but that needs additional modules on both sides (<a href=“https://github.com/nkzawa/socket.io-stream”>socket.io-stream</a>) and additional amount of work for developers. They need to program that explicitly. Aslo, Socket.IO does not provide a RPC <i>application messaging pattern</i>.
+         Comparing to WAMP, library allows you to subscribe to different topics, has a broadcast messages and message namespaces, which works like a realms in WAMP. Binary data transfer is possible, but that needs additional modules on both sides (<a href="https://github.com/nkzawa/socket.io-stream">socket.io-stream</a>) and additional amount of work for developers. They need to program that explicitly.
+      </p>
+      <p>
+         Socket.IO does not provide remote procedure calls.
       </p>
       <a href="#top" class="top">Top</a>
    </div>
