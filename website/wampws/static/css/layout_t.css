@@ -314,3 +314,20 @@ ul li
    margin: 60px auto 40px auto;
    color: #333;
 }
+
+#survey_cta {
+   position: absolute;
+   right: 60px;
+   top: -40px;
+}
+
+#survey_cta a {
+/*   
+   padding: 8px;
+   border-radius: 16px;
+   background-color: #fa72c6;
+   */
+   font-size: 140%;
+   color: #fa72c6;
+   text-decoration: none;
+}
