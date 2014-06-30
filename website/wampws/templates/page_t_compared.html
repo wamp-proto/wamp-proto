@@ -500,7 +500,27 @@
    <div class="section">
       <h1>REST</h1>
       <p>
-         <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a> is a ...
+         <a href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a> is neither a library, nor framework. It's a software architecturing style. REST stands for "Representational State Transfer".
+      </p>
+      <p>
+         REST assumes that data should be transfered over network in one of the standart formats like HTML, XML or JSON. REST architecture is based on 6 limitaions: 
+         <ul>
+            <li>Uniform Interface</li>
+            <li>Stateless</li>
+            <li>Cacheable</li>
+            <li>Client-Server</li>
+            <li>Layered System</li>
+            <li>Code on Demand (optional)</li>
+         </ul>
+      </p>
+      <p>
+         In a World Wide Web, RESTful systems use URL for an information unit address, and http status codes for corresponding <a href=“http://en.wikipedia.org/wiki/Create,_read,_update_and_delete”>CRUD</a> operations.
+      </p>
+      <p>
+         It is difficult to compare WAMP application protocol and a software architect paradigm. They both are a client-server, multilayered, can use different data presentation format. But one of the clearest difference is that WAMP is bidirectional, while REST pattern is not. In RESTful applications only client acts as initiator for data manipulations, and there is no options about how server can send data to client. In contrast to this, WAMP workflow allows data to be transfered to and form server.
+      </p>
+      <p>
+         There is no problem to use WAMP and REST together. For example, you can make a basic CRUD-operations over HTTP using GET/POST/PUT/DELETE methods, and in parallel, use WAMP PubSub service for notifications about changes, and WAMP RPC's for making some explicit business logic operations (like sending sms, or batch picture resizing and so on).
       </p>
    </div>
 
