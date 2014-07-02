@@ -1,0 +1,151 @@
+.introline {
+   color: #fa72c6;
+   font-size: 20px;
+}
+
+.section {
+   border-top: 1px solid #fa72c6;
+   margin-top: 20px;
+   margin-bottom: 60px;
+}
+
+.inset {
+   width: 90%;
+   margin: 40px auto 40px auto;
+   border: 1px solid #fa72c6;
+   padding: 10px;
+}
+
+#comparison {
+   border-collapse: collapse;
+   border-spacing: 0 0;
+   border: 1px solid #fa72c6;
+   margin-top: 30px;
+   margin-bottom: 120px;
+}
+
+#comparison tr {
+   border-bottom: 1px solid #fa72c6;  
+}
+
+#comparison td {
+   text-align: center;
+   padding: 4px 8px 4px 8px;
+   font-size: 16px;
+   width: 100px;
+}
+
+#comparison tr:nth-child(1) {
+   background-color: #fa72c6;
+   color: #fff;
+}
+
+#comparison a {
+   color: #000;
+}
+
+#comparison a:hover {
+   color: #fa72c6;
+}
+
+#comparison a:visited {
+   color: #000;
+}
+
+#comparison td:nth-child(1) {
+   border-right: 1px solid #fa72c6;  
+   text-align: left;
+   width: 140px;
+}
+
+/*
+#comparison td.yes {
+   color: #0f0;
+   font-weight: bold;
+   content: "yes";
+}
+
+#comparison td.no {
+   color: #f00;
+   font-weight: bold;
+   content: "no";
+}
+*/
+
+
+.wamp2_implementations td:nth-child(1) {
+   width: 220px;
+}
+
+.wamp2_implementations td:nth-child(1), td:nth-child(2), td:last-child {
+   text-align: left;
+}
+
+.wamp2_implementations td:nth-child(7) {
+}
+
+.wamp2_implementations td.feature {
+   width: 60px;
+   font-style: italic;
+}
+
+.wamp2_implementations td.notes {
+   font-size: 80%;
+}
+
+#content_block .impl_list {
+   margin-left: 60px;
+   padding-left: 30px;
+}
+
+#implist_wrapper {
+   position: relative;
+   margin: 30px auto 0 auto;
+   width: 720px;
+}
+
+.implist {
+   float: left;
+   width: 360px;
+   font-size: 18px;
+}
+
+.implist ul {
+   margin: 8px 0 0 0;
+   padding: 0 0 0 20px;;
+}
+
+.implist ul li {
+   background-image: url("../img/li_edge.png");
+   background-position: 0 8px;
+   background-repeat: no-repeat;
+   list-style-type: none;
+   line-height: 1.8em;
+   padding-left: 16px;
+}
+
+small {
+   color: #000;
+}
+
+.implist a {
+   text-decoration: none;
+}
+
+#implementors_note {
+   width: 80%;
+   margin: auto;
+
+   padding: 8px 2em 8px 2em;
+   border-radius: 12px;
+
+   font-size: 14px;
+   line-height: 1.2em;
+
+   color: #fff;
+   background-color: #fa72c6;
+}
+
+#implementors_note a {
+   color: #fff;
+}

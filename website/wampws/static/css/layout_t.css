@@ -149,6 +149,7 @@ ul li
 #navbar .navitem
 {
    color: #c6cad2;
+   color: #8792a3;
 }
 
 #navbar a
@@ -312,4 +313,21 @@ ul li
    width: 80%;
    margin: 60px auto 40px auto;
    color: #333;
+}
+
+#survey_cta {
+   position: absolute;
+   right: 60px;
+   top: -40px;
+}
+
+#survey_cta a {
+/*   
+   padding: 8px;
+   border-radius: 16px;
+   background-color: #fa72c6;
+   */
+   font-size: 140%;
+   color: #fa72c6;
+   text-decoration: none;
 }

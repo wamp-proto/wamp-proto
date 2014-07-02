@@ -46,6 +46,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
     * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
     * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
+    * [One Time Token Authentication](#one-time-token-authentication)
 7. [Reflection](#reflection)
 
 
@@ -70,37 +71,48 @@ Here, the bi-directionality requirement for the transport is implemented by usin
 
 Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
 
+
 ### Long-Poll Transport
 
-With the *Long-Poll Transport*, a *Client* sends a HTTP/POST request to a well-known URL, e.g.
+The *Long-Poll Transport* is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the *Client* issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
+
+**Opening a Session**
+
+With the *Long-Poll Transport*, a *Client* opens a new WAMP session by sending a HTTP/POST request to a well-known URL, e.g.
 
 	http://mypp.com/longpoll/open
 
-Here, `http://mypp.com/longpoll` is the base URL for the *Long-Poll Transport*.
+Here, `http://mypp.com/longpoll` is the base URL for the *Long-Poll Transport* and `/open` is a path dedicated for opening new sessions.
 
-The request should have a `Content-Type` header set to `application/json` and contain a request body with a JSON document
+The HTTP/POST request *SHOULD* have a `Content-Type` header set to `application/json` and *MUST* have a request body with a JSON document that is a dictionary:
 
 ```javascript
 {
-   "protocols": ["wamp.2.json"]
+   "protocols": ["wamp.2.json.batched"]
 }
 ``` 
 
-Alternatively, if the peer supports MsgPack, the request *MAY* have a `Content-Type` header set to `application/x-msgpack` and contain a request body with a MsgPack document similar to above.
-
 The (mandatory) `protocols` attribute specifies the protocols the client is willing to speak. The server will chose one from this list when establishing the session or fail the request when no protocol overlap was found.
 
-The request path with this and subsequently describe HTTP/POST requests *MAY* contain a query parameter `x` with some random or sequentially incremented value: 
+The valid protocols are:
 
-	http://mypp.com/longpoll/open?x=382913
+ * `wamp.2.json.batched`
+ * `wamp.2.json`
+ * `wamp.2.msgpack.batched`
+ * `wamp.2.msgpack`
 
-The value is ignored, but may help in certain situations to prevent intermediaries from caching the request.
+> The request path with this and subsequently described HTTP/POST requests *MAY* contain a query parameter `x` with some random or sequentially incremented value: 
+> 
+> 	http://mypp.com/longpoll/open?x=382913
+> 
+> The value is ignored, but may help in certain situations to prevent intermediaries from caching the request.
+> 
 
 Returned is a JSON document containing a transport ID and the protocol to speak:
 
 ```javascript
 {
-   "protocol": "wamp.2.json",
+   "protocol": "wamp.2.json.batched",
    "transport": "kjmd3sBLOUnb3Fyr"
 }
 ```
@@ -115,29 +127,44 @@ where `transport_id` is the transport ID returned from `open`, e.g.
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
+
+**Receiving WAMP Messages**
+
 The *Client* will then issue HTTP/POST requests (with empty request body) to
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
 
-When there are WAMP messages pending downstream, a request will return with a batch of JSON serialized WAMP messages. For sending WAMP messages, the *Client* will issue HTTP/POST requests to
+When there are WAMP messages pending downstream, a request will return with a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).
+
+The serialization format used is the one agreed during opening the session.
+
+The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
+
+> Note: In unbatched mode, when there is more than one message pending, there will be at most one message returned for each request. The other pending messages must be retrieved by new requests. With batched mode, all messages pending at request time will be returned in one batch of messages.
+> 
+
+**Sending WAMP Messages**
+
+For sending WAMP messages, the *Client* will issue HTTP/POST requests to
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
-with request body being a batch of JSON serialized WAMP messages.
+with request body being a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).
+
+The serialization format used is the one agreed during opening the session.
 
 The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
+
+Upon success, the request will return with HTTP status code 202 ("no content"). Upon error, the request will return with HTTP status code 400 ("bad request").
+
+
+**Closing a Session**
 
 To orderly close a session, a *Client* will issue a HTTP/POST to 
 
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
 
-with request body being a JSON document
-
-```javascript
-{
-   "reason": "wamp.close.normal"
-}
-```
+with an empty request body. Upon success, the request will return with HTTP status code 202 ("no content"). 
 
 
 ### Batched Transport
@@ -1053,7 +1080,7 @@ A call may be cancelled at the *Dealer*
 
 ![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
 
-A *Callee* cancels an remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
+A *Caller* cancels a remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
 
     [CANCEL, CALL.Request|id, Options|dict]
 
@@ -1290,41 +1317,194 @@ This transport-level authentication information may be forward to the WAMP level
 
 ### WAMP Challenge-Response Authentication
 
----- now integrated into WAMP session establishment ? ----
+WAMP Challenge-Response ("WAMP-CRA") authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a *secret*. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.
 
-WAMP Challenge Response (WAMP-CRA) is a WAMP level authentication procedure implemented on top of standard, predefined WAMP RPC procedures.
+A typical authentication begins with the client sending a `HELLO` message specifying the `wampcra` method as (one of) the authentication methods:
 
-A peer may authenticate to its other peer via calling the following procedures
+```javascript
+[1, "realm1",
+	{
+		"roles": ...,
+		"authmethods": ["wampcra"],
+		"authid": "peter"
+	}
+]
+```
 
-   	wamp.cra.request
-   	wamp.cra.authenticate
+The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For WAMP-CRA, this MUST include `"wampcra"`.
 
-WAMP-CRA defines the following errors
+The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-CRA, this MUST be provided.
 
-  	wamp.error.invalid_argument
-   	wamp.cra.error.no_such_authkey
-   	wamp.cra.error.authentication_failed
-   	wamp.cra.error.anonymous_not_allowed
-   	wamp.cra.error.already_authenticated
-   	wamp.cra.error.authentication_already_requested
+If the server is unwilling or unable to perform WAMP-CRA authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
 
-A peer starts WAMP-CRA authentication by calling
+If the server is willing to let the client authenticate using WAMP-CRA, and the server recognizes the provided `authid`, it'll send a `CHALLENGE` message:
 
-   	wamp.cra.request
+```javascript
+[4, "wampcra",
+	{
+		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                       \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\",
+                       \"authmethod\": \"wampcra\", \"session\": 3251278072152162}"
+	}
+]
+```
 
-with `Arguments = [auth_key|string, auth_extra|dict]` where
+The `CHALLENGE.Details.challenge|string` is a string the client needs to create a signature for. The string MUST BE a JSON serialized object which MUST contain:
 
- * `auth_key` is the authentication key, e.g. an application or user identifier, possibly the empty string for "authenticating" as anonymous
- * `auth_extra` is a dictionary of extra authentication information, possibly empty
+ 1. `authid|string`: The authentication ID the client will be authenticated as when the authentication succeeds.
+ 2. `authrole|string`: The authentication role the client will be authenticated as when the authentication succeeds.
+ 3. `authmethod|string`: The authentication methods, here `"wampcra"`
+ 4. `authprovider|string`: The actual provider of authentication. For WAMP-CRA, this can be freely chosen by the app, e.g. `userdb`.
+ 5. `nonce|string`: A random value.
+ 6. `timestamp|string`: The UTC timestamp (ISO8601 format) the authentication was started, e.g. `2014-06-22T16:51:41.643Z`.
+ 7. `session|int`: The WAMP session ID that will be assigned to the session once it is authenticated successfully.
 
-The other peer then computes an authentication challenge. WRITEME.
+The client needs to compute the signature as follows:
 
-The peer then signs the authentication challenge and calls
+	signature := HMAC[SHA256]_{secret} (challenge)
 
-   	wamp.cra.authenticate
+That is, compute the HMAC-SHA256 using the shared `secret` over the `challenge`.
+
+After computing the signature, the client will send an `AUTHENTICATE` message containing the signature:
+
+```javascript
+[5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
+```
+
+The server will then check if
+
+* the signature matches the one expected
+* the `AUTHENTICATE` message was sent in due time
+
+If the authentication succeeds, the server will finally respond with a `WELCOME` message:
+
+```javascript
+[2, 3251278072152162,
+	{
+		"authid": "peter",
+		"authrole": "user",
+		"authmethod": "wampcra",
+		"authprovider": "userdb",
+		"roles": ...
+	}
+]
+```
+
+The `WELCOME.Details` again contain the actual authentication information active.
+
+If the authentication fails, the server will response with an `ABORT` message.
+
+
+#### Server-side Verification
+
+The challenge sent during WAMP-CRA contains
+
+1. random information (the `nonce`) to make WAMP-CRA robust against replay attacks
+2. timestamp information (the `timestamp`) to allow WAMP-CRA timeout on authentication requests that took too long
+3. session information (the `session`) to bind the authentication to a WAMP session ID
+4. all the authentication information that relates to authorization like `authid` and `authrole`
+
+
+#### Three-legged Authentication
+
+The signing of the challenge sent by the server usually is done directly on the client. However, this is no strict requirement.
+
+E.g. a client might forward the challenge to another party (hence the "three-legged") for creating the signature. This can be used when the client was previously already authenticated to that third party, and WAMP-CRA should run piggy packed on that authentication.
+
+The third party would, upon receiving a signing request, simply check if the client is already authenticated, and if so, create a signature for WAMP-CRA.
+
+In this case, the secret is actually shared between the WAMP server who wants to authenticate clients using WAMP-CRA and the third party server, who shares a secret with the WAMP server.
+
+This scenario is also the reason the challenge sent with WAMP-CRA is not simply a random value, but a JSON serialized object containing sufficient authentication information for the thrid party to check.
+
+
+#### Password Salting
+
+WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret often requires storage of that secret on the client and the server - and storing a password verbatim (unencrypted) is not recommended in general.
+
+WAMP-CRA allows the use of salted passwords following the [PBKDF2](http://en.wikipedia.org/wiki/PBKDF2) key derivation scheme. With salted passwords, the password itself is never stored, but only a key derived from the password and a password salt. This derived key is then practically working as the new shared secret.
+
+When the password is salted, the server will during WAMP-CRA send a `CHALLENGE` message containing additional information:
+
+```javascript
+[4, "wampcra",
+	{
+		"challenge": "{\"nonce\": \"LHRTC9zeOIrt_9U3\", \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                       \"timestamp\": \"2014-06-22T16:36:25.448Z\", \"authrole\": \"user\",
+                       \"authmethod\": \"wampcra\", \"session\": 3251278072152162}",
+		"salt": "salt123",
+		"keylen": 32,
+		"iterations": 1000
+	}
+]
+```
+
+The `CHALLENGE.Details.salt|string` is the password salt in use. The `CHALLENGE.Details.keylen|int` and `CHALLENGE.Details.iterations|int` are parameters for the PBKDF2 algorithm.
 
 
 
+### Ticket-based Authentication
+
+With *Ticket* based authentication, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.
+
+> Caution: This is extremely simple, but security is limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
+> 
+
+A typical authentication begins with the client sending a `HELLO` message specifying the `ticket` method as (one of) the authentication methods:
+
+```javascript
+[1, "realm1",
+	{
+		"roles": ...,
+		"authmethods": ["ticket"],
+		"authid": "peter"
+	}
+]
+```
+
+The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include `"ticket"`.
+
+The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+
+If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
+
+If the server is willing to let the client authenticate using a ticket and the server recognizes the provided `authid`, it'll send a `CHALLENGE` message:
+
+```javascript
+[4, "ticket", {}]
+]
+```
+
+The client will send an `AUTHENTICATE` message containing a ticket:
+
+```javascript
+[5, "my_magic_secret_ticket_value", {}]
+```
+
+The server will then check if the ticket provided is permissible (for the `authid` given).
+
+If the authentication succeeds, the server will finally respond with a `WELCOME` message:
+
+```javascript
+[2, 3251278072152162,
+	{
+		"authid": "peter",
+		"authrole": "user",
+		"authmethod": "ticket",
+		"authprovider": "userdb",
+		"roles": ...
+	}
+]
+```
+
+where
+
+ 1. `authid|string`: The authentication ID the client was (actually) authenticated as.
+ 2. `authrole|string`: The authentication role the client was authenticated for.
+ 3. `authmethod|string`: The authentication method, here `"ticket"`
+ 4. `authprovider|string`: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. `userdb`.
+
+The `WELCOME.Details` again contain the actual authentication information active. If the authentication fails, the server will response with an `ABORT` message.
 
 
 
