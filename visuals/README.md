@@ -1,10 +1,6 @@
 WAMP Visuals
 ============
 
-"WAMP" and the WAMP logo are trademarks of Tavendo GmbH. To use, you must obtain prior written consent.
-
-Please contact us at by posting to https://groups.google.com/group/wampws or email to **contact at tavendo.de**.
-
 Logos
 -----
 
@@ -18,3 +14,16 @@ Color Scheme
      purple:       #fa72c6
     
      dark purple:  #f10a9a
+
+Legal
+-----
+
+"WAMP" and the WAMP logo are trademarks of Tavendo GmbH.
+
+More information:
+
+ * [Why is WAMP trademarked?](http://wamp.ws/faq/#why_trademarking)
+ * [Who can use the WAMP word mark or the WAMP design mark?](http://wamp.ws/faq/#wamp_trademark_use)
+
+Email contact: **service at tavendo.de**
+
