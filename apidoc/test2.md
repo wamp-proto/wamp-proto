@@ -17,9 +17,8 @@ The procedure will return the total number of deleted items (including those del
 Here is the procedure signature:
 
 ```javascript
-{
+"com.example.store.delete_product" : {
    	"type": "procedure",
-	"uri": "com.example.store.delete_product",
 	"help": "Delete an existing product. When successful, a notification is sent.",
 	"args": [
 		{
