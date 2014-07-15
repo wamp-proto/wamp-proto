@@ -6,7 +6,7 @@
 
 To delete an existing product from the store, call the **procedure**
 
-	com.example.store.delete_product
+	com.example.store.delete_product(product_id, cascade) -> total_deleted
 
  * The procedure takes a mandatory positional argument `product_id` to provide the ID of the product to be deleted.
  * An optional `cascade` positional argument allows you to extend the deletion to any dependend objects.
@@ -14,24 +14,35 @@ To delete an existing product from the store, call the **procedure**
 
 #### Example
 
-Example call `args`:
+A call of `com.example.store.delete_product` with `args`
 
 
 ```javascript
 [100, true]
 ```
 
-and example result `args`:
+will either return successfully with a result having `args`:
 
 ```javascript
 [3]
 ```
 
-or error `args` for an error `com.example.error.no_such_product`:
+indicating there were 3 items deleted in total.
+
+Or the call returns with an error `com.example.error.no_such_product` having `args`:
 
 ```javascript
 ["no product with ID 100"]
 ```
+
+When the call succeeds, an event `com.example.store.on_delete_product` with `args`
+
+```javascript
+[100]
+```
+
+would have been published.
+
 
 #### com.example.store.delete_product
 
@@ -52,13 +63,24 @@ or error `args` for an error `com.example.error.no_such_product`:
 			help = "Flag to activate cascaded delete, which deletes any dependent objects also."}
 	],
 	"result": {
-		"args": [{"label": "cascaded_count", "types": ["int"]}]
+		"args": [{"label": "total_deleted", "types": ["int"]}]
 	},
 	"errors": {
 		"com.example.error.no_such_product": {
 			"help": "The product that was requested to be deleted does not exist.",
 			"args": [{"label": "error_message", "types": ["string"]}]
 		}
-	}
+	},
+    "events": {
+		"com.example.store.on_delete_product": {
+			"args": [
+				{
+					"label": "product_id",
+					"types": ["int"],
+					"help": "The product with given ID was deleted."
+				}
+			]
+        }
+    }
 }
 ```
