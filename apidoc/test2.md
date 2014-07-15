@@ -16,7 +16,7 @@ The procedure will return the total number of deleted items (including those del
 
 Here is the procedure signature:
 
-```json wamp
+```javascript
 {
    	"type": "procedure",
 	"uri": "com.example.store.delete_product",
