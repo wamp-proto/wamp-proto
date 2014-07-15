@@ -47,20 +47,21 @@ would have been published.
 #### com.example.store.delete_product
 
 ```javascript
-"com.example.store.delete_product" : {
+{
+	"uri": "com.example.store.delete_product",
    	"type": "procedure",
 	"help": "Delete an existing product. When successful, a notification is sent.",
 	"args": [
 		{
 			"label": "product_id",
 			"types": ["int"],
-			help = "The product to be deleted."
+			"help" = "The product to be deleted."
 		},
 		{
 			"label": "cascade",
 			"types": ["bool"],
 			"optional": true,
-			help = "Flag to activate cascaded delete, which deletes any dependent objects also."}
+			"help" = "Flag to activate cascaded delete, which deletes any dependent objects also."}
 	],
 	"result": {
 		"args": [{"label": "total_deleted", "types": ["int"]}]
