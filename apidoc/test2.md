@@ -44,7 +44,7 @@ When the call succeeds, an event `com.example.store.on_delete_product` with `arg
 would have been published.
 
 
-#### com.example.store.delete_product
+#### Procedure [**com.example.store.delete_product**]
 
 ```javascript
 {
@@ -74,14 +74,24 @@ would have been published.
 	},
     "events": {
 		"com.example.store.on_delete_product": {
-			"args": [
-				{
-					"label": "product_id",
-					"types": ["int"],
-					"help": "The product with given ID was deleted."
-				}
-			]
         }
     }
+}
+```
+
+#### Topic [**com.example.store.on_delete_product**]
+
+```javascript
+{
+	"uri": "com.example.store.on_delete_product",
+   	"type": "topic",
+	"help": "Fired when a product was deleted.",
+	"args": [
+		{
+			"label": "product_id",
+			"types": ["int"],
+			"help": "The product with given ID was deleted."
+		}
+	]
 }
 ```
