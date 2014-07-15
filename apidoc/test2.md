@@ -10,7 +10,8 @@ To delete an existing product from the store, call the **procedure**
 
  * The procedure takes a mandatory positional argument `product_id` to provide the ID of the product to be deleted.
  * An optional `cascade` positional argument allows you to extend the deletion to any dependend objects.
- * The procedure will return the total number of deleted items (including those deleted due to cascading the deletion).
+ * When successful, the procedure will return the total number of deleted items (including those deleted due to cascading the deletion).
+ * When successful, the procedure will also publish a notification to the **topic** `com.example.store.on_delete_product`
 
 #### Example
 
@@ -46,6 +47,8 @@ would have been published.
 
 #### Procedure [**com.example.store.delete_product**]
 
+Here is the complete signature of above procedure:
+
 ```javascript
 {
 	"uri": "com.example.store.delete_product",
@@ -80,6 +83,8 @@ would have been published.
 ```
 
 #### Topic [**com.example.store.on_delete_product**]
+
+Whenever a previously existing product was successfully deleted, the following event will be published:
 
 ```javascript
 {
