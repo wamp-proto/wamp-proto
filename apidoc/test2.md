@@ -8,13 +8,15 @@ To delete an existing product from the store, call the **procedure**
 
 	com.example.store.delete_product
 
-The procedure takes a mandatory positional argument `product_id` which takes the ID of the product to be deleted.
+The procedure takes a mandatory positional argument `product_id` to provide the ID of the product to be deleted.
 
 An optional `cascade` positional argument allows you to extend the deletion to any dependend objects.
 
+The procedure will return the total number of deleted items (including those deleted due to cascading the deletion).
+
 Here is the procedure signature:
 
-```javascript
+```wamp
 {
    	"type": "procedure",
 	"uri": "com.example.store.delete_product",
