@@ -267,6 +267,20 @@ When the product was successfully created, the procedure returns with
 
 Failure conditions where the procedure will raise an error include non-existant product
 
+
+```javascript
+{
+	"$schema": "http://wamp.ws/schema#",
+	"uri": "com.example.store.create_product",
+	"errors": [
+		"com.example.store.error.no_such_product",
+		"com.example.store.error.invalid_price"
+    ]
+}
+```
+
+where
+
 ```javascript
 {
 	"$schema": "http://wamp.ws/schema#",
