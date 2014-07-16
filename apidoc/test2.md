@@ -108,7 +108,7 @@ Here is the complete signature of above procedure:
 
 + Procedure [com.example.store.delete_product]
 	+ Help: Delete an existing product. When successful, a notification is sent.
-	+ Arg: Product ID" (int) - The product to be deleted.
+	+ Arg: Product ID (int) - The product to be deleted.
 	+ Arg: Cascade? (bool, optional) - Flag to activate cascaded delete, which deletes any dependent objects also.
 	+ Result
 		+ Arg: Total Deleted (int) - The total number of deleted items - including cascaded deletes.
@@ -118,3 +118,41 @@ Here is the complete signature of above procedure:
 + Topic [com.example.store.on_delete_product]
 	+ Help: Fired when a product was deleted.
 	+ Arg: Product ID (int) - The product with given ID was deleted
+
+
+#### Procedure
+
+```javascript
+{
+	"uri": "com.example.myproc1",
+	"type": "procedure",
+	"kwargs": {
+		"number": {"type": "number"},
+		"street_name": {"type": "string"},
+		"street_type": {"type": "string",
+			"enum": ["Street", "Avenue", "Boulevard"]}
+	},
+	"result_args": {
+		"type": "number"
+	}
+}
+```
+
+
+```javascript
+{
+	"title": "com.example.myproc1",
+    "description": "This procedure adds two numbers and returns the sum.",
+	"type": "object",
+	"properties": {
+		"type": "procedure",
+		"args": [
+	    	{"type": "number", "title": "x"},
+	    	{"type": "number", "title": "y"}
+		],
+		"rargs": [
+	    	{"type": "number", "title": "sum"},
+	    ]
+	}
+}
+```
