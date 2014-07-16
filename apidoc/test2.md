@@ -101,3 +101,20 @@ Whenever a previously existing product was successfully deleted, the following e
 	]
 }
 ```
+
+#### Procedure [**com.example.store.delete_product**]
+
+Here is the complete signature of above procedure:
+
++ Procedure [com.example.store.delete_product]
+	+ Help: Delete an existing product. When successful, a notification is sent.
+	+ Arg: Product ID" (int) - The product to be deleted.
+	+ Arg: Cascade? (bool, optional) - Flag to activate cascaded delete, which deletes any dependent objects also.
+	+ Result
+		+ Arg: Total Deleted (int) - The total number of deleted items - including cascaded deletes.
+	+ Error [com.example.error.no_such_product]
+		+ Arg: Error Message (string) - An error messages for logging purposes. 
+	+ Event [com.example.store.on_delete_product]
++ Topic [com.example.store.on_delete_product]
+	+ Help: Fired when a product was deleted.
+	+ Arg: Product ID (int) - The product with given ID was deleted
