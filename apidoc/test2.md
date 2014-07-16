@@ -156,3 +156,59 @@ Here is the complete signature of above procedure:
 	}
 }
 ```
+
+
+```javascript
+{
+	"$schema": "http://wamp.ws/schema#",
+    "uri": "com.example.store.create_product",
+	"type": "procedure",
+    "title": "Create a Product",
+    "description": "Create a new product entry in the Acme's catalog. Upon success, publish a notification.",
+	"kwargs": {
+	    "type": "object",
+	    "properties": {
+	        "id": {
+	            "description": "The unique identifier for a product",
+	            "type": "integer"
+	        },
+	        "name": {
+	            "description": "Name of the product",
+	            "type": "string"
+	        },
+	        "price": {
+	            "type": "number",
+	            "minimum": 0,
+	            "exclusiveMinimum": true
+	        }
+	    },
+	    "required": ["id", "name", "price"]
+	},
+	"result": {
+		"args": {
+			"type": "array",
+			"items": [
+				{
+					"type": "number"
+				}
+			]
+		}
+	}
+}
+```
+
+
+```javascript
+{
+	"$schema": "http://wamp.ws/schema#",
+	"uri": "com.example.store.create_product:result:args",
+	"value": {
+	   "type": "array",
+	   "items": [
+	      {
+	         "type": "number"
+	      }
+	   ]
+	}
+}
+```
