@@ -198,17 +198,89 @@ Here is the complete signature of above procedure:
 ```
 
 
+## Creating a Product
+
+The store API includes a procedure to create new product in the catalog
+
 ```javascript
 {
 	"$schema": "http://wamp.ws/schema#",
-	"uri": "com.example.store.create_product:result:args",
-	"value": {
-	   "type": "array",
-	   "items": [
-	      {
-	         "type": "number"
-	      }
-	   ]
+	"uri": "com.example.store.create_product",
+	"type": "procedure",
+	"title": "Create Product",
+	"description": "Create a new product in the store catalog."
+}
+```
+
+To create a new product, you need to provide an ID, a name and price
+
+
+```javascript
+{
+	"$schema": "http://wamp.ws/schema#",
+    "uri": "com.example.store.create_product",
+	"kwargs": {
+	    "type": "object",
+	    "properties": {
+	        "id": {
+	            "description": "The unique identifier for a product",
+	            "type": "integer"
+	        },
+	        "name": {
+	            "description": "Name of the product",
+	            "type": "string"
+	        },
+	        "price": {
+	            "type": "number",
+	            "minimum": 0,
+	            "exclusiveMinimum": true
+	        }
+	    },
+	    "required": ["id", "name", "price"]
+	},
+}
+```
+
+
+
+When the product was successfully created, the procedure returns with
+
+
+```javascript
+{
+	"$schema": "http://wamp.ws/schema#",
+	"uri": "com.example.store.create_product",
+	"result": {
+		"args": {
+		   	"type": "array",
+		   	"items": [
+				{
+					"type": "number",
+					"title": "Current Inventory",
+					"description": "Total number of product items in inventory."
+				}
+			]
+		}
+	}
+}
+```
+
+Failure conditions where the procedure will raise an error include non-existant product
+
+```javascript
+{
+	"$schema": "http://wamp.ws/schema#",
+	"uri": "com.example.store.error.no_such_product",
+	"type": "error",
+	"args": {
+	   	"type": "array",
+	   	"items": [
+			{
+				"type": "string",
+				"title": "Reason",
+				"description": "A human readable message, intended for development and logging purposes."
+			}
+		]
 	}
 }
 ```
