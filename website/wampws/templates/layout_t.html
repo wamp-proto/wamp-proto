@@ -25,29 +25,10 @@
    <body>
 
       <!-- add community widget -->
-      <!-- <script src="{{ session["widgeturl"] }}/js/communitywidget.js"></script>
+      <script src="{{ session["widgeturl"] }}/js/communitywidget.js"></script>
       <script>
          clandeck.create_widget({community: "tavendo", topOffset: "80px"});
-      </script>-->
-
-      <!-- community widget iframe -->
-      {% if session["widgeturl"] %}
-      <!-- general styles for the widget -->
-      <link rel="stylesheet" type="text/css" href="{{ session["widgeturl"] }}/css/parent.css" />
-      <!-- site-specific modifications -->
-      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/communitywidget.css') }}" />
-      <!-- base stylesheet to ensure non-Display if nothing loads -->
-      <style>
-         #communityWidget.nonDisplay {
-            display: none;
-         }
-      </style>
-      <iframe id="communityWidget" class="nonDisplay" src="{{ session["widgeturl"] }}/index.html" frameborder="0"></iframe>
-
-      <script src="{{ session["widgeturl"] }}/js/parent.js"></script>
-      {% else %}
-      <!-- Community Widget stripped! -->
-      {% endif %}
+      </script>
 
       {% macro up() -%}
          <div class="up">
