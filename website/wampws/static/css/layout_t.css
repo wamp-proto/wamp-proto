@@ -171,8 +171,9 @@ ul
 
 ul li
 {
-   background-image: url("../img/li_edge.png");
-   background-position: 0 8px;
+   background-image: url("../img/gen/li_edge.svg");
+   background-position: 0 7px;
+   background-size: 10px;
    background-repeat: no-repeat;
    list-style-type: none;
    line-height: 1.8em;

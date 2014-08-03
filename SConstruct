@@ -53,7 +53,8 @@ SVG_FILES = [
 
    'wamp_logo.svg',
    'wamp_logo_tiny.svg',
-   'wamp_logo_tiny_white.svg'
+   'wamp_logo_tiny_white.svg',
+   'li_edge.svg'
 ]
 
 IMG_SOURCE_DIR = "visuals/wamp2"
