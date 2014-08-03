@@ -47,6 +47,13 @@ SVG_FILES = [
    'unified_routing_rpc_client_server.svg',
    'unified_routing_rpc_dealer.svg',
    'unified_routing_wamp_iot.svg',
+
+   ## WAMP logos
+   ##
+
+   'wamp_logo.svg',
+   'wamp_logo_tiny.svg',
+   'wamp_logo_tiny_white.svg'
 ]
 
 IMG_SOURCE_DIR = "visuals/wamp2"
