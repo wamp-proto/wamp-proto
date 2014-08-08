@@ -109,11 +109,11 @@
       encapsulated in the <i>Dealer</i>
    </p>
    <p>
-      With WAMP, a <i>Callee</i> registers a procedure at a <i>Dealer</i> under an abstract name (an URI
-      identifying the procedure). When a <i>Caller</i> wants to call a remote procedure, it talks to the
-      <i>Dealer</i> and only provides the procedure name plus any call arguments. The <i>Dealer</i> will
+      With WAMP, a <i>Callee</i> registers a procedure at a <i>Dealer</i> under an abstract name: an URI
+      identifying the procedure. When a <i>Caller</i> wants to call a remote procedure, it talks to the
+      <i>Dealer</i> and only provides the URI of the procedure to be called plus any call arguments. The <i>Dealer</i> will
       look up the procedure to be invoked in his book of registered procedures. The information from the
-      book includes where the <i>Callee</i> implementing the procedure resides, and how to reach it.
+      book includes <i>where</i> the <i>Callee</i> implementing the procedure resides, and how to reach it.
    </p>
    <p>
       In effect, <i>Callers</i> and <i>Callees</i> are decoupled, and applications can use RPC and
