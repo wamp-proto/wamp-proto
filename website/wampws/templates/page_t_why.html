@@ -86,9 +86,9 @@
       <p>A Broker decouples <i>Publishers</i> and <i>Subscribers</i></p>
    </center>
    <p>
-      A <i>Broker</i> keeps a book of subscriptions: who is currently subscribed on which topic. When a <i>Subscriber</i>
-      publishes some information ("event") to a topic, the <i>Broker</i> will look up who is subscribed on
-      that topic. And then forward the information ("event") to all those <i>Subscribers</i>.
+      A <i>Broker</i> keeps a book of subscriptions: who is currently subscribed on which topic. When a <i>Publisher</i>
+      publishes some information ("event") to a topic, the <i>Broker</i> will look up who is currently subscribed on
+      that topic: determine the set of <i>Subscribers</i> on the topic published to. And then forward the information ("event") to all those <i>Subscribers</i>.
    </p>
    <p>
       The act of determining receivers of information (independently of the information submitted) and forwarding
