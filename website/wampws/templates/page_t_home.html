@@ -24,11 +24,49 @@
    </h1>
 
    <div style="clear: both;"></div>
+   <br><br>
+
+   <center style="font-size: 32px; font-weight: 300; color: #fa72c6;">Here is what users do with WAMP:</center>
+   <br>
+
+   <a name="users"></a>
+   <table id="usersbox">
+      <tr>
+         <td>
+            <a href="http://www.sonycsl.co.jp/en/">
+               <img src="{{ url_for('static', filename = 'img/gen/3rd_party_logos/sony.svg') }}" width="180" height="30" border="0" alt="Sony Corporation"></img>
+            </a>
+         </td>
+         <td>
+            <a href="http://record-evolution.com/">
+               <img src="{{ url_for('static', filename = 'img/gen/3rd_party_logos/record-evolution.svg') }}" width="280" height="26" border="0" alt="Record Evolution"></img>
+            </a>
+         </td>
+         <td>
+            <a href="http://www.kitware.com/" style="text-decoration: none;">
+               <p style="font-size: 38px; font-weight: bold; color: #888; margin-top: 0; margin-bottom: 0; text-decoration: none;">Kitware</p>
+            </a>
+         </td>
+      </tr>
+      <tr>
+         <td>
+            <a href="http://www.sonycsl.co.jp/en/">Sony Computer Science Lab</a> is <a href="http://www.w3.org/2014/02/wot/papers/owada.pdf">developing</a> a <b>Home Automation</b> product using WAMP which they <a href="http://www.w3.org/2014/02/wot/slides/owada.pdf">presented</a> at a recent <a href="http://www.w3.org/2014/02/wot/">W3C Workshop on the Web of Things</a>.
+         </td>
+         <td>
+            <a href="">Record-Evolution</a> offers an advanced <b>Data-Warehouse</b> and <b>Business Intelligence</b> tool built on WAMP, <a href="">Crossbar.io</a> (an enterprise WAMP router) and Oracle database.
+         </td>
+         <td>
+            <a href="http://www.kitware.com/">Kitware</a> is offering solutions for 3D scientific visualization and is using WAMP and <a href="http://autobahn.ws/">Autobahn</a> (a WAMP real-time framework) in it's <a href="http://www.paraview.org">ParaView</a> and <a href="http://www.vtk.org">VTK</a> products.
+         </td>
+      </tr>
+   </table>
 
    <div class="ctas">
       <a class="cta_button fasttransition" href="{{ url_for('page_why')}}">Why?</a>
       <a class="cta_button fasttransition" href="{{ url_for('page_implementations')}}">Get started!</a>
-      <a class="cta_button fasttransition" href="https://groups.google.com/forum/#!forum/wampws">Contact us</a>
+      <a class="cta_button fasttransition" href="https://groups.google.com/forum/#!forum/wampws">Mailing list</a>
    </div>
+
+   <div style="clear: both;"></div>
 
 {% endblock%}

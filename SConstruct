@@ -50,11 +50,17 @@ SVG_FILES = [
 
    ## WAMP logos
    ##
-
    'wamp_logo.svg',
    'wamp_logo_tiny.svg',
    'wamp_logo_tiny_white.svg',
-   'li_edge.svg'
+   'li_edge.svg',
+
+   ## Misc
+   ##
+   '3rd_party_logos/sony.svg',
+   '3rd_party_logos/record-evolution.svg',
+   '3rd_party_logos/computer-associates.svg',
+   '3rd_party_logos/tavendo.svg',
 ]
 
 IMG_SOURCE_DIR = "visuals/wamp2"
