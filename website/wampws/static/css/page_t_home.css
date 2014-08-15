@@ -33,7 +33,7 @@
 
 .ctas
 {
-   margin: 60px auto 30px auto;
+   margin: 40px auto 60px auto;
    width: 660px;
 }
 
@@ -68,6 +68,12 @@ a.cta_button:hover {
 #tweetme {
    position: absolute;
    right: 20px;
+}
+
+#usersbox {
+   margin: 2em auto 5em auto;
+   padding-bottom: 1em;
+   border-bottom: 1px solid #ccc;
 }
 
 #usersbox td {

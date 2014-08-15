@@ -61,6 +61,7 @@ SVG_FILES = [
    '3rd_party_logos/record-evolution.svg',
    '3rd_party_logos/computer-associates.svg',
    '3rd_party_logos/tavendo.svg',
+   '3rd_party_logos/kitware.svg',
 ]
 
 IMG_SOURCE_DIR = "visuals/wamp2"
