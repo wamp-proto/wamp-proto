@@ -36,7 +36,8 @@ app.secret_key = str(uuid.uuid4())
 @app.before_request
 def before_request():
    session["debug"] = app.debug
-   session["widgeturl"] = app.widgeturl # TRANSFER
+   session["widgeturl"] = app.widgeturl
+   session["cstatic"] = app.cstatic
 
 @app.after_request
 def after_request(response):
@@ -120,16 +121,21 @@ if __name__ == "__main__":
                       default = 8080,
                       help = "Listening port for Web server (i.e. 8090).")
 
-    # TRANSFER
    parser.add_option ("-w",
                       "--widgeturl",
                       dest = "widgeturl",
                       default = "https://demo.crossbar.io/clandeckwidget",
                       help = "WebClan widget base URL.")
 
+   parser.add_option ("--cstatic",
+                      dest = "cstatic",
+                      default = "//tavendo-common-static.s3-eu-west-1.amazonaws.com",
+                      help = "Tavendo shared static assets base URL")
+
    (options, args) = parser.parse_args ()
 
-   app.widgeturl = options.widgeturl  # TRANSFER
+   app.widgeturl = options.widgeturl
+   app.cstatic = options.cstatic
 
    if options.freeze:
 

@@ -5,7 +5,8 @@
       <meta http-equiv="X-UA-Compatible" content="chrome=1" />
 
       <link rel="shortcut icon" href="{{ url_for('static', filename = 'img/favicon.ico') }}">
-      <link rel="stylesheet" href="{{ url_for('static', filename='css/layout_t.css') }}">
+      <link rel="stylesheet" type="text/css" href="{{ session['cstatic'] }}/css/tavendo.css">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout_t.css') }}">
 
       {% block header %}{% endblock %}
 
@@ -26,7 +27,7 @@
 
       <!-- add community widget -->
       <div id="widgetAnchor"></div>
-      <script src="{{ session["widgeturl"] }}/js/communitywidget.js"></script>
+      <script src="{{ session['widgeturl'] }}/js/communitywidget.js"></script>
       <script>
          clandeck.create_widget({community: "tavendo", topOffset: "80px"});
       </script>
@@ -45,9 +46,10 @@
 
             <div id="logo_wrapper">
                <div id="logo_block">
-                  <div id="logo">
-                     <a href="/"><img src="{{ url_for('static', filename = 'img/gen/wamp_logo.svg') }}" width="624" height="136" border="0" alt="WAMP - The Web Application Messaging Protocol"></img></a>
-                  </div>
+                  <a href="/">
+                     <img id="logo" src="{{ url_for('static', filename = 'img/gen/wamp_logo.svg') }}" width="362" height="80" border="0" alt="WAMP - The Web Application Messaging Protocol"></img>
+                     <span id="logo_line">The Web Application Messaging Protocol</span>
+                  </a>
                   <div id="navbar">
                      <a href="{{ url_for('page_home') }}" {% if session['tab_selected'] == 'home' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Home</a>
                      <a href="{{ url_for('page_why') }}" {% if session['tab_selected'] == 'why' %} class="navitem_selected" {% else %} class="navitem" {% endif %}>Why?</a>
