@@ -14,6 +14,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 **Contents**
 
 1. [Transports](#transports)
+   * [Raw Socket Transport](#raw-socket-transport)
    * [Long-Poll Transport](#long-poll-transport)
    * [Batched Transport](#batched-transport)
    * [Multiplexed Transport](#multiplexed-transport)
@@ -70,6 +71,33 @@ Besides the WebSocket transport, the following WAMP transports are under develop
 Here, the bi-directionality requirement for the transport is implemented by using long-polling for the server-side sending of messages.
 
 Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
+
+### Raw Socket Transport
+
+**WAMP-over-RawSocket** is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.
+
+Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is extremely simple to implement, since there is no need to implement the WebSocket protocol.
+
+WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any realiable streaming underlying transport. When run over TLS on a (misused) standard Web port (443), it is also able to traverse most locked down networking environments (unless Man-in-the-Middle intercepting proxies are in use).
+
+However, WAMP-over-RawSocket does not support compression or automatic negotiation of WAMP serialization (as WAMP-over-WebSocket allows). Perhaps most importantly, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers don't allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser.
+
+#### Serialization
+
+A WAMP message is serialized according to a WAMP serializer (like JSON or MsgPack) which is *preagreed* between the *Client* connecting, and the *Router* the client connects to.
+
+For example, a *Router* might listen for incoming WAMP-over-RawSocket connections using MsgPack on TCP port 9000, while it might listen at the same time for WAMP-over-RawSocket connections using JSON on TCP port 9001.
+
+#### Framing
+
+The serialized bytes for a message to be sent are prefixed each with exactly 4 octets, which MUST contain an unsigned integer in network byte order (big-endian) that provides the length of the serialized message (the number of bytes after serialization) - *excluding* the 4 octets giving the length.
+
+
+	[4 octets: message length, unsigned int, big-endian][.. serialized octets for message ..]
+
+For receiving messages with WAMP-over-RawSocket, a *Peer* will usually read exactly 4 octets from the incoming stream, decode the length, and then receive as many octets as the length was giving.
+
+The received octets for the WAMP message are then unserialized according to the preagreed serializer.
 
 
 ### Long-Poll Transport
