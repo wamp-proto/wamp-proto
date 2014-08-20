@@ -1323,13 +1323,25 @@ WAMP predefines the following URIs.
 
 	wamp.error.not_authorized
 
+*Peer* fails authorization (due to incorrect credentials or some other cause).
+
+	wamp.error.authorization_failed
+
+*Peer* provided incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
+
+	wamp.error.invalid_uri
+
 *Peer* wanted to join a non-existing realm (and the *Router* did not allow to auto-create the realm).
 
 	wamp.error.no_such_realm
 	
-*Peer* wanted to join a non-valid realm (URI validation fails).
+*Peer* provided incorrect role(s) during handshake
 
-	wamp.error.invalid_realm
+	wamp.error.no_such_role
+
+*Router* do not allow disclosing ID of caller/publisher
+
+	wamp.error.disclose_me.not_allowed
 
 The *Peer* is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
 
@@ -1363,14 +1375,13 @@ A call failed, since the given argument types or values are not acceptable to th
 
 	wamp.error.invalid_argument
 
-A publish failed, since the given topic is not acceptable to the *Broker*.
-
-	wamp.error.invalid_topic
-
 A procedure could not be registered, since a procedure with the given URI is already registered (and the *Dealer* is not able to set up a distributed registration).
 
 	wamp.error.procedure_already_exists
 
+*Dealer* or *Calee* canceled RPC due to some reason
+
+	wamp.error.canceled
 
 ### Ordering Guarantees
 
