@@ -1575,6 +1575,26 @@ A peer that acts as a *Dealer* SHOULD announce support for the reflection API by
 
 ## Appendix
 
+### Predefined URIs
+
+WAMP predefines the following URIs in the *advanced profile*.
+
+#### Predefined Errors
+
+*Dealer* or *Callee* canceled a call previously issued
+
+	wamp.error.canceled
+
+A *Peer* requested an interaction with an option that was disallowed by the *Router*
+
+	wamp.error.option_not_allowed
+
+A *Dealer* could not perform a call, since a procedure with the given URI is registered, but *Callee Black- and Whitelisting* and/or *Caller Exclusion* lead to the exclusion of (any) *Callee* providing the procedure.
+
+	wamp.error.no_eligible_callee
+
+
+
 ### Authentication
 
 #### Example 1

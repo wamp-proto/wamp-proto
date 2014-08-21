@@ -1315,33 +1315,37 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 ### Predefined URIs
 
-WAMP predefines the following URIs.
+WAMP predefines the following URIs in the *basic profile*.
 
 #### Predefined Errors
 
-*Peer* is not authorized to access the given resource. This might be triggered by a session trying to join a realm, a publish, subscribe, register or call.
+**Interactions**
 
-	wamp.error.not_authorized
-
-*Peer* fails authorization (due to incorrect credentials or some other cause).
-
-	wamp.error.authorization_failed
-
-*Peer* provided incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
+*Peer* provided an incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
 
 	wamp.error.invalid_uri
 
-*Peer* wanted to join a non-existing realm (and the *Router* did not allow to auto-create the realm).
+A *Dealer* could not perform a call, since no procedure is currently registered under the given URI.
 
-	wamp.error.no_such_realm
-	
-*Peer* provided incorrect role(s) during handshake
+	wamp.error.no_such_procedure
 
-	wamp.error.no_such_role
+A procedure could not be registered, since a procedure with the given URI is already registered.
 
-*Router* do not allow disclosing ID of caller/publisher
+	wamp.error.procedure_already_exists
 
-	wamp.error.disclose_me.not_allowed
+A *Dealer* could not perform an unregister, since the given registration is not active.
+
+	wamp.error.no_such_registration
+
+A *Broker* could not perform an unsubscribe, since the given subscription is not active.
+
+	wamp.error.no_such_subscription
+
+A call failed, since the given argument types or values are not acceptable to the called procedure - in which case the *Callee* may throw this error. Or a Router performing *payload validation* checked the payload (`args` / `kwargs`) of a call, call result, call error or publish, and the payload did not conform - in which case the *Router* may throw this error.
+
+	wamp.error.invalid_argument
+
+**Session Close**
 
 The *Peer* is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
 
@@ -1355,33 +1359,24 @@ A *Peer* acknowledges ending of a session - used as a `GOOBYE` reply reason.
 
 	wamp.error.goodbye_and_out
 
-A *Dealer* could not perform a call, since the procedure called does not exist.
+**Authorization**
 
-	wamp.error.no_such_procedure
+A join, call, register, publish or subscribe failed, since the *Peer* is not authorized to perform the operation.
 
-A *Dealer* could not perform a call, since some advanced options values makes it imposible. (e.g. exclude list holds a callee id).
+	wamp.error.not_authorized
 
-	wamp.error.no_suitable_callee
+A *Dealer* or *Broker* could not determine if the *Peer* is authorized to perform a join, call, register, publish or subscribe, since the authorization operation *itself* failed. E.g. a custom authorizer did run into an error.
 
-A *Broker* could not perform a unsubscribe, since the given subscription is not active.
+	wamp.error.authorization_failed
 
-	wamp.error.no_such_subscription
+*Peer* wanted to join a non-existing realm (and the *Router* did not allow to auto-create the realm).
 
-A *Dealer* could not perform a unregister, since the given registration is not active.
+	wamp.error.no_such_realm
+	
+A *Peer* was to be authenticated under a Role that does not (or no longer) exists on the Router. For example, the *Peer* was successfully authenticated, but the Role configured does not exists - hence there is some misconfiguration in the Router.
 
-	wamp.error.no_such_registration
+	wamp.error.no_such_role
 
-A call failed, since the given argument types or values are not acceptable to the called procedure.
-
-	wamp.error.invalid_argument
-
-A procedure could not be registered, since a procedure with the given URI is already registered (and the *Dealer* is not able to set up a distributed registration).
-
-	wamp.error.procedure_already_exists
-
-*Dealer* or *Calee* canceled RPC due to some reason
-
-	wamp.error.canceled
 
 ### Ordering Guarantees
 
