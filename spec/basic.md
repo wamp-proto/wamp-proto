@@ -73,11 +73,8 @@ A *Subscriber* subscribes to topics under application defined, unique names ("To
 A *Realm* is a WAMP routing and administrative domain (optionally) protected by authentication and authorization.
 A *Session* is a transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
 
-<center>
-<p style="width: 560px;">
-![](figure/sessions2.png)
-</a>
-</center>
+![Realms, Sessions and Transports scheme](figure/sessions2.png "Realms, Sessions and Transports overview")
+
 
 A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions.
 
@@ -170,7 +167,7 @@ WAMP is designed for application code to run inside *Clients*, i.e. *Peers* of t
 
 This allows to transparently switch *Broker* and *Dealer* implementations without affecting the application and to distribute and deploy application components flexibly:
 
-![alt text](figure/appcode.png "Application Code")
+![WAMP Client-Server Architecture](figure/appcode.png "Application Code")
 
 > Note that a **program** that implements e.g. the *Dealer* role might at the same time implement e.g. a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
 >
@@ -597,7 +594,7 @@ The `HELLO` message MUST be the very first message sent by the *Client* after th
 
 In the WAMP Basic Profile without session authentication the *Router* will reply with a `WELCOME` or `ABORT` message.
 
-![alt text](figure/hello.png "WAMP Session success")
+![WAMP Session establishment picture](figure/hello.png "WAMP Session success")
 
 A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` message to the *Client*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message (see below).
 
@@ -673,7 +670,7 @@ The `<role>|dict` is a dictionary describing **features** supported by the peer 
 
 Both the *Router* and the *Client* may abort the opening of a WAMP session
 
-![alt text](figure/hello_denied.png "WAMP Session denied")
+![WAMP Session aborting picture](figure/hello_denied.png "WAMP Session denied")
 
 by sending an `ABORT` message.
 
@@ -693,7 +690,7 @@ No response to an `ABORT` message is expected.
 
 A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Client* and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a `GOODBYE` message sent by one *Peer* and a `GOODBYE` message sent from the other *Peer* in response.
 
-![alt text](figure/goodbye.png "WAMP Session denied")
+![WAMP Session denied picture](figure/goodbye.png "WAMP Session denied")
 
 
    	[GOODBYE, Details|dict, Reason|uri]
@@ -744,7 +741,7 @@ The message flow between *Clients* implementing the role of *Subscriber* and *Ro
  4. `UNSUBSCRIBED`
  5. `ERROR`
 
-![alt text](figure/pubsub_subscribe1.png "PubSub: Subscribing and Unsubscribing")
+![WAMP Publishing and Subscribing picture](figure/pubsub_subscribe1.png "PubSub: Subscribing and Unsubscribing")
 
 A *Subscriber* may subscribe to zero, one or more topics, and a *Publisher* publishes to topics without knowledge of subscribers.
 
@@ -859,7 +856,7 @@ The message flow between *Publishers*, a *Broker* and *Subscribers* for publishi
  3. `EVENT`
  4. `ERROR`
 
-![alt text](figure/pubsub_publish1.png "PubSub: Publishing and Receiving")
+![WAMP Publishing event picture](figure/pubsub_publish1.png "PubSub: Publishing and Receiving")
 
 #### PUBLISH
 
@@ -990,7 +987,7 @@ The message flow between *Callees* and a *Dealer* for registering and unregister
  5. `UNREGISTERED`
  6. `ERROR`
 
-![alt text](figure/rpc_register1.png "RPC: Registering and Unregistering")
+![WAMP RPC registering picture](figure/rpc_register1.png "RPC: Registering and Unregistering")
 
 #### REGISTER
 
@@ -1091,7 +1088,7 @@ The message flow between *Callers*, a *Dealer* and *Callees* for calling procedu
  4. `YIELD`
  5. `ERROR`
 
-![alt text](figure/rpc_call1.png "RPC: Calling")
+![WAMP RPC Calling picture](figure/rpc_call1.png "RPC: Calling")
 
 The execution of remote procedure calls is asynchronous, and there may be more than one call outstanding. A call is called outstanding (from the point of view of the *Caller*), when a (final) result or error has not yet been received by the *Caller*.
 
@@ -1326,9 +1323,25 @@ WAMP predefines the following URIs.
 
 	wamp.error.not_authorized
 
+*Peer* fails authorization (due to incorrect credentials or some other cause).
+
+	wamp.error.authorization_failed
+
+*Peer* provided incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
+
+	wamp.error.invalid_uri
+
 *Peer* wanted to join a non-existing realm (and the *Router* did not allow to auto-create the realm).
 
 	wamp.error.no_such_realm
+	
+*Peer* provided incorrect role(s) during handshake
+
+	wamp.error.no_such_role
+
+*Router* do not allow disclosing ID of caller/publisher
+
+	wamp.error.disclose_me.not_allowed
 
 The *Peer* is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
 
@@ -1346,6 +1359,10 @@ A *Dealer* could not perform a call, since the procedure called does not exist.
 
 	wamp.error.no_such_procedure
 
+A *Dealer* could not perform a call, since some advanced options values makes it imposible. (e.g. exclude list holds a callee id).
+
+	wamp.error.no_suitable_callee
+
 A *Broker* could not perform a unsubscribe, since the given subscription is not active.
 
 	wamp.error.no_such_subscription
@@ -1358,14 +1375,13 @@ A call failed, since the given argument types or values are not acceptable to th
 
 	wamp.error.invalid_argument
 
-A publish failed, since the given topic is not acceptable to the *Broker*.
-
-	wamp.error.invalid_topic
-
 A procedure could not be registered, since a procedure with the given URI is already registered (and the *Dealer* is not able to set up a distributed registration).
 
 	wamp.error.procedure_already_exists
 
+*Dealer* or *Calee* canceled RPC due to some reason
+
+	wamp.error.canceled
 
 ### Ordering Guarantees
 
