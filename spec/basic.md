@@ -18,6 +18,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [Realms, Sessions and Transports](#realms-sessions-and-transports)
     * [Peers and Roles](#peers-and-roles)
     * [Application Code](#application-code)
+    * [Router Implementation Specifics](#router-implementation-specifics)
 2. [Building Blocks](#building-blocks)
     * [Identifiers](#identifiers)
     * [Serializations](#serializations)
@@ -171,6 +172,8 @@ This allows to transparently switch *Broker* and *Dealer* implementations withou
 
 > Note that a **program** that implements e.g. the *Dealer* role might at the same time implement e.g. a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
 >
+
+### Router Implementation Specifics
 
 Specific WAMP *Broker* and *Dealer* implementations might differ in aspects such as:
 
