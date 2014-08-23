@@ -49,7 +49,9 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
     * [One Time Token Authentication](#one-time-token-authentication)
 7. [Reflection](#reflection)
-
+8. [Appendix](#appendix)
+    * [Predefined URIs](#predefined-uris) 
+    * [Authentication examples](#authentication-examples)
 
 ## Preface
 
@@ -535,7 +537,7 @@ Note that a *Broker* may deny a *Publisher's* request to disclose its identity:
 
 *Example*
 
-    [4, 239714735, {}, "wamp.error.disclose_me.not_allowed"]
+    [4, 239714735, {}, "wamp.error.option_disallowed.disclose_me"]
 
 A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is set up to do so.
 
@@ -1577,7 +1579,7 @@ A peer that acts as a *Dealer* SHOULD announce support for the reflection API by
 
 ### Predefined URIs
 
-WAMP predefines the following URIs in the *advanced profile*.
+WAMP predefines the following URIs in the *advanced profile*. For URIs, used in *basic profile*, please, see appendix in basic profile specification.
 
 #### Predefined Errors
 
@@ -1593,9 +1595,11 @@ A *Dealer* could not perform a call, since a procedure with the given URI is reg
 
 	wamp.error.no_eligible_callee
 
+A *Router* rejected client request to disclose its identity
 
+	wamp.error.option_disallowed.disclose_me
 
-### Authentication
+### Authentication examples
 
 #### Example 1
 
