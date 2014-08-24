@@ -126,8 +126,8 @@ After the transport and a session have been established, any application compone
 The Remote Procedure Call messaging pattern involves peers of three different roles:
 
 * *Callee (Client)*
-2. *Caller (Client)*
-3. *Dealer (Router)*
+* *Caller (Client)*
+* *Dealer (Router)*
 
 A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
 The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*.
@@ -141,8 +141,8 @@ The *Caller* and *Callee* will usually run application code, while the *Dealer* 
 The Publish & Subscribe messaging pattern involves peers of three different roles:
 
 * *Subscriber (Client)*
-2. *Publisher (Client)*
-3. *Broker (Router)*
+* *Publisher (Client)*
+* *Broker (Router)*
 
 A *Publishers* publishes events to topics by providing the topic URI and any payload for the event. *Subscribers* of the topic will receive the event together with the event payload.
 
