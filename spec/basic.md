@@ -40,6 +40,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 10. [Appendix](#appendix)
     * [Predefined URIs](#predefined-uris) 
     * [Ordering Guarantees](#ordering-guarantees)
+    * [Security Model](#security-model)
     * [Binary conversion of JSON Strings](#binary-conversion-of-json-strings)
     * [References](#references)
 
@@ -1478,6 +1479,62 @@ Further, if *Callee A* registers for **Procedure 1**, the `REGISTERED` message w
 
 > In general, `REGISTER` is asynchronous, and there is no guarantee on order of return for multiple `REGISTERs`. The first `REGISTER` might require the *Dealer* to do a time-consuming lookup in some database, whereas the second might be permissible immediately.
 >
+
+### Security Model
+
+The security model of WAMP *basic profile* is discussed shortly in the following. For extensions to this security model, please see the [Advanced Profile](advanced.md).
+
+
+#### Transport Encryption and Integrity
+
+WAMP transports may provide (optional) transport-level encryption of integrity verification. If so, encryption and integrity is point-to-point: between a *Client* and the *Router* it is connected to.
+
+Transport-level encryption and integrity is soley at the transport-level and transparent to WAMP. WAMP itself deliberately does not specify any kind of transport-level encryption.
+
+Implementations that offer TCP based transport such as WAMP-over-WebSocket or WAMP-over-RawSocket (see [Advanced Profile](advanced.md)) **SHOULD implement [Transport Layer Security](http://en.wikipedia.org/wiki/Transport_Layer_Security)**.
+
+**WAMP deployments are encouraged to stick to a TLS-only policy with the TLS code and setup being hardened.**  
+
+
+#### Router Authentication
+
+To authenticate *Routers* to *Clients*, deployments MUST run TLS and *Clients* MUST verify the *Router* server certificate presented. WAMP itself does not provide mechanisms to authenticate a *Router* (only a *Client*).
+
+The verification of the *Router* server certificate can happen
+
+1. against a certificate trust database that comes with the *Clients* operating system
+2. against an issuing certificate/key hard-wired into the *Client*
+3. by using new mechanisms like DNS/DANE/TLSA 
+
+
+#### Client Authentication
+
+To authenticate a *Client* to a *Router*, the WAMP [Advanced Profile](advanced.md) specifies different mechanisms at the WAMP level. 
+
+Further, when running over TLS, a *Router* may authenticate a *Client* already at the transport level by doing a *client certificate based authentication*.
+
+These mechanisms and approaches are described in the WAMP Advanced Profile.
+
+
+#### Routers are trusted
+
+*Routers* (in the WAMP Basic Profile) are *trusted* by *Clients*.
+
+In particular, *Routers* can read (and modify) any application payload transmitted in events, calls, call results and call errors (the `Arguments` or `ArgumentsKw` message fields).
+
+Hence, *Routers* do not provide confidentiality with respect to application payload, and also do not provide authenticity or integrity of application payloads that could be verified by a receiving *Client*.
+
+While *Routers* in principle do not need to read the application payloads to perform routing, there are two situation where they logically must do so:
+
+1. automatic conversion between different serialization formats
+2. validation of application payloads according to schemata (see the WAMP Advanced Profile)
+
+Further, *Routers* are trusted to **actually perform** routing as specified. E.g. a *Client* that publishes an event has to trust a *Router* that the event is actually dispatched to all (eligible) *Subscribers* by the *Router*.
+
+A rogue *Router* might deny normal routing operation without a *Client* taking notice.
+
+
+ 
 
 ### Binary conversion of JSON Strings
 
