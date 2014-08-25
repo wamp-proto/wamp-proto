@@ -604,6 +604,36 @@ The following table lists the message type code for **all 25 messages defined in
 
 WAMP uses type codes from the core range [0, 255]. Implementations MAY define and use implementation specific messages with message type codes from the extension message range [256, 1023]. For example, a router MAY implement router-to-router communication by using extension messages.
 
+### Empty Arguments and Keyword Arguments
+
+Implementations SHOULD avoid sending empty `Arguments` lists.
+
+E.g. a `CALL` message
+
+    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+
+where `Arguments == []` SHOULD be avoided, and instead
+
+    [CALL, Request|id, Options|dict, Procedure|uri]
+
+SHOULD be sent.
+
+Implementations SHOULD avoid sending empty `ArgumentsKw` dicts.
+
+E.g. a `CALL` message
+
+    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
+
+where `ArgumentsKw == {}` SHOULD be avoid, and instead
+
+    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+
+SHOULD be sent when `Arguments` is non-empty and
+
+    [CALL, Request|id, Options|dict, Procedure|uri]
+
+SHOULD be sent when `Arguments` is empty.
+
 
 ## Sessions
 
