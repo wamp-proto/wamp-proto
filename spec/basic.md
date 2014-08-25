@@ -1495,6 +1495,7 @@ Implementations that offer TCP based transport such as WAMP-over-WebSocket or WA
 
 **WAMP deployments are encouraged to stick to a TLS-only policy with the TLS code and setup being hardened.**  
 
+Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the integrity of the data transmitted is implicit (the OS kernel is trusted), and the privacy of the data transmitted can be assured using filesystem permissions (no one can tap a Unix domain socket without appropriate permissions or being root).
 
 #### Router Authentication
 
@@ -1505,6 +1506,8 @@ The verification of the *Router* server certificate can happen
 1. against a certificate trust database that comes with the *Clients* operating system
 2. against an issuing certificate/key hard-wired into the *Client*
 3. by using new mechanisms like DNS/DANE/TLSA 
+
+Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the filesystem permissions can be used to create implicit trust. E.g. if only the OS user under which the *Router* runs has the permission to create a Unix domain socket under a specific path, *Clients* connecting to that path can trust in the router authenticity.
 
 
 #### Client Authentication
