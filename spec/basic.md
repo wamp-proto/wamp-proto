@@ -23,11 +23,12 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [Identifiers](#identifiers)
     * [Serializations](#serializations)
     * [Transports](#transports)
-5. [Messages](#mandatory-messages)
+5. [Messages](#messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
     * [Extension Messages](#extension-messages)
-6. [Sessions](#session-management)
+    * [Empty Arguments and Keyword Arguments](#empty-arguments-and-keyword-arguments)
+6. [Sessions](#sessions)
     * [Session Establishment](#session-establishment)
     * [Session Closing](#session-closing)
 7. [Publish & Subscribe](#publish--subscribe)
@@ -39,7 +40,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 10. [Appendix](#appendix)
     * [Predefined URIs](#predefined-uris) 
     * [Ordering Guarantees](#ordering-guarantees)
-    * [Byte Array Conversion](#byte-array-conversion)
+    * [Binary conversion of JSON Strings](#binary-conversion-of-json-strings)
     * [References](#references)
 
 
