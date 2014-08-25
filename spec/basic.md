@@ -2,10 +2,9 @@
 
 This document specifies the *Basic Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **RC2**, 2014/02/26
+Document Revision: **RC3**, 2014/08/25
 
-> For the *Advanced Profile*, please see [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md). For the (deprecated) WAMP version 1 specification, please see [here](http://wamp.ws/spec/wamp1/).
-> 
+> For the *Advanced Profile*, please see [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md).
 
 Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
 
@@ -49,7 +48,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 
 This is *part 1* of the WAMP specification. It introduces the concepts and terminology, and describes the *mandatory* features and aspects of the protocol and its usage which together constitute the **WAMP Basic Profile**.
 
-The information in this part is considered self-contained and sufficient for implementors of WAMP Basic Profile compliant and interoperable implementations.
+The information in this part is considered self-contained and sufficient for implementers of WAMP Basic Profile compliant and interoperable implementations.
 
 For *optional* features and aspects of the protocol that are part of the **WAMP Advanced Profile**, please see
  [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md)
@@ -57,7 +56,7 @@ For *optional* features and aspects of the protocol that are part of the **WAMP 
 
 ## Introduction
 
-WAMP ("The Web Application Messaging Protocol") is a communication protocol that enables distributed application archictectures, with application functionality spread across nodes and all application communication decoupled by messages routed via dedicated WAMP routers.
+WAMP ("The Web Application Messaging Protocol") is a communication protocol that enables distributed application architectures, with application functionality spread across nodes and all application communication decoupled by messages routed via dedicated WAMP routers.
 
 At its core, WAMP provides applications with **two asynchronous messaging patterns within one unified protocol**:
 
@@ -68,7 +67,7 @@ At its core, WAMP provides applications with **two asynchronous messaging patter
 A *Callee* registers procedures with application code to call remotely from *Callers* under application defined, unique names ("Procedure URIs"). A *Dealer* performs the routing of calls and results between *Callers* and *Callees*.
 
 *Publish & Subscribe (PubSub)* is a messaging pattern involving peers of three roles: *Publisher*, *Broker* and *Subscriber*.
-A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* performes the routing of events from *Publishers* to *Subscribers*.
+A *Subscriber* subscribes to topics under application defined, unique names ("Topic URIs") to receive events published by *Publishers* to such topics. A *Broker* performs the routing of events from *Publishers* to *Subscribers*.
 
 
 ### Realms, Sessions and Transports
@@ -168,7 +167,7 @@ WAMP is designed for application code to run inside *Clients*, i.e. *Peers* of t
 
 *Routers*, i.e. *Peers* of the roles *Brokers* and *Dealers* are responsible for **generic call and event routing** and do not run application code.
 
-This allows to transparently switch *Broker* and *Dealer* implementations without affecting the application and to distribute and deploy application components flexibly:
+This allows to transparently exchange *Broker* and *Dealer* implementations without affecting the application and to distribute and deploy application components flexibly:
 
 ![WAMP Client-Server Architecture](figure/appcode.png "Application Code")
 
@@ -228,7 +227,7 @@ To avoid resource naming conflicts, we follow the package naming convention from
 
 **Relaxed/Loose URIs**
 
-URI components (the parts between between `.`) MUST NOT contain `.`, `#` or whitespace characters and MUST NOT be empty (zero-length strings).
+URI components (the parts between two `.`s, the head part up to the first `.`, the tail part after the last `.`) MUST NOT contain a `.`, `#` or whitespace characters and MUST NOT be empty (zero-length strings).
 
 > We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions and registrations. More about pattern-based subscriptions can be found in the specification for the [*Advanced Profile*](advanced.md). We cannot allow `#`, which is reserved for internal use by *Dealers* and *Brokers*.
 
@@ -248,7 +247,7 @@ pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
 
 **Strict URIs**
 
-While above rules are *mandatory*, WAMP *recommends* to follow a stricter URI rule: URI components SHOULD only contain letters, digits and `_`.
+While above rules are *mandatory*, WAMP *recommends* following a stricter URI rule: URI components SHOULD only contain letters, digits and `_`.
 
 As an example, the following regular expression could be used in Python to check URIs according to above rules:
 
@@ -264,7 +263,7 @@ When empty URI components are allowed (which *only* is the case in specific mess
 pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
 ```
 
-> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo URIs starting with a digit and language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language enviroment in a completely transparent way.
+> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo URIs starting with a digit and language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language environment in a completely transparent way.
 
 **Reserved URIs**
 
@@ -307,7 +306,7 @@ A message *serialization* format is assumed that (at least) provides the followi
   * `list`
   * `dict` (with string keys)
 
-> WAMP *itself* only uses the above types, e.g. it does not use the JSON types `number` (non-integer) and `null`. The *application payloads* transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
+> WAMP *itself* only uses the above types, e.g. it does not use the JSON data types `number` (non-integer) and `null`. The *application payloads* transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
 >
 
 WAMPv2 defines two bindings for message *serialization*:
@@ -367,13 +366,13 @@ The following sequence diagram shows the relation between the *lifetime* of a We
 
 WAMP v1 only supports JSON over WebSocket as a transport, and uses the WebSocket subprotocol identifier `wamp`. Since WAMP v2 uses different WebSocket subprotocol identifiers, a WAMP implementation may support both protocol versions at the same time.
 
-A client that supports both WAMP versions can connect to a server requesting WebSocket subprotocols `["wamp.2.json", "wamp"]`. If the server only speaks WAMP v1, it'll answer chosing `wamp` as subprotocol. If the server speaks WAMP v2, it'll answer chosing `wamp.2.json`.
+A client that supports both WAMP versions can connect to a server requesting WebSocket subprotocols `["wamp.2.json", "wamp"]`. If the server only speaks WAMP v1, it'll answer choosing `wamp` as subprotocol. If the server speaks WAMP v2, it'll answer choosing `wamp.2.json`.
 
 The client can access the negotiated WebSocket subprotocol (and hence WAMP version) right after the WebSocket connection has been established, and before even the first message is received (or sent).
 
 Since WAMP v1 has no notion of *Realms*, all WAMP v1 clients connected can be seens as being attached to an implicit "WAMP1" realm.
 
-> Implementors are discouraged from implementing WAMP v1. This old protocol version should be considered deprecated.
+> Implementers are discouraged from implementing WAMP v1. This old protocol version should be considered deprecated.
 > 
 
 ## Messages
@@ -427,7 +426,7 @@ All other messages are mandatory *per role*, i.e. in an implementation which onl
 
 #### HELLO
 
-Sent by a *Client* to initate opening of a WAMP session to a *Router* attaching to a *Realm*.
+Sent by a *Client* to initiate opening of a WAMP session to a *Router* attaching to a *Realm*.
 
     [HELLO, Realm|uri, Details|dict]
 
@@ -445,7 +444,7 @@ Sent by a *Peer* to abort the opening of a WAMP session. No response is expected
 
 #### GOODBYE
 
-Sent by a *Peer* to close a previously opened WAMP session. Must be echoed by the receiving *Peer*.
+Sent by a *Peer* to close a previously opened WAMP session. Must be echo'ed by the receiving *Peer*.
 
     [GOODBYE, Details|dict, Reason|uri]
 
@@ -685,7 +684,7 @@ A *Client* can support any combination of above roles but must support at least 
 
 The `<role>|dict` is a dictionary describing **features** supported by the peer for that role.
 
-With WAMP Basic Profile implementations, the *Features* dictionaries per *Role* will be empty. With WAMP Advanced Profile implementations, the *Features* dictionaries will list the (advanved) features supported per *Role*.
+With WAMP Basic Profile implementations, the *Features* dictionaries per *Role* will be empty. With WAMP Advanced Profile implementations, the *Features* dictionaries will list the (advanced) features supported per *Role*.
 
 *Example: A Client that implements the Publisher and Subscriber roles of the WAMP Basic Profile.*
 
@@ -708,12 +707,12 @@ A *Router* completes the opening of a WAMP session by sending a `WELCOME` reply 
 
 In the WAMP Basic Profile without session authentication, a `WELCOME` message is the first message sent by the *Router*, directly in response to a `HELLO` message received from the *Client*.
 
-> Note. The behaviour if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
+> Note. The behavior if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
 >
 
 ##### Router: Role and Feature Announcement
 
-Similar to `HELLO` announcing *Roles* and *Features* supported by a *Client* to a *Router*, a *Router* announces it's support to the *Client*  in an initial `WELCOME` message.
+Similar to `HELLO` announcing *Roles* and *Features* supported by a *Client* to a *Router*, a *Router* announces its support to the *Client*  in an initial `WELCOME` message.
 
 A *Router* must announce the **roles** it supports via `Welcome.Details.roles|dict`, with a key mapping to a `Welcome.Details.roles.<role>|dict` where `<role>` can be:
 
@@ -945,7 +944,7 @@ where
  * `Options` is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.
  * `Topic` is the topic published to.
  * `Arguments` is a list of application-level event payload elements. The list may be of zero length.
- * `ArgumentsKw` is a an optional dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
+ * `ArgumentsKw` is an optional dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
 
 If the *Broker* is able to fulfill and allowing the publication, the *Broker* will send the event to all current *Subscribers* of the topic of the published event.
 
@@ -1089,7 +1088,7 @@ where
 
 #### Register ERROR
 
-When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
+When the request for registration cannot be fulfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
 
     [ERROR, REGISTER, REGISTER.Request|id, Details|dict, Error|uri]
 
@@ -1200,7 +1199,7 @@ where
 
 #### INVOCATION
 
-If the *Dealer* is able to fullfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
+If the *Dealer* is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
 
@@ -1495,7 +1494,7 @@ Implementations that offer TCP based transport such as WAMP-over-WebSocket or WA
 
 **WAMP deployments are encouraged to stick to a TLS-only policy with the TLS code and setup being hardened.**  
 
-Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the integrity of the data transmitted is implicit (the OS kernel is trusted), and the privacy of the data transmitted can be assured using filesystem permissions (no one can tap a Unix domain socket without appropriate permissions or being root).
+Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the integrity of the data transmitted is implicit (the OS kernel is trusted), and the privacy of the data transmitted can be assured using file system permissions (no one can tap a Unix domain socket without appropriate permissions or being root).
 
 #### Router Authentication
 
@@ -1507,7 +1506,7 @@ The verification of the *Router* server certificate can happen
 2. against an issuing certificate/key hard-wired into the *Client*
 3. by using new mechanisms like [DNSSEC](http://en.wikipedia.org/wiki/Dnssec)/[DANE](http://en.wikipedia.org/wiki/DNS-based_Authentication_of_Named_Entities)/[TLSA](http://en.wikipedia.org/wiki/TLSA_record#TLSA) 
 
-Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the filesystem permissions can be used to create implicit trust. E.g. if only the OS user under which the *Router* runs has the permission to create a Unix domain socket under a specific path, *Clients* connecting to that path can trust in the router authenticity.
+Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the file system permissions can be used to create implicit trust. E.g. if only the OS user under which the *Router* runs has the permission to create a Unix domain socket under a specific path, *Clients* connecting to that path can trust in the router authenticity.
 
 
 #### Client Authentication
@@ -1527,7 +1526,7 @@ In particular, *Routers* can read (and modify) any application payload transmitt
 
 Hence, *Routers* do not provide confidentiality with respect to application payload, and also do not provide authenticity or integrity of application payloads that could be verified by a receiving *Client*.
 
-While *Routers* in principle do not need to read the application payloads to perform routing, there are two situation where they logically must do so:
+While *Routers* in principle do not need to read the application payloads to perform routing, there are two situations where they logically must do so:
 
 1. automatic conversion between different serialization formats
 2. validation of application payloads according to schemata (see the WAMP Advanced Profile)
