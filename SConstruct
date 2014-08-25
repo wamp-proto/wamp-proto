@@ -57,7 +57,6 @@ SVG_FILES = [
 
    ## Misc
    ##
-   '3rd_party_logos/sony.svg',
    '3rd_party_logos/record-evolution.svg',
    '3rd_party_logos/computer-associates.svg',
    '3rd_party_logos/tavendo.svg',
