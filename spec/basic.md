@@ -207,7 +207,9 @@ WAMP needs to identify the following *persistent* resources:
   2. Procedures
   3. Errors
 
-These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MUST BE UTF-8 encoded Unicode strings.
+These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MUST be Unicode strings. 
+
+> Note: When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 encoding.
 
 *Examples*
 
@@ -222,27 +224,47 @@ The URIs are understood to form a single, global, hierarchical namespace for WAM
 
 To avoid resource naming conflicts, we follow the package naming convention from Java where URIs SHOULD begin with (reversed) domain names owned by the organization defining the URI.
 
+**Relaxed/Loose URIs**
+
 URI components (the parts between between `.`) MUST NOT contain `.`, `#` or whitespace characters and MUST NOT be empty (zero-length strings).
 
-> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions. More about pattern-based subscriptions can be found in the specification for the [*Advanced Profile*](advanced.md). We cannot allow `#`, which is reserved for internal use by *Dealers* and *Brokers*.
+> We cannot allow `.` in component strings, since `.` is used to separate components, and WAMP associates semantics with resource hierarchies such as in pattern-based subscriptions. We cannot allow empty (zero-length) strings as components, since this has special meaning to denote wildcard components with pattern-based subscriptions and registrations. More about pattern-based subscriptions can be found in the specification for the [*Advanced Profile*](advanced.md). We cannot allow `#`, which is reserved for internal use by *Dealers* and *Brokers*.
 
-As an example, the following regular pattern code could be used in Python to check URIs according to above rules:
+As an example, the following regular expression could be used in Python to check URIs according to above rules:
 
 ```python
-## loose URI check
+## loose URI check disallowing empty URI components
+pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
+```
+
+When empty URI components are allowed (which *only* is the case in specific messages from the [*Advanced Profile*](advanced.md)), you can use this regular expression:
+
+```python
+## loose URI check allowing empty URI components
 pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
 ```
 
-While above rules are *mandatory*, WAMP *recommends* to follow a stricter URI rule: URI components SHOULD match the regular expression `[a-z0-9_]{2,}` (letters, digits and `_` with length at least 2).
+**Strict URIs**
+
+While above rules are *mandatory*, WAMP *recommends* to follow a stricter URI rule: URI components SHOULD only contain letters, digits and `_`.
+
+As an example, the following regular expression could be used in Python to check URIs according to above rules:
+
+```python
+## strict URI check disallowing empty URI components
+pattern = re.compile(r"^([0-9a-z_]+\.)*([0-9a-z_]+)$")
+```
+
+When empty URI components are allowed (which *only* is the case in specific messages from the [*Advanced Profile*](advanced.md)), you can use this regular expression:
+
+```python
+## strict URI check allowing empty URI components
+pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
+```
 
 > Following the suggested regular expression will make URI components valid identifiers in most languages (modulo URIs starting with a digit and language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language enviroment in a completely transparent way.
 
-As an example, the following regular pattern code could be used in Python to check URIs according to above rules:
-
-```python
-## strict URI check
-pattern = re.compile(r"^(([0-9a-z_]{2,}\.)|\.)*([0-9a-z_]{2,})?$")
-```
+**Reserved URIs**
 
 Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
 
