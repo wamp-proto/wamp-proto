@@ -309,7 +309,7 @@ A message *serialization* format is assumed that (at least) provides the followi
 > WAMP *itself* only uses the above types, e.g. it does not use the JSON data types `number` (non-integer) and `null`. The *application payloads* transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
 >
 
-WAMPv2 defines two bindings for message *serialization*:
+WAMP defines two bindings for message *serialization*:
 
  1. [JSON](http://www.json.org/)
  2. [MsgPack](http://msgpack.org/)
@@ -341,13 +341,13 @@ WAMP assumes a *transport* with the following characteristics:
 
 #### WebSocket Transport
 
-The default transport binding for WAMPv2 is [WebSocket](http://tools.ietf.org/html/rfc6455).
+The default transport binding for WAMP is [WebSocket](http://tools.ietf.org/html/rfc6455).
 
 With WebSocket in **unbatched mode**, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame).
 
 The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between *Peers* using the WebSocket subprotocol negotiation mechanism.
 
-WAMPv2 uses the following WebSocket subprotocol identifiers for unbatched modes:
+WAMP uses the following WebSocket subprotocol identifiers for unbatched modes:
 
  * `wamp.2.json`
  * `wamp.2.msgpack`
@@ -362,18 +362,6 @@ The following sequence diagram shows the relation between the *lifetime* of a We
 
 ![alt text](figure/sessions4.png "Transport and Session Lifetime")
 
-#### Supporting WAMP v1 and v2
-
-WAMP v1 only supports JSON over WebSocket as a transport, and uses the WebSocket subprotocol identifier `wamp`. Since WAMP v2 uses different WebSocket subprotocol identifiers, a WAMP implementation may support both protocol versions at the same time.
-
-A client that supports both WAMP versions can connect to a server requesting WebSocket subprotocols `["wamp.2.json", "wamp"]`. If the server only speaks WAMP v1, it'll answer choosing `wamp` as subprotocol. If the server speaks WAMP v2, it'll answer choosing `wamp.2.json`.
-
-The client can access the negotiated WebSocket subprotocol (and hence WAMP version) right after the WebSocket connection has been established, and before even the first message is received (or sent).
-
-Since WAMP v1 has no notion of *Realms*, all WAMP v1 clients connected can be seens as being attached to an implicit "WAMP1" realm.
-
-> Implementers are discouraged from implementing WAMP v1. This old protocol version should be considered deprecated.
-> 
 
 ## Messages
 
@@ -561,7 +549,7 @@ Actual yield from an endpoint send by a *Callee* to *Dealer*.
 
 ### Message Codes and Direction
 
-The following table lists the message type code for **all 25 messages defined in WAMP v2** and their direction between peer roles.
+The following table lists the message type code for **all 25 messages defined in WAMP** and their direction between peer roles.
 
 > In order to provide a single, authoritative overview of *all* WAMP messages, this table includes both the messages *mandatory* for WAMP Basic Profile as well as optional messages from the WAMP Advanced Profile.
 >
