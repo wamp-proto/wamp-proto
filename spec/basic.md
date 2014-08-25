@@ -272,7 +272,7 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 *Examples*
 
 	wamp.error.not_authorized
-   	wamp.metatopic.subscriber.add
+   	wamp.error.procedure_already_exists
 
 
 #### IDs
@@ -289,10 +289,50 @@ These are identified in WAMP using IDs that are integers between (inclusive) **0
 
 * IDs in the *global scope* MUST be drawn *randomly* from a *uniform distribution* over the complete range [0, 2^53]
 * IDs in the *router scope* can be chosen freely by the specific router implementation
-* IDs in the *session scope* SHOULD be incremented by 1 beginning with 1
+* IDs in the *session scope* SHOULD be incremented by 1 beginning with 1 (for each direction - *Client-to-Router* and *Router-to-Client*)
 
 > The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types which both can hold any value from the specified range.
 >
+
+For reference, the following is a complete list of usage of IDs in the three categories for all WAMP [Messages](#messages) (see subsequent chapters).
+
+**Global Scope IDs**
+
+* `WELCOME.Session`
+* `PUBLISHED.Publication`
+* `EVENT.Publication`
+
+
+**Router Scope IDs**
+
+* `EVENT.Subscription`
+* `SUBSCRIBED.Subscription`
+* `REGISTERED.Registration`
+* `UNSUBSCRIBE.Subscription`
+* `UNREGISTER.Registration`
+* `INVOCATION.Registration`
+
+
+**Session Scope IDs**
+
+* `ERROR.Request`
+* `PUBLISH.Request`
+* `PUBLISHED.Request`
+* `SUBSCRIBE.Request`
+* `SUBSCRIBED.Request`
+* `UNSUBSCRIBE.Request`
+* `UNSUBSCRIBED.Request`
+* `CALL.Request`
+* `CANCEL.Request`
+* `RESULT.Request`
+* `REGISTER.Request`
+* `REGISTERED.Request`
+* `UNREGISTER.Request`
+* `UNREGISTERED.Request`
+* `INVOCATION.Request`
+* `INTERRUPT.Request`
+* `YIELD.Request`
+
 
 ### Serializations
 
