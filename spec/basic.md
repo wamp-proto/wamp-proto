@@ -380,19 +380,29 @@ All WAMP messages are of the same structure, a `list` with a first element `Mess
 
     [MessageType|integer, ... one or more message type specific elements ...]
 
-The notation `Element|type` denotes a message element named `Element` of type `type`, where `type` is one of:
+The notation `Element|type` denotes a message element named `Element` of type `type`, where `type` is one of
 
- * `integer`: a non-negative integer
- * `string`: any UTF-8 encoded Unicode string, including the empty string
- * `bool`: a boolean value (`true` or `false`)
  * `id`: an integer ID as defined in [section IDs](#ids)
  * `uri`: a string URI as defined in [section URIs](#uris)
- * `dict`: a dictionary (map)
- * `list`: a list (array)
 
-*Example* A `SUBSCRIBE` message:
+or 
+
+ * `integer`: a non-negative integer
+ * `string`: a Unicode string, including the empty string
+ * `bool`: a boolean value (`true` or `false`)
+ * `dict`: a dictionary (map) where keys MUST be strings
+ * `list`: a list (array) where items can be again any of this enumeration
+
+*Example*
+
+A `SUBSCRIBE` message has the following format
+
+	[SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+
+Here is an example message conforming to above format
 
 	[32, 713845233, {}, "com.myapp.mytopic1"]
+
 
 > **Extensibility**
 > Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST be of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,}` for WAMP *predefined* keys. Implementations MAY use implementation-specific keys which MUST match the regular expression `_[a-z0-9_]{3,}`. Attributes unknown to an implementation MUST be ignored.
