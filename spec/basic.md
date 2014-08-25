@@ -389,8 +389,8 @@ or
 
  * `integer`: a non-negative integer
  * `string`: a Unicode string, including the empty string
- * `bool`: a boolean value (`true` or `false`)
- * `dict`: a dictionary (map) where keys MUST be strings
+ * `bool`: a boolean value (`true` or `false`) - integers MUST NOT be used instead of boolean values
+ * `dict`: a dictionary (map) where keys MUST be strings, keys MUST be unique and serialization order is undefined (left to the serializer being used)
  * `list`: a list (array) where items can be again any of this enumeration
 
 *Example*
