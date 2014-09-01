@@ -12,7 +12,8 @@ messages = [
 import json
 from pprint import pprint
 
-for m in messages:
-   m = json.loads(m)
+for mr in messages:
+   m = json.loads(mr)
    #pprint(m)
+   #print(len(mr))
    print json.dumps(m, indent = 3, sort_keys = True)
