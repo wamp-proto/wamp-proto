@@ -78,28 +78,167 @@ Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in t
 
 **WAMP-over-RawSocket** is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.
 
-Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is extremely simple to implement, since there is no need to implement the WebSocket protocol.
+Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is *simple to implement*, since there is no need to implement the WebSocket protocol which has some features that make it non-trivial (like a full HTTP-based opening handshake, message fragmentation, masking and variable length integers).
 
-WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any realiable streaming underlying transport. When run over TLS on a (misused) standard Web port (443), it is also able to traverse most locked down networking environments (unless Man-in-the-Middle intercepting proxies are in use).
+WAMP-over-RawSocket has even lower overhead than WebSocket and is expected to allow implementations in microcontrollers in under 2KB RAM.
 
-However, WAMP-over-RawSocket does not support compression or automatic negotiation of WAMP serialization (as WAMP-over-WebSocket allows). Perhaps most importantly, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers don't allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser.
+WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any realiable streaming underlying transport. When run over TLS on a (misused) standard Web port (443), it is also able to traverse most locked down networking environments (unless Man-in-the-Middle TLS intercepting proxies are in use).
+
+However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers don't allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. Currently, WAMP-over-RawSocket also does not support transport-level compression, as WebSocket does provide (`permessage-deflate` WebSocket extension).
+
+
+#### Endianess
+
+WAMP-over-RawSocket uses *network byte order* ("big-endian"). That means, given a unsigned 32 bit integer
+
+   0x 11 22 33 44
+
+the first octet sent out to (or received from) the wire is `0x11` and the last octet sent out (or received) is `0x44`.
+
+Here is how you would convert octets received from the wire into an integer in Python:
+
+```python
+import struct
+
+octets_received = b"\x11\x22\x33\x44"
+i = struct.unpack(">L", octets_received)[0]
+``` 
+
+The integer received has the value `287454020`.
+
+And here is how you would send out an integer to the wire in Python:
+
+```python
+octets_to_be_send = struct.pack(">L", i)
+```
+
+The octets to be sent are `b"\x11\x22\x33\x44"`.
+
+
+#### Handshake
+
+**Client-to-Router Request**
+
+WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets:
+
+    MSB                       LSB
+    31                          0
+    0111 1111 LLLL SSSS RRRR RRRR
+
+The *first octet* is a magic octet with value `0x7F`. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1) and [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2)). No valid HTTP request can have `0x7F` as its first octet.
+
+The *second octet* `0xLS` consists of a 4 bit `LENGTH` field and a 4 bit `SERIALIZER` field.
+
+The `SERIALIZER` value is used by the client to request a specific serializer to be used. When the handshake completes successfully, the client and router will use the serializer requested by the client. The possible values are:
+
+    0: illegal (signals error replies from routers - see below)
+    1: JSON
+    2: MsgPack
+    3 - 15: reserved for future serializers
+
+The `LENGTH` value is used by the client to signal the maximum message length of messages it is willing to receive. When the handshake completes successfully, a router MUST NOT send messages larger than this size. The possible values are:
+
+     0: 2**9
+     1: 2**10
+    ...
+    15: 2**24
+
+This means a client can chose the maximum message length between **512** and **16M** octets.
+
+Here is a Python program that prints all (currently) permissible values for the *second octet*:
+
+```python
+SERMAP = {
+   1: 'json',
+   2: 'msgpack'
+}
+
+## map serializer / max. msg length to RawSocket handshake 2nd octet
+##
+for ser in SERMAP:
+   for l in range(16):
+      octet_2 = (l << 4) | ser
+      print("serializer: {}, maxlen: {} => 0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+```
+
+
+The *third and forth octet* are **reserved** and MUST be all zeros for now.
+
+
+**Router-to-Client Reply**
+
+After a *Client* has connected to a *Router*, the *Router* will first receive the 4 octets handshake request from the *Client*.
+
+If the *first octet* differs from `0x7F`, it is not a WAMP-over-RawSocket request. Unless the *Router* also supports other transports on the connecting port (such as WebSocket), the *Router* MUST **fail the connection**.
+
+When the *Router* is willing to speak the serializer requested by the *Client*, it will answer with a 4 octets response of identical structure as the *Client* request:
+
+    MSB                       LSB
+    31                          0
+    0111 1111 LLLL SSSS RRRR RRRR
+
+Again, the *first octet* MUST be the value `0x7F`. The *third and forth octets* are reserved and MUST be all zeros for now.
+
+In the *second octet*, the *Router* MUST echo the serializer value in `SERIALIZER` as requested by the *Client*.
+
+Similar to the *Client*, the *Router* sets the `LENGTH` field to limit the length of messages sent by the *Client*.
+
+During the connection, *Router* MUST NOT send messages to the *Client* longer than the `LENGTH` requested by the *Client*, and the *Client* MUST NOT send messages larger than the maximum requested by the *Router* in it's handshake reply.
+
+When the *Router* is unable to speak the serializer requested by the *Client*, or it is denying the *Client* for other reasons, the *Router* replies with an error:
+
+    MSB                       LSB
+    31                          0
+    0111 1111 EEEE 0000 RRRR RRRR
+
+An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST BE all zeros for now.
+
+The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upprt 4 bits encode the error:
+
+
+    0: serializer unsupported
+    1: maximum message length unacceptable
+    2: use of reserved bits (unsupported feature)
+    3: maximum connection count reached
+    4 - 15: reserved for future errors
+
 
 #### Serialization
 
-A WAMP message is serialized according to a WAMP serializer (like JSON or MsgPack) which is *preagreed* between the *Client* connecting, and the *Router* the client connects to.
+To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (like JSON or MsgPack).
 
-For example, a *Router* might listen for incoming WAMP-over-RawSocket connections using MsgPack on TCP port 9000, while it might listen at the same time for WAMP-over-RawSocket connections using JSON on TCP port 9001.
+The length of the serialized messages in octets MUST NOT exceed the maximum requested by the *Peer*. If the serialized length exceed the maximum requested, the WAMP message can not be sent to the *Peer*. 
 
 #### Framing
 
-The serialized bytes for a message to be sent are prefixed each with exactly 4 octets, which MUST contain an unsigned integer in network byte order (big-endian) that provides the length of the serialized message (the number of bytes after serialization) - *excluding* the 4 octets giving the length.
+The serialized octets for a message to be sent are prefixed with exactly 4 octets:
 
+    0x FF LL LL LL
 
-	[4 octets: message length, unsigned int, big-endian][.. serialized octets for message ..]
+The *first octet* `0xFF` has the following structure
 
-For receiving messages with WAMP-over-RawSocket, a *Peer* will usually read exactly 4 octets from the incoming stream, decode the length, and then receive as many octets as the length was giving.
+    MSB   LSB
+    7       0
+    RRRR RTTT
 
-The received octets for the WAMP message are then unserialized according to the preagreed serializer.
+The five bits `RRRRR` are reserved for future use and MUST be all zeros for now.
+
+The three bits `TTT` encode the type of the transport message:
+
+    0: regular WAMP message
+    1: PING
+    2: PONG
+    3-7: reserved
+
+The *three octets* `0x LL LL LL` constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
+
+For a regular WAMP message (`TTT == 0`), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).
+
+For a `PING` message (`TTT == 1`), the length is the length of the arbitrary payload that follows. A *Peer* MUST reply to each `PING` by sending exactly one `PONG` immediately, and the `PONG` MUST echo back the payload of the `PING` exactly.   
+
+For receiving messages with WAMP-over-RawSocket, a *Peer* will usually read exactly 4 octets from the incoming stream, decode the transport level message type and payload length, and then receive as many octets as the length was giving.
+
+When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake.
 
 
 ### Long-Poll Transport
