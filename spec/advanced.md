@@ -127,23 +127,29 @@ WAMP-over-RawSocket starts with a handshake where the client connecting to a rou
 
 The *first octet* is a magic octet with value `0x7F`. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1) and [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2)). No valid HTTP request can have `0x7F` as its first octet.
 
+> By using a magic first octet that cannot appear in a regular HTTP request, WAMP-over-RawSocket can be run e.g. on the same TCP listening port as WAMP-over-WebSocket or WAMP-over-LongPoll.
+
 The *second octet* `0xLS` consists of a 4 bit `LENGTH` field and a 4 bit `SERIALIZER` field.
 
-The `SERIALIZER` value is used by the client to request a specific serializer to be used. When the handshake completes successfully, the client and router will use the serializer requested by the client. The possible values are:
+The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
 
-    0: illegal (signals error replies from routers - see below)
+The possible values for `SERIALIZER` are:
+
+    0: illegal
     1: JSON
     2: MsgPack
     3 - 15: reserved for future serializers
 
-The `LENGTH` value is used by the client to signal the maximum message length of messages it is willing to receive. When the handshake completes successfully, a router MUST NOT send messages larger than this size. The possible values are:
+The `LENGTH` value is used by the *Client* to signal the **maximum message length** of messages it is willing to **receive**. When the handshake completes successfully, a *Router* MUST NOT send messages larger than this size.
 
-     0: 2**9
-     1: 2**10
+The possible values for `LENGTH` are:
+
+     0: 2**9 octets
+     1: 2**10 octets
     ...
-    15: 2**24
+    15: 2**24 octets
 
-This means a client can chose the maximum message length between **512** and **16M** octets.
+This means a *Client* can choose the maximum message length between **512** and **16M** octets.
 
 Here is a Python program that prints all (currently) permissible values for the *second octet*:
 
@@ -153,14 +159,13 @@ SERMAP = {
    2: 'msgpack'
 }
 
-## map serializer / max. msg length to RawSocket handshake 2nd octet
+## map serializer / max. msg length to RawSocket handshake request or success reply (2nd octet)
 ##
 for ser in SERMAP:
    for l in range(16):
       octet_2 = (l << 4) | ser
       print("serializer: {}, maxlen: {} => 0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
 ```
-
 
 The *third and forth octet* are **reserved** and MUST be all zeros for now.
 
@@ -169,7 +174,22 @@ The *third and forth octet* are **reserved** and MUST be all zeros for now.
 
 After a *Client* has connected to a *Router*, the *Router* will first receive the 4 octets handshake request from the *Client*.
 
-If the *first octet* differs from `0x7F`, it is not a WAMP-over-RawSocket request. Unless the *Router* also supports other transports on the connecting port (such as WebSocket), the *Router* MUST **fail the connection**.
+If the *first octet* differs from `0x7F`, it is not a WAMP-over-RawSocket request. Unless the *Router* also supports other transports on the connecting port (such as WebSocket or LongPoll), the *Router* MUST **fail the connection**.
+
+Here is an example of how a *Router* could parse the *second octet* in a *Clients* handshake request:
+
+```python
+## map RawSocket handshake request (2nd octet) to serializer / max. msg length
+##
+for i in range(256):
+   ser_id = i & 0x0f
+   if ser_id != 0:
+      ser = SERMAP.get(ser_id, 'currently undefined')
+      maxlen = 2 ** ((i >> 4) + 9)
+      print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
+   else:
+      print("fail the connection: illegal serializer value")
+```
 
 When the *Router* is willing to speak the serializer requested by the *Client*, it will answer with a 4 octets response of identical structure as the *Client* request:
 
@@ -181,9 +201,11 @@ Again, the *first octet* MUST be the value `0x7F`. The *third and forth octets* 
 
 In the *second octet*, the *Router* MUST echo the serializer value in `SERIALIZER` as requested by the *Client*.
 
-Similar to the *Client*, the *Router* sets the `LENGTH` field to limit the length of messages sent by the *Client*.
+Similar to the *Client*, the *Router* sets the `LENGTH` field to request a limit on the length of messages sent by the *Client*.
 
 During the connection, *Router* MUST NOT send messages to the *Client* longer than the `LENGTH` requested by the *Client*, and the *Client* MUST NOT send messages larger than the maximum requested by the *Router* in it's handshake reply.
+
+If a message received during a connection exceeds the limit requested, a *Peer* MUST **fail the connection**.
 
 When the *Router* is unable to speak the serializer requested by the *Client*, or it is denying the *Client* for other reasons, the *Router* replies with an error:
 
@@ -193,8 +215,7 @@ When the *Router* is unable to speak the serializer requested by the *Client*, o
 
 An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST BE all zeros for now.
 
-The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upprt 4 bits encode the error:
-
+The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error:
 
     0: serializer unsupported
     1: maximum message length unacceptable
@@ -202,12 +223,58 @@ The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply f
     3: maximum connection count reached
     4 - 15: reserved for future errors
 
+Here is an example of how a *Router* might create the *second octet* in an error response:
+
+```python
+ERRMAP = {
+   0: "serializer unsupported",
+   1: "maximum message length unacceptable",
+   2: "use of reserved bits (unsupported feature)",
+   3: "maximum connection count reached"
+}
+
+## map error to RawSocket handshake error reply (2nd octet)
+##
+for err in ERRMAP:
+   octet_2 = err << 4
+   print("error: {} => 0x{:02x}").format(ERRMAP[err], err)
+```
+
+The *Client* - after having sent its handshake request - will wait for the 4 octets from *Router* handshake reply.
+
+Here is an example of how a *Client* might parse the *second octet* in a *Router* handshake reply:
+
+
+```python
+## map RawSocket handshake reply (2nd octet)
+##
+for i in range(256):
+   ser_id = i & 0x0f
+   if ser_id:
+      ## verify the serializer is the one we requested! if not, fail the connection!
+      ser = SERMAP.get(ser_id, 'currently undefined')
+      maxlen = 2 ** ((i >> 4) + 9)
+      print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
+   else:
+      err = i >> 4
+      print("error: {}".format(ERRMAP.get(err, 'currently undefined')))
+```
+ 
 
 #### Serialization
 
-To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (like JSON or MsgPack).
+To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MsgPack).
 
-The length of the serialized messages in octets MUST NOT exceed the maximum requested by the *Peer*. If the serialized length exceed the maximum requested, the WAMP message can not be sent to the *Peer*. 
+The length of the serialized messages in octets MUST NOT exceed the maximum requested by the *Peer*.
+
+If the serialized length exceed the maximum requested, the WAMP message can not be sent to the *Peer*. Handling situations like the latter is left to the implementation.
+
+E.g. a *Router* that is to forward a WAMP `EVENT` to a *Client* which exceeds the maximum length requested by the *Client* when serialized might:
+
+* drop the event (not forwarding to that specific client) and track dropped events
+* prohibit publishing to the topic already
+* remove the event payload, and send an event with extra information (`payload_limit_exceeded = true`)
+
 
 #### Framing
 
