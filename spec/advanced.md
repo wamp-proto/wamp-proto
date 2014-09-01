@@ -128,9 +128,9 @@ The octets to be sent are `b"\x11\x22\x33\x44"`.
 
 WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets:
 
-    MSB                       LSB
-    31                          0
-    0111 1111 LLLL SSSS RRRR RRRR
+    MSB                                 LSB
+    31                                    0
+    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 
 The *first octet* is a magic octet with value `0x7F`. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1) and [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2)). No valid HTTP request can have `0x7F` as its first octet.
 
@@ -200,9 +200,9 @@ for i in range(256):
 
 When the *Router* is willing to speak the serializer requested by the *Client*, it will answer with a 4 octets response of identical structure as the *Client* request:
 
-    MSB                       LSB
-    31                          0
-    0111 1111 LLLL SSSS RRRR RRRR
+    MSB                                 LSB
+    31                                    0
+    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 
 Again, the *first octet* MUST be the value `0x7F`. The *third and forth octets* are reserved and MUST be all zeros for now.
 
