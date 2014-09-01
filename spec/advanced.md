@@ -14,9 +14,9 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 **Contents**
 
 1. [Transports](#transports)
-   * [Raw Socket Transport](#raw-socket-transport)
-   * [Long-Poll Transport](#long-poll-transport)
-   * [Batched Transport](#batched-transport)
+   * [RawSocket Transport](#rawsocket-transport)
+   * [Batched WebSocket Transport](#batched-websocket-transport)
+   * [LongPoll Transport](#longpoll-transport)
    * [Multiplexed Transport](#multiplexed-transport)
 2. [Messages](#messages)
     * [Message Definitions](#message-definitions)
@@ -66,15 +66,22 @@ For an introduction to the protocol, and a description of basic features and usa
 
 ## Transports
 
-Besides the WebSocket transport, the following WAMP transports are under development:
+Besides the WebSocket transport, the following WAMP transports are currently specified:
 
- * HTTP 1.0/1.1 long-polling
+* [RawSocket Transport](#rawsocket-transport)
+* [Batched WebSocket Transport](#batched-websocket-transport)
+* [LongPoll Transport](#longpoll-transport)
+* [Multiplexed Transport](#multiplexed-transport)
 
-Here, the bi-directionality requirement for the transport is implemented by using long-polling for the server-side sending of messages.
+Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined in the future. As mentioned in the [Basic Profile](basic.md), the only requirements that WAMP expects from a transport are:
 
-Other transports such as HTTP 2.0 ("SPDY"), raw TCP or UDP might be defined in the future.
+ * message based
+ * bidirectional
+ * reliable
+ * ordered
 
-### Raw Socket Transport
+
+### RawSocket Transport
 
 **WAMP-over-RawSocket** is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.
 
@@ -308,6 +315,28 @@ For receiving messages with WAMP-over-RawSocket, a *Peer* will usually read exac
 When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake.
 
 
+### Batched WebSocket Transport
+
+*WAMP-over-Batched-WebSocket* is a variant of *WAMP-over-WebSocket* where multiple WAMP messages are sent in one WebSocket message.
+
+Using WAMP message batching can increase wire level efficiency further. In particular when using TLS and the WebSocket implementation is forcing every WebSocket message into a new TLS segment.
+
+*WAMP-over-Batched-WebSocket* is negotiated between *Peers* in the WebSocket opening handshake by agreeing on one of the following WebSocket subprotocols:
+
+ * `wamp.2.json.batched`
+ * `wamp.2.msgpack.batched`
+
+Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ([record separator](http://en.wikipedia.org/wiki/Record_separator#Field_separators)) octet `0x1e` to *each* serialized messages, and packing a sequence of such serialized messages into a single WebSocket message:
+
+   	Serialized JSON WAMP Msg 1 | 0x1e | Serialized JSON WAMP Msg 2 | 0x1e | ...
+
+Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MsgPack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
+
+   	Length of Msg 1 serialization (uint32) | serialized MsgPack WAMP Msg 1 | ...
+
+With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length **1**. Sending a batch of length **0** (no WAMP message) is illegal and a *Peer* MUST fail the transport upon receiving such a transport message.
+
+
 ### Long-Poll Transport
 
 The *Long-Poll Transport* is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the *Client* issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
@@ -401,26 +430,6 @@ To orderly close a session, a *Client* will issue a HTTP/POST to
 	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
 
 with an empty request body. Upon success, the request will return with HTTP status code 202 ("no content"). 
-
-
-### Batched Transport
-
-WAMPv2 allows to batch one or more WAMP messages into a single WebSocket message if one of the following subprotocols have been negotiated:
-
- * `wamp.2.json.batched`
- * `wamp.2.msgpack.batched`
-
-Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ([record separator](http://en.wikipedia.org/wiki/Record_separator#Field_separators)) byte `0x1e` to *each* serialized messages, and packing a sequence of such serialized messages into a single WebSocket message:
-
-   	serialized JSON WAMP Msg 1 | 0x1e | serialized JSON WAMP Msg 2 | 0x1e | ...
-
-Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (big-endian byte order) with the length of the serialized MsgPack message, and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
-
-   	Length of Msg 1 serialization (int32) | serialized MsgPack WAMP Msg 1 | ...
-
-With batched transport, even if only a single WAMP message is sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length 1.
-
-Sending a batch of length 0 (no WAMP message) is illegal and a peer MUST fail the transport upon receiving such a transport message.
 
 
 ### Multiplexed Transport
