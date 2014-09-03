@@ -1358,15 +1358,15 @@ or
 
 where
 
- * `INVOCATION.Request` is the ID from the original call request.
- * `Details` is a dictionary containing detailed information about the error.
- * `Error` is an URI that gives the error of why the request could not be fulfilled.
- * `Exception` is an arbitrary application-defined error payload (possible empty, that is `null`).
+ * `INVOCATION.Request` is the ID from the original `INVOCATION` request previously sent by the *Dealer* to the *Callee*.
+ * `Details` is a dictionary with additional error details.
+ * `Error` is an URI that identifies the error of why the request could not be fulfilled.
+ * `Arguments` is a list containing arbitrary, application defined, positional error information. This will be forwarded by the *Dealer* to the *Caller* that initiated the call.
+ * `ArgumentsKw` is a dictionary containing arbitrary, application defined, keyword-based error information. This will be forwarded by the *Dealer* to the *Caller* that initiated the call.
 
 *Example*
 
    	[8, 68, 6131533, {}, "com.myapp.error.object_write_protected", ["Object is write protected."], {"severity": 3}]
-
 
 
 #### Call ERROR
@@ -1385,7 +1385,7 @@ or
 
 where
 
- * `CALL.Request` is the ID from the original call request.
+ * `CALL.Request` is the ID from the original `CALL` request sent by the *Caller* to the *Dealer*.
  * `Details` is a dictionary with additional error details.
  * `Error` is an URI identifying the type of error as returned by the *Callee* to the *Dealer*.
  * `Arguments` is a list containing the original error payload list as returned by the *Callee* to the *Dealer*.
@@ -1393,9 +1393,9 @@ where
 
 *Example*
 
-   	[8, 48, 7814135, {}, "com.myapp.error.object_write_protected", ["Sorry, but the object is write protected."]]
+   	[8, 48, 7814135, {}, "com.myapp.error.object_write_protected", ["Object is write protected."], {"severity": 3}]
 
-If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* also (and immediately) sends a `ERROR` message to the *Caller*:
+If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* will send an `ERROR` message to the *Caller*:
 
    	[ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
 
