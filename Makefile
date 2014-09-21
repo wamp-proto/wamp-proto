@@ -23,13 +23,13 @@ freeze:
 	python website/wampws/__init__.py -f
 
 upload:
-	python website/wampws/upload.py --bucket "wamp.ws" --directory "build"
+	python website/wampws/upload.py --bucket 'wamp.ws' --directory 'build'
 
 test:
-	python website/wampws/__init__.py -d --widgeturl ""
+	python website/wampws/__init__.py -d --widgeturl ''
 
 test_widget:
-	python website/wampws/__init__.py -d --widgeturl "http://127.0.0.1:8090/widget"
+	python website/wampws/__init__.py -d --widgeturl 'http://127.0.0.1:8090/widget'
 
 test_frozen:
 	python website/wampws/__init__.py -f -d
