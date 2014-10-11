@@ -12,15 +12,28 @@
 <div id="page_wrapper">
 
    <p style="font-size: 140%;">
-      Get started with <a href="{{ url_for('page_spec') }}">WAMP</a> using your favorite language and framework.
-   </p>
+      Get started with WAMP</a> by chosing <b>client libraries</b> and a <b>router</b>:
 
+      <ul>
+         <li>
+            To <i>write application components</i> in your favorite language, you will need a <a href="#libraries">WAMP client library</a>
+         </li>
+         <li>
+            To actually <i>run your application</i> consisting of components, you will need a <a href="#routers">WAMP router</a>
+         </li>
+      </ul>
+   </p>
+   <br>
    <div style="font-size: 80%; width: 95%; margin: auto;">
-      Notes:<br>
+      <b>Notes</b><br>
+      - You can choose your WAMP router independently of the programming language you want to write your
+      components in since routers do not run application code directly.<br>
       - Want your WAMP implementation listed here? Please join the <a href="https://groups.google.com/group/wampws" target="_blank">WAMP group</a> and introduce your project.<br>
       - Looking for <b>WAMP version 1 implementations</b>? Please see <a href="{{ url_for('page_implementations_wamp1') }}">here</a>.
    </div>
 
+
+   <br><br>
    <a name="libraries"></a>
    <h2>WAMP Libraries</h2>
 
@@ -43,9 +56,25 @@
       </tr>
 
       <tr>
+         <td><a href="https://github.com/voryx/angular-wamp"><b>Angular</b>WAMP</td>
+         <td>JavaScript</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>x</td>
+         <td>yes</td>
+      </tr>
+      <tr>
+         <td class="notes" colspan="7">
+            AngularWAMP is an AngularJS wrapper for <a href="http://autobahn.ws/js"><b>Autobahn</b>|JS</a> that
+            provides deeper integration for AngularJS apps.
+         </td>
+      </tr>
+
+      <tr>
          <td><a href="http://autobahn.ws/android"><b>Autobahn</b>|Android</a></td>
          <td>Java</td>
-         <td colspan="5">upcoming</td>
+         <td colspan="5">upcoming (currently still at WAMP v1)</td>
       </tr>
       <tr>
          <td class="notes" colspan="7">WAMP Client library for native Android applications.</td>
@@ -160,6 +189,8 @@
      
    </table>
 
+
+   <br><br>
    <a name="routers"></a>
    <h2>WAMP Routers</h2>
 
