@@ -550,15 +550,15 @@ or
 
 *Example*
 
-   	[3, 0, 1]
+   	[7, 0, 1]
 
 *Example*
 
-   	[3, 23, 5]
+   	[7, 23, 5]
 
 *Example*
 
-   	[3, 23, 5, "throw me away ... I am just noise"]
+   	[7, 23, 5, "throw me away ... I am just noise"]
 
 Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of hearbeats is under independent control with each peer.
 
