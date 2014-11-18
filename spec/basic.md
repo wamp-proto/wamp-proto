@@ -600,7 +600,7 @@ The following table lists the message type code for **all 25 messages defined in
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
 |  1   | `HELLO`        |          | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
 |  2   | `WELCOME`      |          | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
-|  3   | `ABORT`        |          | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
+|  3   | `ABORT`        |          | Rx          | Tx/Rx    | Rx           | Rx       | Tx/Rx    | Rx       |
 |  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
 |  5   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
 |  6   | `GOODBYE`      |          | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
