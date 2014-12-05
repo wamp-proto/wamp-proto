@@ -560,7 +560,7 @@ Acknowledge sent by a *Dealer* to a *Callee* for successful registration.
 
 #### UNREGISTER
 
-A *Callees* request to unregister a previsouly established registration.
+A *Callees* request to unregister a previously established registration.
 
     [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
