@@ -47,6 +47,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
     * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
     * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
     * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
+    * [Ticket-based Authentication](#ticket-based-authentication)
     * [One Time Token Authentication](#one-time-token-authentication)
 7. [Reflection](#reflection)
 8. [Appendix](#appendix)
@@ -1690,9 +1691,11 @@ The `CHALLENGE.Details.salt|string` is the password salt in use. The `CHALLENGE.
 
 ### Ticket-based Authentication
 
-With *Ticket* based authentication, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.
+With *Ticket-based authentication*, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.
 
-> Caution: This is extremely simple, but security is limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
+This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
+
+> Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
 > 
 
 A typical authentication begins with the client sending a `HELLO` message specifying the `ticket` method as (one of) the authentication methods:
@@ -1702,7 +1705,7 @@ A typical authentication begins with the client sending a `HELLO` message specif
 	{
 		"roles": ...,
 		"authmethods": ["ticket"],
-		"authid": "peter"
+		"authid": "joe"
 	}
 ]
 ```
@@ -1717,13 +1720,12 @@ If the server is willing to let the client authenticate using a ticket and the s
 
 ```javascript
 [4, "ticket", {}]
-]
 ```
 
 The client will send an `AUTHENTICATE` message containing a ticket:
 
 ```javascript
-[5, "my_magic_secret_ticket_value", {}]
+[5, "secret!!!", {}]
 ```
 
 The server will then check if the ticket provided is permissible (for the `authid` given).
@@ -1733,10 +1735,10 @@ If the authentication succeeds, the server will finally respond with a `WELCOME`
 ```javascript
 [2, 3251278072152162,
 	{
-		"authid": "peter",
+		"authid": "joe",
 		"authrole": "user",
 		"authmethod": "ticket",
-		"authprovider": "userdb",
+		"authprovider": "static",
 		"roles": ...
 	}
 ]
@@ -1747,7 +1749,7 @@ where
  1. `authid|string`: The authentication ID the client was (actually) authenticated as.
  2. `authrole|string`: The authentication role the client was authenticated for.
  3. `authmethod|string`: The authentication method, here `"ticket"`
- 4. `authprovider|string`: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. `userdb`.
+ 4. `authprovider|string`: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. `static` or `dynamic`.
 
 The `WELCOME.Details` again contain the actual authentication information active. If the authentication fails, the server will response with an `ABORT` message.
 
