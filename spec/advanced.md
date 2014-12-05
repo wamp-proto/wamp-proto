@@ -565,7 +565,7 @@ Incoming heartbeats are not required to be answered by an outgoing heartbeat. Se
 
 ## Advanced Features
 
-In addition to the *basic features* definded in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
+In addition to the *basic features* defined in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
 
 *Advanced features* need to be announced by the peer which implements them.
 
