@@ -630,7 +630,7 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
          }
    }]
 
-*Feature Announcemenet and Advanced Features*
+*Feature Announcement and Advanced Features*
 
 The use of *feature announcement* in WAMP allows for
 

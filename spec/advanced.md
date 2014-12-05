@@ -604,7 +604,7 @@ In addition to the *basic features* definded in the first part of this document,
          }
    	}]
 
-*Feature Announcemenet and Advanced Features*
+*Feature Announcement and Advanced Features*
 
 The use of *feature announcement* in WAMP allows for
 
