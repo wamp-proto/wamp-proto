@@ -1036,7 +1036,7 @@ where
 
 #### Register ERROR
 
-When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
+When the request for registration cannot be fulfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
 
     [ERROR, REGISTER.Request|id, Details|dict, Error|uri]
 
@@ -1146,7 +1146,7 @@ where
 
 #### INVOCATION
 
-If the *Dealer* is able to fullfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
+If the *Dealer* is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
 
