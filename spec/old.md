@@ -750,7 +750,7 @@ All of the following features for Publish & Subscribe are mandatory for WAMP imp
 
 ### Subscribing and Unsubscribing
 
-The message flow between *Enpoints* implementing the role of *Subscriber* and *Routers* implementing the role of *Broker* for subscribing and unsubscribing involves the following messages:
+The message flow between *Endpoints* implementing the role of *Subscriber* and *Routers* implementing the role of *Broker* for subscribing and unsubscribing involves the following messages:
 
  1. `SUBSCRIBE`
  2. `SUBSCRIBED`
