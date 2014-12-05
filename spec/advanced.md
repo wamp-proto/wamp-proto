@@ -575,8 +575,8 @@ In addition to the *basic features* defined in the first part of this document, 
       "roles": {
          "publisher": {
             "features": {
-               "publisher_exclusion":     true,
-               "publisher_identication":  true
+               "publisher_exclusion":      true,
+               "publisher_identification": true
             }
          },
          "subscriber": {
