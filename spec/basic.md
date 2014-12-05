@@ -904,7 +904,7 @@ When a *Subscriber* is no longer interested in receiving events for a subscripti
 where
 
  * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
- * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubcribe from, originally handed out by the *Broker* to the *Subscriber*.
+ * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubscribe from, originally handed out by the *Broker* to the *Subscriber*.
 
 *Example*
 
