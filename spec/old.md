@@ -185,7 +185,7 @@ URIs MUST NOT contain `#`, which is reserved for internal use by *Dealers* and *
 
 URI components SHOULD match the regular expression `[a-z][a-z0-9_]*` (that is start with a letter, followed by zero or more letters, digits or `_`).
 
-> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language enviroment in a completely transparent way.
+> Following the suggested regular expression will make URI components valid identifiers in most languages (modulo language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language environment in a completely transparent way.
 
 Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
 
@@ -630,7 +630,7 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
          }
    }]
 
-*Feature Announcemenet and Advanced Features*
+*Feature Announcement and Advanced Features*
 
 The use of *feature announcement* in WAMP allows for
 
@@ -731,7 +731,7 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
     [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
     [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
 
----- ???? peer echoes the message - maybe better a generic 'acknowledge goobye' ? ----
+---- ???? peer echoes the message - maybe better a generic 'acknowledge goodbye' ? ----
 
 *Example*
 
@@ -750,7 +750,7 @@ All of the following features for Publish & Subscribe are mandatory for WAMP imp
 
 ### Subscribing and Unsubscribing
 
-The message flow between *Enpoints* implementing the role of *Subscriber* and *Routers* implementing the role of *Broker* for subscribing and unsubscribing involves the following messages:
+The message flow between *Endpoints* implementing the role of *Subscriber* and *Routers* implementing the role of *Broker* for subscribing and unsubscribing involves the following messages:
 
  1. `SUBSCRIBE`
  2. `SUBSCRIBED`
@@ -827,7 +827,7 @@ When a *Subscriber* is no longer interested in receiving events for a subscripti
 where
 
  * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
- * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubcribe from, originally handed out by the *Broker* to the *Subscriber*.
+ * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubscribe from, originally handed out by the *Broker* to the *Subscriber*.
 
 *Example*
 
@@ -1036,7 +1036,7 @@ where
 
 #### Register ERROR
 
-When the request for registration cannot be fullfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
+When the request for registration cannot be fulfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
 
     [ERROR, REGISTER.Request|id, Details|dict, Error|uri]
 
@@ -1146,7 +1146,7 @@ where
 
 #### INVOCATION
 
-If the *Dealer* is able to fullfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
+If the *Dealer* is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
     [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
 

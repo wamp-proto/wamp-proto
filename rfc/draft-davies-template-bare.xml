@@ -223,7 +223,7 @@
           <t>First, a short item.</t>
 
           <t>Second, a longer list item.<vspace blankLines="1" /> And
-          something that looks like a separate pararaph..</t>
+          something that looks like a separate paragraph..</t>
         </list></t>
 
       <t>Simple indented paragraph using the "empty" style: <list

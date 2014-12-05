@@ -560,7 +560,7 @@ Acknowledge sent by a *Dealer* to a *Callee* for successful registration.
 
 #### UNREGISTER
 
-A *Callees* request to unregister a previsouly established registration.
+A *Callees* request to unregister a previously established registration.
 
     [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
@@ -904,7 +904,7 @@ When a *Subscriber* is no longer interested in receiving events for a subscripti
 where
 
  * `Request` is a random, ephemeral ID chosen by the *Subscriber* and used to correlate the *Broker's* response with the request.
- * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubcribe from, originally handed out by the *Broker* to the *Subscriber*.
+ * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubscribe from, originally handed out by the *Broker* to the *Subscriber*.
 
 *Example*
 
@@ -1449,7 +1449,7 @@ The *Peer* want to leave the realm - used as a `GOODBYE` reason.
 
 	wamp.error.close_realm
 
-A *Peer* acknowledges ending of a session - used as a `GOOBYE` reply reason.
+A *Peer* acknowledges ending of a session - used as a `GOODBYE` reply reason.
 
 	wamp.error.goodbye_and_out
 
@@ -1516,7 +1516,7 @@ The security model of WAMP *basic profile* is discussed shortly in the following
 
 WAMP transports may provide (optional) transport-level encryption of integrity verification. If so, encryption and integrity is point-to-point: between a *Client* and the *Router* it is connected to.
 
-Transport-level encryption and integrity is soley at the transport-level and transparent to WAMP. WAMP itself deliberately does not specify any kind of transport-level encryption.
+Transport-level encryption and integrity is solely at the transport-level and transparent to WAMP. WAMP itself deliberately does not specify any kind of transport-level encryption.
 
 Implementations that offer TCP based transport such as WAMP-over-WebSocket or WAMP-over-RawSocket (see [Advanced Profile](advanced.md)) **SHOULD implement [Transport Layer Security](http://en.wikipedia.org/wiki/Transport_Layer_Security)**.
 

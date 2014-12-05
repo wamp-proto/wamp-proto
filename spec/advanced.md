@@ -90,7 +90,7 @@ Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is simple to implement, sin
 
 WAMP-over-RawSocket has even lower overhead than WebSocket, which can be desirable in particular when running on local connections like loopback TCP or Unix domain sockets. It is also expected to allow implementations in microcontrollers in under 2KB RAM.
 
-WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any realiable streaming underlying transport. When run over TLS on a (misused) standard Web port (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
+WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on a (misused) standard Web port (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
 
 However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers don't allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (`permessage-deflate` WebSocket extension).
 
@@ -532,7 +532,7 @@ In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION
 
 ### HEARTBEAT
 
-The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing hearbeat sequence number in the same message.
+The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing heartbeat sequence number in the same message.
 
 A peer MAY send a `HEARTBEAT` message at any time:
 
@@ -561,12 +561,12 @@ or
 
    	[7, 23, 5, "throw me away ... I am just noise"]
 
-Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of hearbeats is under independent control with each peer.
+Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of heartbeats is under independent control with each peer.
 
 
 ## Advanced Features
 
-In addition to the *basic features* definded in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
+In addition to the *basic features* defined in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
 
 *Advanced features* need to be announced by the peer which implements them.
 
@@ -576,8 +576,8 @@ In addition to the *basic features* definded in the first part of this document,
       "roles": {
          "publisher": {
             "features": {
-               "publisher_exclusion":     true,
-               "publisher_identication":  true
+               "publisher_exclusion":      true,
+               "publisher_identification": true
             }
          },
          "subscriber": {
@@ -605,7 +605,7 @@ In addition to the *basic features* definded in the first part of this document,
          }
    	}]
 
-*Feature Announcemenet and Advanced Features*
+*Feature Announcement and Advanced Features*
 
 The use of *feature announcement* in WAMP allows for
 
