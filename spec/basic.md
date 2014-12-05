@@ -1516,7 +1516,7 @@ The security model of WAMP *basic profile* is discussed shortly in the following
 
 WAMP transports may provide (optional) transport-level encryption of integrity verification. If so, encryption and integrity is point-to-point: between a *Client* and the *Router* it is connected to.
 
-Transport-level encryption and integrity is soley at the transport-level and transparent to WAMP. WAMP itself deliberately does not specify any kind of transport-level encryption.
+Transport-level encryption and integrity is solely at the transport-level and transparent to WAMP. WAMP itself deliberately does not specify any kind of transport-level encryption.
 
 Implementations that offer TCP based transport such as WAMP-over-WebSocket or WAMP-over-RawSocket (see [Advanced Profile](advanced.md)) **SHOULD implement [Transport Layer Security](http://en.wikipedia.org/wiki/Transport_Layer_Security)**.
 
