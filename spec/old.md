@@ -731,7 +731,7 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
     [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
     [2, "wamp.error.system_shutdown", {"message": "The host is shutting down now."}]
 
----- ???? peer echoes the message - maybe better a generic 'acknowledge goobye' ? ----
+---- ???? peer echoes the message - maybe better a generic 'acknowledge goodbye' ? ----
 
 *Example*
 

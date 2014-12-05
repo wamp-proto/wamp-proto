@@ -1449,7 +1449,7 @@ The *Peer* want to leave the realm - used as a `GOODBYE` reason.
 
 	wamp.error.close_realm
 
-A *Peer* acknowledges ending of a session - used as a `GOOBYE` reply reason.
+A *Peer* acknowledges ending of a session - used as a `GOODBYE` reply reason.
 
 	wamp.error.goodbye_and_out
 
