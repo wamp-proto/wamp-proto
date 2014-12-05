@@ -531,7 +531,7 @@ In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION
 
 ### HEARTBEAT
 
-The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing hearbeat sequence number in the same message.
+The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing heartbeat sequence number in the same message.
 
 A peer MAY send a `HEARTBEAT` message at any time:
 
@@ -560,7 +560,7 @@ or
 
    	[7, 23, 5, "throw me away ... I am just noise"]
 
-Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of hearbeats is under independent control with each peer.
+Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of heartbeats is under independent control with each peer.
 
 
 ## Advanced Features
