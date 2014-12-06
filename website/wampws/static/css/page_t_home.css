@@ -37,6 +37,28 @@
    width: 660px;
 }
 
+a.cta_button_small
+{
+   display: inline;
+   padding: 4px 10px;
+   margin: 0;
+   text-align: center;
+   vertical-align: middle;
+   border-radius: 12px;
+
+   color: #fff;
+   background-color: #fa72c6;
+
+   text-decoration: none;
+   font-size: 16px;
+}
+
+a.cta_button_small:hover {
+   background-color: #f10a9a;
+   color: #fff;
+}
+
+
 a.cta_button
 {
    display: block;
