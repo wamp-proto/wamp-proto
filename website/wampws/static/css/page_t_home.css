@@ -106,3 +106,9 @@ a.cta_button:hover {
    text-align: top;
    color: #7e8696;
 }
+
+
+#intro_presentation {
+   width: 760px;
+   margin: 0 auto 4em;
+}
