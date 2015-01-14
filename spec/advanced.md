@@ -1125,6 +1125,16 @@ A *Dealer* MAY deny a *Caller's* request to disclose its identity:
 
     [4, 7814135, "wamp.error.disclose_me.not_allowed"]
 
+A *Callee* MAY **request** the disclosure of caller identity via
+
+    CALL.Options.disclose_caller|bool := true
+
+*Example*
+
+    [64, 927639114088448, {"disclose_caller":true}, "com.maypp.add2"]
+
+With the above registration, the registered procedure is called with the caller's sessionID as part of the call details object.
+
 
 ### Call Trust Levels
 
