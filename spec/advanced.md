@@ -16,7 +16,7 @@ Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [C
 1. [Transports](#transports)
    * [RawSocket Transport](#rawsocket-transport)
    * [Batched WebSocket Transport](#batched-websocket-transport)
-   * [LongPoll Transport](#longpoll-transport)
+   * [Long-Poll Transport](#long-poll-transport)
    * [Multiplexed Transport](#multiplexed-transport)
 2. [Messages](#messages)
     * [Message Definitions](#message-definitions)
