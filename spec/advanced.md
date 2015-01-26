@@ -4,88 +4,62 @@ This document specifies the *Advanced Profile* of the [Web Application Messaging
 
 Document Revision: **beta-1**, 2015/01/26
 
-> For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md). For the (deprecated) WAMP version 1 specification, please see [here](http://wamp.ws/spec/wamp1/).
-> 
+For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md).
 
-Copyright (c) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+
 
 # Part 2: Advanced Profile
 
 **Contents**
 
 1. [Transports](#transports)
-
    * [RawSocket Transport](#rawsocket-transport)
    * [Batched WebSocket Transport](#batched-websocket-transport)
    * [Long-Poll Transport](#long-poll-transport)
    * [Multiplexed Transport](#multiplexed-transport)
-
 2. [Messages](#messages)
-
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
-
 3. [Session Management](#session-management)
-
     * [Session Events](#session-events)
     * [Forced Session Kill](#forced-session-kill)
-
 4. [Publish and Subscribe](#publish-and-subscribe)
-
     * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) [stable]
     * [Publisher Exclusion](#publisher-exclusion) [stable]
-
     * [Publisher Identification](#publisher-identification) [stable]
-
     * [Publication Trust Levels](#publication-trust-levels)
-
     * [Pattern-based Subscriptions](#pattern-based-subscriptions)
     * [Distributed Subscriptions and Publications](#distributed-subscriptions-and-publications)
-
     * [Subscriber Events](#subscriber-events)
     * [Subscriber Listing](#subscriber-listing)
-
     * [Forced Subscriber Unsubscribe](#forced-subscriber-unsubscribe)
-
     * [Event History](#event-history)
-
 5. [Remote Procedure Calls](#remote-procedure-calls)
-
     * [Progressive Call Results](#progressive-call-results) [stable]
     * [Canceling Calls](#canceling-calls) [stable]
     * [Call Timeouts](#call-timeouts)
-
     * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
     * [Caller Exclusion](#caller-exclusion)
-
     * [Caller Identification](#caller-identification) [stable]
-
     * [Call Trust Levels](#call-trust-levels)
-
     * [Pattern-based Registrations](#pattern-based-registrations)
     * [Distributed Registrations and Calls](#distributed-registrations-and-calls)
-
     * [Callee Events](#callee-events)
     * [Callee Listing](#callee-listing)
-
     * [Forced Callee Unregister](#forced-callee-unregister)
-
     * [Call History](#call-history)
-
 6. [Authentication](#authentication)
-
     * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
     * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
     * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
     * [Ticket-based Authentication](#ticket-based-authentication)
     * [One Time Token Authentication](#one-time-token-authentication)
-
 7. [Reflection](#reflection)
-
 8. [Appendix](#appendix)
-
     * [Predefined URIs](#predefined-uris) 
     * [Authentication examples](#authentication-examples)
+
 
 ## Preface
 
