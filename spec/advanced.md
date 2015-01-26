@@ -21,7 +21,9 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
 2. [Messages](#messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
-3. [Session Management](#session-management)
+3. [Sessions](#sessions)
+    * [Feature Announcement](#feature-announcement)
+    * [Session Authentication](#session-authentication)
     * [Session Events](#session-events)
     * [Forced Session Kill](#forced-session-kill)
 4. [Publish and Subscribe](#publish-and-subscribe)
@@ -507,71 +509,9 @@ The following table list the message type code for **the OPTIONAL messages** def
 | 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
 
 
-## Session Management
+## Sessions
 
-### Session Establishment
-
-The message flow between *Clients* and *Routers* for establishing and tearing down sessions MAY involve the following messages which authenticate a session:
-
-1. `CHALLENGE`
-2. `AUTHENTICATE`
-
-![alt text](figure/hello_authenticated.png "WAMP Session denied")
-
-
-#### CHALLENGE
-
-An authentication MAY be required for the establishment of a session. Such requirement may be based on the `Realm` the connection is requested for.
-
-To request authentication, the *Router* sends a `CHALLENGE` message to the *Endpoint*.
-
-    [CHALLENGE, AuthMethod|string, Extra|dict]
-
-
-#### AUTHENTICATE
-
-In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION` message.
-
-    [AUTHENTICATE, Signature|string, Extra|dict]
-
-
-## Advanced Session Management
-
-### HEARTBEAT
-
-The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing heartbeat sequence number in the same message.
-
-A peer MAY send a `HEARTBEAT` message at any time:
-
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer]
-
-or
-
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
-
- * `HEARTBEAT.OutgoingSeq` MUST start with `1` and be incremented by `1` for each `HEARTBEAT` a peer sends.
- * `HEARTBEAT.IncomingSeq` MUST BE the sequence number from the last received heartbeat for which all previously received WAMP messages have been processed or `0` when no `HEARTBEAT` has yet been received
- *  `HEARTBEAT.Discard` is an arbitrary string discarded by the peer.
-
-> The `HEARTBEAT.Discard` can be used to add some traffic volume to the HEARTBEAT message e.g. to keep mobile radio channels in a low-latency, high-power state. The string SHOULD be a random string (otherwise compressing transports might compress away the traffic volume).
->
-
-*Example*
-
-   	[7, 0, 1]
-
-*Example*
-
-   	[7, 23, 5]
-
-*Example*
-
-   	[7, 23, 5, "throw me away ... I am just noise"]
-
-Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of heartbeats is under independent control with each peer.
-
-
-## Advanced Features
+### Feature Announcement
 
 In addition to the *basic features* defined in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
 
@@ -579,7 +519,7 @@ In addition to the *basic features* defined in the first part of this document, 
 
 *Example: An Endpoint implementing the roles of Publisher and Subscriber and implementing some advanced features on the Publisher.*
 
-   	[1, 9129137332, {
+    [1, 9129137332, {
       "roles": {
          "publisher": {
             "features": {
@@ -591,11 +531,11 @@ In addition to the *basic features* defined in the first part of this document, 
 
          }
       }
-   	}]
+    }]
 
 *Example: A Router implementing the role of Broker and supporting all advanced features.*
 
-   	[1, 9129137332, {
+    [1, 9129137332, {
       "roles": {
          "broker": {
             "features": {
@@ -610,7 +550,7 @@ In addition to the *basic features* defined in the first part of this document, 
                "event_history":                 true
             }
          }
-   	}]
+    }]
 
 *Feature Announcement and Advanced Features*
 
@@ -652,25 +592,60 @@ When a software agent operates in a network protocol, it often identifies itself
 
 Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
 
-   	HELLO.Details.agent|string
+    HELLO.Details.agent|string
 
 and
 
-   	WELCOME.Details.agent|string
+    WELCOME.Details.agent|string
 
 *Example*
 
-   	[1, 9129137332, {
+    [1, 9129137332, {
          "agent": "AutobahnPython-0.7.0",
          "roles": {
             "publisher": {}
          }
-   	}]
+    }]
+
+
+### Session Authentication
+
+The message flow between *Clients* and *Routers* for establishing and tearing down sessions MAY involve the following messages which authenticate a session:
+
+1. `CHALLENGE`
+2. `AUTHENTICATE`
+
+![alt text](figure/hello_authenticated.png "WAMP Session denied")
+
+
+#### CHALLENGE
+
+An authentication MAY be required for the establishment of a session. Such requirement may be based on the `Realm` the connection is requested for.
+
+To request authentication, the *Router* sends a `CHALLENGE` message to the *Endpoint*.
+
+    [CHALLENGE, AuthMethod|string, Extra|dict]
+
+
+#### AUTHENTICATE
+
+In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION` message.
+
+    [AUTHENTICATE, Signature|string, Extra|dict]
+
+
+### Session Events
+
+Write me.
+
+
+### Forced Session Kill
+
+Write me.
 
 
 
-
-## Publish & Subscribe
+## Publish and Subscribe
 
 All of the following advanced features for Publish & Subscribe are optional.
 
