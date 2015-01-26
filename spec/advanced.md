@@ -52,11 +52,11 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Forced Callee Unregister](#forced-callee-unregister)
     * [Call History](#call-history)
 6. [Authentication](#authentication)
-    * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
-    * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
-    * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
-    * [Ticket-based Authentication](#ticket-based-authentication)
-    * [One Time Token Authentication](#one-time-token-authentication)
+    * [Challenge Response Authentication](#challenge-response-authentication)
+    * [Ticket based Authentication](#ticket-based-authentication)
+    * [Two Factor Authentication](#two-factor-authentication)
+    * [HTTP Cookie based Authentication](#http-cookie-based-authentication)
+    * [TLS Certificate based Authentication](#tls-certificate-based-authentication)
 7. [Reflection](#reflection)
 8. [Appendix](#appendix)
     * [Predefined URIs](#predefined-uris) 
@@ -778,6 +778,7 @@ If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, th
 
 *Brokers* and *Subscribers* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
 
+
 #### Prefix Matching
 
 A *Subscriber* requests **prefix-matching policy** with a subscription request by setting
@@ -844,7 +845,7 @@ to the *Subscribers*.
    	[36, 5512315355, 4429313566, {"topic": "com.myapp.topic.emergency.category.severe" }, ["Hello, world!"]]
 
 
-### Partitioned Subscriptions & Publications
+### Distributed Subscriptions and Publications
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
@@ -915,7 +916,12 @@ The following metatopics are currently defined:
  2. `wamp.metatopic.subscriber.remove`: A subscriber is removed from the subscription.
 
 
-### Subscriber List
+### Subscriber Events
+
+Write me.
+
+
+### Subscriber Listing
 
 A *Broker* may allow to retrieve the current list of *Subscribers* for a given subscription.
 
@@ -951,6 +957,11 @@ A call to `wamp.broker.subscriber.list` may fail with
  5. The *Router* needs to implement a *Dealer* role as well in order to be able to route the RPC, since calls can only be addressed to *Dealers*.
  6. We should probably then also have a *Callee* as a separate peer. Otherwise we break the rule that peers can implement Broker/Dealer OR Caller/Callee/Subscriber/Publisher roles.
  7. If we have the separate *Callee*, then how does this get the list? One way would be using subscription meta-events.
+
+
+### Forced Subscriber Unsubscribe
+
+Write me.
 
 
 ### Event History
@@ -1006,9 +1017,6 @@ with `Arguments = [topic|uri, publication|id]`
 
 
 
-
-
-
 ## Remote Procedure Calls
 
 All of the following advanced features for Remote Procedure Calls are optional.
@@ -1018,6 +1026,255 @@ If a WAMP implementation supports a specific advanced feature, it should announc
    	HELLO.Details.roles.<role>.features.<feature>|bool := true
 
 Otherwise, the feature is assumed to be unsupported.
+
+
+### Progressive Call Results
+
+Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+    HELLO.Details.roles.<role>.features.progressive_call_results|bool := true
+
+
+A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
+
+![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
+
+
+A *Caller* indicates it's willingness to receive progressive results by setting
+
+    CALL.Options.receive_progress|bool := true
+
+*Example.* Caller-to-Dealer `CALL`
+
+    [48, 77133, {"receive_progress": true}, "com.myapp.compute_revenue", [2010, 2011, 2012]]
+
+If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
+
+    INVOCATION.Options.receive_progress|bool := true
+
+*Example.* Dealer-to-Callee `INVOCATION`
+
+    [68, 87683, 324, {"receive_progress": true}, [2010, 2011, 2012]]
+
+An endpoint implementing the procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
+
+    YIELD.Options.progress|bool := true
+
+*Example.* Callee-to-Dealer progressive `YIELDs`
+
+    [70, 87683, {"progress": true}, ["Y2010", 120]]
+    [70, 87683, {"progress": true}, ["Y2011", 205]]
+    ...
+
+Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will **immediately** send a `RESULT` message to the original *Caller* with
+
+    RESULT.Details.progress|bool := true
+
+*Example.* Dealer-to-Caller progressive `RESULTs`
+
+    [50, 77133, {"progress": true}, ["Y2010", 120]]
+    [50, 77133, {"progress": true}, ["Y2011", 205]]
+    ...
+
+An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
+
+*Example.* Callee-to-Dealer final `YIELD`
+
+    [70, 87683, {}, ["Total", 490]]
+
+*Example.* Callee-to-Dealer final `ERROR`
+
+    [4, 87683, {}, "com.myapp.invalid_revenue_year", [1830]]
+
+A call MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller*.
+
+*Example.* Dealer-to-Caller final `RESULT`
+
+    [50, 77133, {}, ["Total", 490]]
+
+*Example.* Dealer-to-Caller final `ERROR`
+
+    [4, 77133, {}, "com.myapp.invalid_revenue_year", [1830]]
+
+In other words: `YIELD` with `YIELD.Options.progress == true` and `RESULT` with `RESULT.Details.progress == true` messages may only be sent *during* a call or invocation is still ongoing.
+
+The final `YIELD` and final `RESULT` may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.
+
+*Example.* Callee-to-Dealer `YIELDs`
+
+    [70, 87683, {"progress": true}, ["Y2010", 120]]
+    [70, 87683, {"progress": true}, ["Y2011", 205]]
+     ...
+    [70, 87683, {"progress": true}, ["Total", 490]]
+    [70, 87683, {}]
+
+*Example.* Dealer-to-Caller `RESULTs`
+
+    [50, 77133, {"progress": true}, ["Y2010", 120]]
+    [50, 77133, {"progress": true}, ["Y2011", 205]]
+     ...
+    [50, 77133, {"progress": true}, ["Total", 490]]
+    [50, 77133, {}]
+
+The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final `YIELD` and `RESULT`:
+
+*Example.* Callee-to-Dealer `YIELDs`
+
+    [70, 87683, {"progress": true}]
+    [70, 87683, {"progress": true}]
+    ...
+    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
+
+*Example.* Dealer-to-Caller `RESULTs`
+
+    [50, 77133, {"progress": true}]
+    [50, 77133, {"progress": true}]
+    ...
+    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
+
+Note that intermediate, progressive results and/or the final result MAY have different structure. The WAMP peer implementation is responsible for mapping everything into a form suitable for consumption in the host language.
+
+*Example.* Callee-to-Dealer `YIELDs`
+
+    [70, 87683, {"progress": true}, ["partial 1", 10]]
+    [70, 87683, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
+     ...
+    [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
+
+*Example.* Dealer-to-Caller `RESULTs`
+
+    [50, 77133, {"progress": true}, ["partial 1", 10]]
+    [50, 77133, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
+     ...
+    [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
+
+Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Options.receive_progress` are simply indications that the *Callee* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
+
+<!--
+
+**Errors**
+
+
+If a *Caller* has not indicated support for progressive results or has sent a `CALL` to the *Dealer* without setting `CALL.Options.receive_progress == true`, and the *Dealer* sends a progressive `RESULT`, the *Caller* MUST fail the complete session with the *Dealer*.
+
+If a *Dealer* has not indicated support for progressive results or the *Dealer* has sent an `INVOCATION` to the *Callee* without setting `INVOCATION.Options.receive_progress == true`, and the *Callee* sends a progressive `YIELD`, the *Dealer* MUST fail the call with error
+
+    wamp.error.unexpected_progress_in_yield
+
+If a *Caller* has not indicated support for progressive results and sends a `CALL` to the *Dealer* while setting `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call
+
+However, if a *Caller* has *not* indicated it's willingness to receive progressive results in a call, the *Dealer* MUST NOT send progressive `RESULTs`, and a *Callee* MUST NOT produce progressive `YIELDs`.
+
+A *Dealer* that does not support progressive calls MUST ignore any option `CALL.Options.receive_progress` received by a *Caller*, and **not** forward the option to the *Callee*.
+
+
+
+If a *Callee* that has not indicated support for progressive results and the *Dealer* sends an `INVOCATION` with `INVOCATION.Options.receive_progress == true
+
+
+A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Options.receive_progress` flag.
+
+If a *Dealer* has not indicated support for progressive results, and it receives a `CALL` from a *Caller* with `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call with error
+
+    wamp.error.unsupported_feature.dealer.progressive_call_result
+
+
+
+*Example.* Dealer-to-Caller `ERROR`
+
+    [4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
+
+
+
+If the *Caller* does not support receiving *progressive calls*, as indicated by
+
+    HELLO.Details.roles.caller.features.progressive_call_results == false
+
+and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
+
+*Example.* Callee-to-Dealer `YIELD`
+
+    [70, 87683, {"progress": true}, ["partial 1", 10]]
+
+*Example.* Dealer-to-Caller `ERROR`
+
+    [4, 87683, {}, "wamp.error.unsupported_feature.caller.progressive_call_result"]
+
+If the *Dealer* does not support processing *progressive invocations*, as indicated by
+
+    HELLO.Details.roles.dealer.features.progressive_call_results == false
+
+and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
+
+*Example.* Callee-to-Dealer `YIELD`
+
+    [70, 87683, {"progress": true}, ["partial 1", 10]]
+
+*Example.* Dealer-to-Caller `ERROR`
+
+    [4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
+
+-->
+
+
+### Canceling Calls
+
+Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+    HELLO.Details.roles.<role>.features.call_canceling|bool := true
+
+
+A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
+
+The message flow between *Callers*, a *Dealer* and *Callees* for canceling remote procedure calls involves the following messages:
+
+ * `CANCEL`
+ * `INTERRUPT`
+
+A call may be cancelled at the *Callee*
+
+![alt text](figure/rpc_cancel1.png "RPC Message Flow: Calls")
+
+A call may be cancelled at the *Dealer*
+
+![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
+
+A *Caller* cancels a remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
+
+    [CANCEL, CALL.Request|id, Options|dict]
+
+A *Dealer* cancels an invocation of an endpoint initiated (but not yet finished) by sending a `INTERRUPT` message to the *Callee*:
+
+    [INTERRUPT, INVOCATION.Request|id, Options|dict]
+
+Options:
+
+    CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
+
+
+### Call Timeouts
+
+Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+    HELLO.Details.roles.<role>.features.call_timeout|bool := true
+
+A *Caller* might want to issue a call providing a *timeout* for the call to finish.
+
+A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
+
+A *Callee* specifies a timeout by providing
+
+    CALL.Options.timeout|integer
+
+in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value.
+
+The timeout option is a companion to, but slightly different from the `CANCEL` and `INTERRUPT` messages that allow a *Caller* and *Dealer* to **actively** cancel a call or invocation.
+
+In fact, a timeout timer might run at three places:
+
+ * *Caller*
+ * *Dealer*
+ * *Callee*
 
 
 ### Callee Black- and Whitelisting
@@ -1221,7 +1478,7 @@ Since each *Callees* registrations "stands on it's own", there is no *set semant
 If an endpoint was registered with a pattern-based matching policy, a *Dealer* MUST supply the original `CALL.Procedure` as provided by the *Caller* in `INVOCATION.Details.procedure` to the *Callee*.
 
 
-### Partitioned Registrations & Calls
+### Distributed Registrations and Calls
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
@@ -1271,253 +1528,24 @@ The call is then routed to all endpoints that were registered ..
 The call is then processed as for "All" Calls.
 
 
-### Call Timeouts
+### Callee Events
 
-Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+Write me.
 
-   	HELLO.Details.roles.<role>.features.call_timeout|bool := true
 
-A *Caller* might want to issue a call providing a *timeout* for the call to finish.
+### Callee Listing
 
-A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
+Write me.
 
-A *Callee* specifies a timeout by providing
 
-   	CALL.Options.timeout|integer
+### Forced Callee Unregister
 
-in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value.
+Write me.
 
-The timeout option is a companion to, but slightly different from the `CANCEL` and `INTERRUPT` messages that allow a *Caller* and *Dealer* to **actively** cancel a call or invocation.
 
-In fact, a timeout timer might run at three places:
+### Call History
 
- * *Caller*
- * *Dealer*
- * *Callee*
-
-
-### Canceling Calls
-
-Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
-
-   	HELLO.Details.roles.<role>.features.call_canceling|bool := true
-
-
-A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
-
-The message flow between *Callers*, a *Dealer* and *Callees* for canceling remote procedure calls involves the following messages:
-
- * `CANCEL`
- * `INTERRUPT`
-
-A call may be cancelled at the *Callee*
-
-![alt text](figure/rpc_cancel1.png "RPC Message Flow: Calls")
-
-A call may be cancelled at the *Dealer*
-
-![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
-
-A *Caller* cancels a remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
-
-    [CANCEL, CALL.Request|id, Options|dict]
-
-A *Dealer* cancels an invocation of an endpoint initiated (but not yet finished) by sending a `INTERRUPT` message to the *Callee*:
-
-    [INTERRUPT, INVOCATION.Request|id, Options|dict]
-
-Options:
-
-   	CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
-
-
-### Progressive Call Results
-
-Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
-
-   	HELLO.Details.roles.<role>.features.progressive_call_results|bool := true
-
-
-A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
-
-![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
-
-
-A *Caller* indicates it's willingness to receive progressive results by setting
-
-   	CALL.Options.receive_progress|bool := true
-
-*Example.* Caller-to-Dealer `CALL`
-
-   	[48, 77133, {"receive_progress": true}, "com.myapp.compute_revenue", [2010, 2011, 2012]]
-
-If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
-
-   	INVOCATION.Options.receive_progress|bool := true
-
-*Example.* Dealer-to-Callee `INVOCATION`
-
-   	[68, 87683, 324, {"receive_progress": true}, [2010, 2011, 2012]]
-
-An endpoint implementing the procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
-
-   	YIELD.Options.progress|bool := true
-
-*Example.* Callee-to-Dealer progressive `YIELDs`
-
-   	[70, 87683, {"progress": true}, ["Y2010", 120]]
-   	[70, 87683, {"progress": true}, ["Y2011", 205]]
-   	...
-
-Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will **immediately** send a `RESULT` message to the original *Caller* with
-
-   	RESULT.Details.progress|bool := true
-
-*Example.* Dealer-to-Caller progressive `RESULTs`
-
-   	[50, 77133, {"progress": true}, ["Y2010", 120]]
-   	[50, 77133, {"progress": true}, ["Y2011", 205]]
-   	...
-
-An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
-
-*Example.* Callee-to-Dealer final `YIELD`
-
-   	[70, 87683, {}, ["Total", 490]]
-
-*Example.* Callee-to-Dealer final `ERROR`
-
-   	[4, 87683, {}, "com.myapp.invalid_revenue_year", [1830]]
-
-A call MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller*.
-
-*Example.* Dealer-to-Caller final `RESULT`
-
-   	[50, 77133, {}, ["Total", 490]]
-
-*Example.* Dealer-to-Caller final `ERROR`
-
-   	[4, 77133, {}, "com.myapp.invalid_revenue_year", [1830]]
-
-In other words: `YIELD` with `YIELD.Options.progress == true` and `RESULT` with `RESULT.Details.progress == true` messages may only be sent *during* a call or invocation is still ongoing.
-
-The final `YIELD` and final `RESULT` may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.
-
-*Example.* Callee-to-Dealer `YIELDs`
-
-   	[70, 87683, {"progress": true}, ["Y2010", 120]]
-   	[70, 87683, {"progress": true}, ["Y2011", 205]]
-   	 ...
-   	[70, 87683, {"progress": true}, ["Total", 490]]
-   	[70, 87683, {}]
-
-*Example.* Dealer-to-Caller `RESULTs`
-
-   	[50, 77133, {"progress": true}, ["Y2010", 120]]
-   	[50, 77133, {"progress": true}, ["Y2011", 205]]
-   	 ...
-   	[50, 77133, {"progress": true}, ["Total", 490]]
-   	[50, 77133, {}]
-
-The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final `YIELD` and `RESULT`:
-
-*Example.* Callee-to-Dealer `YIELDs`
-
-   	[70, 87683, {"progress": true}]
-   	[70, 87683, {"progress": true}]
-   	...
-   	[70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
-
-*Example.* Dealer-to-Caller `RESULTs`
-
-   	[50, 77133, {"progress": true}]
-   	[50, 77133, {"progress": true}]
-   	...
-   	[50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
-
-Note that intermediate, progressive results and/or the final result MAY have different structure. The WAMP peer implementation is responsible for mapping everything into a form suitable for consumption in the host language.
-
-*Example.* Callee-to-Dealer `YIELDs`
-
-   	[70, 87683, {"progress": true}, ["partial 1", 10]]
-   	[70, 87683, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
-   	 ...
-   	[70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
-
-*Example.* Dealer-to-Caller `RESULTs`
-
-   	[50, 77133, {"progress": true}, ["partial 1", 10]]
-   	[50, 77133, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
-   	 ...
-   	[50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
-
-Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Options.receive_progress` are simply indications that the *Callee* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
-
-<!--
-
-**Errors**
-
-
-If a *Caller* has not indicated support for progressive results or has sent a `CALL` to the *Dealer* without setting `CALL.Options.receive_progress == true`, and the *Dealer* sends a progressive `RESULT`, the *Caller* MUST fail the complete session with the *Dealer*.
-
-If a *Dealer* has not indicated support for progressive results or the *Dealer* has sent an `INVOCATION` to the *Callee* without setting `INVOCATION.Options.receive_progress == true`, and the *Callee* sends a progressive `YIELD`, the *Dealer* MUST fail the call with error
-
-   	wamp.error.unexpected_progress_in_yield
-
-If a *Caller* has not indicated support for progressive results and sends a `CALL` to the *Dealer* while setting `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call
-
-However, if a *Caller* has *not* indicated it's willingness to receive progressive results in a call, the *Dealer* MUST NOT send progressive `RESULTs`, and a *Callee* MUST NOT produce progressive `YIELDs`.
-
-A *Dealer* that does not support progressive calls MUST ignore any option `CALL.Options.receive_progress` received by a *Caller*, and **not** forward the option to the *Callee*.
-
-
-
-If a *Callee* that has not indicated support for progressive results and the *Dealer* sends an `INVOCATION` with `INVOCATION.Options.receive_progress == true
-
-
-A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Options.receive_progress` flag.
-
-If a *Dealer* has not indicated support for progressive results, and it receives a `CALL` from a *Caller* with `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call with error
-
-   	wamp.error.unsupported_feature.dealer.progressive_call_result
-
-
-
-*Example.* Dealer-to-Caller `ERROR`
-
-   	[4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
-
-
-
-If the *Caller* does not support receiving *progressive calls*, as indicated by
-
-   	HELLO.Details.roles.caller.features.progressive_call_results == false
-
-and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
-
-*Example.* Callee-to-Dealer `YIELD`
-
-   	[70, 87683, {"progress": true}, ["partial 1", 10]]
-
-*Example.* Dealer-to-Caller `ERROR`
-
-   	[4, 87683, {}, "wamp.error.unsupported_feature.caller.progressive_call_result"]
-
-If the *Dealer* does not support processing *progressive invocations*, as indicated by
-
-   	HELLO.Details.roles.dealer.features.progressive_call_results == false
-
-and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
-
-*Example.* Callee-to-Dealer `YIELD`
-
-   	[70, 87683, {"progress": true}, ["partial 1", 10]]
-
-*Example.* Dealer-to-Caller `ERROR`
-
-   	[4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
-
--->
+Write me.
 
 
 ## Authentication
@@ -1537,21 +1565,7 @@ Some applications might want to perform their own authentication schemes by usin
 And some applications might want to use a transport independent scheme, nevertheless predefined by WAMP.
 
 
-### TLS Certificate-based Authentication
-
-When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
-
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
-
-
-### HTTP Cookie-based Authentication
-
-When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
-
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
-
-
-### WAMP Challenge-Response Authentication
+### Challenge Response Authentication
 
 WAMP Challenge-Response ("WAMP-CRA") authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a *secret*. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.
 
@@ -1678,70 +1692,24 @@ When the password is salted, the server will during WAMP-CRA send a `CHALLENGE` 
 The `CHALLENGE.Details.salt|string` is the password salt in use. The `CHALLENGE.Details.keylen|int` and `CHALLENGE.Details.iterations|int` are parameters for the PBKDF2 algorithm.
 
 
+### Two Factor Authentication
 
-### Ticket-based Authentication
+Write me.
 
-With *Ticket-based authentication*, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.
 
-This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
+### HTTP Cookie-based Authentication
 
-> Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
-> 
+When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
 
-A typical authentication begins with the client sending a `HELLO` message specifying the `ticket` method as (one of) the authentication methods:
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
 
-```javascript
-[1, "realm1",
-	{
-		"roles": ...,
-		"authmethods": ["ticket"],
-		"authid": "joe"
-	}
-]
-```
 
-The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include `"ticket"`.
+### TLS Certificate-based Authentication
 
-The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
 
-If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
 
-If the server is willing to let the client authenticate using a ticket and the server recognizes the provided `authid`, it'll send a `CHALLENGE` message:
-
-```javascript
-[4, "ticket", {}]
-```
-
-The client will send an `AUTHENTICATE` message containing a ticket:
-
-```javascript
-[5, "secret!!!", {}]
-```
-
-The server will then check if the ticket provided is permissible (for the `authid` given).
-
-If the authentication succeeds, the server will finally respond with a `WELCOME` message:
-
-```javascript
-[2, 3251278072152162,
-	{
-		"authid": "joe",
-		"authrole": "user",
-		"authmethod": "ticket",
-		"authprovider": "static",
-		"roles": ...
-	}
-]
-```
-
-where
-
- 1. `authid|string`: The authentication ID the client was (actually) authenticated as.
- 2. `authrole|string`: The authentication role the client was authenticated for.
- 3. `authmethod|string`: The authentication method, here `"ticket"`
- 4. `authprovider|string`: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. `static` or `dynamic`.
-
-The `WELCOME.Details` again contain the actual authentication information active. If the authentication fails, the server will response with an `ABORT` message.
 
 
 
