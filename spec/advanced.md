@@ -1761,11 +1761,11 @@ WAMP predefines the following URIs in the *advanced profile*. For URIs, used inÂ
 
 **Session Management**
 
-A session has joined a realm on a router:
+A session has joined a realm:
 
   wamp.session.on_join
 
-A session has left a realm on a router:
+A session has left a realm:
 
   wamp.session.on_leave
 
@@ -1774,22 +1774,38 @@ A session has left a realm on a router:
 
 A session has subscribed to a topic:
 
-  wamp.session.subscriber.on_subscribe
+  wamp.topic.on_subscribe
+
+A first session has subscribed to a given topic:
+
+  wamp.topic.on_first_subscribe
 
 A session has unsubscribed from a topic:
 
-  wamp.session.subscriber.on_unsubscribe
+  wamp.topic.on_unsubscribe
+
+The last session subscribed to a given topic has unsubscribed:
+
+  wamp.topic.on_last_unsubscribe
 
 
 **Callee Management**
 
 A session has registered a procedure:
 
-  wamp.session.callee.on_register
+  wamp.procedure.on_register
+
+A first session has registered a given procedure:
+
+  wamp.procedure.on_first_register
 
 A session has unregistered a procedure:
 
-  wamp.session.callee.on_unregister
+  wamp.procedure.on_unregister
+
+The last session registered for a given procedure has unregistered:
+
+  wamp.procedure.on_last_unregister
 
 
 **Reflection**
@@ -1824,30 +1840,30 @@ Forcefully kill session(s):
 
 List subscribers
 
-  wamp.session.subscriber.list
+  wamp.topic.subscriber.list
 
 Count subscribers
 
-  wamp.session.subscriber.count
+  wamp.topic.subscriber.count
 
 Forcefully unsubscribe subscriber(s):
 
-  wamp.session.subscriber.unsubscribe
+  wamp.topic.subscriber.unsubscribe
 
 
 **Callee Management**
 
 List callees
 
-  wamp.session.callee.list
+  wamp.procedure.callee.list
 
 Count callees
 
-  wamp.session.callee.count
+  wamp.procedure.callee.count
 
 Forcefully unregister callee(s)
 
-  wamp.session.callee.unregister
+  wamp.procedure.callee.unregister
 
 
 **Reflection**
