@@ -2,7 +2,7 @@
 
 This document specifies the *Basic Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **RC4**, 2015/01/26
+Document Revision: **RC4**, 2015/01/29
 
 For the *Advanced Profile*, please see [The Web Application Messaging Protocol, Part 2: Advanced Profile](advanced.md).
 
@@ -30,7 +30,7 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
 6. [Sessions](#sessions)
     * [Session Establishment](#session-establishment)
     * [Session Closing](#session-closing)
-7. [Publish & Subscribe](#publish--subscribe)
+7. [Publish and Subscribe](#publish-and-subscribe)
     * [Subscribing and Unsubscribing](#subscribing-and-unsubscribing)
     * [Publishing and Events](#publishing-and-events)
 8. [Remote Procedure Calls](#remote-procedure-calls)
@@ -604,7 +604,7 @@ The following table lists the message type code for **all 25 messages defined in
 |  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
 |  5   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
 |  6   | `GOODBYE`      |          | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
-|  7   | `HEARTBEAT`    | advanced | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
+|      |                |          |             |          |              |          |          |          |
 |  8   | `ERROR`        |          | Rx          | Tx       | Rx           | Rx       | Tx/Rx    | Tx/Rx    |
 |      |                |          |             |          |              |          |          |          |
 | 16   | `PUBLISH`      |          | Tx          | Rx       |              |          |          |          |
@@ -820,7 +820,7 @@ The differences between `ABORT` and `GOODBYE` messages are:
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
 > 
 
-## Publish & Subscribe
+## Publish and Subscribe
 
 All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles.
 
@@ -1563,8 +1563,6 @@ Further, *Routers* are trusted to **actually perform** routing as specified. E.g
 
 A rogue *Router* might deny normal routing operation without a *Client* taking notice.
 
-
- 
 
 ### Binary conversion of JSON Strings
 

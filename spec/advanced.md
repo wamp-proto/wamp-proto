@@ -2,7 +2,7 @@
 
 This document specifies the *Advanced Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **beta-1**, 2015/01/26
+Document Revision: **beta-1**, 2015/01/29
 
 For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md).
 
@@ -16,7 +16,7 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
 1. [Transports](#transports)
    * [RawSocket Transport](#rawsocket-transport)
    * [Batched WebSocket Transport](#batched-websocket-transport)
-   * [Long-Poll Transport](#long-poll-transport)
+   * [LongPoll Transport](#longpoll-transport)
    * [Multiplexed Transport](#multiplexed-transport)
 2. [Messages](#messages)
     * [Message Definitions](#message-definitions)
@@ -31,7 +31,7 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Publisher Exclusion](#publisher-exclusion) [stable]
     * [Publisher Identification](#publisher-identification) [stable]
     * [Publication Trust Levels](#publication-trust-levels)
-    * [Pattern-based Subscriptions](#pattern-based-subscriptions)
+    * [Pattern-based Subscriptions](#pattern--based-subscriptions)
     * [Distributed Subscriptions and Publications](#distributed-subscriptions-and-publications)
     * [Subscriber Events](#subscriber-events)
     * [Subscriber Listing](#subscriber-listing)
@@ -45,7 +45,7 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Caller Exclusion](#caller-exclusion)
     * [Caller Identification](#caller-identification) [stable]
     * [Call Trust Levels](#call-trust-levels)
-    * [Pattern-based Registrations](#pattern-based-registrations)
+    * [Pattern-based Registrations](#pattern--based-registrations)
     * [Distributed Registrations and Calls](#distributed-registrations-and-calls)
     * [Callee Events](#callee-events)
     * [Callee Listing](#callee-listing)
@@ -347,7 +347,7 @@ Batching with MsgPack works by serializing each WAMP message to MsgPack as norma
 With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length **1**. Sending a batch of length **0** (no WAMP message) is illegal and a *Peer* MUST fail the transport upon receiving such a transport message.
 
 
-### Long-Poll Transport
+### LongPoll Transport
 
 The *Long-Poll Transport* is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the *Client* issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
 
@@ -473,13 +473,6 @@ A *Client* having received a challenge is expected to respond by sending a signa
 
     [AUTHENTICATE, Signature|string, Extra|dict]
 
-#### `HEARTBEAT`
-
-Each *Peer* can send heartbeats signaling WAMP message processing advance.
-
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
-
 #### `CANCEL`
 
 A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
@@ -504,7 +497,6 @@ The following table list the message type code for **the OPTIONAL messages** def
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
 |  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
 |  5   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
-|  7   | `HEARTBEAT`    | advanced | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 | 49   | `CANCEL`       | advanced |             |          |              | Tx       | Rx       |          |
 | 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
 
@@ -1697,20 +1689,18 @@ The `CHALLENGE.Details.salt|string` is the password salt in use. The `CHALLENGE.
 Write me.
 
 
-### HTTP Cookie-based Authentication
+### HTTP Cookie based Authentication
 
 When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
 
 This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
 
 
-### TLS Certificate-based Authentication
+### TLS Certificate based Authentication
 
 When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
 
 This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
-
-
 
 
 ## Reflection
@@ -1894,6 +1884,8 @@ A *Dealer* could not perform a call, since a procedure with the given URI is reg
 A *Router* rejected client request to disclose its identity
 
 	wamp.error.option_disallowed.disclose_me
+
+
 
 ### Authentication examples
 
