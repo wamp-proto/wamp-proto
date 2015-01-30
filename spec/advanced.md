@@ -2,55 +2,88 @@
 
 This document specifies the *Advanced Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **alpha-2**, 2014/02/26
+Document Revision: **beta-1**, 2015/01/26
 
 > For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md). For the (deprecated) WAMP version 1 specification, please see [here](http://wamp.ws/spec/wamp1/).
 > 
 
-Copyright (c) 2014 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+Copyright (c) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
 
 # Part 2: Advanced Profile
 
 **Contents**
 
 1. [Transports](#transports)
+
    * [RawSocket Transport](#rawsocket-transport)
    * [Batched WebSocket Transport](#batched-websocket-transport)
    * [Long-Poll Transport](#long-poll-transport)
    * [Multiplexed Transport](#multiplexed-transport)
+
 2. [Messages](#messages)
+
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
+
 3. [Session Management](#session-management)
-    * [Heartbeats](#heartbeats)
-4. [Publish & Subscribe](#publish--subscribe)
+
+    * [Session Events](#session-events)
+    * [Forced Session Kill](#forced-session-kill)
+
+4. [Publish and Subscribe](#publish-and-subscribe)
+
     * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) [stable]
     * [Publisher Exclusion](#publisher-exclusion) [stable]
+
     * [Publisher Identification](#publisher-identification) [stable]
+
     * [Publication Trust Levels](#publication-trust-levels)
+
     * [Pattern-based Subscriptions](#pattern-based-subscriptions)
-    * [Distributed Subscriptions & Publications](#distributed-subscriptions--publications)
-    * [Subscriber Meta Events](#subscriber-meta-events)
-    * [Subscriber List](#subscriber-list)
+    * [Distributed Subscriptions and Publications](#distributed-subscriptions-and-publications)
+
+    * [Subscriber Events](#subscriber-events)
+    * [Subscriber Listing](#subscriber-listing)
+
+    * [Forced Subscriber Unsubscribe](#forced-subscriber-unsubscribe)
+
     * [Event History](#event-history)
+
 5. [Remote Procedure Calls](#remote-procedure-calls)
-    * [Caller Identification](#caller-identification) [stable]
+
     * [Progressive Call Results](#progressive-call-results) [stable]
     * [Canceling Calls](#canceling-calls) [stable]
     * [Call Timeouts](#call-timeouts)
-    * [Call Trust Levels](#call-trust-levels)
-    * [Pattern-based Registrations](#pattern-based-registrations)
-    * [Distributed Registrations & Calls](#distributed-registrations--calls)
+
     * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
     * [Caller Exclusion](#caller-exclusion)
+
+    * [Caller Identification](#caller-identification) [stable]
+
+    * [Call Trust Levels](#call-trust-levels)
+
+    * [Pattern-based Registrations](#pattern-based-registrations)
+    * [Distributed Registrations and Calls](#distributed-registrations-and-calls)
+
+    * [Callee Events](#callee-events)
+    * [Callee Listing](#callee-listing)
+
+    * [Forced Callee Unregister](#forced-callee-unregister)
+
+    * [Call History](#call-history)
+
 6. [Authentication](#authentication)
+
     * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
     * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
     * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
     * [Ticket-based Authentication](#ticket-based-authentication)
     * [One Time Token Authentication](#one-time-token-authentication)
+
 7. [Reflection](#reflection)
+
 8. [Appendix](#appendix)
+
     * [Predefined URIs](#predefined-uris) 
     * [Authentication examples](#authentication-examples)
 
@@ -1540,8 +1573,6 @@ and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.pr
 
 ## Authentication
 
-
-
 ![alt text](figure/hello_authenticated.png "WAMP Session denied")
 
 Authentication is a complex area.
@@ -1807,6 +1838,111 @@ A peer that acts as a *Dealer* SHOULD announce support for the reflection API by
 ### Predefined URIs
 
 WAMP predefines the following URIs in the *advanced profile*. For URIs, used in *basic profile*, please, see appendix in basic profile specification.
+
+
+#### Predefined Meta Topics
+
+**Session Management**
+
+A session has joined a realm on a router:
+
+  wamp.session.on_join
+
+A session has left a realm on a router:
+
+  wamp.session.on_leave
+
+
+**Subscriber Management**
+
+A session has subscribed to a topic:
+
+  wamp.session.subscriber.on_subscribe
+
+A session has unsubscribed from a topic:
+
+  wamp.session.subscriber.on_unsubscribe
+
+
+**Callee Management**
+
+A session has registered a procedure:
+
+  wamp.session.callee.on_register
+
+A session has unregistered a procedure:
+
+  wamp.session.callee.on_unregister
+
+
+**Reflection**
+
+A topic or procedure has been defined for reflection:
+
+  wamp.reflect.on_define
+
+A topic or procedure has been unfined from reflection:
+
+  wamp.reflect.on_undefine
+
+
+#### Predefined Meta Procedures
+
+**Session Management**
+
+List the sessions 
+
+  wamp.session.list
+
+Count sessions
+
+  wamp.session.count
+
+Forcefully kill session(s):
+
+  wamp.session.kill
+
+
+**Subscriber Management**
+
+List subscribers
+
+  wamp.session.subscriber.list
+
+Count subscribers
+
+  wamp.session.subscriber.count
+
+Forcefully unsubscribe subscriber(s):
+
+  wamp.session.subscriber.unsubscribe
+
+
+**Callee Management**
+
+List callees
+
+  wamp.session.callee.list
+
+Count callees
+
+  wamp.session.callee.count
+
+Forcefully unregister callee(s)
+
+  wamp.session.callee.unregister
+
+
+**Reflection**
+
+A topic or procedure is defined for reflection:
+
+  wamp.reflect.define
+
+A topic or procedure was asked to be described (reflected upon):
+
+  wamp.reflect.describe
+
 
 #### Predefined Errors
 
