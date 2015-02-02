@@ -14,23 +14,23 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
 **Contents**
 
 1. [Transports](#transports)
-   * [RawSocket Transport](#rawsocket-transport) **stable**
-   * [Batched WebSocket Transport](#batched-websocket-transport) **stable**
-   * [LongPoll Transport](#longpoll-transport) **stable**
-   * [Multiplexed Transport](#multiplexed-transport) **stable**
+   * [RawSocket Transport](#rawsocket-transport) **[stable]**
+   * [Batched WebSocket Transport](#batched-websocket-transport) **[stable]**
+   * [LongPoll Transport](#longpoll-transport) **[stable]**
+   * [Multiplexed Transport](#multiplexed-transport) **[stable]**
 2. [Messages](#messages)
-    * [Message Definitions](#message-definitions) **stable**
-    * [Message Codes and Direction](#message-codes-and-direction) **stable**
+    * [Message Definitions](#message-definitions) **[stable]**
+    * [Message Codes and Direction](#message-codes-and-direction) **[stable]**
 3. [Sessions](#sessions)
-    * [Feature Announcement](#feature-announcement) **stable**
-    * [Agent Identification](#agent-identification) **stable**
+    * [Feature Announcement](#feature-announcement) **[stable]**
+    * [Agent Identification](#agent-identification) **[stable]**
     * [Session Authentication](#session-authentication)
     * [Session Events](#session-events)
     * [Forced Session Kill](#forced-session-kill)
 4. [Publish and Subscribe](#publish-and-subscribe)
-    * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) [stable]
-    * [Publisher Exclusion](#publisher-exclusion) [stable]
-    * [Publisher Identification](#publisher-identification) [stable]
+    * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) **[stable]**
+    * [Publisher Exclusion](#publisher-exclusion) **[stable]**
+    * [Publisher Identification](#publisher-identification) **[stable]**
     * [Publication Trust Levels](#publication-trust-levels)
     * [Pattern-based Subscriptions](#pattern--based-subscriptions)
     * [Distributed Subscriptions and Publications](#distributed-subscriptions-and-publications)
@@ -39,12 +39,12 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Forced Subscriber Unsubscribe](#forced-subscriber-unsubscribe)
     * [Event History](#event-history)
 5. [Remote Procedure Calls](#remote-procedure-calls)
-    * [Progressive Call Results](#progressive-call-results) [stable]
-    * [Canceling Calls](#canceling-calls) [stable]
+    * [Progressive Call Results](#progressive-call-results) **[stable]**
+    * [Canceling Calls](#canceling-calls) **[stable]**
     * [Call Timeouts](#call-timeouts)
     * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
     * [Caller Exclusion](#caller-exclusion)
-    * [Caller Identification](#caller-identification) [stable]
+    * [Caller Identification](#caller-identification) **[stable]**
     * [Call Trust Levels](#call-trust-levels)
     * [Pattern-based Registrations](#pattern--based-registrations)
     * [Distributed Registrations and Calls](#distributed-registrations-and-calls)
