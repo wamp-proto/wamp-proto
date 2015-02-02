@@ -19,10 +19,11 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
    * [LongPoll Transport](#longpoll-transport) **stable**
    * [Multiplexed Transport](#multiplexed-transport) **stable**
 2. [Messages](#messages)
-    * [Message Definitions](#message-definitions)
-    * [Message Codes and Direction](#message-codes-and-direction)
+    * [Message Definitions](#message-definitions) **stable**
+    * [Message Codes and Direction](#message-codes-and-direction) **stable**
 3. [Sessions](#sessions)
-    * [Feature Announcement](#feature-announcement)
+    * [Feature Announcement](#feature-announcement) **stable**
+    * [Agent Identification](#agent-identification) **stable**
     * [Session Authentication](#session-authentication)
     * [Session Events](#session-events)
     * [Forced Session Kill](#forced-session-kill)
@@ -532,12 +533,11 @@ In addition to the *basic features* defined in the first part of this document, 
             }
          },
          "subscriber": {
-
          }
       }
     }]
 
-*Example: A Router implementing the role of Broker and supporting all advanced features.*
+*Example: A Router implementing the role of Broker and supporting multiple advanced features.*
 
     [1, 9129137332, {
       "roles": {
@@ -569,6 +569,7 @@ The complete list of *advanced features* currently defined per role is:
 | Feature                       |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |-------------------------------|-------------|----------|--------------|----------|----------|----------|
 | **Remote Procedure Calls**    |             |          |              |          |          |          |
+|                               |             |          |              |          |          |          |
 | callee_blackwhite_listing     |             |          |              | X        | X        |          |
 | caller_exclusion              |             |          |              | X        | X        |          |
 | caller_identification         |             |          |              | X        | X        | X        |
@@ -580,6 +581,7 @@ The complete list of *advanced features* currently defined per role is:
 | progressive_call_results      |             |          |              | X        | X        | X        |
 |                               |             |          |              |          |          |          |
 | **Publish & Subscribe**       |             |          |              |          |          |          |
+|                               |             |          |              |          |          |          |
 | subscriber_blackwhite_listing | X           | X        |              |          |          |          |
 | publisher_exclusion           | X           | X        |              |          |          |          |
 | publisher_identification      | X           | X        | X            |          |          |          |
@@ -590,7 +592,8 @@ The complete list of *advanced features* currently defined per role is:
 | subscriber_list               |             | X        | X            |          |          |          |
 | event_history                 |             | X        | X            |          |          |          |
 
-*Network Agent*
+
+### Agent Identification
 
 When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
 
@@ -602,13 +605,24 @@ and
 
     WELCOME.Details.agent|string
 
-*Example*
+*Example: A Client `HELLO` message.*
 
-    [1, 9129137332, {
-         "agent": "AutobahnPython-0.7.0",
+    [1, "somerealm", {
+         "agent": "AutobahnJS-0.9.14",
          "roles": {
+            "subscriber": {},
             "publisher": {}
          }
+    }]
+
+
+*Example: A Router `WELCOME` message.*
+
+    [2, 9129137332, {
+        "agent": "Crossbar.io-0.10.11",
+        "roles": {
+          "broker": {}
+        }
     }]
 
 
@@ -620,6 +634,8 @@ The message flow between *Clients* and *Routers* for establishing and tearing do
 2. `AUTHENTICATE`
 
 ![alt text](figure/hello_authenticated.png "WAMP Session denied")
+
+Concrete use of `CHALLENGE` and `AUTHENTICATE` messages depends on the specific authentication method. These are described in the [Authentication](#authentication) section.
 
 
 #### CHALLENGE
