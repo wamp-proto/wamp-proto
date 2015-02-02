@@ -14,10 +14,10 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
 **Contents**
 
 1. [Transports](#transports)
-   * [RawSocket Transport](#rawsocket-transport)
-   * [Batched WebSocket Transport](#batched-websocket-transport)
-   * [LongPoll Transport](#longpoll-transport)
-   * [Multiplexed Transport](#multiplexed-transport)
+   * [RawSocket Transport](#rawsocket-transport) **stable**
+   * [Batched WebSocket Transport](#batched-websocket-transport) **stable**
+   * [LongPoll Transport](#longpoll-transport) **stable**
+   * [Multiplexed Transport](#multiplexed-transport) **stable**
 2. [Messages](#messages)
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
@@ -99,7 +99,7 @@ Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is simple to implement, sin
 
 WAMP-over-RawSocket has even lower overhead than WebSocket, which can be desirable in particular when running on local connections like loopback TCP or Unix domain sockets. It is also expected to allow implementations in microcontrollers in under 2KB RAM.
 
-WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on a (misused) standard Web port (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
+WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on the standard port for secure HTTPS (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
 
 However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers don't allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (`permessage-deflate` WebSocket extension).
 
@@ -146,16 +146,7 @@ The *first octet* is a magic octet with value `0x7F`. This value is chosen to av
 
 > By using a magic first octet that cannot appear in a regular HTTP request, WAMP-over-RawSocket can be run e.g. on the same TCP listening port as WAMP-over-WebSocket or WAMP-over-LongPoll.
 
-The *second octet* `0xLS` consists of a 4 bit `LENGTH` field and a 4 bit `SERIALIZER` field.
-
-The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
-
-The possible values for `SERIALIZER` are:
-
-    0: illegal
-    1: JSON
-    2: MsgPack
-    3 - 15: reserved for future serializers
+The *second octet* consists of a 4 bit `LENGTH` field and a 4 bit `SERIALIZER` field.
 
 The `LENGTH` value is used by the *Client* to signal the **maximum message length** of messages it is willing to **receive**. When the handshake completes successfully, a *Router* MUST NOT send messages larger than this size.
 
@@ -167,6 +158,15 @@ The possible values for `LENGTH` are:
     15: 2**24 octets
 
 This means a *Client* can choose the maximum message length between **512** and **16M** octets.
+
+The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
+
+The possible values for `SERIALIZER` are:
+
+    0: illegal
+    1: JSON
+    2: MsgPack
+    3 - 15: reserved for future serializers
 
 Here is a Python program that prints all (currently) permissible values for the *second octet*:
 
@@ -230,24 +230,28 @@ When the *Router* is unable to speak the serializer requested by the *Client*, o
     31                          0
     0111 1111 EEEE 0000 RRRR RRRR
 
-An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST BE all zeros for now.
+An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST all be zeros for now.
 
 The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error:
 
-    0: serializer unsupported
-    1: maximum message length unacceptable
-    2: use of reserved bits (unsupported feature)
-    3: maximum connection count reached
-    4 - 15: reserved for future errors
+    0: illegal (must not be used)
+    1: serializer unsupported
+    2: maximum message length unacceptable
+    3: use of reserved bits (unsupported feature)
+    4: maximum connection count reached
+    5 - 15: reserved for future errors
+
+> Note that the error code `0` MUST not be used. This is to allow storage of error state in a host language variable, while allowing `0` to signal the current state "no error"
 
 Here is an example of how a *Router* might create the *second octet* in an error response:
 
 ```python
 ERRMAP = {
-   0: "serializer unsupported",
-   1: "maximum message length unacceptable",
-   2: "use of reserved bits (unsupported feature)",
-   3: "maximum connection count reached"
+   0: "illegal (must not be used)",
+   1: "serializer unsupported",
+   2: "maximum message length unacceptable",
+   3: "use of reserved bits (unsupported feature)",
+   4: "maximum connection count reached"
 }
 
 ## map error to RawSocket handshake error reply (2nd octet)
@@ -295,11 +299,13 @@ E.g. a *Router* that is to forward a WAMP `EVENT` to a *Client* which exceeds th
 
 #### Framing
 
-The serialized octets for a message to be sent are prefixed with exactly 4 octets:
+The serialized octets for a message to be sent are prefixed with exactly 4 octets.
 
-    0x FF LL LL LL
+    MSB                       LSB
+    31                          0
+    RRRR RTTT LLLL LLLL LLLL LLLL
 
-The *first octet* `0xFF` has the following structure
+The *first octet* has the following structure
 
     MSB   LSB
     7       0
@@ -314,7 +320,7 @@ The three bits `TTT` encode the type of the transport message:
     2: PONG
     3-7: reserved
 
-The *three octets* `0x LL LL LL` constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
+The *three remaining octets* constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
 
 For a regular WAMP message (`TTT == 0`), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).
 
@@ -322,7 +328,7 @@ For a `PING` message (`TTT == 1`), the length is the length of the arbitrary pay
 
 For receiving messages with WAMP-over-RawSocket, a *Peer* will usually read exactly 4 octets from the incoming stream, decode the transport level message type and payload length, and then receive as many octets as the length was giving.
 
-When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake.
+When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake and the processed at the WAMP level.
 
 
 ### Batched WebSocket Transport
@@ -363,7 +369,7 @@ The HTTP/POST request *SHOULD* have a `Content-Type` header set to `application/
 
 ```javascript
 {
-   "protocols": ["wamp.2.json.batched"]
+   "protocols": ["wamp.2.json"]
 }
 ``` 
 
@@ -387,7 +393,7 @@ Returned is a JSON document containing a transport ID and the protocol to speak:
 
 ```javascript
 {
-   "protocol": "wamp.2.json.batched",
+   "protocol": "wamp.2.json",
    "transport": "kjmd3sBLOUnb3Fyr"
 }
 ```
@@ -413,7 +419,7 @@ When there are WAMP messages pending downstream, a request will return with a si
 
 The serialization format used is the one agreed during opening the session.
 
-The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
+The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket.
 
 > Note: In unbatched mode, when there is more than one message pending, there will be at most one message returned for each request. The other pending messages must be retrieved by new requests. With batched mode, all messages pending at request time will be returned in one batch of messages.
 > 
@@ -428,7 +434,7 @@ with request body being a single WAMP message (unbatched modes) or a batch of se
 
 The serialization format used is the one agreed during opening the session.
 
-The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
+The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket.
 
 Upon success, the request will return with HTTP status code 202 ("no content"). Upon error, the request will return with HTTP status code 400 ("bad request").
 
@@ -444,13 +450,19 @@ with an empty request body. Upon success, the request will return with HTTP stat
 
 ### Multiplexed Transport
 
-A *Transport* may support the multiplexing of multiple logical channels over a single "physical" connection.
+A *Transport* may support the multiplexing of multiple logical transports over a single "physical" transport.
 
-By using such a *Transport*, multiple WAMP sessions can be transported over a single underlying connection at the same time.
+By using such a *Transport*, multiple WAMP sessions can be transported over a single underlying transport at the same time.
 
 ![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
 As an example, the proposed [WebSocket extension "permessage-priority"](https://github.com/oberstet/permessage-priority/blob/master/draft-oberstein-hybi-permessage-priority.txt) would allow creating multiple logical *Transports* for WAMP over a single underlying WebSocket connection.
+
+Sessions running over a multiplexed *Transport* are completely independent: they get assigned different session IDs, may join different realms and each session needs to authenticate itself.
+
+Because of above, *Multiplexed Transports* for WAMP are actually not detailed in the WAMP spec, but a feature of the transport being used.
+
+> Note: Currently no WAMP transport supports multiplexing. The work on the MUX extension with WebSocket has stalled, and the `permessage-priority` proposal above is still just a proposal. However, with RawSocket, we should be able to add multiplexing in the the future (with downward compatibility).
 
 
 ## Messages
