@@ -2,90 +2,67 @@
 
 This document specifies the *Advanced Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **beta-1**, 2015/01/26
+Document Revision: **beta-1**, 2015/01/29
 
-> For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md). For the (deprecated) WAMP version 1 specification, please see [here](http://wamp.ws/spec/wamp1/).
-> 
+For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md).
 
-Copyright (c) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+
 
 # Part 2: Advanced Profile
 
 **Contents**
 
 1. [Transports](#transports)
-
-   * [RawSocket Transport](#rawsocket-transport)
-   * [Batched WebSocket Transport](#batched-websocket-transport)
-   * [Long-Poll Transport](#long-poll-transport)
-   * [Multiplexed Transport](#multiplexed-transport)
-
+   * [RawSocket Transport](#rawsocket-transport) **[stable]**
+   * [Batched WebSocket Transport](#batched-websocket-transport) **[stable]**
+   * [LongPoll Transport](#longpoll-transport) **[stable]**
+   * [Multiplexed Transport](#multiplexed-transport) **[stable]**
 2. [Messages](#messages)
-
-    * [Message Definitions](#message-definitions)
-    * [Message Codes and Direction](#message-codes-and-direction)
-
-3. [Session Management](#session-management)
-
+    * [Message Definitions](#message-definitions) **[stable]**
+    * [Message Codes and Direction](#message-codes-and-direction) **[stable]**
+3. [Sessions](#sessions)
+    * [Feature Announcement](#feature-announcement) **[stable]**
+    * [Agent Identification](#agent-identification) **[stable]**
+    * [Session Authentication](#session-authentication)
     * [Session Events](#session-events)
     * [Forced Session Kill](#forced-session-kill)
-
 4. [Publish and Subscribe](#publish-and-subscribe)
-
-    * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) [stable]
-    * [Publisher Exclusion](#publisher-exclusion) [stable]
-
-    * [Publisher Identification](#publisher-identification) [stable]
-
+    * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) **[stable]**
+    * [Publisher Exclusion](#publisher-exclusion) **[stable]**
+    * [Publisher Identification](#publisher-identification) **[stable]**
     * [Publication Trust Levels](#publication-trust-levels)
-
-    * [Pattern-based Subscriptions](#pattern-based-subscriptions)
+    * [Pattern-based Subscriptions](#pattern--based-subscriptions)
     * [Distributed Subscriptions and Publications](#distributed-subscriptions-and-publications)
-
     * [Subscriber Events](#subscriber-events)
     * [Subscriber Listing](#subscriber-listing)
-
     * [Forced Subscriber Unsubscribe](#forced-subscriber-unsubscribe)
-
     * [Event History](#event-history)
-
 5. [Remote Procedure Calls](#remote-procedure-calls)
-
-    * [Progressive Call Results](#progressive-call-results) [stable]
-    * [Canceling Calls](#canceling-calls) [stable]
+    * [Progressive Call Results](#progressive-call-results) **[stable]**
+    * [Canceling Calls](#canceling-calls) **[stable]**
     * [Call Timeouts](#call-timeouts)
-
     * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
     * [Caller Exclusion](#caller-exclusion)
-
-    * [Caller Identification](#caller-identification) [stable]
-
+    * [Caller Identification](#caller-identification) **[stable]**
     * [Call Trust Levels](#call-trust-levels)
-
-    * [Pattern-based Registrations](#pattern-based-registrations)
+    * [Pattern-based Registrations](#pattern--based-registrations)
     * [Distributed Registrations and Calls](#distributed-registrations-and-calls)
-
     * [Callee Events](#callee-events)
     * [Callee Listing](#callee-listing)
-
     * [Forced Callee Unregister](#forced-callee-unregister)
-
     * [Call History](#call-history)
-
 6. [Authentication](#authentication)
-
-    * [TLS Certificate-based Authentication](#tls-certificate-based-authentication)
-    * [HTTP Cookie-based Authentication](#http-cookie-based-authentication)
-    * [WAMP Challenge-Response Authentication](#wamp-challenge-response-authentication)
-    * [Ticket-based Authentication](#ticket-based-authentication)
-    * [One Time Token Authentication](#one-time-token-authentication)
-
+    * [Challenge Response Authentication](#challenge-response-authentication)
+    * [Ticket based Authentication](#ticket-based-authentication)
+    * [Two Factor Authentication](#two-factor-authentication)
+    * [HTTP Cookie based Authentication](#http-cookie-based-authentication)
+    * [TLS Certificate based Authentication](#tls-certificate-based-authentication)
 7. [Reflection](#reflection)
-
 8. [Appendix](#appendix)
-
     * [Predefined URIs](#predefined-uris) 
     * [Authentication examples](#authentication-examples)
+
 
 ## Preface
 
@@ -123,7 +100,7 @@ Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is simple to implement, sin
 
 WAMP-over-RawSocket has even lower overhead than WebSocket, which can be desirable in particular when running on local connections like loopback TCP or Unix domain sockets. It is also expected to allow implementations in microcontrollers in under 2KB RAM.
 
-WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on a (misused) standard Web port (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
+WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on the standard port for secure HTTPS (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
 
 However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers don't allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (`permessage-deflate` WebSocket extension).
 
@@ -170,16 +147,7 @@ The *first octet* is a magic octet with value `0x7F`. This value is chosen to av
 
 > By using a magic first octet that cannot appear in a regular HTTP request, WAMP-over-RawSocket can be run e.g. on the same TCP listening port as WAMP-over-WebSocket or WAMP-over-LongPoll.
 
-The *second octet* `0xLS` consists of a 4 bit `LENGTH` field and a 4 bit `SERIALIZER` field.
-
-The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
-
-The possible values for `SERIALIZER` are:
-
-    0: illegal
-    1: JSON
-    2: MsgPack
-    3 - 15: reserved for future serializers
+The *second octet* consists of a 4 bit `LENGTH` field and a 4 bit `SERIALIZER` field.
 
 The `LENGTH` value is used by the *Client* to signal the **maximum message length** of messages it is willing to **receive**. When the handshake completes successfully, a *Router* MUST NOT send messages larger than this size.
 
@@ -191,6 +159,15 @@ The possible values for `LENGTH` are:
     15: 2**24 octets
 
 This means a *Client* can choose the maximum message length between **512** and **16M** octets.
+
+The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
+
+The possible values for `SERIALIZER` are:
+
+    0: illegal
+    1: JSON
+    2: MsgPack
+    3 - 15: reserved for future serializers
 
 Here is a Python program that prints all (currently) permissible values for the *second octet*:
 
@@ -254,24 +231,28 @@ When the *Router* is unable to speak the serializer requested by the *Client*, o
     31                          0
     0111 1111 EEEE 0000 RRRR RRRR
 
-An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST BE all zeros for now.
+An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST all be zeros for now.
 
 The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error:
 
-    0: serializer unsupported
-    1: maximum message length unacceptable
-    2: use of reserved bits (unsupported feature)
-    3: maximum connection count reached
-    4 - 15: reserved for future errors
+    0: illegal (must not be used)
+    1: serializer unsupported
+    2: maximum message length unacceptable
+    3: use of reserved bits (unsupported feature)
+    4: maximum connection count reached
+    5 - 15: reserved for future errors
+
+> Note that the error code `0` MUST not be used. This is to allow storage of error state in a host language variable, while allowing `0` to signal the current state "no error"
 
 Here is an example of how a *Router* might create the *second octet* in an error response:
 
 ```python
 ERRMAP = {
-   0: "serializer unsupported",
-   1: "maximum message length unacceptable",
-   2: "use of reserved bits (unsupported feature)",
-   3: "maximum connection count reached"
+   0: "illegal (must not be used)",
+   1: "serializer unsupported",
+   2: "maximum message length unacceptable",
+   3: "use of reserved bits (unsupported feature)",
+   4: "maximum connection count reached"
 }
 
 ## map error to RawSocket handshake error reply (2nd octet)
@@ -319,11 +300,13 @@ E.g. a *Router* that is to forward a WAMP `EVENT` to a *Client* which exceeds th
 
 #### Framing
 
-The serialized octets for a message to be sent are prefixed with exactly 4 octets:
+The serialized octets for a message to be sent are prefixed with exactly 4 octets.
 
-    0x FF LL LL LL
+    MSB                       LSB
+    31                          0
+    RRRR RTTT LLLL LLLL LLLL LLLL
 
-The *first octet* `0xFF` has the following structure
+The *first octet* has the following structure
 
     MSB   LSB
     7       0
@@ -338,7 +321,7 @@ The three bits `TTT` encode the type of the transport message:
     2: PONG
     3-7: reserved
 
-The *three octets* `0x LL LL LL` constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
+The *three remaining octets* constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
 
 For a regular WAMP message (`TTT == 0`), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).
 
@@ -346,7 +329,7 @@ For a `PING` message (`TTT == 1`), the length is the length of the arbitrary pay
 
 For receiving messages with WAMP-over-RawSocket, a *Peer* will usually read exactly 4 octets from the incoming stream, decode the transport level message type and payload length, and then receive as many octets as the length was giving.
 
-When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake.
+When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake and the processed at the WAMP level.
 
 
 ### Batched WebSocket Transport
@@ -371,7 +354,7 @@ Batching with MsgPack works by serializing each WAMP message to MsgPack as norma
 With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length **1**. Sending a batch of length **0** (no WAMP message) is illegal and a *Peer* MUST fail the transport upon receiving such a transport message.
 
 
-### Long-Poll Transport
+### LongPoll Transport
 
 The *Long-Poll Transport* is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the *Client* issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
 
@@ -387,7 +370,7 @@ The HTTP/POST request *SHOULD* have a `Content-Type` header set to `application/
 
 ```javascript
 {
-   "protocols": ["wamp.2.json.batched"]
+   "protocols": ["wamp.2.json"]
 }
 ``` 
 
@@ -411,7 +394,7 @@ Returned is a JSON document containing a transport ID and the protocol to speak:
 
 ```javascript
 {
-   "protocol": "wamp.2.json.batched",
+   "protocol": "wamp.2.json",
    "transport": "kjmd3sBLOUnb3Fyr"
 }
 ```
@@ -437,7 +420,7 @@ When there are WAMP messages pending downstream, a request will return with a si
 
 The serialization format used is the one agreed during opening the session.
 
-The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
+The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket.
 
 > Note: In unbatched mode, when there is more than one message pending, there will be at most one message returned for each request. The other pending messages must be retrieved by new requests. With batched mode, all messages pending at request time will be returned in one batch of messages.
 > 
@@ -452,7 +435,7 @@ with request body being a single WAMP message (unbatched modes) or a batch of se
 
 The serialization format used is the one agreed during opening the session.
 
-The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket (see below).
+The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket.
 
 Upon success, the request will return with HTTP status code 202 ("no content"). Upon error, the request will return with HTTP status code 400 ("bad request").
 
@@ -468,13 +451,19 @@ with an empty request body. Upon success, the request will return with HTTP stat
 
 ### Multiplexed Transport
 
-A *Transport* may support the multiplexing of multiple logical channels over a single "physical" connection.
+A *Transport* may support the multiplexing of multiple logical transports over a single "physical" transport.
 
-By using such a *Transport*, multiple WAMP sessions can be transported over a single underlying connection at the same time.
+By using such a *Transport*, multiple WAMP sessions can be transported over a single underlying transport at the same time.
 
 ![alt text](figure/sessions3.png "Transports, Sessions and Peers")
 
 As an example, the proposed [WebSocket extension "permessage-priority"](https://github.com/oberstet/permessage-priority/blob/master/draft-oberstein-hybi-permessage-priority.txt) would allow creating multiple logical *Transports* for WAMP over a single underlying WebSocket connection.
+
+Sessions running over a multiplexed *Transport* are completely independent: they get assigned different session IDs, may join different realms and each session needs to authenticate itself.
+
+Because of above, *Multiplexed Transports* for WAMP are actually not detailed in the WAMP spec, but a feature of the transport being used.
+
+> Note: Currently no WAMP transport supports multiplexing. The work on the MUX extension with WebSocket has stalled, and the `permessage-priority` proposal above is still just a proposal. However, with RawSocket, we should be able to add multiplexing in the the future (with downward compatibility).
 
 
 ## Messages
@@ -496,13 +485,6 @@ During authenticated session establishment, a *Router* sends a challenge message
 A *Client* having received a challenge is expected to respond by sending a signature or token.
 
     [AUTHENTICATE, Signature|string, Extra|dict]
-
-#### `HEARTBEAT`
-
-Each *Peer* can send heartbeats signaling WAMP message processing advance.
-
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
 
 #### `CANCEL`
 
@@ -528,14 +510,123 @@ The following table list the message type code for **the OPTIONAL messages** def
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
 |  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
 |  5   | `AUTHENTICATE` | advanced | Tx          | Rx       | Tx           | Tx       | Rx       | Tx       |
-|  7   | `HEARTBEAT`    | advanced | Tx/Rx       | Tx/Rx    | Tx/Rx        | Tx/Rx    | Tx/Rx    | Tx/Rx    |
 | 49   | `CANCEL`       | advanced |             |          |              | Tx       | Rx       |          |
 | 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
 
 
-## Session Management
+## Sessions
 
-### Session Establishment
+### Feature Announcement
+
+In addition to the *basic features* defined in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
+
+*Advanced features* need to be announced by the peer which implements them.
+
+*Example: An Endpoint implementing the roles of Publisher and Subscriber and implementing some advanced features on the Publisher.*
+
+    [1, 9129137332, {
+      "roles": {
+         "publisher": {
+            "features": {
+               "publisher_exclusion":      true,
+               "publisher_identification": true
+            }
+         },
+         "subscriber": {
+         }
+      }
+    }]
+
+*Example: A Router implementing the role of Broker and supporting multiple advanced features.*
+
+    [1, 9129137332, {
+      "roles": {
+         "broker": {
+            "features": {
+               "subscriber_blackwhite_listing": true,
+               "publisher_exclusion":           true,
+               "publisher_identification":      true,
+               "publication_trustlevels":       true,
+               "pattern_based_subscription":    true,
+               "partitioned_pubsub":            true,
+               "subscriber_metaevents":         true,
+               "subscriber_list":               true,
+               "event_history":                 true
+            }
+         }
+    }]
+
+*Feature Announcement and Advanced Features*
+
+The use of *feature announcement* in WAMP allows for
+
+ * only implementing subsets of functionality
+ * graceful degration
+
+
+The complete list of *advanced features* currently defined per role is:
+
+| Feature                       |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|-------------------------------|-------------|----------|--------------|----------|----------|----------|
+| **Remote Procedure Calls**    |             |          |              |          |          |          |
+|                               |             |          |              |          |          |          |
+| callee_blackwhite_listing     |             |          |              | X        | X        |          |
+| caller_exclusion              |             |          |              | X        | X        |          |
+| caller_identification         |             |          |              | X        | X        | X        |
+| call_trustlevels              |             |          |              |          | X        | X        |
+| pattern_based_registration    |             |          |              |          | X        | X        |
+| partitioned_rpc               |             |          |              | X        | X        | X        |
+| call_timeout                  |             |          |              | X        | X        | X        |
+| call_canceling                |             |          |              | X        | X        | X        |
+| progressive_call_results      |             |          |              | X        | X        | X        |
+|                               |             |          |              |          |          |          |
+| **Publish & Subscribe**       |             |          |              |          |          |          |
+|                               |             |          |              |          |          |          |
+| subscriber_blackwhite_listing | X           | X        |              |          |          |          |
+| publisher_exclusion           | X           | X        |              |          |          |          |
+| publisher_identification      | X           | X        | X            |          |          |          |
+| publication_trustlevels       |             | X        | X            |          |          |          |
+| pattern_based_subscription    |             | X        | X            |          |          |          |
+| partitioned_pubsub            | X           | X        | X            |          |          |          |
+| subscriber_metaevents         |             | X        | X            |          |          |          |
+| subscriber_list               |             | X        | X            |          |          |          |
+| event_history                 |             | X        | X            |          |          |          |
+
+
+### Agent Identification
+
+When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
+
+Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
+
+    HELLO.Details.agent|string
+
+and
+
+    WELCOME.Details.agent|string
+
+*Example: A Client `HELLO` message.*
+
+    [1, "somerealm", {
+         "agent": "AutobahnJS-0.9.14",
+         "roles": {
+            "subscriber": {},
+            "publisher": {}
+         }
+    }]
+
+
+*Example: A Router `WELCOME` message.*
+
+    [2, 9129137332, {
+        "agent": "Crossbar.io-0.10.11",
+        "roles": {
+          "broker": {}
+        }
+    }]
+
+
+### Session Authentication
 
 The message flow between *Clients* and *Routers* for establishing and tearing down sessions MAY involve the following messages which authenticate a session:
 
@@ -543,6 +634,8 @@ The message flow between *Clients* and *Routers* for establishing and tearing do
 2. `AUTHENTICATE`
 
 ![alt text](figure/hello_authenticated.png "WAMP Session denied")
+
+Concrete use of `CHALLENGE` and `AUTHENTICATE` messages depends on the specific authentication method. These are described in the [Authentication](#authentication) section.
 
 
 #### CHALLENGE
@@ -561,142 +654,18 @@ In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION
     [AUTHENTICATE, Signature|string, Extra|dict]
 
 
-## Advanced Session Management
+### Session Events
 
-### HEARTBEAT
-
-The heartbeat allows to keep network intermediaries from closing the underlying transport, notify the peer up to which incoming heartbeat all incoming WAMP messages have been processed, and announce an outgoing heartbeat sequence number in the same message.
-
-A peer MAY send a `HEARTBEAT` message at any time:
-
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer]
-
-or
-
-    [HEARTBEAT, IncomingSeq|integer, OutgoingSeq|integer, Discard|string]
-
- * `HEARTBEAT.OutgoingSeq` MUST start with `1` and be incremented by `1` for each `HEARTBEAT` a peer sends.
- * `HEARTBEAT.IncomingSeq` MUST BE the sequence number from the last received heartbeat for which all previously received WAMP messages have been processed or `0` when no `HEARTBEAT` has yet been received
- *  `HEARTBEAT.Discard` is an arbitrary string discarded by the peer.
-
-> The `HEARTBEAT.Discard` can be used to add some traffic volume to the HEARTBEAT message e.g. to keep mobile radio channels in a low-latency, high-power state. The string SHOULD be a random string (otherwise compressing transports might compress away the traffic volume).
->
-
-*Example*
-
-   	[7, 0, 1]
-
-*Example*
-
-   	[7, 23, 5]
-
-*Example*
-
-   	[7, 23, 5, "throw me away ... I am just noise"]
-
-Incoming heartbeats are not required to be answered by an outgoing heartbeat. Sending of heartbeats is under independent control with each peer.
+Write me.
 
 
-## Advanced Features
+### Forced Session Kill
 
-In addition to the *basic features* defined in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
-
-*Advanced features* need to be announced by the peer which implements them.
-
-*Example: An Endpoint implementing the roles of Publisher and Subscriber and implementing some advanced features on the Publisher.*
-
-   	[1, 9129137332, {
-      "roles": {
-         "publisher": {
-            "features": {
-               "publisher_exclusion":      true,
-               "publisher_identification": true
-            }
-         },
-         "subscriber": {
-
-         }
-      }
-   	}]
-
-*Example: A Router implementing the role of Broker and supporting all advanced features.*
-
-   	[1, 9129137332, {
-      "roles": {
-         "broker": {
-            "features": {
-               "subscriber_blackwhite_listing": true,
-               "publisher_exclusion":           true,
-               "publisher_identification":      true,
-               "publication_trustlevels":       true,
-               "pattern_based_subscription":    true,
-               "partitioned_pubsub":            true,
-               "subscriber_metaevents":         true,
-               "subscriber_list":               true,
-               "event_history":                 true
-            }
-         }
-   	}]
-
-*Feature Announcement and Advanced Features*
-
-The use of *feature announcement* in WAMP allows for
-
- * only implementing subsets of functionality
- * graceful degration
-
-
-The complete list of *advanced features* currently defined per role is:
-
-| Feature                       |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|-------------------------------|-------------|----------|--------------|----------|----------|----------|
-| **Remote Procedure Calls**    |             |          |              |          |          |          |
-| callee_blackwhite_listing     |             |          |              | X        | X        |          |
-| caller_exclusion              |             |          |              | X        | X        |          |
-| caller_identification         |             |          |              | X        | X        | X        |
-| call_trustlevels              |             |          |              |          | X        | X        |
-| pattern_based_registration    |             |          |              |          | X        | X        |
-| partitioned_rpc               |             |          |              | X        | X        | X        |
-| call_timeout                  |             |          |              | X        | X        | X        |
-| call_canceling                |             |          |              | X        | X        | X        |
-| progressive_call_results      |             |          |              | X        | X        | X        |
-|                               |             |          |              |          |          |          |
-| **Publish & Subscribe**       |             |          |              |          |          |          |
-| subscriber_blackwhite_listing | X           | X        |              |          |          |          |
-| publisher_exclusion           | X           | X        |              |          |          |          |
-| publisher_identification      | X           | X        | X            |          |          |          |
-| publication_trustlevels       |             | X        | X            |          |          |          |
-| pattern_based_subscription    |             | X        | X            |          |          |          |
-| partitioned_pubsub            | X           | X        | X            |          |          |          |
-| subscriber_metaevents         |             | X        | X            |          |          |          |
-| subscriber_list               |             | X        | X            |          |          |          |
-| event_history                 |             | X        | X            |          |          |          |
-
-*Network Agent*
-
-When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
-
-Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
-
-   	HELLO.Details.agent|string
-
-and
-
-   	WELCOME.Details.agent|string
-
-*Example*
-
-   	[1, 9129137332, {
-         "agent": "AutobahnPython-0.7.0",
-         "roles": {
-            "publisher": {}
-         }
-   	}]
+Write me.
 
 
 
-
-## Publish & Subscribe
+## Publish and Subscribe
 
 All of the following advanced features for Publish & Subscribe are optional.
 
@@ -829,6 +798,7 @@ If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, th
 
 *Brokers* and *Subscribers* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
 
+
 #### Prefix Matching
 
 A *Subscriber* requests **prefix-matching policy** with a subscription request by setting
@@ -895,7 +865,7 @@ to the *Subscribers*.
    	[36, 5512315355, 4429313566, {"topic": "com.myapp.topic.emergency.category.severe" }, ["Hello, world!"]]
 
 
-### Partitioned Subscriptions & Publications
+### Distributed Subscriptions and Publications
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
@@ -966,7 +936,12 @@ The following metatopics are currently defined:
  2. `wamp.metatopic.subscriber.remove`: A subscriber is removed from the subscription.
 
 
-### Subscriber List
+### Subscriber Events
+
+Write me.
+
+
+### Subscriber Listing
 
 A *Broker* may allow to retrieve the current list of *Subscribers* for a given subscription.
 
@@ -1002,6 +977,11 @@ A call to `wamp.broker.subscriber.list` may fail with
  5. The *Router* needs to implement a *Dealer* role as well in order to be able to route the RPC, since calls can only be addressed to *Dealers*.
  6. We should probably then also have a *Callee* as a separate peer. Otherwise we break the rule that peers can implement Broker/Dealer OR Caller/Callee/Subscriber/Publisher roles.
  7. If we have the separate *Callee*, then how does this get the list? One way would be using subscription meta-events.
+
+
+### Forced Subscriber Unsubscribe
+
+Write me.
 
 
 ### Event History
@@ -1057,9 +1037,6 @@ with `Arguments = [topic|uri, publication|id]`
 
 
 
-
-
-
 ## Remote Procedure Calls
 
 All of the following advanced features for Remote Procedure Calls are optional.
@@ -1069,6 +1046,255 @@ If a WAMP implementation supports a specific advanced feature, it should announc
    	HELLO.Details.roles.<role>.features.<feature>|bool := true
 
 Otherwise, the feature is assumed to be unsupported.
+
+
+### Progressive Call Results
+
+Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+    HELLO.Details.roles.<role>.features.progressive_call_results|bool := true
+
+
+A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
+
+![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
+
+
+A *Caller* indicates it's willingness to receive progressive results by setting
+
+    CALL.Options.receive_progress|bool := true
+
+*Example.* Caller-to-Dealer `CALL`
+
+    [48, 77133, {"receive_progress": true}, "com.myapp.compute_revenue", [2010, 2011, 2012]]
+
+If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
+
+    INVOCATION.Options.receive_progress|bool := true
+
+*Example.* Dealer-to-Callee `INVOCATION`
+
+    [68, 87683, 324, {"receive_progress": true}, [2010, 2011, 2012]]
+
+An endpoint implementing the procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
+
+    YIELD.Options.progress|bool := true
+
+*Example.* Callee-to-Dealer progressive `YIELDs`
+
+    [70, 87683, {"progress": true}, ["Y2010", 120]]
+    [70, 87683, {"progress": true}, ["Y2011", 205]]
+    ...
+
+Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will **immediately** send a `RESULT` message to the original *Caller* with
+
+    RESULT.Details.progress|bool := true
+
+*Example.* Dealer-to-Caller progressive `RESULTs`
+
+    [50, 77133, {"progress": true}, ["Y2010", 120]]
+    [50, 77133, {"progress": true}, ["Y2011", 205]]
+    ...
+
+An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
+
+*Example.* Callee-to-Dealer final `YIELD`
+
+    [70, 87683, {}, ["Total", 490]]
+
+*Example.* Callee-to-Dealer final `ERROR`
+
+    [4, 87683, {}, "com.myapp.invalid_revenue_year", [1830]]
+
+A call MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller*.
+
+*Example.* Dealer-to-Caller final `RESULT`
+
+    [50, 77133, {}, ["Total", 490]]
+
+*Example.* Dealer-to-Caller final `ERROR`
+
+    [4, 77133, {}, "com.myapp.invalid_revenue_year", [1830]]
+
+In other words: `YIELD` with `YIELD.Options.progress == true` and `RESULT` with `RESULT.Details.progress == true` messages may only be sent *during* a call or invocation is still ongoing.
+
+The final `YIELD` and final `RESULT` may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.
+
+*Example.* Callee-to-Dealer `YIELDs`
+
+    [70, 87683, {"progress": true}, ["Y2010", 120]]
+    [70, 87683, {"progress": true}, ["Y2011", 205]]
+     ...
+    [70, 87683, {"progress": true}, ["Total", 490]]
+    [70, 87683, {}]
+
+*Example.* Dealer-to-Caller `RESULTs`
+
+    [50, 77133, {"progress": true}, ["Y2010", 120]]
+    [50, 77133, {"progress": true}, ["Y2011", 205]]
+     ...
+    [50, 77133, {"progress": true}, ["Total", 490]]
+    [50, 77133, {}]
+
+The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final `YIELD` and `RESULT`:
+
+*Example.* Callee-to-Dealer `YIELDs`
+
+    [70, 87683, {"progress": true}]
+    [70, 87683, {"progress": true}]
+    ...
+    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
+
+*Example.* Dealer-to-Caller `RESULTs`
+
+    [50, 77133, {"progress": true}]
+    [50, 77133, {"progress": true}]
+    ...
+    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
+
+Note that intermediate, progressive results and/or the final result MAY have different structure. The WAMP peer implementation is responsible for mapping everything into a form suitable for consumption in the host language.
+
+*Example.* Callee-to-Dealer `YIELDs`
+
+    [70, 87683, {"progress": true}, ["partial 1", 10]]
+    [70, 87683, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
+     ...
+    [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
+
+*Example.* Dealer-to-Caller `RESULTs`
+
+    [50, 77133, {"progress": true}, ["partial 1", 10]]
+    [50, 77133, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
+     ...
+    [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
+
+Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Options.receive_progress` are simply indications that the *Callee* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
+
+<!--
+
+**Errors**
+
+
+If a *Caller* has not indicated support for progressive results or has sent a `CALL` to the *Dealer* without setting `CALL.Options.receive_progress == true`, and the *Dealer* sends a progressive `RESULT`, the *Caller* MUST fail the complete session with the *Dealer*.
+
+If a *Dealer* has not indicated support for progressive results or the *Dealer* has sent an `INVOCATION` to the *Callee* without setting `INVOCATION.Options.receive_progress == true`, and the *Callee* sends a progressive `YIELD`, the *Dealer* MUST fail the call with error
+
+    wamp.error.unexpected_progress_in_yield
+
+If a *Caller* has not indicated support for progressive results and sends a `CALL` to the *Dealer* while setting `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call
+
+However, if a *Caller* has *not* indicated it's willingness to receive progressive results in a call, the *Dealer* MUST NOT send progressive `RESULTs`, and a *Callee* MUST NOT produce progressive `YIELDs`.
+
+A *Dealer* that does not support progressive calls MUST ignore any option `CALL.Options.receive_progress` received by a *Caller*, and **not** forward the option to the *Callee*.
+
+
+
+If a *Callee* that has not indicated support for progressive results and the *Dealer* sends an `INVOCATION` with `INVOCATION.Options.receive_progress == true
+
+
+A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Options.receive_progress` flag.
+
+If a *Dealer* has not indicated support for progressive results, and it receives a `CALL` from a *Caller* with `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call with error
+
+    wamp.error.unsupported_feature.dealer.progressive_call_result
+
+
+
+*Example.* Dealer-to-Caller `ERROR`
+
+    [4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
+
+
+
+If the *Caller* does not support receiving *progressive calls*, as indicated by
+
+    HELLO.Details.roles.caller.features.progressive_call_results == false
+
+and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
+
+*Example.* Callee-to-Dealer `YIELD`
+
+    [70, 87683, {"progress": true}, ["partial 1", 10]]
+
+*Example.* Dealer-to-Caller `ERROR`
+
+    [4, 87683, {}, "wamp.error.unsupported_feature.caller.progressive_call_result"]
+
+If the *Dealer* does not support processing *progressive invocations*, as indicated by
+
+    HELLO.Details.roles.dealer.features.progressive_call_results == false
+
+and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
+
+*Example.* Callee-to-Dealer `YIELD`
+
+    [70, 87683, {"progress": true}, ["partial 1", 10]]
+
+*Example.* Dealer-to-Caller `ERROR`
+
+    [4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
+
+-->
+
+
+### Canceling Calls
+
+Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+    HELLO.Details.roles.<role>.features.call_canceling|bool := true
+
+
+A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
+
+The message flow between *Callers*, a *Dealer* and *Callees* for canceling remote procedure calls involves the following messages:
+
+ * `CANCEL`
+ * `INTERRUPT`
+
+A call may be cancelled at the *Callee*
+
+![alt text](figure/rpc_cancel1.png "RPC Message Flow: Calls")
+
+A call may be cancelled at the *Dealer*
+
+![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
+
+A *Caller* cancels a remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
+
+    [CANCEL, CALL.Request|id, Options|dict]
+
+A *Dealer* cancels an invocation of an endpoint initiated (but not yet finished) by sending a `INTERRUPT` message to the *Callee*:
+
+    [INTERRUPT, INVOCATION.Request|id, Options|dict]
+
+Options:
+
+    CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
+
+
+### Call Timeouts
+
+Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+    HELLO.Details.roles.<role>.features.call_timeout|bool := true
+
+A *Caller* might want to issue a call providing a *timeout* for the call to finish.
+
+A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
+
+A *Callee* specifies a timeout by providing
+
+    CALL.Options.timeout|integer
+
+in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value.
+
+The timeout option is a companion to, but slightly different from the `CANCEL` and `INTERRUPT` messages that allow a *Caller* and *Dealer* to **actively** cancel a call or invocation.
+
+In fact, a timeout timer might run at three places:
+
+ * *Caller*
+ * *Dealer*
+ * *Callee*
 
 
 ### Callee Black- and Whitelisting
@@ -1272,7 +1498,7 @@ Since each *Callees* registrations "stands on it's own", there is no *set semant
 If an endpoint was registered with a pattern-based matching policy, a *Dealer* MUST supply the original `CALL.Procedure` as provided by the *Caller* in `INVOCATION.Details.procedure` to the *Callee*.
 
 
-### Partitioned Registrations & Calls
+### Distributed Registrations and Calls
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
@@ -1322,253 +1548,59 @@ The call is then routed to all endpoints that were registered ..
 The call is then processed as for "All" Calls.
 
 
-### Call Timeouts
+### Callee Events
 
-Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+In certain scenarios, application components might be interested in getting notified when a *Dealer* registers or unregisters a *Callee* for a procedure on a *different* session.
 
-   	HELLO.Details.roles.<role>.features.call_timeout|bool := true
+When a *Callee* registers a procedure at a *Dealer*, the *Dealer* can signal the registration to other components by publishing a WAMP metaevent:
 
-A *Caller* might want to issue a call providing a *timeout* for the call to finish.
+  wamp.procedure.on_register
 
-A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
+Further, a *Dealer* might *additionally* publish a WAMP event upon the first *Callee* registering for a given procedure:
 
-A *Callee* specifies a timeout by providing
+  wamp.procedure.on_first_register
 
-   	CALL.Options.timeout|integer
+A *Callee* has unregistered a (previously registered) procedure, either actively (via `UNREGISTER`) or because the *Callee* session has closed or the underlying transport was closed or dropped:
 
-in ms. A timeout value of `0` deactivates automatic call timeout. This is also the default value.
+  wamp.procedure.on_unregister
 
-The timeout option is a companion to, but slightly different from the `CANCEL` and `INTERRUPT` messages that allow a *Caller* and *Dealer* to **actively** cancel a call or invocation.
+When the last *Callee* registered for a given procedure has unregistered, a *Dealer* might *additionally* publish a WAMP event:
 
-In fact, a timeout timer might run at three places:
+  wamp.procedure.on_last_unregister
 
- * *Caller*
- * *Dealer*
- * *Callee*
+*Event Contents*
 
+FIXME
 
-### Canceling Calls
+*Configuration*
 
-Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+When a *Dealer* supports *Callee Events*, it might
 
-   	HELLO.Details.roles.<role>.features.call_canceling|bool := true
+* simply produce respective WAMP metaevents always or
+* it might produce WAMP metaevents only when the URI of the respective procedure was configured for *Callee Events* or
 
+Note that generating above WAMP metaevents is never under control of the *Callee* registering/unregistering or the *Subscriber* to the metaevent.
 
-A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
+A *Subscriber* that has subscribed to a *Callee* metaevent will (when authorized) receive respective metaevents for *all* procedures configured to trigger metaevents. The *Subscriber* cannot subscribe to *Callee* metaevents only for a single or a set of procedures.
 
-The message flow between *Callers*, a *Dealer* and *Callees* for canceling remote procedure calls involves the following messages:
+*Feature Announcement*
 
- * `CANCEL`
- * `INTERRUPT`
+FIXME
 
-A call may be cancelled at the *Callee*
 
-![alt text](figure/rpc_cancel1.png "RPC Message Flow: Calls")
+### Callee Listing
 
-A call may be cancelled at the *Dealer*
+Write me.
 
-![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
 
-A *Caller* cancels a remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
+### Forced Callee Unregister
 
-    [CANCEL, CALL.Request|id, Options|dict]
+Write me.
 
-A *Dealer* cancels an invocation of an endpoint initiated (but not yet finished) by sending a `INTERRUPT` message to the *Callee*:
 
-    [INTERRUPT, INVOCATION.Request|id, Options|dict]
+### Call History
 
-Options:
-
-   	CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
-
-
-### Progressive Call Results
-
-Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
-
-   	HELLO.Details.roles.<role>.features.progressive_call_results|bool := true
-
-
-A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
-
-![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
-
-
-A *Caller* indicates it's willingness to receive progressive results by setting
-
-   	CALL.Options.receive_progress|bool := true
-
-*Example.* Caller-to-Dealer `CALL`
-
-   	[48, 77133, {"receive_progress": true}, "com.myapp.compute_revenue", [2010, 2011, 2012]]
-
-If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
-
-   	INVOCATION.Options.receive_progress|bool := true
-
-*Example.* Dealer-to-Callee `INVOCATION`
-
-   	[68, 87683, 324, {"receive_progress": true}, [2010, 2011, 2012]]
-
-An endpoint implementing the procedure produces progressive results by sending `YIELD` messages to the *Dealer* with
-
-   	YIELD.Options.progress|bool := true
-
-*Example.* Callee-to-Dealer progressive `YIELDs`
-
-   	[70, 87683, {"progress": true}, ["Y2010", 120]]
-   	[70, 87683, {"progress": true}, ["Y2011", 205]]
-   	...
-
-Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will **immediately** send a `RESULT` message to the original *Caller* with
-
-   	RESULT.Details.progress|bool := true
-
-*Example.* Dealer-to-Caller progressive `RESULTs`
-
-   	[50, 77133, {"progress": true}, ["Y2010", 120]]
-   	[50, 77133, {"progress": true}, ["Y2011", 205]]
-   	...
-
-An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
-
-*Example.* Callee-to-Dealer final `YIELD`
-
-   	[70, 87683, {}, ["Total", 490]]
-
-*Example.* Callee-to-Dealer final `ERROR`
-
-   	[4, 87683, {}, "com.myapp.invalid_revenue_year", [1830]]
-
-A call MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Dealer* and received by the *Caller*.
-
-*Example.* Dealer-to-Caller final `RESULT`
-
-   	[50, 77133, {}, ["Total", 490]]
-
-*Example.* Dealer-to-Caller final `ERROR`
-
-   	[4, 77133, {}, "com.myapp.invalid_revenue_year", [1830]]
-
-In other words: `YIELD` with `YIELD.Options.progress == true` and `RESULT` with `RESULT.Details.progress == true` messages may only be sent *during* a call or invocation is still ongoing.
-
-The final `YIELD` and final `RESULT` may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.
-
-*Example.* Callee-to-Dealer `YIELDs`
-
-   	[70, 87683, {"progress": true}, ["Y2010", 120]]
-   	[70, 87683, {"progress": true}, ["Y2011", 205]]
-   	 ...
-   	[70, 87683, {"progress": true}, ["Total", 490]]
-   	[70, 87683, {}]
-
-*Example.* Dealer-to-Caller `RESULTs`
-
-   	[50, 77133, {"progress": true}, ["Y2010", 120]]
-   	[50, 77133, {"progress": true}, ["Y2011", 205]]
-   	 ...
-   	[50, 77133, {"progress": true}, ["Total", 490]]
-   	[50, 77133, {}]
-
-The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final `YIELD` and `RESULT`:
-
-*Example.* Callee-to-Dealer `YIELDs`
-
-   	[70, 87683, {"progress": true}]
-   	[70, 87683, {"progress": true}]
-   	...
-   	[70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
-
-*Example.* Dealer-to-Caller `RESULTs`
-
-   	[50, 77133, {"progress": true}]
-   	[50, 77133, {"progress": true}]
-   	...
-   	[50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., ["Total", 490]]]
-
-Note that intermediate, progressive results and/or the final result MAY have different structure. The WAMP peer implementation is responsible for mapping everything into a form suitable for consumption in the host language.
-
-*Example.* Callee-to-Dealer `YIELDs`
-
-   	[70, 87683, {"progress": true}, ["partial 1", 10]]
-   	[70, 87683, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
-   	 ...
-   	[70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
-
-*Example.* Dealer-to-Caller `RESULTs`
-
-   	[50, 77133, {"progress": true}, ["partial 1", 10]]
-   	[50, 77133, {"progress": true}, [], {"foo": 10, "bar": "partial 1"}]
-   	 ...
-   	[50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
-
-Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Options.receive_progress` are simply indications that the *Callee* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
-
-<!--
-
-**Errors**
-
-
-If a *Caller* has not indicated support for progressive results or has sent a `CALL` to the *Dealer* without setting `CALL.Options.receive_progress == true`, and the *Dealer* sends a progressive `RESULT`, the *Caller* MUST fail the complete session with the *Dealer*.
-
-If a *Dealer* has not indicated support for progressive results or the *Dealer* has sent an `INVOCATION` to the *Callee* without setting `INVOCATION.Options.receive_progress == true`, and the *Callee* sends a progressive `YIELD`, the *Dealer* MUST fail the call with error
-
-   	wamp.error.unexpected_progress_in_yield
-
-If a *Caller* has not indicated support for progressive results and sends a `CALL` to the *Dealer* while setting `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call
-
-However, if a *Caller* has *not* indicated it's willingness to receive progressive results in a call, the *Dealer* MUST NOT send progressive `RESULTs`, and a *Callee* MUST NOT produce progressive `YIELDs`.
-
-A *Dealer* that does not support progressive calls MUST ignore any option `CALL.Options.receive_progress` received by a *Caller*, and **not** forward the option to the *Callee*.
-
-
-
-If a *Callee* that has not indicated support for progressive results and the *Dealer* sends an `INVOCATION` with `INVOCATION.Options.receive_progress == true
-
-
-A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Options.receive_progress` flag.
-
-If a *Dealer* has not indicated support for progressive results, and it receives a `CALL` from a *Caller* with `CALL.Options.receive_progress == true`, the *Dealer* MUST fail the call with error
-
-   	wamp.error.unsupported_feature.dealer.progressive_call_result
-
-
-
-*Example.* Dealer-to-Caller `ERROR`
-
-   	[4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
-
-
-
-If the *Caller* does not support receiving *progressive calls*, as indicated by
-
-   	HELLO.Details.roles.caller.features.progressive_call_results == false
-
-and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
-
-*Example.* Callee-to-Dealer `YIELD`
-
-   	[70, 87683, {"progress": true}, ["partial 1", 10]]
-
-*Example.* Dealer-to-Caller `ERROR`
-
-   	[4, 87683, {}, "wamp.error.unsupported_feature.caller.progressive_call_result"]
-
-If the *Dealer* does not support processing *progressive invocations*, as indicated by
-
-   	HELLO.Details.roles.dealer.features.progressive_call_results == false
-
-and *Dealer* receives a `YIELD` message from the *Callee* with `YIELD.Options.progress == true`, the *Dealer* MUST fail the call.
-
-*Example.* Callee-to-Dealer `YIELD`
-
-   	[70, 87683, {"progress": true}, ["partial 1", 10]]
-
-*Example.* Dealer-to-Caller `ERROR`
-
-   	[4, 87683, {}, "wamp.error.unsupported_feature.dealer.progressive_call_result"]
-
--->
+Write me.
 
 
 ## Authentication
@@ -1588,21 +1620,7 @@ Some applications might want to perform their own authentication schemes by usin
 And some applications might want to use a transport independent scheme, nevertheless predefined by WAMP.
 
 
-### TLS Certificate-based Authentication
-
-When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
-
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
-
-
-### HTTP Cookie-based Authentication
-
-When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
-
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
-
-
-### WAMP Challenge-Response Authentication
+### Challenge Response Authentication
 
 WAMP Challenge-Response ("WAMP-CRA") authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a *secret*. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.
 
@@ -1729,71 +1747,23 @@ When the password is salted, the server will during WAMP-CRA send a `CHALLENGE` 
 The `CHALLENGE.Details.salt|string` is the password salt in use. The `CHALLENGE.Details.keylen|int` and `CHALLENGE.Details.iterations|int` are parameters for the PBKDF2 algorithm.
 
 
+### Two Factor Authentication
 
-### Ticket-based Authentication
+Write me.
 
-With *Ticket-based authentication*, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.
 
-This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
+### HTTP Cookie based Authentication
 
-> Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
-> 
+When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
 
-A typical authentication begins with the client sending a `HELLO` message specifying the `ticket` method as (one of) the authentication methods:
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
 
-```javascript
-[1, "realm1",
-	{
-		"roles": ...,
-		"authmethods": ["ticket"],
-		"authid": "joe"
-	}
-]
-```
 
-The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include `"ticket"`.
+### TLS Certificate based Authentication
 
-The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
 
-If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
-
-If the server is willing to let the client authenticate using a ticket and the server recognizes the provided `authid`, it'll send a `CHALLENGE` message:
-
-```javascript
-[4, "ticket", {}]
-```
-
-The client will send an `AUTHENTICATE` message containing a ticket:
-
-```javascript
-[5, "secret!!!", {}]
-```
-
-The server will then check if the ticket provided is permissible (for the `authid` given).
-
-If the authentication succeeds, the server will finally respond with a `WELCOME` message:
-
-```javascript
-[2, 3251278072152162,
-	{
-		"authid": "joe",
-		"authrole": "user",
-		"authmethod": "ticket",
-		"authprovider": "static",
-		"roles": ...
-	}
-]
-```
-
-where
-
- 1. `authid|string`: The authentication ID the client was (actually) authenticated as.
- 2. `authrole|string`: The authentication role the client was authenticated for.
- 3. `authmethod|string`: The authentication method, here `"ticket"`
- 4. `authprovider|string`: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. `static` or `dynamic`.
-
-The `WELCOME.Details` again contain the actual authentication information active. If the authentication fails, the server will response with an `ABORT` message.
-
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
 
 
 ## Reflection
@@ -1844,11 +1814,11 @@ WAMP predefines the following URIs in the *advanced profile*. For URIs, used inÂ
 
 **Session Management**
 
-A session has joined a realm on a router:
+A session has joined a realm:
 
   wamp.session.on_join
 
-A session has left a realm on a router:
+A session has left a realm:
 
   wamp.session.on_leave
 
@@ -1857,22 +1827,38 @@ A session has left a realm on a router:
 
 A session has subscribed to a topic:
 
-  wamp.session.subscriber.on_subscribe
+  wamp.topic.on_subscribe
+
+A first session has subscribed to a given topic:
+
+  wamp.topic.on_first_subscribe
 
 A session has unsubscribed from a topic:
 
-  wamp.session.subscriber.on_unsubscribe
+  wamp.topic.on_unsubscribe
+
+The last session subscribed to a given topic has unsubscribed:
+
+  wamp.topic.on_last_unsubscribe
 
 
 **Callee Management**
 
 A session has registered a procedure:
 
-  wamp.session.callee.on_register
+  wamp.procedure.on_register
+
+A first session has registered a given procedure:
+
+  wamp.procedure.on_first_register
 
 A session has unregistered a procedure:
 
-  wamp.session.callee.on_unregister
+  wamp.procedure.on_unregister
+
+The last session registered for a given procedure has unregistered:
+
+  wamp.procedure.on_last_unregister
 
 
 **Reflection**
@@ -1907,30 +1893,30 @@ Forcefully kill session(s):
 
 List subscribers
 
-  wamp.session.subscriber.list
+  wamp.topic.subscriber.list
 
 Count subscribers
 
-  wamp.session.subscriber.count
+  wamp.topic.subscriber.count
 
 Forcefully unsubscribe subscriber(s):
 
-  wamp.session.subscriber.unsubscribe
+  wamp.topic.subscriber.unsubscribe
 
 
 **Callee Management**
 
 List callees
 
-  wamp.session.callee.list
+  wamp.procedure.callee.list
 
 Count callees
 
-  wamp.session.callee.count
+  wamp.procedure.callee.count
 
 Forcefully unregister callee(s)
 
-  wamp.session.callee.unregister
+  wamp.procedure.callee.unregister
 
 
 **Reflection**
@@ -1961,6 +1947,8 @@ A *Dealer* could not perform a call, since a procedure with the given URI is reg
 A *Router* rejected client request to disclose its identity
 
 	wamp.error.option_disallowed.disclose_me
+
+
 
 ### Authentication examples
 
