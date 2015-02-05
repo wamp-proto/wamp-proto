@@ -1386,7 +1386,7 @@ A *Dealer* MAY deny a *Caller's* request to disclose its identity:
 
 A *Callee* MAY **request** the disclosure of caller identity via
 
-    CALL.Options.disclose_caller|bool := true
+    REGISTER.Options.disclose_caller|bool := true
 
 *Example*
 
