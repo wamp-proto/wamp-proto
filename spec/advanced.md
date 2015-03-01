@@ -33,25 +33,19 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Publisher Identification](#publisher-identification) **[stable]**
     * [Publication Trust Levels](#publication-trust-levels)
     * [Pattern-based Subscriptions](#pattern--based-subscriptions)
-    * [Distributed Subscriptions and Publications](#distributed-subscriptions-and-publications)
-    * [Subscriber Events](#subscriber-events)
-    * [Subscriber Listing](#subscriber-listing)
+    * [Subscriber Meta API](#subscriber-meta-api)
     * [Forced Subscriber Unsubscribe](#forced-subscriber-unsubscribe)
     * [Event History](#event-history)
 5. [Remote Procedure Calls](#remote-procedure-calls)
     * [Progressive Call Results](#progressive-call-results) **[stable]**
     * [Canceling Calls](#canceling-calls) **[stable]**
     * [Call Timeouts](#call-timeouts)
-    * [Callee Black- and Whitelisting](#callee-black--and-whitelisting)
-    * [Caller Exclusion](#caller-exclusion)
     * [Caller Identification](#caller-identification) **[stable]**
     * [Call Trust Levels](#call-trust-levels)
     * [Pattern-based Registrations](#pattern--based-registrations)
-    * [Distributed Registrations and Calls](#distributed-registrations-and-calls)
-    * [Callee Events](#callee-events)
-    * [Callee Listing](#callee-listing)
+    * [Shared Registrations](#shared-registrations)
+    * [Callee Meta API](#callee-meta-api)
     * [Forced Callee Unregister](#forced-callee-unregister)
-    * [Call History](#call-history)
 6. [Authentication](#authentication)
     * [Challenge Response Authentication](#challenge-response-authentication)
     * [Ticket based Authentication](#ticket-based-authentication)
@@ -570,26 +564,23 @@ The complete list of *advanced features* currently defined per role is:
 |-------------------------------|-------------|----------|--------------|----------|----------|----------|
 | **Remote Procedure Calls**    |             |          |              |          |          |          |
 |                               |             |          |              |          |          |          |
-| callee_blackwhite_listing     |             |          |              | X        | X        |          |
-| caller_exclusion              |             |          |              | X        | X        |          |
 | caller_identification         |             |          |              | X        | X        | X        |
 | call_trustlevels              |             |          |              |          | X        | X        |
 | pattern_based_registration    |             |          |              |          | X        | X        |
-| partitioned_rpc               |             |          |              | X        | X        | X        |
+| registration_meta_api         |             |          |              |          | X        |          |
+| shared_registration           |             |          |              |          | X        | X        |
 | call_timeout                  |             |          |              | X        | X        | X        |
 | call_canceling                |             |          |              | X        | X        | X        |
 | progressive_call_results      |             |          |              | X        | X        | X        |
 |                               |             |          |              |          |          |          |
 | **Publish & Subscribe**       |             |          |              |          |          |          |
 |                               |             |          |              |          |          |          |
-| subscriber_blackwhite_listing | X           | X        |              |          |          |          |
-| publisher_exclusion           | X           | X        |              |          |          |          |
 | publisher_identification      | X           | X        | X            |          |          |          |
 | publication_trustlevels       |             | X        | X            |          |          |          |
 | pattern_based_subscription    |             | X        | X            |          |          |          |
-| partitioned_pubsub            | X           | X        | X            |          |          |          |
-| subscriber_metaevents         |             | X        | X            |          |          |          |
-| subscriber_list               |             | X        | X            |          |          |          |
+| subscription_meta_api         |             | X        |              |          |          |          |
+| subscriber_blackwhite_listing | X           | X        |              |          |          |          |
+| publisher_exclusion           | X           | X        |              |          |          |          |
 | event_history                 |             | X        | X            |          |          |          |
 
 
