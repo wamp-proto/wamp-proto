@@ -21,20 +21,66 @@
          <li>
             General
             <ul>
-               <li><a href="#rpc">What is RPC?</a></li>
-               <li><a href="#pubsub">What is PubSub?</a></li>
-               <li><a href="#why_rpc_and_pubsub">Why RPC and PubSub in one protocol?</a></li>
-               <li><a href="#naming">Why is it called WAMP and how do I use it?</a></li>
+               <li>
+                  <a href="#rpc">
+                     What is RPC?
+                  </a>
+               </li>
+               <li>
+                  <a href="#pubsub">
+                     What is PubSub?
+                  </a>
+               </li>
+               <li>
+                  <a href="#why_rpc_and_pubsub">
+                     Why RPC and PubSub in one protocol?
+                  </a>
+               </li>
+               <li>
+                  <a href="#naming">
+                     Why is it called WAMP and how do I use it?
+                  </a>
+               </li>
+               <li>
+                  <a href="#what_is_websocket">
+                     What is Websocket?
+                  </a>
+               </li>
+               <li>
+                  <a href="#is_websocket_necessary_for_wamp">
+                     Is WebSocket necessary for WAMP?
+                  </a>
+               </li>
             </ul>
          </li>
          <li>
             Legal
             <ul>
-               <li><a href="#legal_status">What is the legal status of WAMP?</a></li>
-               <li><a href="#requirements_for_use">Are there any requirements if I use WAMP for my project?</a></li>
-               <li><a href="#why_trademarking">Why is WAMP trademarked?</a></li>
-               <li><a href="#wamp_trademark_use">Who can use the WAMP word mark or the WAMP design mark?</a></li>
-               <li><a href="#website_copyright">What does the CC copyright on this website mean?</a></li>
+               <li>
+                  <a href="#legal_status">
+                     What is the legal status of WAMP?
+                  </a>
+               </li>
+               <li>
+                  <a href="#requirements_for_use">
+                     Are there any requirements if I use WAMP for my project?
+                  </a>
+               </li>
+               <li>
+                  <a href="#why_trademarking">
+                     Why is WAMP trademarked?
+                  </a>
+               </li>
+               <li>
+                  <a href="#wamp_trademark_use">
+                     Who can use the WAMP word mark or the WAMP design mark?
+                  </a>
+               </li>
+               <li>
+                  <a href="#website_copyright">
+                     What does the CC copyright on this website mean?
+                  </a>
+               </li>
             </ul>
          </li>
       </ul>
@@ -125,6 +171,9 @@
       WAMP was designed exactly with above in mind, so it
       provides you with a unified protocol for both RPC and PubSub.
    </p>
+   <p>
+      For more about the reasoning behind WAMP, see <a href="{{ url_for('page_why') }}">this explanation</a>.
+   </p>
    {{up()}}
 
    <a name="naming"></a>
@@ -162,6 +211,22 @@
             <li>Use the hashtag/keyword <b>"wampws"</b> when search on Web platform like <a href="https://twitter.com">Twitter</a> or <a href="http://stackoverflow.com/">StackOverflow</a></li>
          </ol>
       </div>
+   </p>
+   {{up()}}
+
+   <a name="what_is_websocket"></a>
+   <h3>What is WebSocket?</h3>
+   <p>
+      WebSocket is a protocol providing full-dupley communcations channels over a single TCP connection. It started out in the Web world, where it was created to replace things like Comet, and to allow true bi-directional, low-latency connections between browser and server. It's standardized by the IETF and the W3C. Usage is not limited to the browser, with implementations available for all major programming languages. For more details see this <a href="http://tavendo.com/blog/post/websocket-why-what-can-i-use-it/">introductory blog post</a>.
+   </p>
+   {{up()}}
+
+   <a name="is_websocket_necessary_for_wamp"></a>
+   <h3>Is WebSocket necessary for WAMP?</h3>
+   <p>
+     WAMP started out as the WebSocket Application Messaging Protocol. WebSocket is still the preferred transport in many cases, but the transport layer is fully decoupled. Any bi-directional, reliable, message-based and ordered transport works. Transports like Unix Domain Sockets or Unix Pipes are being used in implementations.
+     <br>
+     Additionally, a transport for WAMP transports can be implemented on top of other transports which lack some of the requirements, e.g. using longpoll bi-directionality can be built on top of HTTP.
    </p>
    {{up()}}
 

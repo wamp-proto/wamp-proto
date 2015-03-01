@@ -1377,7 +1377,7 @@ A *Dealer* MAY deny a *Caller's* request to disclose its identity:
 
 A *Callee* MAY **request** the disclosure of caller identity via
 
-    CALL.Options.disclose_caller|bool := true
+    REGISTER.Options.disclose_caller|bool := true
 
 *Example*
 
@@ -1738,6 +1738,71 @@ When the password is salted, the server will during WAMP-CRA send a `CHALLENGE` 
 The `CHALLENGE.Details.salt|string` is the password salt in use. The `CHALLENGE.Details.keylen|int` and `CHALLENGE.Details.iterations|int` are parameters for the PBKDF2 algorithm.
 
 
+### Ticket-based Authentication
+
+With *Ticket-based authentication*, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.
+
+This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
+
+> Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
+> 
+
+A typical authentication begins with the client sending a `HELLO` message specifying the `ticket` method as (one of) the authentication methods:
+
+```javascript
+[1, "realm1",
+  {
+    "roles": ...,
+    "authmethods": ["ticket"],
+    "authid": "joe"
+  }
+]
+```
+
+The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include `"ticket"`.
+
+The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+
+If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
+
+If the server is willing to let the client authenticate using a ticket and the server recognizes the provided `authid`, it'll send a `CHALLENGE` message:
+
+```javascript
+[4, "ticket", {}]
+```
+
+The client will send an `AUTHENTICATE` message containing a ticket:
+
+```javascript
+[5, "secret!!!", {}]
+```
+
+The server will then check if the ticket provided is permissible (for the `authid` given).
+
+If the authentication succeeds, the server will finally respond with a `WELCOME` message:
+
+```javascript
+[2, 3251278072152162,
+  {
+    "authid": "joe",
+    "authrole": "user",
+    "authmethod": "ticket",
+    "authprovider": "static",
+    "roles": ...
+  }
+]
+```
+
+where
+
+ 1. `authid|string`: The authentication ID the client was (actually) authenticated as.
+ 2. `authrole|string`: The authentication role the client was authenticated for.
+ 3. `authmethod|string`: The authentication method, here `"ticket"`
+ 4. `authprovider|string`: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. `static` or `dynamic`.
+
+The `WELCOME.Details` again contain the actual authentication information active. If the authentication fails, the server will response with an `ABORT` message.
+
+
 ### Two Factor Authentication
 
 Write me.
@@ -1807,60 +1872,60 @@ WAMP predefines the following URIs in the *advanced profile*. For URIs, used inÂ
 
 A session has joined a realm:
 
-  wamp.session.on_join
+    wamp.session.on_join
 
 A session has left a realm:
 
-  wamp.session.on_leave
+    wamp.session.on_leave
 
 
 **Subscriber Management**
 
 A session has subscribed to a topic:
 
-  wamp.topic.on_subscribe
+    wamp.topic.on_subscribe
 
 A first session has subscribed to a given topic:
 
-  wamp.topic.on_first_subscribe
+    wamp.topic.on_first_subscribe
 
 A session has unsubscribed from a topic:
 
-  wamp.topic.on_unsubscribe
+    wamp.topic.on_unsubscribe
 
 The last session subscribed to a given topic has unsubscribed:
 
-  wamp.topic.on_last_unsubscribe
+    wamp.topic.on_last_unsubscribe
 
 
 **Callee Management**
 
 A session has registered a procedure:
 
-  wamp.procedure.on_register
+    wamp.procedure.on_register
 
 A first session has registered a given procedure:
 
-  wamp.procedure.on_first_register
+    wamp.procedure.on_first_register
 
 A session has unregistered a procedure:
 
-  wamp.procedure.on_unregister
+    wamp.procedure.on_unregister
 
 The last session registered for a given procedure has unregistered:
 
-  wamp.procedure.on_last_unregister
+    wamp.procedure.on_last_unregister
 
 
 **Reflection**
 
 A topic or procedure has been defined for reflection:
 
-  wamp.reflect.on_define
+    wamp.reflect.on_define
 
 A topic or procedure has been unfined from reflection:
 
-  wamp.reflect.on_undefine
+    wamp.reflect.on_undefine
 
 
 #### Predefined Meta Procedures
@@ -1869,75 +1934,75 @@ A topic or procedure has been unfined from reflection:
 
 List the sessions 
 
-  wamp.session.list
+    wamp.session.list
 
 Count sessions
 
-  wamp.session.count
+    wamp.session.count
 
 Forcefully kill session(s):
 
-  wamp.session.kill
+    wamp.session.kill
 
 
 **Subscriber Management**
 
 List subscribers
 
-  wamp.topic.subscriber.list
+    wamp.topic.subscriber.list
 
 Count subscribers
 
-  wamp.topic.subscriber.count
+    wamp.topic.subscriber.count
 
 Forcefully unsubscribe subscriber(s):
 
-  wamp.topic.subscriber.unsubscribe
+    wamp.topic.subscriber.unsubscribe
 
 
 **Callee Management**
 
 List callees
 
-  wamp.procedure.callee.list
+    wamp.procedure.callee.list
 
 Count callees
 
-  wamp.procedure.callee.count
+    wamp.procedure.callee.count
 
 Forcefully unregister callee(s)
 
-  wamp.procedure.callee.unregister
+    wamp.procedure.callee.unregister
 
 
 **Reflection**
 
 A topic or procedure is defined for reflection:
 
-  wamp.reflect.define
+    wamp.reflect.define
 
 A topic or procedure was asked to be described (reflected upon):
 
-  wamp.reflect.describe
+    wamp.reflect.describe
 
 
 #### Predefined Errors
 
 *Dealer* orÂ *Callee* canceled a call previously issued
 
-	wamp.error.canceled
+    wamp.error.canceled
 
 A *Peer* requested an interaction with an option that was disallowed by the *Router*
 
-	wamp.error.option_not_allowed
+    wamp.error.option_not_allowed
 
 A *Dealer* could not perform a call, since a procedure with the given URI is registered, but *Callee Black- and Whitelisting* and/or *Caller Exclusion* lead to the exclusion of (any) *Callee* providing the procedure.
 
-	wamp.error.no_eligible_callee
+    wamp.error.no_eligible_callee
 
 A *Router* rejected client request to disclose its identity
 
-	wamp.error.option_disallowed.disclose_me
+    wamp.error.option_disallowed.disclose_me
 
 
 
