@@ -843,6 +843,12 @@ Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will rec
 
 A subscription lasts for the duration of a session, unless a *Subscriber* opts out from a previously established subscription via the `UNSUBSCRIBE` message.
 
+A *Subscriber* may have more than one event handlers for the same topic, that can be implemented in different ways:
+
+* *Subscriber* can be smart enough to be aware, that it is already subscribed to such topic, and just add another handler for incoming events.
+* Or it can simply send SUBSCRIBE message to broker (as it would be first).
+
+A *Broker*, received a `SUBSCRIBE` message, can fullfill or reject subscribtion, so it answers with `SUBSCRIBED` or `ERROR` messages. In case of receiving a `SUBSCRIBE` message from the same *Subscriber* and to already subscribed topic, *Broker* should answer with `SUBSCRIBED` message, containing existing `Subscription|id`.
 
 #### SUBSCRIBE
 
