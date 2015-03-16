@@ -530,6 +530,8 @@ Event dispatched by *Broker* to *Subscribers* for subscription the event was mat
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list]
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 
+> An event is dispatched to a *Subscriber* for a given `Subscription|id` *only once*. On the other hand, a *Subscriber* that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
+
 #### CALL
 
 Call as originally issued by the *Caller* to the *Dealer*.
@@ -843,12 +845,10 @@ Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will rec
 
 A subscription lasts for the duration of a session, unless a *Subscriber* opts out from a previously established subscription via the `UNSUBSCRIBE` message.
 
-A *Subscriber* may have more than one event handlers for the same topic, that can be implemented in different ways:
+A *Subscriber* may have more than one event handler attached to the same subscription. This can be implemented in different ways:
 
-* *Subscriber* can be smart enough to be aware, that it is already subscribed to such topic, and just add another handler for incoming events.
-* Or it can simply send SUBSCRIBE message to broker (as it would be first).
-
-A *Broker*, received a `SUBSCRIBE` message, can fullfill or reject subscribtion, so it answers with `SUBSCRIBED` or `ERROR` messages. In case of receiving a `SUBSCRIBE` message from the same *Subscriber* and to already subscribed topic, *Broker* should answer with `SUBSCRIBED` message, containing existing `Subscription|id`.
+* a *Subscriber* can recognize itself that it is already subscribed and just attach another handler to the subscription for incoming events
+* or it can send a new `SUBSCRIBE` message to broker (as it would be first) and upon receiving a `SUBSCRIBED.Subscription|id` it already knows about, attach the handler to the existing subscription
 
 #### SUBSCRIBE
 
@@ -866,6 +866,7 @@ where
 
 	[32, 713845233, {}, "com.myapp.mytopic1"]
 
+A *Broker*, receiving a `SUBSCRIBE` message, can fullfil or reject the subscription, so it answers with `SUBSCRIBED` or `ERROR` messages.
 
 #### SUBSCRIBED
 
@@ -883,7 +884,8 @@ where
 	[33, 713845233, 5512315355]
 
 > Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
->
+
+> In case of receiving a `SUBSCRIBE` message from the same *Subscriber* and to already subscribed topic, *Broker* should answer with `SUBSCRIBED` message, containing the existing `Subscription|id`.
 
 #### Subscription ERROR
 
