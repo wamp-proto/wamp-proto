@@ -462,7 +462,7 @@ Sent by a *Client* to initiate opening of a WAMP session to a *Router* attaching
 
 Sent by a *Router* to accept a *Client*. The WAMP session is now open.
 
-    [WELCOME, Session|id, Details|dict]
+    [WELCOME, Session|id, Details|dict, Extra|dict]
 
 #### ABORT
 
@@ -730,10 +730,11 @@ With WAMP Basic Profile implementations, the *Features* dictionaries per *Role* 
 
 A *Router* completes the opening of a WAMP session by sending a `WELCOME` reply message to the *Client*.
 
-   	[WELCOME, Session|id, Details|dict]
+   	[WELCOME, Session|id, Details|dict, Extra|dict]
 
  * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session.
  * `Details` is a dictionary that allows to provide additional information regarding the open session (see below).
+ * `Extra` is a dictionary which allows applications to pass additional (arbitrary) informations to a peer. Its not mandatory and if its not present, client implementations should treat that case, like an empty dictionary were present. This dictionary can be used for application logic to e.g pass a session token to a peer.
 
 In the WAMP Basic Profile without session authentication, a `WELCOME` message is the first message sent by the *Router*, directly in response to a `HELLO` message received from the *Client*.
 
