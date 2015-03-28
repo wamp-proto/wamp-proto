@@ -1273,7 +1273,7 @@ A *Caller* might want to issue a call providing a *timeout* for the call to fini
 
 A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
 
-A *Callee* specifies a timeout by providing
+A *Caller* specifies a timeout by providing
 
     CALL.Options.timeout|integer
 
