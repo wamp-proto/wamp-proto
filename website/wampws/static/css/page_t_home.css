@@ -99,14 +99,17 @@ a.cta_button:hover {
 }
 
 #usersbox td {
-   width: 30%;
-   max-width: 30%;
-   padding: 8px;
+   width: 50%;
+   max-width: 50%;
+   padding: 20px;
    vertical-align: top;
    text-align: top;
    color: #7e8696;
 }
 
+#usersbox td {
+   margin-bottom: 18px;
+}
 
 #intro_presentation {
    width: 760px;

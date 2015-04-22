@@ -61,6 +61,7 @@ SVG_FILES = [
    '3rd_party_logos/computer-associates.svg',
    '3rd_party_logos/tavendo.svg',
    '3rd_party_logos/kitware.svg',
+   '3rd_party_logos/logo_genesi_wampws_site.svg'
 ]
 
 IMG_SOURCE_DIR = "visuals/wamp2"

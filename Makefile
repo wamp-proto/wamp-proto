@@ -20,16 +20,16 @@ img:
 	scons
 
 freeze:
-	python website/wampws/__init__.py -f
+	python website/wampws/__init__.py -f --widgeturl ''
 
 upload:
 	python website/wampws/upload.py --bucket 'wamp.ws' --directory 'build'
 
-test:
+test: img
 	python website/wampws/__init__.py -d --widgeturl ''
 
-test_widget:
+test_widget: img
 	python website/wampws/__init__.py -d --widgeturl 'http://127.0.0.1:8090/widget'
 
-test_frozen:
-	python website/wampws/__init__.py -f -d
+test_frozen: img
+	python website/wampws/__init__.py -f -d --widgeturl ''
