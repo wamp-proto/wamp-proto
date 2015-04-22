@@ -9,7 +9,7 @@ all:
 	@echo "   upload              Upload frozen Web site to S3"
 	@echo ""
 
-deploy: clean img freeze upload
+deploy: img freeze upload
 
 clean:
 	rm -rf website/wampws/build
