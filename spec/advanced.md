@@ -787,7 +787,7 @@ If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, th
  * prefix-matching policy
  * wildcard-matching policy
 
-*Brokers* and *Subscribers* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
+*Brokers* and *Subscribers* MUST announce support for non-exact matching policies in the `HELLO.Details` (see that chapter).
 
 
 #### Prefix Matching
@@ -1424,7 +1424,7 @@ If the *Dealer* and the *Callee* support **pattern-based registrations**, this m
  * prefix-matching policy
  * wildcard-matching policy
 
-*Dealers* and *Callees* MUST announce support for non-exact matching policies in the `HELLO.Options` (see that chapter).
+*Dealers* and *Callees* MUST announce support for non-exact matching policies in the `HELLO.Details` (see that chapter).
 
 #### Prefix Matching
 
@@ -1627,9 +1627,9 @@ A typical authentication begins with the client sending a `HELLO` message specif
 ]
 ```
 
-The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For WAMP-CRA, this MUST include `"wampcra"`.
+The `HELLO.Details.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For WAMP-CRA, this MUST include `"wampcra"`.
 
-The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-CRA, this MUST be provided.
+The `HELLO.Details.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-CRA, this MUST be provided.
 
 If the server is unwilling or unable to perform WAMP-CRA authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
 
@@ -1759,9 +1759,9 @@ A typical authentication begins with the client sending a `HELLO` message specif
 ]
 ```
 
-The `HELLO.Options.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include `"ticket"`.
+The `HELLO.Details.authmethods|list` is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include `"ticket"`.
 
-The `HELLO.Options.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+The `HELLO.Details.authid|string` is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
 
 If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an `ABORT` message.
 
@@ -1812,14 +1812,14 @@ Write me.
 
 When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
 
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in the client-to-server direction.
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Details.transport.auth|any` in the client-to-server direction.
 
 
 ### TLS Certificate based Authentication
 
 When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
 
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Options.transport.auth|any` in both directions (if available).
+This transport-level authentication information may be forward to the WAMP level within `HELLO.Details.transport.auth|any` in both directions (if available).
 
 
 ## Reflection
