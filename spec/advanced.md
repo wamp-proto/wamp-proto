@@ -221,9 +221,9 @@ If a message received during a connection exceeds the limit requested, a *Peer* 
 
 When the *Router* is unable to speak the serializer requested by the *Client*, or it is denying the *Client* for other reasons, the *Router* replies with an error:
 
-    MSB                       LSB
-    31                          0
-    0111 1111 EEEE 0000 RRRR RRRR
+    MSB                                 LSB
+    31                                    0
+    0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
 
 An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST all be zeros for now.
 
@@ -296,9 +296,9 @@ E.g. a *Router* that is to forward a WAMP `EVENT` to a *Client* which exceeds th
 
 The serialized octets for a message to be sent are prefixed with exactly 4 octets.
 
-    MSB                       LSB
-    31                          0
-    RRRR RTTT LLLL LLLL LLLL LLLL
+    MSB                                 LSB
+    31                                    0
+    RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
 
 The *first octet* has the following structure
 
