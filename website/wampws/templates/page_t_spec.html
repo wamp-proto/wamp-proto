@@ -1,47 +1,26 @@
 {% extends "layout_t.html" %}
 
 {% block header %}
-
    <title>WAMP Specification</title>
    <meta name="description" content="The WAMP protocol specification and reference.">
-
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/page_t_spec.css') }}">
-
-   <link href="{{ url_for('static', filename='deps/syntaxhighlighter/styles/shCore.css') }}" rel="stylesheet" type="text/css" />
-   <link href="{{ url_for('static', filename='deps/syntaxhighlighter/styles/shThemeDefault.css') }}" rel="stylesheet" type="text/css" />
-
-   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/XRegExp.js') }}" type="text/javascript"></script>
-   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/shCore.js') }}" type="text/javascript"></script>
-   <script src="{{ url_for('static', filename='deps/syntaxhighlighter/scripts/shBrushJScript.js') }}" type="text/javascript"></script>
-   <script type="text/javascript">
-     SyntaxHighlighter.all()
-   </script>
-
 {% endblock %}
 
 {% block content %}
 
    <div id="page_wrapper">
-
       <a name="top"></a>
       <h1 class="title">The Web Application Messaging Protocol</h1>
-
       <p>
          This document specifies the Web Application Messaging Protocol (WAMP) split into two parts:
-
          <ul>
             <li><a href="https://github.com/tavendo/WAMP/blob/master/spec/basic.md">The Web Application Messaging Protocol, Part 1: Basic Profile</a></li>
             <li><a href="https://github.com/tavendo/WAMP/blob/master/spec/advanced.md">The Web Application Messaging Protocol, Part 2: Advanced Profile</a></li>
          </ul>
-
       </p>
-
       <p>
          While the "Basic Profile" is considered stable, the "Advanced Profile" is still under
          active development and should be considered work-in-progress.
-         For the old specification of WAMP version 1, please see <a href="{{ url_for('page_spec_wamp1')}}">here</a>.
       </p>
-
    </div>
 
 {% endblock%}
