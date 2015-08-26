@@ -1,4 +1,6 @@
 .sconsign.dblite
 *.sublime-workspace
 website/wampws/build
+website/wampws/build_uploaded
 website/wampws/static/img/gen/
+twistd.log
