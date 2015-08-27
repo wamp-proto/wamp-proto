@@ -2004,7 +2004,9 @@ A *Router* rejected client request to disclose its identity
 
     wamp.error.option_disallowed.disclose_me
 
+A *Router* encountered a network failure
 
+    wamp.error.network_failure
 
 ### Authentication examples
 
