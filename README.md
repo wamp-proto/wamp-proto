@@ -1,34 +1,21 @@
-# The WebSocket Application Messaging Protocol
+# The Web Application Messaging Protocol
 
-[WAMP](http://wamp.ws) is an open WebSocket subprotocol that provides two asynchronous messaging patterns:
+[WAMP](http://wamp.ws) is an open standard WebSocket subprotocol that provides two application messaging patterns in one unified protocol:
 
-  * Remote Procedure Calls
-  * Publish and Subscribe
+* Remote Procedure Calls and
+* Publish & Subscribe
+
+Using WAMP you can build distributed systems out of application components which are loosely coupled and communicate in (soft) real-time.
 
 Find out more on the [Web site](http://wamp.ws) or get in touch on the [mailing list](https://groups.google.com/group/wampws).
 
-Note:
+## Implementations
 
-WAMP v2 is currently under development. Along with a name change ('Web Application Messaging Protocol'), this greatly extends the power and flexibility of the protocol. Comments to the [draft spec](https://github.com/tavendo/WAMP/tree/master/spec) are highly welcome!
-
-For a working (in progress) implementation of WAMP v2, and examples illustrating the benefits of the new version, take a look at [AutobahnPython](https://github.com/tavendo/AutobahnPython/tree/master/examples/twisted/wamp).
-
-## WAMP Project Web site development
-
-The WAMP project Web site is built using [Flask](http://flask.pocoo.org/) and [Jinja2](http://jinja.pocoo.org/docs/) templating, and then frozen for production into a set of static files using [Frozen-Flask](http://pythonhosted.org/Frozen-Flask/).
-
-To install relevant stuff:
-
-    easy_install flask
-	easy_install frozen-flask
-
-To test:
-
-      make test
-
-This will run Flask via a WSGI server based Twisted Web.
-
-To deploy the Web site to Amazon S3 (only relevant for those authorized):
-
-	make deploy
-
+language (run-time) | implementations
+---|---
+**Python** | [AutobahnPython](http://autobahn.ws/python) provides a WAMP client library with support for many features from the WAMP AP. It runs on Python 2 and 3, on top of Twisted or asyncio.
+**Java** | [jawampa]()
+**C#** | [WAMPSharp]()
+**JavaScript** | [AutobahnJS](http://autobahn.ws/js). Runs in browsers and NodeJS.
+**PHP** | [PHP](https://github.com/voryx/Thruway)
+**ObjectiveC (iOS)** | [MDWamp](https://github.com/mogui/MDWamp)
