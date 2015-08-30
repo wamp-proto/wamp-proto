@@ -514,7 +514,9 @@ The following table list the message type code for **the OPTIONAL messages** def
 
 In addition to the *basic features* defined in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
 
-*Advanced features* need to be announced by the peer which implements them.
+*Advanced features* need to be announced by the peer which implements them. There is no "negotiation" involved when the client and the router announce their features. Features announced by one peer do not need to match with features announced by the other peer.
+
+**Applications that depend on advanced features for security/reliability reasons are responsible for verifying their availability on both the client and router**. Client implementations should provide a means to return the `WELCOME.Details.roles` dictionary back to the application. The application can then make the determination whether or not it's willing to proceed with the capabilities offered by the client and router.
 
 *Example: An Endpoint implementing the roles of Publisher and Subscriber and implementing some advanced features on the Publisher.*
 
@@ -557,6 +559,17 @@ The use of *feature announcement* in WAMP allows for
  * only implementing subsets of functionality
  * graceful degration
 
+*Use of Unannounced and Unsupported Features*
+
+- Clients **must not** send advanced message types or attributes that they did not previously announce during session establishment.
+- Routers may use the `HELLO.Details.roles` dictionary to allocate and prepare resources needed to support the various client-side features. If a client uses a feature supported by the router, but which was not previously announced during `HELLO`, then the router may proceed, at its discretion, in one of following manners:
+  - proceed normally if the router can fulfill the request with the unannounced feature, or,
+  - return an `ERROR` message with URI `wamp.error.unannounced_feature`.
+- Routers, at their discretion, may either:
+  - ignore unsupported/unrecognized attributes found in the `Options`/`Details` dictionaries of WAMP messages sent by clients, or,
+  - reject messages containing `Options`/`Details` attributes that are not recognized or not supported, and, when possible, return an `ERROR` message with URI `wamp.error.unsupported_feature`.
+- Routers **must not** send message types that are not supported by a client. For example, if a callee did not announce support for `callee.features.call_canceling`, then the router must not send an `INTERRUPT` message to the callee when a caller cancels a pending RPC.
+- Routers **must not** send advanced feature attributes that are not supported by a client. For example, if a callee did not announce support for `callee.features.progressive_call_results`, then the router must not send `INVOCATION` messages containing `Options.receive_progress := true` to the callee.
 
 The complete list of *advanced features* currently defined per role is:
 
