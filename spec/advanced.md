@@ -82,30 +82,30 @@ The following table list the message type code for **the OPTIONAL messages** def
 
 *Advanced features* need to be announced by the peer which implements them. The complete list of *advanced features* currently defined or proposed per role is:
 
-| Feature                                                         |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|-----------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------|
-| **Remote Procedure Calls**                                      |             |          |              |          |          |          |
-|                                                                 |             |          |              |          |          |          |
-| [caller_identification](advanced/caller-identification.md)      |             |          |              | X        | X        | X        |
-| [call_trustlevels]()                                            |             |          |              |          | X        | X        |
-| [pattern_based_registration]()                                  |             |          |              |          | X        | X        |
-| [session_meta_api]()                                            |             |          |              |          | X        |          |
-| [registration_meta_api]()                                       |             |          |              |          | X        |          |
-| [shared_registration]()                                         |             |          |              |          | X        | X        |
-| [call_timeout]()                                                |             |          |              | X        | X        | X        |
-| [call_canceling]()                                              |             |          |              | X        | X        | X        |
-| [progressive_call_results]()                                    |             |          |              | X        | X        | X        |
-|                                                                 |             |          |              |          |          |          |
-| **Publish & Subscribe**                                         |             |          |              |          |          |          |
-|                                                                 |             |          |              |          |          |          |
-| [publisher_identification]()                                    | X           | X        | X            |          |          |          |
-| [publication_trustlevels]()                                     |             | X        | X            |          |          |          |
-| [pattern_based_subscription]()                                  |             | X        | X            |          |          |          |
-| [session_meta_api]()                                            |             | X        |              |          |          |          |
-| [subscription_meta_api]()                                       |             | X        |              |          |          |          |
-| [subscriber_blackwhite_listing]()                               | X           | X        |              |          |          |          |
-| [publisher_exclusion]()                                         | X           | X        |              |          |          |          |
-| [event_history]()                                               |             | X        | X            |          |          |          |
+| Feature                                                                    |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|----------------------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------|
+| **Remote Procedure Calls**                                                 |             |          |              |          |          |          |
+|                                                                            |             |          |              |          |          |          |
+| [caller_identification](advanced/caller-identification.md)                 |             |          |              | X        | X        | X        |
+| [call_trustlevels](advanced/call-trustlevels.md)                           |             |          |              |          | X        | X        |
+| [pattern_based_registration](advanced/pattern-based-registration.md)       |             |          |              |          | X        | X        |
+| [session_meta_api](advanced/session-meta-api.md)                           |             |          |              |          | X        |          |
+| [registration_meta_api](advanced/registration-meta-api.md)                 |             |          |              |          | X        |          |
+| [shared_registration](advanced/shared-registration.md)                     |             |          |              |          | X        | X        |
+| [call_timeout](advanced/call-timeout.md)                                   |             |          |              | X        | X        | X        |
+| [call_canceling](advanced/call-canceling.md)                               |             |          |              | X        | X        | X        |
+| [progressive_call_results](advanced/progressive-call-results.md)           |             |          |              | X        | X        | X        |
+|                                                                            |             |          |              |          |          |          |
+| **Publish & Subscribe**                                                    |             |          |              |          |          |          |
+|                                                                            |             |          |              |          |          |          |
+| [publisher_identification](advanced/publisher-identification.md)           | X           | X        | X            |          |          |          |
+| [publication_trustlevels](advanced/publication-trustlevels.md)             |             | X        | X            |          |          |          |
+| [pattern_based_subscription](advanced/pattern-based-subsription.md)        |             | X        | X            |          |          |          |
+| [session_meta_api](advanced/session-meta-api.md)                           |             | X        |              |          |          |          |
+| [subscription_meta_api](advanced/subscription-meta-api.md)                 |             | X        |              |          |          |          |
+| [subscriber_blackwhite_listing](advanced/subscriber-blackwhite-listing.md) | X           | X        |              |          |          |          |
+| [publisher_exclusion](advanced/publisher-exclusion.md)                     | X           | X        |              |          |          |          |
+| [event_history](advanced/event-history.md)                                 |             | X        | X            |          |          |          |
 
 
 ## Alternative Transports
