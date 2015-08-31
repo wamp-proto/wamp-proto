@@ -25,17 +25,12 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Feature Announcement](#feature-announcement) **[stable]**
     * [Agent Identification](#agent-identification) **[stable]**
     * [Session Authentication](#session-authentication)
-    * [Session Events](#session-events)
-    * [Forced Session Kill](#forced-session-kill)
 4. [Publish and Subscribe](#publish-and-subscribe)
     * [Subscriber Black- and Whitelisting](#subscriber-black--and-whitelisting) **[stable]**
     * [Publisher Exclusion](#publisher-exclusion) **[stable]**
     * [Publisher Identification](#publisher-identification) **[stable]**
     * [Publication Trust Levels](#publication-trust-levels)
     * [Pattern-based Subscriptions](#pattern--based-subscriptions)
-    * [Subscriber Meta API](#subscriber-meta-api)
-    * [Forced Subscriber Unsubscribe](#forced-subscriber-unsubscribe)
-    * [Event History](#event-history)
 5. [Remote Procedure Calls](#remote-procedure-calls)
     * [Progressive Call Results](#progressive-call-results) **[stable]**
     * [Canceling Calls](#canceling-calls) **[stable]**
@@ -44,15 +39,13 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Call Trust Levels](#call-trust-levels)
     * [Pattern-based Registrations](#pattern--based-registrations)
     * [Shared Registrations](#shared-registrations)
-    * [Callee Meta API](#callee-meta-api)
-    * [Forced Callee Unregister](#forced-callee-unregister)
 6. [Authentication](#authentication)
     * [Challenge Response Authentication](#challenge-response-authentication)
     * [Ticket based Authentication](#ticket-based-authentication)
     * [Two Factor Authentication](#two-factor-authentication)
     * [HTTP Cookie based Authentication](#http-cookie-based-authentication)
     * [TLS Certificate based Authentication](#tls-certificate-based-authentication)
-7. [Reflection](#reflection)
+7. [Meta API](#meta-api)
 8. [Appendix](#appendix)
     * [Predefined URIs](#predefined-uris) 
     * [Authentication examples](#authentication-examples)
@@ -567,21 +560,27 @@ The complete list of *advanced features* currently defined per role is:
 | caller_identification         |             |          |              | X        | X        | X        |
 | call_trustlevels              |             |          |              |          | X        | X        |
 | pattern_based_registration    |             |          |              |          | X        | X        |
-| registration_meta_api         |             |          |              |          | X        |          |
 | shared_registration           |             |          |              |          | X        | X        |
 | call_timeout                  |             |          |              | X        | X        | X        |
 | call_canceling                |             |          |              | X        | X        | X        |
 | progressive_call_results      |             |          |              | X        | X        | X        |
+| session_meta_procedures       |             |          |              |          | X        |          |
+| subscription_meta_procedures  |             | X        |              |          | X        |          |
+| publication_meta_procedures   |             | X        |              |          | X        |          |
+| registration_meta_procedures  |             |          |              |          | X        |          |
+| reflection_meta_procedures    |             |          |              |          | X        |          |
 |                               |             |          |              |          |          |          |
 | **Publish & Subscribe**       |             |          |              |          |          |          |
 |                               |             |          |              |          |          |          |
 | publisher_identification      | X           | X        | X            |          |          |          |
 | publication_trustlevels       |             | X        | X            |          |          |          |
 | pattern_based_subscription    |             | X        | X            |          |          |          |
-| subscription_meta_api         |             | X        |              |          |          |          |
 | subscriber_blackwhite_listing | X           | X        |              |          |          |          |
 | publisher_exclusion           | X           | X        |              |          |          |          |
 | event_history                 |             | X        | X            |          |          |          |
+| session_meta_events           |             | X        |              |          |          |          |
+| subscription_meta_events      |             | X        |              |          |          |          |
+| registration_meta_events      |             | X        |              |          | X        |          |
 
 
 ### Agent Identification
@@ -643,16 +642,6 @@ To request authentication, the *Router* sends a `CHALLENGE` message to the *Endp
 In response to a `CHALLENGE` message, an *Endpoint* MUST send an `AUTHENTICATION` message.
 
     [AUTHENTICATE, Signature|string, Extra|dict]
-
-
-### Session Events
-
-Write me.
-
-
-### Forced Session Kill
-
-Write me.
 
 
 
@@ -880,152 +869,6 @@ Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
 *Example*
 
    	[32, 912873614, {"match": "wildcard", "nkey": "node23"}, "com.myapp.sensor..temperature"]
-
-
-### Subscriber Meta Events
-
-Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
-
-   	HELLO.Details.roles.<role>.features.subscriber_metaevents|bool := true
-
-*Example*
-
-   	[32, 713845233,
-         {"metatopics": ["wamp.metatopic.subscriber.add",
-                         "wamp.metatopic.subscriber.remove"]},
-         "com.myapp.mytopic1"]
-
-If above subscription request by a *Subscriber 1* succeeds, the *Broker* will dispatch meta events to *Subscriber 1* for every *Subscriber 2, 3, ..* added to or removed from a subscription for `com.myapp.mytopic1`. It will also dispatch "normal" events on the topic `com.myapp.mytopic1` to *Subscriber 1*.
-
-*Example*
-
-   	[32, 713845233,
-         {"metatopics": ["wamp.metatopic.subscriber.add",
-                         "wamp.metatopic.subscriber.remove"],
-          "metaonly": 1},
-         "com.myapp.mytopic1"]
-
-This subscription works like the previous one, except that "normal" events on the topic `com.myapp.mytopic1` will NOT be dispatched to *Subscriber 1*. Consequently, it is called a "Meta Event only subscription".
-
-
-Metaevents are always generated by the *Broker* itself and do not contain application payload:
-
-   	[EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
-
-*Example*
-
-   	[36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.add", "session": 9712478}]
-
-*Example*
-
-   	[36, 5512315355, 71415664, {"metatopic": "wamp.metatopic.subscriber.remove", "session": 9712478}]
-
-
-The following metatopics are currently defined:
-
- 1. `wamp.metatopic.subscriber.add`: A new subscriber is added to the subscription.
- 2. `wamp.metatopic.subscriber.remove`: A subscriber is removed from the subscription.
-
-
-### Subscriber Events
-
-Write me.
-
-
-### Subscriber Listing
-
-A *Broker* may allow to retrieve the current list of *Subscribers* for a given subscription.
-
-Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
-
-   	HELLO.Details.roles.<role>.features.subscriber_list|bool := true
-
-A *Broker* that implements *subscriber list* must (also) announce role `HELLO.roles.callee` and provide the following (built in) procedures.
-
-A *Caller* (that is also a *Subscriber*) can request the current list of subscribers for a subscription (it is subscribed to) by calling the *Broker* procedure
-
-   	wamp.broker.subscriber.list
-
-with `Arguments = [subscription|id]` where
-
- * `subscription` is the ID of the subscription as returned from `SUBSCRIBED.Subscription`
-
-and `Result = sessions|list` where
-
- * `sessions` is a list of WAMP session IDs currently subscribed to the given subscription.
-
-A call to `wamp.broker.subscriber.list` may fail with
-
-   	wamp.error.no_such_subscription
-   	wamp.error.not_authorized
-
-**Open Issues**
-
- 1. What if we have multiple *Brokers* (a cluster)? The call would need to be forwarded.
- 2. Should we allow "paging" (`offset|integer` and `limit|integer` arguments)?
- 3. Should we allow *Subscribers* to list subscribers for subscription it is not itself subscribed to? How would the *Callee* know the subscription ID it wants to look up without subscribing?
- 4. Why retrieve the list for a subscription ID, when the interest may lie in how many subscribers there are to a topic, e.g. if a publisher wants to judge its current reach?
- 5. The *Router* needs to implement a *Dealer* role as well in order to be able to route the RPC, since calls can only be addressed to *Dealers*.
- 6. We should probably then also have a *Callee* as a separate peer. Otherwise we break the rule that peers can implement Broker/Dealer OR Caller/Callee/Subscriber/Publisher roles.
- 7. If we have the separate *Callee*, then how does this get the list? One way would be using subscription meta-events.
-
-
-### Forced Subscriber Unsubscribe
-
-Write me.
-
-
-### Event History
-
-Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
-
-   	HELLO.Details.roles.<role>.features.event_history|bool := true
-
-Instead of complex QoS for message delivery, a *Broker* may provide *message history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
-
-The *Broker* may allow for configuration on a per-topic basis.
-
-The event history may be transient or persistent message history (surviving *Broker* restarts).
-
-A *Broker* that implements *event history* must (also) announce role `HELLO.roles.callee`, indicate `HELLO.roles.broker.history == 1` and provide the following (builtin) procedures.
-
-A *Caller* can request message history by calling the *Broker* procedure
-
-   	wamp.topic.history.last
-
-with `Arguments = [topic|uri, limit|integer]` where
-
- * `topic` is the topic to retrieve event history for
- * `limit` indicates the number of last N events to retrieve
-
-or by calling
-
-   	wamp.topic.history.since
-
-with `Arguments = [topic|uri, timestamp|string]` where
-
- * `topic` is the topic to retrieve event history for
- * `timestamp` indicates the UTC timestamp since when to retrieve the events in the ISO-8601 format `yyyy-MM-ddThh:mm:ss:SSSZ` (e.g. `"2013-12-21T13:43:11:000Z"`)
-
-or by calling
-
-   	wamp.topic.history.after
-
-with `Arguments = [topic|uri, publication|id]`
-
- * `topic` is the topic to retrieve event history for
- * `publication` is the id of an event which marks the start of the events to retrieve from history
-
-
-*FIXME*
-
- 1. Should we use `topic|uri` or `subscription|id` in `Arguments`?
-      - Since we need to be able to get history for pattern-based subscriptions as well, a subscription|id makes more sense: create pattern-based subscription, then get the event history for this.
-      - The only restriction then is that we may not get event history without a current subscription covering the events. This is a minor inconvenience at worst.
- 2. Can `wamp.topic.history.after` be implemented (efficiently) at all?
- 3. How does that interact with pattern-based subscriptions?
- 4. The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.
-
 
 
 ## Remote Procedure Calls
@@ -1539,61 +1382,6 @@ The call is then routed to all endpoints that were registered ..
 The call is then processed as for "All" Calls.
 
 
-### Callee Events
-
-In certain scenarios, application components might be interested in getting notified when a *Dealer* registers or unregisters a *Callee* for a procedure on a *different* session.
-
-When a *Callee* registers a procedure at a *Dealer*, the *Dealer* can signal the registration to other components by publishing a WAMP metaevent:
-
-  wamp.procedure.on_register
-
-Further, a *Dealer* might *additionally* publish a WAMP event upon the first *Callee* registering for a given procedure:
-
-  wamp.procedure.on_first_register
-
-A *Callee* has unregistered a (previously registered) procedure, either actively (via `UNREGISTER`) or because the *Callee* session has closed or the underlying transport was closed or dropped:
-
-  wamp.procedure.on_unregister
-
-When the last *Callee* registered for a given procedure has unregistered, a *Dealer* might *additionally* publish a WAMP event:
-
-  wamp.procedure.on_last_unregister
-
-*Event Contents*
-
-FIXME
-
-*Configuration*
-
-When a *Dealer* supports *Callee Events*, it might
-
-* simply produce respective WAMP metaevents always or
-* it might produce WAMP metaevents only when the URI of the respective procedure was configured for *Callee Events* or
-
-Note that generating above WAMP metaevents is never under control of the *Callee* registering/unregistering or the *Subscriber* to the metaevent.
-
-A *Subscriber* that has subscribed to a *Callee* metaevent will (when authorized) receive respective metaevents for *all* procedures configured to trigger metaevents. The *Subscriber* cannot subscribe to *Callee* metaevents only for a single or a set of procedures.
-
-*Feature Announcement*
-
-FIXME
-
-
-### Callee Listing
-
-Write me.
-
-
-### Forced Callee Unregister
-
-Write me.
-
-
-### Call History
-
-Write me.
-
-
 ## Authentication
 
 ![alt text](figure/hello_authenticated.png "WAMP Session denied")
@@ -1821,8 +1609,159 @@ When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a p
 
 This transport-level authentication information may be forward to the WAMP level within `HELLO.Details.transport.auth|any` in both directions (if available).
 
+## Meta API
 
-## Reflection
+The _Meta API_ is a set of _meta-events_ (pub-sub topics) and _meta-procedures_ (RPCs) provided by the router itself. _Meta-events_ allow subscribers to receive information about the lifecycle of sessions, subscriptions and registrations. _Meta-procedures_ allow retrieving information about currently existing sessions, subscriptions and registrations.
+
+Meta-events are published by the router itself. This means that meta-events, as well as the data received when calling a meta-procedure, can be accorded the same trust level as the router.
+
+The following subsections provide an overview of standardized meta-events and meta-procedures. Details on each meta-event and meta-procedure, including argument lists and schemas, are provided in (Appendix - Meta-Event Specifications) and (Appendix - Meta-Procedure Specifications).
+
+### Session Meta-Events
+
+WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via session meta-events.
+
+Support for this feature **must** be announced by _Brokers_ (`role := "broker"`) via
+
+   	HELLO.Details.roles.broker.features.session_meta_events|bool := true
+   	
+A client can subscribe to the following session meta-events, which cover the lifecycle of a session:
+
+- `wamp.session.on_join`: Fired when a session joins a realm on the router.
+- `wamp.session.on_leave`: Fired when a session leaves a realm on the router or is disconnected.
+
+The WAMP session meta events shall be dispatched by the router to the same realm as the WAMP session which triggered the event.
+
+### Session Meta-Procedures
+
+WAMP allows retrieving information about currently connected sessions via session meta-procedures.
+
+Support for this feature **must** be announced by _Dealers_ (`role := "dealer"`) via
+
+   	HELLO.Details.roles.dealer.features.session_meta_procedures|bool := true
+
+A client can actively retrieve information about sessions via the following meta-procedures:
+
+- `wamp.session.count`: Obtains the number of sessions currently attached to the realm.
+- `wamp.session.list`: Obtains a list of the session IDs for all sessions currently attached to the realm
+
+> Leftover from Predefined Meta Procedures
+> - `wamp.session.kill`: Forcefully kill session(s).
+
+### Subscription Meta-Events
+
+Within an application, it may be desirable for a publisher to know whether a publication to a specific topic currently makes sense, i.e. whether there are any subscribers who would receive an event based on the publication. It may also be desirable to keep a current count of subscribers to a topic to then be able to filter out any subscribers who are not supposed to receive an event.
+
+Subscription meta-events are fired when topics are first created, when clients subscribe/unsubscribe to them, and when topics are deleted.
+
+Support for this feature **must** be announced by _Brokers_ (`role := "broker"`) via
+
+   	HELLO.Details.roles.broker.features.subscription_meta_events|bool := true
+   	
+A client can subscribe to the following session meta-events, which cover the lifecycle of a subscription:
+
+- `wamp.subscription.on_create`: Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.
+- `wamp.subscription.on_subscribe`: Fired when a session is added to a subscription.
+- `wamp.subscription.on_subscribe_to.<topic>`: Fired when a session subscribes to the given topic.
+- `wamp.subscription.on_unsubscribe`: Fired when a session is removed from a subscription.
+- `wamp.subscription.on_unsubscribe_from.<topic>`: Fired when a session unsubscribes from the given topic.
+- `wamp.subscription.on_delete`: Fired when a subscription is deleted after the last session attached to it has been removed.
+
+A `wamp.subscription.on_subscribe` event **shall** always be fired subsequent to a `wamp.subscription.on_create` event, since the first subscribe results in both the creation of the subscription and the addition of a session. Similarly, the `wamp.subscription.on_delete` event **shall** always be preceded by a `wamp.subscription.on_unsubscribe` event.
+
+The WAMP subscription meta events shall be dispatched by the router to the same realm as the WAMP session which triggered the event.
+
+### Subscription Meta-Procedures
+
+WAMP allows retrieving information about subscriptions via subscription meta-procedures.
+
+Support for this feature **must** be announced by _Dealers_ (`role := "dealer"`) via
+
+   	HELLO.Details.roles.dealer.features.subscription_meta_procedures|bool := true
+
+A client can actively retrieve information about subscriptions via the following meta-procedures:
+
+- `wamp.subscription.list`: Obtains subscription IDs listed according to match policies.
+- `wamp.subscription.lookup`: Obtains the subscription (if any) managing a topic, according to some match policy.
+- `wamp.subscription.match`: Obtains a list of IDs of subscriptions matching a topic URI, irrespective of match policy.
+- `wamp.subscription.get`: Obtains information on a particular subscription.
+- `wamp.subscription.list_subscribers`: Obtains a list of session IDs for sessions currently attached to the subscription.
+- `wamp.subscription.count_subscribers`: Obtains the number of sessions currently attached to the subscription.
+
+> Leftover from Predefined Meta Procedures
+> - `wamp.topic.subscriber.unsubscribe`: Forcefully unsubscribe subscriber(s).
+
+
+### Publication Meta-Procedures
+
+> This section is intended as a replacement of the old Event History section.
+
+Support for this feature **must** be announced by _Dealers_ (`role := "dealer"`) via
+
+   	HELLO.Details.roles.dealer.features.publication_meta_procedures|bool := true
+
+Instead of complex QoS for message delivery, a *Broker* may provide *publication history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
+
+The *Broker* may allow for configuration on a per-topic basis.
+
+The event history may be transient or persistent message history (surviving *Broker* restarts).
+
+A client can actively retrieve information on publication history via the following meta-procedures:
+
+- `wamp.publication.history.last`: Requests the history of the latest publications sent from the Broker.
+- `wamp.publication.history.since`: Requests the history of publications sent from the Broker since a given timestamp.
+- `wamp.publication.history.after`: Requests the history of publications sent from the Broker since a given publication.
+
+> **Leftover notes from Event History section:**
+
+1. Should we use `topic|uri` or `subscription|id` in `Arguments`?
+      - Since we need to be able to get history for pattern-based subscriptions as well, a subscription|id makes more sense: create pattern-based subscription, then get the event history for this.
+      - The only restriction then is that we may not get event history without a current subscription covering the events. This is a minor inconvenience at worst.
+2. Can `wamp.topic.history.after` be implemented (efficiently) at all?
+3. How does that interact with pattern-based subscriptions?
+4. The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.
+
+### Registration Meta-Events
+
+Registration meta-events are fired when RPC registrations are first created, when other clients attach/remove themselves to them, and when registrations are deleted.
+
+Support for this feature **must** be announced by _Brokers_ (`role := "broker"`) via
+
+   	HELLO.Details.roles.broker.features.registration_meta_events|bool := true
+   	
+A client can subscribe to the following registration meta-events, which cover the lifecycle of a registration:
+
+- `wamp.registration.on_create`: Fired when a registration is created through a registration request for an URI which was previously without a registration.
+- `wamp.registration.on_register`: Fired when a session is added to a registration.
+- `wamp.registration.on_unregister`: Fired when a session is removed from a registration.
+- `wamp.registration.on_delete`: Fired when a registration is deleted after the last session attached to it has been removed.
+
+A `wamp.registration.on_register` event **shall** always be fired subsequent to a `wamp.registration.on_create` event, since the first registration results in both the creation of the registration and the addition of a session. Similarly, the `wamp.registration.on_delete` event **shall** always be preceded by a `wamp.registration.on_unregister` event.
+
+The WAMP registration meta events shall be dispatched by the router to the same realm as the WAMP session which triggered the event.
+
+### Registration Meta-Procedures
+
+WAMP allows actively retrieving information about registrations via registration meta-procedures.
+
+Support for this feature **must** be announced by _Dealers_ (`role := "dealer"`) via
+
+   	HELLO.Details.roles.dealer.features.registration_meta_procedures|bool := true
+
+A client can actively retrieve information about subscriptions via the following meta-procedures:
+
+- `wamp.registration.list`: Obtains registration IDs listed according to match policies.
+- `wamp.registration.lookup`: Obtains the registration (if any) managing a procedure, according to some match policy.
+- `wamp.registration.match`: Obtains the registration best matching a given procedure URI.
+- `wamp.registration.get`: Obtains information on a particular registration.
+- `wamp.registration.list_callees`: Obtains a list of session IDs for sessions currently attached to the registration.
+- `wamp.registration.count_callees`: Obtains the number of sessions currently attached to the registration.
+
+> Leftover from Predefined Meta Procedures
+> - `wamp.procedure.callee.unregister`: Forcefully unregister callee(s).
+
+
+### Reflection Meta-Procedures
 
 *Reflection* denotes the ability of WAMP peers to examine the procedures, topics and errors provided or used by other peers.
 
@@ -1834,7 +1773,7 @@ Reflection may be useful in the following cases:
  * discoverability
  * generating stubs and proxies
 
-WAMP predefines the following procedures for performing run-time reflection on WAMP peers which act as *Brokers* and/or *Dealers*.
+WAMP predefines the following meta-procedures for performing run-time reflection on WAMP peers which act as *Brokers* and/or *Dealers*.
 
 Predefined WAMP reflection procedures to *list* resources by type:
 
@@ -1848,142 +1787,23 @@ Predefined WAMP reflection procedures to *describe* resources by type:
    	wamp.reflection.procedure.describe
    	wamp.reflection.error.describe
 
-A peer that acts as a *Broker* SHOULD announce support for the reflection API by sending
+> Leftover from Predefined Meta Procedures
+> - `wamp.reflect.define`: A topic or procedure is defined for reflection.
+> - `wamp.reflect.describe`: A topic or procedure was asked to be described (reflected upon).
 
-   	HELLO.Details.roles.broker.reflection|bool := true
+A router that acts as a *Dealer* SHOULD announce support for the reflection API by sending
 
-A peer that acts as a *Dealer* SHOULD announce support for the reflection API by sending
+   	HELLO.Details.roles.dealer.reflection_meta_procedures|bool := true
 
-   	HELLO.Details.roles.dealer.reflection|bool := true
+**Note**: In order to support the `wamp.reflection.topic.*` meta-procedures, a Router must also be a Dealer in order to be able to service those meta-procedure calls.
 
 > Since *Brokers* might provide (broker) procedures and *Dealers* might provide (dealer) topics, both SHOULD implement the complete API above (even if the peer only implements one of *Broker* or *Dealer* roles).
-
 
 ## Appendix
 
 ### Predefined URIs
 
 WAMP predefines the following URIs in the *advanced profile*. For URIs, used in *basic profile*, please, see appendix in basic profile specification.
-
-
-#### Predefined Meta Topics
-
-**Session Management**
-
-A session has joined a realm:
-
-    wamp.session.on_join
-
-A session has left a realm:
-
-    wamp.session.on_leave
-
-
-**Subscriber Management**
-
-A session has subscribed to a topic:
-
-    wamp.topic.on_subscribe
-
-A first session has subscribed to a given topic:
-
-    wamp.topic.on_first_subscribe
-
-A session has unsubscribed from a topic:
-
-    wamp.topic.on_unsubscribe
-
-The last session subscribed to a given topic has unsubscribed:
-
-    wamp.topic.on_last_unsubscribe
-
-
-**Callee Management**
-
-A session has registered a procedure:
-
-    wamp.procedure.on_register
-
-A first session has registered a given procedure:
-
-    wamp.procedure.on_first_register
-
-A session has unregistered a procedure:
-
-    wamp.procedure.on_unregister
-
-The last session registered for a given procedure has unregistered:
-
-    wamp.procedure.on_last_unregister
-
-
-**Reflection**
-
-A topic or procedure has been defined for reflection:
-
-    wamp.reflect.on_define
-
-A topic or procedure has been unfined from reflection:
-
-    wamp.reflect.on_undefine
-
-
-#### Predefined Meta Procedures
-
-**Session Management**
-
-List the sessions 
-
-    wamp.session.list
-
-Count sessions
-
-    wamp.session.count
-
-Forcefully kill session(s):
-
-    wamp.session.kill
-
-
-**Subscriber Management**
-
-List subscribers
-
-    wamp.topic.subscriber.list
-
-Count subscribers
-
-    wamp.topic.subscriber.count
-
-Forcefully unsubscribe subscriber(s):
-
-    wamp.topic.subscriber.unsubscribe
-
-
-**Callee Management**
-
-List callees
-
-    wamp.procedure.callee.list
-
-Count callees
-
-    wamp.procedure.callee.count
-
-Forcefully unregister callee(s)
-
-    wamp.procedure.callee.unregister
-
-
-**Reflection**
-
-A topic or procedure is defined for reflection:
-
-    wamp.reflect.define
-
-A topic or procedure was asked to be described (reflected upon):
-
-    wamp.reflect.describe
 
 
 #### Predefined Errors
@@ -2007,6 +1827,7 @@ A *Router* rejected client request to disclose its identity
 A *Router* encountered a network failure
 
     wamp.error.network_failure
+
 
 ### Authentication examples
 
@@ -2241,3 +2062,387 @@ Router sends `WELCOME` message:
    }
 ]
 ```
+
+### Meta-Event Specifications
+
+#### `wamp.session.on_join`
+
+Fired when a session joins a realm on the router.
+
+**Arguments**
+- `SessionDetails|dict`
+
+**Object Schemas**
+
+```javascript
+SessionDetails :=
+{
+    "authid": authid|string,
+    "authrole": authrole|string,
+    "authmethod": authmethod|string,
+    "authprovider": authprovider|string,
+    "realm": realm|uri,
+    "session": session|id,
+    "transport": transport_info|dict // Implementation defined?
+}
+```
+
+See [Authentication](#authentication) for a description of the `authid`, `authrole`, `authmethod` and `authprovider` properties.
+
+#### `wamp.session.on_leave`
+
+Fired when a session leaves a realm on the router or is disconnected.
+
+**Arguments**
+- `session|id`
+
+#### `wamp.subscription.on_create`
+
+Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.
+
+**Arguments**
+- `session|id`
+- `SubscriptionDetails|dict`
+
+**Object Schemas**
+
+```javascript
+SubscriptionDetails :=
+{
+    "id": subscription|id,
+    "created": time_created|iso_8601_string,
+    "uri": topic|uri,
+    "match": match_policy|string
+}
+```
+
+See [Pattern-based Subscriptions](#pattern--based-subscriptions) for a description of `match_policy`.
+
+#### `wamp.subscription.on_subscribe`
+
+Fired when a session is added to a subscription.
+
+**Arguments**
+- `session|id`
+- `subscription|id`
+
+#### `wamp.subscription.on_subscribe_to.<topic>`
+
+Fired when a session subscribes to the given topic.
+
+> This meta-event is a replacement for the proposed `SUBSCRIBE.Options.metatopics` option.
+
+**Arguments**
+- `session|id`
+- `subscription|id`
+
+#### `wamp.subscription.on_unsubscribe`
+
+Fired when a session is removed from a subscription.
+
+**Arguments**
+- `session|id`
+- `subscription|id`
+
+#### `wamp.subscription.on_unsubscribe_from.<topic>`
+
+Fired when a session unsubscribes from the given topic.
+
+> This meta-event is a replacement for the proposed `SUBSCRIBE.Options.metatopics` option.
+
+**Arguments**
+- `session|id`
+- `subscription|id`
+
+#### `wamp.subscription.on_delete`
+
+Fired when a subscription is deleted after the last session attached to it has been removed.
+
+**Arguments**
+- `session|id`
+- `subscription|id`
+
+#### `wamp.registration.on_create`
+
+Fired when a registration is created through a registration request for an URI which was previously without a registration.
+
+**Arguments**
+- `session|id`
+- `RegistrationDetails|dict`
+
+**Object Schemas**
+
+```javascript
+RegistrationDetails :=
+{
+    "id": registration|id,
+    "created": time_created|iso_8601_string,
+    "uri": procedure|uri,
+    "match": match_policy|string,
+    "invoke": invocation_policy|string
+}
+```
+
+See [Pattern-based Registrations](#pattern--based-registrations) for a description of `match_policy`.
+
+*NOTE: invocation_policy IS NOT YET DESCRIBED IN THE ADVANCED SPEC*
+
+#### `wamp.registration.on_register`
+
+Fired when a session is removed from a registration.
+
+**Arguments**
+- `session|id`
+- `registration|id`
+
+#### `wamp.registration.on_unregister`
+
+Fired when a session is removed from a subscription.
+
+**Arguments**
+- `session|id`
+- `registration|id`
+
+#### `wamp.registration.on_delete`
+
+Fired when a registration is deleted after the last session attached to it has been removed.
+
+**Arguments**
+- `session|id`
+- `registration|id`
+
+### Meta-Procedure Specifications
+
+#### `wamp.session.count`
+
+Obtains the number of sessions currently attached to the realm.
+
+**Arguments**
+- (Optional) `filter_authroles|list`: If provided, only count sessions with an authrole from this list.
+
+**Results**
+- `count|int`
+
+#### `wamp.session.list`
+
+Obtains a list of the session IDs for all sessions currently attached to the realm.
+
+**Arguments**
+- (Optional) `filter_authroles|list`: If provided, only return sessions with an authrole from this list.
+
+**Results**
+- `session_ids|list`: List of WAMP session IDs (order undefined).
+
+#### `wamp.subscription.list`
+
+Obtains subscription IDs listed according to match policies.
+
+**Arguments**
+- None
+
+**Results**
+- `SubscriptionLists|dict`: A dictionary with a list of subscription IDs for each match policy.
+
+**Object Schemas**
+
+```javascript
+SubscriptionLists :=
+{
+    "exact": subscription_ids|list,
+    "prefix": subscription_ids|list,
+    "wildcard": subscription_ids|list
+}
+```
+
+#### `wamp.subscription.lookup`
+
+Obtains the subscription (if any) managing a topic, according to some match policy.
+
+**Arguments**
+- `topic|uri`
+- (Optional) `options|dict`: Same options as when subscribing to a topic.
+
+**Results**
+- (Nullable) `subscription|id`: The ID of the subscription managing the topic, if found, or null.
+
+#### `wamp.subscription.match`
+
+Obtains a list of IDs of subscriptions matching a topic URI, irrespective of match policy.
+
+**Arguments**
+- `topic|uri`: The topic to match
+
+**Results**
+- (Nullable) `subscription_ids|list`: A list of all matching subscription IDs, or null.
+
+#### `wamp.subscription.get`
+
+Obtains information on a particular subscription.
+
+**Arguments**
+- `subscription|id`: The ID of the subscription to retrieve.
+
+**Results**
+- `SubscriptionDetails|dict`: Details on the subscription.
+
+**Object Schemas**
+
+```javascript
+SubscriptionDetails :=
+{
+    "id": subscription|id,
+    "created": time_created|iso_8601_string,
+    "uri": topic|uri,
+    "match": match_policy|string
+}
+```
+
+#### `wamp.subscription.list_subscribers`
+
+Obtains a list of session IDs for sessions currently attached to the subscription.
+
+**Arguments**
+- `subscription|id`: The ID of the subscription to get subscribers for.
+
+**Results**
+- `subscribers_ids|list`: A list of WAMP session IDs of subscribers currently attached to the subscription.
+
+> **Leftover notes from the old Subscriber Listing section:**
+
+ 1. What if we have multiple *Brokers* (a cluster)? The call would need to be forwarded.
+ 2. Should we allow "paging" (`offset|integer` and `limit|integer` arguments)?
+ 3. Should we allow *Subscribers* to list subscribers for subscription it is not itself subscribed to? How would the *Callee* know the subscription ID it wants to look up without subscribing?
+ 4. Why retrieve the list for a subscription ID, when the interest may lie in how many subscribers there are to a topic, e.g. if a publisher wants to judge its current reach?
+ 5. The *Router* needs to implement a *Dealer* role as well in order to be able to route the RPC, since calls can only be addressed to *Dealers*.
+ 6. We should probably then also have a *Callee* as a separate peer. Otherwise we break the rule that peers can implement Broker/Dealer OR Caller/Callee/Subscriber/Publisher roles.
+ 7. If we have the separate *Callee*, then how does this get the list? One way would be using subscription meta-events.
+
+#### `wamp.subscription.count_subscribers`
+
+Obtains the number of sessions currently attached to a subscription.
+
+**Arguments**
+- `subscription|id`: The ID of the subscription to get the number of subscribers for.
+
+**Results**
+- `count|int`: The number of sessions currently attached to a subscription.
+
+#### `wamp.publication.history.last`
+
+Requests the history of the latest publications sent from the Broker.
+
+**Arguments**
+- `topic|uri`: The topic to retrieve the publication history for.
+- `limit|integer`: Indicates the number of last N publications to retrieve.
+
+**Results**
+- `PublicationHistory|TBD`: (TBD) A list or object containing up to `limit` of the latest publications sent from the Broker.
+
+#### `wamp.publication.history.since`
+
+Requests the history of publications sent from the Broker since a given timestamp.
+
+**Arguments**
+- `topic|uri`: The topic to retrieve the publication history for.
+- `since|iso_8601_string`: The UTC timestamp, in ISO-8601 format, from whence to retrieve the publications history.
+
+**Results**
+- `PublicationHistory|TBD`: (TBD) A list or object containing publications sent from the Broker.
+
+#### `wamp.publication.history.after`
+
+Requests the history of publications sent from the Broker since a given publication.
+
+**Arguments**
+- `topic|uri`: The topic to retrieve the publication history for.
+- `publication|id`: The id of an publication which marks the start of the publications to retrieve from history.
+
+**Results**
+- `PublicationHistory|TBD`: (TBD) A list or object containing publications sent from the Broker.
+
+#### `wamp.registration.list`
+
+Obtains registration IDs listed according to match policies.
+
+**Arguments**
+- None
+
+**Results**
+- `RegistrationLists|dict`: A dictionary with a list of registration IDs for each match policy.
+
+**Object Schemas**
+
+```javascript
+RegistrationLists :=
+{
+    "exact": registration_ids|list,
+    "prefix": registration_ids|list,
+    "wildcard": registration_ids|list
+}
+```
+
+#### `wamp.registration.lookup`
+
+Obtains the registration (if any) managing a procedure, according to some match policy.
+
+**Arguments**
+- `procedure|uri`: The procedure to lookup the registration for.
+- (Optional) `options|dict`: Same options as when registering a procedure.
+
+**Results**
+- (Nullable) `registration|id`: The ID of the registration managing the procedure, if found, or null.
+
+#### `wamp.registration.match`
+
+Obtains the registration best matching a given procedure URI.
+
+**Arguments**
+- `procedure|uri`: The procedure URI to match
+
+**Results**
+- (Nullable) `registration|id`: The ID of best matching registration, or null.
+
+#### `wamp.registration.get`
+
+Obtains information on a particular registration.
+
+**Arguments**
+- `registration|id`: The ID of the registration to retrieve.
+
+**Results**
+- `RegistrationDetails|dict`: Details on the registration.
+
+**Object Schemas**
+
+```javascript
+RegistrationDetails :=
+{
+    "id": registration|id,
+    "created": time_created|iso_8601_string,
+    "uri": procedure|uri,
+    "match": match_policy|string,
+    "invoke": invocation_policy|string
+}
+```
+
+*NOTE: invocation_policy IS NOT YET DESCRIBED IN THE ADVANCED SPEC*
+
+#### `wamp.registration.list_callees`
+
+Obtains a list of session IDs for sessions currently attached to the registration.
+
+**Arguments**
+- `registration|id`: The ID of the registration to get calles for.
+
+**Results**
+- `callee_ids|list`: A list of WAMP session IDs of callees currently attached to the registration.
+
+#### `wamp.registration.count_callees`
+
+Obtains the number of sessions currently attached to a registration.
+
+**Arguments**
+- `registration|id`: The ID of the registration to get the number of callees for.
+
+**Results**
+- `count|int`: The number of callees currently attached to a registration.
