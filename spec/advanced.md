@@ -23,7 +23,7 @@ For the *Basic Profile*, please see [The Web Application Messaging Protocol, Par
 
 ## Preface
 
-This is *part 2* of the WAMP specification. It describes advanced features and aspects of the protocol and its usage from the **WAMP Advanced Profile**.
+This is **part 2** of the WAMP specification. It describes advanced features and aspects of the protocol and its usage from the **WAMP Advanced Profile**.
 
 This part as a whole is considered partially finished and unstable. Some features are presently underspecified. Features may yet be added or removed, and there is no guarantee that an existing feature in this part will remain unchanged.
 
@@ -38,7 +38,7 @@ WAMP Advanced Profile defines the following additional messages which are explai
 
 ### Message Definitions
 
-The following 5 message types are used in the WAMP Advanced Profile.
+The following 4 additional message types are used in the WAMP Advanced Profile.
 
 #### `CHALLENGE`
 
@@ -54,13 +54,13 @@ The `AUTHENTICATE` message is used with certain [Authentication Methods](advance
 
 #### `CANCEL`
 
-The `CANCEL` message is used with the[Call Canceling](advanced/call-canceling.md) advanced feature. A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
+The `CANCEL` message is used with the [Call Canceling](advanced/call-canceling.md) advanced feature. A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
 
     [CANCEL, CALL.Request|id, Options|dict]
 
 #### `INTERRUPT`
 
-The `INTERRUPT` message is used with the[Call Canceling](advanced/call-canceling.md) advanced feature. Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt to the *Callee*.
+The `INTERRUPT` message is used with the [Call Canceling](advanced/call-canceling.md) advanced feature. Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt to the *Callee*.
 
     [INTERRUPT, INVOCATION.Request|id, Options|dict]
 
@@ -76,9 +76,10 @@ The following table list the message type code for **the OPTIONAL messages** def
 | 49   | `CANCEL`       | advanced |             |          |              | Tx       | Rx       |          |
 | 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
 
-> "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
+> "Tx" ("Rx") means the message is sent (received) by a peer of the respective role.
 
 ---
+
 
 ## Advanced Features
 
