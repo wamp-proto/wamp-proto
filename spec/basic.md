@@ -37,7 +37,7 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [Registering and Unregistering](#registering-and-unregistering)
     * [Calling and Invocations](#calling-and-invocations)
 10. [Appendix](#appendix)
-    * [Predefined URIs](#predefined-uris) 
+    * [Predefined URIs](#predefined-uris)
     * [Ordering Guarantees](#ordering-guarantees)
     * [Security Model](#security-model)
     * [Binary conversion of JSON Strings](#binary-conversion-of-json-strings)
@@ -208,7 +208,7 @@ WAMP needs to identify the following *persistent* resources:
   2. Procedures
   3. Errors
 
-These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MUST be Unicode strings. 
+These are identified in WAMP using *Uniform Resource Identifiers* (URIs) that MUST be Unicode strings.
 
 > Note: When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 encoding.
 
@@ -414,7 +414,7 @@ The notation `Element|type` denotes a message element named `Element` of type `t
  * `id`: an integer ID as defined in [section IDs](#ids)
  * `uri`: a string URI as defined in [section URIs](#uris)
 
-or 
+or
 
  * `integer`: a non-negative integer
  * `string`: a Unicode string, including the empty string
@@ -820,7 +820,39 @@ The differences between `ABORT` and `GOODBYE` messages are:
 2. `ABORT` is never replied by a *Peer*, whereas `GOODBYE` must be replied by the receiving *Peer*
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
-> 
+>
+
+### Agent Identification
+
+When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
+
+Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
+
+    HELLO.Details.agent|string
+
+and
+
+    WELCOME.Details.agent|string
+
+*Example: A Client `HELLO` message.*
+
+    [1, "somerealm", {
+         "agent": "AutobahnJS-0.9.14",
+         "roles": {
+            "subscriber": {},
+            "publisher": {}
+         }
+    }]
+
+
+*Example: A Router `WELCOME` message.*
+
+    [2, 9129137332, {
+        "agent": "Crossbar.io-0.10.11",
+        "roles": {
+          "broker": {}
+        }
+    }]
 
 ## Publish and Subscribe
 
@@ -1474,7 +1506,7 @@ A *Dealer* or *Broker* could not determine if the *Peer* is authorized to perfor
 *Peer* wanted to join a non-existing realm (and the *Router* did not allow to auto-create the realm).
 
 	wamp.error.no_such_realm
-	
+
 A *Peer* was to be authenticated under a Role that does not (or no longer) exists on the Router. For example, the *Peer* was successfully authenticated, but the Role configured does not exists - hence there is some misconfiguration in the Router.
 
 	wamp.error.no_such_role
@@ -1528,7 +1560,7 @@ Transport-level encryption and integrity is solely at the transport-level and tr
 
 Implementations that offer TCP based transport such as WAMP-over-WebSocket or WAMP-over-RawSocket (see [Advanced Profile](advanced.md)) **SHOULD implement [Transport Layer Security](http://en.wikipedia.org/wiki/Transport_Layer_Security)**.
 
-**WAMP deployments are encouraged to stick to a TLS-only policy with the TLS code and setup being hardened.**  
+**WAMP deployments are encouraged to stick to a TLS-only policy with the TLS code and setup being hardened.**
 
 Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the integrity of the data transmitted is implicit (the OS kernel is trusted), and the privacy of the data transmitted can be assured using file system permissions (no one can tap a Unix domain socket without appropriate permissions or being root).
 
@@ -1540,14 +1572,14 @@ The verification of the *Router* server certificate can happen
 
 1. against a certificate trust database that comes with the *Clients* operating system
 2. against an issuing certificate/key hard-wired into the *Client*
-3. by using new mechanisms like [DNSSEC](http://en.wikipedia.org/wiki/Dnssec)/[DANE](http://en.wikipedia.org/wiki/DNS-based_Authentication_of_Named_Entities)/[TLSA](http://en.wikipedia.org/wiki/TLSA_record#TLSA) 
+3. by using new mechanisms like [DNSSEC](http://en.wikipedia.org/wiki/Dnssec)/[DANE](http://en.wikipedia.org/wiki/DNS-based_Authentication_of_Named_Entities)/[TLSA](http://en.wikipedia.org/wiki/TLSA_record#TLSA)
 
 Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the file system permissions can be used to create implicit trust. E.g. if only the OS user under which the *Router* runs has the permission to create a Unix domain socket under a specific path, *Clients* connecting to that path can trust in the router authenticity.
 
 
 #### Client Authentication
 
-To authenticate a *Client* to a *Router*, the WAMP [Advanced Profile](advanced.md) specifies different mechanisms at the WAMP level. 
+To authenticate a *Client* to a *Router*, the WAMP [Advanced Profile](advanced.md) specifies different mechanisms at the WAMP level.
 
 Further, when running over TLS, a *Router* may authenticate a *Client* already at the transport level by doing a *client certificate based authentication*.
 
