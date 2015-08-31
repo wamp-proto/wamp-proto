@@ -17,7 +17,8 @@ For the *Basic Profile*, please see [The Web Application Messaging Protocol, Par
     * [Message Definitions](#message-definitions)
     * [Message Codes and Direction](#message-codes-and-direction)
 2. [Advanced Features](#advanced-features)
-3. [Alternative Transports](#alternative-transports)
+3. [Alternative Transports](advanced/transports.md)
+4. [Authentication Methods](advanced/authentication.md)
 
 
 ## Preface
@@ -80,13 +81,12 @@ The following table list the message type code for **the OPTIONAL messages** def
 
 ## Advanced Features
 
-*Advanced features* need to be announced by the peer which implements them. The complete list of *advanced features* currently defined or proposed per role is:
+*Advanced features* need to be announced by the peer which implements them. The following is a complete list of *advanced features* currently defined or proposed.
+
+### Advanced RPC Features
 
 | Feature                                                                    |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|----------------------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------|
-| **Remote Procedure Calls**                                                 |             |          |              |          |          |          |
-|                                                                            |             |          |              |          |          |          |
-| [caller_identification](advanced/caller-identification.md)                 |             |          |              | X        | X        | X        |
+|----------------------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------| [caller_identification](advanced/caller-identification.md)                 |             |          |              | X        | X        | X        |
 | [call_trustlevels](advanced/call-trustlevels.md)                           |             |          |              |          | X        | X        |
 | [pattern_based_registration](advanced/pattern-based-registration.md)       |             |          |              |          | X        | X        |
 | [session_meta_api](advanced/session-meta-api.md)                           |             |          |              |          | X        |          |
@@ -94,29 +94,17 @@ The following table list the message type code for **the OPTIONAL messages** def
 | [shared_registration](advanced/shared-registration.md)                     |             |          |              |          | X        | X        |
 | [call_timeout](advanced/call-timeout.md)                                   |             |          |              | X        | X        | X        |
 | [call_canceling](advanced/call-canceling.md)                               |             |          |              | X        | X        | X        |
-| [progressive_call_results](advanced/progressive-call-results.md)           |             |          |              | X        | X        | X        |
-|                                                                            |             |          |              |          |          |          |
-| **Publish & Subscribe**                                                    |             |          |              |          |          |          |
-|                                                                            |             |          |              |          |          |          |
-| [publisher_identification](advanced/publisher-identification.md)           | X           | X        | X            |          |          |          |
+| [progressive_call_results](advanced/progressive-call-results.md)           |             |          |              | X        | X        | X
+
+
+### Advanced PubSub Features
+
+| Feature                                                                    |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|----------------------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------| [publisher_identification](advanced/publisher-identification.md)           | X           | X        | X            |          |          |          |
 | [publication_trustlevels](advanced/publication-trustlevels.md)             |             | X        | X            |          |          |          |
 | [pattern_based_subscription](advanced/pattern-based-subsription.md)        |             | X        | X            |          |          |          |
 | [session_meta_api](advanced/session-meta-api.md)                           |             | X        |              |          |          |          |
 | [subscription_meta_api](advanced/subscription-meta-api.md)                 |             | X        |              |          |          |          |
 | [subscriber_blackwhite_listing](advanced/subscriber-blackwhite-listing.md) | X           | X        |              |          |          |          |
 | [publisher_exclusion](advanced/publisher-exclusion.md)                     | X           | X        |              |          |          |          |
-| [event_history](advanced/event-history.md)                                 |             | X        | X            |          |          |          |
-
-
-## Alternative Transports
-
-As mentioned in the [Basic Profile](basic.md), the only requirements that WAMP expects from a transport are: the transport must be message-based, bidirectional, reliable and ordered. This allows WAMP to run over different transports without any impact at the application layer.
-
-Besides the WebSocket transport, the following WAMP transports are currently specified:
-
-* [RawSocket Transport](advanced/rawsocket-transport.md)
-* [Batched WebSocket Transport](advanced/batched-websocket-transport.md)
-* [LongPoll Transport](advanced/longpoll-transport.md)
-* [Multiplexed Transport](advanced/multiplexed-transport.md)
-
-> Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined in the future.
+| [event_history](advanced/event-history.md)                                 |             | X        | X            |          |          |
