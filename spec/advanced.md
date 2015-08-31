@@ -6,7 +6,7 @@ Document Revision: **RC4**, 2015/08/31
 
 For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md).
 
-Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
+> Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/). "WAMP", "Crossbar.io" and "Tavendo" are trademarks of Tavendo GmbH.
 
 
 # Part 2: Advanced Profile
@@ -68,9 +68,6 @@ Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt t
 
 The following table list the message type code for **the OPTIONAL messages** defined in this part of the document and their direction between peer roles.
 
-> "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
->
-
 | Code | Message        |  Profile |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
 |  4   | `CHALLENGE`    | advanced | Rx          | Tx       | Rx           | Rx       | Tx       | Rx       |
@@ -78,82 +75,37 @@ The following table list the message type code for **the OPTIONAL messages** def
 | 49   | `CANCEL`       | advanced |             |          |              | Tx       | Rx       |          |
 | 69   | `INTERRUPT`    | advanced |             |          |              |          | Tx       | Rx       |
 
+> "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
 
-## Sessions
 
-### Feature Announcement
+## Advanced Features
 
-In addition to the *basic features* defined in the first part of this document, RPCs and PubSub calls can offer *advanced features*.
+*Advanced features* need to be announced by the peer which implements them. The complete list of *advanced features* currently defined or proposed per role is:
 
-*Advanced features* need to be announced by the peer which implements them.
-
-*Example: An Endpoint implementing the roles of Publisher and Subscriber and implementing some advanced features on the Publisher.*
-
-    [1, 9129137332, {
-      "roles": {
-         "publisher": {
-            "features": {
-               "publisher_exclusion":      true,
-               "publisher_identification": true
-            }
-         },
-         "subscriber": {
-         }
-      }
-    }]
-
-*Example: A Router implementing the role of Broker and supporting multiple advanced features.*
-
-    [1, 9129137332, {
-      "roles": {
-         "broker": {
-            "features": {
-               "subscriber_blackwhite_listing": true,
-               "publisher_exclusion":           true,
-               "publisher_identification":      true,
-               "publication_trustlevels":       true,
-               "pattern_based_subscription":    true,
-               "partitioned_pubsub":            true,
-               "subscriber_metaevents":         true,
-               "subscriber_list":               true,
-               "event_history":                 true
-            }
-         }
-    }]
-
-*Feature Announcement and Advanced Features*
-
-The use of *feature announcement* in WAMP allows for
-
- * only implementing subsets of functionality
- * graceful degration
-
-The complete list of *advanced features* currently defined per role is:
-
-| Feature                       |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|-------------------------------|-------------|----------|--------------|----------|----------|----------|
-| **Remote Procedure Calls**    |             |          |              |          |          |          |
-|                               |             |          |              |          |          |          |
-| caller_identification         |             |          |              | X        | X        | X        |
-| call_trustlevels              |             |          |              |          | X        | X        |
-| pattern_based_registration    |             |          |              |          | X        | X        |
-| session_meta_api              |             |          |              |          | X        |          |
-| registration_meta_api         |             |          |              |          | X        |          |
-| shared_registration           |             |          |              |          | X        | X        |
-| call_timeout                  |             |          |              | X        | X        | X        |
-| call_canceling                |             |          |              | X        | X        | X        |
-| progressive_call_results      |             |          |              | X        | X        | X        |
-|                               |             |          |              |          |          |          |
-| **Publish & Subscribe**       |             |          |              |          |          |          |
-|                               |             |          |              |          |          |          |
-| publisher_identification      | X           | X        | X            |          |          |          |
-| publication_trustlevels       |             | X        | X            |          |          |          |
-| pattern_based_subscription    |             | X        | X            |          |          |          |
-| session_meta_api              |             | X        |              |          |          |          |
-| subscription_meta_api         |             | X        |              |          |          |          |
-| subscriber_blackwhite_listing | X           | X        |              |          |          |          |
-| publisher_exclusion           | X           | X        |              |          |          |          |
-| event_history                 |             | X        | X            |          |          |          |
+| Feature                                                         |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|-----------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------|
+| **Remote Procedure Calls**                                      |             |          |              |          |          |          |
+|                                                                 |             |          |              |          |          |          |
+| [caller_identification](advanced/caller-identification.md)      |             |          |              | X        | X        | X        |
+| [call_trustlevels]()                                            |             |          |              |          | X        | X        |
+| [pattern_based_registration]()                                  |             |          |              |          | X        | X        |
+| [session_meta_api]()                                            |             |          |              |          | X        |          |
+| [registration_meta_api]()                                       |             |          |              |          | X        |          |
+| [shared_registration]()                                         |             |          |              |          | X        | X        |
+| [call_timeout]()                                                |             |          |              | X        | X        | X        |
+| [call_canceling]()                                              |             |          |              | X        | X        | X        |
+| [progressive_call_results]()                                    |             |          |              | X        | X        | X        |
+|                                                                 |             |          |              |          |          |          |
+| **Publish & Subscribe**                                         |             |          |              |          |          |          |
+|                                                                 |             |          |              |          |          |          |
+| [publisher_identification]()                                    | X           | X        | X            |          |          |          |
+| [publication_trustlevels]()                                     |             | X        | X            |          |          |          |
+| [pattern_based_subscription]()                                  |             | X        | X            |          |          |          |
+| [session_meta_api]()                                            |             | X        |              |          |          |          |
+| [subscription_meta_api]()                                       |             | X        |              |          |          |          |
+| [subscriber_blackwhite_listing]()                               | X           | X        |              |          |          |          |
+| [publisher_exclusion]()                                         | X           | X        |              |          |          |          |
+| [event_history]()                                               |             | X        | X            |          |          |          |
 
 
 ## Alternative Transports
