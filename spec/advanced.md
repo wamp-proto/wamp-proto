@@ -54,7 +54,7 @@ Copyright (C) 2014-2015 [Tavendo GmbH](http://www.tavendo.com). Licensed under t
     * [TLS Certificate based Authentication](#tls-certificate-based-authentication)
 7. [Reflection](#reflection)
 8. [Appendix](#appendix)
-    * [Predefined URIs](#predefined-uris) 
+    * [Predefined URIs](#predefined-uris)
     * [Authentication examples](#authentication-examples)
 
 
@@ -68,397 +68,23 @@ Some features, however, are already specified and should remain unchanged. These
 
 For an introduction to the protocol, and a description of basic features and usage that are part of the **WAMP Basic Profile**, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md)
 
-
 ## Transports
 
-Besides the WebSocket transport, the following WAMP transports are currently specified:
-
-* [RawSocket Transport](#rawsocket-transport)
-* [Batched WebSocket Transport](#batched-websocket-transport)
-* [LongPoll Transport](#longpoll-transport)
-* [Multiplexed Transport](#multiplexed-transport)
-
-Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined in the future. As mentioned in the [Basic Profile](basic.md), the only requirements that WAMP expects from a transport are:
+As mentioned in the [Basic Profile](basic.md), the only requirements that WAMP expects from a transport are:
 
  * message based
  * bidirectional
  * reliable
  * ordered
 
+Besides the WebSocket transport, the following WAMP transports are currently specified:
 
-### RawSocket Transport
+* [RawSocket Transport](advanced/rawsocket-transport)
+* [Batched WebSocket Transport](advanced/batched-websocket-transport)
+* [LongPoll Transport](advanced/longpoll-transport)
+* [Multiplexed Transport](advanced/multiplexed-transport)
 
-**WAMP-over-RawSocket** is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.
-
-Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is simple to implement, since there is no need to implement the WebSocket protocol which has some features that make it non-trivial (like a full HTTP-based opening handshake, message fragmentation, masking and variable length integers).
-
-WAMP-over-RawSocket has even lower overhead than WebSocket, which can be desirable in particular when running on local connections like loopback TCP or Unix domain sockets. It is also expected to allow implementations in microcontrollers in under 2KB RAM.
-
-WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on the standard port for secure HTTPS (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
-
-However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers don't allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (`permessage-deflate` WebSocket extension).
-
-
-#### Endianess
-
-WAMP-over-RawSocket uses *network byte order* ("big-endian"). That means, given a unsigned 32 bit integer
-
-   0x 11 22 33 44
-
-the first octet sent out to (or received from) the wire is `0x11` and the last octet sent out (or received) is `0x44`.
-
-Here is how you would convert octets received from the wire into an integer in Python:
-
-```python
-import struct
-
-octets_received = b"\x11\x22\x33\x44"
-i = struct.unpack(">L", octets_received)[0]
-``` 
-
-The integer received has the value `287454020`.
-
-And here is how you would send out an integer to the wire in Python:
-
-```python
-octets_to_be_send = struct.pack(">L", i)
-```
-
-The octets to be sent are `b"\x11\x22\x33\x44"`.
-
-
-#### Handshake
-
-**Client-to-Router Request**
-
-WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets:
-
-    MSB                                 LSB
-    31                                    0
-    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
-
-The *first octet* is a magic octet with value `0x7F`. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1) and [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2)). No valid HTTP request can have `0x7F` as its first octet.
-
-> By using a magic first octet that cannot appear in a regular HTTP request, WAMP-over-RawSocket can be run e.g. on the same TCP listening port as WAMP-over-WebSocket or WAMP-over-LongPoll.
-
-The *second octet* consists of a 4 bit `LENGTH` field and a 4 bit `SERIALIZER` field.
-
-The `LENGTH` value is used by the *Client* to signal the **maximum message length** of messages it is willing to **receive**. When the handshake completes successfully, a *Router* MUST NOT send messages larger than this size.
-
-The possible values for `LENGTH` are:
-
-     0: 2**9 octets
-     1: 2**10 octets
-    ...
-    15: 2**24 octets
-
-This means a *Client* can choose the maximum message length between **512** and **16M** octets.
-
-The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
-
-The possible values for `SERIALIZER` are:
-
-    0: illegal
-    1: JSON
-    2: MsgPack
-    3 - 15: reserved for future serializers
-
-Here is a Python program that prints all (currently) permissible values for the *second octet*:
-
-```python
-SERMAP = {
-   1: 'json',
-   2: 'msgpack'
-}
-
-## map serializer / max. msg length to RawSocket handshake request or success reply (2nd octet)
-##
-for ser in SERMAP:
-   for l in range(16):
-      octet_2 = (l << 4) | ser
-      print("serializer: {}, maxlen: {} => 0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
-```
-
-The *third and forth octet* are **reserved** and MUST be all zeros for now.
-
-
-**Router-to-Client Reply**
-
-After a *Client* has connected to a *Router*, the *Router* will first receive the 4 octets handshake request from the *Client*.
-
-If the *first octet* differs from `0x7F`, it is not a WAMP-over-RawSocket request. Unless the *Router* also supports other transports on the connecting port (such as WebSocket or LongPoll), the *Router* MUST **fail the connection**.
-
-Here is an example of how a *Router* could parse the *second octet* in a *Clients* handshake request:
-
-```python
-## map RawSocket handshake request (2nd octet) to serializer / max. msg length
-##
-for i in range(256):
-   ser_id = i & 0x0f
-   if ser_id != 0:
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i >> 4) + 9)
-      print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
-   else:
-      print("fail the connection: illegal serializer value")
-```
-
-When the *Router* is willing to speak the serializer requested by the *Client*, it will answer with a 4 octets response of identical structure as the *Client* request:
-
-    MSB                                 LSB
-    31                                    0
-    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
-
-Again, the *first octet* MUST be the value `0x7F`. The *third and forth octets* are reserved and MUST be all zeros for now.
-
-In the *second octet*, the *Router* MUST echo the serializer value in `SERIALIZER` as requested by the *Client*.
-
-Similar to the *Client*, the *Router* sets the `LENGTH` field to request a limit on the length of messages sent by the *Client*.
-
-During the connection, *Router* MUST NOT send messages to the *Client* longer than the `LENGTH` requested by the *Client*, and the *Client* MUST NOT send messages larger than the maximum requested by the *Router* in it's handshake reply.
-
-If a message received during a connection exceeds the limit requested, a *Peer* MUST **fail the connection**.
-
-When the *Router* is unable to speak the serializer requested by the *Client*, or it is denying the *Client* for other reasons, the *Router* replies with an error:
-
-    MSB                                 LSB
-    31                                    0
-    0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
-
-An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST all be zeros for now.
-
-The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error:
-
-    0: illegal (must not be used)
-    1: serializer unsupported
-    2: maximum message length unacceptable
-    3: use of reserved bits (unsupported feature)
-    4: maximum connection count reached
-    5 - 15: reserved for future errors
-
-> Note that the error code `0` MUST not be used. This is to allow storage of error state in a host language variable, while allowing `0` to signal the current state "no error"
-
-Here is an example of how a *Router* might create the *second octet* in an error response:
-
-```python
-ERRMAP = {
-   0: "illegal (must not be used)",
-   1: "serializer unsupported",
-   2: "maximum message length unacceptable",
-   3: "use of reserved bits (unsupported feature)",
-   4: "maximum connection count reached"
-}
-
-## map error to RawSocket handshake error reply (2nd octet)
-##
-for err in ERRMAP:
-   octet_2 = err << 4
-   print("error: {} => 0x{:02x}").format(ERRMAP[err], err)
-```
-
-The *Client* - after having sent its handshake request - will wait for the 4 octets from *Router* handshake reply.
-
-Here is an example of how a *Client* might parse the *second octet* in a *Router* handshake reply:
-
-
-```python
-## map RawSocket handshake reply (2nd octet)
-##
-for i in range(256):
-   ser_id = i & 0x0f
-   if ser_id:
-      ## verify the serializer is the one we requested! if not, fail the connection!
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i >> 4) + 9)
-      print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
-   else:
-      err = i >> 4
-      print("error: {}".format(ERRMAP.get(err, 'currently undefined')))
-```
- 
-
-#### Serialization
-
-To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MsgPack).
-
-The length of the serialized messages in octets MUST NOT exceed the maximum requested by the *Peer*.
-
-If the serialized length exceed the maximum requested, the WAMP message can not be sent to the *Peer*. Handling situations like the latter is left to the implementation.
-
-E.g. a *Router* that is to forward a WAMP `EVENT` to a *Client* which exceeds the maximum length requested by the *Client* when serialized might:
-
-* drop the event (not forwarding to that specific client) and track dropped events
-* prohibit publishing to the topic already
-* remove the event payload, and send an event with extra information (`payload_limit_exceeded = true`)
-
-
-#### Framing
-
-The serialized octets for a message to be sent are prefixed with exactly 4 octets.
-
-    MSB                                 LSB
-    31                                    0
-    RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
-
-The *first octet* has the following structure
-
-    MSB   LSB
-    7       0
-    RRRR RTTT
-
-The five bits `RRRRR` are reserved for future use and MUST be all zeros for now.
-
-The three bits `TTT` encode the type of the transport message:
-
-    0: regular WAMP message
-    1: PING
-    2: PONG
-    3-7: reserved
-
-The *three remaining octets* constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
-
-For a regular WAMP message (`TTT == 0`), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).
-
-For a `PING` message (`TTT == 1`), the length is the length of the arbitrary payload that follows. A *Peer* MUST reply to each `PING` by sending exactly one `PONG` immediately, and the `PONG` MUST echo back the payload of the `PING` exactly.   
-
-For receiving messages with WAMP-over-RawSocket, a *Peer* will usually read exactly 4 octets from the incoming stream, decode the transport level message type and payload length, and then receive as many octets as the length was giving.
-
-When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake and the processed at the WAMP level.
-
-
-### Batched WebSocket Transport
-
-*WAMP-over-Batched-WebSocket* is a variant of *WAMP-over-WebSocket* where multiple WAMP messages are sent in one WebSocket message.
-
-Using WAMP message batching can increase wire level efficiency further. In particular when using TLS and the WebSocket implementation is forcing every WebSocket message into a new TLS segment.
-
-*WAMP-over-Batched-WebSocket* is negotiated between *Peers* in the WebSocket opening handshake by agreeing on one of the following WebSocket subprotocols:
-
- * `wamp.2.json.batched`
- * `wamp.2.msgpack.batched`
-
-Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ([record separator](http://en.wikipedia.org/wiki/Record_separator#Field_separators)) octet `0x1e` to *each* serialized messages, and packing a sequence of such serialized messages into a single WebSocket message:
-
-   	Serialized JSON WAMP Msg 1 | 0x1e | Serialized JSON WAMP Msg 2 | 0x1e | ...
-
-Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MsgPack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
-
-   	Length of Msg 1 serialization (uint32) | serialized MsgPack WAMP Msg 1 | ...
-
-With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length **1**. Sending a batch of length **0** (no WAMP message) is illegal and a *Peer* MUST fail the transport upon receiving such a transport message.
-
-
-### LongPoll Transport
-
-The *Long-Poll Transport* is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the *Client* issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
-
-**Opening a Session**
-
-With the *Long-Poll Transport*, a *Client* opens a new WAMP session by sending a HTTP/POST request to a well-known URL, e.g.
-
-	http://mypp.com/longpoll/open
-
-Here, `http://mypp.com/longpoll` is the base URL for the *Long-Poll Transport* and `/open` is a path dedicated for opening new sessions.
-
-The HTTP/POST request *SHOULD* have a `Content-Type` header set to `application/json` and *MUST* have a request body with a JSON document that is a dictionary:
-
-```javascript
-{
-   "protocols": ["wamp.2.json"]
-}
-``` 
-
-The (mandatory) `protocols` attribute specifies the protocols the client is willing to speak. The server will chose one from this list when establishing the session or fail the request when no protocol overlap was found.
-
-The valid protocols are:
-
- * `wamp.2.json.batched`
- * `wamp.2.json`
- * `wamp.2.msgpack.batched`
- * `wamp.2.msgpack`
-
-> The request path with this and subsequently described HTTP/POST requests *MAY* contain a query parameter `x` with some random or sequentially incremented value: 
-> 
-> 	http://mypp.com/longpoll/open?x=382913
-> 
-> The value is ignored, but may help in certain situations to prevent intermediaries from caching the request.
-> 
-
-Returned is a JSON document containing a transport ID and the protocol to speak:
-
-```javascript
-{
-   "protocol": "wamp.2.json",
-   "transport": "kjmd3sBLOUnb3Fyr"
-}
-```
-
-As an implied side-effect, two HTTP endpoints are created
-
-	http://mypp.com/longpoll/<transport_id>/receive
-	http://mypp.com/longpoll/<transport_id>/send
-
-where `transport_id` is the transport ID returned from `open`, e.g.
-
-	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
-	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
-
-
-**Receiving WAMP Messages**
-
-The *Client* will then issue HTTP/POST requests (with empty request body) to
-
-	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
-
-When there are WAMP messages pending downstream, a request will return with a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).
-
-The serialization format used is the one agreed during opening the session.
-
-The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket.
-
-> Note: In unbatched mode, when there is more than one message pending, there will be at most one message returned for each request. The other pending messages must be retrieved by new requests. With batched mode, all messages pending at request time will be returned in one batch of messages.
-> 
-
-**Sending WAMP Messages**
-
-For sending WAMP messages, the *Client* will issue HTTP/POST requests to
-
-	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
-
-with request body being a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).
-
-The serialization format used is the one agreed during opening the session.
-
-The batching uses the same scheme as with `wamp.2.json.batched` and `wamp.2.msgpack.batched` transport over WebSocket.
-
-Upon success, the request will return with HTTP status code 202 ("no content"). Upon error, the request will return with HTTP status code 400 ("bad request").
-
-
-**Closing a Session**
-
-To orderly close a session, a *Client* will issue a HTTP/POST to 
-
-	http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
-
-with an empty request body. Upon success, the request will return with HTTP status code 202 ("no content"). 
-
-
-### Multiplexed Transport
-
-A *Transport* may support the multiplexing of multiple logical transports over a single "physical" transport.
-
-By using such a *Transport*, multiple WAMP sessions can be transported over a single underlying transport at the same time.
-
-![alt text](figure/sessions3.png "Transports, Sessions and Peers")
-
-As an example, the proposed [WebSocket extension "permessage-priority"](https://github.com/oberstet/permessage-priority/blob/master/draft-oberstein-hybi-permessage-priority.txt) would allow creating multiple logical *Transports* for WAMP over a single underlying WebSocket connection.
-
-Sessions running over a multiplexed *Transport* are completely independent: they get assigned different session IDs, may join different realms and each session needs to authenticate itself.
-
-Because of above, *Multiplexed Transports* for WAMP are actually not detailed in the WAMP spec, but a feature of the transport being used.
-
-> Note: Currently no WAMP transport supports multiplexing. The work on the MUX extension with WebSocket has stalled, and the `permessage-priority` proposal above is still just a proposal. However, with RawSocket, we should be able to add multiplexing in the the future (with downward compatibility).
-
+> Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined in the future.
 
 ## Messages
 
@@ -498,7 +124,7 @@ Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt t
 The following table list the message type code for **the OPTIONAL messages** defined in this part of the document and their direction between peer roles.
 
 > "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
-> 
+>
 
 | Code | Message        |  Profile |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |------|----------------|----------|-------------|----------|--------------|----------|----------|----------|
@@ -1745,7 +1371,7 @@ With *Ticket-based authentication*, the client needs to present the server an au
 This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
 
 > Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
-> 
+>
 
 A typical authentication begins with the client sending a `HELLO` message specifying the `ticket` method as (one of) the authentication methods:
 
@@ -1932,7 +1558,7 @@ A topic or procedure has been unfined from reflection:
 
 **Session Management**
 
-List the sessions 
+List the sessions
 
     wamp.session.list
 
@@ -2016,32 +1642,32 @@ Client sends `HELLO` message:
 
 ```javascript
 [
-   1, 
-   "com.tavendo.clandeck", 
+   1,
+   "com.tavendo.clandeck",
    {
       "authmethods": [
-         "cookie", 
+         "cookie",
          "anonymous"
-      ], 
+      ],
       "roles": {
          "callee": {
             "features": {
                "progressive_call_results": true
             }
-         }, 
+         },
          "caller": {
             "features": {
-               "caller_identification": true, 
+               "caller_identification": true,
                "progressive_call_results": true
             }
-         }, 
+         },
          "publisher": {
             "features": {
-               "publisher_exclusion": true, 
-               "publisher_identification": true, 
+               "publisher_exclusion": true,
+               "publisher_identification": true,
                "subscriber_blackwhite_listing": true
             }
-         }, 
+         },
          "subscriber": {
             "features": {
                "publisher_identification": true
@@ -2056,23 +1682,23 @@ Router sends `WELCOME` message:
 
 ```javascript
 [
-   2, 
-   2134435219590102, 
+   2,
+   2134435219590102,
    {
-      "authid": "Z269J2NM6lWuB5UjxEH3cMHa", 
-      "authmethod": "anonymous", 
-      "authrole": "com.tavendo.community.role.anonymous", 
+      "authid": "Z269J2NM6lWuB5UjxEH3cMHa",
+      "authmethod": "anonymous",
+      "authrole": "com.tavendo.community.role.anonymous",
       "roles": {
          "broker": {
             "features": {
-               "publisher_exclusion": true, 
-               "publisher_identification": true, 
+               "publisher_exclusion": true,
+               "publisher_identification": true,
                "subscriber_blackwhite_listing": true
             }
-         }, 
+         },
          "dealer": {
             "features": {
-               "caller_identification": true, 
+               "caller_identification": true,
                "progressive_call_results": true
             }
          }
@@ -2087,32 +1713,32 @@ Client sends `HELLO` message:
 
 ```javascript
 [
-   1, 
-   "com.tavendo.clandeck", 
+   1,
+   "com.tavendo.clandeck",
    {
       "authmethods": [
-         "cookie", 
+         "cookie",
          "mozilla_persona"
-      ], 
+      ],
       "roles": {
          "callee": {
             "features": {
                "progressive_call_results": true
             }
-         }, 
+         },
          "caller": {
             "features": {
-               "caller_identification": true, 
+               "caller_identification": true,
                "progressive_call_results": true
             }
-         }, 
+         },
          "publisher": {
             "features": {
-               "publisher_exclusion": true, 
-               "publisher_identification": true, 
+               "publisher_exclusion": true,
+               "publisher_identification": true,
                "subscriber_blackwhite_listing": true
             }
-         }, 
+         },
          "subscriber": {
             "features": {
                "publisher_identification": true
@@ -2127,8 +1753,8 @@ Router sends `CHALLENGE` message:
 
 ```javascript
 [
-   4, 
-   "mozilla-persona", 
+   4,
+   "mozilla-persona",
    {}
 ]
 ```
@@ -2137,7 +1763,7 @@ Client sends `AUTHENTICATE` message:
 
 ```javascript
 [
-   5,  "eyJhbGciOiJSUzI1NiJ9.eyJwdWJsaWMta2V5Ijp7ImFsZ29yaXRobSI6IkRTIiwieSI6ImE5NzBiNzRmYWVmMWVlNzhhZjAzODk2MWZhMGEwMWZhMGM1NTgwY2RiNWZiNTc4YTkzNDIwMjQ4ZTllZWE1ZTIzYzNhOTU1MmZiYjExMTk0ZjVjNTc4NjE3N2Y5OGNkZWEzNzA0MDBmYThmZjJhMzNhMWNiOTdmYmM2ZDUyZjRmNzVjNjAxMmVjZDQ3YThiNWY2ZGRhMjk0MjhmMzZmMWJiM2UyZDM5MjUzM2E2YTY5ODFmMjE5NjAwM2FiNDA0NjgxNjcxMjNmMDI3NWZjMjYyMjBlNzliZGM2ZDQ1ZTkxOWU4MzdkZmQ4ZTQ5NjZkNDQzZDRlYzhjMjYxNDljYjIiLCJwIjoiZmY2MDA0ODNkYjZhYmZjNWI0NWVhYjc4NTk0YjM1MzNkNTUwZDlmMWJmMmE5OTJhN2E4ZGFhNmRjMzRmODA0NWFkNGU2ZTBjNDI5ZDMzNGVlZWFhZWZkN2UyM2Q0ODEwYmUwMGU0Y2MxNDkyY2JhMzI1YmE4MWZmMmQ1YTViMzA1YThkMTdlYjNiZjRhMDZhMzQ5ZDM5MmUwMGQzMjk3NDRhNTE3OTM4MDM0NGU4MmExOGM0NzkzMzQzOGY4OTFlMjJhZWVmODEyZDY5YzhmNzVlMzI2Y2I3MGVhMDAwYzNmNzc2ZGZkYmQ2MDQ2MzhjMmVmNzE3ZmMyNmQwMmUxNyIsInEiOiJlMjFlMDRmOTExZDFlZDc5OTEwMDhlY2FhYjNiZjc3NTk4NDMwOWMzIiwiZyI6ImM1MmE0YTBmZjNiN2U2MWZkZjE4NjdjZTg0MTM4MzY5YTYxNTRmNGFmYTkyOTY2ZTNjODI3ZTI1Y2ZhNmNmNTA4YjkwZTVkZTQxOWUxMzM3ZTA3YTJlOWUyYTNjZDVkZWE3MDRkMTc1ZjhlYmY2YWYzOTdkNjllMTEwYjk2YWZiMTdjN2EwMzI1OTMyOWU0ODI5YjBkMDNiYmM3ODk2YjE1YjRhZGU1M2UxMzA4NThjYzM0ZDk2MjY5YWE4OTA0MWY0MDkxMzZjNzI0MmEzODg5NWM5ZDViY2NhZDRmMzg5YWYxZDdhNGJkMTM5OGJkMDcyZGZmYTg5NjIzMzM5N2EifSwicHJpbmNpcGFsIjp7ImVtYWlsIjoidG9iaWFzLm9iZXJzdGVpbkBnbWFpbC5jb20ifSwiaWF0IjoxMzk5OTA4NzgyMzkwLCJleHAiOjEzOTk5MTIzOTIzOTAsImlzcyI6ImdtYWlsLmxvZ2luLnBlcnNvbmEub3JnIn0.eWg3M1prvcTiiaihzOvjdoZb_m01xs3MokNTeYOMHRflJFe-R526WdGP0wnFTgTXs5nwLId3eLBQr425v3ImoVKVuzJjpib_tT_O38xKEmmA4RBaiDRk_WKFXh1vDvEa2G70fb_cyxrisCoPgScs5df6DWse6-DVI3h4rPpXIQCk04rawblCErcd28lBK7aJ2EKV4PRJFSRg8h59DUDpg7J0N5VCrBXMdgXNs9_fifWJFsW9YeQx-1xHHJkXV-I8NIrV2hVSBwtns6R0uKbHTmgMgWPqCjs1v8gUW_yi---OFnR2g_eoxKyUOyTNHkspi0yxmW208Ayve1jQkzz5Kg~eyJhbGciOiJEUzEyOCJ9.eyJleHAiOjEzOTk5MDg5MTI5MTEsImF1ZCI6Imh0dHBzOi8vMTI3LjAuMC4xOjgwOTAifQ.kjwsBOIf-vrriJ1gfJ4Xqlj3MA15UiWI5wm4rpedBv4B3_LpvxJgGA", 
+   5,  "eyJhbGciOiJSUzI1NiJ9.eyJwdWJsaWMta2V5Ijp7ImFsZ29yaXRobSI6IkRTIiwieSI6ImE5NzBiNzRmYWVmMWVlNzhhZjAzODk2MWZhMGEwMWZhMGM1NTgwY2RiNWZiNTc4YTkzNDIwMjQ4ZTllZWE1ZTIzYzNhOTU1MmZiYjExMTk0ZjVjNTc4NjE3N2Y5OGNkZWEzNzA0MDBmYThmZjJhMzNhMWNiOTdmYmM2ZDUyZjRmNzVjNjAxMmVjZDQ3YThiNWY2ZGRhMjk0MjhmMzZmMWJiM2UyZDM5MjUzM2E2YTY5ODFmMjE5NjAwM2FiNDA0NjgxNjcxMjNmMDI3NWZjMjYyMjBlNzliZGM2ZDQ1ZTkxOWU4MzdkZmQ4ZTQ5NjZkNDQzZDRlYzhjMjYxNDljYjIiLCJwIjoiZmY2MDA0ODNkYjZhYmZjNWI0NWVhYjc4NTk0YjM1MzNkNTUwZDlmMWJmMmE5OTJhN2E4ZGFhNmRjMzRmODA0NWFkNGU2ZTBjNDI5ZDMzNGVlZWFhZWZkN2UyM2Q0ODEwYmUwMGU0Y2MxNDkyY2JhMzI1YmE4MWZmMmQ1YTViMzA1YThkMTdlYjNiZjRhMDZhMzQ5ZDM5MmUwMGQzMjk3NDRhNTE3OTM4MDM0NGU4MmExOGM0NzkzMzQzOGY4OTFlMjJhZWVmODEyZDY5YzhmNzVlMzI2Y2I3MGVhMDAwYzNmNzc2ZGZkYmQ2MDQ2MzhjMmVmNzE3ZmMyNmQwMmUxNyIsInEiOiJlMjFlMDRmOTExZDFlZDc5OTEwMDhlY2FhYjNiZjc3NTk4NDMwOWMzIiwiZyI6ImM1MmE0YTBmZjNiN2U2MWZkZjE4NjdjZTg0MTM4MzY5YTYxNTRmNGFmYTkyOTY2ZTNjODI3ZTI1Y2ZhNmNmNTA4YjkwZTVkZTQxOWUxMzM3ZTA3YTJlOWUyYTNjZDVkZWE3MDRkMTc1ZjhlYmY2YWYzOTdkNjllMTEwYjk2YWZiMTdjN2EwMzI1OTMyOWU0ODI5YjBkMDNiYmM3ODk2YjE1YjRhZGU1M2UxMzA4NThjYzM0ZDk2MjY5YWE4OTA0MWY0MDkxMzZjNzI0MmEzODg5NWM5ZDViY2NhZDRmMzg5YWYxZDdhNGJkMTM5OGJkMDcyZGZmYTg5NjIzMzM5N2EifSwicHJpbmNpcGFsIjp7ImVtYWlsIjoidG9iaWFzLm9iZXJzdGVpbkBnbWFpbC5jb20ifSwiaWF0IjoxMzk5OTA4NzgyMzkwLCJleHAiOjEzOTk5MTIzOTIzOTAsImlzcyI6ImdtYWlsLmxvZ2luLnBlcnNvbmEub3JnIn0.eWg3M1prvcTiiaihzOvjdoZb_m01xs3MokNTeYOMHRflJFe-R526WdGP0wnFTgTXs5nwLId3eLBQr425v3ImoVKVuzJjpib_tT_O38xKEmmA4RBaiDRk_WKFXh1vDvEa2G70fb_cyxrisCoPgScs5df6DWse6-DVI3h4rPpXIQCk04rawblCErcd28lBK7aJ2EKV4PRJFSRg8h59DUDpg7J0N5VCrBXMdgXNs9_fifWJFsW9YeQx-1xHHJkXV-I8NIrV2hVSBwtns6R0uKbHTmgMgWPqCjs1v8gUW_yi---OFnR2g_eoxKyUOyTNHkspi0yxmW208Ayve1jQkzz5Kg~eyJhbGciOiJEUzEyOCJ9.eyJleHAiOjEzOTk5MDg5MTI5MTEsImF1ZCI6Imh0dHBzOi8vMTI3LjAuMC4xOjgwOTAifQ.kjwsBOIf-vrriJ1gfJ4Xqlj3MA15UiWI5wm4rpedBv4B3_LpvxJgGA",
    {}
 ]
 ```
@@ -2146,23 +1772,23 @@ Router sends `WELCOME` message:
 
 ```javascript
 [
-   2, 
-   1665486214880871, 
+   2,
+   1665486214880871,
    {
-      "authid": "tobias.oberstein@gmail.com", 
-      "authmethod": "mozilla_persona", 
-      "authrole": "com.tavendo.community.role.user", 
+      "authid": "tobias.oberstein@gmail.com",
+      "authmethod": "mozilla_persona",
+      "authrole": "com.tavendo.community.role.user",
       "roles": {
          "broker": {
             "features": {
-               "publisher_exclusion": true, 
-               "publisher_identification": true, 
+               "publisher_exclusion": true,
+               "publisher_identification": true,
                "subscriber_blackwhite_listing": true
             }
-         }, 
+         },
          "dealer": {
             "features": {
-               "caller_identification": true, 
+               "caller_identification": true,
                "progressive_call_results": true
             }
          }
@@ -2177,32 +1803,32 @@ Client sends `HELLO` message:
 
 ```javascript
 [
-   1, 
-   "com.tavendo.clandeck", 
+   1,
+   "com.tavendo.clandeck",
    {
       "authmethods": [
-         "cookie", 
+         "cookie",
          "anonymous"
-      ], 
+      ],
       "roles": {
          "callee": {
             "features": {
                "progressive_call_results": true
             }
-         }, 
+         },
          "caller": {
             "features": {
-               "caller_identification": true, 
+               "caller_identification": true,
                "progressive_call_results": true
             }
-         }, 
+         },
          "publisher": {
             "features": {
-               "publisher_exclusion": true, 
-               "publisher_identification": true, 
+               "publisher_exclusion": true,
+               "publisher_identification": true,
                "subscriber_blackwhite_listing": true
             }
-         }, 
+         },
          "subscriber": {
             "features": {
                "publisher_identification": true
@@ -2217,23 +1843,23 @@ Router sends `WELCOME` message:
 
 ```javascript
 [
-   2, 
-   7286787554810878, 
+   2,
+   7286787554810878,
    {
-      "authid": "tobias.oberstein@gmail.com", 
-      "authmethod": "mozilla_persona", 
-      "authrole": "com.tavendo.community.role.user", 
+      "authid": "tobias.oberstein@gmail.com",
+      "authmethod": "mozilla_persona",
+      "authrole": "com.tavendo.community.role.user",
       "roles": {
          "broker": {
             "features": {
-               "publisher_exclusion": true, 
-               "publisher_identification": true, 
+               "publisher_exclusion": true,
+               "publisher_identification": true,
                "subscriber_blackwhite_listing": true
             }
-         }, 
+         },
          "dealer": {
             "features": {
-               "caller_identification": true, 
+               "caller_identification": true,
                "progressive_call_results": true
             }
          }
