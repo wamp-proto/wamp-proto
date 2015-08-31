@@ -42,25 +42,25 @@ The following 5 message types are used in the WAMP Advanced Profile.
 
 #### `CHALLENGE`
 
-During authenticated session establishment, a *Router* sends a challenge message.
+The `CHALLENGE` message is used with certain [Authentication Methods](advanced/authentication.md). During authenticated session establishment, a **Router** sends a challenge message.
 
     [CHALLENGE, AuthMethod|string, Extra|dict]
 
 #### `AUTHENTICATE`
 
-A *Client* having received a challenge is expected to respond by sending a signature or token.
+The `AUTHENTICATE` message is used with certain [Authentication Methods](advanced/authentication.md). A **Client** having received a challenge is expected to respond by sending a signature or token.
 
     [AUTHENTICATE, Signature|string, Extra|dict]
 
 #### `CANCEL`
 
-A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
+The `CANCEL` message is used with the[Call Canceling](advanced/call-canceling.md) advanced feature. A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
 
     [CANCEL, CALL.Request|id, Options|dict]
 
 #### `INTERRUPT`
 
-Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt to the *Callee*.
+The `INTERRUPT` message is used with the[Call Canceling](advanced/call-canceling.md) advanced feature. Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt to the *Callee*.
 
     [INTERRUPT, INVOCATION.Request|id, Options|dict]
 
@@ -78,10 +78,11 @@ The following table list the message type code for **the OPTIONAL messages** def
 
 > "Tx" means the message is sent by the respective role, and "Rx" means the message is received by the respective role.
 
+---
 
 ## Advanced Features
 
-*Advanced features* need to be announced by the peer which implements them. The following is a complete list of *advanced features* currently defined or proposed.
+Support for advanced features must be announced by the peers which implement them. The following is a complete list of advanced features currently defined or proposed.
 
 ### Advanced RPC Features
 
@@ -102,9 +103,11 @@ The following table list the message type code for **the OPTIONAL messages** def
 | Feature                                                                    |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |----------------------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------| [publisher_identification](advanced/publisher-identification.md)           | X           | X        | X            |          |          |          |
 | [publication_trustlevels](advanced/publication-trustlevels.md)             |             | X        | X            |          |          |          |
-| [pattern_based_subscription](advanced/pattern-based-subsription.md)        |             | X        | X            |          |          |          |
+| [pattern_based_subscription](advanced/pattern-based-subscription.md)       |             | X        | X            |          |          |          |
 | [session_meta_api](advanced/session-meta-api.md)                           |             | X        |              |          |          |          |
 | [subscription_meta_api](advanced/subscription-meta-api.md)                 |             | X        |              |          |          |          |
 | [subscriber_blackwhite_listing](advanced/subscriber-blackwhite-listing.md) | X           | X        |              |          |          |          |
 | [publisher_exclusion](advanced/publisher-exclusion.md)                     | X           | X        |              |          |          |          |
 | [event_history](advanced/event-history.md)                                 |             | X        | X            |          |          |
+
+---
