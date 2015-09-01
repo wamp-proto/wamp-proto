@@ -92,7 +92,6 @@ alpha | The feature use case is still fuzzy and/or the feature definition is unc
 beta | The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete.
 stable | The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperatble implementations.
 
-
 ### Advanced RPC Features
 
 | Feature                                                                    |  Status   |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
@@ -109,7 +108,7 @@ stable | The feature definition in the spec is complete and stable and the featu
 | [shared_registration](advanced/shared-registration.md)                     | beta      |             |          |              |          | X        | X        |
 | [sharded_registration](advanced/sharded-registration.md)                   | alpha     |             |          |              |          | X        | X        |
 | [registration_revocation](advanced/registration-revocation.md)             | alpha     |             |          |              |          | X        | X        |
-
+| [procedure_reflection](advanced/procedure-reflection.md)                   | sketch    |             |          |              |          | X        |          |
 
 ### Advanced PubSub Features
 
@@ -124,5 +123,6 @@ stable | The feature definition in the spec is complete and stable and the featu
 | [pattern_based_subscription](advanced/pattern-based-subscription.md)       | beta      |             | X        | X            |          |          |          |
 | [sharded_subscription](advanced/sharded-subscription.md)                   | alpha     |             | X        | X            |          |          |          |
 | [event_history](advanced/event-history.md)                                 | alpha     |             | X        | X            |          |          |          |
+| [topic_reflection](advanced/topic-reflection.md)                           | sketch    |             | X        |              |          |          |          |
 
 ---

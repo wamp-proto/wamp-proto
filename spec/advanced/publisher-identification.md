@@ -1,4 +1,4 @@
-### Publisher Identification
+# Publisher Identification
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Brokers* (`role := "broker"`) and *Subscribers* (`role := "subscriber"`) via
 

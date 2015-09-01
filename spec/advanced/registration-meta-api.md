@@ -1,5 +1,4 @@
-Registration Meta API
-=====================
+# Registration Meta API
 
 Registration _meta-events_ are fired when RPC registrations are first created, when other clients attach/remove themselves to them, and when registrations are deleted. Furthermore, WAMP allows actively retrieving information about registrations via _meta-procedures_.
 

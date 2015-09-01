@@ -1,5 +1,4 @@
-Session Meta API
-================
+# Session Meta API
 
 WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via
 _session meta-events_. It also allows retrieving information about currently connected sessions via session

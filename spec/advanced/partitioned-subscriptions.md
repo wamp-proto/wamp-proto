@@ -1,4 +1,4 @@
-### Distributed Subscriptions and Publications
+# Partitioned Subscriptions
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 

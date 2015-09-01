@@ -1,4 +1,4 @@
-### Distributed Registrations and Calls
+# Partitioned Registrations
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 

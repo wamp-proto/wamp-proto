@@ -1,5 +1,4 @@
-Subscription Meta API
-=====================
+# Subscription Meta API
 
 Within an application, it may be desirable for a publisher to know whether a publication to a specific topic currently makes sense, i.e. whether there are any subscribers who would receive an event based on the publication. It may also be desirable to keep a current count of subscribers to a topic to then be able to filter out any subscribers who are not supposed to receive an event.
 

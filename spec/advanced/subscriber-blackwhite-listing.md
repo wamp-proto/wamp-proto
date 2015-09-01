@@ -1,4 +1,4 @@
-### Subscriber Black- and Whitelisting
+# Subscriber Black- and Whitelisting
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 

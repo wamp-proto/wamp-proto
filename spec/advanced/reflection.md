@@ -1,4 +1,4 @@
-## Reflection
+# Reflection
 
 *Reflection* denotes the ability of WAMP peers to examine the procedures, topics and errors provided or used by other peers.
 

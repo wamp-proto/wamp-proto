@@ -1,4 +1,4 @@
-### Publisher Exclusion
+# Publisher Exclusion
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 
