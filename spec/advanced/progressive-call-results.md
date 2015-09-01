@@ -7,7 +7,7 @@ Support for this advanced feature MUST be announced by *Callers* (`role := "call
 
 A procedure implemented by a *Callee* and registered at a *Dealer* may produce progressive results (incrementally). The message flow for progressive results involves:
 
-![alt text](figure/rpc_progress1.png "RPC Message Flow: Calls")
+![alt text](../figure/rpc_progress1.png "RPC Message Flow: Calls")
 
 
 A *Caller* indicates it's willingness to receive progressive results by setting

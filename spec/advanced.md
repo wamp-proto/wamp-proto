@@ -87,7 +87,8 @@ Support for advanced features must be announced by the peers which implement the
 
 Status | Description
 ---|---
-alpha | The feature use case is still fuzzy and/or the feature definition is unclear or there are multiple different proposals or options.
+sketch | There is a rough description of an itch to scratch, but the feature use case isn't clear, and there is no protocol proposal at all.
+alpha | The feature use case is still fuzzy and/or the feature definition is unclear, but there is at least a protocol level proposal.
 beta | The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete.
 stable | The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperatble implementations.
 
@@ -97,6 +98,7 @@ stable | The feature definition in the spec is complete and stable and the featu
 | Feature                                                                    |  Status   |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |----------------------------------------------------------------------------|-----------|-------------|----------|--------------|----------|----------|----------|
 | [progressive_call_results](advanced/progressive-call-results.md)           |**stable** |             |          |              | X        | X        | X        |
+| [progressive_calls](advanced/progressive-calls.md)                         | alpha     |             |          |              | X        | X        | X        |
 | [call_timeout](advanced/call-timeout.md)                                   | alpha     |             |          |              | X        | X        | X        |
 | [call_canceling](advanced/call-canceling.md)                               | alpha     |             |          |              | X        | X        | X        |
 | [caller_identification](advanced/caller-identification.md)                 | alpha     |             |          |              | X        | X        | X        |
