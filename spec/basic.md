@@ -366,8 +366,7 @@ Further, binary data follows a convention for conversion to JSON strings. For de
 
 With MsgPack serialization, each WAMP message is serialized according to the MsgPack specification as described in [here](https://github.com/msgpack/msgpack/blob/master/spec.md).
 
-The version 5 of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.
-
+> The **version 5 or later** of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values. See [here](https://github.com/msgpack/msgpack/issues/128) and [here](https://github.com/msgpack/msgpack/issues/121).
 
 ### Transports
 
