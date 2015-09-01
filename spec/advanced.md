@@ -89,22 +89,23 @@ Status | Description
 ---|---
 alpha | The feature use case is still fuzzy and/or the feature definition is unclear or there are multiple different proposals or options.
 beta | The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete.
-stable | The feature use case is field proven and the feature definition in the spec is complete and stable. There are multiple, interoperatble implementations.
+stable | The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperatble implementations.
 
 
 ### Advanced RPC Features
 
 | Feature                                                                    |  Status   |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |----------------------------------------------------------------------------|-----------|-------------|----------|--------------|----------|----------|----------|
-| [caller_identification](advanced/caller-identification.md)                 | alpha     |             |          |              | X        | X        | X        |
-| [call_trustlevels](advanced/call-trustlevels.md)                           | alpha     |             |          |              |          | X        | X        |
-| [pattern_based_registration](advanced/pattern-based-registration.md)       | beta      |             |          |              |          | X        | X        |
-| [session_meta_api](advanced/session-meta-api.md)                           | beta      |             |          |              |          | X        |          |
-| [registration_meta_api](advanced/registration-meta-api.md)                 | beta      |             |          |              |          | X        |          |
-| [shared_registration](advanced/shared-registration.md)                     | beta      |             |          |              |          | X        | X        |
+| [progressive_call_results](advanced/progressive-call-results.md)           |**stable** |             |          |              | X        | X        | X        |
 | [call_timeout](advanced/call-timeout.md)                                   | alpha     |             |          |              | X        | X        | X        |
 | [call_canceling](advanced/call-canceling.md)                               | alpha     |             |          |              | X        | X        | X        |
-| [progressive_call_results](advanced/progressive-call-results.md)           |**stable** |             |          |              | X        | X        | X        |
+| [caller_identification](advanced/caller-identification.md)                 | alpha     |             |          |              | X        | X        | X        |
+| [call_trustlevels](advanced/call-trustlevels.md)                           | alpha     |             |          |              |          | X        | X        |
+| [session_meta_api](advanced/session-meta-api.md)                           | beta      |             |          |              |          | X        |          |
+| [registration_meta_api](advanced/registration-meta-api.md)                 | beta      |             |          |              |          | X        |          |
+| [pattern_based_registration](advanced/pattern-based-registration.md)       | beta      |             |          |              |          | X        | X        |
+| [shared_registration](advanced/shared-registration.md)                     | beta      |             |          |              |          | X        | X        |
+| [sharded_registration](advanced/sharded-registration.md)                   | alpha     |             |          |              |          | X        | X        |
 | [registration_revocation](advanced/registration-revocation.md)             | alpha     |             |          |              |          | X        | X        |
 
 
@@ -112,13 +113,14 @@ stable | The feature use case is field proven and the feature definition in the 
 
 | Feature                                                                    |  Status   |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |----------------------------------------------------------------------------|-----------|-------------|----------|--------------|----------|----------|----------|
-| [publisher_identification](advanced/publisher-identification.md)           | alpha     | X           | X        | X            |          |          |          |
-| [publication_trustlevels](advanced/publication-trustlevels.md)             | alpha     |             | X        | X            |          |          |          |
-| [pattern_based_subscription](advanced/pattern-based-subscription.md)       | beta      |             | X        | X            |          |          |          |
-| [session_meta_api](advanced/session-meta-api.md)                           | beta      |             | X        |              |          |          |          |
-| [subscription_meta_api](advanced/subscription-meta-api.md)                 | beta      |             | X        |              |          |          |          |
 | [subscriber_blackwhite_listing](advanced/subscriber-blackwhite-listing.md) |**stable** | X           | X        |              |          |          |          |
 | [publisher_exclusion](advanced/publisher-exclusion.md)                     |**stable** | X           | X        |              |          |          |          |
+| [publisher_identification](advanced/publisher-identification.md)           | alpha     | X           | X        | X            |          |          |          |
+| [publication_trustlevels](advanced/publication-trustlevels.md)             | alpha     |             | X        | X            |          |          |          |
+| [session_meta_api](advanced/session-meta-api.md)                           | beta      |             | X        |              |          |          |          |
+| [subscription_meta_api](advanced/subscription-meta-api.md)                 | beta      |             | X        |              |          |          |          |
+| [pattern_based_subscription](advanced/pattern-based-subscription.md)       | beta      |             | X        | X            |          |          |          |
+| [sharded_subscription](advanced/sharded-subscription.md)                   | alpha     |             | X        | X            |          |          |          |
 | [event_history](advanced/event-history.md)                                 | alpha     |             | X        | X            |          |          |          |
 
 ---
