@@ -2,7 +2,7 @@
 
 This document specifies the *Advanced Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
 
-Document Revision: **RC4**, 2015/08/31
+Document Revision: **2015/09/01**
 
 For the *Basic Profile*, please see [The Web Application Messaging Protocol, Part 1: Basic Profile](basic.md).
 
@@ -34,7 +34,7 @@ For an introduction to the protocol, and a description of basic features and usa
 
 ## Messages
 
-WAMP Advanced Profile defines the following additional messages which are explained in detail in the following sections.
+WAMP Advanced Profile defines the following additional messages which are explained in detail in separate sections.
 
 ### Message Definitions
 
@@ -87,28 +87,28 @@ Support for advanced features must be announced by the peers which implement the
 
 ### Advanced RPC Features
 
-| Feature                                                                    |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|----------------------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------| [caller_identification](advanced/caller-identification.md)                 |             |          |              | X        | X        | X        |
-| [call_trustlevels](advanced/call-trustlevels.md)                           |             |          |              |          | X        | X        |
-| [pattern_based_registration](advanced/pattern-based-registration.md)       |             |          |              |          | X        | X        |
-| [session_meta_api](advanced/session-meta-api.md)                           |             |          |              |          | X        |          |
-| [registration_meta_api](advanced/registration-meta-api.md)                 |             |          |              |          | X        |          |
-| [shared_registration](advanced/shared-registration.md)                     |             |          |              |          | X        | X        |
-| [call_timeout](advanced/call-timeout.md)                                   |             |          |              | X        | X        | X        |
-| [call_canceling](advanced/call-canceling.md)                               |             |          |              | X        | X        | X        |
-| [progressive_call_results](advanced/progressive-call-results.md)           |             |          |              | X        | X        | X
+| Feature                                                                    |  Status   |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|----------------------------------------------------------------------------|-----------|-------------|----------|--------------|----------|----------|----------| [caller_identification](advanced/caller-identification.md)                 |             |          |              | X        | X        | X        |
+| [call_trustlevels](advanced/call-trustlevels.md)                           | sketch    |             |          |              |          | X        | X        |
+| [pattern_based_registration](advanced/pattern-based-registration.md)       | beta      |             |          |              |          | X        | X        |
+| [session_meta_api](advanced/session-meta-api.md)                           | beta      |             |          |              |          | X        |          |
+| [registration_meta_api](advanced/registration-meta-api.md)                 | beta      |             |          |              |          | X        |          |
+| [shared_registration](advanced/shared-registration.md)                     | beta      |             |          |              |          | X        | X        |
+| [call_timeout](advanced/call-timeout.md)                                   | alpha     |             |          |              | X        | X        | X        |
+| [call_canceling](advanced/call-canceling.md)                               | alpha     |             |          |              | X        | X        | X        |
+| [progressive_call_results](advanced/progressive-call-results.md)           |**stable** |             |          |              | X        | X        | X
 
 
 ### Advanced PubSub Features
 
-| Feature                                                                    |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
-|----------------------------------------------------------------------------|-------------|----------|--------------|----------|----------|----------| [publisher_identification](advanced/publisher-identification.md)           | X           | X        | X            |          |          |          |
-| [publication_trustlevels](advanced/publication-trustlevels.md)             |             | X        | X            |          |          |          |
-| [pattern_based_subscription](advanced/pattern-based-subscription.md)       |             | X        | X            |          |          |          |
-| [session_meta_api](advanced/session-meta-api.md)                           |             | X        |              |          |          |          |
-| [subscription_meta_api](advanced/subscription-meta-api.md)                 |             | X        |              |          |          |          |
-| [subscriber_blackwhite_listing](advanced/subscriber-blackwhite-listing.md) | X           | X        |              |          |          |          |
-| [publisher_exclusion](advanced/publisher-exclusion.md)                     | X           | X        |              |          |          |          |
-| [event_history](advanced/event-history.md)                                 |             | X        | X            |          |          |
+| Feature                                                                    |  Status   |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
+|----------------------------------------------------------------------------|-----------|-------------|----------|--------------|----------|----------|----------| [publisher_identification](advanced/publisher-identification.md)           | X           | X        | X            |          |          |          |
+| [publication_trustlevels](advanced/publication-trustlevels.md)             | sketch    |             | X        | X            |          |          |          |
+| [pattern_based_subscription](advanced/pattern-based-subscription.md)       | beta      |             | X        | X            |          |          |          |
+| [session_meta_api](advanced/session-meta-api.md)                           | beta      |             | X        |              |          |          |          |
+| [subscription_meta_api](advanced/subscription-meta-api.md)                 | beta      |             | X        |              |          |          |          |
+| [subscriber_blackwhite_listing](advanced/subscriber-blackwhite-listing.md) |**stable** | X           | X        |              |          |          |          |
+| [publisher_exclusion](advanced/publisher-exclusion.md)                     |**stable** | X           | X        |              |          |          |          |
+| [event_history](advanced/event-history.md)                                 | sketch    |             | X        | X            |          |          |
 
 ---
