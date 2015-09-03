@@ -1,5 +1,7 @@
 # Subscriber Black- and Whitelisting
 
+Feature status: **stable**
+
 ## Introduction
 
 **Subscriber Black- and Whitelisting** is an advanced *Broker* feature where a *Publisher* is able to restrict the set of receivers of a published event.
