@@ -1,4 +1,4 @@
-### Event History
+# Event History
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 
