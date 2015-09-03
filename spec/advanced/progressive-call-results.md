@@ -1,6 +1,6 @@
 # Progressive Call Results
 
-Feature status: **stable**
+Feature status: **beta**
 
 ## Feature Definition
 

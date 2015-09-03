@@ -96,8 +96,8 @@ stable | The feature definition in the spec is complete and stable and the featu
 
 | Feature                                                                    |  Status   |  Publisher  |  Broker  |  Subscriber  |  Caller  |  Dealer  |  Callee  |
 |----------------------------------------------------------------------------|-----------|-------------|----------|--------------|----------|----------|----------|
-| [progressive_call_results](advanced/progressive-call-results.md)           |**stable** |             |          |              | X        | X        | X        |
-| [progressive_calls](advanced/progressive-calls.md)                         | alpha     |             |          |              | X        | X        | X        |
+| [progressive_call_results](advanced/progressive-call-results.md)           | beta      |             |          |              | X        | X        | X        |
+| [progressive_calls](advanced/progressive-calls.md)                         | sketch    |             |          |              | X        | X        | X        |
 | [call_timeout](advanced/call-timeout.md)                                   | alpha     |             |          |              | X        | X        | X        |
 | [call_canceling](advanced/call-canceling.md)                               | alpha     |             |          |              | X        | X        | X        |
 | [caller_identification](advanced/caller-identification.md)                 | alpha     |             |          |              | X        | X        | X        |
