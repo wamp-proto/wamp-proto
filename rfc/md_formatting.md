@@ -28,16 +28,3 @@ There is no line wrapping of code blocks, and RFCs are limited to 72 characters 
 
 This means that we need to manually line-wrap code blocks.
 
-### Message Definitions 
-
-For message definitions, we do one element per line e.g.
-
-    [
-        ERROR,
-        REQUEST.Type|int,
-        REQUEST.Request|id,
-        Details|dict,
-        Error|uri,
-        Arguments|list,
-        ArgumentsKw|dict
-    ]

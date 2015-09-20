@@ -1,0 +1,9 @@
+@startuml
+participant Publisher
+participant Broker
+participant Subscriber
+
+Publisher -> Broker : PUBLISH
+Broker -> Publisher : PUBLISHED or ERROR
+Broker -> Subscriber : EVENT
+@enduml

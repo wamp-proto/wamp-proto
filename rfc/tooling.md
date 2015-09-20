@@ -56,6 +56,14 @@ http://tools.ietf.org/tools/idnits/ - provides additional checks
 (Haven't tested any of the above checking tools yet.)
 
 
+## Message Sequence Diagrams
+
+Message Sequence Diagrams as ASCII art are generated from UML files using a Java tool (http://plantuml.com/).
+
+The .jar file for this as well as the source files are in the 'diagrams' subdirectory.
+
+After adding or modifying a diagram, just do `make diagrams`. This clears the previously generated text files and processes all *.uml files in the diagram directory.
+
 
 ## Style Guides
 

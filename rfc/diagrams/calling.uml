@@ -1,0 +1,10 @@
+@startuml
+participant Caller
+participant Dealer
+participant Callee
+
+Caller -> Dealer : CALL
+Dealer -> Callee : INVOCATION
+Callee -> Dealer : YIELD or ERROR
+Dealer -> Caller : RESULT or ERROR
+@enduml

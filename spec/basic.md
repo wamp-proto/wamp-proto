@@ -557,7 +557,7 @@ A *Callees* request to register an endpoint at a *Dealer*.
 
 Acknowledge sent by a *Dealer* to a *Callee* for successful registration.
 
-	[REGISTERED, REGISTER.Request|id, Registration|id]
+	  [REGISTERED, REGISTER.Request|id, Registration|id]
 
 #### UNREGISTER
 
