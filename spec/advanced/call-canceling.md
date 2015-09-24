@@ -14,11 +14,11 @@ The message flow between *Callers*, a *Dealer* and *Callees* for canceling remot
 
 A call may be cancelled at the *Callee*
 
-![alt text](figure/rpc_cancel1.png "RPC Message Flow: Calls")
+![alt text](../figure/rpc_cancel1.png "RPC Message Flow: Calls")
 
 A call may be cancelled at the *Dealer*
 
-![alt text](figure/rpc_cancel2.png "RPC Message Flow: Calls")
+![alt text](../figure/rpc_cancel2.png "RPC Message Flow: Calls")
 
 A *Caller* cancels a remote procedure call initiated (but not yet finished) by sending a `CANCEL` message to the *Dealer*:
 
