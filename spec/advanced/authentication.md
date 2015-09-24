@@ -1,6 +1,6 @@
 # Authentication
 
-![alt text](figure/hello_authenticated.png "WAMP Session denied")
+![alt text](../figure/hello_authenticated.png "WAMP Session denied")
 
 Authentication is a complex area.
 

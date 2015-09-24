@@ -102,13 +102,17 @@ The definition and documentation of implementation specific *Router* features li
 
 # Conformance Requirements
 
-## Terminology and Other Conventions
+All diagrams, examples, and notes in this specification are non-normative, as are all sections explicitly marked non-normative.    Everything else in this specification is normative.
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in
 this document are to be interpreted as described in RFC 2119 [@?RFC2119].
 
+Requirements phrased in the imperative as part of algorithms (such as "strip any leading space characters" or "return false and abort these steps") are to be interpreted with the meaning of the key word ("MUST", "SHOULD", "MAY", etc.) used in introducing the algorithm.
+ 
+Conformance requirements phrased as algorithms or specific steps MAY  be implemented in any manner, so long as the end result is equivalent.
 
+Key terms such as named algorithms or definitions are indicated like _this_.
 
 # Realms, Sessions and Transports
 
@@ -223,7 +227,7 @@ WAMP needs to identify the following *persistent* resources:
 
 These are identified in WAMP using *Uniform Resource Identifiers* (URIs) [@!RFC3986] that MUST be Unicode strings.
 
-> Note: When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 [@!RFC3629] encoding.
+> When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 [@!RFC3629] encoding.
 
 *Examples*
 
