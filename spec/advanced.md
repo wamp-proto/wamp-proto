@@ -89,7 +89,7 @@ Status | Description
 ---|---
 sketch | There is a rough description of an itch to scratch, but the feature use case isn't clear, and there is no protocol proposal at all.
 alpha | The feature use case is still fuzzy and/or the feature definition is unclear, but there is at least a protocol level proposal.
-beta | The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete.
+beta | The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete and change.
 stable | The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperatble implementations.
 
 ### Advanced RPC Features
