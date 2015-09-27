@@ -1,0 +1,3304 @@
+
+
+
+
+BiDirectional or Server-Initiated HTTP                      T. Oberstein
+Internet-Draft                                              Tavendo GmbH
+Intended status: Standards Track                      September 17, 2015
+Expires: March 20, 2016
+
+
+           Web Application Messaging Protocol - Basic Profile
+                  draft-oberstet-hybi-tavendo-wamp-01
+
+Abstract
+
+   This document defines the basic profile for the Web Application
+   Messaging Protocol (WAMP).  WAMP is a routed protocol that provides
+   two messaging patterns: Publish & Subscribe and routed Remote
+   Procedure Calls.  It is intended to connect application components in
+   distributed applications.  WAMP uses WebSocket as its default
+   transport, but can be transmitted via any other protocol that allows
+   for ordered, reliable, bi-directional and message-based
+   communication.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at http://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on March 20, 2016.
+
+Copyright Notice
+
+   Copyright (c) 2015 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents
+   (http://trustee.ietf.org/license-info) in effect on the date of
+   publication of this document.  Please review these documents
+   carefully, as they describe your rights and restrictions with respect
+   to this document.  Code Components extracted from this document must
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 1]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   include Simplified BSD License text as described in Section 4.e of
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   4
+     1.1.  Background  . . . . . . . . . . . . . . . . . . . . . . .   4
+     1.2.  Protocol Overview . . . . . . . . . . . . . . . . . . . .   5
+     1.3.  Design Philosophy . . . . . . . . . . . . . . . . . . . .   5
+       1.3.1.  Basic and Advanced Profile  . . . . . . . . . . . . .   6
+       1.3.2.  Application Code  . . . . . . . . . . . . . . . . . .   6
+       1.3.3.  Router Implementation Specifics . . . . . . . . . . .   6
+     1.4.  Relationship to WebSocket . . . . . . . . . . . . . . . .   7
+   2.  Conformance Requirements  . . . . . . . . . . . . . . . . . .   7
+     2.1.  Terminology and Other Conventions . . . . . . . . . . . .   7
+   3.  Realms, Sessions and Transports . . . . . . . . . . . . . . .   7
+   4.  Peers and Roles . . . . . . . . . . . . . . . . . . . . . . .   8
+     4.1.  Symmetric Messaging . . . . . . . . . . . . . . . . . . .   8
+     4.2.  Remote Procedure Call Roles . . . . . . . . . . . . . . .   9
+     4.3.  Publish & Subscribe Roles . . . . . . . . . . . . . . . .   9
+     4.4.  Peers with multiple Roles . . . . . . . . . . . . . . . .  10
+   5.  Building Blocks . . . . . . . . . . . . . . . . . . . . . . .  10
+     5.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .  10
+       5.1.1.  URIs  . . . . . . . . . . . . . . . . . . . . . . . .  10
+       5.1.2.  IDs . . . . . . . . . . . . . . . . . . . . . . . . .  12
+     5.2.  Serializations  . . . . . . . . . . . . . . . . . . . . .  14
+       5.2.1.  JSON  . . . . . . . . . . . . . . . . . . . . . . . .  15
+       5.2.2.  MsgPack . . . . . . . . . . . . . . . . . . . . . . .  16
+     5.3.  Transports  . . . . . . . . . . . . . . . . . . . . . . .  16
+       5.3.1.  WebSocket Transport . . . . . . . . . . . . . . . . .  16
+       5.3.2.  Transport and Session Lifetime  . . . . . . . . . . .  17
+   6.  Messages  . . . . . . . . . . . . . . . . . . . . . . . . . .  18
+     6.1.  Extensibility . . . . . . . . . . . . . . . . . . . . . .  19
+     6.2.  No Polymorphism . . . . . . . . . . . . . . . . . . . . .  19
+     6.3.  Structure . . . . . . . . . . . . . . . . . . . . . . . .  20
+     6.4.  Message Definitions . . . . . . . . . . . . . . . . . . .  20
+       6.4.1.  Session Lifecycle . . . . . . . . . . . . . . . . . .  20
+       6.4.2.  Publish & Subscribe . . . . . . . . . . . . . . . . .  21
+       6.4.3.  Routed Remote Procedure Calls . . . . . . . . . . . .  23
+     6.5.  Message Codes and Direction . . . . . . . . . . . . . . .  24
+     6.6.  Extension Messages  . . . . . . . . . . . . . . . . . . .  25
+     6.7.  Empty Arguments and Keyword Arguments . . . . . . . . . .  25
+   7.  Sessions  . . . . . . . . . . . . . . . . . . . . . . . . . .  26
+     7.1.  Session Establishment . . . . . . . . . . . . . . . . . .  26
+       7.1.1.  HELLO . . . . . . . . . . . . . . . . . . . . . . . .  26
+       7.1.2.  WELCOME . . . . . . . . . . . . . . . . . . . . . . .  28
+       7.1.3.  ABORT . . . . . . . . . . . . . . . . . . . . . . . .  29
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 2]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+     7.2.  Session Closing . . . . . . . . . . . . . . . . . . . . .  30
+       7.2.1.  Difference between ABORT and GOODBYE  . . . . . . . .  31
+     7.3.  Agent Identification  . . . . . . . . . . . . . . . . . .  32
+   8.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  32
+     8.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  32
+       8.1.1.  SUBSCRIBE . . . . . . . . . . . . . . . . . . . . . .  34
+       8.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  34
+       8.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  35
+       8.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  35
+       8.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  36
+       8.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  36
+     8.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  37
+       8.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  37
+       8.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  38
+       8.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  39
+       8.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  39
+   9.  Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  40
+     9.1.  Registering and Unregistering . . . . . . . . . . . . . .  41
+       9.1.1.  REGISTER  . . . . . . . . . . . . . . . . . . . . . .  41
+       9.1.2.  REGISTERED  . . . . . . . . . . . . . . . . . . . . .  42
+       9.1.3.  Register ERROR  . . . . . . . . . . . . . . . . . . .  42
+       9.1.4.  UNREGISTER  . . . . . . . . . . . . . . . . . . . . .  43
+       9.1.5.  UNREGISTERED  . . . . . . . . . . . . . . . . . . . .  43
+       9.1.6.  Unregister ERROR  . . . . . . . . . . . . . . . . . .  43
+     9.2.  Calling and Invocations . . . . . . . . . . . . . . . . .  44
+       9.2.1.  CALL  . . . . . . . . . . . . . . . . . . . . . . . .  45
+       9.2.2.  INVOCATION  . . . . . . . . . . . . . . . . . . . . .  46
+       9.2.3.  YIELD . . . . . . . . . . . . . . . . . . . . . . . .  47
+       9.2.4.  RESULT  . . . . . . . . . . . . . . . . . . . . . . .  48
+       9.2.5.  Invocation ERROR  . . . . . . . . . . . . . . . . . .  49
+       9.2.6.  Call ERROR  . . . . . . . . . . . . . . . . . . . . .  50
+     9.3.  Predefined URIs . . . . . . . . . . . . . . . . . . . . .  51
+     9.4.  Interaction . . . . . . . . . . . . . . . . . . . . . . .  51
+       9.4.1.  Session Close . . . . . . . . . . . . . . . . . . . .  52
+     9.5.  Authorization . . . . . . . . . . . . . . . . . . . . . .  52
+     9.6.  Ordering Guarantees . . . . . . . . . . . . . . . . . . .  53
+       9.6.1.  Publish & Subscribe Ordering  . . . . . . . . . . . .  53
+       9.6.2.  Remote Procedure Call Ordering  . . . . . . . . . . .  53
+     9.7.  Security Model  . . . . . . . . . . . . . . . . . . . . .  54
+       9.7.1.  Transport Encryption and Integrity  . . . . . . . . .  54
+       9.7.2.  Router Authentication . . . . . . . . . . . . . . . .  54
+       9.7.3.  Client Authentication . . . . . . . . . . . . . . . .  55
+     9.8.  Binary conversion of JSON Strings . . . . . . . . . . . .  56
+       9.8.1.  Python  . . . . . . . . . . . . . . . . . . . . . . .  57
+       9.8.2.  JavaScript  . . . . . . . . . . . . . . . . . . . . .  57
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  58
+   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . .  59
+   12. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  59
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 3]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   13. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . .  59
+   14. References  . . . . . . . . . . . . . . . . . . . . . . . . .  59
+     14.1.  Normative References . . . . . . . . . . . . . . . . . .  59
+     14.2.  Informative References . . . . . . . . . . . . . . . . .  59
+     14.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . .  59
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  59
+
+1.  Introduction
+
+1.1.  Background
+
+   _This section is non-normative._
+
+   The WebSocket protocol brought bi-directional real-time connections
+   to the browser.  This defines an API at the message level, requiring
+   users who want to use WebSocket connections in their applications to
+   define any semantics on top of it.
+
+   The Web Application Messaging Protocl (WAMP) was initially defined as
+   WebSocket protocol at the technical level, and is intended to provide
+   application developers with the semantics they need to handle
+   messaging between components in distributed applications.
+
+   WAMP is a routed protocol, with all components connecting to a WAMP
+   router.
+
+   WAMP provides two messaging patterns: Publish & Subscribe and routed
+   Remote Procedure calls.
+
+   Publish & Subscribe is an established messaging pattern where
+   components inform the router that they want to receive information on
+   a topic (they suscribe to the topic).  A component can then publish
+   to this topic, and the router distributes events to all subscribers.
+
+   With routed Remote Procedure calls, the decoupling of the Publish &
+   Subscribe pattern is applied to Remote Procedure Calls: a component
+   announces to the router that it provides a certain procedure,
+   identified by a procedure name.  Other components can then call the
+   procedure, with the router invoking the procedure on the registering
+   component, receiving the result for this, and forwarding this to the
+   caller.
+
+   Routed Remote Procedure Calls transfer the decoupling of the Publish
+   & Subscribe pattern to Remote Procedure Calls.  A caller is no longer
+   required to have knowledge of the Callee, it merely needs to know the
+   identifier for the procedure it wants to call.  There is also no
+   longer a need for a direct connection between the caller and the
+   callee, since all traffic is routed.  This enables calling procedures
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 4]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   in components which are not reachable externally, e.g. on a NATted
+   connection, but which can establish an outgoing connection to the
+   WAMP router.
+
+   Combining these two patterns into a single protocol allows a single
+   protocol to be used for the entire messaging requirements of an
+   application, reducing complexity in the technology stack and
+   networking overheads.
+
+   While WAMP was originally specified to run over WebSocket, it can run
+   over any transport which is message-based, ordered, reliable and bi-
+   directional.
+
+1.2.  Protocol Overview
+
+   _This section is non-normative._
+
+   For each of the two messaging patterns, three roles are defined:
+
+   For PubSub, there are Subscribers and Publishers, which are connected
+   through a Broker.
+
+   For routed Remote Procedure Calls there are Callers and Callees,
+   which are connected through a Dealer.
+
+   WAMP Connections are established by Clients to a Router.  Connections
+   can use any transport which is message-based, ordered, reliable and
+   bi-directional, with WebSocket as the default transport.
+
+   WAMP Sessions are established using a WAMP Connection.  A WAMP
+   Session connects to a Realm on a Router.  Routing occurs only between
+   WAMP Sessions connected to the same realm.
+
+   -- probably extend this - the WebSocket spec gives an overview of the
+   entire protocol including handshakes.  Things to cover
+
+- the possible serializations
+- the possible transport layers
+- opening a connection
+- closing a connection
+- arguments for the messages
+- generic routing functionality with all application functionality in the clients
+
+1.3.  Design Philosophy
+
+   _This section is non-normative._
+
+   WAMP was desinged to be performant, safe and easy to implement.
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 5]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   A first version of the protocol was publicly released in March 2012.
+   The intention was to gain insight through implementation and use, and
+   integrate these into a second version of the protocol, where there
+   would be no regard for compatibility between the two versions.
+   Several interoperable, independent implementations were released, and
+   feedback from the implementers and users was collected.
+
+   The second version of the protocol, which this RFC covers, integrates
+   this feedback.  Routed Remote Procedure Calls are one outcome of
+   this, where the first version of the protocol only allowed to call
+   functionality implemented in the router.  A connected outcome was the
+   strict separation of routing and application functionality (see
+   below).
+
+1.3.1.  Basic and Advanced Profile
+
+   This specification is for a necessary basic set of features which
+   allow WAMP to function, and which is referred to as the WAMP Basic
+   Profile.
+
+   The specification of additional features is still ongoing.  The
+   standardization of such features will be through a separate, future
+   document.
+
+1.3.2.  Application Code
+
+   WAMP is designed for application code to run inside _Clients_, i.e.
+   _Peers_ of the roles _Callee_, _Caller_, _Publisher_, and
+   _Subscriber_.
+
+   _Routers_, i.e. _Peers_ of the roles _Brokers_ and _Dealers_ are
+   responsible for *generic call and event routing* and do not run
+   application code.
+
+   This allows to transparently exchange _Broker_ and _Dealer_
+   implementations without affecting the application and to distribute
+   and deploy application components flexibly.
+
+      Note that a *program* that implements e.g. the _Dealer_ role might
+      at the same time implement e.g. a built-in _Callee_. It is the
+      _Dealer_ and _Broker_ that are generic, not the program.
+
+1.3.3.  Router Implementation Specifics
+
+   This specification only deals with the protocol level for a basic
+   profile.  Specific WAMP _Broker_ and _Dealer_ implementations might
+   differ in aspects such as:
+
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 6]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  support for WAMP Advanced Profile
+
+   o  router networks (clustering and federation)
+
+   o  authentication and authorization schemes
+
+   o  message persistence
+
+   o  management and monitoring
+
+   The definition and documentation of implementation specific _Router_
+   features like the above is outside the scope of this document.
+
+1.4.  Relationship to WebSocket
+
+   -- write me --
+
+2.  Conformance Requirements
+
+   All diagrams, examples, and notes in this specification are non-
+   normative, as are all sections explicitly marked non-normative.
+   Everything else in this specification is normative.
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+   document are to be interpreted as described in RFC 2119 [RFC2119].
+
+   Requirements phrased in the imperative as part of algorithms (such as
+   "strip any leading space characters" or "return false and abort these
+   steps") are to be interpreted with the meaning of the key word
+   ("MUST", "SHOULD", "MAY", etc.) used in introducing the algorithm.
+
+   Conformance requirements phrased as algorithms or specific steps MAY
+   be implemented in any manner, so long as the end result is
+   equivalent.
+
+2.1.  Terminology and Other Conventions
+
+   Key terms such as named algorithms or definitions are indicated like
+   _this_.
+
+3.  Realms, Sessions and Transports
+
+   A _Realm_ is a WAMP routing and administrative domain, optionally
+   protected by authentication and authorization.  -- extend --
+
+   A _Session_ is a transient conversation between two _Peers_ attached
+   to a _Realm_ and running over a _Transport_.
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 7]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   A _Transport_ connects two WAMP _Peers_ and provides a channel over
+   which WAMP messages for a WAMP _Session_ can flow in both directions.
+
+   WAMP can run over any _transport_ which is message-based,
+   bidirectional, reliable and ordered.
+
+   The default transport for WAMP is WebSocket [RFC6455], where WAMP is
+   an officially registered [1] subprotocol.
+
+4.  Peers and Roles
+
+   A WAMP _Session_ connects two _Peers_, a _Client_ and a _Router_.
+   Each WAMP _Peer_ can implement one or more roles.
+
+   A _Client_ can implement any combination of the _Roles_:
+
+   o  _Callee_
+
+   o  _Caller_
+
+   o  _Publisher_
+
+   o  _Subscriber_
+
+   and a _Router_ can implement either or both of the _Roles_:
+
+   o  _Dealer_
+
+   o  _Broker_
+
+      This document describes WAMP as in client-to-router communication.
+      Direct client-to-client communication is not supported by WAMP.
+      Router-to-router communication MAY be defined by a specific router
+      implementation.
+
+4.1.  Symmetric Messaging
+
+   It is important to note that though the establishment of a
+   _Transport_ might have a inherent asymmetry (like a TCP client
+   establishing a WebSocket connection to a server), and _Clients_
+   establish WAMP sessions by attaching to _Realms_ on _Routers_, WAMP
+   itself is designed to be fully symmetric for application components.
+
+   After the transport and a session have been established, any
+   application component may act as _Caller_, _Callee_, _Publisher_ and
+   _Subscriber_ at the same time.  And _Routers_ provide the fabric on
+   top of which WAMP runs a symmetric application messaging service.
+
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 8]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+4.2.  Remote Procedure Call Roles
+
+   The Remote Procedure Call messaging pattern involves peers of three
+   different roles:
+
+   o  _Callee (Client)_
+
+   o  _Caller (Client)_
+
+   o  _Dealer (Router)_
+
+   A _Caller_ issues calls to remote procedures by providing the
+   procedure URI and any arguments for the call.  The _Callee_ will
+   execute the procedure using the supplied arguments to the call and
+   return the result of the call to the _Caller_.
+
+   _Callees_ register procedures they provide with _Dealers_. _Callers_
+   initiate procedure calls first to _Dealers_. _Dealers_ route calls
+   incoming from _Callers_ to _Callees_ implementing the procedure
+   called, and route call results back from _Callees_ to _Callers_.
+
+   The _Caller_ and _Callee_ will usually run application code, while
+   the _Dealer_ works as a generic router for remote procedure calls
+   decoupling _Callers_ and _Callees_.
+
+4.3.  Publish & Subscribe Roles
+
+   The Publish & Subscribe messaging pattern involves peers of three
+   different roles:
+
+   o  _Subscriber (Client)_
+
+   o  _Publisher (Client)_
+
+   o  _Broker (Router)_
+
+   A _Publishers_ publishes events to topics by providing the topic URI
+   and any payload for the event. _Subscribers_ of the topic will
+   receive the event together with the event payload.
+
+   _Subscribers_ subscribe to topics they are interested in with
+   _Brokers_. _Publishers_ initiate publication first at _Brokers_.
+   _Brokers_ route events incoming from _Publishers_ to _Subscribers_
+   that are subscribed to respective topics.
+
+   The _Publisher_ and _Subscriber_ will usually run application code,
+   while the _Broker_ works as a generic router for events decoupling
+   _Publishers_ from _Subscribers_.
+
+
+
+Oberstein                Expires March 20, 2016                 [Page 9]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+4.4.  Peers with multiple Roles
+
+   Note that _Peers_ might implement more than one role: e.g. a _Peer_
+   might act as _Caller_, _Publisher_ and _Subscriber_ at the same time.
+   Another _Peer_ might act as both a _Broker_ and a _Dealer_.
+
+5.  Building Blocks
+
+   WAMP is defined with respect to the following building blocks
+
+   1.  Identifiers
+
+   2.  Serializations
+
+   3.  Transports
+
+   For each building block, WAMP only assumes a defined set of
+   requirements, which allows to run WAMP variants with different
+   concrete bindings.
+
+5.1.  Identifiers
+
+5.1.1.  URIs
+
+   WAMP needs to identify the following _persistent_ resources:
+
+   1.  Topics
+
+   2.  Procedures
+
+   3.  Errors
+
+   These are identified in WAMP using _Uniform Resource Identifiers_
+   (URIs) [RFC3986] that MUST be Unicode strings.
+
+      When using JSON as WAMP serialization format, URIs (as other
+      strings) are transmitted in UTF-8 [RFC3629] encoding.
+
+   _Examples_
+
+   o  "com.myapp.mytopic1"
+
+   o  "com.myapp.myprocedure1"
+
+   o  "com.myapp.myerror1"
+
+   The URIs are understood to form a single, global, hierarchical
+   namespace for WAMP.
+
+
+
+Oberstein                Expires March 20, 2016                [Page 10]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+      The namespace is unified for topics, procedures and errors - these
+      different resource types do NOT have separate namespaces.
+
+   To avoid resource naming conflicts, the package naming convention
+   from Java is used, where URIs SHOULD begin with (reversed) domain
+   names owned by the organization defining the URI.
+
+5.1.1.1.  Relaxed/Loose URIs
+
+   URI components (the parts between two "."s, the head part up to the
+   first ".", the tail part after the last ".") MUST NOT contain a ".",
+   "#" or whitespace characters and MUST NOT be empty (zero-length
+   strings).
+
+      The restriction not to allow "." in component strings is due to
+      the fact that "." is used to separate components, and WAMP
+      associates semantics with resource hierarchies, such as in
+      pattern-based subscriptions that may be part of an Advanced
+      Profile.  The restriction not to allow empty (zero-length) strings
+      as components is due to the fact that this may be used to denote
+      wildcard components with pattern-based subscriptions and
+      registrations in an Advanced Profile.  The character "#" is not
+      allowed since this is reserved for internal use by _Dealers_ and
+      _Brokers_.
+
+   As an example, the following regular expression could be used in
+   Python to check URIs according to above rules:
+
+       <CODE BEGINS>
+           ## loose URI check disallowing empty URI components
+           pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
+       <CODE ENDS>
+
+   When empty URI components are allowed (this may the case for specific
+   messages that are part of an Advanced Profile), this following
+   regular expression can be used (shown used in Python):
+
+       <CODE BEGINS>
+           ## loose URI check allowing empty URI components
+           pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
+       <CODE ENDS>
+
+5.1.1.2.  Strict URIs
+
+   While the above rules MUST be followed, following a stricter URI rule
+   is recommended: URI components SHOULD only contain letters, digits
+   and "_".
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 11]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   As an example, the following regular expression could be used in
+   Python to check URIs according to the above rules:
+
+       <CODE BEGINS>
+           ## strict URI check disallowing empty URI components
+           pattern = re.compile(r"^([0-9a-z_]+\.)*([0-9a-z_]+)$")
+       <CODE ENDS>
+
+   When empty URI components are allowed (this may the case for specific
+   messages that are part of an Advanced Profile), the following regular
+   expression can be used (shown in Python):
+
+       <CODE BEGINS>
+           ## strict URI check allowing empty URI components
+           pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
+       <CODE ENDS>
+
+      Following the suggested regular expression will make URI
+      components valid identifiers in most languages (modulo URIs
+      starting with a digit and language keywords) and the use of lower-
+      case only will make those identifiers unique in languages that
+      have case-insensitive identifiers.  Following this suggestion can
+      allow implementations to map topics, procedures and errors to the
+      language environment in a completely transparent way.
+
+5.1.1.3.  Reserved URIs
+
+   Further, application URIs MUST NOT use "wamp" as a first URI
+   component, since this is reserved for URIs predefined with the WAMP
+   protocol itself.
+
+   _Examples_
+
+   o  "wamp.error.not_authorized"
+
+   o  "wamp.error.procedure_already_exists"
+
+5.1.2.  IDs
+
+   WAMP needs to identify the following ephemeral entities each in the
+   scope noted:
+
+   1.  Sessions (_global scope_)
+
+   2.  Publications (_global scope_)
+
+   3.  Subscriptions (_router scope_)
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 12]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   4.  Registrations (_router scope_)
+
+   5.  Requests (_session scope_)
+
+   These are identified in WAMP using IDs that are integers between
+   (inclusive) *0* and *2^53* (9007199254740992):
+
+   o  IDs in the _global scope_ MUST be drawn _randomly_ from a _uniform
+      distribution_ over the complete range [0, 2^53]
+
+   o  IDs in the _router scope_ can be chosen freely by the specific
+      router implementation
+
+   o  IDs in the _session scope_ SHOULD be incremented by 1 beginning
+      with 1 (for each direction - _Client-to-Router_ and _Router-to-
+      Client_)
+
+      The reason to choose the specific upper bound is that 2^53 is the
+      largest integer such that this integer and _all_ (positive)
+      smaller integers can be represented exactly in IEEE-754 doubles.
+      Some languages (e.g.  JavaScript) use doubles as their sole number
+      type.  Most languages do have signed and unsigned 64-bit integer
+      types that both can hold any value from the specified range.
+
+   The following is a complete list of usage of IDs in the three
+   categories for all WAMP messages.  For a full definition of these see
+   Section 6.
+
+5.1.2.1.  Global Scope IDs
+
+   o  "WELCOME.Session"
+
+   o  "PUBLISHED.Publication"
+
+   o  "EVENT.Publication"
+
+5.1.2.2.  Router Scope IDs
+
+   o  "EVENT.Subscription"
+
+   o  "SUBSCRIBED.Subscription"
+
+   o  "REGISTERED.Registration"
+
+   o  "UNSUBSCRIBE.Subscription"
+
+   o  "UNREGISTER.Registration"
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 13]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "INVOCATION.Registration"
+
+5.1.2.3.  Session Scope IDs
+
+   o  "ERROR.Request"
+
+   o  "PUBLISH.Request"
+
+   o  "PUBLISHED.Request"
+
+   o  "SUBSCRIBE.Request"
+
+   o  "SUBSCRIBED.Request"
+
+   o  "UNSUBSCRIBE.Request"
+
+   o  "UNSUBSCRIBED.Request"
+
+   o  "CALL.Request"
+
+   o  "CANCEL.Request"
+
+   o  "RESULT.Request"
+
+   o  "REGISTER.Request"
+
+   o  "REGISTERED.Request"
+
+   o  "UNREGISTER.Request"
+
+   o  "UNREGISTERED.Request"
+
+   o  "INVOCATION.Request"
+
+   o  "INTERRUPT.Request"
+
+   o  "YIELD.Request"
+
+5.2.  Serializations
+
+   WAMP is a message based protocol that requires serialization of
+   messages to octet sequences to be sent out on the wire.
+
+   A message _serialization_ format is assumed that (at least) provides
+   the following types:
+
+   o  "integer" (non-negative)
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 14]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "string" (UTF-8 encoded Unicode)
+
+   o  "bool"
+
+   o  "list"
+
+   o  "dict" (with string keys)
+
+      WAMP _itself_ only uses the above types, e.g. it does not use the
+      JSON data types "number" (non-integer) and "null".  The
+      _application payloads_ transmitted by WAMP (e.g. in call arguments
+      or event payloads) may use other types a concrete serialization
+      format supports.
+
+   o  Q: Can this lead to problems where an app payload uses a feature
+      of one serialization format, and this needs to be routed to a
+      client using a different serialization format which lacks this
+      feature? ----> file issue (basic profile), bindings need to
+      resolve this
+
+   There is no required serialization or set of serializations for WAMP
+   implementations.  Routers may implement more than one serialization,
+   enabling components using different kinds of serializations to
+   connect to each other.
+
+   o  Q: We're defining two bindings - does this mean that this is the
+      full set which is WAMP-spec-compliant, or can implementers add
+      serializations here? ---> any serialization which works, routers
+      should implement the two defined bindings ---> motivation for
+      transport + serialization choice in the introduction: we want to
+      enable widest-possible implementation, e.g. resource-constrained.
+      routers are where this is less of an issue, should implement the
+      max set
+
+   WAMP defines two bindings for message _serialization_:
+
+   1.  JSON
+
+   2.  MsgPack
+
+   Other bindings for _serialization_ may be defined in future WAMP
+   versions.
+
+5.2.1.  JSON
+
+   With JSON serialization, each WAMP message is serialized according to
+   the JSON specification as described in RFC4627.
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 15]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   Further, binary data follows a convention for conversion to JSON
+   strings.  For details see the Appendix.
+
+5.2.2.  MsgPack
+
+   With MsgPack serialization, each WAMP message is serialized according
+   to the MsgPack specification.
+
+      The *version 5 or later* of MsgPack MUST BE used, since this
+      version is able to differentiate between strings and binary
+      values.
+
+5.3.  Transports
+
+   WAMP assumes a _transport_ with the following characteristics:
+
+   1.  message-based
+
+   2.  reliable
+
+   3.  ordered
+
+   4.  bidirectional (full-duplex)
+
+   There is no required transport or set of transports for WAMP
+   implementations.  Routers may implement more than one transport,
+   enabling components using different kinds of transports to connect in
+   an application.
+
+5.3.1.  WebSocket Transport
+
+   The default transport binding for WAMP is WebSocket.
+
+   As a default, WAMP messages are transmitted as WebSocket messages:
+   each WAMP message is transmitted as a separate WebSocket message (not
+   WebSocket frame).  A *batched mode* where mutliple WAMP messages are
+   transmitted via single WebSockter message may be defined as part of
+   an Advanced Profile.
+
+   The WAMP protocol MUST BE negotiated during the WebSocket opening
+   handshake between _Peers_ using the WebSocket subprotocol negotiation
+   mechanism.
+
+   WAMP uses the following WebSocket subprotocol identifiers for
+   unbatched modes:
+
+   o  "wamp.2.json"
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 16]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "wamp.2.msgpack"
+
+   With "wamp.2.json", _all_ WebSocket messages MUST BE of type *text*
+   (UTF8 encoded payload) and use the JSON message serialization.
+
+   With "wamp.2.msgpack", _all_ WebSocket messages MUST BE of type
+   *binary* and use the MsgPack message serialization.
+
+   o  Q: Other protocols are possible, but there is then no standard for
+      either the subprotocol identifiers or the WebSocket message type
+      ---> are not registered subprotocols - that's just plain "wamp".
+      strictly speaking these need to be registered, and new bindings
+      would also need to do that --> this would serve as central
+      registry
+
+5.3.2.  Transport and Session Lifetime
+
+   WAMP implementations may choose to tie the lifetime of the underlying
+   transport connection for a WAMP connection to that of a WAMP session,
+   i.e. establish a new transport-layer connection as part of each new
+   session establishment.  They may equally choose to allow re-use of a
+   transport connection, allowing subsequent WAMP sessions to be
+   established using the same transport connection.
+
+   The diagram below illustrates the full transport connection and
+   session lifecycle for an implementation which uses WebSocket over TCP
+   as the transport and allows the re-use of a transport connection.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 17]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+       ,------.                                    ,------.
+       | Peer |                                    | Peer |
+       `--+---'                                    `--+---'
+
+                         TCP established
+          |<----------------------------------------->|
+          |                                           |
+          |               TLS established             |
+          |+<--------------------------------------->+|
+          |+                                         +|
+          |+           WebSocket established         +|
+          |+|<------------------------------------->|+|
+          |+|                                       |+|
+          |+|            WAMP established           |+|
+          |+|+<----------------------------------->+|+|
+          |+|+                                     +|+|
+          |+|+                                     +|+|
+          |+|+            WAMP closed              +|+|
+          |+|+<----------------------------------->+|+|
+          |+|                                       |+|
+          |+|                                       |+|
+          |+|            WAMP established           |+|
+          |+|+<----------------------------------->+|+|
+          |+|+                                     +|+|
+          |+|+                                     +|+|
+          |+|+            WAMP closed              +|+|
+          |+|+<----------------------------------->+|+|
+          |+|                                       |+|
+          |+|           WebSocket closed            |+|
+          |+|<------------------------------------->|+|
+          |+                                         +|
+          |+              TLS closed                 +|
+          |+<--------------------------------------->+|
+          |                                           |
+          |               TCP closed                  |
+          |<----------------------------------------->|
+
+       ,--+---.                                    ,--+---.
+       | Peer |                                    | Peer |
+       `------'                                    `------'
+
+6.  Messages
+
+   All WAMP messages are a "list" with a first element "MessageType"
+   followed by one or more message type specific elements:
+
+       [MessageType|integer, ... one or more message type specific
+           elements ...]
+
+
+
+Oberstein                Expires March 20, 2016                [Page 18]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   The notation "Element|type" denotes a message element named "Element"
+   of type "type", where "type" is one of
+
+   o  "uri": a string URI as defined in Section 5.1.1
+
+   o  "id": an integer ID as defined in Section 5.1.2
+
+   o  "integer": a non-negative integer
+
+   o  "string": a Unicode string, including the empty string
+
+   o  "bool": a boolean value ("true" or "false") - integers MUST NOT be
+      used instead of boolean value
+
+   o  "dict": a dictionary (map) where keys MUST be strings, keys MUST
+      be uniueand serialization order is undefined (left to the
+      serializer being used)
+
+   o  "list": a list (array) where items can be again any of this
+      enumeration
+
+   _Example_
+
+   A "SUBSCRIBE" message has the following format
+
+       [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+
+   Here is an example message conforming to the above format
+
+       [32, 713845233, {}, "com.myapp.mytopic1"]
+
+6.1.  Extensibility
+
+   Some WAMP messages contain "Options|dict" or "Details|dict" elements.
+   This allows for future extensibility and implementations that only
+   provide subsets of functionality by ignoring unimplemented
+   attributes.  Keys in "Options" and "Details" MUST be of type "string"
+   and MUST match the regular expression "[a-z][a-z0-9_]{2,}" for WAMP
+   _predefined_ keys.  Implementations MAY use implementation-specific
+   keys that MUST match the regular expression "_[a-z0-9_]{3,}".
+   Attributes unknown to an implementation MUST be ignored.
+
+6.2.  No Polymorphism
+
+   For a given "MessageType" _and_ number of message elements the
+   expected types are uniquely defined.  Hence there are no polymorphic
+   messages in WAMP.  This leads to a message parsing and validation
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 19]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   control flow that is efficient, simple to implement and simple to
+   code for rigorous message format checking.
+
+6.3.  Structure
+
+   The _application_ payload (that is call arguments, call results,
+   event payload etc) is always at the end of the message element list.
+   The rationale is: _Brokers_ and _Dealers_ have no need to inspect
+   (parse) the application payload.  Their business is call/event
+   routing.  Having the application payload at the end of the list
+   allows _Brokers_ and _Dealers_ to skip parsing it altogether.  This
+   can improve efficiency and performance.
+
+6.4.  Message Definitions
+
+   WAMP defines the following messages that are explained in detail in
+   the following sections.
+
+   The messages concerning the WAMP session itself are mandatory for all
+   _Peers_, i.e. a _Client_ MUST implement "HELLO", "ABORT" and
+   "GOODBYE", while a _Router_ MUST implement "WELCOME", "ABORT" and
+   "GOODBYE".
+
+   All other messages are mandatory _per role_, i.e. in an
+   implementation that only provides a _Client_ with the role of
+   _Publisher_ MUST additionally implement sending "PUBLISH" and
+   receiving "PUBLISHED" and "ERROR" messages.
+
+6.4.1.  Session Lifecycle
+
+6.4.1.1.  HELLO
+
+   Sent by a _Client_ to initiate opening of a WAMP session to a
+   _Router_ attaching to a _Realm_.
+
+       [HELLO, Realm|uri, Details|dict]
+
+6.4.1.2.  WELCOME
+
+   Sent by a _Router_ to accept a _Client_. The WAMP session is now
+   open.
+
+       [WELCOME, Session|id, Details|dict]
+
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 20]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+6.4.1.3.  ABORT
+
+   Sent by a _Peer_ to abort the opening of a WAMP session.  No response
+   is expected.
+
+     [ABORT, Details|dict, Reason|uri]
+
+6.4.1.4.  GOODBYE
+
+   Sent by a _Peer_ to close a previously opened WAMP session.  Must be
+   echo'ed by the receiving _Peer_.
+
+       [GOODBYE, Details|dict, Reason|uri]
+
+6.4.1.5.  ERROR
+
+   Error reply sent by a _Peer_ as an error response to different kinds
+   of requests.
+
+       [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+           Error|uri]
+
+       [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+           Error|uri, Arguments|list]
+
+       [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+           Error|uri, Arguments|list, ArgumentsKw|dict]
+
+6.4.2.  Publish & Subscribe
+
+6.4.2.1.  PUBLISH
+
+   Sent by a _Publisher_ to a _Broker_ to publish an event.
+
+       [PUBLISH, Request|id, Options|dict, Topic|uri]
+
+       [PUBLISH, Request|id, Options|dict, Topic|uri,
+           Arguments|list]
+
+       [PUBLISH, Request|id, Options|dict, Topic|uri,
+           Arguments|list, ArgumentsKw|dict]
+
+6.4.2.2.  PUBLISHED
+
+   Acknowledge sent by a _Broker_ to a _Publisher_ for acknowledged
+   publications.
+
+       [PUBLISHED, PUBLISH.Request|id, Publication|id]
+
+
+
+Oberstein                Expires March 20, 2016                [Page 21]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+6.4.2.3.  SUBSCRIBE
+
+   Subscribe request sent by a _Subscriber_ to a _Broker_ to subscribe
+   to a topic.
+
+       [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+
+6.4.2.4.  SUBSCRIBED
+
+   Acknowledge sent by a _Broker_ to a _Subscriber_ to acknowledge a
+   subscription.
+
+       [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
+
+6.4.2.5.  UNSUBSCRIBE
+
+   Unsubscribe request sent by a _Subscriber_ to a _Broker_ to
+   unsubscribe a subscription.
+
+       [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
+
+6.4.2.6.  UNSUBSCRIBED
+
+   Acknowledge sent by a _Broker_ to a _Subscriber_ to acknowledge
+   unsubscription.
+
+       [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
+
+6.4.2.7.  EVENT
+
+   Event dispatched by _Broker_ to _Subscribers_ for subscriptions the
+   event was matching.
+
+       [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+           Details|dict]
+
+       [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+           Details|dict, PUBLISH.Arguments|list]
+
+       [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+           Details|dict, PUBLISH.Arguments|list,
+           PUBLISH.ArgumentsKw|dict]
+
+      An event is dispatched to a _Subscriber_ for a given
+      "Subscription|id" _only once_. On the other hand, a _Subscriber_
+      that holds subscriptions with different "Subscription|id"s that
+      all match a given event will receive the event on each matching
+      subscription.
+
+
+
+Oberstein                Expires March 20, 2016                [Page 22]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+6.4.3.  Routed Remote Procedure Calls
+
+6.4.3.1.  CALL
+
+   Call as originally issued by the _Caller_ to the _Dealer_.
+
+     [CALL, Request|id, Options|dict, Procedure|uri]
+
+     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+
+     [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
+         ArgumentsKw|dict]
+
+6.4.3.2.  RESULT
+
+   Result of a call as returned by _Dealer_ to _Caller_.
+
+       [RESULT, CALL.Request|id, Details|dict]
+
+       [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
+
+       [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
+           YIELD.ArgumentsKw|dict]
+
+6.4.3.3.  REGISTER
+
+   A _Callees_ request to register an endpoint at a _Dealer_.
+
+       [REGISTER, Request|id, Options|dict, Procedure|uri]
+
+6.4.3.4.  REGISTERED
+
+   Acknowledge sent by a _Dealer_ to a _Callee_ for successful
+   registration.
+
+       [REGISTERED, REGISTER.Request|id, Registration|id]
+
+6.4.3.5.  UNREGISTER
+
+   A _Callees_ request to unregister a previously established
+   registration.
+
+       [UNREGISTER, Request|id, REGISTERED.Registration|id]
+
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 23]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+6.4.3.6.  UNREGISTERED
+
+   Acknowledge sent by a _Dealer_ to a _Callee_ for successful
+   unregistration.
+
+       [UNREGISTERED, UNREGISTER.Request|id]
+
+6.4.3.7.  INVOCATION
+
+   Actual invocation of an endpoint sent by _Dealer_ to a _Callee_.
+
+       [INVOCATION, Request|id, REGISTERED.Registration|id,
+           Details|dict]
+
+       [INVOCATION, Request|id, REGISTERED.Registration|id,
+           Details|dict, C* Arguments|list]
+
+       [INVOCATION, Request|id, REGISTERED.Registration|id,
+           Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+
+6.4.3.8.  YIELD
+
+   Actual yield from an endpoint sent by a _Callee_ to _Dealer_.
+
+       [YIELD, INVOCATION.Request|id, Options|dict]
+
+       [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
+
+       [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
+           ArgumentsKw|dict]
+
+6.5.  Message Codes and Direction
+
+   The following table lists the message type code for *all 25 messages
+   defined in the WAMP basic profile* and their direction between peer
+   roles.
+
+   Reserved codes may be used to indentify additional message types in
+   future standards documents.
+
+      "Tx" indicates the message is sent by the respective role, and
+      "Rx" indicates the message is received by the respective role.
+
+
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 24]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   +-----+----------------+------+------+------+------+-------+--------+
+   | Cod |    Message     | Pub  | Brk  | Subs | Calr | Dealr | Callee |
+   +-----+----------------+------+------+------+------+-------+--------+
+   |  1  |    "HELLO"     |  Tx  |  Rx  |  Tx  |  Tx  |   Rx  |   Tx   |
+   |  2  |   "WELCOME"    |  Rx  |  Tx  |  Rx  |  Rx  |   Tx  |   Rx   |
+   |  3  |    "ABORT"     |  Rx  | TxRx |  Rx  |  Rx  |  TxRx |   Rx   |
+   |  6  |   "GOODBYE"    | TxRx | TxRx | TxRx | TxRx |  TxRx |  TxRx  |
+   |     |                |      |      |      |      |       |        |
+   |  8  |    "ERROR"     |  Rx  |  Tx  |  Rx  |  Rx  |  TxRx |  TxRx  |
+   |     |                |      |      |      |      |       |        |
+   |  16 |   "PUBLISH"    |  Tx  |  Rx  |      |      |       |        |
+   |  17 |  "PUBLISHED"   |  Rx  |  Tx  |      |      |       |        |
+   |     |                |      |      |      |      |       |        |
+   |  32 |  "SUBSCRIBE"   |      |  Rx  |  Tx  |      |       |        |
+   |  33 |  "SUBSCRIBED"  |      |  Tx  |  Rx  |      |       |        |
+   |  34 | "UNSUBSCRIBE"  |      |  Rx  |  Tx  |      |       |        |
+   |  35 | "UNSUBSCRIBED" |      |  Tx  |  Rx  |      |       |        |
+   |  36 |    "EVENT"     |      |  Tx  |  Rx  |      |       |        |
+   |     |                |      |      |      |      |       |        |
+   |  48 |     "CALL"     |      |      |      |  Tx  |   Rx  |        |
+   |  50 |    "RESULT"    |      |      |      |  Rx  |   Tx  |        |
+   |     |                |      |      |      |      |       |        |
+   |  64 |   "REGISTER"   |      |      |      |      |   Rx  |   Tx   |
+   |  65 |  "REGISTERED"  |      |      |      |      |   Tx  |   Rx   |
+   |  66 |  "UNREGISTER"  |      |      |      |      |   Rx  |   Tx   |
+   |  67 | "UNREGISTERED" |      |      |      |      |   Tx  |   Rx   |
+   |  68 |  "INVOCATION"  |      |      |      |      |   Tx  |   Rx   |
+   |  70 |    "YIELD"     |      |      |      |      |   Rx  |   Tx   |
+   +-----+----------------+------+------+------+------+-------+--------+
+
+6.6.  Extension Messages
+
+   WAMP uses type codes from the core range [0, 255].  Implementations
+   MAY define and use implementation specific messages with message type
+   codes from the extension message range [256, 1023].  For example, a
+   router MAY implement router-to-router communication by using
+   extension messages.
+
+6.7.  Empty Arguments and Keyword Arguments
+
+   Implementations SHOULD avoid sending empty "Arguments" lists.
+
+   E.g. a "CALL" message
+
+       [CALL, Request|id, Options|dict, Procedure|uri,
+           Arguments|list]
+
+   where "Arguments == []" SHOULD be avoided, and instead
+
+
+
+Oberstein                Expires March 20, 2016                [Page 25]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+       [CALL, Request|id, Options|dict, Procedure|uri]
+
+   SHOULD be sent.
+
+   Implementations SHOULD avoid sending empty "ArgumentsKw"
+   dictionaries.
+
+   E.g. a "CALL" message
+
+       [CALL, Request|id, Options|dict, Procedure|uri,
+           Arguments|list, ArgumentsKw|dict]
+
+   where "ArgumentsKw == {}" SHOULD be avoided, and instead
+
+       [CALL, Request|id, Options|dict, Procedure|uri,
+           Arguments|list]
+
+   SHOULD be sent when "Arguments" is non-empty.
+
+7.  Sessions
+
+   The message flow between _Clients_ and _Routers_ for opening and
+   closing WAMP sessions involves the following messages:
+
+   1.  "HELLO"
+
+   2.  "WELCOME"
+
+   3.  "ABORT"
+
+   4.  "GOODBYE"
+
+7.1.  Session Establishment
+
+7.1.1.  HELLO
+
+   After the underlying transport has been established, the opening of a
+   WAMP session is initiated by the _Client_ sending a "HELLO" message
+   to the _Router_
+
+       [HELLO, Realm|uri, Details|dict]
+
+   where
+
+   o  "Realm" is a string identifying the realm this session should
+      attach to
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 26]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "Details" is a dictionary that allows to provide additional
+      opening information (see below).
+
+   The "HELLO" message MUST be the very first message sent by the
+   _Client_ after the transport has been established.
+
+   In the WAMP Basic Profile without session authentication the _Router_
+   will reply with a "WELCOME" or "ABORT" message.
+
+       ,------.          ,------.
+       |Client|          |Router|
+       `--+---'          `--+---'
+          |      HELLO      |
+          | ---------------->
+          |                 |
+          |     WELCOME     |
+          | <----------------
+       ,--+---.          ,--+---.
+       |Client|          |Router|
+       `------'          `------'
+
+   A WAMP session starts its lifetime when the _Router_ has sent a
+   "WELCOME" message to the _Client_, and ends when the underlying
+   transport closes or when the session is closed explicitly by either
+   peer sending the "GOODBYE" message (see below).
+
+   It is a protocol error to receive a second "HELLO" message during the
+   lifetime of the session and the _Peer_ must fail the session if that
+   happens.
+
+7.1.1.1.  Client: Role and Feature Announcement
+
+   WAMP uses _Role & Feature announcement_ instead of _protocol
+   versioning_ to allow
+
+   o  implementations only supporting subsets of functionality
+
+   o  future extensibility
+
+   A _Client_ must announce the *roles* it supports via
+   "Hello.Details.roles|dict", with a key mapping to a
+   "Hello.Details.roles.<role>|dict" where "<role>" can be:
+
+   o  "publisher"
+
+   o  "subscriber"
+
+   o  "caller"
+
+
+
+Oberstein                Expires March 20, 2016                [Page 27]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "callee"
+
+   A _Client_ can support any combination of the above roles but must
+   support at least one role.
+
+   The "<role>|dict" is a dictionary describing *features* supported by
+   the peer for that role.
+
+   This is empty for WAMP Basic Profile implementations, but may be used
+   by implementations implementing parts of a future WAMP Advanced
+   Profile to list the specific set of features they support.
+
+   _Example: A Client that implements the Publisher and Subscriber roles
+   of the WAMP Basic Profile._
+
+       [1, "somerealm", {
+         "roles": {
+             "publisher": {},
+             "subscriber": {}
+         }
+       }]
+
+7.1.2.  WELCOME
+
+   A _Router_ completes the opening of a WAMP session by sending a
+   "WELCOME" reply message to the _Client_.
+
+       [WELCOME, Session|id, Details|dict]
+
+   where
+
+   o  "Session" MUST be a randomly generated ID specific to the WAMP
+      session.  This applies for the lifetime of the session.
+
+   o  "Details" is a dictionary that allows to provide additional
+      information regarding the open session (see below).
+
+   In the WAMP Basic Profile without session authentication, a "WELCOME"
+   message is the first message sent by the _Router_, directly in
+   response to a "HELLO" message received from the _Client_. Extensions
+   in an Advanced Profile may include intermediate steps and messages
+   for authentication.
+
+      Note.  The behavior if a requested "Realm" does not presently
+      exist is router-specific.  A router may e.g. automatically create
+      the realm, or deny the establishment of the session with a "ABORT"
+      reply message.
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 28]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+7.1.2.1.  Router: Role and Feature Announcement
+
+   Similar to a _Client_ announcing _Roles_ and _Features_ supported in
+   the `"HELLO" message, a _Router_ announces its supported _Roles_ and
+   _Features_ in the "WELCOME" message.
+
+   A _Router_ MUST announce the *roles* it supports via
+   "Welcome.Details.roles|dict", with a key mapping to a
+   "Welcome.Details.roles.<role>|dict" where "<role>" can be:
+
+   o  "broker"
+
+   o  "dealer"
+
+   A _Router_ must support at least one role, and MAY support both
+   roles.
+
+   The "<role>|dict" is a dictionary describing *features* supported by
+   the peer for that role.  With WAMP Basic Profile implementations,
+   this will be empty, but may be used by implementations implementing
+   parts of a future WAMP Advanced Profile to list the specific set of
+   features they support
+
+   _Example: A Router implementing the Broker role of the WAMP Basic
+   Profile._
+
+       [2, 9129137332, {
+          "roles": {
+             "broker": {}
+          }
+       }]
+
+7.1.3.  ABORT
+
+   Both the _Router_ and the _Client_ may abort the opening of a WAMP
+   session by sending an "ABORT" message.
+
+       [ABORT, Details|dict, Reason|uri]
+
+   where
+
+   o  "Reason" MUST be an URI.
+
+   o  "Details" MUST be a dictionary that allows to provide additional,
+      optional closing information (see below).
+
+   No response to an "ABORT" message is expected.
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 29]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+       ,------.          ,------.
+       |Client|          |Router|
+       `--+---'          `--+---'
+          |      HELLO      |
+          | ---------------->
+          |                 |
+          |      ABORT      |
+          | <----------------
+       ,--+---.          ,--+---.
+       |Client|          |Router|
+       `------'          `------'
+
+   _Example_
+
+       [3, {"message": "The realm does not exist."},
+           "wamp.error.no_such_realm"]
+
+7.2.  Session Closing
+
+   A WAMP session starts its lifetime with the _Router_ sending a
+   "WELCOME" message to the _Client_ and ends when the underlying
+   transport disappears or when the WAMP session is closed explicitly by
+   a "GOODBYE" message sent by one _Peer_ and a "GOODBYE" message sent
+   from the other _Peer_ in response.
+
+       [GOODBYE, Details|dict, Reason|uri]
+
+   where
+
+   o  "Reason" MUST be an URI.
+
+   o  "Details" MUST be a dictionary that allows to provide additional,
+      optional closing information (see below).
+
+       ,------.          ,------.
+       |Client|          |Router|
+       `--+---'          `--+---'
+          |     GOODBYE     |
+          | ---------------->
+          |                 |
+          |     GOODBYE     |
+          | <----------------
+       ,--+---.          ,--+---.
+       |Client|          |Router|
+       `------'          `------'
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 30]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+       ,------.          ,------.
+       |Client|          |Router|
+       `--+---'          `--+---'
+          |     GOODBYE     |
+          | <----------------
+          |                 |
+          |     GOODBYE     |
+          | ---------------->
+       ,--+---.          ,--+---.
+       |Client|          |Router|
+       `------'          `------'
+
+   _Example_. One _Peer_ initiates closing
+
+       [6, {"message": "The host is shutting down now."},
+           "wamp.error.system_shutdown"]
+
+   and the other peer replies
+
+       [6, {}, "wamp.error.goodbye_and_out"]
+
+   o  Q: Why is an ordered closing of a connection via GOOBYEs
+      communicated using ERROR messages?  It's clearly not an error.
+      --> file issue
+
+   _Example_. One _Peer_ initiates closing
+
+       [6, {}, "wamp.error.close_realm"]
+
+   and the other peer replies
+
+       [6, {}, "wamp.error.goodbye_and_out"]
+
+7.2.1.  Difference between ABORT and GOODBYE
+
+   The differences between "ABORT" and "GOODBYE" messages are:
+
+   1.  "ABORT" gets sent only _before_ a _Session_ is established, while
+       "GOODBYE" is sent only _after_ a _Session_ is already
+       established.
+
+   2.  "ABORT" is never replied to by a _Peer_, whereas "GOODBYE" must
+       be replied to by the receiving _Peer_
+
+      Though "ABORT" and "GOODBYE" are structurally identical, using
+      different message types serves to reduce overloaded meaning of
+      messages and simplify message handling code.
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 31]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+7.3.  Agent Identification
+
+   When a software agent operates in a network protocol, it often
+   identifies itself, its application type, operating system, software
+   vendor, or software revision, by submitting a characteristic
+   identification string to its operating peer.
+
+   Similar to what browsers do with the "User-Agent" HTTP header, both
+   the "HELLO" and the "WELCOME" message MAY disclose the WAMP
+   implementation in use to its peer:
+
+       HELLO.Details.agent|string
+
+   and
+
+       WELCOME.Details.agent|string
+
+   _Example: A Client "HELLO" message._
+
+       [1, "somerealm", {
+            "agent": "AutobahnJS-0.9.14",
+            "roles": {
+               "subscriber": {},
+               "publisher": {}
+            }
+       }]
+
+   _Example: A Router "WELCOME" message._
+
+       [2, 9129137332, {
+           "agent": "Crossbar.io-0.10.11",
+           "roles": {
+             "broker": {}
+           }
+       }]
+
+8.  Publish and Subscribe
+
+   All of the following features for Publish & Subscribe are mandatory
+   for WAMP Basic Profile implementations supporting the respective
+   roles, i.e. _Publisher_, _Subscriber_ and _Dealer_.
+
+8.1.  Subscribing and Unsubscribing
+
+   The message flow between _Clients_ implementing the role of
+   _Subscriber_ and _Routers_ implementing the role of _Broker_ for
+   subscribing and unsubscribing involves the following messages:
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 32]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   1.  "SUBSCRIBE"
+
+   2.  "SUBSCRIBED"
+
+   3.  "UNSUBSCRIBE"
+
+   4.  "UNSUBSCRIBED"
+
+   5.  "ERROR"
+
+       ,---------.          ,------.             ,----------.
+       |Publisher|          |Broker|             |Subscriber|
+       `----+----'          `--+---'             `----+-----'
+            |                  |                      |
+            |                  |                      |
+            |                  |       SUBSCRIBE      |
+            |                  | <---------------------
+            |                  |                      |
+            |                  |  SUBSCRIBED or ERROR |
+            |                  | --------------------->
+            |                  |                      |
+            |                  |                      |
+            |                  |                      |
+            |                  |                      |
+            |                  |      UNSUBSCRIBE     |
+            |                  | <---------------------
+            |                  |                      |
+            |                  | UNSUBSCRIBED or ERROR|
+            |                  | --------------------->
+       ,----+----.          ,--+---.             ,----+-----.
+       |Publisher|          |Broker|             |Subscriber|
+       `---------'          `------'             `----------'
+
+   A _Subscriber_ may subscribe to zero, one or more topics, and a
+   _Publisher_ publishes to topics without knowledge of subscribers.
+
+   Upon subscribing to a topic via the "SUBSCRIBE" message, a
+   _Subscriber_ will receive any future events published to the
+   respective topic by _Publishers_, and will receive those events
+   asynchronously.
+
+   A subscription lasts for the duration of a session, unless a
+   _Subscriber_ opts out from a previously established subscription via
+   the "UNSUBSCRIBE" message.
+
+      A _Subscriber_ may have more than one event handler attached to
+      the same subscription.  This can be implemented in different ways:
+      a) a _Subscriber_ can recognize itself that it is already
+
+
+
+Oberstein                Expires March 20, 2016                [Page 33]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+      subscribed and just attach another handler to the subscription
+      for incoming events, b) or it can send a new "SUBSCRIBE" message
+      to broker (as it would be first) and upon receiving a
+      "SUBSCRIBED.Subscription|id" it already knows about, attach the
+      handler to the existing subscription
+
+8.1.1.  SUBSCRIBE
+
+   A _Subscriber_ communicates its interest in a topic to a _Broker_ by
+   sending a "SUBSCRIBE" message:
+
+       [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+
+   where
+
+   o  "Request" MUST be a random, ephemeral ID chosen by the
+      _Subscriber_ and used to correlate the _Broker's_ response with
+      the request.
+
+   o  "Options" MUST be a dictionary that allows to provide additional
+      subscription request details in a extensible way.  This is
+      described further below.
+
+   o  "Topic" is the topic the _Subscriber_ wants to subscribe to and
+      MUST be an URI.
+
+   _Example_
+
+       [32, 713845233, {}, "com.myapp.mytopic1"]
+
+   A _Broker_, receiving a "SUBSCRIBE" message, can fullfill or reject
+   the subscription, so it answers with "SUBSCRIBED" or "ERROR"
+   messages.
+
+8.1.2.  SUBSCRIBED
+
+   If the _Broker_ is able to fulfill and allow the subscription, it
+   answers by sending a "SUBSCRIBED" message to the _Subscriber_
+
+       [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
+
+   where
+
+   o  "SUBSCRIBE.Request" MUST be the ID from the original request.
+
+   o  "Subscription" MUST be an ID chosen by the _Broker_ for the
+      subscription.
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 34]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   _Example_
+
+       [33, 713845233, 5512315355]
+
+      Note.  The "Subscription" ID chosen by the broker need not be
+      unique to the subscription of a single _Subscriber_, but may be
+      assigned to the "Topic", or the combination of the "Topic" and
+      some or all "Options", such as the topic pattern matching method
+      to be used.  Then this ID may be sent to all _Subscribers_ for the
+      "Topic" or "Topic" / "Options" combination.  This allows the
+      _Broker_ to serialize an event to be delivered only once for all
+      actual receivers of the event.
+
+      In case of receiving a "SUBSCRIBE" message from the same
+      _Subscriber_ and to already subscribed topic, _Broker_ should
+      answer with "SUBSCRIBED" message, containing the existing
+      "Subscription|id".
+
+8.1.3.  Subscribe ERROR
+
+   When the request for subscription cannot be fulfilled by the
+   _Broker_, the _Broker_ sends back an "ERROR" message to the
+   _Subscriber_
+
+       [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict,
+           Error|uri]
+
+   where
+
+   o  "SUBSCRIBE.Request" MUST be the ID from the original request.
+
+   o  "Error" MUST be an URI that gives the error of why the request
+      could not be fulfilled.
+
+   _Example_
+
+       [8, 32, 713845233, {}, "wamp.error.not_authorized"]
+
+8.1.4.  UNSUBSCRIBE
+
+   When a _Subscriber_ is no longer interested in receiving events for a
+   subscription it sends an "UNSUBSCRIBE" message
+
+       [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
+
+   where
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 35]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "Request" MUST be a random, ephemeral ID chosen by the
+      _Subscriber_ and used to correlate the _Broker's_ response with
+      the request.
+
+   o  "SUBSCRIBED.Subscription" MUST be the ID for the subscription to
+      unsubscribe from, originally handed out by the _Broker_ to the
+      _Subscriber_.
+
+   _Example_
+
+       [34, 85346237, 5512315355]
+
+8.1.5.  UNSUBSCRIBED
+
+   Upon successful unsubscription, the _Broker_ sends an "UNSUBSCRIBED"
+   message to the _Subscriber_
+
+       [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
+
+   where
+
+   o  "UNSUBSCRIBE.Request" MUST be the ID from the original request.
+
+   _Example_
+
+       [35, 85346237]
+
+8.1.6.  Unsubscribe ERROR
+
+   When the request fails, the _Broker_ sends an "ERROR"
+
+       [ERROR, UNSUBSCRIBE, UNSUBSCRIBE.Request|id, Details|dict,
+           Error|uri]
+
+   where
+
+   o  "UNSUBSCRIBE.Request" MUST be the ID from the original request.
+
+   o  "Error" MUST be an URI that gives the error of why the request
+      could not be fulfilled.
+
+   _Example_
+
+       [8, 34, 85346237, {}, "wamp.error.no_such_subscription"]
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 36]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+8.2.  Publishing and Events
+
+   The message flow between _Publishers_, a _Broker_ and _Subscribers_
+   for publishing to topics and dispatching events involves the
+   following messages:
+
+   1.  "PUBLISH"
+
+   2.  "PUBLISHED"
+
+   3.  "EVENT"
+
+   4.  "ERROR"
+
+       ,---------.          ,------.          ,----------.
+       |Publisher|          |Broker|          |Subscriber|
+       `----+----'          `--+---'          `----+-----'
+            |     PUBLISH      |                   |
+            |------------------>                   |
+            |                  |                   |
+            |PUBLISHED or ERROR|                   |
+            |<------------------                   |
+            |                  |                   |
+            |                  |       EVENT       |
+            |                  | ------------------>
+       ,----+----.          ,--+---.          ,----+-----.
+       |Publisher|          |Broker|          |Subscriber|
+       `---------'          `------'          `----------'
+
+8.2.1.  PUBLISH
+
+   When a _Publisher_ requests to publish an event to some topic, it
+   sends a "PUBLISH" message to a _Broker_:
+
+       [PUBLISH, Request|id, Options|dict, Topic|uri]
+
+   or
+
+       [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
+
+   or
+
+       [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list,
+           ArgumentsKw|dict]
+
+   where
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 37]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "Request" is a random, ephemeral ID chosen by the _Publisher_ and
+      used to correlate the _Broker's_ response with the request.
+
+   o  "Options" is a dictionary that allows to provide additional
+      publication request details in an extensible way.  This is
+      described further below.
+
+   o  "Topic" is the topic published to.
+
+   o  "Arguments" is a list of application-level event payload elements.
+      The list may be of zero length.
+
+   o  "ArgumentsKw" is an optional dictionary containing application-
+      level event payload, provided as keyword arguments.  The
+      dictionary may be empty.
+
+   If the _Broker_ is able to fulfill and allowing the publication, the
+   _Broker_ will send the event to all current _Subscribers_ of the
+   topic of the published event.
+
+   By default, publications are unacknowledged, and the _Broker_ will
+   not respond, whether the publication was successful indeed or not.
+   This behavior can be changed with the option
+   "PUBLISH.Options.acknowledge|bool" (see below).
+
+   _Example_
+
+       [16, 239714735, {}, "com.myapp.mytopic1"]
+
+   _Example_
+
+       [16, 239714735, {}, "com.myapp.mytopic1", ["Hello, world!"]]
+
+   _Example_
+
+       [16, 239714735, {}, "com.myapp.mytopic1", [], {"color": "orange",
+           "sizes": [23, 42, 7]}]
+
+8.2.2.  PUBLISHED
+
+   If the _Broker_ is able to fulfill and allowing the publication, and
+   "PUBLISH.Options.acknowledge == true", the _Broker_ replies by
+   sending a "PUBLISHED" message to the _Publisher_:
+
+       [PUBLISHED, PUBLISH.Request|id, Publication|id]
+
+   where
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 38]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "PUBLISH.Request" is the ID from the original publication request.
+
+   o  "Publication" is a ID chosen by the Broker for the publication.
+
+   _Example_
+
+       [17, 239714735, 4429313566]
+
+8.2.3.  Publish ERROR
+
+   When the request for publication cannot be fulfilled by the _Broker_,
+   and "PUBLISH.Options.acknowledge == true", the _Broker_ sends back an
+   "ERROR" message to the _Publisher_
+
+       [ERROR, PUBLISH, PUBLISH.Request|id, Details|dict, Error|uri]
+
+   where
+
+   o  "PUBLISH.Request" is the ID from the original publication request.
+
+   o  "Error" is an URI that gives the error of why the request could
+      not be fulfilled.
+
+   _Example_
+
+       [8, 16, 239714735, {}, "wamp.error.not_authorized"]
+
+8.2.4.  EVENT
+
+   When a publication is successful and a _Broker_ dispatches the event,
+   it determines a list of receivers for the event based on
+   _Subscribers_ for the topic published to and, possibly, other
+   information in the event.
+
+   Note that the _Publisher_ of an event will never receive the
+   published event even if the _Publisher_ is also a _Subscriber_ of the
+   topic published to.
+
+      WAMP Advanced Profile provides options for more detailed control
+      over publication.
+
+   When a _Subscriber_ is deemed to be a receiver, the _Broker_ sends
+   the _Subscriber_ an "EVENT" message:
+
+       [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+           Details|dict]
+
+   or
+
+
+
+Oberstein                Expires March 20, 2016                [Page 39]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+       [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+           Details|dict, PUBLISH.Arguments|list]
+
+   or
+
+       [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+       Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
+
+   where
+
+   o  "SUBSCRIBED.Subscription" is the ID for the subscription under
+      which the _Subscriber_ receives the event - the ID for the
+      subscription originally handed out by the _Broker_ to the
+      _Subscriber_.
+
+   o  "PUBLISHED.Publication" is the ID of the publication of the
+      published event.
+
+   o  "Details" is a dictionary that allows the _Broker_ to provide
+      additional event details in a extensible way.  This is described
+      further below.
+
+   o  "PUBLISH.Arguments" is the application-level event payload that
+      was provided with the original publication request.
+
+   o  "PUBLISH.ArgumentKw" is the application-level event payload that
+      was provided with the original publication request.
+
+   _Example_
+
+       [36, 5512315355, 4429313566, {}]
+
+   _Example_
+
+       [36, 5512315355, 4429313566, {}, ["Hello, world!"]]
+
+   _Example_
+
+       [36, 5512315355, 4429313566, {}, [], {"color": "orange",
+           "sizes": [23, 42, 7]}]
+
+9.  Remote Procedure Calls
+
+   All of the following features for Remote Procedure Calls are
+   mandatory for WAMP Basic Profile implementations supporting the
+   respective roles.
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 40]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+9.1.  Registering and Unregistering
+
+   The message flow between _Callees_ and a _Dealer_ for registering and
+   unregistering endpoints to be called over RPC involves the following
+   messages:
+
+   1.  "REGISTER"
+
+   2.  "REGISTERED"
+
+   3.  "UNREGISTER"
+
+   4.  "UNREGISTERED"
+
+   5.  "ERROR"
+
+       ,------.          ,------.               ,------.
+       |Caller|          |Dealer|               |Callee|
+       `--+---'          `--+---'               `--+---'
+          |                 |                      |
+          |                 |                      |
+          |                 |       REGISTER       |
+          |                 | <---------------------
+          |                 |                      |
+          |                 |  REGISTERED or ERROR |
+          |                 | --------------------->
+          |                 |                      |
+          |                 |                      |
+          |                 |                      |
+          |                 |                      |
+          |                 |                      |
+          |                 |      UNREGISTER      |
+          |                 | <---------------------
+          |                 |                      |
+          |                 | UNREGISTERED or ERROR|
+          |                 | --------------------->
+       ,--+---.          ,--+---.               ,--+---.
+       |Caller|          |Dealer|               |Callee|
+       `------'          `------'               `------'
+
+9.1.1.  REGISTER
+
+   A _Callee_ announces the availability of an endpoint implementing a
+   procedure with a _Dealer_ by sending a "REGISTER" message:
+
+       [REGISTER, Request|id, Options|dict, Procedure|uri]
+
+   where
+
+
+
+Oberstein                Expires March 20, 2016                [Page 41]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "Request" is a random, ephemeral ID chosen by the _Callee_ and
+      used to correlate the _Dealer's_ response with the request.
+
+   o  "Options" is a dictionary that allows to provide additional
+      registration request details in a extensible way.  This is
+      described further below.
+
+   o  "Procedure"is the procedure the _Callee_ wants to register
+
+   _Example_
+
+       [64, 25349185, {}, "com.myapp.myprocedure1"]
+
+9.1.2.  REGISTERED
+
+   If the _Dealer_ is able to fulfill and allowing the registration, it
+   answers by sending a "REGISTERED" message to the "Callee":
+
+       [REGISTERED, REGISTER.Request|id, Registration|id]
+
+   where
+
+   o  "REGISTER.Request" is the ID from the original request.
+
+   o  "Registration" is an ID chosen by the _Dealer_ for the
+      registration.
+
+   _Example_
+
+       [65, 25349185, 2103333224]
+
+9.1.3.  Register ERROR
+
+   When the request for registration cannot be fulfilled by the
+   _Dealer_, the _Dealer_ sends back an "ERROR" message to the _Callee_:
+
+       [ERROR, REGISTER, REGISTER.Request|id, Details|dict, Error|uri]
+
+   where
+
+   o  "REGISTER.Request" is the ID from the original request.
+
+   o  "Error" is an URI that gives the error of why the request could
+      not be fulfilled.
+
+   _Example_
+
+       [8, 64, 25349185, {}, "wamp.error.procedure_already_exists"]
+
+
+
+Oberstein                Expires March 20, 2016                [Page 42]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+9.1.4.  UNREGISTER
+
+   When a _Callee_ is no longer willing to provide an implementation of
+   the registered procedure, it sends an "UNREGISTER" message to the
+   _Dealer_:
+
+       [UNREGISTER, Request|id, REGISTERED.Registration|id]
+
+   where
+
+   o  "Request" is a random, ephemeral ID chosen by the _Callee_ and
+      used to correlate the _Dealer's_ response with the request.
+
+   o  "REGISTERED.Registration" is the ID for the registration to
+      revoke, originally handed out by the _Dealer_ to the _Callee_.
+
+   _Example_
+
+       [66, 788923562, 2103333224]
+
+9.1.5.  UNREGISTERED
+
+   Upon successful unregistration, the _Dealer_ sends an "UNREGISTERED"
+   message to the _Callee_:
+
+       [UNREGISTERED, UNREGISTER.Request|id]
+
+   where
+
+   o  "UNREGISTER.Request" is the ID from the original request.
+
+   _Example_
+
+       [67, 788923562]
+
+9.1.6.  Unregister ERROR
+
+   When the unregistration request fails, the _Dealer_ sends an "ERROR"
+   message:
+
+       [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict,
+           Error|uri]
+
+   where
+
+   o  "UNREGISTER.Request" is the ID from the original request.
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 43]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   o  "Error" is an URI that gives the error of why the request could
+      not be fulfilled.
+
+   _Example_
+
+       [8, 66, 788923562, {}, "wamp.error.no_such_registration"]
+
+9.2.  Calling and Invocations
+
+   The message flow between _Callers_, a _Dealer_ and _Callees_ for
+   calling procedures and invoking endpoints involves the following
+   messages:
+
+   1.  "CALL"
+
+   2.  "RESULT"
+
+   3.  "INVOCATION"
+
+   4.  "YIELD"
+
+   5.  "ERROR"
+
+       ,------.          ,------.          ,------.
+       |Caller|          |Dealer|          |Callee|
+       `--+---'          `--+---'          `--+---'
+          |       CALL      |                 |
+          | ---------------->                 |
+          |                 |                 |
+          |                 |    INVOCATION   |
+          |                 | ---------------->
+          |                 |                 |
+          |                 |  YIELD or ERROR |
+          |                 | <----------------
+          |                 |                 |
+          | RESULT or ERROR |                 |
+          | <----------------                 |
+       ,--+---.          ,--+---.          ,--+---.
+       |Caller|          |Dealer|          |Callee|
+       `------'          `------'          `------'
+
+   The execution of remote procedure calls is asynchronous, and there
+   may be more than one call outstanding.  A call is called outstanding
+   (from the point of view of the _Caller_), when a (final) result or
+   error has not yet been received by the _Caller_.
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 44]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+9.2.1.  CALL
+
+   When a _Caller_ wishes to call a remote procedure, it sends a "CALL"
+   message to a _Dealer_:
+
+       [CALL, Request|id, Options|dict, Procedure|uri]
+
+   or
+
+       [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+
+   or
+
+       [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
+           ArgumentsKw|dict]
+
+   where
+
+   o  "Request" is a random, ephemeral ID chosen by the _Caller_ and
+      used to correlate the _Dealer's_ response with the request.
+
+   o  "Options" is a dictionary that allows to provide additional call
+      request details in an extensible way.  This is described further
+      below.
+
+   o  "Procedure" is the URI of the procedure to be called.
+
+   o  "Arguments" is a list of positional call arguments (each of
+      arbitrary type).  The list may be of zero length.
+
+   o  "ArgumentsKw" is a dictionary of keyword call arguments (each of
+      arbitrary type).  The dictionary may be empty.
+
+   _Example_
+
+       [48, 7814135, {}, "com.myapp.ping"]
+
+   _Example_
+
+       [48, 7814135, {}, "com.myapp.echo", ["Hello, world!"]]
+
+   _Example_
+
+       [48, 7814135, {}, "com.myapp.add2", [23, 7]]
+
+   _Example_
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 45]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+       [48, 7814135, {}, "com.myapp.user.new", ["johnny"],
+           {"firstname": "John", "surname": "Doe"}]
+
+9.2.2.  INVOCATION
+
+   If the _Dealer_ is able to fulfill (mediate) the call and it allows
+   the call, it sends a "INVOCATION" message to the respective _Callee_
+   implementing the procedure:
+
+       [INVOCATION, Request|id, REGISTERED.Registration|id,
+           Details|dict]
+
+   or
+
+       [INVOCATION, Request|id, REGISTERED.Registration|id,
+           Details|dict, CALL.Arguments|list]
+
+   or
+
+       [INVOCATION, Request|id, REGISTERED.Registration|id,
+           Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+
+   where
+
+   o  "Request" is a random, ephemeral ID chosen by the _Dealer_ and
+      used to correlate the _Callee's_ response with the request.
+
+   o  "REGISTERED.Registration" is the registration ID under which the
+      procedure was registered at the _Dealer_.
+
+   o  "Details" is a dictionary that allows to provide additional
+      invocation request details in an extensible way.  This is
+      described further below.
+
+   o  "CALL.Arguments" is the original list of positional call arguments
+      as provided by the _Caller_.
+
+   o  "CALL.ArgumentsKw" is the original dictionary of keyword call
+      arguments as provided by the _Caller_.
+
+   _Example_
+
+       [68, 6131533, 9823526, {}]
+
+   _Example_
+
+       [68, 6131533, 9823527, {}, ["Hello, world!"]]
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 46]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   _Example_
+
+       [68, 6131533, 9823528, {}, [23, 7]]
+
+   _Example_
+
+       [68, 6131533, 9823529, {}, ["johnny"], {"firstname": "John",
+           "surname": "Doe"}]
+
+9.2.3.  YIELD
+
+   If the _Callee_ is able to successfully process and finish the
+   execution of the call, it answers by sending a "YIELD" message to the
+   _Dealer_:
+
+       [YIELD, INVOCATION.Request|id, Options|dict]
+
+   or
+
+       [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
+
+   or
+
+       [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
+           ArgumentsKw|dict]
+
+   where
+
+   o  "INVOCATION.Request" is the ID from the original invocation
+      request.
+
+   o  "Options"is a dictionary that allows to provide additional
+      options.
+
+   o  "Arguments" is a list of positional result elements (each of
+      arbitrary type).  The list may be of zero length.
+
+   o  "ArgumentsKw" is a dictionary of keyword result elements (each of
+      arbitrary type).  The dictionary may be empty.
+
+   _Example_
+
+       [70, 6131533, {}]
+
+   _Example_
+
+       [70, 6131533, {}, ["Hello, world!"]]
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 47]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   _Example_
+
+       [70, 6131533, {}, [30]]
+
+   _Example_
+
+       [70, 6131533, {}, [], {"userid": 123, "karma": 10}]
+
+9.2.4.  RESULT
+
+   The _Dealer_ will then send a "RESULT" message to the original
+   _Caller_:
+
+       [RESULT, CALL.Request|id, Details|dict]
+
+   or
+
+       [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
+
+   or
+
+       [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
+           YIELD.ArgumentsKw|dict]
+
+   where
+
+   o  "CALL.Request" is the ID from the original call request.
+
+   o  "Details" is a dictionary of additional details.
+
+   o  "YIELD.Arguments" is the original list of positional result
+      elements as returned by the _Callee_.
+
+   o  "YIELD.ArgumentsKw" is the original dictionary of keyword result
+      elements as returned by the _Callee_.
+
+   _Example_
+
+       [50, 7814135, {}]
+
+   _Example_
+
+       [50, 7814135, {}, ["Hello, world!"]]
+
+   _Example_
+
+       [50, 7814135, {}, [30]]
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 48]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   _Example_
+
+       [50, 7814135, {}, [], {"userid": 123, "karma": 10}]
+
+9.2.5.  Invocation ERROR
+
+   If the _Callee_ is unable to process or finish the execution of the
+   call, or the application code implementing the procedure raises an
+   exception or otherwise runs into an error, the _Callee_ sends an
+   "ERROR" message to the _Dealer_:
+
+       [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
+           Error|uri]
+
+   or
+
+       [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
+       Error|uri, Arguments|list]
+
+   or
+
+       [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
+           Error|uri, Arguments|list, ArgumentsKw|dict]
+
+   where
+
+   o  "INVOCATION.Request" is the ID from the original "INVOCATION"
+      request previously sent by the _Dealer_ to the _Callee_.
+
+   o  "Details" is a dictionary with additional error details.
+
+   o  "Error" is an URI that identifies the error of why the request
+      could not be fulfilled.
+
+   o  "Arguments" is a list containing arbitrary, application defined,
+      positional error information.  This will be forwarded by the
+      _Dealer_ to the _Caller_ that initiated the call.
+
+   o  "ArgumentsKw" is a dictionary containing arbitrary, application
+      defined, keyword-based error information.  This will be forwarded
+      by the _Dealer_ to the _Caller_ that initiated the call.
+
+   _Example_
+
+       [8, 68, 6131533, {}, "com.myapp.error.object_write_protected",
+           ["Object is write protected."], {"severity": 3}]
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 49]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+9.2.6.  Call ERROR
+
+   The _Dealer_ will then send a "ERROR" message to the original
+   _Caller_:
+
+       [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
+
+   or
+
+       [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
+           Arguments|list]
+
+   or
+
+       [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
+           Arguments|list, ArgumentsKw|dict]
+
+   where
+
+   o  "CALL.Request" is the ID from the original "CALL" request sent by
+      the _Caller_ to the _Dealer_.
+
+   o  "Details" is a dictionary with additional error details.
+
+   o  "Error" is an URI identifying the type of error as returned by the
+      _Callee_ to the _Dealer_.
+
+   o  "Arguments" is a list containing the original error payload list
+      as returned by the _Callee_ to the _Dealer_.
+
+   o  "ArgumentsKw" is a dictionary containing the original error
+      payload dictionary as returned by the _Callee_ to the _Dealer_
+
+   _Example_
+
+       [8, 48, 7814135, {}, "com.myapp.error.object_write_protected",
+           ["Object is write protected."], {"severity": 3}]
+
+   If the original call already failed at the _Dealer_ *before* the call
+   would have been forwarded to any _Callee_, the _Dealer_ will send an
+   "ERROR" message to the _Caller_:
+
+       [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
+
+   _Example_
+
+       [8, 48, 7814135, {}, "wamp.error.no_such_procedure"]
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 50]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+9.3.  Predefined URIs
+
+   WAMP predefines the following error URIs as part of this Basic
+   Profile, which cover the full set of error states.  Additional error
+   URIs may be defined as part of a future Advanced Profile to cover
+   error states which may occur based on extensions of the protocol.
+
+   o  below has to be changed to state that for the given error state a
+      party MUST send the specific error uri, e.g
+
+   When a _Peer_ provides an incorrect URI for any URI-based attribute
+   of a WAMP message (e.g. realm, topic), then the other _Peer_ has to
+   respond with an "ERROR" message and give the following _Error URI_:
+
+       wamp.error.invalid_uri
+
+9.4.  Interaction
+
+   _Peer_ provided an incorrect URI for any URI-based attribute of WAMP
+   message, such as realm, topic or procedure
+
+       wamp.error.invalid_uri
+
+   A _Dealer_ could not perform a call, since no procedure is currently
+   registered under the given URI.
+
+       wamp.error.no_such_procedure
+
+   A procedure could not be registered, since a procedure with the given
+   URI is already registered.
+
+       wamp.error.procedure_already_exists
+
+   A _Dealer_ could not perform an unregister, since the given
+   registration is not active.
+
+       wamp.error.no_such_registration
+
+   A _Broker_ could not perform an unsubscribe, since the given
+   subscription is not active.
+
+       wamp.error.no_such_subscription
+
+   A call failed since the given argument types or values are not
+   acceptable to the called procedure.  In this case the _Callee_ may
+   throw this error.  Alternatively a _Router_ may throw this error if
+   it performed _payload validation_ of a call, call result, call error
+   or publish, and the payload did not conform to the requirements.
+
+
+
+Oberstein                Expires March 20, 2016                [Page 51]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+       wamp.error.invalid_argument
+
+9.4.1.  Session Close
+
+   The _Peer_ is shutting down completely - used as a "GOODBYE" (or
+   "ABORT") reason.
+
+       wamp.error.system_shutdown
+
+   The _Peer_ want to leave the realm - used as a "GOODBYE" reason.
+
+       wamp.error.close_realm
+
+   A _Peer_ acknowledges ending of a session - used as a "GOODBYE" reply
+   reason.
+
+       wamp.error.goodbye_and_out
+
+9.5.  Authorization
+
+   A join, call, register, publish or subscribe failed, since the _Peer_
+   is not authorized to perform the operation.
+
+       wamp.error.not_authorized
+
+   A _Dealer_ or _Broker_ could not determine if the _Peer_ is
+   authorized to perform a join, call, register, publish or subscribe,
+   since the authorization operation _itself_ failed.  E.g. a custom
+   authorizer did run into an error.
+
+       wamp.error.authorization_failed
+
+   _Peer_ wanted to join a non-existing realm (and the _Router_ did not
+   allow to auto-create the realm).
+
+       wamp.error.no_such_realm
+
+   A _Peer_ was to be authenticated under a Role that does not (or no
+   longer) exists on the Router.  For example, the _Peer_ was
+   successfully authenticated, but the Role configured does not exists -
+   hence there is some misconfiguration in the Router.
+
+       wamp.error.no_such_role
+
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 52]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+9.6.  Ordering Guarantees
+
+   All WAMP implementations, in particular _Routers_ MUST support the
+   following ordering guarantees.
+
+      A WAMP Advanced Profile may provide applications options to relax
+      ordering guarantees, in particular with distributed calls.
+
+9.6.1.  Publish & Subscribe Ordering
+
+   Regarding *Publish & Subscribe*, the ordering guarantees are as
+   follows:
+
+   If _Subscriber A_ is subscribed to both *Topic 1* and *Topic 2*, and
+   _Publisher B_ first publishes an *Event 1* to *Topic 1* and then an
+   *Event 2* to *Topic 2*, then _Subscriber A_ will first receive *Event
+   1* and then *Event 2*. This also holds if *Topic 1* and *Topic 2* are
+   identical.
+
+   In other words, WAMP guarantees ordering of events between any given
+   _pair_ of _Publisher_ and _Subscriber_.
+
+   Further, if _Subscriber A_ subscribes to *Topic 1*, the "SUBSCRIBED"
+   message will be sent by the _Broker_ to _Subscriber A_ before any
+   "EVENT" message for *Topic 1*.
+
+   There is no guarantee regarding the order of return for multiple
+   subsequent subscribe requests.  A subscribe request might require the
+   _Broker_ to do a time-consuming lookup in some database, whereas
+   another subscribe request second might be permissible immediately.
+
+9.6.2.  Remote Procedure Call Ordering
+
+   Regarding *Remote Procedure Calls*, the ordering guarantees are as
+   follows:
+
+   If _Callee A_ has registered endpoints for both *Procedure 1* and
+   *Procedure 2*, and _Caller B_ first issues a *Call 1* to *Procedure
+   1* and then a *Call 2* to *Procedure 2*, and both calls are routed to
+   _Callee A_, then _Callee A_ will first receive an invocation
+   corresponding to *Call 1* and then *Call 2*. This also holds if
+   *Procedure 1* and *Procedure 2* are identical.
+
+   In other words, WAMP guarantees ordering of invocations between any
+   given _pair_ of _Caller_ and _Callee_.
+
+   There are no guarantees on the order of call results and errors in
+   relation to _different_ calls, since the execution of calls upon
+
+
+
+Oberstein                Expires March 20, 2016                [Page 53]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   different invocations of endpoints in _Callees_ are running
+   independently.  A first call might require an expensive, long-running
+   computation, whereas a second, subsequent call might finish
+   immediately.
+
+   Further, if _Callee A_ registers for *Procedure 1*, the "REGISTERED"
+   message will be sent by _Dealer_ to _Callee A_ before any
+   "INVOCATION" message for *Procedure 1*.
+
+   There is no guarantee regarding the order of return for multiple
+   subsequent register requests.  A register request might require the
+   _Broker_ to do a time-consuming lookup in some database, whereas
+   another register request second might be permissible immediately.
+
+9.7.  Security Model
+
+   The following discusses the security model for the WAMP basic
+   profile.  A WAMP Advanced Profile may extend this.
+
+9.7.1.  Transport Encryption and Integrity
+
+   WAMP transports may provide (optional) transport-level encryption and
+   integrity verification.  If so, encryption and integrity is point-to-
+   point: between a _Client_ and the _Router_ it is connected to.
+
+   Transport-level encryption and integrity is solely at the transport-
+   level and transparent to WAMP.  WAMP itself deliberately does not
+   specify any kind of transport-level encryption.
+
+   Implementations that offer TCP based transport such as WAMP-over-
+   WebSocket or WAMP-over-RawSocket SHOULD implement Transport Layer
+   Security (TLS).
+
+   WAMP deployments are encouraged to stick to a TLS-only policy with
+   the TLS code and setup being hardened.
+
+   Further, when a _Client_ connects to a _Router_ over a local-only
+   transport such as Unix domain sockets, the integrity of the data
+   transmitted is implicit (the OS kernel is trusted), and the privacy
+   of the data transmitted can be assured using file system permissions
+   (no one can tap a Unix domain socket without appropriate permissions
+   or being root).
+
+9.7.2.  Router Authentication
+
+   To authenticate _Routers_ to _Clients_, deployments MUST run TLS and
+   _Clients_ MUST verify the _Router_ server certificate presented.
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 54]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   WAMP itself does not provide mechanisms to authenticate a _Router_
+   (only a _Client_).
+
+   The verification of the _Router_ server certificate can happen
+
+   1.  against a certificate trust database that comes with the
+       _Clients_ operating system
+
+   2.  against an issuing certificate/key hard-wired into the _Client_
+
+   3.  by using new mechanisms like DNS-based Authentication of Named
+       Enitities (DNSSEC)/TLSA
+
+   Further, when a _Client_ connects to a _Router_ over a local-only
+   transport such as Unix domain sockets, the file system permissions
+   can be used to create implicit trust.  E.g. if only the OS user under
+   which the _Router_ runs has the permission to create a Unix domain
+   socket under a specific path, _Clients_ connecting to that path can
+   trust in the router authenticity.
+
+9.7.3.  Client Authentication
+
+   Authentication of a _Client_ to a _Router_ at the WAMP level is not
+   part of this basic profile.  A WAMP Advanced Profile may specify such
+   mechanisms.
+
+   When running over TLS, a _Router_ may authenticate a _Client_ at the
+   transport level by doing a _client certificate based authentication_.
+
+9.7.3.1.  Routers are trusted
+
+   _Routers_ are _trusted_ by _Clients_.
+
+   In particular, _Routers_ can read (and modify) any application
+   payload transmitted in events, calls, call results and call errors
+   (the "Arguments" or "ArgumentsKw" message fields).
+
+   Hence, _Routers_ do not provide confidentiality with respect to
+   application payload, and also do not provide authenticity or
+   integrity of application payloads that could be verified by a
+   receiving _Client_.
+
+   _Routers_ need to read the application payloads in cases of automatic
+   conversion between different serialization formats.
+
+   Further, _Routers_ are trusted to *actually perform* routing as
+   specified.  E.g. a _Client_ that publishes an event has to trust a
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 55]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+   _Router_ that the event is actually dispatched to all (eligible)
+   _Subscribers_ by the _Router_.
+
+   A rogue _Router_ might deny normal routing operation without a
+   _Client_ taking notice.
+
+9.8.  Binary conversion of JSON Strings
+
+   Binary data follows a convention for conversion to JSON strings.
+
+   A *byte array* is converted to a *JSON string* as follows:
+
+   1.  convert the byte array to a Base64 encoded (host language) string
+
+   2.  prepend the string with a "\0" character
+
+   3.  serialize the string to a JSON string
+
+   _Example_
+
+   Consider the byte array (hex representation):
+
+       10e3ff9053075c526f5fc06d4fe37cdb
+
+   This will get converted to Base64
+
+       EOP/kFMHXFJvX8BtT+N82w==
+
+   prepended with "\0"
+
+       \x00EOP/kFMHXFJvX8BtT+N82w==
+
+   and serialized to a JSON string
+
+       "\\u0000EOP/kFMHXFJvX8BtT+N82w=="
+
+   A *JSON string* is unserialized to either a *string* or a *byte
+   array* using the following procedure:
+
+   1.  Unserialize a JSON string to a host language (Unicode) string
+
+   2.  If the string starts with a "\0" character, interpret the rest
+       (after the first character) as Base64 and decode to a byte array
+
+   3.  Otherwise, return the Unicode string
+
+   Below are complete Python and JavaScript code examples for conversion
+   between byte arrays and JSON strings.
+
+
+
+Oberstein                Expires March 20, 2016                [Page 56]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+9.8.1.  Python
+
+   Here is a complete example in Python showing how byte arrays are
+   converted to and from JSON:
+
+       ```python
+       <CODE BEGINS>
+
+       import os, base64, json, sys, binascii
+       PY3 = sys.version_info >= (3,)
+       if PY3:
+          unicode = str
+
+       data_in = os.urandom(16)
+       print("In:   {}".format(binascii.hexlify(data_in)))
+
+       ## encoding
+       encoded = json.dumps('\0' + base64.b64encode(data_in).
+                                             decode('ascii'))
+
+       print("JSON: {}".format(encoded))
+
+       ## decoding
+       decoded = json.loads(encoded)
+       if type(decoded) == unicode:
+          if decoded[0] == '\0':
+             data_out = base64.b64decode(decoded[1:])
+          else:
+             data_out = decoded
+
+       print("Out:  {}".format(binascii.hexlify(data_out)))
+
+       assert(data_out == data_in)
+
+       <CODE ENDS>
+       ```
+
+9.8.2.  JavaScript
+
+   Here is a complete example in JavaScript showing how byte arrays are
+   converted to and from JSON:
+
+
+
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 57]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+      ```javascript
+      <CODE BEGINS>
+
+      var data_in = new Uint8Array(new ArrayBuffer(16));
+
+      // initialize test data
+      for (var i = 0; i < data_in.length; ++i) {
+         data_in[i] = i;
+      }
+      console.log(data_in);
+
+      // convert byte array to raw string
+      var raw_out = '';
+      for (var i = 0; i < data_in.length; ++i) {
+         raw_out += String.fromCharCode(data_in[i]);
+      }
+
+      // base64 encode raw string, prepend with \0 and serialize to JSON
+      var encoded = JSON.stringify("\0" + window.btoa(raw_out));
+      console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="
+
+      // unserialize from JSON
+      var decoded = JSON.parse(encoded);
+
+      var data_out;
+      if (decoded.charCodeAt(0) === 0) {
+         // strip first character and decode base64 to raw string
+         var raw = window.atob(decoded.substring(1));
+
+         // convert raw string to byte array
+         var data_out = new Uint8Array(new ArrayBuffer(raw.length));
+         for (var i = 0; i < raw.length; ++i) {
+            data_out[i] = raw.charCodeAt(i);
+         }
+      } else {
+         data_out = decoded;
+      }
+
+      console.log(data_out);
+
+      <CODE ENDS>
+      ```
+
+10.  Security Considerations
+
+   -- write me --
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 58]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
+11.  IANA Considerations
+
+   TBD
+
+12.  Contributors
+
+13.  Acknowledgements
+
+14.  References
+
+14.1.  Normative References
+
+   [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
+              10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
+              2003, <http://www.rfc-editor.org/info/rfc3629>.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66, RFC
+              3986, DOI 10.17487/RFC3986, January 2005,
+              <http://www.rfc-editor.org/info/rfc3986>.
+
+   [RFC6455]  Fette, I. and A. Melnikov, "The WebSocket Protocol", RFC
+              6455, DOI 10.17487/RFC6455, December 2011,
+              <http://www.rfc-editor.org/info/rfc6455>.
+
+14.2.  Informative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
+              RFC2119, March 1997,
+              <http://www.rfc-editor.org/info/rfc2119>.
+
+14.3.  URIs
+
+   [1] http://www.iana.org/assignments/websocket/websocket.xml
+
+Author's Address
+
+   Tobias G. Oberstein
+   Tavendo GmbH
+
+   Email: tobias.oberstein@tavendo.de
+
+
+
+
+
+
+
+
+
+Oberstein                Expires March 20, 2016                [Page 59]
