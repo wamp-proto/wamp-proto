@@ -16,6 +16,14 @@ go get github.com/miekg/mmark
 
 to install directly from the GitHub repository. (There is no feedback about a successful installation.)
 
+You then do 
+
+```
+make all
+```
+
+in the directory it was installed to, which creates the executable for your system.
+
 To convert a markdown file into XML, do 
 
 ```
