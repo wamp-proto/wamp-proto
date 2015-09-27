@@ -8,7 +8,7 @@ We want to author our drafts in a sane format. Furtunately, there is a converter
 
 [mmark](https://github.com/miekg/mmark)
 
-This is written in Go, so you need to [install this](https://golang.org/doc/install). Once you have this, with your paths properly set up, you can just do 
+This is written in Go, so you need to [install this](https://golang.org/doc/install) (On Ubuntu: `sudo apt-get install golang`). Once you have this, with your paths properly set up, you can just do
 
 ```
 go get github.com/miekg/mmark
@@ -16,7 +16,7 @@ go get github.com/miekg/mmark
 
 to install directly from the GitHub repository. (There is no feedback about a successful installation.)
 
-You then do 
+You then do
 
 ```
 make all
@@ -24,7 +24,7 @@ make all
 
 in the directory it was installed to, which creates the executable for your system.
 
-To convert a markdown file into XML, do 
+To convert a markdown file into XML, do
 
 ```
 <the path to your go installation>/src/github.com/miekg/mmark/mmark/mmark -xml2 -page <source file>.md > <output file>.xml
@@ -36,13 +36,15 @@ A refrence about the markdown flavor used can be found in the [project readme](h
 
 To check what the draft will look like in the final output format for publication (txt), we need to convert once more.
 
-The tool for this is [xml2rfc](http://xml2rfc.ietf.org/). To install this just do 
+The tool for this is [xml2rfc](http://xml2rfc.ietf.org/). To install this just do
 
 ```
 pip install xml2rfc
 ```
 
-and to use it 
+> On Ubuntu you need: `sudo apt-get install libxml2-dev libxslt1-dev`
+
+and to use it
 
 ```
 xml2rfc <source file>.xml
@@ -59,7 +61,7 @@ http://tools.ietf.org/tools/idspell/webservice - provides spell checking with an
 
 http://fenron.net/~fenner/ietf/xml2rfc-valid/ - does formal XML validation
 
-http://tools.ietf.org/tools/idnits/ - provides additional checks 
+http://tools.ietf.org/tools/idnits/ - provides additional checks
 
 (Haven't tested any of the above checking tools yet.)
 
