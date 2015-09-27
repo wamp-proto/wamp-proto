@@ -1,19 +1,25 @@
 # Session Meta API
 
+Feature status: **beta**
+
+## Introduction
+
 WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via
-[Session Meta Events](#session-meta-events). It also allows retrieving information about currently connected sessions via [Session Meta Procedures](#session-meta-procedures).
+**[Session Meta Events](#session-meta-events)**. It also allows retrieving information about currently connected sessions via **[Session Meta Procedures](#session-meta-procedures)**.
 
 Meta events are created by the router itself. This means that the events, as well as the data received when calling a meta procedure, can be accorded the same trust level as the router.
+
+> Note that an implementation that only supports a *Broker* or *Dealer* role, not both at the same time, essentially cannot offer the **Session Meta API**, as it requires both roles to support this feature.
 
 
 ## Session Meta Events
 
-A client can subscribe to the following session meta-events, which cover the lifecycle of a WAMP session:
+A client can subscribe to the following session meta-events, which cover the lifecycle of a session:
 
 * `wamp.session.on_join`: Fired when a session joins a realm on the router.
 * `wamp.session.on_leave`: Fired when a session leaves a realm on the router or is disconnected.
 
-Session meta events MUST be dispatched by the *Router* to the same realm as the WAMP session which triggered the event.
+**Session Meta Events** MUST be dispatched by the *Router* to the same realm as the WAMP session which triggered the event.
 
 ### `wamp.session.on_join`
 
@@ -31,6 +37,8 @@ Fired when a session joins a realm on the router. The event payload consists of 
 ### `wamp.session.on_leave`
 
 Fired when a session leaves a realm on the router or is disconnected. The event payload consists of a single positional argument `session|id` with the session ID of the session that left.
+
+---
 
 
 ## Session Meta Procedures
@@ -88,6 +96,7 @@ Retrieves information on a specific session.
 
 ---
 
+
 ## Feature Announcement
 
 Support for this feature MUST be announced by **both** *Dealers* and *Brokers* via:
@@ -121,5 +130,7 @@ Here is a `WELCOME` message from a *Router* with support for both the *Broker* a
     }
 ]
 ```
+
+> Note in particular that the feature is announced on both the *Broker* and the *Dealer* roles.
 
 ---
