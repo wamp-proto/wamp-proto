@@ -339,8 +339,6 @@ These are identified in WAMP using IDs that are integers between (inclusive) **0
 > The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.
 >
 
-- Q: What about the birthday problem with the current range for IDs?
-
 The following is a complete list of usage of IDs in the three categories for all WAMP messages. For a full definition of these see [messages section](#messages).
 
 #### Global Scope IDs
@@ -398,10 +396,13 @@ A message *serialization* format is assumed that (at least) provides the followi
 >
 
 - Q: Can this lead to problems where an app payload uses a feature of one serialization format, and this needs to be routed to a client using a different serialization format which lacks this feature?
+----> file issue (basic profile), bindings need to resolve this
 
 There is no required serialization or set of serializations for WAMP implementations. Routers may implement more than one serialization, enabling components using different kinds of serializations to connect to each other.
 
 - Q: We're defining two bindings - does this mean that this is the full set which is WAMP-spec-compliant, or can implementers add serializations here?
+---> any serialization which works, routers should implement the two defined bindings
+---> motivation for transport + serialization choice in the introduction: we want to enable widest-possible implementation, e.g. resource-constrained. routers are where this is less of an issue, should implement the max set
 
 WAMP defines two bindings for message *serialization*:
 
@@ -454,6 +455,7 @@ With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 enco
 With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
 
 - Q: Other protocols are possible, but there is then no standard for either the subprotocol identifiers or the WebSocket message type
+---> are not registered subprotocols - that's just plain "wamp". strictly speaking these need to be registered, and new bindings would also need to do that --> this would serve as central registry
 
 
 ### Transport and Session Lifetime
@@ -1028,6 +1030,7 @@ and the other peer replies
         [6, {}, "wamp.error.goodbye_and_out"]
 
 - Q: Why is an ordered closing of a connection via GOOBYEs communicated using ERROR messages? It's clearly not an error.
+--> file issue
 
 
 *Example*. One *Peer* initiates closing
@@ -1866,15 +1869,13 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 WAMP predefines the following error URIs as part of this Basic Profile, which cover the full set of error states. Additional error URIs may be defined as part of a future Advanced Profile to cover error states which may occur based on extensions of the protocol.
 
----------------------------------------------
---- below has to be changed to state that for the given error state a party MUST send the specific error uri, e.g
+- below has to be changed to state that for the given error state a party MUST send the specific error uri, e.g
 
 When a *Peer* provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other *Peer* has to respond with an `ERROR` message and give the following *Error URI*:
 
 {align="left"}
         wamp.error.invalid_uri
 
-------------------------------------------------
 
 ## Interaction
 
