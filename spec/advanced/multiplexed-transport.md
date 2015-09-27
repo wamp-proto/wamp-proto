@@ -4,7 +4,7 @@ A *Transport* may support the multiplexing of multiple logical transports over a
 
 By using such a *Transport*, multiple WAMP sessions can be transported over a single underlying transport at the same time.
 
-![alt text](figure/sessions3.png "Transports, Sessions and Peers")
+![alt text](../figure/sessions3.png "Transports, Sessions and Peers")
 
 As an example, the proposed [WebSocket extension "permessage-priority"](https://github.com/oberstet/permessage-priority/blob/master/draft-oberstein-hybi-permessage-priority.txt) would allow creating multiple logical *Transports* for WAMP over a single underlying WebSocket connection.
 

@@ -1,0 +1,10 @@
+@startuml
+participant Publisher
+participant Broker
+participant Subscriber
+
+Subscriber -> Broker : SUBSCRIBE
+Broker -> Subscriber : SUBSCRIBED or ERROR
+Subscriber -> Broker : UNSUBSCRIBE
+Broker -> Subscriber : UNSUBSCRIBED or ERROR
+@enduml

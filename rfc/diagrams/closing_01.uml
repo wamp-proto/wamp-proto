@@ -1,0 +1,7 @@
+@startuml
+participant Client
+participant Router
+ 
+Client -> Router : GOODBYE
+Router -> Client : GOODBYE
+@enduml

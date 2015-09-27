@@ -1,0 +1,10 @@
+@startuml
+participant Caller
+participant Dealer
+participant Callee
+
+Callee -> Dealer : REGISTER
+Dealer -> Callee : REGISTERED or ERROR
+Callee -> Dealer : UNREGISTER
+Dealer -> Callee : UNREGISTERED or ERROR
+@enduml
