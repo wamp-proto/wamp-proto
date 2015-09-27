@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                              Tavendo GmbH
-Intended status: Standards Track                      September 17, 2015
-Expires: March 20, 2016
+Intended status: Standards Track                      September 27, 2015
+Expires: March 30, 2016
 
 
            Web Application Messaging Protocol - Basic Profile
@@ -37,7 +37,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 20, 2016.
+   This Internet-Draft will expire on March 30, 2016.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Oberstein                Expires March 20, 2016                 [Page 1]
+Oberstein                Expires March 30, 2016                 [Page 1]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -70,11 +70,11 @@ Table of Contents
      1.3.  Design Philosophy . . . . . . . . . . . . . . . . . . . .   5
        1.3.1.  Basic and Advanced Profile  . . . . . . . . . . . . .   6
        1.3.2.  Application Code  . . . . . . . . . . . . . . . . . .   6
-       1.3.3.  Router Implementation Specifics . . . . . . . . . . .   6
+       1.3.3.  Router Implementation Specifics . . . . . . . . . . .   7
      1.4.  Relationship to WebSocket . . . . . . . . . . . . . . . .   7
    2.  Conformance Requirements  . . . . . . . . . . . . . . . . . .   7
      2.1.  Terminology and Other Conventions . . . . . . . . . . . .   7
-   3.  Realms, Sessions and Transports . . . . . . . . . . . . . . .   7
+   3.  Realms, Sessions and Transports . . . . . . . . . . . . . . .   8
    4.  Peers and Roles . . . . . . . . . . . . . . . . . . . . . . .   8
      4.1.  Symmetric Messaging . . . . . . . . . . . . . . . . . . .   8
      4.2.  Remote Procedure Call Roles . . . . . . . . . . . . . . .   9
@@ -83,8 +83,8 @@ Table of Contents
    5.  Building Blocks . . . . . . . . . . . . . . . . . . . . . . .  10
      5.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .  10
        5.1.1.  URIs  . . . . . . . . . . . . . . . . . . . . . . . .  10
-       5.1.2.  IDs . . . . . . . . . . . . . . . . . . . . . . . . .  12
-     5.2.  Serializations  . . . . . . . . . . . . . . . . . . . . .  14
+       5.1.2.  IDs . . . . . . . . . . . . . . . . . . . . . . . . .  13
+     5.2.  Serializations  . . . . . . . . . . . . . . . . . . . . .  15
        5.2.1.  JSON  . . . . . . . . . . . . . . . . . . . . . . . .  15
        5.2.2.  MsgPack . . . . . . . . . . . . . . . . . . . . . . .  16
      5.3.  Transports  . . . . . . . . . . . . . . . . . . . . . . .  16
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Oberstein                Expires March 20, 2016                 [Page 2]
+Oberstein                Expires March 30, 2016                 [Page 2]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -165,7 +165,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                 [Page 3]
+Oberstein                Expires March 30, 2016                 [Page 3]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -221,7 +221,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                 [Page 4]
+Oberstein                Expires March 30, 2016                 [Page 4]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -259,28 +259,14 @@ Internet-Draft                  WAMP - BP                 September 2015
    Session connects to a Realm on a Router.  Routing occurs only between
    WAMP Sessions connected to the same realm.
 
-   -- probably extend this - the WebSocket spec gives an overview of the
-   entire protocol including handshakes.  Things to cover
-
-- the possible serializations
-- the possible transport layers
-- opening a connection
-- closing a connection
-- arguments for the messages
-- generic routing functionality with all application functionality in the clients
+   o  extend me -
 
 1.3.  Design Philosophy
 
    _This section is non-normative._
 
-   WAMP was desinged to be performant, safe and easy to implement.
-
-
-
-Oberstein                Expires March 20, 2016                 [Page 5]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
+   WAMP was designed to be performant, safe and easy to implement.  Its
+   entire design was drive by a implement, get feedback, adjust cycle.
 
    A first version of the protocol was publicly released in March 2012.
    The intention was to gain insight through implementation and use, and
@@ -289,12 +275,29 @@ Internet-Draft                  WAMP - BP                 September 2015
    Several interoperable, independent implementations were released, and
    feedback from the implementers and users was collected.
 
+
+
+Oberstein                Expires March 30, 2016                 [Page 5]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
    The second version of the protocol, which this RFC covers, integrates
    this feedback.  Routed Remote Procedure Calls are one outcome of
    this, where the first version of the protocol only allowed to call
    functionality implemented in the router.  A connected outcome was the
    strict separation of routing and application functionality (see
    below).
+
+   While WAMP was originally developed to use WebSocket as a transport,
+   and JSON for serialization, experience in the field showed that other
+   transports and serialization formats were better suited to some use
+   cases.  As an example, with the use of WAMP in the Internet of Things
+   sphere, resource constraints play a much larger role than in the
+   browser, so any reduction in resource use of WAMP implementations
+   counts.  This lead to the decoupling of WAMP from any particular
+   transport or serialization, and the establishment of minimum
+   requirements for each.
 
 1.3.1.  Basic and Advanced Profile
 
@@ -324,19 +327,22 @@ Internet-Draft                  WAMP - BP                 September 2015
       at the same time implement e.g. a built-in _Callee_. It is the
       _Dealer_ and _Broker_ that are generic, not the program.
 
+
+
+
+
+
+
+Oberstein                Expires March 30, 2016                 [Page 6]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
 1.3.3.  Router Implementation Specifics
 
    This specification only deals with the protocol level for a basic
    profile.  Specific WAMP _Broker_ and _Dealer_ implementations might
    differ in aspects such as:
-
-
-
-
-Oberstein                Expires March 20, 2016                 [Page 6]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
    o  support for WAMP Advanced Profile
 
@@ -353,7 +359,8 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 1.4.  Relationship to WebSocket
 
-   -- write me --
+   WAMP uses WebSocket as its default transport binding, and is a
+   registered WebSocket subprotocol.
 
 2.  Conformance Requirements
 
@@ -379,6 +386,14 @@ Internet-Draft                  WAMP - BP                 September 2015
    Key terms such as named algorithms or definitions are indicated like
    _this_.
 
+
+
+
+Oberstein                Expires March 30, 2016                 [Page 7]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
 3.  Realms, Sessions and Transports
 
    A _Realm_ is a WAMP routing and administrative domain, optionally
@@ -386,13 +401,6 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    A _Session_ is a transient conversation between two _Peers_ attached
    to a _Realm_ and running over a _Transport_.
-
-
-
-Oberstein                Expires March 20, 2016                 [Page 7]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
    A _Transport_ connects two WAMP _Peers_ and provides a channel over
    which WAMP messages for a WAMP _Session_ can flow in both directions.
@@ -434,6 +442,14 @@ Internet-Draft                  WAMP - BP                 September 2015
    It is important to note that though the establishment of a
    _Transport_ might have a inherent asymmetry (like a TCP client
    establishing a WebSocket connection to a server), and _Clients_
+
+
+
+Oberstein                Expires March 30, 2016                 [Page 8]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
    establish WAMP sessions by attaching to _Realms_ on _Routers_, WAMP
    itself is designed to be fully symmetric for application components.
 
@@ -441,14 +457,6 @@ Internet-Draft                  WAMP - BP                 September 2015
    application component may act as _Caller_, _Callee_, _Publisher_ and
    _Subscriber_ at the same time.  And _Routers_ provide the fabric on
    top of which WAMP runs a symmetric application messaging service.
-
-
-
-
-Oberstein                Expires March 20, 2016                 [Page 8]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
 4.2.  Remote Procedure Call Roles
 
@@ -490,6 +498,14 @@ Internet-Draft                  WAMP - BP                 September 2015
    and any payload for the event. _Subscribers_ of the topic will
    receive the event together with the event payload.
 
+
+
+
+Oberstein                Expires March 30, 2016                 [Page 9]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
    _Subscribers_ subscribe to topics they are interested in with
    _Brokers_. _Publishers_ initiate publication first at _Brokers_.
    _Brokers_ route events incoming from _Publishers_ to _Subscribers_
@@ -498,13 +514,6 @@ Internet-Draft                  WAMP - BP                 September 2015
    The _Publisher_ and _Subscriber_ will usually run application code,
    while the _Broker_ works as a generic router for events decoupling
    _Publishers_ from _Subscribers_.
-
-
-
-Oberstein                Expires March 20, 2016                 [Page 9]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
 4.4.  Peers with multiple Roles
 
@@ -546,6 +555,13 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    _Examples_
 
+
+
+Oberstein                Expires March 30, 2016                [Page 10]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
    o  "com.myapp.mytopic1"
 
    o  "com.myapp.myprocedure1"
@@ -554,13 +570,6 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    The URIs are understood to form a single, global, hierarchical
    namespace for WAMP.
-
-
-
-Oberstein                Expires March 20, 2016                [Page 10]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
       The namespace is unified for topics, procedures and errors - these
       different resource types do NOT have separate namespaces.
@@ -599,6 +608,16 @@ Internet-Draft                  WAMP - BP                 September 2015
    messages that are part of an Advanced Profile), this following
    regular expression can be used (shown used in Python):
 
+
+
+
+
+
+Oberstein                Expires March 30, 2016                [Page 11]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
        <CODE BEGINS>
            ## loose URI check allowing empty URI components
            pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
@@ -609,14 +628,6 @@ Internet-Draft                  WAMP - BP                 September 2015
    While the above rules MUST be followed, following a stricter URI rule
    is recommended: URI components SHOULD only contain letters, digits
    and "_".
-
-
-
-
-Oberstein                Expires March 20, 2016                [Page 11]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
    As an example, the following regular expression could be used in
    Python to check URIs according to the above rules:
@@ -655,6 +666,14 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    o  "wamp.error.procedure_already_exists"
 
+
+
+
+Oberstein                Expires March 30, 2016                [Page 12]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
 5.1.2.  IDs
 
    WAMP needs to identify the following ephemeral entities each in the
@@ -665,14 +684,6 @@ Internet-Draft                  WAMP - BP                 September 2015
    2.  Publications (_global scope_)
 
    3.  Subscriptions (_router scope_)
-
-
-
-
-Oberstein                Expires March 20, 2016                [Page 12]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
    4.  Registrations (_router scope_)
 
@@ -710,6 +721,15 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    o  "EVENT.Publication"
 
+
+
+
+
+Oberstein                Expires March 30, 2016                [Page 13]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
 5.1.2.2.  Router Scope IDs
 
    o  "EVENT.Subscription"
@@ -721,14 +741,6 @@ Internet-Draft                  WAMP - BP                 September 2015
    o  "UNSUBSCRIBE.Subscription"
 
    o  "UNREGISTER.Registration"
-
-
-
-
-Oberstein                Expires March 20, 2016                [Page 13]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
    o  "INVOCATION.Registration"
 
@@ -766,6 +778,14 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    o  "INTERRUPT.Request"
 
+
+
+
+Oberstein                Expires March 30, 2016                [Page 14]
+
+Internet-Draft                  WAMP - BP                 September 2015
+
+
    o  "YIELD.Request"
 
 5.2.  Serializations
@@ -777,14 +797,6 @@ Internet-Draft                  WAMP - BP                 September 2015
    the following types:
 
    o  "integer" (non-negative)
-
-
-
-
-Oberstein                Expires March 20, 2016                [Page 14]
-
-Internet-Draft                  WAMP - BP                 September 2015
-
 
    o  "string" (UTF-8 encoded Unicode)
 
@@ -800,25 +812,11 @@ Internet-Draft                  WAMP - BP                 September 2015
       or event payloads) may use other types a concrete serialization
       format supports.
 
-   o  Q: Can this lead to problems where an app payload uses a feature
-      of one serialization format, and this needs to be routed to a
-      client using a different serialization format which lacks this
-      feature? ----> file issue (basic profile), bindings need to
-      resolve this
-
    There is no required serialization or set of serializations for WAMP
-   implementations.  Routers may implement more than one serialization,
-   enabling components using different kinds of serializations to
-   connect to each other.
-
-   o  Q: We're defining two bindings - does this mean that this is the
-      full set which is WAMP-spec-compliant, or can implementers add
-      serializations here? ---> any serialization which works, routers
-      should implement the two defined bindings ---> motivation for
-      transport + serialization choice in the introduction: we want to
-      enable widest-possible implementation, e.g. resource-constrained.
-      routers are where this is less of an issue, should implement the
-      max set
+   implementations (but each implementation MUST, of course, implement
+   at least one serialization format).  Routers SHOULD implement more
+   than one serialization format, enabling components using different
+   kinds of serializations to connect to each other.
 
    WAMP defines two bindings for message _serialization_:
 
@@ -834,25 +832,23 @@ Internet-Draft                  WAMP - BP                 September 2015
    With JSON serialization, each WAMP message is serialized according to
    the JSON specification as described in RFC4627.
 
+   Further, binary data follows a convention for conversion to JSON
+   strings.  For details see the Appendix.
 
 
 
-Oberstein                Expires March 20, 2016                [Page 15]
+Oberstein                Expires March 30, 2016                [Page 15]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
-
-   Further, binary data follows a convention for conversion to JSON
-   strings.  For details see the Appendix.
 
 5.2.2.  MsgPack
 
    With MsgPack serialization, each WAMP message is serialized according
    to the MsgPack specification.
 
-      The *version 5 or later* of MsgPack MUST BE used, since this
-      version is able to differentiate between strings and binary
-      values.
+      Version 5 or later of MsgPack MUST BE used, since this version is
+      able to differentiate between strings and binary values.
 
 5.3.  Transports
 
@@ -867,9 +863,10 @@ Internet-Draft                  WAMP - BP                 September 2015
    4.  bidirectional (full-duplex)
 
    There is no required transport or set of transports for WAMP
-   implementations.  Routers may implement more than one transport,
-   enabling components using different kinds of transports to connect in
-   an application.
+   implementations (but each implementation MUST, of course, implement
+   at least one transport).  Routers SHOULD implement more than one
+   transport, enabling components using different kinds of transports to
+   connect in an application.
 
 5.3.1.  WebSocket Transport
 
@@ -877,9 +874,9 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    As a default, WAMP messages are transmitted as WebSocket messages:
    each WAMP message is transmitted as a separate WebSocket message (not
-   WebSocket frame).  A *batched mode* where mutliple WAMP messages are
-   transmitted via single WebSockter message may be defined as part of
-   an Advanced Profile.
+   WebSocket frame).  A *batched mode* where multiple WAMP messages are
+   transmitted via single WebSocket message may be defined as part of an
+   Advanced Profile.
 
    The WAMP protocol MUST BE negotiated during the WebSocket opening
    handshake between _Peers_ using the WebSocket subprotocol negotiation
@@ -890,15 +887,16 @@ Internet-Draft                  WAMP - BP                 September 2015
 
    o  "wamp.2.json"
 
+   o  "wamp.2.msgpack"
 
 
 
-Oberstein                Expires March 20, 2016                [Page 16]
+
+
+Oberstein                Expires March 30, 2016                [Page 16]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
-
-   o  "wamp.2.msgpack"
 
    With "wamp.2.json", _all_ WebSocket messages MUST BE of type *text*
    (UTF8 encoded payload) and use the JSON message serialization.
@@ -906,19 +904,17 @@ Internet-Draft                  WAMP - BP                 September 2015
    With "wamp.2.msgpack", _all_ WebSocket messages MUST BE of type
    *binary* and use the MsgPack message serialization.
 
-   o  Q: Other protocols are possible, but there is then no standard for
-      either the subprotocol identifiers or the WebSocket message type
-      ---> are not registered subprotocols - that's just plain "wamp".
-      strictly speaking these need to be registered, and new bindings
-      would also need to do that --> this would serve as central
-      registry
+      To avoid incompatibilities merely due to naming conflicts with
+      WebSocket subprotocol identifiers, implementers SHOULD register
+      identifiers for additional serialization formats with the official
+      WebSocket subprotocol registry.
 
 5.3.2.  Transport and Session Lifetime
 
-   WAMP implementations may choose to tie the lifetime of the underlying
+   WAMP implementations MAY choose to tie the lifetime of the underlying
    transport connection for a WAMP connection to that of a WAMP session,
    i.e. establish a new transport-layer connection as part of each new
-   session establishment.  They may equally choose to allow re-use of a
+   session establishment.  They MAY equally choose to allow re-use of a
    transport connection, allowing subsequent WAMP sessions to be
    established using the same transport connection.
 
@@ -949,7 +945,11 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 17]
+
+
+
+
+Oberstein                Expires March 30, 2016                [Page 17]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 18]
+Oberstein                Expires March 30, 2016                [Page 18]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1025,7 +1025,7 @@ Internet-Draft                  WAMP - BP                 September 2015
       used instead of boolean value
 
    o  "dict": a dictionary (map) where keys MUST be strings, keys MUST
-      be uniueand serialization order is undefined (left to the
+      be unique and serialization order is undefined (left to the
       serializer being used)
 
    o  "list": a list (array) where items can be again any of this
@@ -1061,7 +1061,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 19]
+Oberstein                Expires March 30, 2016                [Page 19]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 20]
+Oberstein                Expires March 30, 2016                [Page 20]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 21]
+Oberstein                Expires March 30, 2016                [Page 21]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 22]
+Oberstein                Expires March 30, 2016                [Page 22]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 23]
+Oberstein                Expires March 30, 2016                [Page 23]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1327,7 +1327,7 @@ Internet-Draft                  WAMP - BP                 September 2015
    defined in the WAMP basic profile* and their direction between peer
    roles.
 
-   Reserved codes may be used to indentify additional message types in
+   Reserved codes may be used to identify additional message types in
    future standards documents.
 
       "Tx" indicates the message is sent by the respective role, and
@@ -1341,7 +1341,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 24]
+Oberstein                Expires March 30, 2016                [Page 24]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 25]
+Oberstein                Expires March 30, 2016                [Page 25]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 26]
+Oberstein                Expires March 30, 2016                [Page 26]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 27]
+Oberstein                Expires March 30, 2016                [Page 27]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 28]
+Oberstein                Expires March 30, 2016                [Page 28]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1621,7 +1621,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 29]
+Oberstein                Expires March 30, 2016                [Page 29]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1677,7 +1677,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 30]
+Oberstein                Expires March 30, 2016                [Page 30]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1702,10 +1702,6 @@ Internet-Draft                  WAMP - BP                 September 2015
    and the other peer replies
 
        [6, {}, "wamp.error.goodbye_and_out"]
-
-   o  Q: Why is an ordered closing of a connection via GOOBYEs
-      communicated using ERROR messages?  It's clearly not an error.
-      --> file issue
 
    _Example_. One _Peer_ initiates closing
 
@@ -1733,7 +1729,11 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 31]
+
+
+
+
+Oberstein                Expires March 30, 2016                [Page 31]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1789,7 +1789,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 32]
+Oberstein                Expires March 30, 2016                [Page 32]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1845,7 +1845,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 33]
+Oberstein                Expires March 30, 2016                [Page 33]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1901,7 +1901,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 34]
+Oberstein                Expires March 30, 2016                [Page 34]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -1957,7 +1957,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 35]
+Oberstein                Expires March 30, 2016                [Page 35]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2013,7 +2013,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 36]
+Oberstein                Expires March 30, 2016                [Page 36]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2069,7 +2069,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 37]
+Oberstein                Expires March 30, 2016                [Page 37]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2125,7 +2125,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 38]
+Oberstein                Expires March 30, 2016                [Page 38]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2181,7 +2181,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 39]
+Oberstein                Expires March 30, 2016                [Page 39]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2237,7 +2237,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 40]
+Oberstein                Expires March 30, 2016                [Page 40]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2293,7 +2293,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 41]
+Oberstein                Expires March 30, 2016                [Page 41]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2349,7 +2349,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 42]
+Oberstein                Expires March 30, 2016                [Page 42]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2405,7 +2405,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 43]
+Oberstein                Expires March 30, 2016                [Page 43]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2461,7 +2461,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 44]
+Oberstein                Expires March 30, 2016                [Page 44]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2517,7 +2517,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 45]
+Oberstein                Expires March 30, 2016                [Page 45]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2573,7 +2573,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 46]
+Oberstein                Expires March 30, 2016                [Page 46]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2629,7 +2629,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 47]
+Oberstein                Expires March 30, 2016                [Page 47]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2685,7 +2685,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 48]
+Oberstein                Expires March 30, 2016                [Page 48]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2741,7 +2741,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 49]
+Oberstein                Expires March 30, 2016                [Page 49]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2797,14 +2797,14 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 50]
+Oberstein                Expires March 30, 2016                [Page 50]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
 
 9.3.  Predefined URIs
 
-   WAMP predefines the following error URIs as part of this Basic
+   WAMP pre-defines the following error URIs as part of this Basic
    Profile, which cover the full set of error states.  Additional error
    URIs may be defined as part of a future Advanced Profile to cover
    error states which may occur based on extensions of the protocol.
@@ -2853,7 +2853,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 51]
+Oberstein                Expires March 30, 2016                [Page 51]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2909,7 +2909,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 52]
+Oberstein                Expires March 30, 2016                [Page 52]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -2965,7 +2965,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 53]
+Oberstein                Expires March 30, 2016                [Page 53]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -3021,7 +3021,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 54]
+Oberstein                Expires March 30, 2016                [Page 54]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -3077,7 +3077,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 55]
+Oberstein                Expires March 30, 2016                [Page 55]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -3133,7 +3133,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 56]
+Oberstein                Expires March 30, 2016                [Page 56]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -3189,7 +3189,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 57]
+Oberstein                Expires March 30, 2016                [Page 57]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -3245,7 +3245,7 @@ Internet-Draft                  WAMP - BP                 September 2015
 
 
 
-Oberstein                Expires March 20, 2016                [Page 58]
+Oberstein                Expires March 30, 2016                [Page 58]
 
 Internet-Draft                  WAMP - BP                 September 2015
 
@@ -3301,4 +3301,4 @@ Author's Address
 
 
 
-Oberstein                Expires March 20, 2016                [Page 59]
+Oberstein                Expires March 30, 2016                [Page 59]

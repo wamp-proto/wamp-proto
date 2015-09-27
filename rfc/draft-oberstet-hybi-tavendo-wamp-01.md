@@ -7,12 +7,11 @@
 % workgroup = "BiDirectional or Server-Initiated HTTP"
 % keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 %
-% date = 2015-09-17T00:00:00Z
+% date = 2015-09-27T00:00:00Z
 %
 % [pi]
 % toc = "yes"
 %
-% #Independent Submission
 % [[author]]
 % initials="T.O."
 % surname="Oberstein"
@@ -66,26 +65,20 @@ WAMP Connections are established by Clients to a Router. Connections can use any
 
 WAMP Sessions are established using a WAMP Connection. A WAMP Session connects to a Realm on a Router. Routing occurs only between WAMP Sessions connected to the same realm.
 
-
--- probably extend this - the WebSocket spec gives an overview of the entire protocol including handshakes. Things to cover
-    - the possible serializations
-    - the possible transport layers
-    - opening a connection
-    - closing a connection
-    - arguments for the messages
-    - generic routing functionality with all application functionality in the clients
-
+- extend me -
 
 
 ## Design Philosophy
 
 _This section is non-normative._
 
-WAMP was desinged to be performant, safe and easy to implement. 
+WAMP was designed to be performant, safe and easy to implement. Its entire design was drive by a implement, get feedback, adjust cycle.
 
 A first version of the protocol was publicly released in March 2012. The intention was to gain insight through implementation and use, and integrate these into a second version of the protocol, where there would be no regard for compatibility between the two versions. Several interoperable, independent implementations were released, and feedback from the implementers and users was collected.
 
 The second version of the protocol, which this RFC covers, integrates this feedback. Routed Remote Procedure Calls are one outcome of this, where the  first version of the protocol only allowed to call functionality implemented in the router. A connected outcome was the strict separation of routing and application functionality (see below).
+
+While WAMP was originally developed to use WebSocket as a transport, and JSON for serialization, experience in the field showed that other transports and serialization formats were better suited to some use cases. As an example, with the use of WAMP in the Internet of Things sphere, resource constraints play a much larger role than in the browser, so any reduction in resource use of WAMP implementations counts. This lead to the decoupling of WAMP from any particular transport or serialization, and the establishment of minimum requirements for each. 
 
 ### Basic and Advanced Profile
 
@@ -119,7 +112,7 @@ The definition and documentation of implementation specific *Router* features li
 
 ## Relationship to WebSocket
 
--- write me --
+WAMP uses WebSocket as its default transport binding, and is a registered WebSocket subprotocol.
 
 
 # Conformance Requirements
@@ -395,14 +388,7 @@ A message *serialization* format is assumed that (at least) provides the followi
 > WAMP *itself* only uses the above types, e.g. it does not use the JSON data types `number` (non-integer) and `null`. The *application payloads* transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.
 >
 
-- Q: Can this lead to problems where an app payload uses a feature of one serialization format, and this needs to be routed to a client using a different serialization format which lacks this feature?
-----> file issue (basic profile), bindings need to resolve this
-
-There is no required serialization or set of serializations for WAMP implementations. Routers may implement more than one serialization, enabling components using different kinds of serializations to connect to each other.
-
-- Q: We're defining two bindings - does this mean that this is the full set which is WAMP-spec-compliant, or can implementers add serializations here?
----> any serialization which works, routers should implement the two defined bindings
----> motivation for transport + serialization choice in the introduction: we want to enable widest-possible implementation, e.g. resource-constrained. routers are where this is less of an issue, should implement the max set
+There is no required serialization or set of serializations for WAMP implementations (but each implementation MUST, of course, implement at least one serialization format). Routers SHOULD implement more than one serialization format, enabling components using different kinds of serializations to connect to each other.
 
 WAMP defines two bindings for message *serialization*:
 
@@ -421,8 +407,7 @@ Further, binary data follows a convention for conversion to JSON strings. For de
 
 With MsgPack serialization, each WAMP message is serialized according to the MsgPack specification.
 
-> The **version 5 or later** of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.
-
+> Version 5 or later of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.
 
 
 ## Transports
@@ -434,14 +419,14 @@ WAMP assumes a *transport* with the following characteristics:
 3. ordered
 4. bidirectional (full-duplex)
 
-There is no required transport or set of transports for WAMP implementations. Routers may implement more than one transport, enabling components using different kinds of transports to connect in an application.
+There is no required transport or set of transports for WAMP implementations (but each implementation MUST, of course, implement at least one transport). Routers SHOULD implement more than one transport, enabling components using different kinds of transports to connect in an application.
 
 
 ### WebSocket Transport
 
 The default transport binding for WAMP is WebSocket.
 
-As a default, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). A **batched mode** where mutliple WAMP messages are transmitted via single WebSockter message may be defined as part of an Advanced Profile.
+As a default, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). A **batched mode** where multiple WAMP messages are transmitted via single WebSocket message may be defined as part of an Advanced Profile.
 
 The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between *Peers* using the WebSocket subprotocol negotiation mechanism.
 
@@ -454,13 +439,12 @@ With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 enco
 
 With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MsgPack message serialization.
 
-- Q: Other protocols are possible, but there is then no standard for either the subprotocol identifiers or the WebSocket message type
----> are not registered subprotocols - that's just plain "wamp". strictly speaking these need to be registered, and new bindings would also need to do that --> this would serve as central registry
+> To avoid incompatibilities merely due to naming conflicts with WebSocket subprotocol identifiers, implementers SHOULD register identifiers for additional serialization formats with the official WebSocket subprotocol registry.
 
 
 ### Transport and Session Lifetime
 
-WAMP implementations may choose to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session, i.e. establish a new transport-layer connection as part of each new session establishment. They may equally choose to allow re-use of a transport connection, allowing subsequent WAMP sessions to be established using the same transport connection.
+WAMP implementations MAY choose to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session, i.e. establish a new transport-layer connection as part of each new session establishment. They MAY equally choose to allow re-use of a transport connection, allowing subsequent WAMP sessions to be established using the same transport connection.
 
 The diagram below illustrates the full transport connection and session lifecycle for an implementation which uses WebSocket over TCP as the transport and allows the re-use of a transport connection.
 
@@ -521,7 +505,7 @@ The notation `Element|type` denotes a message element named `Element` of type `t
 * `integer`: a non-negative integer
 * `string`: a Unicode string, including the empty string
 * `bool`: a boolean value (`true` or `false`) - integers MUST NOT be used instead of boolean value
-* `dict`: a dictionary (map) where keys MUST be strings, keys MUST be uniueand serialization order is undefined (left to the serializer being used)
+* `dict`: a dictionary (map) where keys MUST be strings, keys MUST be unique and serialization order is undefined (left to the serializer being used)
 * `list`: a list (array) where items can be again any of this enumeration
 
 *Example*
@@ -759,7 +743,7 @@ Actual yield from an endpoint sent by a *Callee* to *Dealer*.
 
 The following table lists the message type code for **all 25 messages defined in the WAMP basic profile** and their direction between peer roles.
 
-Reserved codes may be used to indentify additional message types in future standards documents.
+Reserved codes may be used to identify additional message types in future standards documents.
 
 > "Tx" indicates the message is sent by the respective role, and "Rx" indicates the message is received by the respective role.
 
@@ -1028,9 +1012,6 @@ and the other peer replies
 
 {align="left"}
         [6, {}, "wamp.error.goodbye_and_out"]
-
-- Q: Why is an ordered closing of a connection via GOOBYEs communicated using ERROR messages? It's clearly not an error.
---> file issue
 
 
 *Example*. One *Peer* initiates closing
@@ -1867,7 +1848,7 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 ## Predefined URIs
 
-WAMP predefines the following error URIs as part of this Basic Profile, which cover the full set of error states. Additional error URIs may be defined as part of a future Advanced Profile to cover error states which may occur based on extensions of the protocol.
+WAMP pre-defines the following error URIs as part of this Basic Profile, which cover the full set of error states. Additional error URIs may be defined as part of a future Advanced Profile to cover error states which may occur based on extensions of the protocol.
 
 - below has to be changed to state that for the given error state a party MUST send the specific error uri, e.g
 
