@@ -1,7 +1,7 @@
 % Title = "Web Application Messaging Protocol - Basic Profile"
 % abbrev = "WAMP - BP"
 % category = "std"
-% docName = "draft-oberstet-hybi-tavendo-wamp-01"
+% docName = "draft-oberstet-hybi-tavendo-wamp-00"
 % ipr= "trust200902"
 % area = "Applications and Real-Time (art)"
 % workgroup = "BiDirectional or Server-Initiated HTTP"
@@ -19,11 +19,11 @@
 % organization = "Tavendo GmbH"
 %   [author.address]
 %   email = "tobias.oberstein@tavendo.de"
-%   
+%
 
 .# Abstract
 
-This document defines the basic profile for the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional and message-based communication. 
+This document defines the basic profile for the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional and message-based communication.
 
 {mainmatter}
 
@@ -39,7 +39,7 @@ The Web Application Messaging Protocl (WAMP) was initially defined as WebSocket 
 
 WAMP is a routed protocol, with all components connecting to a WAMP router.
 
-WAMP provides two messaging patterns: Publish & Subscribe and routed Remote Procedure calls. 
+WAMP provides two messaging patterns: Publish & Subscribe and routed Remote Procedure calls.
 
 Publish & Subscribe is an established messaging pattern where components inform the router that they want to receive information on a topic (they suscribe to the topic). A component can then publish to this topic, and the router distributes events to all subscribers.
 
@@ -78,7 +78,7 @@ A first version of the protocol was publicly released in March 2012. The intenti
 
 The second version of the protocol, which this RFC covers, integrates this feedback. Routed Remote Procedure Calls are one outcome of this, where the  first version of the protocol only allowed to call functionality implemented in the router. A connected outcome was the strict separation of routing and application functionality (see below).
 
-While WAMP was originally developed to use WebSocket as a transport, and JSON for serialization, experience in the field showed that other transports and serialization formats were better suited to some use cases. As an example, with the use of WAMP in the Internet of Things sphere, resource constraints play a much larger role than in the browser, so any reduction in resource use of WAMP implementations counts. This lead to the decoupling of WAMP from any particular transport or serialization, and the establishment of minimum requirements for each. 
+While WAMP was originally developed to use WebSocket as a transport, and JSON for serialization, experience in the field showed that other transports and serialization formats were better suited to some use cases. As an example, with the use of WAMP in the Internet of Things sphere, resource constraints play a much larger role than in the browser, so any reduction in resource use of WAMP implementations counts. This lead to the decoupling of WAMP from any particular transport or serialization, and the establishment of minimum requirements for each.
 
 ### Basic and Advanced Profile
 
@@ -124,7 +124,7 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 this document are to be interpreted as described in RFC 2119 [@?RFC2119].
 
 Requirements phrased in the imperative as part of algorithms (such as "strip any leading space characters" or "return false and abort these steps") are to be interpreted with the meaning of the key word ("MUST", "SHOULD", "MAY", etc.) used in introducing the algorithm.
- 
+
 Conformance requirements phrased as algorithms or specific steps MAY  be implemented in any manner, so long as the end result is equivalent.
 
 ## Terminology and Other Conventions
@@ -143,9 +143,9 @@ A *Session* is a transient conversation between two *Peers* attached to a *Realm
 
 A *Transport* connects two WAMP *Peers* and provides a channel over which WAMP messages for a WAMP *Session* can flow in both directions.
 
-WAMP can run over any *transport* which is message-based, bidirectional,  reliable and ordered. 
+WAMP can run over any *transport* which is message-based, bidirectional,  reliable and ordered.
 
-The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol. 
+The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol.
 
 
 
@@ -452,11 +452,11 @@ The diagram below illustrates the full transport connection and session lifecycl
         ,------.                                    ,------.
         | Peer |                                    | Peer |
         `--+---'                                    `--+---'
-           
-                          TCP established                 
-           |<----------------------------------------->|    
-           |                                           |    
-           |               TLS established             |    
+
+                          TCP established
+           |<----------------------------------------->|
+           |                                           |
+           |               TLS established             |
            |+<--------------------------------------->+|
            |+                                         +|
            |+           WebSocket established         +|
@@ -464,7 +464,7 @@ The diagram below illustrates the full transport connection and session lifecycl
            |+|                                       |+|
            |+|            WAMP established           |+|
            |+|+<----------------------------------->+|+|
-           |+|+                                     +|+|    
+           |+|+                                     +|+|
            |+|+                                     +|+|
            |+|+            WAMP closed              +|+|
            |+|+<----------------------------------->+|+|
@@ -472,7 +472,7 @@ The diagram below illustrates the full transport connection and session lifecycl
            |+|                                       |+|
            |+|            WAMP established           |+|
            |+|+<----------------------------------->+|+|
-           |+|+                                     +|+|    
+           |+|+                                     +|+|
            |+|+                                     +|+|
            |+|+            WAMP closed              +|+|
            |+|+<----------------------------------->+|+|
@@ -480,12 +480,12 @@ The diagram below illustrates the full transport connection and session lifecycl
            |+|           WebSocket closed            |+|
            |+|<------------------------------------->|+|
            |+                                         +|
-           |+              TLS closed                 +|    
-           |+<--------------------------------------->+| 
-           |                                           |    
-           |               TCP closed                  |    
-           |<----------------------------------------->|   
-        
+           |+              TLS closed                 +|
+           |+<--------------------------------------->+|
+           |                                           |
+           |               TCP closed                  |
+           |<----------------------------------------->|
+
         ,--+---.                                    ,--+---.
         | Peer |                                    | Peer |
         `------'                                    `------'
@@ -495,7 +495,7 @@ The diagram below illustrates the full transport connection and session lifecycl
 All WAMP messages are a `list` with a first element `MessageType` followed by one or more message type specific elements:
 
 {align="left"}
-        [MessageType|integer, ... one or more message type specific 
+        [MessageType|integer, ... one or more message type specific
             elements ...]
 
 The notation `Element|type` denotes a message element named `Element` of type `type`, where `type` is one of
@@ -579,13 +579,13 @@ Sent by a *Peer* to close a previously opened WAMP session. Must be echo'ed by t
 Error reply sent by a *Peer* as an error response to different kinds of requests.
 
 {align="left"}
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, 
-            Error|uri] 
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+            Error|uri]
 
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, 
-            Error|uri, Arguments|list] 
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+            Error|uri, Arguments|list]
 
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, 
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
             Error|uri, Arguments|list, ArgumentsKw|dict]
 
 
@@ -598,10 +598,10 @@ Sent by a *Publisher* to a *Broker* to publish an event.
 {align="left"}
         [PUBLISH, Request|id, Options|dict, Topic|uri]
 
-        [PUBLISH, Request|id, Options|dict, Topic|uri, 
+        [PUBLISH, Request|id, Options|dict, Topic|uri,
             Arguments|list]
 
-        [PUBLISH, Request|id, Options|dict, Topic|uri, 
+        [PUBLISH, Request|id, Options|dict, Topic|uri,
             Arguments|list, ArgumentsKw|dict]
 
 #### PUBLISHED
@@ -646,12 +646,12 @@ Event dispatched by *Broker* to *Subscribers* for subscriptions the event was ma
 {align="left"}
         [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
             Details|dict]
-        
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, 
+
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
             Details|dict, PUBLISH.Arguments|list]
-        
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, 
-            Details|dict, PUBLISH.Arguments|list, 
+
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+            Details|dict, PUBLISH.Arguments|list,
             PUBLISH.ArgumentsKw|dict]
 
 > An event is dispatched to a *Subscriber* for a given `Subscription|id` *only once*. On the other hand, a *Subscriber* that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
@@ -677,10 +677,10 @@ Result of a call as returned by *Dealer* to *Caller*.
 
 {align="left"}
         [RESULT, CALL.Request|id, Details|dict]
-        
+
         [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
-        
-        [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, 
+
+        [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
             YIELD.ArgumentsKw|dict]
 
 #### REGISTER
@@ -716,13 +716,13 @@ Acknowledge sent by a *Dealer* to a *Callee* for successful unregistration.
 Actual invocation of an endpoint sent by *Dealer* to a *Callee*.
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id, 
+        [INVOCATION, Request|id, REGISTERED.Registration|id,
             Details|dict]
 
-        [INVOCATION, Request|id, REGISTERED.Registration|id, 
+        [INVOCATION, Request|id, REGISTERED.Registration|id,
             Details|dict, C* Arguments|list]
 
-        [INVOCATION, Request|id, REGISTERED.Registration|id, 
+        [INVOCATION, Request|id, REGISTERED.Registration|id,
             Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 #### YIELD
@@ -787,7 +787,7 @@ Implementations SHOULD avoid sending empty `Arguments` lists.
 E.g. a `CALL` message
 
 {align="left"}
-        [CALL, Request|id, Options|dict, Procedure|uri, 
+        [CALL, Request|id, Options|dict, Procedure|uri,
             Arguments|list]
 
 where `Arguments == []` SHOULD be avoided, and instead
@@ -802,13 +802,13 @@ Implementations SHOULD avoid sending empty `ArgumentsKw` dictionaries.
 E.g. a `CALL` message
 
 {align="left"}
-        [CALL, Request|id, Options|dict, Procedure|uri, 
+        [CALL, Request|id, Options|dict, Procedure|uri,
             Arguments|list, ArgumentsKw|dict]
 
 where `ArgumentsKw == {}` SHOULD be avoided, and instead
 
 {align="left"}
-        [CALL, Request|id, Options|dict, Procedure|uri, 
+        [CALL, Request|id, Options|dict, Procedure|uri,
             Arguments|list]
 
 SHOULD be sent when `Arguments` is non-empty.
@@ -845,11 +845,11 @@ In the WAMP Basic Profile without session authentication the *Router* will reply
         ,------.          ,------.
         |Client|          |Router|
         `--+---'          `--+---'
-           |      HELLO      |    
-           | ---------------->    
-           |                 |    
-           |     WELCOME     |    
-           | <----------------    
+           |      HELLO      |
+           | ---------------->
+           |                 |
+           |     WELCOME     |
+           | <----------------
         ,--+---.          ,--+---.
         |Client|          |Router|
         `------'          `------'
@@ -946,11 +946,11 @@ No response to an `ABORT` message is expected.
         ,------.          ,------.
         |Client|          |Router|
         `--+---'          `--+---'
-           |      HELLO      |    
-           | ---------------->    
-           |                 |    
-           |      ABORT      |    
-           | <----------------    
+           |      HELLO      |
+           | ---------------->
+           |                 |
+           |      ABORT      |
+           | <----------------
         ,--+---.          ,--+---.
         |Client|          |Router|
         `------'          `------'
@@ -959,7 +959,7 @@ No response to an `ABORT` message is expected.
 *Example*
 
 {align="left"}
-        [3, {"message": "The realm does not exist."}, 
+        [3, {"message": "The realm does not exist."},
             "wamp.error.no_such_realm"]
 
 
@@ -970,8 +970,8 @@ A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message
 {align="left"}
         [GOODBYE, Details|dict, Reason|uri]
 
-where 
- 
+where
+
 * `Reason` MUST be an URI.
 * `Details` MUST be a dictionary that allows to provide additional, optional closing information (see below).
 
@@ -979,11 +979,11 @@ where
         ,------.          ,------.
         |Client|          |Router|
         `--+---'          `--+---'
-           |     GOODBYE     |    
-           | ---------------->    
-           |                 |    
-           |     GOODBYE     |    
-           | <----------------    
+           |     GOODBYE     |
+           | ---------------->
+           |                 |
+           |     GOODBYE     |
+           | <----------------
         ,--+---.          ,--+---.
         |Client|          |Router|
         `------'          `------'
@@ -993,11 +993,11 @@ where
         ,------.          ,------.
         |Client|          |Router|
         `--+---'          `--+---'
-           |     GOODBYE     |    
-           | <----------------    
-           |                 |    
-           |     GOODBYE     |    
-           | ---------------->    
+           |     GOODBYE     |
+           | <----------------
+           |                 |
+           |     GOODBYE     |
+           | ---------------->
         ,--+---.          ,--+---.
         |Client|          |Router|
         `------'          `------'
@@ -1005,7 +1005,7 @@ where
 *Example*. One *Peer* initiates closing
 
 {align="left"}
-        [6, {"message": "The host is shutting down now."}, 
+        [6, {"message": "The host is shutting down now."},
             "wamp.error.system_shutdown"]
 
 and the other peer replies
@@ -1089,28 +1089,28 @@ The message flow between *Clients* implementing the role of *Subscriber* and *Ro
 5. `ERROR`
 
 {align="left"}
-        ,---------.          ,------.             ,----------.     
-        |Publisher|          |Broker|             |Subscriber|     
-        `----+----'          `--+---'             `----+-----'     
-             |                  |                      |           
-             |                  |                      |           
-             |                  |       SUBSCRIBE      |           
-             |                  | <---------------------           
-             |                  |                      |           
-             |                  |  SUBSCRIBED or ERROR |           
-             |                  | --------------------->           
-             |                  |                      |           
-             |                  |                      |           
-             |                  |                      |           
-             |                  |                      |           
-             |                  |      UNSUBSCRIBE     |           
-             |                  | <---------------------           
-             |                  |                      |           
-             |                  | UNSUBSCRIBED or ERROR|           
-             |                  | --------------------->           
-        ,----+----.          ,--+---.             ,----+-----.     
-        |Publisher|          |Broker|             |Subscriber|     
-        `---------'          `------'             `----------' 
+        ,---------.          ,------.             ,----------.
+        |Publisher|          |Broker|             |Subscriber|
+        `----+----'          `--+---'             `----+-----'
+             |                  |                      |
+             |                  |                      |
+             |                  |       SUBSCRIBE      |
+             |                  | <---------------------
+             |                  |                      |
+             |                  |  SUBSCRIBED or ERROR |
+             |                  | --------------------->
+             |                  |                      |
+             |                  |                      |
+             |                  |                      |
+             |                  |                      |
+             |                  |      UNSUBSCRIBE     |
+             |                  | <---------------------
+             |                  |                      |
+             |                  | UNSUBSCRIBED or ERROR|
+             |                  | --------------------->
+        ,----+----.          ,--+---.             ,----+-----.
+        |Publisher|          |Broker|             |Subscriber|
+        `---------'          `------'             `----------'
 
 
 A *Subscriber* may subscribe to zero, one or more topics, and a *Publisher* publishes to topics without knowledge of subscribers.
@@ -1168,7 +1168,7 @@ where
 When the request for subscription cannot be fulfilled by the *Broker*, the *Broker* sends back an `ERROR` message to the *Subscriber*
 
 {align="left"}
-        [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict, 
+        [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict,
             Error|uri]
 
 where
@@ -1221,7 +1221,7 @@ where
 When the request fails, the *Broker* sends an `ERROR`
 
 {align="left"}
-        [ERROR, UNSUBSCRIBE, UNSUBSCRIBE.Request|id, Details|dict, 
+        [ERROR, UNSUBSCRIBE, UNSUBSCRIBE.Request|id, Details|dict,
             Error|uri]
 
 where
@@ -1249,14 +1249,14 @@ The message flow between *Publishers*, a *Broker* and *Subscribers* for publishi
         ,---------.          ,------.          ,----------.
         |Publisher|          |Broker|          |Subscriber|
         `----+----'          `--+---'          `----+-----'
-             |     PUBLISH      |                   |      
-             |------------------>                   |      
-             |                  |                   |      
-             |PUBLISHED or ERROR|                   |      
-             |<------------------                   |      
-             |                  |                   |      
-             |                  |       EVENT       |      
-             |                  | ------------------>      
+             |     PUBLISH      |                   |
+             |------------------>                   |
+             |                  |                   |
+             |PUBLISHED or ERROR|                   |
+             |<------------------                   |
+             |                  |                   |
+             |                  |       EVENT       |
+             |                  | ------------------>
         ,----+----.          ,--+---.          ,----+-----.
         |Publisher|          |Broker|          |Subscriber|
         `---------'          `------'          `----------'
@@ -1356,19 +1356,19 @@ Note that the *Publisher* of an event will never receive the published event eve
 When a *Subscriber* is deemed to be a receiver, the *Broker* sends the *Subscriber* an `EVENT` message:
 
 {align="left"}
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, 
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
             Details|dict]
 
 or
 
 {align="left"}
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, 
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
             Details|dict, PUBLISH.Arguments|list]
 
 or
 
 {align="left"}
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, 
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
         Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
 
 where
@@ -1392,7 +1392,7 @@ where
 *Example*
 
 {align="left"}
-        [36, 5512315355, 4429313566, {}, [], {"color": "orange", 
+        [36, 5512315355, 4429313566, {}, [], {"color": "orange",
             "sizes": [23, 42, 7]}]
 
 
@@ -1413,29 +1413,29 @@ The message flow between *Callees* and a *Dealer* for registering and unregister
 6. `ERROR`
 
 {align="left"}
-        ,------.          ,------.               ,------.     
-        |Caller|          |Dealer|               |Callee|     
-        `--+---'          `--+---'               `--+---'     
-           |                 |                      |         
-           |                 |                      |         
-           |                 |       REGISTER       |         
-           |                 | <---------------------         
-           |                 |                      |         
-           |                 |  REGISTERED or ERROR |         
-           |                 | --------------------->         
-           |                 |                      |         
-           |                 |                      |                 
-           |                 |                      |                 
-           |                 |                      |         
-           |                 |                      |         
-           |                 |      UNREGISTER      |         
-           |                 | <---------------------         
-           |                 |                      |         
-           |                 | UNREGISTERED or ERROR|         
-           |                 | --------------------->         
-        ,--+---.          ,--+---.               ,--+---.     
-        |Caller|          |Dealer|               |Callee|     
-        `------'          `------'               `------'     
+        ,------.          ,------.               ,------.
+        |Caller|          |Dealer|               |Callee|
+        `--+---'          `--+---'               `--+---'
+           |                 |                      |
+           |                 |                      |
+           |                 |       REGISTER       |
+           |                 | <---------------------
+           |                 |                      |
+           |                 |  REGISTERED or ERROR |
+           |                 | --------------------->
+           |                 |                      |
+           |                 |                      |
+           |                 |                      |
+           |                 |                      |
+           |                 |                      |
+           |                 |      UNREGISTER      |
+           |                 | <---------------------
+           |                 |                      |
+           |                 | UNREGISTERED or ERROR|
+           |                 | --------------------->
+        ,--+---.          ,--+---.               ,--+---.
+        |Caller|          |Dealer|               |Callee|
+        `------'          `------'               `------'
 
 
 ### REGISTER
@@ -1480,7 +1480,7 @@ When the request for registration cannot be fulfilled by the *Dealer*, the *Deal
 {align="left"}
         [ERROR, REGISTER, REGISTER.Request|id, Details|dict, Error|uri]
 
-where 
+where
 
 * `REGISTER.Request` is the ID from the original request.
 * `Error` is an URI that gives the error of why the request could not be fulfilled.
@@ -1528,7 +1528,7 @@ where
 When the unregistration request fails, the *Dealer* sends an `ERROR` message:
 
 {align="left"}
-        [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict, 
+        [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict,
             Error|uri]
 
 where
@@ -1556,17 +1556,17 @@ The message flow between *Callers*, a *Dealer* and *Callees* for calling procedu
         ,------.          ,------.          ,------.
         |Caller|          |Dealer|          |Callee|
         `--+---'          `--+---'          `--+---'
-           |       CALL      |                 |    
-           | ---------------->                 |    
-           |                 |                 |    
-           |                 |    INVOCATION   |    
-           |                 | ---------------->    
-           |                 |                 |    
-           |                 |  YIELD or ERROR |    
-           |                 | <----------------    
-           |                 |                 |    
-           | RESULT or ERROR |                 |    
-           | <----------------                 |    
+           |       CALL      |                 |
+           | ---------------->                 |
+           |                 |                 |
+           |                 |    INVOCATION   |
+           |                 | ---------------->
+           |                 |                 |
+           |                 |  YIELD or ERROR |
+           |                 | <----------------
+           |                 |                 |
+           | RESULT or ERROR |                 |
+           | <----------------                 |
         ,--+---.          ,--+---.          ,--+---.
         |Caller|          |Dealer|          |Callee|
         `------'          `------'          `------'
@@ -1589,7 +1589,7 @@ or
 or
 
 {align="left"}
-        [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, 
+        [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
             ArgumentsKw|dict]
 
 where
@@ -1618,7 +1618,7 @@ where
 *Example*
 
 {align="left"}
-        [48, 7814135, {}, "com.myapp.user.new", ["johnny"], 
+        [48, 7814135, {}, "com.myapp.user.new", ["johnny"],
             {"firstname": "John", "surname": "Doe"}]
 
 
@@ -1627,19 +1627,19 @@ where
 If the *Dealer* is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id, 
+        [INVOCATION, Request|id, REGISTERED.Registration|id,
             Details|dict]
 
 or
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id, 
+        [INVOCATION, Request|id, REGISTERED.Registration|id,
             Details|dict, CALL.Arguments|list]
 
 or
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id, 
+        [INVOCATION, Request|id, REGISTERED.Registration|id,
             Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 where
@@ -1668,7 +1668,7 @@ where
 *Example*
 
 {align="left"}
-        [68, 6131533, 9823529, {}, ["johnny"], {"firstname": "John", 
+        [68, 6131533, 9823529, {}, ["johnny"], {"firstname": "John",
             "surname": "Doe"}]
 
 
@@ -1687,7 +1687,7 @@ or
 or
 
 {align="left"}
-        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, 
+        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
             ArgumentsKw|dict]
 
 where
@@ -1734,7 +1734,7 @@ or
 or
 
 {align="left"}
-        [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, 
+        [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
             YIELD.ArgumentsKw|dict]
 
 where
@@ -1771,19 +1771,19 @@ where
 If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `ERROR` message to the *Dealer*:
 
 {align="left"}
-        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, 
+        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
             Error|uri]
 
 or
 
 {align="left"}
-        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, 
+        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
         Error|uri, Arguments|list]
 
 or
 
 {align="left"}
-        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, 
+        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
             Error|uri, Arguments|list, ArgumentsKw|dict]
 
 where
@@ -1811,13 +1811,13 @@ The *Dealer* will then send a `ERROR` message to the original *Caller*:
 or
 
 {align="left"}
-        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri, 
+        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
             Arguments|list]
 
 or
 
 {align="left"}
-        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri, 
+        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
             Arguments|list, ArgumentsKw|dict]
 
 where
@@ -2008,7 +2008,7 @@ In particular, *Routers* can read (and modify) any application payload transmitt
 
 Hence, *Routers* do not provide confidentiality with respect to application payload, and also do not provide authenticity or integrity of application payloads that could be verified by a receiving *Client*.
 
-*Routers* need to read the application payloads in cases of automatic conversion between different serialization formats. 
+*Routers* need to read the application payloads in cases of automatic conversion between different serialization formats.
 
 Further, *Routers* are trusted to **actually perform** routing as specified. E.g. a *Client* that publishes an event has to trust a *Router* that the event is actually dispatched to all (eligible) *Subscribers* by the *Router*.
 
