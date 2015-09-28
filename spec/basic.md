@@ -1,6 +1,6 @@
 # The Web Application Messaging Protocol
 
-This document specifies the *Basic Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
+This document specifies the *Basic Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp-proto.org).
 
 Document Revision: **RC4**, 2015/01/29
 

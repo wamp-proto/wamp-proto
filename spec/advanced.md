@@ -1,6 +1,6 @@
 # The Web Application Messaging Protocol
 
-This document specifies the *Advanced Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp.ws/).
+This document specifies the *Advanced Profile* of the [Web Application Messaging Protocol (WAMP)](http://wamp-proto.org).
 
 Document Revision: **2015/09/01**
 
