@@ -30,41 +30,6 @@ The WAMP subscription meta events shall be dispatched by the router to the same 
 
 -----------------------------------
 
-#### `wamp.session.on_join`
-
-Fired when a session joins a realm on the router.
-
-**Event Arguments**
-- `SessionDetails|dict`: Information on the session joining the router.
-
-**Object Schemas**
-
-```javascript
-SessionDetails :=
-{
-    "authid": authid|string,
-    "authrole": authrole|string,
-    "authmethod": authmethod|string,
-    "authprovider": authprovider|string,
-    "realm": realm|uri,
-    "session": session|id,
-    "transport": transport_info|dict // Implementation defined?
-}
-```
-
-See [Authentication](authentication.md) for a description of the `authid`, `authrole`, `authmethod` and `authprovider` properties.
-
------------------------------------
-
-#### `wamp.session.on_leave`
-
-Fired when a session leaves a realm on the router or is disconnected.
-
-**Event Arguments**
-- `session|id`: ID of the session leaving a realm or disconnecting.
-
------------------------------------
-
 #### `wamp.subscription.on_create`
 
 Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.
