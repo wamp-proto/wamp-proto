@@ -1,0 +1,3259 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web Application Messaging Protocol</title>
+  <meta name="GENERATOR" content="Mmark Markdown Processor v1.0">
+  <meta charset="utf-8">
+</head>
+<body>
+
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream:rfc/draft-oberstet-hybi-tavendo-wamp-00.md</p>
+
+<h1 id="-docname--draftoberstethybitavendowamp00">% docName = &quot;draft-oberstet-hybi-tavendo-wamp-00&quot;</h1>
+
+<p>% docName = &quot;draft-oberstet-hybi-tavendo-wamp-02&quot;</p>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>Stashed changes:rfc/draft-oberstet-hybi-tavendo-wamp-01.md
+% ipr= &quot;trust200902&quot;
+% area = &quot;Applications and Real-Time (art)&quot;
+% workgroup = &quot;BiDirectional or Server-Initiated HTTP&quot;
+% keyword = [&quot;WebSocket, WAMP, real-time, RPC, PubSub&quot;]
+%
+% date = 2015-09-27T00:00:00Z
+%
+% [pi]
+% toc = &quot;yes&quot;
+%
+% [[author]]
+% initials=&quot;T.O.&quot;
+% surname=&quot;Oberstein&quot;
+% fullname=&quot;Tobias G. Oberstein&quot;
+% organization = &quot;Tavendo GmbH&quot;
+%   [author.address]
+%   email = &quot;tobias.oberstein@tavendo.de&quot;
+%
+% [[author]]
+% initials=&quot;A.G.&quot;
+% surname=&quot;Goedde&quot;
+% fullname=&quot;Alexander Goedde&quot;
+% organization = &quot;Tavendo GmbH&quot;
+%   [author.address]
+%   email = &quot;alexander.goedde@tavendo.de&quot;
+%</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<h1 class="abstract" id="abstract">Abstract</h1>
+
+<p>This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional and message-based communication.</p>
+
+<h1 id="introduction">Introduction</h1>
+
+<h2 id="background">Background</h2>
+
+<p><em>This section is non-normative.</em></p>
+
+<p>The WebSocket protocol brought bi-directional real-time connections to the browser. This defines an API at the message level, requiring users who want to use WebSocket connections in their applications to define any semantics on top of it.</p>
+
+<p>The Web Application Messaging Protocl (WAMP) was initially defined as a WebSocket sub-protocol at the technical level, and is intended to provide application developers with the semantics they need to handle messaging between components in distributed applications.</p>
+
+<p>WAMP is a routed protocol, with all components connecting to a WAMP router.</p>
+
+<p>WAMP provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure calls.</p>
+
+<p>Publish &amp; Subscribe is an established messaging pattern where components inform the router that they want to receive information on a topic (they suscribe to the topic). A component can then publish to this topic, and the router distributes events to all subscribers.</p>
+
+<p>With routed Remote Procedure calls, the decoupling of the Publish &amp; Subscribe pattern is applied to Remote Procedure Calls: a component announces to the router that it provides a certain procedure, identified by a procedure name. Other components can then call the procedure, with the router invoking the procedure on the registering component, receiving the result for this, and forwarding this to the caller.</p>
+
+<p>Routed Remote Procedure Calls transfer the decoupling of the Publish &amp; Subscribe pattern to Remote Procedure Calls. A caller is no longer required to have knowledge of the Callee, it merely needs to know the identifier for the procedure it wants to call. There is also no longer a need for a direct connection between the caller and the callee, since all traffic is routed. This enables calling procedures in components which are not reachable externally, e.g. on a NATted connection, but which can establish an outgoing connection to the WAMP router.</p>
+
+<p>Combining these two patterns into a single protocol allows a single protocol to be used for the entire messaging requirements of an application, reducing complexity in the technology stack and networking overheads.</p>
+
+<p>While WAMP was originally specified to run over WebSocket, it can run over any transport which is message-based, ordered, reliable and bi-directional.</p>
+
+<h2 id="protocol-overview">Protocol Overview</h2>
+
+<p><em>This section is non-normative.</em></p>
+
+<p>For each of the two messaging patterns, three roles are defined:</p>
+
+<p>For PubSub, there are Subscribers and Publishers, which are connected through a Broker.</p>
+
+<p>For routed Remote Procedure Calls there are Callers and Callees, which are connected through a Dealer.</p>
+
+<p>WAMP Connections are established by Clients to a Router. Connections can use any transport which is message-based, ordered, reliable and bi-directional, with WebSocket as the default transport.</p>
+
+<p>WAMP Sessions are established using a WAMP Connection. A WAMP Session connects to a Realm on a Router. Routing occurs only between WAMP Sessions connected to the same realm.</p>
+
+<p>The Basic Profile defines the parts of the protocol which are required to establish a WAMP connection as well as for basic interactions between the four client and two router roles.</p>
+
+<p>WAMP implementations are required to implement the basic profile regarding connection establishment as well as for the role or roles they implement.</p>
+
+<p>The Advanced Profile defines additions to the Basic Profile which greatly extend the utility of WAMP in real-world applications.</p>
+
+<p>WAMP implementations may implement any subset of Advanced Profile features. They are required to announce the implemented features during connection establishment.</p>
+
+<h2 id="design-philosophy">Design Philosophy</h2>
+
+<p><em>This section is non-normative.</em></p>
+
+<p>WAMP was designed to be performant, safe and easy to implement. Its entire design was drive by a implement, get feedback, adjust cycle.</p>
+
+<p>A first version of the protocol was publicly released in March 2012. The intention was to gain insight through implementation and use, and integrate these into a second version of the protocol, where there would be no regard for compatibility between the two versions. Several interoperable, independent implementations were released, and feedback from the implementers and users was collected.</p>
+
+<p>The second version of the protocol, which this RFC covers, integrates this feedback. Routed Remote Procedure Calls are one outcome of this, where the  first version of the protocol only allowed to call functionality implemented in the router. A connected outcome was the strict separation of routing and application functionality (see below).</p>
+
+<p>While WAMP was originally developed to use WebSocket as a transport, and JSON for serialization, experience in the field showed that other transports and serialization formats were better suited to some use cases. As an example, with the use of WAMP in the Internet of Things sphere, resource constraints play a much larger role than in the browser, so any reduction in resource use of WAMP implementations counts. This lead to the decoupling of WAMP from any particular transport or serialization, and the establishment of minimum requirements for each.</p>
+
+<h3 id="basic-and-advanced-profile">Basic and Advanced Profile</h3>
+
+<p>This document first describes a Basic Profile for WAMP in its entirety before describing an Advanced Profile which extends the functionality of WAMP.</p>
+
+<p>The separation in Basic and Advanced Profile is intended to extend the reach of the protocol.</p>
+
+<p>It allows implementations to start out with a minimal but operable and useful set of functionality, and to expand their functionality from there.</p>
+
+<p>It also allows implementations in resource-constrained environments where an implementation of a larger set of functionality would not be possible. Here implementers can weigh between resource constraints and functionality requirements and implement an optimal set for the circumstances.</p>
+
+<p>Feature announcement is used for Advanced Profile features, so that different implementations can adjust their interactions to fit the commonly supported feature set.</p>
+
+<h3 id="application-code">Application Code</h3>
+
+<p>WAMP is designed for application code to run inside <em>Clients</em>, i.e. <em>Peers</em> of the roles <em>Callee</em>, <em>Caller</em>, <em>Publisher</em>, and <em>Subscriber</em>.</p>
+
+<p><em>Routers</em>, i.e. <em>Peers</em> of the roles <em>Brokers</em> and <em>Dealers</em> are responsible for <strong>generic call and event routing</strong> and do not run application code.</p>
+
+<p>This allows to transparently exchange <em>Broker</em> and <em>Dealer</em> implementations without affecting the application and to distribute and deploy application components flexibly.</p>
+
+<blockquote>
+<p>Note that a <strong>program</strong> that implements e.g. the <em>Dealer</em> role might at the same time implement e.g. a built-in <em>Callee</em>. It is the <em>Dealer</em> and <em>Broker</em> that are generic, not the program.</p>
+</blockquote>
+
+<h3 id="router-implementation-specifics">Router Implementation Specifics</h3>
+
+<p>This specification only deals with the protcol level. Specific WAMP <em>Broker</em> and <em>Dealer</em> implementations may differ in aspects such as support for</p>
+
+<ul>
+<li>router networks (clustering and federation)</li>
+<li>authentication and authorization schemes</li>
+<li>message persistence</li>
+<li>management and monitoring</li>
+</ul>
+
+<p>The definition and documentation of such <em>Router</em> features is outside the scope of this document.</p>
+
+<h2 id="relationship-to-websocket">Relationship to WebSocket</h2>
+
+<p>WAMP uses WebSocket as its default transport binding, and is a registered WebSocket subprotocol.</p>
+
+<h1 id="conformance-requirements">Conformance Requirements</h1>
+
+<p>All diagrams, examples, and notes in this specification are non-normative, as are all sections explicitly marked non-normative. Everything else in this specification is normative.</p>
+
+<p>The key words &quot;MUST&quot;, &quot;MUST NOT&quot;, &quot;REQUIRED&quot;, &quot;SHALL&quot;, &quot;SHALL NOT&quot;,
+&quot;SHOULD&quot;, &quot;SHOULD NOT&quot;, &quot;RECOMMENDED&quot;, &quot;MAY&quot;, and &quot;OPTIONAL&quot; in
+this document are to be interpreted as described in RFC 2119 <a class="cite" href="#rfc2119"></a>.</p>
+
+<p>Requirements phrased in the imperative as part of algorithms (such as &quot;strip any leading space characters&quot; or &quot;return false and abort these steps&quot;) are to be interpreted with the meaning of the key word (&quot;MUST&quot;, &quot;SHOULD&quot;, &quot;MAY&quot;, etc.) used in introducing the algorithm.</p>
+
+<p>Conformance requirements phrased as algorithms or specific steps MAY  be implemented in any manner, so long as the end result is equivalent.</p>
+
+<h2 id="terminology-and-other-conventions">Terminology and Other Conventions</h2>
+
+<p>Key terms such as named algorithms or definitions are indicated like <em>this</em>.</p>
+
+<h1 id="realms-sessions-and-transports">Realms, Sessions and Transports</h1>
+
+<p>A <em>Realm</em> is a WAMP routing and administrative domain, optionally protected by authentication and authorization. WAMP messages are only routed within a <em>Realm</em>.</p>
+
+<p>A <em>Session</em> is a transient conversation between two <em>Peers</em> attached to a <em>Realm</em> and running over a <em>Transport</em>.</p>
+
+<p>A <em>Transport</em> connects two WAMP <em>Peers</em> and provides a channel over which WAMP messages for a WAMP <em>Session</em> can flow in both directions.</p>
+
+<p>WAMP can run over any <em>transport</em> which is message-based, bidirectional,  reliable and ordered.</p>
+
+<p>The default transport for WAMP is WebSocket <a class="cite" href="#rfc6455"></a>, where WAMP is an <a href="http://www.iana.org/assignments/websocket/websocket.xml">officially registered</a> subprotocol.</p>
+
+<h1 id="peers-and-roles">Peers and Roles</h1>
+
+<p>A WAMP <em>Session</em> connects two <em>Peers</em>, a <em>Client</em> and a <em>Router</em>. Each WAMP <em>Peer</em> MUST implement one role, and MAY implement more roles.</p>
+
+<p>A <em>Client</em> MAY implement any combination of the <em>Roles</em>:</p>
+
+<ul>
+<li><em>Callee</em></li>
+<li><em>Caller</em></li>
+<li><em>Publisher</em></li>
+<li><em>Subscriber</em></li>
+</ul>
+
+<p>and a <em>Router</em> MAY implement either or both of the <em>Roles</em>:</p>
+
+<ul>
+<li><em>Dealer</em></li>
+<li><em>Broker</em></li>
+</ul>
+
+<blockquote>
+<p>This document describes WAMP as in client-to-router communication. Direct client-to-client communication is not supported by WAMP. Router-to-router communication MAY be defined by a specific router implementation.</p>
+</blockquote>
+
+<h2 id="symmetric-messaging">Symmetric Messaging</h2>
+
+<p>It is important to note that though the establishment of a <em>Transport</em> might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and <em>Clients</em> establish WAMP sessions by attaching to <em>Realms</em> on <em>Routers</em>, WAMP itself is designed to be fully symmetric for application components.</p>
+
+<p>After the transport and a session have been established, any application component may act as <em>Caller</em>, <em>Callee</em>, <em>Publisher</em> and <em>Subscriber</em> at the same time. And <em>Routers</em> provide the fabric on top of which WAMP runs a symmetric application messaging service.</p>
+
+<h2 id="remote-procedure-call-roles">Remote Procedure Call Roles</h2>
+
+<p>The Remote Procedure Call messaging pattern involves peers of three different roles:</p>
+
+<ul>
+<li><em>Callee (Client)</em></li>
+<li><em>Caller (Client)</em></li>
+<li><em>Dealer (Router)</em></li>
+</ul>
+
+<p>A <em>Caller</em> issues calls to remote procedures by providing the procedure URI and any arguments for the call.
+The <em>Callee</em> will execute the procedure using the supplied arguments to the call and return the result of the call to the <em>Caller</em>.</p>
+
+<p><em>Callees</em> register procedures they provide with <em>Dealers</em>. <em>Callers</em> initiate procedure calls first to <em>Dealers</em>. <em>Dealers</em> route calls incoming from <em>Callers</em> to <em>Callees</em> implementing the procedure called, and route call results back from <em>Callees</em> to <em>Callers</em>.</p>
+
+<p>The <em>Caller</em> and <em>Callee</em> will usually run application code, while the <em>Dealer</em> works as a generic router for remote procedure calls decoupling <em>Callers</em> and <em>Callees</em>.</p>
+
+<h2 id="publish--subscribe-roles">Publish &amp; Subscribe Roles</h2>
+
+<p>The Publish &amp; Subscribe messaging pattern involves peers of three different roles:</p>
+
+<ul>
+<li><em>Subscriber (Client)</em></li>
+<li><em>Publisher (Client)</em></li>
+<li><em>Broker (Router)</em></li>
+</ul>
+
+<p>A <em>Publishers</em> publishes events to topics by providing the topic URI and any payload for the event. <em>Subscribers</em> of the topic will receive the event together with the event payload.</p>
+
+<p><em>Subscribers</em> subscribe to topics they are interested in with <em>Brokers</em>. <em>Publishers</em> initiate publication first at <em>Brokers</em>. <em>Brokers</em> route events incoming from <em>Publishers</em> to <em>Subscribers</em> that are subscribed to respective topics.</p>
+
+<p>The <em>Publisher</em> and <em>Subscriber</em> will usually run application code, while the <em>Broker</em> works as a generic router for events decoupling <em>Publishers</em> from <em>Subscribers</em>.</p>
+
+<h2 id="peers-with-multiple-roles">Peers with multiple Roles</h2>
+
+<p>Note that <em>Peers</em> might implement more than one role: e.g. a <em>Peer</em> might act as <em>Caller</em>, <em>Publisher</em> and <em>Subscriber</em> at the same time. Another <em>Peer</em> might act as both a <em>Broker</em> and a <em>Dealer</em>.</p>
+
+<h1 id="building-blocks">Building Blocks</h1>
+
+<p>WAMP is defined with respect to the following building blocks</p>
+
+<ol>
+<li>Identifiers</li>
+<li>Serializations</li>
+<li>Transports</li>
+</ol>
+
+<p>For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.</p>
+
+<h2 id="identifiers">Identifiers</h2>
+
+<h3 id="uris">URIs</h3>
+
+<p>WAMP needs to identify the following <em>persistent</em> resources:</p>
+
+<ol>
+<li>Topics</li>
+<li>Procedures</li>
+<li>Errors</li>
+</ol>
+
+<p>These are identified in WAMP using <em>Uniform Resource Identifiers</em> (URIs) <a class="cite" href="#rfc3986"></a> that MUST be Unicode strings.</p>
+
+<blockquote>
+<p>When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 <a class="cite" href="#rfc3629"></a> encoding.</p>
+</blockquote>
+
+<p><em>Examples</em></p>
+
+<ul>
+<li><code>com.myapp.mytopic1</code></li>
+<li><code>com.myapp.myprocedure1</code></li>
+<li><code>com.myapp.myerror1</code></li>
+</ul>
+
+<p>The URIs are understood to form a single, global, hierarchical namespace for WAMP.</p>
+
+<blockquote>
+<p>The namespace is unified for topics, procedures and errors - these different resource types do NOT have separate namespaces.</p>
+</blockquote>
+
+<p>To avoid resource naming conflicts, the package naming convention from Java is used, where URIs SHOULD begin with (reversed) domain names owned by the organization defining the URI.</p>
+
+<h4 id="relaxedloose-uris">Relaxed/Loose URIs</h4>
+
+<p>URI components (the parts between two <code>.</code>s, the head part up to the first <code>.</code>, the tail part after the last <code>.</code>) MUST NOT contain a <code>.</code>, <code>#</code> or whitespace characters and MUST NOT be empty (zero-length strings).</p>
+
+<blockquote>
+<p>The restriction not to allow <code>.</code> in component strings is due to the fact that <code>.</code> is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that are part of the Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in the Advanced Profile. The character <code>#</code> is not allowed since this is reserved for internal use by <em>Dealers</em> and <em>Brokers</em>.</p>
+</blockquote>
+
+<p>As an example, the following regular expression could be used in Python to check URIs according to above rules:</p>
+
+<pre><code class="language-python">    &lt;CODE BEGINS&gt;
+        ## loose URI check disallowing empty URI components
+        pattern = re.compile(r&quot;^([^\s\.#]+\.)*([^\s\.#]+)$&quot;)
+    &lt;CODE ENDS&gt;
+</code></pre>
+
+<p>When empty URI components are allowed (which is the case for specific messages that are part of the Advanced Profile), this following regular expression can be used (shown used in Python):</p>
+
+<pre><code class="language-python">    &lt;CODE BEGINS&gt;
+        ## loose URI check allowing empty URI components
+        pattern = re.compile(r&quot;^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$&quot;)
+    &lt;CODE ENDS&gt;
+</code></pre>
+
+<h4 id="strict-uris">Strict URIs</h4>
+
+<p>While the above rules MUST be followed, following a stricter URI rule is recommended: URI components SHOULD only contain letters, digits and <code>_</code>.</p>
+
+<p>As an example, the following regular expression could be used in Python to check URIs according to the above rules:</p>
+
+<pre><code class="language-python">    &lt;CODE BEGINS&gt;
+        ## strict URI check disallowing empty URI components
+        pattern = re.compile(r&quot;^([0-9a-z_]+\.)*([0-9a-z_]+)$&quot;)
+    &lt;CODE ENDS&gt;
+</code></pre>
+
+<p>When empty URI components are allowed (which is the case for specific messages that are part of the Advanced Profile), the following regular expression can be used (shown in Python):</p>
+
+<pre><code class="language-python">    &lt;CODE BEGINS&gt;
+        ## strict URI check allowing empty URI components
+        pattern = re.compile(r&quot;^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$&quot;)
+    &lt;CODE ENDS&gt;
+</code></pre>
+
+<blockquote>
+<p>Following the suggested regular expression will make URI components valid identifiers in most languages (modulo URIs starting with a digit and language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language environment in a completely transparent way.</p>
+</blockquote>
+
+<h4 id="reserved-uris">Reserved URIs</h4>
+
+<p>Further, application URIs MUST NOT use <code>wamp</code> as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.</p>
+
+<p><em>Examples</em></p>
+
+<ul>
+<li><code>wamp.error.not_authorized</code></li>
+<li><code>wamp.error.procedure_already_exists</code></li>
+</ul>
+
+<h3 id="ids">IDs</h3>
+
+<p>WAMP needs to identify the following ephemeral entities each in the scope noted:</p>
+
+<ol>
+<li>Sessions (<em>global scope</em>)</li>
+<li>Publications (<em>global scope</em>)</li>
+<li>Subscriptions (<em>router scope</em>)</li>
+<li>Registrations (<em>router scope</em>)</li>
+<li>Requests (<em>session scope</em>)</li>
+</ol>
+
+<p>These are identified in WAMP using IDs that are integers between (inclusive) <strong>0</strong> and <strong>2^53</strong> (9007199254740992):</p>
+
+<ul>
+<li>IDs in the <em>global scope</em> MUST be drawn <em>randomly</em> from a <em>uniform distribution</em> over the complete range [0, 2^53]</li>
+<li>IDs in the <em>router scope</em> can be chosen freely by the specific router implementation</li>
+<li>IDs in the <em>session scope</em> SHOULD be incremented by 1 beginning with 1 (for each direction - <em>Client-to-Router</em> and <em>Router-to-Client</em>)</li>
+</ul>
+
+<blockquote>
+<p>The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and <em>all</em> (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.</p>
+</blockquote>
+
+<p>The following is a complete list of usage of IDs in the three categories for all WAMP messages. For a full definition of these see <a href="#messages">messages section</a>.</p>
+
+<h4 id="global-scope-ids">Global Scope IDs</h4>
+
+<ul>
+<li><code>WELCOME.Session</code></li>
+<li><code>PUBLISHED.Publication</code></li>
+<li><code>EVENT.Publication</code></li>
+</ul>
+
+<h4 id="router-scope-ids">Router Scope IDs</h4>
+
+<ul>
+<li><code>EVENT.Subscription</code></li>
+<li><code>SUBSCRIBED.Subscription</code></li>
+<li><code>REGISTERED.Registration</code></li>
+<li><code>UNSUBSCRIBE.Subscription</code></li>
+<li><code>UNREGISTER.Registration</code></li>
+<li><code>INVOCATION.Registration</code></li>
+</ul>
+
+<h4 id="session-scope-ids">Session Scope IDs</h4>
+
+<ul>
+<li><code>ERROR.Request</code></li>
+<li><code>PUBLISH.Request</code></li>
+<li><code>PUBLISHED.Request</code></li>
+<li><code>SUBSCRIBE.Request</code></li>
+<li><code>SUBSCRIBED.Request</code></li>
+<li><code>UNSUBSCRIBE.Request</code></li>
+<li><code>UNSUBSCRIBED.Request</code></li>
+<li><code>CALL.Request</code></li>
+<li><code>CANCEL.Request</code></li>
+<li><code>RESULT.Request</code></li>
+<li><code>REGISTER.Request</code></li>
+<li><code>REGISTERED.Request</code></li>
+<li><code>UNREGISTER.Request</code></li>
+<li><code>UNREGISTERED.Request</code></li>
+<li><code>INVOCATION.Request</code></li>
+<li><code>INTERRUPT.Request</code></li>
+<li><code>YIELD.Request</code></li>
+</ul>
+
+<h2 id="serializations">Serializations</h2>
+
+<p>WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.</p>
+
+<p>A message <em>serialization</em> format is assumed that (at least) provides the following types:</p>
+
+<ul>
+<li><code>integer</code> (non-negative)</li>
+<li><code>string</code> (UTF-8 encoded Unicode)</li>
+<li><code>bool</code></li>
+<li><code>list</code></li>
+<li><code>dict</code> (with string keys)</li>
+</ul>
+
+<blockquote>
+<p>WAMP <em>itself</em> only uses the above types, e.g. it does not use the JSON data types <code>number</code> (non-integer) and <code>null</code>. The <em>application payloads</em> transmitted by WAMP (e.g. in call arguments or event payloads) may use other types a concrete serialization format supports.</p>
+</blockquote>
+
+<p>There is no required serialization or set of serializations for WAMP implementations (but each implementation MUST, of course, implement at least one serialization format). Routers SHOULD implement more than one serialization format, enabling components using different kinds of serializations to connect to each other.</p>
+
+<p>WAMP defines two bindings for message <em>serialization</em>:</p>
+
+<ol>
+<li>JSON</li>
+<li>MsgPack</li>
+</ol>
+
+<p>Other bindings for <em>serialization</em> may be defined in future WAMP versions.</p>
+
+<h3 id="json">JSON</h3>
+
+<p>With JSON serialization, each WAMP message is serialized according to the JSON specification as described in RFC4627.</p>
+
+<p>Further, binary data follows a convention for conversion to JSON strings. For details see the Appendix.</p>
+
+<h3 id="msgpack">MsgPack</h3>
+
+<p>With MsgPack serialization, each WAMP message is serialized according to the MsgPack specification.</p>
+
+<blockquote>
+<p>Version 5 or later of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.</p>
+</blockquote>
+
+<h2 id="transports">Transports</h2>
+
+<p>WAMP assumes a <em>transport</em> with the following characteristics:</p>
+
+<ol>
+<li>message-based</li>
+<li>reliable</li>
+<li>ordered</li>
+<li>bidirectional (full-duplex)</li>
+</ol>
+
+<p>There is no required transport or set of transports for WAMP implementations (but each implementation MUST, of course, implement at least one transport). Routers SHOULD implement more than one transport, enabling components using different kinds of transports to connect in an application.</p>
+
+<h3 id="websocket-transport">WebSocket Transport</h3>
+
+<p>The default transport binding for WAMP is WebSocket.</p>
+
+<p>In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). The Advanced Profile may define other modes, e.g. a <strong>batched mode</strong> where multiple WAMP messages are transmitted via single WebSocket message.</p>
+
+<p>The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between <em>Peers</em> using the WebSocket subprotocol negotiation mechanism.</p>
+
+<p>WAMP uses the following WebSocket subprotocol identifiers for unbatched modes:</p>
+
+<ul>
+<li><code>wamp.2.json</code></li>
+<li><code>wamp.2.msgpack</code></li>
+</ul>
+
+<p>With <code>wamp.2.json</code>, <em>all</em> WebSocket messages MUST BE of type <strong>text</strong> (UTF8 encoded payload) and use the JSON message serialization.</p>
+
+<p>With <code>wamp.2.msgpack</code>, <em>all</em> WebSocket messages MUST BE of type <strong>binary</strong> and use the MsgPack message serialization.</p>
+
+<blockquote>
+<p>To avoid incompatibilities merely due to naming conflicts with WebSocket subprotocol identifiers, implementers SHOULD register identifiers for additional serialization formats with the official WebSocket subprotocol registry.</p>
+</blockquote>
+
+<h3 id="transport-and-session-lifetime">Transport and Session Lifetime</h3>
+
+<p>WAMP implementations MAY choose to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session, i.e. establish a new transport-layer connection as part of each new session establishment. They MAY equally choose to allow re-use of a transport connection, allowing subsequent WAMP sessions to be established using the same transport connection.</p>
+
+<p>The diagram below illustrates the full transport connection and session lifecycle for an implementation which uses WebSocket over TCP as the transport and allows the re-use of a transport connection.</p>
+
+<pre><code>    ,------.                                    ,------.
+    | Peer |                                    | Peer |
+    `--+---'                                    `--+---'
+
+                      TCP established
+       |&lt;-----------------------------------------&gt;|
+       |                                           |
+       |               TLS established             |
+       |+&lt;---------------------------------------&gt;+|
+       |+                                         +|
+       |+           WebSocket established         +|
+       |+|&lt;-------------------------------------&gt;|+|
+       |+|                                       |+|
+       |+|            WAMP established           |+|
+       |+|+&lt;-----------------------------------&gt;+|+|
+       |+|+                                     +|+|
+       |+|+                                     +|+|
+       |+|+            WAMP closed              +|+|
+       |+|+&lt;-----------------------------------&gt;+|+|
+       |+|                                       |+|
+       |+|                                       |+|
+       |+|            WAMP established           |+|
+       |+|+&lt;-----------------------------------&gt;+|+|
+       |+|+                                     +|+|
+       |+|+                                     +|+|
+       |+|+            WAMP closed              +|+|
+       |+|+&lt;-----------------------------------&gt;+|+|
+       |+|                                       |+|
+       |+|           WebSocket closed            |+|
+       |+|&lt;-------------------------------------&gt;|+|
+       |+                                         +|
+       |+              TLS closed                 +|
+       |+&lt;---------------------------------------&gt;+|
+       |                                           |
+       |               TCP closed                  |
+       |&lt;-----------------------------------------&gt;|
+
+    ,--+---.                                    ,--+---.
+    | Peer |                                    | Peer |
+    `------'                                    `------'
+</code></pre>
+
+<h1 id="messages">Messages</h1>
+
+<p>All WAMP messages are a <code>list</code> with a first element <code>MessageType</code> followed by one or more message type specific elements:</p>
+
+<pre><code>    [MessageType|integer, ... one or more message type specific
+        elements ...]
+</code></pre>
+
+<p>The notation <code>Element|type</code> denotes a message element named <code>Element</code> of type <code>type</code>, where <code>type</code> is one of</p>
+
+<ul>
+<li><code>uri</code>: a string URI as defined in <a href="#uris">URIs</a></li>
+<li><code>id</code>: an integer ID as defined in <a href="#ids">IDs</a></li>
+<li><code>integer</code>: a non-negative integer</li>
+<li><code>string</code>: a Unicode string, including the empty string</li>
+<li><code>bool</code>: a boolean value (<code>true</code> or <code>false</code>) - integers MUST NOT be used instead of boolean value</li>
+<li><code>dict</code>: a dictionary (map) where keys MUST be strings, keys MUST be unique and serialization order is undefined (left to the serializer being used)</li>
+<li><code>list</code>: a list (array) where items can be again any of this enumeration</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<p>A <code>SUBSCRIBE</code> message has the following format</p>
+
+<pre><code>    [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+</code></pre>
+
+<p>Here is an example message conforming to the above format</p>
+
+<pre><code>    [32, 713845233, {}, &quot;com.myapp.mytopic1&quot;]
+</code></pre>
+
+<h2 id="extensibility">Extensibility</h2>
+
+<p>Some WAMP messages contain <code>Options|dict</code> or <code>Details|dict</code> elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in <code>Options</code> and <code>Details</code> MUST be of type <code>string</code> and MUST match the regular expression <code>[a-z][a-z0-9_]{2,}</code> for WAMP <em>predefined</em> keys. Implementations MAY use implementation-specific keys that MUST match the regular expression <code>_[a-z0-9_]{3,}</code>. Attributes unknown to an implementation MUST be ignored.</p>
+
+<h2 id="no-polymorphism">No Polymorphism</h2>
+
+<p>For a given <code>MessageType</code> <em>and</em> number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.</p>
+
+<h2 id="structure">Structure</h2>
+
+<p>The <em>application</em> payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: <em>Brokers</em> and <em>Dealers</em> have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows <em>Brokers</em> and <em>Dealers</em> to skip parsing it altogether. This can improve efficiency and performance.</p>
+
+<h2 id="message-definitions">Message Definitions</h2>
+
+<p>WAMP defines the following messages that are explained in detail in the following sections.</p>
+
+<p>The messages concerning the WAMP session itself are mandatory for all <em>Peers</em>, i.e. a <em>Client</em> MUST implement <code>HELLO</code>, <code>ABORT</code> and <code>GOODBYE</code>, while a <em>Router</em> MUST implement <code>WELCOME</code>, <code>ABORT</code> and <code>GOODBYE</code>.</p>
+
+<p>All other messages are mandatory <em>per role</em>, i.e. in an implementation that only provides a <em>Client</em> with the role of <em>Publisher</em> MUST additionally implement sending <code>PUBLISH</code> and receiving <code>PUBLISHED</code> and <code>ERROR</code> messages.</p>
+
+<h3 id="session-lifecycle">Session Lifecycle</h3>
+
+<h4 id="hello">HELLO</h4>
+
+<p>Sent by a <em>Client</em> to initiate opening of a WAMP session to a <em>Router</em> attaching to a <em>Realm</em>.</p>
+
+<pre><code>    [HELLO, Realm|uri, Details|dict]
+</code></pre>
+
+<h4 id="welcome">WELCOME</h4>
+
+<p>Sent by a <em>Router</em> to accept a <em>Client</em>. The WAMP session is now open.</p>
+
+<pre><code>    [WELCOME, Session|id, Details|dict]
+</code></pre>
+
+<h4 id="abort">ABORT</h4>
+
+<p>Sent by a <em>Peer</em> to abort the opening of a WAMP session. No response is expected.</p>
+
+<pre><code>  [ABORT, Details|dict, Reason|uri]
+</code></pre>
+
+<h4 id="goodbye">GOODBYE</h4>
+
+<p>Sent by a <em>Peer</em> to close a previously opened WAMP session. Must be echo'ed by the receiving <em>Peer</em>.</p>
+
+<pre><code>    [GOODBYE, Details|dict, Reason|uri]
+</code></pre>
+
+<h4 id="error">ERROR</h4>
+
+<p>Error reply sent by a <em>Peer</em> as an error response to different kinds of requests.</p>
+
+<pre><code>    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+        Error|uri]
+
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+        Error|uri, Arguments|list]
+
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
+        Error|uri, Arguments|list, ArgumentsKw|dict]
+</code></pre>
+
+<h3 id="publish--subscribe">Publish &amp; Subscribe</h3>
+
+<h4 id="publish">PUBLISH</h4>
+
+<p>Sent by a <em>Publisher</em> to a <em>Broker</em> to publish an event.</p>
+
+<pre><code>    [PUBLISH, Request|id, Options|dict, Topic|uri]
+
+    [PUBLISH, Request|id, Options|dict, Topic|uri,
+        Arguments|list]
+
+    [PUBLISH, Request|id, Options|dict, Topic|uri,
+        Arguments|list, ArgumentsKw|dict]
+</code></pre>
+
+<h4 id="published">PUBLISHED</h4>
+
+<p>Acknowledge sent by a <em>Broker</em> to a <em>Publisher</em> for acknowledged publications.</p>
+
+<pre><code>    [PUBLISHED, PUBLISH.Request|id, Publication|id]
+</code></pre>
+
+<h4 id="subscribe">SUBSCRIBE</h4>
+
+<p>Subscribe request sent by a <em>Subscriber</em> to a <em>Broker</em> to subscribe to a topic.</p>
+
+<pre><code>    [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+</code></pre>
+
+<h4 id="subscribed">SUBSCRIBED</h4>
+
+<p>Acknowledge sent by a <em>Broker</em> to a <em>Subscriber</em> to acknowledge a subscription.</p>
+
+<pre><code>    [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
+</code></pre>
+
+<h4 id="unsubscribe">UNSUBSCRIBE</h4>
+
+<p>Unsubscribe request sent by a <em>Subscriber</em> to a <em>Broker</em> to unsubscribe a subscription.</p>
+
+<pre><code>    [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
+</code></pre>
+
+<h4 id="unsubscribed">UNSUBSCRIBED</h4>
+
+<p>Acknowledge sent by a <em>Broker</em> to a <em>Subscriber</em> to acknowledge unsubscription.</p>
+
+<pre><code>    [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
+</code></pre>
+
+<h4 id="event">EVENT</h4>
+
+<p>Event dispatched by <em>Broker</em> to <em>Subscribers</em> for subscriptions the event was matching.</p>
+
+<pre><code>    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+        Details|dict]
+
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+        Details|dict, PUBLISH.Arguments|list]
+
+    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+        Details|dict, PUBLISH.Arguments|list,
+        PUBLISH.ArgumentsKw|dict]
+</code></pre>
+
+<blockquote>
+<p>An event is dispatched to a <em>Subscriber</em> for a given <code>Subscription|id</code> <em>only once</em>. On the other hand, a <em>Subscriber</em> that holds subscriptions with different <code>Subscription|id</code>s that all match a given event will receive the event on each matching subscription.</p>
+</blockquote>
+
+<h3 id="routed-remote-procedure-calls">Routed Remote Procedure Calls</h3>
+
+<h4 id="call">CALL</h4>
+
+<p>Call as originally issued by the <em>Caller</em> to the <em>Dealer</em>.</p>
+
+<pre><code>  [CALL, Request|id, Options|dict, Procedure|uri]
+
+  [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+
+  [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
+      ArgumentsKw|dict]
+</code></pre>
+
+<h4 id="result">RESULT</h4>
+
+<p>Result of a call as returned by <em>Dealer</em> to <em>Caller</em>.</p>
+
+<pre><code>    [RESULT, CALL.Request|id, Details|dict]
+
+    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
+
+    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
+        YIELD.ArgumentsKw|dict]
+</code></pre>
+
+<h4 id="register">REGISTER</h4>
+
+<p>A <em>Callees</em> request to register an endpoint at a <em>Dealer</em>.</p>
+
+<pre><code>    [REGISTER, Request|id, Options|dict, Procedure|uri]
+</code></pre>
+
+<h4 id="registered">REGISTERED</h4>
+
+<p>Acknowledge sent by a <em>Dealer</em> to a <em>Callee</em> for successful registration.</p>
+
+<pre><code>    [REGISTERED, REGISTER.Request|id, Registration|id]
+</code></pre>
+
+<h4 id="unregister">UNREGISTER</h4>
+
+<p>A <em>Callees</em> request to unregister a previously established registration.</p>
+
+<pre><code>    [UNREGISTER, Request|id, REGISTERED.Registration|id]
+</code></pre>
+
+<h4 id="unregistered">UNREGISTERED</h4>
+
+<p>Acknowledge sent by a <em>Dealer</em> to a <em>Callee</em> for successful unregistration.</p>
+
+<pre><code>    [UNREGISTERED, UNREGISTER.Request|id]
+</code></pre>
+
+<h4 id="invocation">INVOCATION</h4>
+
+<p>Actual invocation of an endpoint sent by <em>Dealer</em> to a <em>Callee</em>.</p>
+
+<pre><code>    [INVOCATION, Request|id, REGISTERED.Registration|id,
+        Details|dict]
+
+    [INVOCATION, Request|id, REGISTERED.Registration|id,
+        Details|dict, C* Arguments|list]
+
+    [INVOCATION, Request|id, REGISTERED.Registration|id,
+        Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+</code></pre>
+
+<h4 id="yield">YIELD</h4>
+
+<p>Actual yield from an endpoint sent by a <em>Callee</em> to <em>Dealer</em>.</p>
+
+<pre><code>    [YIELD, INVOCATION.Request|id, Options|dict]
+
+    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
+
+    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
+        ArgumentsKw|dict]
+</code></pre>
+
+<h2 id="message-codes-and-direction">Message Codes and Direction</h2>
+
+<p>The following table lists the message type code for <strong>all 25 messages defined in the WAMP basic profile</strong> and their direction between peer roles.</p>
+
+<p>Reserved codes may be used to identify additional message types in future standards documents.</p>
+
+<blockquote>
+<p>&quot;Tx&quot; indicates the message is sent by the respective role, and &quot;Rx&quot; indicates the message is received by the respective role.</p>
+</blockquote>
+
+<table>
+<thead>
+<tr>
+<th>Cod</th>
+<th>Message</th>
+<th>Pub</th>
+<th>Brk</th>
+<th>Subs</th>
+<th>Calr</th>
+<th>Dealr</th>
+<th>Callee</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>1</td>
+<td><code>HELLO</code></td>
+<td>Tx</td>
+<td>Rx</td>
+<td>Tx</td>
+<td>Tx</td>
+<td>Rx</td>
+<td>Tx</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td><code>WELCOME</code></td>
+<td>Rx</td>
+<td>Tx</td>
+<td>Rx</td>
+<td>Rx</td>
+<td>Tx</td>
+<td>Rx</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td><code>ABORT</code></td>
+<td>Rx</td>
+<td>TxRx</td>
+<td>Rx</td>
+<td>Rx</td>
+<td>TxRx</td>
+<td>Rx</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td><code>GOODBYE</code></td>
+<td>TxRx</td>
+<td>TxRx</td>
+<td>TxRx</td>
+<td>TxRx</td>
+<td>TxRx</td>
+<td>TxRx</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>8</td>
+<td><code>ERROR</code></td>
+<td>Rx</td>
+<td>Tx</td>
+<td>Rx</td>
+<td>Rx</td>
+<td>TxRx</td>
+<td>TxRx</td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>16</td>
+<td><code>PUBLISH</code></td>
+<td>Tx</td>
+<td>Rx</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>17</td>
+<td><code>PUBLISHED</code></td>
+<td>Rx</td>
+<td>Tx</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>32</td>
+<td><code>SUBSCRIBE</code></td>
+<td></td>
+<td>Rx</td>
+<td>Tx</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>33</td>
+<td><code>SUBSCRIBED</code></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>34</td>
+<td><code>UNSUBSCRIBE</code></td>
+<td></td>
+<td>Rx</td>
+<td>Tx</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>35</td>
+<td><code>UNSUBSCRIBED</code></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>36</td>
+<td><code>EVENT</code></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>48</td>
+<td><code>CALL</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+<td></td>
+</tr>
+
+<tr>
+<td>50</td>
+<td><code>RESULT</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Rx</td>
+<td>Tx</td>
+<td></td>
+</tr>
+
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>64</td>
+<td><code>REGISTER</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Rx</td>
+<td>Tx</td>
+</tr>
+
+<tr>
+<td>65</td>
+<td><code>REGISTERED</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+</tr>
+
+<tr>
+<td>66</td>
+<td><code>UNREGISTER</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Rx</td>
+<td>Tx</td>
+</tr>
+
+<tr>
+<td>67</td>
+<td><code>UNREGISTERED</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+</tr>
+
+<tr>
+<td>68</td>
+<td><code>INVOCATION</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+</tr>
+
+<tr>
+<td>70</td>
+<td><code>YIELD</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Rx</td>
+<td>Tx</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="extension-messages">Extension Messages</h2>
+
+<p>WAMP uses type codes from the core range [0, 255]. Implementations MAY define and use implementation specific messages with message type codes from the extension message range [256, 1023]. For example, a router MAY implement router-to-router communication by using extension messages.</p>
+
+<h2 id="empty-arguments-and-keyword-arguments">Empty Arguments and Keyword Arguments</h2>
+
+<p>Implementations SHOULD avoid sending empty <code>Arguments</code> lists.</p>
+
+<p>E.g. a <code>CALL</code> message</p>
+
+<pre><code>    [CALL, Request|id, Options|dict, Procedure|uri,
+        Arguments|list]
+</code></pre>
+
+<p>where <code>Arguments == []</code> SHOULD be avoided, and instead</p>
+
+<pre><code>    [CALL, Request|id, Options|dict, Procedure|uri]
+</code></pre>
+
+<p>SHOULD be sent.</p>
+
+<p>Implementations SHOULD avoid sending empty <code>ArgumentsKw</code> dictionaries.</p>
+
+<p>E.g. a <code>CALL</code> message</p>
+
+<pre><code>    [CALL, Request|id, Options|dict, Procedure|uri,
+        Arguments|list, ArgumentsKw|dict]
+</code></pre>
+
+<p>where <code>ArgumentsKw == {}</code> SHOULD be avoided, and instead</p>
+
+<pre><code>    [CALL, Request|id, Options|dict, Procedure|uri,
+        Arguments|list]
+</code></pre>
+
+<p>SHOULD be sent when <code>Arguments</code> is non-empty.</p>
+
+<h1 id="sessions">Sessions</h1>
+
+<p>The message flow between <em>Clients</em> and <em>Routers</em> for opening and closing WAMP sessions involves the following messages:</p>
+
+<ol>
+<li><code>HELLO</code></li>
+<li><code>WELCOME</code></li>
+<li><code>ABORT</code></li>
+<li><code>GOODBYE</code></li>
+</ol>
+
+<h2 id="session-establishment">Session Establishment</h2>
+
+<h3 id="hello-1">HELLO</h3>
+
+<p>After the underlying transport has been established, the opening of a WAMP session is initiated by the <em>Client</em> sending a <code>HELLO</code> message to the <em>Router</em></p>
+
+<pre><code>    [HELLO, Realm|uri, Details|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Realm</code> is a string identifying the realm this session should attach to</li>
+<li><code>Details</code> is a dictionary that allows to provide additional opening information (see below).</li>
+</ul>
+
+<p>The <code>HELLO</code> message MUST be the very first message sent by the <em>Client</em> after the transport has been established.</p>
+
+<p>In the WAMP Basic Profile without session authentication the <em>Router</em> will reply with a <code>WELCOME</code> or <code>ABORT</code> message.</p>
+
+<pre><code>    ,------.          ,------.
+    |Client|          |Router|
+    `--+---'          `--+---'
+       |      HELLO      |
+       | ----------------&gt;
+       |                 |
+       |     WELCOME     |
+       | &lt;----------------
+    ,--+---.          ,--+---.
+    |Client|          |Router|
+    `------'          `------'
+</code></pre>
+
+<p>A WAMP session starts its lifetime when the <em>Router</em> has sent a <code>WELCOME</code> message to the <em>Client</em>, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the <code>GOODBYE</code> message (see below).</p>
+
+<p>It is a protocol error to receive a second <code>HELLO</code> message during the lifetime of the session and the <em>Peer</em> must fail the session if that happens.</p>
+
+<h4 id="client-role-and-feature-announcement">Client: Role and Feature Announcement</h4>
+
+<p>WAMP uses <em>Role &amp; Feature announcement</em> instead of <em>protocol versioning</em> to allow</p>
+
+<ul>
+<li>implementations only supporting subsets of functionality</li>
+<li>future extensibility</li>
+</ul>
+
+<p>A <em>Client</em> must announce the <strong>roles</strong> it supports via <code>Hello.Details.roles|dict</code>, with a key mapping to a <code>Hello.Details.roles.&lt;role&gt;|dict</code> where <code>&lt;role&gt;</code> can be:</p>
+
+<ul>
+<li><code>publisher</code></li>
+<li><code>subscriber</code></li>
+<li><code>caller</code></li>
+<li><code>callee</code></li>
+</ul>
+
+<p>A <em>Client</em> can support any combination of the above roles but must support at least one role.</p>
+
+<p>The <code>&lt;role&gt;|dict</code> is a dictionary describing <strong>features</strong> supported by the peer for that role.</p>
+
+<p>This MUST be empty for WAMP Basic Profile implementations, and MUST be used by implementations implementing parts of the Advanced Profile to list the specific set of features they support.</p>
+
+<p><em>Example: A Client that implements the Publisher and Subscriber roles of the WAMP Basic Profile.</em></p>
+
+<pre><code>    [1, &quot;somerealm&quot;, {
+      &quot;roles&quot;: {
+          &quot;publisher&quot;: {},
+          &quot;subscriber&quot;: {}
+      }
+    }]
+</code></pre>
+
+<h3 id="welcome-1">WELCOME</h3>
+
+<p>A <em>Router</em> completes the opening of a WAMP session by sending a <code>WELCOME</code> reply message to the <em>Client</em>.</p>
+
+<pre><code>    [WELCOME, Session|id, Details|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Session</code> MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session.</li>
+<li><code>Details</code> is a dictionary that allows to provide additional information regarding the open session (see below).</li>
+</ul>
+
+<p>In the WAMP Basic Profile without session authentication, a <code>WELCOME</code> message MUST be the first message sent by the <em>Router</em>, directly in response to a <code>HELLO</code> message received from the <em>Client</em>. Extensions in the Advanced Profile MAY include intermediate steps and messages for authentication.</p>
+
+<blockquote>
+<p>Note. The behavior if a requested <code>Realm</code> does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a <code>ABORT</code> reply message.</p>
+</blockquote>
+
+<h4 id="router-role-and-feature-announcement">Router: Role and Feature Announcement</h4>
+
+<p>Similar to a <em>Client</em> announcing <em>Roles</em> and <em>Features</em> supported in the `<code>HELLO</code> message, a <em>Router</em> announces its supported <em>Roles</em> and <em>Features</em> in the <code>WELCOME</code> message.</p>
+
+<p>A <em>Router</em> MUST announce the <strong>roles</strong> it supports via <code>Welcome.Details.roles|dict</code>, with a key mapping to a <code>Welcome.Details.roles.&lt;role&gt;|dict</code> where <code>&lt;role&gt;</code> can be:</p>
+
+<ul>
+<li><code>broker</code></li>
+<li><code>dealer</code></li>
+</ul>
+
+<p>A <em>Router</em> must support at least one role, and MAY support both roles.</p>
+
+<p>The <code>&lt;role&gt;|dict</code> is a dictionary describing <strong>features</strong> supported by the peer for that role. With WAMP Basic Profile implementations, this MUST be empty, but MUST be used by implementations implementing parts of the Advanced Profile to list the specific set of features they support</p>
+
+<p><em>Example: A Router implementing the Broker role of the WAMP Basic Profile.</em></p>
+
+<pre><code>    [2, 9129137332, {
+       &quot;roles&quot;: {
+          &quot;broker&quot;: {}
+       }
+    }]
+</code></pre>
+
+<h3 id="abort-1">ABORT</h3>
+
+<p>Both the <em>Router</em> and the <em>Client</em> may abort the opening of a WAMP session by sending an <code>ABORT</code> message.</p>
+
+<pre><code>    [ABORT, Details|dict, Reason|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Reason</code> MUST be an URI.</li>
+<li><code>Details</code> MUST be a dictionary that allows to provide additional, optional closing information (see below).</li>
+</ul>
+
+<p>No response to an <code>ABORT</code> message is expected.</p>
+
+<pre><code>    ,------.          ,------.
+    |Client|          |Router|
+    `--+---'          `--+---'
+       |      HELLO      |
+       | ----------------&gt;
+       |                 |
+       |      ABORT      |
+       | &lt;----------------
+    ,--+---.          ,--+---.
+    |Client|          |Router|
+    `------'          `------'
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [3, {&quot;message&quot;: &quot;The realm does not exist.&quot;},
+        &quot;wamp.error.no_such_realm&quot;]
+</code></pre>
+
+<h2 id="session-closing">Session Closing</h2>
+
+<p>A WAMP session starts its lifetime with the <em>Router</em> sending a <code>WELCOME</code> message to the <em>Client</em> and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a <code>GOODBYE</code> message sent by one <em>Peer</em> and a <code>GOODBYE</code> message sent from the other <em>Peer</em> in response.</p>
+
+<pre><code>    [GOODBYE, Details|dict, Reason|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Reason</code> MUST be an URI.</li>
+<li><code>Details</code> MUST be a dictionary that allows to provide additional, optional closing information (see below).</li>
+</ul>
+
+<pre><code>    ,------.          ,------.
+    |Client|          |Router|
+    `--+---'          `--+---'
+       |     GOODBYE     |
+       | ----------------&gt;
+       |                 |
+       |     GOODBYE     |
+       | &lt;----------------
+    ,--+---.          ,--+---.
+    |Client|          |Router|
+    `------'          `------'
+</code></pre>
+
+<pre><code>    ,------.          ,------.
+    |Client|          |Router|
+    `--+---'          `--+---'
+       |     GOODBYE     |
+       | &lt;----------------
+       |                 |
+       |     GOODBYE     |
+       | ----------------&gt;
+    ,--+---.          ,--+---.
+    |Client|          |Router|
+    `------'          `------'
+</code></pre>
+
+<p><em>Example</em>. One <em>Peer</em> initiates closing</p>
+
+<pre><code>    [6, {&quot;message&quot;: &quot;The host is shutting down now.&quot;},
+        &quot;wamp.error.system_shutdown&quot;]
+</code></pre>
+
+<p>and the other peer replies</p>
+
+<pre><code>    [6, {}, &quot;wamp.error.goodbye_and_out&quot;]
+</code></pre>
+
+<p><em>Example</em>. One <em>Peer</em> initiates closing</p>
+
+<pre><code>    [6, {}, &quot;wamp.error.close_realm&quot;]
+</code></pre>
+
+<p>and the other peer replies</p>
+
+<pre><code>    [6, {}, &quot;wamp.error.goodbye_and_out&quot;]
+</code></pre>
+
+<h3 id="difference-between-abort-and-goodbye">Difference between ABORT and GOODBYE</h3>
+
+<p>The differences between <code>ABORT</code> and <code>GOODBYE</code> messages are:</p>
+
+<ol>
+<li><code>ABORT</code> gets sent only <em>before</em> a <em>Session</em> is established, while <code>GOODBYE</code> is sent only <em>after</em> a <em>Session</em> is already established.</li>
+<li><code>ABORT</code> is never replied to by a <em>Peer</em>, whereas <code>GOODBYE</code> must be replied to by the receiving <em>Peer</em></li>
+</ol>
+
+<blockquote>
+<p>Though <code>ABORT</code> and <code>GOODBYE</code> are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.</p>
+</blockquote>
+
+<h2 id="agent-identification">Agent Identification</h2>
+
+<p>When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.</p>
+
+<p>Similar to what browsers do with the <code>User-Agent</code> HTTP header, both the <code>HELLO</code> and the <code>WELCOME</code> message MAY disclose the WAMP implementation in use to its peer:</p>
+
+<pre><code>    HELLO.Details.agent|string
+</code></pre>
+
+<p>and</p>
+
+<pre><code>    WELCOME.Details.agent|string
+</code></pre>
+
+<p><em>Example: A Client &quot;HELLO&quot; message.</em></p>
+
+<pre><code>    [1, &quot;somerealm&quot;, {
+         &quot;agent&quot;: &quot;AutobahnJS-0.9.14&quot;,
+         &quot;roles&quot;: {
+            &quot;subscriber&quot;: {},
+            &quot;publisher&quot;: {}
+         }
+    }]
+</code></pre>
+
+<p><em>Example: A Router &quot;WELCOME&quot; message.</em></p>
+
+<pre><code>    [2, 9129137332, {
+        &quot;agent&quot;: &quot;Crossbar.io-0.10.11&quot;,
+        &quot;roles&quot;: {
+          &quot;broker&quot;: {}
+        }
+    }]
+</code></pre>
+
+<h1 id="publish-and-subscribe">Publish and Subscribe</h1>
+
+<p>All of the following features for Publish &amp; Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. <em>Publisher</em>, <em>Subscriber</em> and <em>Dealer</em>.</p>
+
+<h2 id="subscribing-and-unsubscribing">Subscribing and Unsubscribing</h2>
+
+<p>The message flow between <em>Clients</em> implementing the role of <em>Subscriber</em> and <em>Routers</em> implementing the role of <em>Broker</em> for subscribing and unsubscribing involves the following messages:</p>
+
+<ol>
+<li><code>SUBSCRIBE</code></li>
+<li><code>SUBSCRIBED</code></li>
+<li><code>UNSUBSCRIBE</code></li>
+<li><code>UNSUBSCRIBED</code></li>
+<li><code>ERROR</code></li>
+</ol>
+
+<pre><code>    ,---------.          ,------.             ,----------.
+    |Publisher|          |Broker|             |Subscriber|
+    `----+----'          `--+---'             `----+-----'
+         |                  |                      |
+         |                  |                      |
+         |                  |       SUBSCRIBE      |
+         |                  | &lt;---------------------
+         |                  |                      |
+         |                  |  SUBSCRIBED or ERROR |
+         |                  | ---------------------&gt;
+         |                  |                      |
+         |                  |                      |
+         |                  |                      |
+         |                  |                      |
+         |                  |      UNSUBSCRIBE     |
+         |                  | &lt;---------------------
+         |                  |                      |
+         |                  | UNSUBSCRIBED or ERROR|
+         |                  | ---------------------&gt;
+    ,----+----.          ,--+---.             ,----+-----.
+    |Publisher|          |Broker|             |Subscriber|
+    `---------'          `------'             `----------'
+</code></pre>
+
+<p>A <em>Subscriber</em> may subscribe to zero, one or more topics, and a <em>Publisher</em> publishes to topics without knowledge of subscribers.</p>
+
+<p>Upon subscribing to a topic via the <code>SUBSCRIBE</code> message, a <em>Subscriber</em> will receive any future events published to the respective topic by <em>Publishers</em>, and will receive those events asynchronously.</p>
+
+<p>A subscription lasts for the duration of a session, unless a <em>Subscriber</em> opts out from a previously established subscription via the <code>UNSUBSCRIBE</code> message.</p>
+
+<blockquote>
+<p>A <em>Subscriber</em> may have more than one event handler attached to the same subscription. This can be implemented in different ways: a) a <em>Subscriber</em> can recognize itself that it is already subscribed and just attach another handler to the subscription for incoming events, b) or it can send a new <code>SUBSCRIBE</code> message to broker (as it would be first) and upon receiving a <code>SUBSCRIBED.Subscription|id</code> it already knows about, attach the handler to the existing subscription</p>
+</blockquote>
+
+<h3 id="subscribe-1">SUBSCRIBE</h3>
+
+<p>A <em>Subscriber</em> communicates its interest in a topic to a <em>Broker</em> by sending a <code>SUBSCRIBE</code> message:</p>
+
+<pre><code>    [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Request</code> MUST be a random, ephemeral ID chosen by the <em>Subscriber</em> and used to correlate the <em>Broker's</em> response with the request.</li>
+<li><code>Options</code> MUST be a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.</li>
+<li><code>Topic</code> is the topic the <em>Subscriber</em> wants to subscribe to and MUST be an URI.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [32, 713845233, {}, &quot;com.myapp.mytopic1&quot;]
+</code></pre>
+
+<p>A <em>Broker</em>, receiving a <code>SUBSCRIBE</code> message, can fullfill or reject the subscription, so it answers with <code>SUBSCRIBED</code> or <code>ERROR</code> messages.</p>
+
+<h3 id="subscribed-1">SUBSCRIBED</h3>
+
+<p>If the <em>Broker</em> is able to fulfill and allow the subscription, it answers by sending a <code>SUBSCRIBED</code> message to the <em>Subscriber</em></p>
+
+<pre><code>    [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>SUBSCRIBE.Request</code> MUST be the ID from the original request.</li>
+<li><code>Subscription</code> MUST be an ID chosen by the <em>Broker</em> for the subscription.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [33, 713845233, 5512315355]
+</code></pre>
+
+<blockquote>
+<p>Note. The <code>Subscription</code> ID chosen by the broker need not be unique to the subscription of a single <em>Subscriber</em>, but may be assigned to the <code>Topic</code>, or the combination of the <code>Topic</code> and some or all <code>Options</code>, such as the topic pattern matching method to be used. Then this ID may be sent to all <em>Subscribers</em> for the <code>Topic</code> or <code>Topic</code> /  <code>Options</code> combination. This allows the <em>Broker</em> to serialize an event to be delivered only once for all actual receivers of the event.</p>
+
+<p>In case of receiving a <code>SUBSCRIBE</code> message from the same <em>Subscriber</em> and to already subscribed topic, <em>Broker</em> should answer with <code>SUBSCRIBED</code> message, containing the existing <code>Subscription|id</code>.</p>
+</blockquote>
+
+<h3 id="subscribe-error">Subscribe ERROR</h3>
+
+<p>When the request for subscription cannot be fulfilled by the <em>Broker</em>, the <em>Broker</em> sends back an <code>ERROR</code> message to the <em>Subscriber</em></p>
+
+<pre><code>    [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict,
+        Error|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>SUBSCRIBE.Request</code> MUST be the ID from the original request.</li>
+<li><code>Error</code> MUST be an URI that gives the error of why the request could not be fulfilled.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 32, 713845233, {}, &quot;wamp.error.not_authorized&quot;]
+</code></pre>
+
+<h3 id="unsubscribe-1">UNSUBSCRIBE</h3>
+
+<p>When a <em>Subscriber</em> is no longer interested in receiving events for a subscription it sends an <code>UNSUBSCRIBE</code> message</p>
+
+<pre><code>    [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Request</code> MUST be a random, ephemeral ID chosen by the <em>Subscriber</em> and used to correlate the <em>Broker's</em> response with the request.</li>
+<li><code>SUBSCRIBED.Subscription</code> MUST be the ID for the subscription to unsubscribe from, originally handed out by the <em>Broker</em> to the <em>Subscriber</em>.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [34, 85346237, 5512315355]
+</code></pre>
+
+<h3 id="unsubscribed-1">UNSUBSCRIBED</h3>
+
+<p>Upon successful unsubscription, the <em>Broker</em> sends an <code>UNSUBSCRIBED</code> message to the <em>Subscriber</em></p>
+
+<pre><code>    [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>UNSUBSCRIBE.Request</code> MUST be the ID from the original request.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [35, 85346237]
+</code></pre>
+
+<h3 id="unsubscribe-error">Unsubscribe ERROR</h3>
+
+<p>When the request fails, the <em>Broker</em> sends an <code>ERROR</code></p>
+
+<pre><code>    [ERROR, UNSUBSCRIBE, UNSUBSCRIBE.Request|id, Details|dict,
+        Error|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>UNSUBSCRIBE.Request</code> MUST be the ID from the original request.</li>
+<li><code>Error</code> MUST be an URI that gives the error of why the request could not be fulfilled.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 34, 85346237, {}, &quot;wamp.error.no_such_subscription&quot;]
+</code></pre>
+
+<h2 id="publishing-and-events">Publishing and Events</h2>
+
+<p>The message flow between <em>Publishers</em>, a <em>Broker</em> and <em>Subscribers</em> for publishing to topics and dispatching events involves the following messages:</p>
+
+<ol>
+<li><code>PUBLISH</code></li>
+<li><code>PUBLISHED</code></li>
+<li><code>EVENT</code></li>
+<li><code>ERROR</code></li>
+</ol>
+
+<pre><code>    ,---------.          ,------.          ,----------.
+    |Publisher|          |Broker|          |Subscriber|
+    `----+----'          `--+---'          `----+-----'
+         |     PUBLISH      |                   |
+         |------------------&gt;                   |
+         |                  |                   |
+         |PUBLISHED or ERROR|                   |
+         |&lt;------------------                   |
+         |                  |                   |
+         |                  |       EVENT       |
+         |                  | ------------------&gt;
+    ,----+----.          ,--+---.          ,----+-----.
+    |Publisher|          |Broker|          |Subscriber|
+    `---------'          `------'          `----------'
+</code></pre>
+
+<h3 id="publish-1">PUBLISH</h3>
+
+<p>When a <em>Publisher</em> requests to publish an event to some topic, it sends a <code>PUBLISH</code> message to a <em>Broker</em>:</p>
+
+<pre><code>    [PUBLISH, Request|id, Options|dict, Topic|uri]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list,
+        ArgumentsKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Request</code> is a random, ephemeral ID chosen by the <em>Publisher</em> and used to correlate the <em>Broker's</em> response with the request.</li>
+<li><code>Options</code> is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.</li>
+<li><code>Topic</code> is the topic published to.</li>
+<li><code>Arguments</code> is a list of application-level event payload elements. The list may be of zero length.</li>
+<li><code>ArgumentsKw</code> is an optional dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.</li>
+</ul>
+
+<p>If the <em>Broker</em> is able to fulfill and allowing the publication, the <em>Broker</em> will send the event to all current <em>Subscribers</em> of the topic of the published event.</p>
+
+<p>By default, publications are unacknowledged, and the <em>Broker</em> will not respond, whether the publication was successful indeed or not. This behavior can be changed with the option <code>PUBLISH.Options.acknowledge|bool</code> (see below).</p>
+
+<p><em>Example</em></p>
+
+<pre><code>    [16, 239714735, {}, &quot;com.myapp.mytopic1&quot;]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [16, 239714735, {}, &quot;com.myapp.mytopic1&quot;, [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [16, 239714735, {}, &quot;com.myapp.mytopic1&quot;, [], {&quot;color&quot;: &quot;orange&quot;,
+        &quot;sizes&quot;: [23, 42, 7]}]
+</code></pre>
+
+<h3 id="published-1">PUBLISHED</h3>
+
+<p>If the <em>Broker</em> is able to fulfill and allowing the publication, and <code>PUBLISH.Options.acknowledge == true</code>, the <em>Broker</em> replies by sending a <code>PUBLISHED</code> message to the <em>Publisher</em>:</p>
+
+<pre><code>    [PUBLISHED, PUBLISH.Request|id, Publication|id]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>PUBLISH.Request</code> is the ID from the original publication request.</li>
+<li><code>Publication</code> is a ID chosen by the Broker for the publication.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [17, 239714735, 4429313566]
+</code></pre>
+
+<h3 id="publish-error">Publish ERROR</h3>
+
+<p>When the request for publication cannot be fulfilled by the <em>Broker</em>, and <code>PUBLISH.Options.acknowledge == true</code>, the <em>Broker</em> sends back an <code>ERROR</code> message to the <em>Publisher</em></p>
+
+<pre><code>    [ERROR, PUBLISH, PUBLISH.Request|id, Details|dict, Error|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>PUBLISH.Request</code> is the ID from the original publication request.</li>
+<li><code>Error</code> is an URI that gives the error of why the request could not be fulfilled.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 16, 239714735, {}, &quot;wamp.error.not_authorized&quot;]
+</code></pre>
+
+<h3 id="event-1">EVENT</h3>
+
+<p>When a publication is successful and a <em>Broker</em> dispatches the event, it determines a list of receivers for the event based on <em>Subscribers</em> for the topic published to and, possibly, other information in the event.</p>
+
+<p>Note that the <em>Publisher</em> of an event will never receive the published event even if the <em>Publisher</em> is also a <em>Subscriber</em> of the topic published to.</p>
+
+<blockquote>
+<p>The Advanced Profile provides options for more detailed control over publication.</p>
+</blockquote>
+
+<p>When a <em>Subscriber</em> is deemed to be a receiver, the <em>Broker</em> sends the <em>Subscriber</em> an <code>EVENT</code> message:</p>
+
+<pre><code>    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+        Details|dict]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+        Details|dict, PUBLISH.Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
+    Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>SUBSCRIBED.Subscription</code> is the ID for the subscription under which the <em>Subscriber</em> receives the event - the ID for the subscription originally handed out by the <em>Broker</em> to the <em>Subscriber</em>.</li>
+<li><code>PUBLISHED.Publication</code> is the ID of the publication of the published event.</li>
+<li><code>Details</code> is a dictionary that allows the <em>Broker</em> to provide additional event details in a extensible way. This is described further below.</li>
+<li><code>PUBLISH.Arguments</code> is the application-level event payload that was provided with the original publication request.</li>
+<li><code>PUBLISH.ArgumentKw</code> is the application-level event payload that was provided with the original publication request.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [36, 5512315355, 4429313566, {}]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [36, 5512315355, 4429313566, {}, [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [36, 5512315355, 4429313566, {}, [], {&quot;color&quot;: &quot;orange&quot;,
+        &quot;sizes&quot;: [23, 42, 7]}]
+</code></pre>
+
+<h1 id="remote-procedure-calls">Remote Procedure Calls</h1>
+
+<p>All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles.</p>
+
+<h2 id="registering-and-unregistering">Registering and Unregistering</h2>
+
+<p>The message flow between <em>Callees</em> and a <em>Dealer</em> for registering and unregistering endpoints to be called over RPC involves the following messages:</p>
+
+<ol>
+<li><code>REGISTER</code></li>
+<li><code>REGISTERED</code></li>
+<li><code>UNREGISTER</code></li>
+<li><code>UNREGISTERED</code></li>
+<li><code>ERROR</code></li>
+</ol>
+
+<pre><code>    ,------.          ,------.               ,------.
+    |Caller|          |Dealer|               |Callee|
+    `--+---'          `--+---'               `--+---'
+       |                 |                      |
+       |                 |                      |
+       |                 |       REGISTER       |
+       |                 | &lt;---------------------
+       |                 |                      |
+       |                 |  REGISTERED or ERROR |
+       |                 | ---------------------&gt;
+       |                 |                      |
+       |                 |                      |
+       |                 |                      |
+       |                 |                      |
+       |                 |                      |
+       |                 |      UNREGISTER      |
+       |                 | &lt;---------------------
+       |                 |                      |
+       |                 | UNREGISTERED or ERROR|
+       |                 | ---------------------&gt;
+    ,--+---.          ,--+---.               ,--+---.
+    |Caller|          |Dealer|               |Callee|
+    `------'          `------'               `------'
+</code></pre>
+
+<h3 id="register-1">REGISTER</h3>
+
+<p>A <em>Callee</em> announces the availability of an endpoint implementing a procedure with a <em>Dealer</em> by sending a <code>REGISTER</code> message:</p>
+
+<pre><code>    [REGISTER, Request|id, Options|dict, Procedure|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Request</code> is a random, ephemeral ID chosen by the <em>Callee</em> and used to correlate the <em>Dealer's</em> response with the request.</li>
+<li><code>Options</code> is a dictionary that allows to provide additional registration request details in a extensible way. This is described further below.</li>
+<li><code>Procedure</code>is the procedure the <em>Callee</em> wants to register</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [64, 25349185, {}, &quot;com.myapp.myprocedure1&quot;]
+</code></pre>
+
+<h3 id="registered-1">REGISTERED</h3>
+
+<p>If the <em>Dealer</em> is able to fulfill and allowing the registration, it answers by sending a <code>REGISTERED</code> message to the <code>Callee</code>:</p>
+
+<pre><code>    [REGISTERED, REGISTER.Request|id, Registration|id]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>REGISTER.Request</code> is the ID from the original request.</li>
+<li><code>Registration</code> is an ID chosen by the <em>Dealer</em> for the registration.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [65, 25349185, 2103333224]
+</code></pre>
+
+<h3 id="register-error">Register ERROR</h3>
+
+<p>When the request for registration cannot be fulfilled by the <em>Dealer</em>, the <em>Dealer</em> sends back an <code>ERROR</code> message to the <em>Callee</em>:</p>
+
+<pre><code>    [ERROR, REGISTER, REGISTER.Request|id, Details|dict, Error|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>REGISTER.Request</code> is the ID from the original request.</li>
+<li><code>Error</code> is an URI that gives the error of why the request could not be fulfilled.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 64, 25349185, {}, &quot;wamp.error.procedure_already_exists&quot;]
+</code></pre>
+
+<h3 id="unregister-1">UNREGISTER</h3>
+
+<p>When a <em>Callee</em> is no longer willing to provide an implementation of the registered procedure, it sends an <code>UNREGISTER</code> message to the <em>Dealer</em>:</p>
+
+<pre><code>    [UNREGISTER, Request|id, REGISTERED.Registration|id]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Request</code> is a random, ephemeral ID chosen by the <em>Callee</em> and used to correlate the <em>Dealer's</em> response with the request.</li>
+<li><code>REGISTERED.Registration</code> is the ID for the registration to revoke, originally handed out by the <em>Dealer</em> to the <em>Callee</em>.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [66, 788923562, 2103333224]
+</code></pre>
+
+<h3 id="unregistered-1">UNREGISTERED</h3>
+
+<p>Upon successful unregistration, the <em>Dealer</em> sends an <code>UNREGISTERED</code> message to the <em>Callee</em>:</p>
+
+<pre><code>    [UNREGISTERED, UNREGISTER.Request|id]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>UNREGISTER.Request</code> is the ID from the original request.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [67, 788923562]
+</code></pre>
+
+<h3 id="unregister-error">Unregister ERROR</h3>
+
+<p>When the unregistration request fails, the <em>Dealer</em> sends an <code>ERROR</code> message:</p>
+
+<pre><code>    [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict,
+        Error|uri]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>UNREGISTER.Request</code> is the ID from the original request.</li>
+<li><code>Error</code> is an URI that gives the error of why the request could not be fulfilled.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 66, 788923562, {}, &quot;wamp.error.no_such_registration&quot;]
+</code></pre>
+
+<h2 id="calling-and-invocations">Calling and Invocations</h2>
+
+<p>The message flow between <em>Callers</em>, a <em>Dealer</em> and <em>Callees</em> for calling procedures and invoking endpoints involves the following messages:</p>
+
+<ol>
+<li><code>CALL</code></li>
+<li><code>RESULT</code></li>
+<li><code>INVOCATION</code></li>
+<li><code>YIELD</code></li>
+<li><code>ERROR</code></li>
+</ol>
+
+<pre><code>    ,------.          ,------.          ,------.
+    |Caller|          |Dealer|          |Callee|
+    `--+---'          `--+---'          `--+---'
+       |       CALL      |                 |
+       | ----------------&gt;                 |
+       |                 |                 |
+       |                 |    INVOCATION   |
+       |                 | ----------------&gt;
+       |                 |                 |
+       |                 |  YIELD or ERROR |
+       |                 | &lt;----------------
+       |                 |                 |
+       | RESULT or ERROR |                 |
+       | &lt;----------------                 |
+    ,--+---.          ,--+---.          ,--+---.
+    |Caller|          |Dealer|          |Callee|
+    `------'          `------'          `------'
+</code></pre>
+
+<p>The execution of remote procedure calls is asynchronous, and there may be more than one call outstanding. A call is called outstanding (from the point of view of the <em>Caller</em>), when a (final) result or error has not yet been received by the <em>Caller</em>.</p>
+
+<h3 id="call-1">CALL</h3>
+
+<p>When a <em>Caller</em> wishes to call a remote procedure, it sends a <code>CALL</code> message to a <em>Dealer</em>:</p>
+
+<pre><code>    [CALL, Request|id, Options|dict, Procedure|uri]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
+        ArgumentsKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Request</code> is a random, ephemeral ID chosen by the <em>Caller</em> and used to correlate the <em>Dealer's</em> response with the request.</li>
+<li><code>Options</code> is a dictionary that allows to provide additional call request details in an extensible way. This is described further below.</li>
+<li><code>Procedure</code> is the URI of the procedure to be called.</li>
+<li><code>Arguments</code> is a list of positional call arguments (each of arbitrary type). The list may be of zero length.</li>
+<li><code>ArgumentsKw</code> is a dictionary of keyword call arguments (each of arbitrary type). The dictionary may be empty.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [48, 7814135, {}, &quot;com.myapp.ping&quot;]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [48, 7814135, {}, &quot;com.myapp.echo&quot;, [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [48, 7814135, {}, &quot;com.myapp.add2&quot;, [23, 7]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [48, 7814135, {}, &quot;com.myapp.user.new&quot;, [&quot;johnny&quot;],
+        {&quot;firstname&quot;: &quot;John&quot;, &quot;surname&quot;: &quot;Doe&quot;}]
+</code></pre>
+
+<h3 id="invocation-1">INVOCATION</h3>
+
+<p>If the <em>Dealer</em> is able to fulfill (mediate) the call and it allows the call, it sends a <code>INVOCATION</code> message to the respective <em>Callee</em> implementing the procedure:</p>
+
+<pre><code>    [INVOCATION, Request|id, REGISTERED.Registration|id,
+        Details|dict]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [INVOCATION, Request|id, REGISTERED.Registration|id,
+        Details|dict, CALL.Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [INVOCATION, Request|id, REGISTERED.Registration|id,
+        Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>Request</code> is a random, ephemeral ID chosen by the <em>Dealer</em> and used to correlate the <em>Callee's</em> response with the request.</li>
+<li><code>REGISTERED.Registration</code> is the registration ID under which the procedure was registered at the <em>Dealer</em>.</li>
+<li><code>Details</code> is a dictionary that allows to provide additional invocation request details in an extensible way. This is described further below.</li>
+<li><code>CALL.Arguments</code> is the original list of positional call arguments as provided by the <em>Caller</em>.</li>
+<li><code>CALL.ArgumentsKw</code> is the original dictionary of keyword call arguments as provided by the <em>Caller</em>.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [68, 6131533, 9823526, {}]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [68, 6131533, 9823527, {}, [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [68, 6131533, 9823528, {}, [23, 7]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [68, 6131533, 9823529, {}, [&quot;johnny&quot;], {&quot;firstname&quot;: &quot;John&quot;,
+        &quot;surname&quot;: &quot;Doe&quot;}]
+</code></pre>
+
+<h3 id="yield-1">YIELD</h3>
+
+<p>If the <em>Callee</em> is able to successfully process and finish the execution of the call, it answers by sending a <code>YIELD</code> message to the <em>Dealer</em>:</p>
+
+<pre><code>    [YIELD, INVOCATION.Request|id, Options|dict]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
+        ArgumentsKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>INVOCATION.Request</code> is the ID from the original invocation request.</li>
+<li><code>Options</code>is a dictionary that allows to provide additional options.</li>
+<li><code>Arguments</code> is a list of positional result elements (each of arbitrary type). The list may be of zero length.</li>
+<li><code>ArgumentsKw</code> is a dictionary of keyword result elements (each of arbitrary type). The dictionary may be empty.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [70, 6131533, {}]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [70, 6131533, {}, [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [70, 6131533, {}, [30]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [70, 6131533, {}, [], {&quot;userid&quot;: 123, &quot;karma&quot;: 10}]
+</code></pre>
+
+<h3 id="result-1">RESULT</h3>
+
+<p>The <em>Dealer</em> will then send a <code>RESULT</code> message to the original <em>Caller</em>:</p>
+
+<pre><code>    [RESULT, CALL.Request|id, Details|dict]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
+        YIELD.ArgumentsKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>CALL.Request</code> is the ID from the original call request.</li>
+<li><code>Details</code> is a dictionary of additional details.</li>
+<li><code>YIELD.Arguments</code> is the original list of positional result elements as returned by the <em>Callee</em>.</li>
+<li><code>YIELD.ArgumentsKw</code> is the original dictionary of keyword result elements as returned by the <em>Callee</em>.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [50, 7814135, {}]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [50, 7814135, {}, [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [50, 7814135, {}, [30]]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [50, 7814135, {}, [], {&quot;userid&quot;: 123, &quot;karma&quot;: 10}]
+</code></pre>
+
+<h3 id="invocation-error">Invocation ERROR</h3>
+
+<p>If the <em>Callee</em> is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the <em>Callee</em> sends an <code>ERROR</code> message to the <em>Dealer</em>:</p>
+
+<pre><code>    [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
+        Error|uri]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
+    Error|uri, Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
+        Error|uri, Arguments|list, ArgumentsKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>INVOCATION.Request</code> is the ID from the original <code>INVOCATION</code> request previously sent by the <em>Dealer</em> to the <em>Callee</em>.</li>
+<li><code>Details</code> is a dictionary with additional error details.</li>
+<li><code>Error</code> is an URI that identifies the error of why the request could not be fulfilled.</li>
+<li><code>Arguments</code> is a list containing arbitrary, application defined, positional error information. This will be forwarded by the <em>Dealer</em> to the <em>Caller</em> that initiated the call.</li>
+<li><code>ArgumentsKw</code> is a dictionary containing arbitrary, application defined, keyword-based error information. This will be forwarded by the <em>Dealer</em> to the <em>Caller</em> that initiated the call.</li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 68, 6131533, {}, &quot;com.myapp.error.object_write_protected&quot;,
+        [&quot;Object is write protected.&quot;], {&quot;severity&quot;: 3}]
+</code></pre>
+
+<h3 id="call-error">Call ERROR</h3>
+
+<p>The <em>Dealer</em> will then send a <code>ERROR</code> message to the original <em>Caller</em>:</p>
+
+<pre><code>    [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
+        Arguments|list]
+</code></pre>
+
+<p>or</p>
+
+<pre><code>    [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
+        Arguments|list, ArgumentsKw|dict]
+</code></pre>
+
+<p>where</p>
+
+<ul>
+<li><code>CALL.Request</code> is the ID from the original <code>CALL</code> request sent by the <em>Caller</em> to the <em>Dealer</em>.</li>
+<li><code>Details</code> is a dictionary with additional error details.</li>
+<li><code>Error</code> is an URI identifying the type of error as returned by the <em>Callee</em> to the <em>Dealer</em>.</li>
+<li><code>Arguments</code> is a list containing the original error payload list as returned by the <em>Callee</em> to the <em>Dealer</em>.</li>
+<li><code>ArgumentsKw</code> is a dictionary containing the original error payload dictionary as returned by the <em>Callee</em> to the <em>Dealer</em></li>
+</ul>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 48, 7814135, {}, &quot;com.myapp.error.object_write_protected&quot;,
+        [&quot;Object is write protected.&quot;], {&quot;severity&quot;: 3}]
+</code></pre>
+
+<p>If the original call already failed at the <em>Dealer</em> <strong>before</strong> the call would have been forwarded to any <em>Callee</em>, the <em>Dealer</em> will send an <code>ERROR</code> message to the <em>Caller</em>:</p>
+
+<pre><code>    [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 48, 7814135, {}, &quot;wamp.error.no_such_procedure&quot;]
+</code></pre>
+
+<h1 id="predefined-uris">Predefined URIs</h1>
+
+<p>WAMP pre-defines the following error URIs as part of this Basic Profile, which cover the full set of error states for the Basic Profile. Additional error URIs are defined as part of the Advanced Profile to cover error states for the Advanced Profile. WAMP peers MUST use only the defined error messages.</p>
+
+<h2 id="incorrect-uris">Incorrect URIs</h2>
+
+<p>When a <em>Peer</em> provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other <em>Peer</em> MUST respond with an <code>ERROR</code> message and give the following <em>Error URI</em>:</p>
+
+<pre><code>    wamp.error.invalid_uri
+</code></pre>
+
+<h2 id="interaction">Interaction</h2>
+
+<p><em>Peer</em> provided an incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure</p>
+
+<pre><code>    wamp.error.invalid_uri
+</code></pre>
+
+<p>A <em>Dealer</em> could not perform a call, since no procedure is currently registered under the given URI.</p>
+
+<pre><code>    wamp.error.no_such_procedure
+</code></pre>
+
+<p>A procedure could not be registered, since a procedure with the given URI is already registered.</p>
+
+<pre><code>    wamp.error.procedure_already_exists
+</code></pre>
+
+<p>A <em>Dealer</em> could not perform an unregister, since the given registration is not active.</p>
+
+<pre><code>    wamp.error.no_such_registration
+</code></pre>
+
+<p>A <em>Broker</em> could not perform an unsubscribe, since the given subscription is not active.</p>
+
+<pre><code>    wamp.error.no_such_subscription
+</code></pre>
+
+<p>A call failed since the given argument types or values are not acceptable to the called procedure. In this case the <em>Callee</em> may throw this error. Alternatively a <em>Router</em> may throw this error if it performed <em>payload validation</em> of a call, call result, call error or publish, and the payload did not conform to the requirements.</p>
+
+<pre><code>    wamp.error.invalid_argument
+</code></pre>
+
+<h2 id="session-close">Session Close</h2>
+
+<p>The <em>Peer</em> is shutting down completely - used as a <code>GOODBYE</code> (or <code>ABORT</code>) reason.</p>
+
+<pre><code>    wamp.error.system_shutdown
+</code></pre>
+
+<p>The <em>Peer</em> want to leave the realm - used as a <code>GOODBYE</code> reason.</p>
+
+<pre><code>    wamp.error.close_realm
+</code></pre>
+
+<p>A <em>Peer</em> acknowledges ending of a session - used as a <code>GOODBYE</code> reply reason.</p>
+
+<pre><code>    wamp.error.goodbye_and_out
+</code></pre>
+
+<h2 id="authorization">Authorization</h2>
+
+<p>A join, call, register, publish or subscribe failed, since the <em>Peer</em> is not authorized to perform the operation.</p>
+
+<pre><code>    wamp.error.not_authorized
+</code></pre>
+
+<p>A <em>Dealer</em> or <em>Broker</em> could not determine if the <em>Peer</em> is authorized to perform a join, call, register, publish or subscribe, since the authorization operation <em>itself</em> failed. E.g. a custom authorizer did run into an error.</p>
+
+<pre><code>    wamp.error.authorization_failed
+</code></pre>
+
+<p><em>Peer</em> wanted to join a non-existing realm (and the <em>Router</em> did not allow to auto-create the realm).</p>
+
+<pre><code>    wamp.error.no_such_realm
+</code></pre>
+
+<p>A <em>Peer</em> was to be authenticated under a Role that does not (or no longer) exists on the Router. For example, the <em>Peer</em> was successfully authenticated, but the Role configured does not exists - hence there is some misconfiguration in the Router.</p>
+
+<pre><code>    wamp.error.no_such_role
+</code></pre>
+
+<h1 id="ordering-guarantees">Ordering Guarantees</h1>
+
+<p>All WAMP implementations, in particular <em>Routers</em> MUST support the following ordering guarantees.</p>
+
+<blockquote>
+<p>A WAMP Advanced Profile may provide applications options to relax ordering guarantees, in particular with distributed calls.</p>
+</blockquote>
+
+<h2 id="publish--subscribe-ordering">Publish &amp; Subscribe Ordering</h2>
+
+<p>Regarding <strong>Publish &amp; Subscribe</strong>, the ordering guarantees are as follows:</p>
+
+<p>If <em>Subscriber A</em> is subscribed to both <strong>Topic 1</strong> and <strong>Topic 2</strong>, and <em>Publisher B</em> first publishes an <strong>Event 1</strong> to <strong>Topic 1</strong> and then an <strong>Event 2</strong> to <strong>Topic 2</strong>, then <em>Subscriber A</em> will first receive <strong>Event 1</strong> and then <strong>Event 2</strong>. This also holds if <strong>Topic 1</strong> and <strong>Topic 2</strong> are identical.</p>
+
+<p>In other words, WAMP guarantees ordering of events between any given <em>pair</em> of <em>Publisher</em> and <em>Subscriber</em>.</p>
+
+<p>Further, if <em>Subscriber A</em> subscribes to <strong>Topic 1</strong>, the <code>SUBSCRIBED</code> message will be sent by the <em>Broker</em> to <em>Subscriber A</em> before any <code>EVENT</code> message for <strong>Topic 1</strong>.</p>
+
+<p>There is no guarantee regarding the order of return for multiple subsequent subscribe requests. A subscribe request might require the <em>Broker</em> to do a time-consuming lookup in some database, whereas another subscribe request second might be permissible immediately.</p>
+
+<h2 id="remote-procedure-call-ordering">Remote Procedure Call Ordering</h2>
+
+<p>Regarding <strong>Remote Procedure Calls</strong>, the ordering guarantees are as follows:</p>
+
+<p>If <em>Callee A</em> has registered endpoints for both <strong>Procedure 1</strong> and <strong>Procedure 2</strong>, and <em>Caller B</em> first issues a <strong>Call 1</strong> to <strong>Procedure 1</strong> and then a <strong>Call 2</strong> to <strong>Procedure 2</strong>, and both calls are routed to <em>Callee A</em>, then <em>Callee A</em> will first receive an invocation corresponding to <strong>Call 1</strong> and then <strong>Call 2</strong>. This also holds if <strong>Procedure 1</strong> and <strong>Procedure 2</strong> are identical.</p>
+
+<p>In other words, WAMP guarantees ordering of invocations between any given <em>pair</em> of <em>Caller</em> and <em>Callee</em>.</p>
+
+<p>There are no guarantees on the order of call results and errors in relation to <em>different</em> calls, since the execution of calls upon different invocations of endpoints in <em>Callees</em> are running independently. A first call might require an expensive, long-running computation, whereas a second, subsequent call might finish immediately.</p>
+
+<p>Further, if <em>Callee A</em> registers for <strong>Procedure 1</strong>, the <code>REGISTERED</code> message will be sent by <em>Dealer</em> to <em>Callee A</em> before any <code>INVOCATION</code> message for <strong>Procedure 1</strong>.</p>
+
+<p>There is no guarantee regarding the order of return for multiple subsequent register requests. A register request might require the <em>Broker</em> to do a time-consuming lookup in some database, whereas another register request second might be permissible immediately.</p>
+
+<h1 id="security-model">Security Model</h1>
+
+<p>The following discusses the security model for the Basic Profile. Any changes or extensions to this for the Advanced Profile are discussed further on as part of the Advanced Profile definition.</p>
+
+<h2 id="transport-encryption-and-integrity">Transport Encryption and Integrity</h2>
+
+<p>WAMP transports may provide (optional) transport-level encryption and integrity verification. If so, encryption and integrity is point-to-point: between a <em>Client</em> and the <em>Router</em> it is connected to.</p>
+
+<p>Transport-level encryption and integrity is solely at the transport-level and transparent to WAMP. WAMP itself deliberately does not specify any kind of transport-level encryption.</p>
+
+<p>Implementations that offer TCP based transport such as WAMP-over-WebSocket or WAMP-over-RawSocket SHOULD implement Transport Layer Security (TLS).</p>
+
+<p>WAMP deployments are encouraged to stick to a TLS-only policy with the TLS code and setup being hardened.</p>
+
+<p>Further, when a <em>Client</em> connects to a <em>Router</em> over a local-only transport such as Unix domain sockets, the integrity of the data transmitted is implicit (the OS kernel is trusted), and the privacy of the data transmitted can be assured using file system permissions (no one can tap a Unix domain socket without appropriate permissions or being root).</p>
+
+<h2 id="router-authentication">Router Authentication</h2>
+
+<p>To authenticate <em>Routers</em> to <em>Clients</em>, deployments MUST run TLS and <em>Clients</em> MUST verify the <em>Router</em> server certificate presented. WAMP itself does not provide mechanisms to authenticate a <em>Router</em> (only a <em>Client</em>).</p>
+
+<p>The verification of the <em>Router</em> server certificate can happen</p>
+
+<ol>
+<li>against a certificate trust database that comes with the <em>Clients</em> operating system</li>
+<li>against an issuing certificate/key hard-wired into the <em>Client</em></li>
+<li>by using new mechanisms like DNS-based Authentication of Named Enitities (DNSSEC)/TLSA</li>
+</ol>
+
+<p>Further, when a <em>Client</em> connects to a <em>Router</em> over a local-only transport such as Unix domain sockets, the file system permissions can be used to create implicit trust. E.g. if only the OS user under which the <em>Router</em> runs has the permission to create a Unix domain socket under a specific path, <em>Clients</em> connecting to that path can trust in the router authenticity.</p>
+
+<h2 id="client-authentication">Client Authentication</h2>
+
+<p>Authentication of a <em>Client</em> to a <em>Router</em> at the WAMP level is not part of the basic profile.</p>
+
+<p>When running over TLS, a <em>Router</em> MAY authenticate a <em>Client</em> at the transport level by doing a <em>client certificate based authentication</em>.</p>
+
+<h3 id="routers-are-trusted">Routers are trusted</h3>
+
+<p><em>Routers</em> are <em>trusted</em> by <em>Clients</em>.</p>
+
+<p>In particular, <em>Routers</em> can read (and modify) any application payload transmitted in events, calls, call results and call errors (the <code>Arguments</code> or <code>ArgumentsKw</code> message fields).</p>
+
+<p>Hence, <em>Routers</em> do not provide confidentiality with respect to application payload, and also do not provide authenticity or integrity of application payloads that could be verified by a receiving <em>Client</em>.</p>
+
+<p><em>Routers</em> need to read the application payloads in cases of automatic conversion between different serialization formats.</p>
+
+<p>Further, <em>Routers</em> are trusted to <strong>actually perform</strong> routing as specified. E.g. a <em>Client</em> that publishes an event has to trust a <em>Router</em> that the event is actually dispatched to all (eligible) <em>Subscribers</em> by the <em>Router</em>.</p>
+
+<p>A rogue <em>Router</em> might deny normal routing operation without a <em>Client</em> taking notice.</p>
+
+<h1 id="advanced-profile">Advanced Profile</h1>
+
+<p>While implementations MUST implement the subset of the Basic Profile necessary for the particular set of WAMP roles they provide, they MAY implement any subset of features from the Advanced Profile. Implementers SHOULD implement the maximum of features possible considering the aims of an implementation.</p>
+
+<blockquote>
+<p>Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This is part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.</p>
+</blockquote>
+
+<h2 id="messages-1">Messages</h2>
+
+<p>The Advanced Profile defines the following additional messages which are explained in detail in separate sections.</p>
+
+<h3 id="message-definitions-1">Message Definitions</h3>
+
+<p>The following 4 additional message types MAY be used in the Advanced Profile.</p>
+
+<h4 id="challenge">CHALLENGE</h4>
+
+<p>The <code>CHALLENGE</code> message is used with certain Authentication Methods. During authenticated session establishment, a <strong>Router</strong> sends a challenge message.</p>
+
+<pre><code>[CHALLENGE, AuthMethod|string, Extra|dict]
+</code></pre>
+
+<h4 id="authenticate">AUTHENTICATE</h4>
+
+<p>The <code>AUTHENTICATE</code> message is used with certain Authentication Methods. A <strong>Client</strong> having received a challenge is expected to respond by sending a signature or token.</p>
+
+<pre><code>[AUTHENTICATE, Signature|string, Extra|dict]
+</code></pre>
+
+<h4 id="cancel">CANCEL</h4>
+
+<p>The <code>CANCEL</code> message is used with the Call Canceling advanced feature. A <em>Caller</em> can cancel and issued call actively by sending a cancel message to the <em>Dealer</em>.</p>
+
+<pre><code>[CANCEL, CALL.Request|id, Options|dict]
+</code></pre>
+
+<h4 id="interrupt">INTERRUPT</h4>
+
+<p>The <code>INTERRUPT</code> message is used with the Call Canceling advanced feature. Upon receiving a cancel for a pending call, a <em>Dealer</em> will issue an interrupt to the <em>Callee</em>.</p>
+
+<pre><code>[INTERRUPT, INVOCATION.Request|id, Options|dict]
+</code></pre>
+
+<h3 id="message-codes-and-direction-1">Message Codes and Direction</h3>
+
+<p>The following table list the message type code for <strong>the OPTIONAL messages</strong> defined in this part of the document and their direction between peer roles.</p>
+
+<table>
+<thead>
+<tr>
+<th>Cod</th>
+<th>Message</th>
+<th>Pub</th>
+<th>Brk</th>
+<th>Subs</th>
+<th>Calr</th>
+<th>Dealr</th>
+<th>Callee</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>4</td>
+<td><code>CHALLENGE</code></td>
+<td>Rx</td>
+<td>Tx</td>
+<td>Rx</td>
+<td>Rx</td>
+<td>Tx</td>
+<td>Rx</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td><code>AUTHENTICATE</code></td>
+<td>Tx</td>
+<td>Rx</td>
+<td>Tx</td>
+<td>Tx</td>
+<td>Rx</td>
+<td>Tx</td>
+</tr>
+
+<tr>
+<td>49</td>
+<td><code>CANCEL</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+<td></td>
+</tr>
+
+<tr>
+<td>69</td>
+<td><code>INTERRUPT</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Tx</td>
+<td>Rx</td>
+</tr>
+</tbody>
+</table>
+
+<blockquote>
+<p>&quot;Tx&quot; (&quot;Rx&quot;) means the message is sent (received) by a peer of the respective role.</p>
+</blockquote>
+
+<h2 id="features">Features</h2>
+
+<p>Support for advanced features must be announced by the peers which implement them. The following is a complete list of advanced features currently defined or proposed.</p>
+
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>sketch</td>
+<td>There is a rough description of an itch to scratch, but the feature use case isn't clear, and there is no protocol proposal at all.</td>
+</tr>
+
+<tr>
+<td>alpha</td>
+<td>The feature use case is still fuzzy and/or the feature definition is unclear, but there is at least a protocol level proposal.</td>
+</tr>
+
+<tr>
+<td>beta</td>
+<td>The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete and change.</td>
+</tr>
+
+<tr>
+<td>stable</td>
+<td>The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperatble implementations.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="rpc-features">RPC Features</h3>
+
+<p>| Feature                    | Status | P | B | S | Cr | D | Ce|
+|----------------------------|--------|---|---|---|----|- -|---|
+| progressive_call_results   | beta   |   |   |   | X  | X | X |
+| progressive_calls          | sketch |   |   |   | X  | X | X |
+| call_timeout               | alpha  |   |   |   | X  | X | X |
+| call_canceling             | alpha  |   |   |   | X  | X | X |
+| caller_identification      | alpha  |   |   |   | X  | X | X |
+| call_trustlevels           | alpha  |   |   |   |    | X | X |
+| registration_meta_api      | beta   |   |   |   |    | X |   |
+| pattern_based_registration | beta   |   |   |   |    | X | X |
+| shared_registration        | beta   |   |   |   |    | X | X |
+| sharded_registration       | alpha  |   |   |   |    | X | X |
+| registration_revocation    | alpha  |   |   |   |    | X | X |
+| procedure_reflection       | sketch |   |   |   |    | X |   |</p>
+
+<h3 id="pubsub-features">PubSub Features</h3>
+
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+<th>P</th>
+<th>B</th>
+<th>S</th>
+<th>Cr</th>
+<th>D</th>
+<th>Ce</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>subscriber_blackwhite_listing</td>
+<td>stable</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>publisher_exclusion</td>
+<td>stable</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>publisher_identification</td>
+<td>alpha</td>
+<td>X</td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>publication_trustlevels</td>
+<td>alpha</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>session_meta_api</td>
+<td>beta</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>subscription_meta_api</td>
+<td>beta</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>pattern_based_subscription</td>
+<td>beta</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>sharded_subscription</td>
+<td>alpha</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>event_history</td>
+<td>alpha</td>
+<td></td>
+<td>X</td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>topic_reflection</td>
+<td>sketch</td>
+<td></td>
+<td>X</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="other-advanced-features">Other Advanced Features</h3>
+
+<ul>
+<li>authentication
+
+<ul>
+<li>WAMP CRA</li>
+<li>cookie (entirely missing)</li>
+<li>OTP --&gt; ticket?</li>
+</ul></li>
+<li>transports
+
+<ul>
+<li>batched WS transport</li>
+<li>longpoll transport</li>
+<li>rawsocket transport</li>
+<li>multiplexed transport</li>
+</ul></li>
+<li>pre-defined URIs</li>
+<li>reflection</li>
+<li>session meta-api</li>
+</ul>
+
+<p>?</p>
+
+<ul>
+<li>partitioned registration</li>
+<li>partitioned subscription</li>
+</ul>
+
+<h2 id="advanced-rpc-features">Advanced RPC Features</h2>
+
+<h3 id="progressive-call-results">Progressive Call Results</h3>
+
+<p>Feature status: <strong>beta</strong></p>
+
+<h4 id="feature-definition">Feature Definition</h4>
+
+<p>A procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may produce progressive results. Progressive results can e.g. be used to return partial results for long-running operations, or to chunk the transmission of larger results sets.</p>
+
+<p>The message flow for progressive results involves:</p>
+
+<pre><code> ,------.           ,------.          ,------.
+ |Caller|           |Dealer|          |Callee|
+ `--+---'           `--+---'          `--+---'
+    |       CALL       |                 |    
+    | -----------------&gt;                 |    
+    |                  |                 |    
+    |                  |    INVOCATION   |    
+    |                  | ----------------&gt;    
+    |                  |                 |    
+    |                  | YIELD (progress)|    
+    |                  | &lt;----------------    
+    |                  |                 |    
+    | RESULT (progress)|                 |    
+    | &lt;-----------------                 |    
+    |                  |                 |    
+    |                  | YIELD (progress)|    
+    |                  | &lt;----------------    
+    |                  |                 |    
+    | RESULT (progress)|                 |    
+    | &lt;-----------------                 |    
+    |                  |                 |    
+    |                  |                 |        
+    |       ...        |       ...       |
+    |                  |                 |
+    |                  |  YIELD or ERROR |    
+    |                  | &lt;----------------    
+    |                  |                 |    
+    |  RESULT or ERROR |                 |    
+    | &lt;-----------------                 |    
+ ,--+---.           ,--+---.          ,--+---.
+ |Caller|           |Dealer|          |Callee|
+ `------'           `------'          `------'
+</code></pre>
+
+<p>A <em>Caller</em> indicates its willingness to receive progressive results by setting</p>
+
+<pre><code>    CALL.Options.receive_progress|bool := true
+</code></pre>
+
+<p><em>Example.</em> Caller-to-Dealer <code>CALL</code></p>
+
+<pre><code class="language-json">    [
+        48,
+        77133,
+        {
+            &quot;receive_progress&quot;: true
+        },
+        &quot;com.myapp.compute_revenue&quot;,
+        [2010, 2011, 2012]
+    ]
+</code></pre>
+
+<p>If the <em>Callee</em> supports progressive calls, the <em>Dealer</em> will forward the <em>Caller's</em> willingness to receive progressive results by setting</p>
+
+<pre><code>    INVOCATION.Options.receive_progress|bool := true
+</code></pre>
+
+<p><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code></p>
+
+<pre><code class="language-json">    [
+        68,
+        87683,
+        324,
+        {
+            &quot;receive_progress&quot;: true
+        },
+        [2010, 2011, 2012]
+    ]
+</code></pre>
+
+<p>An endpoint implementing the procedure produces progressive results by sending <code>YIELD</code> messages to the <em>Dealer</em> with</p>
+
+<pre><code>    YIELD.Options.progress|bool := true
+</code></pre>
+
+<p><em>Example.</em> Callee-to-Dealer progressive <code>YIELDs</code></p>
+
+<pre><code class="language-json">    [
+        70,
+        87683,
+        {
+            &quot;progress&quot;: true
+        },
+        [&quot;Y2010&quot;, 120]
+    ]
+</code></pre>
+
+<pre><code class="language-json">    [
+        70,
+        87683,
+        {
+            &quot;progress&quot;: true
+        },
+        [&quot;Y2011&quot;, 205]
+    ]
+</code></pre>
+
+<p>Upon receiving an <code>YIELD</code> message from a <em>Callee</em> with <code>YIELD.Options.progress == true</code> (for a call that is still ongoing), the <em>Dealer</em> will <strong>immediately</strong> send a <code>RESULT</code> message to the original <em>Caller</em> with</p>
+
+<pre><code>    RESULT.Details.progress|bool := true
+</code></pre>
+
+<p><em>Example.</em> Dealer-to-Caller progressive <code>RESULTs</code></p>
+
+<pre><code class="language-json">    [
+        50,
+        77133,
+        {
+            &quot;progress&quot;: true
+        },
+        [&quot;Y2010&quot;, 120]
+    ]
+</code></pre>
+
+<pre><code class="language-json">    [
+        50,
+        77133,
+        {
+            &quot;progress&quot;: true
+        },
+        [&quot;Y2011&quot;, 205]
+    ]
+</code></pre>
+
+<p>An invocation MUST <em>always</em> end in either a <em>normal</em> <code>RESULT</code> or <code>ERROR</code> message being sent by the <em>Callee</em> and received by the <em>Dealer</em>.</p>
+
+<p><em>Example.</em> Callee-to-Dealer final <code>YIELD</code></p>
+
+<pre><code class="language-json">    [
+        70,
+        87683,
+        {},
+        [&quot;Total&quot;, 490]
+    ]
+</code></pre>
+
+<p><em>Example.</em> Callee-to-Dealer final <code>ERROR</code></p>
+
+<pre><code class="language-json">    [
+        4,
+        87683,
+        {},
+        &quot;com.myapp.invalid_revenue_year&quot;,
+        [1830]
+    ]
+</code></pre>
+
+<p>A call MUST <em>always</em> end in either a <em>normal</em> <code>RESULT</code> or <code>ERROR</code> message being sent by the <em>Dealer</em> and received by the <em>Caller</em>.</p>
+
+<p><em>Example.</em> Dealer-to-Caller final <code>RESULT</code></p>
+
+<pre><code class="language-json">    [
+        50,
+        77133,
+        {},
+        [&quot;Total&quot;, 490]
+    ]
+</code></pre>
+
+<p><em>Example.</em> Dealer-to-Caller final <code>ERROR</code></p>
+
+<pre><code class="language-json">    [
+        4,
+        77133,
+        {},
+        &quot;com.myapp.invalid_revenue_year&quot;,
+        [1830]
+    ]
+</code></pre>
+
+<p>In other words: <code>YIELD</code> with <code>YIELD.Options.progress == true</code> and <code>RESULT</code> with <code>RESULT.Details.progress == true</code> messages may only be sent <em>during</em> a call or invocation is still ongoing.</p>
+
+<p>The final <code>YIELD</code> and final <code>RESULT</code> may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.</p>
+
+<p><em>Example.</em> Callee-to-Dealer <code>YIELDs</code></p>
+
+<pre><code>    [70, 87683, {&quot;progress&quot;: true}, [&quot;Y2010&quot;, 120]]
+    [70, 87683, {&quot;progress&quot;: true}, [&quot;Y2011&quot;, 205]]
+     ...
+    [70, 87683, {&quot;progress&quot;: true}, [&quot;Total&quot;, 490]]
+    [70, 87683, {}]
+</code></pre>
+
+<p><em>Example.</em> Dealer-to-Caller <code>RESULTs</code></p>
+
+<pre><code>    [50, 77133, {&quot;progress&quot;: true}, [&quot;Y2010&quot;, 120]]
+    [50, 77133, {&quot;progress&quot;: true}, [&quot;Y2011&quot;, 205]]
+     ...
+    [50, 77133, {&quot;progress&quot;: true}, [&quot;Total&quot;, 490]]
+    [50, 77133, {}]
+</code></pre>
+
+<p>The progressive <code>YIELD</code> and progressive <code>RESULT</code> may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final <code>YIELD</code> and <code>RESULT</code>:</p>
+
+<p><em>Example.</em> Callee-to-Dealer <code>YIELDs</code></p>
+
+<pre><code>    [70, 87683, {&quot;progress&quot;: true}]
+    [70, 87683, {&quot;progress&quot;: true}]
+    ...
+    [70, 87683, {}, [[&quot;Y2010&quot;, 120], [&quot;Y2011&quot;, 205], ..., 
+        [&quot;Total&quot;, 490]]]
+</code></pre>
+
+<p><em>Example.</em> Dealer-to-Caller <code>RESULTs</code></p>
+
+<pre><code>    [50, 77133, {&quot;progress&quot;: true}]
+    [50, 77133, {&quot;progress&quot;: true}]
+    ...
+    [50, 77133, {}, [[&quot;Y2010&quot;, 120], [&quot;Y2011&quot;, 205], ..., 
+        [&quot;Total&quot;, 490]]]
+</code></pre>
+
+<blockquote>
+<p>Note that intermediate, progressive results and/or the final result MAY have different structure. The WAMP peer implementation is responsible for mapping everything into a form suitable for consumption in the host language.</p>
+</blockquote>
+
+<p><em>Example.</em> Callee-to-Dealer <code>YIELDs</code></p>
+
+<pre><code>    [70, 87683, {&quot;progress&quot;: true}, [&quot;partial 1&quot;, 10]]
+    [70, 87683, {&quot;progress&quot;: true}, [], {&quot;foo&quot;: 10, 
+        &quot;bar&quot;: &quot;partial 1&quot;}]
+     ...
+    [70, 87683, {}, [1, 2, 3], {&quot;moo&quot;: &quot;hello&quot;}]
+</code></pre>
+
+<p><em>Example.</em> Dealer-to-Caller <code>RESULTs</code></p>
+
+<pre><code>    [50, 77133, {&quot;progress&quot;: true}, [&quot;partial 1&quot;, 10]]
+    [50, 77133, {&quot;progress&quot;: true}, [], {&quot;foo&quot;: 10, 
+        &quot;bar&quot;: &quot;partial 1&quot;}]
+     ...
+    [50, 77133, {}, [1, 2, 3], {&quot;moo&quot;: &quot;hello&quot;}]
+</code></pre>
+
+<p>Even if a <em>Caller</em> has indicated it's expectation to receive progressive results by setting <code>CALL.Options.receive_progress|bool := true</code>, a <em>Callee</em> is <strong>not required</strong> to produce progressive results. <code>CALL.Options.receive_progress</code> and <code>INVOCATION.Options.receive_progress</code> are simply indications that the <em>Caller</em> is prepared to process progressive results, should there be any produced. In other words, <em>Callees</em> are free to ignore such <code>receive_progress</code> hints at any time.</p>
+
+<h4 id="feature-announcement">Feature Announcement</h4>
+
+<p>Support for this advanced feature MUST be announced by <em>Callers</em> (<code>role := &quot;caller&quot;</code>), <em>Callees</em> (<code>role := &quot;callee&quot;</code>) and <em>Dealers</em> (<code>role := &quot;dealer&quot;</code>) via</p>
+
+<pre><code>    HELLO.Details.roles.&lt;role&gt;.features.
+         progressive_call_results|bool := true
+</code></pre>
+
+<h3 id="progressive-calls">Progressive Calls</h3>
+
+<p>Feature status: <strong>sketch</strong></p>
+
+<h4 id="feature-definition-1">Feature Definition</h4>
+
+<p>A procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may receive a progressive call. Progressive results can e.g. be used to start processing initial data where a larger data set may not yet have been generated or received by the <em>Caller</em>.</p>
+
+<p>See this GitHub issue for more discussion: <a href="https://github.com/wamp-proto/wamp-proto/issues/167">https://github.com/wamp-proto/wamp-proto/issues/167</a></p>
+
+<h3 id="call-canceling">Call Canceling</h3>
+
+<h4 id="feature-definition-2">Feature Definition</h4>
+
+<p>A <em>Caller</em> might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.</p>
+
+<p>The message flow between <em>Callers</em>, a <em>Dealer</em> and <em>Callees</em> for canceling remote procedure calls involves the following messages:</p>
+
+<ul>
+<li><code>CANCEL</code></li>
+<li><code>INTERRUPT</code></li>
+</ul>
+
+<p>A call may be cancelled at the <em>Callee</em></p>
+
+<pre><code>    ,------.          ,------.          ,------.
+    |Caller|          |Dealer|          |Callee|
+    `--+---'          `--+---'          `--+---'
+       |       CALL      |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |                 |    INVOCATION   |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |      CANCEL     |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |                 |    INTERRUPT    |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |                 |      ERROR      |    
+       |                 | &lt;----------------    
+       |                 |                 |    
+       |      ERROR      |                 |    
+       | &lt;----------------                 |    
+    ,--+---.          ,--+---.          ,--+---.
+    |Caller|          |Dealer|          |Callee|
+    `------'          `------'          `------'
+</code></pre>
+
+<p>A call may be cancelled at the <em>Dealer</em></p>
+
+<pre><code>    ,------.          ,------.          ,------.
+    |Caller|          |Dealer|          |Callee|
+    `--+---'          `--+---'          `--+---'
+       |       CALL      |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |                 |    INVOCATION   |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |      CANCEL     |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |      ERROR      |                 |    
+       | &lt;----------------                 |    
+       |                 |                 |    
+       |                 |    INTERRUPT    |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |                 |      ERROR      |    
+       |                 | &lt;----------------    
+    ,--+---.          ,--+---.          ,--+---.
+    |Caller|          |Dealer|          |Callee|
+    `------'          `------'          `------'
+</code></pre>
+
+<p>A <em>Caller</em> cancels a remote procedure call initiated (but not yet finished) by sending a <code>CANCEL</code> message to the <em>Dealer</em>:</p>
+
+<pre><code>    [CANCEL, CALL.Request|id, Options|dict]
+</code></pre>
+
+<p>A <em>Dealer</em> cancels an invocation of an endpoint initiated (but not yet finished) by sending a <code>INTERRUPT</code> message to the <em>Callee</em>:</p>
+
+<pre><code>    [INTERRUPT, INVOCATION.Request|id, Options|dict]
+</code></pre>
+
+<p>Options:</p>
+
+<pre><code>    CANCEL.Options.mode|string == &quot;skip&quot; | &quot;kill&quot; | &quot;killnowait&quot;
+</code></pre>
+
+<h4 id="feature-announcement-1">Feature Announcement</h4>
+
+<p>Support for this feature MUST be announced by <em>Callers</em> (<code>role := &quot;caller&quot;</code>), <em>Callees</em> (<code>role := &quot;callee&quot;</code>) and <em>Dealers</em> (<code>role := &quot;dealer&quot;</code>) via</p>
+
+<pre><code>    HELLO.Details.roles.&lt;role&gt;.features.call_canceling|bool := true
+</code></pre>
+
+<h3 id="caller-identification">Caller Identification</h3>
+
+<h4 id="feature-definition-3">Feature Definition</h4>
+
+<p>A <em>Caller</em> MAY <strong>request</strong> the disclosure of its identity (its WAMP session ID) to endpoints of a routed call via</p>
+
+<pre><code>    CALL.Options.disclose_me|bool := true
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [48, 7814135, {&quot;disclose_me&quot;: true}, &quot;com.myapp.echo&quot;, 
+        [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p>If above call is issued by a <em>Caller</em> with WAMP session ID <code>3335656</code>, the <em>Dealer</em> sends an <code>INVOCATION</code> message to <em>Callee</em> with the <em>Caller's</em> WAMP session ID in <code>INVOCATION.Details.caller</code>:</p>
+
+<p><em>Example</em></p>
+
+<pre><code>    [68, 6131533, 9823526, {&quot;caller&quot;: 3335656}, [&quot;Hello, world!&quot;]]
+</code></pre>
+
+<p>Note that a <em>Dealer</em> MAY disclose the identity of a <em>Caller</em> even without the <em>Caller</em> having explicitly requested to do so when the <em>Dealer</em> configuration (for the called procedure) is setup to do so.</p>
+
+<p>A <em>Dealer</em> MAY deny a <em>Caller's</em> request to disclose its identity:</p>
+
+<p><em>Example</em></p>
+
+<pre><code>    [8, 7814135, &quot;wamp.error.disclose_me.not_allowed&quot;]
+</code></pre>
+
+<p>A <em>Callee</em> MAY <strong>request</strong> the disclosure of caller identity via</p>
+
+<pre><code>    REGISTER.Options.disclose_caller|bool := true
+</code></pre>
+
+<p><em>Example</em></p>
+
+<pre><code>    [64, 927639114088448, {&quot;disclose_caller&quot;:true}, 
+        &quot;com.maypp.add2&quot;]
+</code></pre>
+
+<p>With the above registration, the registered procedure is called with the caller's sessionID as part of the call details object.</p>
+
+<h4 id="feature-announcement-2">Feature Announcement</h4>
+
+<p>Support for this feature MUST be announced by <em>Callers</em> (<code>role := &quot;caller&quot;</code>), <em>Callees</em> (<code>role := &quot;callee&quot;</code>) and <em>Dealers</em> (<code>role := &quot;dealer&quot;</code>) via</p>
+
+<pre><code>    HELLO.Details.roles.&lt;role&gt;.features.
+         caller_identification|bool := true
+</code></pre>
+
+<h2 id="advanced-pubsub-featrues">Advanced PubSub Featrues</h2>
+
+<h1 id="binary-conversion-of-json-strings">Binary conversion of JSON Strings</h1>
+
+<p>Binary data follows a convention for conversion to JSON strings.</p>
+
+<p>A <strong>byte array</strong> is converted to a <strong>JSON string</strong> as follows:</p>
+
+<ol>
+<li>convert the byte array to a Base64 encoded (host language) string</li>
+<li>prepend the string with a <code>\0</code> character</li>
+<li>serialize the string to a JSON string</li>
+</ol>
+
+<p><em>Example</em></p>
+
+<p>Consider the byte array (hex representation):</p>
+
+<pre><code>    10e3ff9053075c526f5fc06d4fe37cdb
+</code></pre>
+
+<p>This will get converted to Base64</p>
+
+<pre><code>    EOP/kFMHXFJvX8BtT+N82w==
+</code></pre>
+
+<p>prepended with <code>\0</code></p>
+
+<pre><code>    \x00EOP/kFMHXFJvX8BtT+N82w==
+</code></pre>
+
+<p>and serialized to a JSON string</p>
+
+<pre><code>    &quot;\\u0000EOP/kFMHXFJvX8BtT+N82w==&quot;
+</code></pre>
+
+<p>A <strong>JSON string</strong> is unserialized to either a <strong>string</strong> or a <strong>byte array</strong> using the following procedure:</p>
+
+<ol>
+<li>Unserialize a JSON string to a host language (Unicode) string</li>
+<li>If the string starts with a <code>\0</code> character, interpret the rest (after the first character) as Base64 and decode to a byte array</li>
+<li>Otherwise, return the Unicode string</li>
+</ol>
+
+<p>Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.</p>
+
+<h2 id="python">Python</h2>
+
+<p>Here is a complete example in Python showing how byte arrays are converted to and from JSON:</p>
+
+<pre><code>    ```python
+    &lt;CODE BEGINS&gt;
+
+    import os, base64, json, sys, binascii
+    PY3 = sys.version_info &gt;= (3,)
+    if PY3:
+       unicode = str
+
+    data_in = os.urandom(16)
+    print(&quot;In:   {}&quot;.format(binascii.hexlify(data_in)))
+
+    ## encoding
+    encoded = json.dumps('\0' + base64.b64encode(data_in).
+                                          decode('ascii'))
+
+    print(&quot;JSON: {}&quot;.format(encoded))
+
+    ## decoding
+    decoded = json.loads(encoded)
+    if type(decoded) == unicode:
+       if decoded[0] == '\0':
+          data_out = base64.b64decode(decoded[1:])
+       else:
+          data_out = decoded
+
+    print(&quot;Out:  {}&quot;.format(binascii.hexlify(data_out)))
+
+    assert(data_out == data_in)
+
+    &lt;CODE ENDS&gt;
+    ```
+</code></pre>
+
+<h2 id="javascript">JavaScript</h2>
+
+<p>Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:</p>
+
+<pre><code>    ```javascript
+    &lt;CODE BEGINS&gt;
+
+    var data_in = new Uint8Array(new ArrayBuffer(16));
+
+    // initialize test data
+    for (var i = 0; i &lt; data_in.length; ++i) {
+       data_in[i] = i;
+    }
+    console.log(data_in);
+
+    // convert byte array to raw string
+    var raw_out = '';
+    for (var i = 0; i &lt; data_in.length; ++i) {
+       raw_out += String.fromCharCode(data_in[i]);
+    }
+
+    // base64 encode raw string, prepend with \0 
+    // and serialize to JSON
+    var encoded = JSON.stringify(&quot;\0&quot; + window.btoa(raw_out));
+    console.log(encoded); // &quot;\u0000AAECAwQFBgcICQoLDA0ODw==&quot;
+
+    // unserialize from JSON
+    var decoded = JSON.parse(encoded);
+
+    var data_out;
+    if (decoded.charCodeAt(0) === 0) {
+       // strip first character and decode base64 to raw string
+       var raw = window.atob(decoded.substring(1));
+
+       // convert raw string to byte array
+       var data_out = new Uint8Array(new ArrayBuffer(raw.length));
+       for (var i = 0; i &lt; raw.length; ++i) {
+          data_out[i] = raw.charCodeAt(i);
+       }
+    } else {
+       data_out = decoded;
+    }
+
+    console.log(data_out);
+
+    &lt;CODE ENDS&gt;
+    ```
+</code></pre>
+
+<h1 id="security-considerations">Security Considerations</h1>
+
+<p>-- write me --</p>
+
+<h1 id="iana-considerations">IANA Considerations</h1>
+
+<p>TBD</p>
+
+<h1 id="contributors">Contributors</h1>
+
+<h1 id="acknowledgements">Acknowledgements</h1>
+
+<h1 id="bibliography" class="appendix bibliography">Bibliography</h1>
+<ol class="bibliography">
+</ol>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+@startuml
+participant Caller
+participant Dealer
+participant Callee
+
+Caller -> Dealer : CALL
+Dealer -> Callee : INVOCATION
+Caller -> Dealer : CANCEL
+Dealer -> Callee : INTERRUPT
+Callee -> Dealer : ERROR
+Dealer -> Caller : ERROR
+@enduml
+
+newpage
+
+@startuml
+participant Caller
+participant Dealer
+participant Callee
+
+Caller -> Dealer : CALL
+Dealer -> Callee : INVOCATION
+Caller -> Dealer : CANCEL
+Dealer -> Caller : ERROR
+Dealer -> Callee : INTERRUPT
+Callee -> Dealer : ERROR
+@enduml

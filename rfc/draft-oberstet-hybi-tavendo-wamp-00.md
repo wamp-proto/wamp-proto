@@ -1,5 +1,5 @@
-% Title = "Web Application Messaging Protocol - Basic Profile"
-% abbrev = "WAMP - BP"
+% Title = "Web Application Messaging Protocol"
+% abbrev = "WAMP"
 % category = "std"
 % docName = "draft-oberstet-hybi-tavendo-wamp-00"
 % ipr= "trust200902"
@@ -20,10 +20,18 @@
 %   [author.address]
 %   email = "tobias.oberstein@tavendo.de"
 %
+% [[author]]
+% initials="A.G."
+% surname="Goedde"
+% fullname="Alexander Goedde"
+% organization = "Tavendo GmbH"
+%   [author.address]
+%   email = "alexander.goedde@tavendo.de"
+%   
 
 .# Abstract
 
-This document defines the basic profile for the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional and message-based communication.
+This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional and message-based communication. 
 
 {mainmatter}
 
@@ -35,7 +43,7 @@ _This section is non-normative._
 
 The WebSocket protocol brought bi-directional real-time connections to the browser. This defines an API at the message level, requiring users who want to use WebSocket connections in their applications to define any semantics on top of it.
 
-The Web Application Messaging Protocl (WAMP) was initially defined as WebSocket protocol at the technical level, and is intended to provide application developers with the semantics they need to handle messaging between components in distributed applications.
+The Web Application Messaging Protocl (WAMP) was initially defined as a WebSocket sub-protocol at the technical level, and is intended to provide application developers with the semantics they need to handle messaging between components in distributed applications.
 
 WAMP is a routed protocol, with all components connecting to a WAMP router.
 
@@ -65,7 +73,13 @@ WAMP Connections are established by Clients to a Router. Connections can use any
 
 WAMP Sessions are established using a WAMP Connection. A WAMP Session connects to a Realm on a Router. Routing occurs only between WAMP Sessions connected to the same realm.
 
-- extend me -
+The Basic Profile defines the parts of the protocol which are required to establish a WAMP connection as well as for basic interactions between the four client and two router roles. 
+
+WAMP implementations are required to implement the basic profile regarding connection establishment as well as for the role or roles they implement.
+
+The Advanced Profile defines additions to the Basic Profile which greatly extend the utility of WAMP in real-world applications. 
+
+WAMP implementations may implement any subset of Advanced Profile features. They are required to announce the implemented features during connection establishment.
 
 
 ## Design Philosophy
@@ -82,9 +96,16 @@ While WAMP was originally developed to use WebSocket as a transport, and JSON fo
 
 ### Basic and Advanced Profile
 
-This specification is for a necessary basic set of features which allow WAMP to function, and which is referred to as the WAMP Basic Profile.
+This document first describes a Basic Profile for WAMP in its entirety before describing an Advanced Profile which extends the functionality of WAMP.
 
-The specification of additional features is still ongoing. The standardization of such features will be through a separate, future document.
+The separation in Basic and Advanced Profile is intended to extend the reach of the protocol. 
+
+It allows implementations to start out with a minimal but operable and useful set of functionality, and to expand their functionality from there.
+
+It also allows implementations in resource-constrained environments where an implementation of a larger set of functionality would not be possible. Here implementers can weigh between resource constraints and functionality requirements and implement an optimal set for the circumstances.
+
+Feature announcement is used for Advanced Profile features, so that different implementations can adjust their interactions to fit the commonly supported feature set.
+
 
 ### Application Code
 
@@ -99,15 +120,14 @@ This allows to transparently exchange *Broker* and *Dealer* implementations with
 
 ### Router Implementation Specifics
 
-This specification only deals with the protocol level for a basic profile. Specific WAMP *Broker* and *Dealer* implementations might differ in aspects such as:
+This specification only deals with the protcol level. Specific WAMP *Broker* and *Dealer* implementations may differ in aspects such as support for
 
-* support for WAMP Advanced Profile
 * router networks (clustering and federation)
 * authentication and authorization schemes
 * message persistence
 * management and monitoring
 
-The definition and documentation of implementation specific *Router* features like the above is outside the scope of this document.
+The definition and documentation of such *Router* features is outside the scope of this document.
 
 
 ## Relationship to WebSocket
@@ -136,8 +156,7 @@ Key terms such as named algorithms or definitions are indicated like _this_.
 
 # Realms, Sessions and Transports
 
-A *Realm* is a WAMP routing and administrative domain, optionally protected by authentication and authorization.
--- extend --
+A *Realm* is a WAMP routing and administrative domain, optionally protected by authentication and authorization. WAMP messages are only routed within a *Realm*.
 
 A *Session* is a transient conversation between two *Peers* attached to a *Realm* and running over a *Transport*.
 
@@ -151,16 +170,16 @@ The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [offic
 
 # Peers and Roles
 
-A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. Each WAMP *Peer* can implement one or more roles.
+A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. Each WAMP *Peer* MUST implement one role, and MAY implement more roles.
 
-A *Client* can implement any combination of the *Roles*:
+A *Client* MAY implement any combination of the *Roles*:
 
  * *Callee*
  * *Caller*
  * *Publisher*
  * *Subscriber*
 
-and a *Router* can implement either or both of the *Roles*:
+and a *Router* MAY implement either or both of the *Roles*:
 
  * *Dealer*
  * *Broker*
@@ -255,7 +274,7 @@ To avoid resource naming conflicts, the package naming convention from Java is u
 
 URI components (the parts between two `.`s, the head part up to the first `.`, the tail part after the last `.`) MUST NOT contain a `.`, `#` or whitespace characters and MUST NOT be empty (zero-length strings).
 
-> The restriction not to allow `.` in component strings is due to the fact that `.` is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that may be part of an Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in an Advanced Profile. The character `#` is not allowed since this is reserved for internal use by *Dealers* and *Brokers*.
+> The restriction not to allow `.` in component strings is due to the fact that `.` is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that are part of the Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in the Advanced Profile. The character `#` is not allowed since this is reserved for internal use by *Dealers* and *Brokers*.
 
 As an example, the following regular expression could be used in Python to check URIs according to above rules:
 
@@ -267,7 +286,7 @@ As an example, the following regular expression could be used in Python to check
     <CODE ENDS>
 ```
 
-When empty URI components are allowed (this may the case for specific messages that are part of an Advanced Profile), this following regular expression can be used (shown used in Python):
+When empty URI components are allowed (which is the case for specific messages that are part of the Advanced Profile), this following regular expression can be used (shown used in Python):
 
 {align="left"}
 ``` python
@@ -291,7 +310,7 @@ As an example, the following regular expression could be used in Python to check
     <CODE ENDS>
 ```
 
-When empty URI components are allowed (this may the case for specific messages that are part of an Advanced Profile), the following regular expression can be used (shown in Python):
+When empty URI components are allowed (which is the case for specific messages that are part of the Advanced Profile), the following regular expression can be used (shown in Python):
 
 {align="left"}
 ```python
@@ -426,7 +445,7 @@ There is no required transport or set of transports for WAMP implementations (bu
 
 The default transport binding for WAMP is WebSocket.
 
-As a default, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). A **batched mode** where multiple WAMP messages are transmitted via single WebSocket message may be defined as part of an Advanced Profile.
+In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). The Advanced Profile may define other modes, e.g. a **batched mode** where multiple WAMP messages are transmitted via single WebSocket message.
 
 The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between *Peers* using the WebSocket subprotocol negotiation mechanism.
 
@@ -877,7 +896,7 @@ A *Client* can support any combination of the above roles but must support at le
 
 The `<role>|dict` is a dictionary describing **features** supported by the peer for that role.
 
-This is empty for WAMP Basic Profile implementations, but may be used by implementations implementing parts of a future WAMP Advanced Profile to list the specific set of features they support.
+This MUST be empty for WAMP Basic Profile implementations, and MUST be used by implementations implementing parts of the Advanced Profile to list the specific set of features they support.
 
 *Example: A Client that implements the Publisher and Subscriber roles of the WAMP Basic Profile.*
 
@@ -901,7 +920,7 @@ where
 * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session.
 * `Details` is a dictionary that allows to provide additional information regarding the open session (see below).
 
-In the WAMP Basic Profile without session authentication, a `WELCOME` message is the first message sent by the *Router*, directly in response to a `HELLO` message received from the *Client*. Extensions in an Advanced Profile may include intermediate steps and messages for authentication.
+In the WAMP Basic Profile without session authentication, a `WELCOME` message MUST be the first message sent by the *Router*, directly in response to a `HELLO` message received from the *Client*. Extensions in the Advanced Profile MAY include intermediate steps and messages for authentication.
 
 > Note. The behavior if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
 >
@@ -917,7 +936,7 @@ A *Router* MUST announce the **roles** it supports via `Welcome.Details.roles|di
 
 A *Router* must support at least one role, and MAY support both roles.
 
-The `<role>|dict` is a dictionary describing **features** supported by the peer for that role. With WAMP Basic Profile implementations, this will be empty, but may be used by implementations implementing parts of a future WAMP Advanced Profile to list the specific set of features they support
+The `<role>|dict` is a dictionary describing **features** supported by the peer for that role. With WAMP Basic Profile implementations, this MUST be empty, but MUST be used by implementations implementing parts of the Advanced Profile to list the specific set of features they support
 
 *Example: A Router implementing the Broker role of the WAMP Basic Profile.*
 
@@ -1350,7 +1369,7 @@ When a publication is successful and a *Broker* dispatches the event, it determi
 
 Note that the *Publisher* of an event will never receive the published event even if the *Publisher* is also a *Subscriber* of the topic published to.
 
-> WAMP Advanced Profile provides options for more detailed control over publication.
+> The Advanced Profile provides options for more detailed control over publication.
 >
 
 When a *Subscriber* is deemed to be a receiver, the *Broker* sends the *Subscriber* an `EVENT` message:
@@ -1846,13 +1865,13 @@ If the original call already failed at the *Dealer* **before** the call would ha
 
 
 
-## Predefined URIs
+# Predefined URIs
 
-WAMP pre-defines the following error URIs as part of this Basic Profile, which cover the full set of error states. Additional error URIs may be defined as part of a future Advanced Profile to cover error states which may occur based on extensions of the protocol.
+WAMP pre-defines the following error URIs as part of this Basic Profile, which cover the full set of error states for the Basic Profile. Additional error URIs are defined as part of the Advanced Profile to cover error states for the Advanced Profile. WAMP peers MUST use only the defined error messages.
 
-- below has to be changed to state that for the given error state a party MUST send the specific error uri, e.g
+## Incorrect URIs
 
-When a *Peer* provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other *Peer* has to respond with an `ERROR` message and give the following *Error URI*:
+When a *Peer* provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other *Peer* MUST respond with an `ERROR` message and give the following *Error URI*:
 
 {align="left"}
         wamp.error.invalid_uri
@@ -1890,7 +1909,7 @@ A call failed since the given argument types or values are not acceptable to the
 {align="left"}
         wamp.error.invalid_argument
 
-### Session Close
+## Session Close
 
 The *Peer* is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
 
@@ -1930,14 +1949,14 @@ A *Peer* was to be authenticated under a Role that does not (or no longer) exist
         wamp.error.no_such_role
 
 
-## Ordering Guarantees
+# Ordering Guarantees
 
 All WAMP implementations, in particular *Routers* MUST support the following ordering guarantees.
 
 > A WAMP Advanced Profile may provide applications options to relax ordering guarantees, in particular with distributed calls.
 >
 
-### Publish & Subscribe Ordering
+## Publish & Subscribe Ordering
 
 Regarding **Publish & Subscribe**, the ordering guarantees are as follows:
 
@@ -1950,7 +1969,7 @@ Further, if *Subscriber A* subscribes to **Topic 1**, the `SUBSCRIBED` message w
 There is no guarantee regarding the order of return for multiple subsequent subscribe requests. A subscribe request might require the *Broker* to do a time-consuming lookup in some database, whereas another subscribe request second might be permissible immediately.
 
 
-### Remote Procedure Call Ordering
+## Remote Procedure Call Ordering
 
 Regarding **Remote Procedure Calls**, the ordering guarantees are as follows:
 
@@ -1966,11 +1985,11 @@ There is no guarantee regarding the order of return for multiple subsequent regi
 
 
 
-## Security Model
+# Security Model
 
-The following discusses the security model for the WAMP basic profile. A WAMP Advanced Profile may extend this.
+The following discusses the security model for the Basic Profile. Any changes or extensions to this for the Advanced Profile are discussed further on as part of the Advanced Profile definition.
 
-### Transport Encryption and Integrity
+## Transport Encryption and Integrity
 
 WAMP transports may provide (optional) transport-level encryption and integrity verification. If so, encryption and integrity is point-to-point: between a *Client* and the *Router* it is connected to.
 
@@ -1982,7 +2001,7 @@ WAMP deployments are encouraged to stick to a TLS-only policy with the TLS code 
 
 Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the integrity of the data transmitted is implicit (the OS kernel is trusted), and the privacy of the data transmitted can be assured using file system permissions (no one can tap a Unix domain socket without appropriate permissions or being root).
 
-### Router Authentication
+## Router Authentication
 
 To authenticate *Routers* to *Clients*, deployments MUST run TLS and *Clients* MUST verify the *Router* server certificate presented. WAMP itself does not provide mechanisms to authenticate a *Router* (only a *Client*).
 
@@ -1994,13 +2013,13 @@ The verification of the *Router* server certificate can happen
 
 Further, when a *Client* connects to a *Router* over a local-only transport such as Unix domain sockets, the file system permissions can be used to create implicit trust. E.g. if only the OS user under which the *Router* runs has the permission to create a Unix domain socket under a specific path, *Clients* connecting to that path can trust in the router authenticity.
 
-### Client Authentication
+## Client Authentication
 
-Authentication of a *Client* to a *Router* at the WAMP level is not part of this basic profile. A WAMP Advanced Profile may specify such mechanisms.
+Authentication of a *Client* to a *Router* at the WAMP level is not part of the basic profile.
 
-When running over TLS, a *Router* may authenticate a *Client* at the transport level by doing a *client certificate based authentication*.
+When running over TLS, a *Router* MAY authenticate a *Client* at the transport level by doing a *client certificate based authentication*.
 
-#### Routers are trusted
+### Routers are trusted
 
 *Routers* are *trusted* by *Clients*.
 
@@ -2015,7 +2034,84 @@ Further, *Routers* are trusted to **actually perform** routing as specified. E.g
 A rogue *Router* might deny normal routing operation without a *Client* taking notice.
 
 
-## Binary conversion of JSON Strings
+
+
+# Advanced Profile
+
+While implementations MUST implement the subset of the Basic Profile necessary for the particular set of WAMP roles they provide, they MAY implement any subset of features from the Advanced Profile. Implementers SHOULD implement the maximum of features possible considering the aims of an implementation.
+
+> Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This is part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.
+
+{{adv_messages.md}}
+
+{{adv_features.md}}
+
+
+## Advanced RPC Features
+
+{{adv_rpc_progressive_call_results.md}}
+
+{{adv_rpc_progressive_calls.md}}
+
+{{adv_rpc_call_timeout.md}}
+
+{{adv_rpc_call_canceling.md}}
+
+{{adv_rpc_caller_identification.md}}
+
+{{adv_rpc_call_trustlevels.md}}
+
+{{adv_rpc_registration_meta_api.md}}
+
+{{adv_rpc_pattern_based_registration.md}}
+
+{{adv_rpc_shared_registration.md}}
+
+{{adv_rpc_sharded_registration.md}}
+
+{{adv_rpc_registration_revocation.md}}
+
+{{adv_rpc_procedure_reflection.md}}
+
+
+## Advanced PubSub Featrues
+
+
+{{adv_pubsub_subscriber_blackwhite_listing.md}}
+
+{{adv_pubsub_publisher_exclusion.md}}
+
+{{adv_pubsub_publisher_identification.md}}
+
+{{adv_pubsub_publication_trustlevels.md}}
+
+{{adv_pubsub_session_meta_api.md}}
+
+{{adv_pubsub_subscription_meta_api.md}}
+
+{{adv_pubsub_pattern_based_subscription.md}}
+
+{{adv_pubsub_sharded_subscription.md}}
+
+{{adv_pubsub_event_history.md}}
+
+{{adv_pubsub_topic_reflection.md}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Binary conversion of JSON Strings
 
 Binary data follows a convention for conversion to JSON strings.
 
@@ -2055,7 +2151,7 @@ A **JSON string** is unserialized to either a **string** or a **byte array** usi
 
 Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.
 
-### Python
+## Python
 
 Here is a complete example in Python showing how byte arrays are converted to and from JSON:
 
@@ -2092,7 +2188,7 @@ Here is a complete example in Python showing how byte arrays are converted to an
         <CODE ENDS>
         ```
 
-### JavaScript
+## JavaScript
 
 Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:
 
@@ -2114,7 +2210,8 @@ Here is a complete example in JavaScript showing how byte arrays are converted t
            raw_out += String.fromCharCode(data_in[i]);
         }
 
-        // base64 encode raw string, prepend with \0 and serialize to JSON
+        // base64 encode raw string, prepend with \0 
+        // and serialize to JSON
         var encoded = JSON.stringify("\0" + window.btoa(raw_out));
         console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="
 
