@@ -31,7 +31,7 @@
 
 .# Abstract
 
-This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional and message-based communication. 
+This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications. 
 
 {mainmatter}
 
@@ -41,91 +41,84 @@ This document defines the Web Application Messaging Protocol (WAMP). WAMP is a r
 
 _This section is non-normative._
 
-The WebSocket protocol brought bi-directional real-time connections to the browser. This defines an API at the message level, requiring users who want to use WebSocket connections in their applications to define any semantics on top of it.
+The WebSocket protocol brings bi-directional real-time connections to the browser. It defines an API at the message level, requiring users who want to use WebSocket connections in their applications to define their own semantics on top of it.
 
 The Web Application Messaging Protocl (WAMP) was initially defined as a WebSocket sub-protocol at the technical level, and is intended to provide application developers with the semantics they need to handle messaging between components in distributed applications.
 
-WAMP is a routed protocol, with all components connecting to a WAMP router.
+WAMP is a routed protocol, with all components connecting to a _WAMP router_.
 
-WAMP provides two messaging patterns: Publish & Subscribe and routed Remote Procedure calls.
+WAMP provides two messaging patterns: _Publish & Subscribe_ and _routed Remote Procedure Calls_.
 
-Publish & Subscribe is an established messaging pattern where components inform the router that they want to receive information on a topic (they suscribe to the topic). A component can then publish to this topic, and the router distributes events to all subscribers.
+Publish & Subscribe (PubSub) is an established messaging pattern where a component, the _Subscriber_, informs the router that it wants to receive information on a topic (i.e., it subscribes to a topic). Another component, a _Publisher_, can then publish to this topic, and the router distributes events to all Subscribers.
 
-With routed Remote Procedure calls, the decoupling of the Publish & Subscribe pattern is applied to Remote Procedure Calls: a component announces to the router that it provides a certain procedure, identified by a procedure name. Other components can then call the procedure, with the router invoking the procedure on the registering component, receiving the result for this, and forwarding this to the caller.
+Routed Remote Procedure Calls (RPCs) rely on the same sort of decoupling that is used by the Publish & Subscribe pattern. A component, the _Callee_, announces to the router that it provides a certain procedure, identified by a procedure name. Other components, _Callers_, can then call the procedure, with the router invoking the procedure on the Callee, receiving the procedure's result, and then forwarding this result back to the Caller. Routed RPCs differ from traditional client-server RPCs in that the router serves as an intermediary between the Caller and the Callee.
 
-Routed Remote Procedure Calls transfer the decoupling of the Publish & Subscribe pattern to Remote Procedure Calls. A caller is no longer required to have knowledge of the Callee, it merely needs to know the identifier for the procedure it wants to call. There is also no longer a need for a direct connection between the caller and the callee, since all traffic is routed. This enables calling procedures in components which are not reachable externally, e.g. on a NATted connection, but which can establish an outgoing connection to the WAMP router.
+The decoupling in routed RPCs arises from the fact that the Caller is no longer required to have knowledge of the Callee; it merely needs to know the identifier of the procedure it wants to call. There is also no longer a need for a direct connection between the caller and the callee, since all traffic is routed. This enables the calling of procedures in components which are not reachable externally (e.g. on a NATted connection) but which can establish an outgoing connection to the WAMP router.
 
-Combining these two patterns into a single protocol allows a single protocol to be used for the entire messaging requirements of an application, reducing complexity in the technology stack and networking overheads.
+Combining these two patterns into a single protocol allows it to be used for the entire messaging requirements of an application, thus reducing technology stack complexity, as well as networking overheads.
 
-While WAMP was originally specified to run over WebSocket, it can run over any transport which is message-based, ordered, reliable and bi-directional.
+While WAMP was originally specified to run over WebSocket, it can run over any transport which is message-oriented, ordered, reliable, and bi-directional.
 
 ## Protocol Overview
 
 _This section is non-normative._
 
-For each of the two messaging patterns, three roles are defined:
+The PubSub messaging pattern defines three roles: _Subscribers_ and _Publishers_, which communicate via a _Broker_.
 
-For PubSub, there are Subscribers and Publishers, which are connected through a Broker.
+The routed RPC messaging pattern also defines three roles: _Callers_ and _Callees_, which communicate via a _Dealer_.
 
-For routed Remote Procedure Calls there are Callers and Callees, which are connected through a Dealer.
+WAMP Connections are established by Clients to a Router. Connections can use any transport that is message-based, ordered, reliable and bi-directional, with WebSocket as the default transport.
 
-WAMP Connections are established by Clients to a Router. Connections can use any transport which is message-based, ordered, reliable and bi-directional, with WebSocket as the default transport.
+A _Router_ is a component which implements one or both of the Broker and Dealer roles. A _Client_ is a component which implements any or all of the Subscriber, Publisher, Caller, or Callee roles.
 
-WAMP Sessions are established using a WAMP Connection. A WAMP Session connects to a Realm on a Router. Routing occurs only between WAMP Sessions connected to the same realm.
++WAMP _Connections_ are established by Clients to a Router. Connections can use any transport which is message-oriented, ordered, reliable and bi-directional, with WebSocket as the default transport.
 
-The Basic Profile defines the parts of the protocol which are required to establish a WAMP connection as well as for basic interactions between the four client and two router roles. 
++WAMP _Sessions_ are established over a WAMP Connection. A WAMP Session is joined to a _Realm_ on a Router. Routing occurs only between WAMP Sessions that have joined the same Realm.
 
-WAMP implementations are required to implement the basic profile regarding connection establishment as well as for the role or roles they implement.
+The _WAMP Basic Profile_ defines the parts of the protocol that are required to establish a WAMP connection, as well as for basic interactions between the four client and two router roles. WAMP implementations are required to implement the Basic Profile, at minimum.
 
-The Advanced Profile defines additions to the Basic Profile which greatly extend the utility of WAMP in real-world applications. 
-
-WAMP implementations may implement any subset of Advanced Profile features. They are required to announce the implemented features during connection establishment.
+The _WAMP Advanced Profile_ defines additions to the Basic Profile which greatly extend the utility of WAMP in real-world applications. WAMP implementations may support any subset of the Advanced Profile features. They are required to announce those supported features during session establishment.
 
 
 ## Design Philosophy
 
 _This section is non-normative._
 
-WAMP was designed to be performant, safe and easy to implement. Its entire design was drive by a implement, get feedback, adjust cycle.
+WAMP was designed to be performant, safe and easy to implement. Its entire design was driven by a implement, get feedback, adjust cycle.
 
-A first version of the protocol was publicly released in March 2012. The intention was to gain insight through implementation and use, and integrate these into a second version of the protocol, where there would be no regard for compatibility between the two versions. Several interoperable, independent implementations were released, and feedback from the implementers and users was collected.
+An initial version of the protocol was publicly released in March 2012. The intent was to gain insight through implementation and use, and integrate these into a second version of the protocol, where there would be no regard for compatibility between the two versions. Several interoperable, independent implementations were released, and feedback from the implementers and users was collected.
 
-The second version of the protocol, which this RFC covers, integrates this feedback. Routed Remote Procedure Calls are one outcome of this, where the  first version of the protocol only allowed to call functionality implemented in the router. A connected outcome was the strict separation of routing and application functionality (see below).
+The second version of the protocol, which this RFC covers, integrates this feedback. Routed Remote Procedure Calls are one outcome of this, where the initial version of the protocol only allowed the calling of procedures provided by the router. Another, related outcome was the strict separation of routing and application logic (see below).
 
-While WAMP was originally developed to use WebSocket as a transport, and JSON for serialization, experience in the field showed that other transports and serialization formats were better suited to some use cases. As an example, with the use of WAMP in the Internet of Things sphere, resource constraints play a much larger role than in the browser, so any reduction in resource use of WAMP implementations counts. This lead to the decoupling of WAMP from any particular transport or serialization, and the establishment of minimum requirements for each.
+While WAMP was originally developed to use WebSocket as a transport, with JSON for serialization, experience in the field revealed that other transports and serialization formats were better suited to some use cases. For instance, with the use of WAMP in the Internet of Things sphere, resource constraints play a much larger role than in the browser, so any reduction of resource usage in WAMP implementations counts. This lead to the decoupling of WAMP from any particular transport or serialization, with the establishment of minimum requirements for both.
 
-### Basic and Advanced Profile
+### Basic and Advanced Profiles
 
-This document first describes a Basic Profile for WAMP in its entirety before describing an Advanced Profile which extends the functionality of WAMP.
+This document first describes a Basic Profile for WAMP in its entirety, before describing an Advanced Profile which extends the basic functionality of WAMP.
 
-The separation in Basic and Advanced Profile is intended to extend the reach of the protocol. 
+The separation into Basic and Advanced Profiles is intended to extend the reach of the protocol. It allows implementations to start out with a minimal, yet operable and useful set of features, and to expand that set from there. It also allows implementations that are tailored for resource-constrained environments, where larger feature sets would not be possible. Here implementers can weigh between resource constraints and functionality requirements, then implement an optimal feature set for the circumstances.
 
-It allows implementations to start out with a minimal but operable and useful set of functionality, and to expand their functionality from there.
-
-It also allows implementations in resource-constrained environments where an implementation of a larger set of functionality would not be possible. Here implementers can weigh between resource constraints and functionality requirements and implement an optimal set for the circumstances.
-
-Feature announcement is used for Advanced Profile features, so that different implementations can adjust their interactions to fit the commonly supported feature set.
+Advanced Profile features are announced during session establishment, so that different implementations can adjust their interactions to fit the commonly supported feature set.
 
 
 ### Application Code
 
-WAMP is designed for application code to run inside *Clients*, i.e. *Peers* of the roles *Callee*, *Caller*, *Publisher*, and *Subscriber*.
+WAMP is designed for application code to run within *Clients*, i.e. *Peers* having the roles *Callee*, *Caller*, *Publisher*, and *Subscriber*.
 
 *Routers*, i.e. *Peers* of the roles *Brokers* and *Dealers* are responsible for **generic call and event routing** and do not run application code.
 
-This allows to transparently exchange *Broker* and *Dealer* implementations without affecting the application and to distribute and deploy application components flexibly.
+This allows the transparent exchange of *Broker* and *Dealer* implementations without affecting the application and to distribute and deploy application components flexibly.
 
-> Note that a **program** that implements e.g. the *Dealer* role might at the same time implement e.g. a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
->
+> Note that a **program** that implements, for instance, the *Dealer* role might at the same time implement, say, a built-in *Callee*. It is the *Dealer* and *Broker* that are generic, not the program.
 
 ### Router Implementation Specifics
 
-This specification only deals with the protcol level. Specific WAMP *Broker* and *Dealer* implementations may differ in aspects such as support for
+This specification only deals with the protcol level. Specific WAMP *Broker* and *Dealer* implementations may differ in aspects such as support for:
 
-* router networks (clustering and federation)
-* authentication and authorization schemes
-* message persistence
-* management and monitoring
+* router networks (clustering and federation),
+* authentication and authorization schemes,
+* message persistence, and,
+* management and monitoring.
 
 The definition and documentation of such *Router* features is outside the scope of this document.
 
@@ -1138,7 +1131,7 @@ Upon subscribing to a topic via the `SUBSCRIBE` message, a *Subscriber* will rec
 
 A subscription lasts for the duration of a session, unless a *Subscriber* opts out from a previously established subscription via the `UNSUBSCRIBE` message.
 
-> A *Subscriber* may have more than one event handler attached to the same subscription. This can be implemented in different ways: a) a *Subscriber* can recognize itself that it is already subscribed and just attach another handler to the subscription for incoming events, b) or it can send a new `SUBSCRIBE` message to broker (as it would be first) and upon receiving a `SUBSCRIBED.Subscription|id` it already knows about, attach the handler to the existing subscription
+> A *Subscriber* may have more than one event handler attached to the same subscription. This can be implemented in different ways: a) a *Subscriber* can recognize itself that it is already subscribed and just attach another handler to the subscription for incoming events, b) or it can send a new `SUBSCRIBE` message to broker (as it would be first) and upon receiving a `SUBSCRIBED.Subscription|id` it already knows about, attach the handler to the existing subscription
 >
 
 ### SUBSCRIBE
@@ -1159,7 +1152,7 @@ where
 {align="left"}
         [32, 713845233, {}, "com.myapp.mytopic1"]
 
-A *Broker*, receiving a `SUBSCRIBE` message, can fullfill or reject the subscription, so it answers with `SUBSCRIBED` or `ERROR` messages.
+A *Broker*, receiving a `SUBSCRIBE` message, can fullfill or reject the subscription, so it answers with `SUBSCRIBED` or `ERROR` messages.
 
 ### SUBSCRIBED
 
@@ -1180,7 +1173,7 @@ where
 
 > Note. The `Subscription` ID chosen by the broker need not be unique to the subscription of a single *Subscriber*, but may be assigned to the `Topic`, or the combination of the `Topic` and some or all `Options`, such as the topic pattern matching method to be used. Then this ID may be sent to all *Subscribers* for the `Topic` or `Topic` /  `Options` combination. This allows the *Broker* to serialize an event to be delivered only once for all actual receivers of the event.
 
-> In case of receiving a `SUBSCRIBE` message from the same *Subscriber* and to already subscribed topic, *Broker* should answer with `SUBSCRIBED` message, containing the existing `Subscription|id`.
+> In case of receiving a `SUBSCRIBE` message from the same *Subscriber* and to already subscribed topic, *Broker* should answer with `SUBSCRIBED` message, containing the existing `Subscription|id`.
 
 ### Subscribe ERROR
 
@@ -1879,7 +1872,7 @@ When a *Peer* provides an incorrect URI for any URI-based attribute of a WAMP me
 
 ## Interaction
 
-*Peer* provided an incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
+*Peer* provided an incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
 
 {align="left"}
         wamp.error.invalid_uri
