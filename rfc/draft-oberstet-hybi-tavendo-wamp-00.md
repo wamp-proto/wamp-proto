@@ -160,7 +160,7 @@ A Session is a transient conversation between two Peers attached to a Realm and 
 
 A Transport connects two WAMP Peers and provides a channel over which WAMP messages for a WAMP Session can flow in both directions.
 
-WAMP can run over any *transport* which is message-based, bidirectional,  reliable and ordered.
+WAMP can run over any Transport which is message-based, bidirectional,  reliable and ordered.
 
 The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol.
 
@@ -168,19 +168,19 @@ The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [offic
 
 # Peers and Roles
 
-A WAMP *Session* connects two *Peers*, a *Client* and a *Router*. Each WAMP *Peer* MUST implement one role, and MAY implement more roles.
+A WAMP Session connects two Peers, a Client and a Router. Each WAMP Peer MUST implement one role, and MAY implement more roles.
 
-A *Client* MAY implement any combination of the *Roles*:
+A Client MAY implement any combination of the Roles:
 
- * *Callee*
- * *Caller*
- * *Publisher*
- * *Subscriber*
+ * Callee
+ * Caller
+ * Publisher
+ * Subscriber
 
-and a *Router* MAY implement either or both of the *Roles*:
+and a Router MAY implement either or both of the Roles:
 
- * *Dealer*
- * *Broker*
+ * Dealer
+ * Broker
 
 > This document describes WAMP as in client-to-router communication. Direct client-to-client communication is not supported by WAMP. Router-to-router communication MAY be defined by a specific router implementation.
 >
@@ -188,45 +188,45 @@ and a *Router* MAY implement either or both of the *Roles*:
 
 ## Symmetric Messaging
 
-It is important to note that though the establishment of a *Transport* might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and *Clients* establish WAMP sessions by attaching to *Realms* on *Routers*, WAMP itself is designed to be fully symmetric for application components.
+It is important to note that though the establishment of a Transport might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and Clients establish WAMP sessions by attaching to Realms on Routers, WAMP itself is designed to be fully symmetric for application components.
 
-After the transport and a session have been established, any application component may act as *Caller*, *Callee*, *Publisher* and *Subscriber* at the same time. And *Routers* provide the fabric on top of which WAMP runs a symmetric application messaging service.
+After the transport and a session have been established, any application component may act as Caller, Callee, Publisher and Subscriber at the same time. And Routers provide the fabric on top of which WAMP runs a symmetric application messaging service.
 
 
 ## Remote Procedure Call Roles
 
 The Remote Procedure Call messaging pattern involves peers of three different roles:
 
-* *Callee (Client)*
-* *Caller (Client)*
-* *Dealer (Router)*
+* Callee (Client)
+* Caller (Client)
+* Dealer (Router)
 
-A *Caller* issues calls to remote procedures by providing the procedure URI and any arguments for the call.
-The *Callee* will execute the procedure using the supplied arguments to the call and return the result of the call to the *Caller*.
+A Caller issues calls to remote procedures by providing the procedure URI and any arguments for the call.
+The Callee will execute the procedure using the supplied arguments to the call and return the result of the call to the Caller.
 
-*Callees* register procedures they provide with *Dealers*. *Callers* initiate procedure calls first to *Dealers*. *Dealers* route calls incoming from *Callers* to *Callees* implementing the procedure called, and route call results back from *Callees* to *Callers*.
+Callees register procedures they provide with Dealers. Callers initiate procedure calls first to Dealers. Dealers route calls incoming from Callers to Callees implementing the procedure called, and route call results back from Callees to Callers.
 
-The *Caller* and *Callee* will usually run application code, while the *Dealer* works as a generic router for remote procedure calls decoupling *Callers* and *Callees*.
+The Caller and Callee will usually run application code, while the Dealer works as a generic router for remote procedure calls decoupling Callers and Callees.
 
 
 ## Publish & Subscribe Roles
 
 The Publish & Subscribe messaging pattern involves peers of three different roles:
 
-* *Subscriber (Client)*
-* *Publisher (Client)*
-* *Broker (Router)*
+* Subscriber (Client)
+* Publisher (Client)
+* Broker (Router)
 
-A *Publishers* publishes events to topics by providing the topic URI and any payload for the event. *Subscribers* of the topic will receive the event together with the event payload.
+A Publishers publishes events to topics by providing the topic URI and any payload for the event. Subscribers of the topic will receive the event together with the event payload.
 
-*Subscribers* subscribe to topics they are interested in with *Brokers*. *Publishers* initiate publication first at *Brokers*. *Brokers* route events incoming from *Publishers* to *Subscribers* that are subscribed to respective topics.
+Subscribers subscribe to topics they are interested in with Brokers. Publishers initiate publication first at Brokers. Brokers route events incoming from Publishers to Subscribers that are subscribed to respective topics.
 
-The *Publisher* and *Subscriber* will usually run application code, while the *Broker* works as a generic router for events decoupling *Publishers* from *Subscribers*.
+The Publisher and Subscriber will usually run application code, while the Broker works as a generic router for events decoupling Publishers from Subscribers.
 
 
 ## Peers with multiple Roles
 
-Note that *Peers* might implement more than one role: e.g. a *Peer* might act as *Caller*, *Publisher* and *Subscriber* at the same time. Another *Peer* might act as both a *Broker* and a *Dealer*.
+Note that Peers might implement more than one role: e.g. a Peer might act as Caller, Publisher and Subscriber at the same time. Another Peer might act as both a Broker and a Dealer.
 
 
 
@@ -245,7 +245,7 @@ For each building block, WAMP only assumes a defined set of requirements, which 
 
 ### URIs {#uris}
 
-WAMP needs to identify the following *persistent* resources:
+WAMP needs to identify the following **persistent** resources:
 
 1.  Topics
 2.  Procedures
@@ -272,7 +272,7 @@ To avoid resource naming conflicts, the package naming convention from Java is u
 
 URI components (the parts between two `.`s, the head part up to the first `.`, the tail part after the last `.`) MUST NOT contain a `.`, `#` or whitespace characters and MUST NOT be empty (zero-length strings).
 
-> The restriction not to allow `.` in component strings is due to the fact that `.` is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that are part of the Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in the Advanced Profile. The character `#` is not allowed since this is reserved for internal use by *Dealers* and *Brokers*.
+> The restriction not to allow `.` in component strings is due to the fact that `.` is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that are part of the Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in the Advanced Profile. The character `#` is not allowed since this is reserved for internal use by Dealers and Brokers.
 
 As an example, the following regular expression could be used in Python to check URIs according to above rules:
 
@@ -445,7 +445,7 @@ The default transport binding for WAMP is WebSocket.
 
 In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). The Advanced Profile may define other modes, e.g. a **batched mode** where multiple WAMP messages are transmitted via single WebSocket message.
 
-The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between *Peers* using the WebSocket subprotocol negotiation mechanism.
+The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism.
 
 WAMP uses the following WebSocket subprotocol identifiers for unbatched modes:
 
@@ -550,50 +550,50 @@ For a given `MessageType` *and* number of message elements the expected types ar
 
 ## Structure
 
-The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: *Brokers* and *Dealers* have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows *Brokers* and *Dealers* to skip parsing it altogether. This can improve efficiency and performance.
+The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: Brokers and Dealers have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows Brokers and Dealers to skip parsing it altogether. This can improve efficiency and performance.
 
 
 ## Message Definitions
 
 WAMP defines the following messages that are explained in detail in the following sections.
 
-The messages concerning the WAMP session itself are mandatory for all *Peers*, i.e. a *Client* MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a *Router* MUST implement `WELCOME`, `ABORT` and `GOODBYE`.
+The messages concerning the WAMP session itself are mandatory for all Peers, i.e. a Client MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a Router MUST implement `WELCOME`, `ABORT` and `GOODBYE`.
 
-All other messages are mandatory *per role*, i.e. in an implementation that only provides a *Client* with the role of *Publisher* MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
+All other messages are mandatory *per role*, i.e. in an implementation that only provides a Client with the role of Publisher MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
 
 ### Session Lifecycle
 
 #### HELLO
 
-Sent by a *Client* to initiate opening of a WAMP session to a *Router* attaching to a *Realm*.
+Sent by a Client to initiate opening of a WAMP session to a Router attaching to a Realm.
 
 {align="left"}
         [HELLO, Realm|uri, Details|dict]
 
 #### WELCOME
 
-Sent by a *Router* to accept a *Client*. The WAMP session is now open.
+Sent by a Router to accept a Client. The WAMP session is now open.
 
 {align="left"}
         [WELCOME, Session|id, Details|dict]
 
 #### ABORT
 
-Sent by a *Peer* to abort the opening of a WAMP session. No response is expected.
+Sent by a Peer*to abort the opening of a WAMP session. No response is expected.
 
 {align="left"}
       [ABORT, Details|dict, Reason|uri]
 
 #### GOODBYE
 
-Sent by a *Peer* to close a previously opened WAMP session. Must be echo'ed by the receiving *Peer*.
+Sent by a Peer to close a previously opened WAMP session. Must be echo'ed by the receiving Peer.
 
 {align="left"}
         [GOODBYE, Details|dict, Reason|uri]
 
 #### ERROR
 
-Error reply sent by a *Peer* as an error response to different kinds of requests.
+Error reply sent by a Peer as an error response to different kinds of requests.
 
 {align="left"}
         [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
@@ -610,7 +610,7 @@ Error reply sent by a *Peer* as an error response to different kinds of requests
 
 #### PUBLISH
 
-Sent by a *Publisher* to a *Broker* to publish an event.
+Sent by a Publisher to a Broker to publish an event.
 
 {align="left"}
         [PUBLISH, Request|id, Options|dict, Topic|uri]
@@ -623,42 +623,42 @@ Sent by a *Publisher* to a *Broker* to publish an event.
 
 #### PUBLISHED
 
-Acknowledge sent by a *Broker* to a *Publisher* for acknowledged publications.
+Acknowledge sent by a Broker to a Publisher for acknowledged publications.
 
 {align="left"}
         [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
 #### SUBSCRIBE
 
-Subscribe request sent by a *Subscriber* to a *Broker* to subscribe to a topic.
+Subscribe request sent by a Subscriber to a Broker to subscribe to a topic.
 
 {align="left"}
         [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
 #### SUBSCRIBED
 
-Acknowledge sent by a *Broker* to a *Subscriber* to acknowledge a subscription.
+Acknowledge sent by a Broker to a Subscriber to acknowledge a subscription.
 
 {align="left"}
         [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
 #### UNSUBSCRIBE
 
-Unsubscribe request sent by a *Subscriber* to a *Broker* to unsubscribe a subscription.
+Unsubscribe request sent by a Subscriber to a Broker to unsubscribe a subscription.
 
 {align="left"}
         [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
 #### UNSUBSCRIBED
 
-Acknowledge sent by a *Broker* to a *Subscriber* to acknowledge unsubscription.
+Acknowledge sent by a Broker to a Subscriber to acknowledge unsubscription.
 
 {align="left"}
         [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
 #### EVENT
 
-Event dispatched by *Broker* to *Subscribers* for subscriptions the event was matching.
+Event dispatched by Broker to Subscribers for subscriptions the event was matching.
 
 {align="left"}
         [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
@@ -671,7 +671,7 @@ Event dispatched by *Broker* to *Subscribers* for subscriptions the event was ma
             Details|dict, PUBLISH.Arguments|list,
             PUBLISH.ArgumentsKw|dict]
 
-> An event is dispatched to a *Subscriber* for a given `Subscription|id` *only once*. On the other hand, a *Subscriber* that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
+> An event is dispatched to a Subscriber for a given `Subscription|id` *only once*. On the other hand, a Subscriber that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
 >
 
 ### Routed Remote Procedure Calls
