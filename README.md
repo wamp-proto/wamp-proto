@@ -18,3 +18,11 @@ The [WAMP spec](https://github.com/wamp-proto/wamp-proto/blob/master/spec/) is a
 [WAMP implementations](http://wamp-proto.org/implementations/) are available for many different languages and run-time environments.
 
 Find out more on the [Web site](http://wamp-proto.org) or get in touch on the [mailing list](https://groups.google.com/group/wampws).
+
+## Standardization of WAMP as an IETF standard
+
+We're currently working on getting WAMP onto a the IETF standards track. 
+
+Your participation here is highly welcome!
+
+To participate in the process, please take a look at the [guidelines](PARTICIPATE.md).
