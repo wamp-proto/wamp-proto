@@ -82,7 +82,7 @@ https://www.rfc-editor.org/policy.html
 
 
 
-# Formatting for markdown file for RFC
+# Formatting the markdown file for RFC
 
 This document collects formatting conventions and formatting tips for drafting a RFC in markdown format when using [mmark](https://github.com/miekg/mmark) to transform the markdown into XML.
 
@@ -111,4 +111,18 @@ For triple backticks e.g.
 There is no line wrapping of code blocks, and RFCs are limited to 72 characters per line.
 
 This means that we need to manually line-wrap code blocks.
+
+
+## Defined Terms
+
+Terms that we define as part of the WAMP spec are 
+
+* capitalized throughout the text and
+* italicised on their first use only.
+
+## WAMP MESSAGES
+
+**WAMP message texts** are in all caps.
+
+**Arguments of WAMP messages** are in backticks, e.g. "Keys in `Options` and `Details` must be of type ...".
 
