@@ -5,11 +5,11 @@
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                                 A. Goedde
 Intended status: Standards Track                            Tavendo GmbH
-Expires: March 30, 2016                               September 27, 2015
+Expires: April 12, 2016                                 October 10, 2015
 
 
                    Web Application Messaging Protocol
-                  draft-oberstet-hybi-tavendo-wamp-00
+                  draft-oberstet-hybi-tavendo-wamp-01
 
 Abstract
 
@@ -36,7 +36,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on March 30, 2016.
+   This Internet-Draft will expire on April 12, 2016.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 1]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 1]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    the Trust Legal Provisions and are provided without warranty as
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 2]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 2]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
      7.2.  Session Closing . . . . . . . . . . . . . . . . . . . . .  31
@@ -165,9 +165,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 3]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 3]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
      13.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  58
@@ -221,9 +221,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 4]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 4]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 1.1.  Background
@@ -277,9 +277,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 5]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 5]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    the callee, since all traffic is routed.  This enables the calling of
@@ -333,9 +333,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 6]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 6]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 1.3.  Design Philosophy
@@ -389,9 +389,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 7]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 7]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 1.3.2.  Application Code
@@ -445,9 +445,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 8]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 8]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    All diagrams, examples, and notes in this specification are non-
@@ -501,9 +501,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                 [Page 9]
+Oberstein & Goedde       Expires April 12, 2016                 [Page 9]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  Callee
@@ -557,9 +557,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 10]
+Oberstein & Goedde       Expires April 12, 2016                [Page 10]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    Callees register procedures they provide with Dealers.  Callers
@@ -613,9 +613,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 11]
+Oberstein & Goedde       Expires April 12, 2016                [Page 11]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    For each building block, WAMP only assumes a defined set of
@@ -669,9 +669,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 12]
+Oberstein & Goedde       Expires April 12, 2016                [Page 12]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
       The restriction not to allow "." in component strings is due to
@@ -725,9 +725,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 13]
+Oberstein & Goedde       Expires April 12, 2016                [Page 13]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
         pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
@@ -781,9 +781,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 14]
+Oberstein & Goedde       Expires April 12, 2016                [Page 14]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  IDs in the _session scope_ SHOULD be incremented by 1 beginning
@@ -837,9 +837,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 15]
+Oberstein & Goedde       Expires April 12, 2016                [Page 15]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "UNSUBSCRIBE.Request"
@@ -893,9 +893,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 16]
+Oberstein & Goedde       Expires April 12, 2016                [Page 16]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    There is no required serialization or set of serializations for WAMP
@@ -949,9 +949,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 17]
+Oberstein & Goedde       Expires April 12, 2016                [Page 17]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 5.3.1.  WebSocket Transport
@@ -1005,9 +1005,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 18]
+Oberstein & Goedde       Expires April 12, 2016                [Page 18]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
                          TCP established
@@ -1061,9 +1061,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 19]
+Oberstein & Goedde       Expires April 12, 2016                [Page 19]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "uri": a string URI as defined in Section 5.1.1
@@ -1117,9 +1117,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 20]
+Oberstein & Goedde       Expires April 12, 2016                [Page 20]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 6.3.  Structure
@@ -1173,9 +1173,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 21]
+Oberstein & Goedde       Expires April 12, 2016                [Page 21]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    Sent by a Peer to close a previously opened WAMP session.  Must be
@@ -1229,9 +1229,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 22]
+Oberstein & Goedde       Expires April 12, 2016                [Page 22]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 6.4.2.4.  SUBSCRIBED
@@ -1285,9 +1285,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 23]
+Oberstein & Goedde       Expires April 12, 2016                [Page 23]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
      [CALL, Request|id, Options|dict, Procedure|uri]
@@ -1341,9 +1341,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 24]
+Oberstein & Goedde       Expires April 12, 2016                [Page 24]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
        [INVOCATION, Request|id, REGISTERED.Registration|id,
@@ -1397,9 +1397,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 25]
+Oberstein & Goedde       Expires April 12, 2016                [Page 25]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    |  35 | "UNSUBSCRIBED" |      |  Tx  |  Rx  |      |       |        |
@@ -1453,9 +1453,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 26]
+Oberstein & Goedde       Expires April 12, 2016                [Page 26]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     [CALL, Request|id, Options|dict, Procedure|uri,
@@ -1509,9 +1509,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 27]
+Oberstein & Goedde       Expires April 12, 2016                [Page 27]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
        |     WELCOME     |
@@ -1565,9 +1565,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 28]
+Oberstein & Goedde       Expires April 12, 2016                [Page 28]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     [1, "somerealm", {
@@ -1621,9 +1621,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 29]
+Oberstein & Goedde       Expires April 12, 2016                [Page 29]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    A _Router_ must support at least one role, and MAY support both
@@ -1677,9 +1677,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 30]
+Oberstein & Goedde       Expires April 12, 2016                [Page 30]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     [3, {"message": "The realm does not exist."},
@@ -1733,9 +1733,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 31]
+Oberstein & Goedde       Expires April 12, 2016                [Page 31]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    and the other peer replies
@@ -1789,9 +1789,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 32]
+Oberstein & Goedde       Expires April 12, 2016                [Page 32]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
          "roles": {
@@ -1845,9 +1845,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 33]
+Oberstein & Goedde       Expires April 12, 2016                [Page 33]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
          |                  |                      |
@@ -1901,9 +1901,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 34]
+Oberstein & Goedde       Expires April 12, 2016                [Page 34]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "Options" MUST be a dictionary that allows to provide additional
@@ -1957,9 +1957,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 35]
+Oberstein & Goedde       Expires April 12, 2016                [Page 35]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 8.1.3.  Subscribe ERROR
@@ -2013,9 +2013,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 36]
+Oberstein & Goedde       Expires April 12, 2016                [Page 36]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    where
@@ -2069,9 +2069,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 37]
+Oberstein & Goedde       Expires April 12, 2016                [Page 37]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
          |                  |                   |
@@ -2125,9 +2125,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 38]
+Oberstein & Goedde       Expires April 12, 2016                [Page 38]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    By default, publications are unacknowledged, and the _Broker_ will
@@ -2181,9 +2181,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 39]
+Oberstein & Goedde       Expires April 12, 2016                [Page 39]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "Error" is an URI that gives the error of why the request could
@@ -2237,9 +2237,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 40]
+Oberstein & Goedde       Expires April 12, 2016                [Page 40]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "Details" is a dictionary that allows the _Broker_ to provide
@@ -2293,9 +2293,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 41]
+Oberstein & Goedde       Expires April 12, 2016                [Page 41]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
        |                 |                      |
@@ -2349,9 +2349,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 42]
+Oberstein & Goedde       Expires April 12, 2016                [Page 42]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 9.1.2.  REGISTERED
@@ -2405,9 +2405,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 43]
+Oberstein & Goedde       Expires April 12, 2016                [Page 43]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "REGISTERED.Registration" is the ID for the registration to
@@ -2461,9 +2461,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 44]
+Oberstein & Goedde       Expires April 12, 2016                [Page 44]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    2.  "RESULT"
@@ -2517,9 +2517,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 45]
+Oberstein & Goedde       Expires April 12, 2016                [Page 45]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "Request" is a random, ephemeral ID chosen by the _Caller_ and
@@ -2573,9 +2573,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 46]
+Oberstein & Goedde       Expires April 12, 2016                [Page 46]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     [INVOCATION, Request|id, REGISTERED.Registration|id,
@@ -2629,9 +2629,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 47]
+Oberstein & Goedde       Expires April 12, 2016                [Page 47]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
@@ -2685,9 +2685,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 48]
+Oberstein & Goedde       Expires April 12, 2016                [Page 48]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    or
@@ -2741,9 +2741,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 49]
+Oberstein & Goedde       Expires April 12, 2016                [Page 49]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    or
@@ -2797,9 +2797,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 50]
+Oberstein & Goedde       Expires April 12, 2016                [Page 50]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "CALL.Request" is the ID from the original "CALL" request sent by
@@ -2853,9 +2853,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 51]
+Oberstein & Goedde       Expires April 12, 2016                [Page 51]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    _Peer_ provided an incorrect URI for any URI-based attribute of WAMP
@@ -2909,9 +2909,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 52]
+Oberstein & Goedde       Expires April 12, 2016                [Page 52]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 10.4.  Authorization
@@ -2965,9 +2965,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 53]
+Oberstein & Goedde       Expires April 12, 2016                [Page 53]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    Further, if _Subscriber A_ subscribes to *Topic 1*, the "SUBSCRIBED"
@@ -3021,9 +3021,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 54]
+Oberstein & Goedde       Expires April 12, 2016                [Page 54]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    WAMP transports may provide (optional) transport-level encryption and
@@ -3077,9 +3077,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 55]
+Oberstein & Goedde       Expires April 12, 2016                [Page 55]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    Authentication of a _Client_ to a _Router_ at the WAMP level is not
@@ -3133,9 +3133,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 56]
+Oberstein & Goedde       Expires April 12, 2016                [Page 56]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.1.1.  Message Definitions
@@ -3189,9 +3189,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 57]
+Oberstein & Goedde       Expires April 12, 2016                [Page 57]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     |  49 |    "CANCEL"    |     |     |      |  Tx  |   Rx  |        |
@@ -3245,9 +3245,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 58]
+Oberstein & Goedde       Expires April 12, 2016                [Page 58]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    +-------------------------------+--------+---+---+---+----+---+----+
@@ -3301,9 +3301,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 59]
+Oberstein & Goedde       Expires April 12, 2016                [Page 59]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.3.  Advanced RPC Features
@@ -3357,9 +3357,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 60]
+Oberstein & Goedde       Expires April 12, 2016                [Page 60]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    A _Caller_ indicates its willingness to receive progressive results
@@ -3413,9 +3413,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 61]
+Oberstein & Goedde       Expires April 12, 2016                [Page 61]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     [
@@ -3469,9 +3469,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 62]
+Oberstein & Goedde       Expires April 12, 2016                [Page 62]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    _Example._ Callee-to-Dealer final "YIELD"
@@ -3525,9 +3525,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 63]
+Oberstein & Goedde       Expires April 12, 2016                [Page 63]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    _Example._ Callee-to-Dealer "YIELDs"
@@ -3581,9 +3581,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 64]
+Oberstein & Goedde       Expires April 12, 2016                [Page 64]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     [70, 87683, {"progress": true}, ["partial 1", 10]]
@@ -3637,9 +3637,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 65]
+Oberstein & Goedde       Expires April 12, 2016                [Page 65]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.3.3.1.  Feature Definition
@@ -3693,9 +3693,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 66]
+Oberstein & Goedde       Expires April 12, 2016                [Page 66]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "INTERRUPT"
@@ -3749,9 +3749,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 67]
+Oberstein & Goedde       Expires April 12, 2016                [Page 67]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
        |                 |      ERROR      |
@@ -3805,9 +3805,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 68]
+Oberstein & Goedde       Expires April 12, 2016                [Page 68]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    _Example_
@@ -3861,9 +3861,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 69]
+Oberstein & Goedde       Expires April 12, 2016                [Page 69]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     INVOCATION.Details.trustlevel|integer
@@ -3917,9 +3917,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 70]
+Oberstein & Goedde       Expires April 12, 2016                [Page 70]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    A client can subscribe to the following registration meta-events,
@@ -3973,9 +3973,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 71]
+Oberstein & Goedde       Expires April 12, 2016                [Page 71]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
         "invoke": invocation_policy|string
@@ -4029,9 +4029,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 72]
+Oberstein & Goedde       Expires April 12, 2016                [Page 72]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.3.7.1.3.  Registration Meta-Procedures
@@ -4085,9 +4085,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 73]
+Oberstein & Goedde       Expires April 12, 2016                [Page 73]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.3.7.1.3.2.  wamp.registration.lookup
@@ -4141,9 +4141,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 74]
+Oberstein & Goedde       Expires April 12, 2016                [Page 74]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
     RegistrationDetails :=
@@ -4197,9 +4197,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 75]
+Oberstein & Goedde       Expires April 12, 2016                [Page 75]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "wamp.error.no_such_registration": No registration with the given
@@ -4253,9 +4253,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 76]
+Oberstein & Goedde       Expires April 12, 2016                [Page 76]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    _Dealer_ if the procedure called ("CALL.Procedure") _exactly_ matches
@@ -4309,9 +4309,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 77]
+Oberstein & Goedde       Expires April 12, 2016                [Page 77]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    will all apply for call routing.  A call with one of the following
@@ -4365,9 +4365,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 78]
+Oberstein & Goedde       Expires April 12, 2016                [Page 78]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    When a single call matches more than one of a _Callees_
@@ -4421,9 +4421,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 79]
+Oberstein & Goedde       Expires April 12, 2016                [Page 79]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.3.8.2.  Feature Announcement
@@ -4477,9 +4477,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 80]
+Oberstein & Goedde       Expires April 12, 2016                [Page 80]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    With 'single', the *Dealer* MUST fail all subsequent attempts to
@@ -4533,9 +4533,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 81]
+Oberstein & Goedde       Expires April 12, 2016                [Page 81]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.3.11.1.  Feature Definition
@@ -4589,9 +4589,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 82]
+Oberstein & Goedde       Expires April 12, 2016                [Page 82]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    A peer that acts as a _Dealer_ SHOULD announce support for the
@@ -4645,9 +4645,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 83]
+Oberstein & Goedde       Expires April 12, 2016                [Page 83]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    The _Publisher_ can explicitly *exclude* _Subscribers_ based on WAMP
@@ -4701,9 +4701,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 84]
+Oberstein & Goedde       Expires April 12, 2016                [Page 84]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    The application can publish *all* customer updates to the *same*
@@ -4757,9 +4757,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 85]
+Oberstein & Goedde       Expires April 12, 2016                [Page 85]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    2.  if there is an "eligible_authid" attribute present, the
@@ -4813,9 +4813,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 86]
+Oberstein & Goedde       Expires April 12, 2016                [Page 86]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
           "eligible": [
@@ -4869,9 +4869,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 87]
+Oberstein & Goedde       Expires April 12, 2016                [Page 87]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.4.2.  Publisher Exclusion
@@ -4925,9 +4925,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 88]
+Oberstein & Goedde       Expires April 12, 2016                [Page 88]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.6.1.  Publisher Identification
@@ -4981,9 +4981,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 89]
+Oberstein & Goedde       Expires April 12, 2016                [Page 89]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.6.2.  Publication Trust Levels
@@ -5037,9 +5037,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 90]
+Oberstein & Goedde       Expires April 12, 2016                [Page 90]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
       Note that an implementation that only supports a _Broker_ or
@@ -5093,9 +5093,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 91]
+Oberstein & Goedde       Expires April 12, 2016                [Page 91]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.6.3.2.2.  wamp.session.on_leave
@@ -5149,9 +5149,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 92]
+Oberstein & Goedde       Expires April 12, 2016                [Page 92]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    1.  "session_ids|list" - List of WAMP session IDs (order undefined).
@@ -5205,9 +5205,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 93]
+Oberstein & Goedde       Expires April 12, 2016                [Page 93]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    *Example*
@@ -5261,9 +5261,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 94]
+Oberstein & Goedde       Expires April 12, 2016                [Page 94]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    If the _Broker_ and the _Subscriber_ support *pattern-based
@@ -5317,9 +5317,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 95]
+Oberstein & Goedde       Expires April 12, 2016                [Page 95]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    Wildcard-matching allows to provide wildcards for *whole* URI
@@ -5373,9 +5373,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 96]
+Oberstein & Goedde       Expires April 12, 2016                [Page 96]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    When a single event matches more than one of a _Subscriber's_
@@ -5429,9 +5429,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 97]
+Oberstein & Goedde       Expires April 12, 2016                [Page 97]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
 13.6.6.  Event History
@@ -5485,9 +5485,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 98]
+Oberstein & Goedde       Expires April 12, 2016                [Page 98]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    o  "publication" is the id of an event which marks the start of the
@@ -5541,9 +5541,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016                [Page 99]
+Oberstein & Goedde       Expires April 12, 2016                [Page 99]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    _Example_
@@ -5597,9 +5597,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016               [Page 100]
+Oberstein & Goedde       Expires April 12, 2016               [Page 100]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
        encoded = json.dumps('\0' + base64.b64encode(data_in).
@@ -5653,9 +5653,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016               [Page 101]
+Oberstein & Goedde       Expires April 12, 2016               [Page 101]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
        var decoded = JSON.parse(encoded);
@@ -5709,9 +5709,9 @@ Internet-Draft                    WAMP                    September 2015
 
 
 
-Oberstein & Goedde       Expires March 30, 2016               [Page 102]
+Oberstein & Goedde       Expires April 12, 2016               [Page 102]
 
-Internet-Draft                    WAMP                    September 2015
+Internet-Draft                    WAMP                      October 2015
 
 
    [RFC6455]  Fette, I. and A. Melnikov, "The WebSocket Protocol", RFC
@@ -5765,4 +5765,4 @@ Authors' Addresses
 
 
 
-Oberstein & Goedde       Expires March 30, 2016               [Page 103]
+Oberstein & Goedde       Expires April 12, 2016               [Page 103]
