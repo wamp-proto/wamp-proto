@@ -1,3 +1,10 @@
+# Submitting
+
+- `make rfc` to generate the current XML + TXT
+- quick sanity check of the generated TXT file
+- increment the draft number on the XML file
+- submit XML file at https://datatracker.ietf.org/submit/
+
 # Tooling
 
 RFC drafts can be submitted in several formats, with XML the preferred one, since it is easiest on the IETF RFC editors.
