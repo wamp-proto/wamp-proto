@@ -1,3 +1,0 @@
-# Shared Registration
-
-Write me.

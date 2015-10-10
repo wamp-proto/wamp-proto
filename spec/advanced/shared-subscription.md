@@ -1,3 +1,0 @@
-# Shared Subscription
-
-Write me.

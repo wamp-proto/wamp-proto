@@ -1,3 +1,0 @@
-# Sharded Registration
-
-Write me.

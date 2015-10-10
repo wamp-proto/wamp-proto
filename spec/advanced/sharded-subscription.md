@@ -1,3 +1,0 @@
-# Sharded Subscription
-
-Write me.
