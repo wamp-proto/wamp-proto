@@ -1,10 +1,3 @@
-# Submitting
-
-- `make rfc` to generate the current XML + TXT
-- quick sanity check of the generated TXT file
-- increment the draft number on the XML file
-- submit XML file at https://datatracker.ietf.org/submit/
-
 # Tooling
 
 RFC drafts can be submitted in several formats, with XML the preferred one, since it is easiest on the IETF RFC editors.
@@ -139,16 +132,14 @@ After adding or modifying a diagram, just do `make diagrams`. This clears the pr
 
 ### State-machine Diagrams
 
-https://github.com/wamp-proto/wamp-proto/blob/master/rfc/diagrams/peer_statechart.txt
-http://asciiflow.com/
-
+* https://github.com/wamp-proto/wamp-proto/blob/master/rfc/diagrams/peer_statechart.txt
+* http://asciiflow.com/
 
 
 ## Style Guides
 
-https://www.rfc-editor.org/rfc-style-guide/rfc-style
-https://www.rfc-editor.org/policy.html
-
+* https://www.rfc-editor.org/rfc-style-guide/rfc-style
+* https://www.rfc-editor.org/policy.html
 
 
 # Formatting the markdown file for RFC
@@ -194,4 +185,3 @@ Terms that we define as part of the WAMP spec are
 **WAMP message texts** are in all caps.
 
 **Arguments of WAMP messages** are in backticks, e.g. "Keys in `Options` and `Details` must be of type ...".
-

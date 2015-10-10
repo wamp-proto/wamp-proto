@@ -1,6 +1,6 @@
 # The Web Application Messaging Protocol
 
-**Quick Links:** [Project homepage](http://wamp-proto.org) | [Latest Internet Draft (ID)](https://tools.ietf.org/html/draft-oberstet-hybi-tavendo-wamp-00) | [Project mailing list](https://groups.google.com/forum/#!forum/wampws) | [IETF mailing list](https://www.ietf.org/mailman/listinfo/hybi)
+**Quick Links:** [Project homepage](http://wamp-proto.org) | [Latest Internet Draft (ID)](https://tools.ietf.org/html/draft-oberstet-hybi-tavendo-wamp) | [Project mailing list](https://groups.google.com/forum/#!forum/wampws) | [IETF mailing list](https://www.ietf.org/mailman/listinfo/hybi)
 
 [![Chat about WAMP at https://gitter.im/tavendo/WAMP](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/tavendo/WAMP?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -25,4 +25,9 @@ We're currently working on getting WAMP onto a the IETF standards track.
 
 Your participation here is highly welcome!
 
-To participate in the process, please take a look at the [guidelines](PARTICIPATE.md).
+To participate in the process, please take a look at
+
+* [Contribung](CONTRIBUTING.md)
+* [Authoring](AUTHORING.md)
+
+join the [mailing list](https://groups.google.com/forum/#!forum/wampws) and our [chat room](https://gitter.im/tavendo/WAMP).
