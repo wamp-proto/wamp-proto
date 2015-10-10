@@ -1,3 +1,5 @@
+-- move to: "ap_transport_batched_websocket.md" --
+
 # Batched WebSocket Transport for WAMP
 
 *WAMP-over-Batched-WebSocket* is a variant of *WAMP-over-WebSocket* where multiple WAMP messages are sent in one WebSocket message.

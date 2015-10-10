@@ -1,3 +1,5 @@
+-- the contents here should move to "ap_rpc_sharded_subscriptions.md" .. and then be overworked --
+
 # Partitioned Subscriptions
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via

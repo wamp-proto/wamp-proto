@@ -1,3 +1,5 @@
+-- there should be 2 text sections in the spec, one "bp_uris.md" and one "ap_uris.md" listing all URIs predefined in the BP and the AP --
+
 # Predefined URIs
 
 WAMP predefines the following URIs in the *advanced profile*. For URIs, used in *basic profile*, please, see appendix in basic profile specification.

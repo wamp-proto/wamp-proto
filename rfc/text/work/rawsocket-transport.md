@@ -1,3 +1,5 @@
+-- move to: "ap_transport_rawsocket.md" --
+
 # RawSocket Transport
 
 **WAMP-over-RawSocket** is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.

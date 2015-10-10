@@ -1,3 +1,5 @@
+-- move to: "ap_transport_multiplexed.md" --
+
 # Multiplexed Transport
 
 A *Transport* may support the multiplexing of multiple logical transports over a single "physical" transport.

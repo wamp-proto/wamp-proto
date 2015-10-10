@@ -1,3 +1,5 @@
+-- this should move to "ap_authentication_ticket.md" --
+
 # Ticket-based Authentication
 
 With *Ticket-based authentication*, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.

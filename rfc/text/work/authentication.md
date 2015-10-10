@@ -1,3 +1,5 @@
+-- this should move to "ap_authentication.md" --
+
 # Authentication
 
 ![alt text](../figure/hello_authenticated.png "WAMP Session denied")
