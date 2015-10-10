@@ -2038,59 +2038,61 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 > Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This is part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.
 
-{{rfc/text/adv_messages.md}}
+{{rfc/text/advanced/ap_messages.md}}
 
-{{rfc/text/adv_features.md}}
+{{rfc/text/advanced/ap_features.md}}
 
 
 ## Advanced RPC Features
 
-{{rfc/text/adv_rpc_progressive_call_results.md}}
+{{rfc/text/advanced/ap_rpc_progressive_call_results.md}}
 
-{{rfc/text/adv_rpc_progressive_calls.md}}
+{{rfc/text/advanced/ap_rpc_progressive_calls.md}}
 
-{{rfc/text/adv_rpc_call_timeout.md}}
+{{rfc/text/advanced/ap_rpc_call_timeout.md}}
 
-{{rfc/text/adv_rpc_call_canceling.md}}
+{{rfc/text/advanced/ap_rpc_call_canceling.md}}
 
-{{rfc/text/adv_rpc_caller_identification.md}}
+{{rfc/text/advanced/ap_rpc_caller_identification.md}}
 
-{{rfc/text/adv_rpc_call_trustlevels.md}}
+{{rfc/text/advanced/ap_rpc_call_trustlevels.md}}
 
-{{rfc/text/adv_rpc_registration_meta_api.md}}
+{{rfc/text/advanced/ap_rpc_registration_meta_api.md}}
 
-{{rfc/text/adv_rpc_pattern_based_registration.md}}
+{{rfc/text/advanced/ap_rpc_pattern_based_registration.md}}
 
-{{rfc/text/adv_rpc_shared_registration.md}}
+{{rfc/text/advanced/ap_rpc_shared_registration.md}}
 
-{{rfc/text/adv_rpc_sharded_registration.md}}
+{{rfc/text/advanced/ap_rpc_sharded_registration.md}}
 
-{{rfc/text/adv_rpc_registration_revocation.md}}
+{{rfc/text/advanced/ap_rpc_registration_revocation.md}}
 
-{{rfc/text/adv_rpc_procedure_reflection.md}}
+{{rfc/text/advanced/ap_rpc_procedure_reflection.md}}
 
 
-## Advanced PubSub Featrues
+## Advanced PubSub Features
 
-{{rfc/text/adv_pubsub_subscriber_blackwhite_listing.md}}
+{{rfc/text/advanced/ap_pubsub_subscriber_blackwhite_listing.md}}
 
-{{rfc/text/adv_pubsub_publisher_exclusion.md}}
+{{rfc/text/advanced/ap_pubsub_publisher_exclusion.md}}
 
-{{rfc/text/adv_pubsub_publisher_identification.md}}
+{{rfc/text/advanced/ap_pubsub_publisher_identification.md}}
 
-{{rfc/text/adv_pubsub_publication_trustlevels.md}}
+{{rfc/text/advanced/ap_pubsub_publication_trustlevels.md}}
 
-{{rfc/text/adv_pubsub_session_meta_api.md}}
+{{rfc/text/advanced/ap_pubsub_session_meta_api.md}}
 
-{{rfc/text/adv_pubsub_subscription_meta_api.md}}
+{{rfc/text/advanced/ap_pubsub_subscription_meta_api.md}}
 
-{{rfc/text/adv_pubsub_pattern_based_subscription.md}}
+{{rfc/text/advanced/ap_pubsub_pattern_based_subscription.md}}
 
-{{rfc/text/adv_pubsub_sharded_subscription.md}}
+{{rfc/text/advanced/ap_pubsub_sharded_subscription.md}}
 
-{{rfc/text/adv_pubsub_event_history.md}}
+{{rfc/text/advanced/ap_pubsub_event_history.md}}
 
-{{rfc/text/adv_pubsub_topic_reflection.md}}
+{{rfc/text/advanced/ap_pubsub_subscription_revocation.md}}
+
+{{rfc/text/advanced/ap_pubsub_topic_reflection.md}}
 
 
 # Binary conversion of JSON Strings

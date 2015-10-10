@@ -5,7 +5,7 @@
 <head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
 
-  <title>Web Application Messaging Protocol</title>
+  <title>The Web Application Messaging Protocol</title>
 
   <style type="text/css" title="Xml2Rfc (sans serif)">
   /*<![CDATA[*/
@@ -482,7 +482,7 @@
 <link href="#rfc.section.13.3.10" rel="Chapter" title="13.3.10 Sharded Registration"/>
 <link href="#rfc.section.13.3.11" rel="Chapter" title="13.3.11 Registration Revocation"/>
 <link href="#rfc.section.13.3.12" rel="Chapter" title="13.3.12 Procedure Reflection"/>
-<link href="#rfc.section.13.4" rel="Chapter" title="13.4 Advanced PubSub Featrues"/>
+<link href="#rfc.section.13.4" rel="Chapter" title="13.4 Advanced PubSub Features"/>
 <link href="#rfc.section.13.4.1" rel="Chapter" title="13.4.1 Subscriber Black- and Whitelisting"/>
 <link href="#rfc.section.13.4.2" rel="Chapter" title="13.4.2 Publisher Exclusion"/>
 <link href="#rfc.section.13.5" rel="Chapter" title="13.5 Feature Definition"/>
@@ -490,10 +490,12 @@
 <link href="#rfc.section.13.6.1" rel="Chapter" title="13.6.1 Publisher Identification"/>
 <link href="#rfc.section.13.6.2" rel="Chapter" title="13.6.2 Publication Trust Levels"/>
 <link href="#rfc.section.13.6.3" rel="Chapter" title="13.6.3 Session Meta API"/>
-<link href="#rfc.section.13.6.4" rel="Chapter" title="13.6.4 Pattern-based Subscriptions"/>
-<link href="#rfc.section.13.6.5" rel="Chapter" title="13.6.5 Sharded Subscription"/>
-<link href="#rfc.section.13.6.6" rel="Chapter" title="13.6.6 Event History"/>
-<link href="#rfc.section.13.6.7" rel="Chapter" title="13.6.7 Topic Reflection"/>
+<link href="#rfc.section.13.6.4" rel="Chapter" title="13.6.4 Subscription Meta API"/>
+<link href="#rfc.section.13.6.5" rel="Chapter" title="13.6.5 Pattern-based Subscriptions"/>
+<link href="#rfc.section.13.6.6" rel="Chapter" title="13.6.6 Sharded Subscription"/>
+<link href="#rfc.section.13.6.7" rel="Chapter" title="13.6.7 Event History"/>
+<link href="#rfc.section.13.6.8" rel="Chapter" title="13.6.8 Registration Revocation"/>
+<link href="#rfc.section.13.6.9" rel="Chapter" title="13.6.9 Topic Reflection"/>
 <link href="#rfc.section.14" rel="Chapter" title="14 Binary conversion of JSON Strings"/>
 <link href="#rfc.section.14.1" rel="Chapter" title="14.1 Python"/>
 <link href="#rfc.section.14.2" rel="Chapter" title="14.2 JavaScript"/>
@@ -511,7 +513,7 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Oberstein, T. and A. Goedde" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-oberstet-hybi-tavendo-wamp-01" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-oberstet-hybi-tavendo-wamp-02" />
   <meta name="dct.issued" scheme="ISO8601" content="2015-10-10" />
   <meta name="dct.abstract" content="This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.  " />
   <meta name="description" content="This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.  " />
@@ -544,8 +546,8 @@
     </tbody>
   </table>
 
-  <p class="title">Web Application Messaging Protocol<br />
-  <span class="filename">draft-oberstet-hybi-tavendo-wamp-01</span></p>
+  <p class="title">The Web Application Messaging Protocol<br />
+  <span class="filename">draft-oberstet-hybi-tavendo-wamp-02</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -677,7 +679,7 @@
 <li>13.3.10.   <a href="#rfc.section.13.3.10">Sharded Registration</a></li>
 <li>13.3.11.   <a href="#rfc.section.13.3.11">Registration Revocation</a></li>
 <li>13.3.12.   <a href="#rfc.section.13.3.12">Procedure Reflection</a></li>
-</ul><li>13.4.   <a href="#rfc.section.13.4">Advanced PubSub Featrues</a></li>
+</ul><li>13.4.   <a href="#rfc.section.13.4">Advanced PubSub Features</a></li>
 <ul><li>13.4.1.   <a href="#rfc.section.13.4.1">Subscriber Black- and Whitelisting</a></li>
 <li>13.4.2.   <a href="#rfc.section.13.4.2">Publisher Exclusion</a></li>
 </ul><li>13.5.   <a href="#rfc.section.13.5">Feature Definition</a></li>
@@ -685,10 +687,12 @@
 <ul><li>13.6.1.   <a href="#rfc.section.13.6.1">Publisher Identification</a></li>
 <li>13.6.2.   <a href="#rfc.section.13.6.2">Publication Trust Levels</a></li>
 <li>13.6.3.   <a href="#rfc.section.13.6.3">Session Meta API</a></li>
-<li>13.6.4.   <a href="#rfc.section.13.6.4">Pattern-based Subscriptions</a></li>
-<li>13.6.5.   <a href="#rfc.section.13.6.5">Sharded Subscription</a></li>
-<li>13.6.6.   <a href="#rfc.section.13.6.6">Event History</a></li>
-<li>13.6.7.   <a href="#rfc.section.13.6.7">Topic Reflection</a></li>
+<li>13.6.4.   <a href="#rfc.section.13.6.4">Subscription Meta API</a></li>
+<li>13.6.5.   <a href="#rfc.section.13.6.5">Pattern-based Subscriptions</a></li>
+<li>13.6.6.   <a href="#rfc.section.13.6.6">Sharded Subscription</a></li>
+<li>13.6.7.   <a href="#rfc.section.13.6.7">Event History</a></li>
+<li>13.6.8.   <a href="#rfc.section.13.6.8">Registration Revocation</a></li>
+<li>13.6.9.   <a href="#rfc.section.13.6.9">Topic Reflection</a></li>
 </ul></ul><li>14.   <a href="#rfc.section.14">Binary conversion of JSON Strings</a></li>
 <ul><li>14.1.   <a href="#rfc.section.14.1">Python</a></li>
 <li>14.2.   <a href="#rfc.section.14.2">JavaScript</a></li>
@@ -3301,7 +3305,6 @@
 <p> </p>
 <h1 id="rfc.section.13.3"><a href="#rfc.section.13.3">13.3.</a> <a href="#advanced-rpc-features" id="advanced-rpc-features">Advanced RPC Features</a></h1>
 <h1 id="rfc.section.13.3.1"><a href="#rfc.section.13.3.1">13.3.1.</a> <a href="#progressive-call-results" id="progressive-call-results">Progressive Call Results</a></h1>
-<p id="rfc.section.13.3.1.p.1">Feature status: <strong>beta</strong> </p>
 <h1 id="rfc.section.13.3.1.1"><a href="#rfc.section.13.3.1.1">13.3.1.1.</a> <a href="#feature-definition" id="feature-definition">Feature Definition</a></h1>
 <p id="rfc.section.13.3.1.1.p.1">A procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may produce progressive results. Progressive results can e.g. be used to return partial results for long-running operations, or to chunk the transmission of larger results sets.  </p>
 <p id="rfc.section.13.3.1.1.p.2">The message flow for progressive results involves: </p>
@@ -3309,32 +3312,32 @@
  ,------.           ,------.          ,------.
  |Caller|           |Dealer|          |Callee|
  `--+---'           `--+---'          `--+---'
-    |       CALL       |                 |    
-    | -----------------&gt;                 |    
-    |                  |                 |    
-    |                  |    INVOCATION   |    
-    |                  | ----------------&gt;    
-    |                  |                 |    
-    |                  | YIELD (progress)|    
-    |                  | &lt;----------------    
-    |                  |                 |    
-    | RESULT (progress)|                 |    
-    | &lt;-----------------                 |    
-    |                  |                 |    
-    |                  | YIELD (progress)|    
-    |                  | &lt;----------------    
-    |                  |                 |    
-    | RESULT (progress)|                 |    
-    | &lt;-----------------                 |    
-    |                  |                 |    
-    |                  |                 |        
+    |       CALL       |                 |
+    | -----------------&gt;                 |
+    |                  |                 |
+    |                  |    INVOCATION   |
+    |                  | ----------------&gt;
+    |                  |                 |
+    |                  | YIELD (progress)|
+    |                  | &lt;----------------
+    |                  |                 |
+    | RESULT (progress)|                 |
+    | &lt;-----------------                 |
+    |                  |                 |
+    |                  | YIELD (progress)|
+    |                  | &lt;----------------
+    |                  |                 |
+    | RESULT (progress)|                 |
+    | &lt;-----------------                 |
+    |                  |                 |
+    |                  |                 |
     |       ...        |       ...       |
     |                  |                 |
-    |                  |  YIELD or ERROR |    
-    |                  | &lt;----------------    
-    |                  |                 |    
-    |  RESULT or ERROR |                 |    
-    | &lt;-----------------                 |    
+    |                  |  YIELD or ERROR |
+    |                  | &lt;----------------
+    |                  |                 |
+    |  RESULT or ERROR |                 |
+    | &lt;-----------------                 |
  ,--+---.           ,--+---.          ,--+---.
  |Caller|           |Dealer|          |Callee|
  `------'           `------'          `------'
@@ -3421,7 +3424,8 @@
         ["Y2011", 205]
     ]
 </pre>
-<p id="rfc.section.13.3.1.1.p.11">An invocation MUST <em>always</em> end in either a <em>normal</em> <samp>RESULT</samp> or <samp>ERROR</samp> message being sent by the <em>Callee</em> and received by the <em>Dealer</em>.  </p>
+<p id="rfc.section.13.3.1.1.p.11">...  </p>
+<p id="rfc.section.13.3.1.1.p.12">An invocation MUST <em>always</em> end in either a <em>normal</em> <samp>RESULT</samp> or <samp>ERROR</samp> message being sent by the <em>Callee</em> and received by the <em>Dealer</em>.  </p>
 <p><em>Example.</em> Callee-to-Dealer final <samp>YIELD</samp> </p>
 <pre>
     [
@@ -3441,7 +3445,7 @@
         [1830]
     ]
 </pre>
-<p id="rfc.section.13.3.1.1.p.14">A call MUST <em>always</em> end in either a <em>normal</em> <samp>RESULT</samp> or <samp>ERROR</samp> message being sent by the <em>Dealer</em> and received by the <em>Caller</em>.  </p>
+<p id="rfc.section.13.3.1.1.p.15">A call MUST <em>always</em> end in either a <em>normal</em> <samp>RESULT</samp> or <samp>ERROR</samp> message being sent by the <em>Dealer</em> and received by the <em>Caller</em>.  </p>
 <p><em>Example.</em> Dealer-to-Caller final <samp>RESULT</samp> </p>
 <pre>
     [
@@ -3461,8 +3465,8 @@
         [1830]
     ]
 </pre>
-<p id="rfc.section.13.3.1.1.p.17">In other words: <samp>YIELD</samp> with <samp>YIELD.Options.progress == true</samp> and <samp>RESULT</samp> with <samp>RESULT.Details.progress == true</samp> messages may only be sent <em>during</em> a call or invocation is still ongoing.  </p>
-<p id="rfc.section.13.3.1.1.p.18">The final <samp>YIELD</samp> and final <samp>RESULT</samp> may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.  </p>
+<p id="rfc.section.13.3.1.1.p.18">In other words: <samp>YIELD</samp> with <samp>YIELD.Options.progress == true</samp> and <samp>RESULT</samp> with <samp>RESULT.Details.progress == true</samp> messages may only be sent <em>during</em> a call or invocation is still ongoing.  </p>
+<p id="rfc.section.13.3.1.1.p.19">The final <samp>YIELD</samp> and final <samp>RESULT</samp> may also be empty, e.g. when all actual results have already been transmitted in progressive result messages.  </p>
 <p><em>Example.</em> Callee-to-Dealer <samp>YIELDs</samp> </p>
 <pre>
     [70, 87683, {"progress": true}, ["Y2010", 120]]
@@ -3479,13 +3483,13 @@
     [50, 77133, {"progress": true}, ["Total", 490]]
     [50, 77133, {}]
 </pre>
-<p id="rfc.section.13.3.1.1.p.21">The progressive <samp>YIELD</samp> and progressive <samp>RESULT</samp> may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final <samp>YIELD</samp> and <samp>RESULT</samp>: </p>
+<p id="rfc.section.13.3.1.1.p.22">The progressive <samp>YIELD</samp> and progressive <samp>RESULT</samp> may also be empty, e.g. when those messages are only used to signal that the procedure is still running and working, and the actual result is completely delivered in the final <samp>YIELD</samp> and <samp>RESULT</samp>: </p>
 <p><em>Example.</em> Callee-to-Dealer <samp>YIELDs</samp> </p>
 <pre>
     [70, 87683, {"progress": true}]
     [70, 87683, {"progress": true}]
     ...
-    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., 
+    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ...,
         ["Total", 490]]]
 </pre>
 <p><em>Example.</em> Dealer-to-Caller <samp>RESULTs</samp> </p>
@@ -3493,7 +3497,7 @@
     [50, 77133, {"progress": true}]
     [50, 77133, {"progress": true}]
     ...
-    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., 
+    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ...,
         ["Total", 490]]]
 </pre>
 <p/>
@@ -3504,7 +3508,7 @@
 <p><em>Example.</em> Callee-to-Dealer <samp>YIELDs</samp> </p>
 <pre>
     [70, 87683, {"progress": true}, ["partial 1", 10]]
-    [70, 87683, {"progress": true}, [], {"foo": 10, 
+    [70, 87683, {"progress": true}, [], {"foo": 10,
         "bar": "partial 1"}]
      ...
     [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
@@ -3512,12 +3516,12 @@
 <p><em>Example.</em> Dealer-to-Caller <samp>RESULTs</samp> </p>
 <pre>
     [50, 77133, {"progress": true}, ["partial 1", 10]]
-    [50, 77133, {"progress": true}, [], {"foo": 10, 
+    [50, 77133, {"progress": true}, [], {"foo": 10,
         "bar": "partial 1"}]
      ...
     [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
 </pre>
-<p id="rfc.section.13.3.1.1.p.27">Even if a <em>Caller</em> has indicated it's expectation to receive progressive results by setting <samp>CALL.Options.receive_progress|bool := true</samp>, a <em>Callee</em> is <strong>not required</strong> to produce progressive results. <samp>CALL.Options.receive_progress</samp> and <samp>INVOCATION.Options.receive_progress</samp> are simply indications that the <em>Caller</em> is prepared to process progressive results, should there be any produced. In other words, <em>Callees</em> are free to ignore such <samp>receive_progress</samp> hints at any time.  </p>
+<p id="rfc.section.13.3.1.1.p.28">Even if a <em>Caller</em> has indicated it's expectation to receive progressive results by setting <samp>CALL.Options.receive_progress|bool := true</samp>, a <em>Callee</em> is <strong>not required</strong> to produce progressive results. <samp>CALL.Options.receive_progress</samp> and <samp>INVOCATION.Options.receive_progress</samp> are simply indications that the <em>Caller</em> is prepared to process progressive results, should there be any produced. In other words, <em>Callees</em> are free to ignore such <samp>receive_progress</samp> hints at any time.  </p>
 <h1 id="rfc.section.13.3.1.2"><a href="#rfc.section.13.3.1.2">13.3.1.2.</a> <a href="#feature-announcement" id="feature-announcement">Feature Announcement</a></h1>
 <p id="rfc.section.13.3.1.2.p.1">Support for this advanced feature MUST be announced by <em>Callers</em> (<samp>role := "caller"</samp>), <em>Callees</em> (<samp>role := "callee"</samp>) and <em>Dealers</em> (<samp>role := "dealer"</samp>) via </p>
 <pre>
@@ -3525,12 +3529,10 @@
          progressive_call_results|bool := true
 </pre>
 <h1 id="rfc.section.13.3.2"><a href="#rfc.section.13.3.2">13.3.2.</a> <a href="#progressive-calls" id="progressive-calls">Progressive Calls</a></h1>
-<p id="rfc.section.13.3.2.p.1">Feature status: <strong>sketch</strong> </p>
 <h1 id="rfc.section.13.3.2.1"><a href="#rfc.section.13.3.2.1">13.3.2.1.</a> <a href="#feature-definition-1" id="feature-definition-1">Feature Definition</a></h1>
 <p id="rfc.section.13.3.2.1.p.1">A procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may receive a progressive call. Progressive results can e.g. be used to start processing initial data where a larger data set may not yet have been generated or received by the <em>Caller</em>.  </p>
 <p id="rfc.section.13.3.2.1.p.2">See this GitHub issue for more discussion: <span>&lt;</span><a href="https://github.com/wamp-proto/wamp-proto/issues/167">https://github.com/wamp-proto/wamp-proto/issues/167</a><span>&gt;</span> </p>
 <h1 id="rfc.section.13.3.3"><a href="#rfc.section.13.3.3">13.3.3.</a> <a href="#call-timeouts" id="call-timeouts">Call Timeouts</a></h1>
-<p id="rfc.section.13.3.3.p.1">Feature status: <strong>alpha</strong> </p>
 <h1 id="rfc.section.13.3.3.1"><a href="#rfc.section.13.3.3.1">13.3.3.1.</a> <a href="#feature-definition-2" id="feature-definition-2">Feature Definition</a></h1>
 <p id="rfc.section.13.3.3.1.p.1">A <em>Caller</em> might want to issue a call providing a <em>timeout</em> for the call to finish.  </p>
 <p id="rfc.section.13.3.3.1.p.2">A <em>timeout</em> allows to <strong>automatically</strong> cancel a call after a specified time either at the <em>Callee</em> or at the <em>Dealer</em>.  </p>
@@ -3647,7 +3649,6 @@
     HELLO.Details.roles.&lt;role&gt;.features.call_canceling|bool := true
 </pre>
 <h1 id="rfc.section.13.3.5"><a href="#rfc.section.13.3.5">13.3.5.</a> <a href="#caller-identification" id="caller-identification">Caller Identification</a></h1>
-<p id="rfc.section.13.3.5.p.1">Feature status: <strong>alpha</strong> </p>
 <h1 id="rfc.section.13.3.5.1"><a href="#rfc.section.13.3.5.1">13.3.5.1.</a> <a href="#feature-definition-4" id="feature-definition-4">Feature Definition</a></h1>
 <p id="rfc.section.13.3.5.1.p.1">A <em>Caller</em> MAY <strong>request</strong> the disclosure of its identity (its WAMP session ID) to endpoints of a routed call via </p>
 <pre>
@@ -3655,7 +3656,7 @@
 </pre>
 <p><em>Example</em> </p>
 <pre>
-    [48, 7814135, {"disclose_me": true}, "com.myapp.echo", 
+    [48, 7814135, {"disclose_me": true}, "com.myapp.echo",
         ["Hello, world!"]]
 </pre>
 <p id="rfc.section.13.3.5.1.p.3">If above call is issued by a <em>Caller</em> with WAMP session ID <samp>3335656</samp>, the <em>Dealer</em> sends an <samp>INVOCATION</samp> message to <em>Callee</em> with the <em>Caller's</em> WAMP session ID in <samp>INVOCATION.Details.caller</samp>: </p>
@@ -3675,7 +3676,7 @@
 </pre>
 <p><em>Example</em> </p>
 <pre>
-    [64, 927639114088448, {"disclose_caller":true}, 
+    [64, 927639114088448, {"disclose_caller":true},
         "com.maypp.add2"]
 </pre>
 <p id="rfc.section.13.3.5.1.p.10">With the above registration, the registered procedure is called with the caller's sessionID as part of the call details object.  </p>
@@ -3686,7 +3687,6 @@
          caller_identification|bool := true
 </pre>
 <h1 id="rfc.section.13.3.6"><a href="#rfc.section.13.3.6">13.3.6.</a> <a href="#call-trust-levels" id="call-trust-levels">Call Trust Levels</a></h1>
-<p id="rfc.section.13.3.6.p.1">Feature status: <strong>alpha</strong> </p>
 <h1 id="rfc.section.13.3.6.1"><a href="#rfc.section.13.3.6.1">13.3.6.1.</a> <a href="#feature-defintion" id="feature-defintion">Feature Defintion</a></h1>
 <p id="rfc.section.13.3.6.1.p.1">A <em>Dealer</em> may be configured to automatically assign <em>trust levels</em> to calls issued by <em>Callers</em> according to the <em>Dealer</em> configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) <em>Caller</em>.  </p>
 <p id="rfc.section.13.3.6.1.p.2">A <em>Dealer</em> supporting trust level will provide </p>
@@ -3705,7 +3705,6 @@
     HELLO.Details.roles.&lt;role&gt;.features.call_trustlevels|bool := true
 </pre>
 <h1 id="rfc.section.13.3.7"><a href="#rfc.section.13.3.7">13.3.7.</a> <a href="#registration-meta-api" id="registration-meta-api">Registration Meta API</a></h1>
-<p id="rfc.section.13.3.7.p.1">Feature status: <strong>beta</strong> </p>
 <h1 id="rfc.section.13.3.7.1"><a href="#rfc.section.13.3.7.1">13.3.7.1.</a> <a href="#feature-definition-5" id="feature-definition-5">Feature Definition</a></h1>
 <h1 id="rfc.section.13.3.7.1.1"><a href="#rfc.section.13.3.7.1.1">13.3.7.1.1.</a> <a href="#introduction-1" id="introduction-1">Introduction</a></h1>
 <p><strong>Registration Meta Events</strong> are fired when registrations are first created, when <em>Callees</em> are attached (removed) to (from) a registration, and when registrations are finally destroyed.  </p>
@@ -3993,7 +3992,6 @@
     ]
 </pre>
 <h1 id="rfc.section.13.3.8"><a href="#rfc.section.13.3.8">13.3.8.</a> <a href="#patternbased-registrations" id="patternbased-registrations">Pattern-based Registrations</a></h1>
-<p id="rfc.section.13.3.8.p.1">Feature status: <strong>beta</strong> </p>
 <h1 id="rfc.section.13.3.8.1"><a href="#rfc.section.13.3.8.1">13.3.8.1.</a> <a href="#feature-definition-6" id="feature-definition-6">Feature Definition</a></h1>
 <h1 id="rfc.section.13.3.8.1.1"><a href="#rfc.section.13.3.8.1.1">13.3.8.1.1.</a> <a href="#introduction-2" id="introduction-2">Introduction</a></h1>
 <p id="rfc.section.13.3.8.1.1.p.1">By default, <em>Callees</em> register procedures with <strong>exact matching policy</strong>. That is a call will only be routed to a <em>Callee</em> by the <em>Dealer</em> if the procedure called (<samp>CALL.Procedure</samp>) <em>exactly</em> matches the endpoint registered (<samp>REGISTER.Procedure</samp>).  </p>
@@ -4181,7 +4179,6 @@
 <h1 id="rfc.section.13.3.10.1"><a href="#rfc.section.13.3.10.1">13.3.10.1.</a> <a href="#feature-definition-8" id="feature-definition-8">Feature Definition</a></h1>
 <p><strong>Sharded Registrations</strong> are intended to allow calling a procedure which is offered by a sharded database, by routing the call to a single shard.  </p>
 <h1 id="rfc.section.13.3.11"><a href="#rfc.section.13.3.11">13.3.11.</a> <a href="#registration-revocation" id="registration-revocation">Registration Revocation</a></h1>
-<p id="rfc.section.13.3.11.p.1">Feature status: <strong>alpha</strong> </p>
 <h1 id="rfc.section.13.3.11.1"><a href="#rfc.section.13.3.11.1">13.3.11.1.</a> <a href="#feature-definition-9" id="feature-definition-9">Feature Definition</a></h1>
 <p id="rfc.section.13.3.11.1.p.1">Actively and forcefully revoke a previously granted registration from a session.  </p>
 <h1 id="rfc.section.13.3.11.2"><a href="#rfc.section.13.3.11.2">13.3.11.2.</a> <a href="#feature-announcement-8" id="feature-announcement-8">Feature Announcement</a></h1>
@@ -4243,9 +4240,8 @@
 <pre>
     wamp.reflect.on_undefine
 </pre>
-<h1 id="rfc.section.13.4"><a href="#rfc.section.13.4">13.4.</a> <a href="#advanced-pubsub-featrues" id="advanced-pubsub-featrues">Advanced PubSub Featrues</a></h1>
+<h1 id="rfc.section.13.4"><a href="#rfc.section.13.4">13.4.</a> <a href="#advanced-pubsub-features" id="advanced-pubsub-features">Advanced PubSub Features</a></h1>
 <h1 id="rfc.section.13.4.1"><a href="#rfc.section.13.4.1">13.4.1.</a> <a href="#subscriber-black-and-whitelisting" id="subscriber-black-and-whitelisting">Subscriber Black- and Whitelisting</a></h1>
-<p id="rfc.section.13.4.1.p.1">Feature status: <strong>stable</strong> </p>
 <h1 id="rfc.section.13.4.1.1"><a href="#rfc.section.13.4.1.1">13.4.1.1.</a> <a href="#introduction-3" id="introduction-3">Introduction</a></h1>
 <p><strong>Subscriber Black- and Whitelisting</strong> is an advanced <em>Broker</em> feature where a <em>Publisher</em> is able to restrict the set of receivers of a published event.  </p>
 <p id="rfc.section.13.4.1.1.p.2">Under normal Publish &amp; Subscriber event dispatching, a <em>Broker</em> will dispatch a published event to all (authorized) <em>Subscribers</em> other than the <em>Publisher</em> itself. This set of receivers can be further reduced on a per-publication basis by the <em>Publisher</em> using <strong>Subscriber Black- and Whitelisting</strong>.  </p>
@@ -4361,7 +4357,6 @@
         subscriber_blackwhite_listing|bool := true
 </pre>
 <h1 id="rfc.section.13.4.2"><a href="#rfc.section.13.4.2">13.4.2.</a> <a href="#publisher-exclusion" id="publisher-exclusion">Publisher Exclusion</a></h1>
-<p id="rfc.section.13.4.2.p.1">Feature status: <strong>stable</strong> </p>
 <h1 id="rfc.section.13.5"><a href="#rfc.section.13.5">13.5.</a> <a href="#feature-definition-11" id="feature-definition-11">Feature Definition</a></h1>
 <p id="rfc.section.13.5.p.1">By default, a <em>Publisher</em> of an event will <strong>not</strong> itself receive an event published, even when subscribed to the <samp>Topic</samp> the <em>Publisher</em> is publishing to. This behavior can be overridden using this feature.  </p>
 <p id="rfc.section.13.5.p.2">To override the exclusion of a publisher from it's own publication, the <samp>PUBLISH</samp> message must include the following option: </p>
@@ -4389,7 +4384,6 @@
         publisher_exclusion|bool := true
 </pre>
 <h1 id="rfc.section.13.6.1"><a href="#rfc.section.13.6.1">13.6.1.</a> <a href="#publisher-identification" id="publisher-identification">Publisher Identification</a></h1>
-<p id="rfc.section.13.6.1.p.1">Feature status: <strong>alpha</strong> </p>
 <h1 id="rfc.section.13.6.1.1"><a href="#rfc.section.13.6.1.1">13.6.1.1.</a> <a href="#feature-definition-12" id="feature-definition-12">Feature Definition</a></h1>
 <p id="rfc.section.13.6.1.1.p.1">A <em>Publisher</em> may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting </p>
 <pre>
@@ -4397,13 +4391,13 @@
 </pre>
 <p><em>Example</em> </p>
 <pre>
-    [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1", 
+    [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1",
         ["Hello, world!"]]
 </pre>
 <p id="rfc.section.13.6.1.1.p.3">If above event is published by a <em>Publisher</em> with WAMP session ID <samp>3335656</samp>, the <em>Broker</em> would send an <samp>EVENT</samp> message to <em>Subscribers</em> with the <em>Publisher's</em> WAMP session ID in <samp>EVENT.Details.publisher</samp>: </p>
 <p><em>Example</em> </p>
 <pre>
-    [36, 5512315355, 4429313566, {"publisher": 3335656}, 
+    [36, 5512315355, 4429313566, {"publisher": 3335656},
         ["Hello, world!"]]
 </pre>
 <p id="rfc.section.13.6.1.1.p.5">Note that a <em>Broker</em> may deny a <em>Publisher's</em> request to disclose its identity: </p>
@@ -4439,7 +4433,6 @@
         publication_trustlevels|bool := true
 </pre>
 <h1 id="rfc.section.13.6.3"><a href="#rfc.section.13.6.3">13.6.3.</a> <a href="#session-meta-api" id="session-meta-api">Session Meta API</a></h1>
-<p id="rfc.section.13.6.3.p.1">Feature status: <strong>beta</strong> </p>
 <h1 id="rfc.section.13.6.3.1"><a href="#rfc.section.13.6.3.1">13.6.3.1.</a> <a href="#introduction-4" id="introduction-4">Introduction</a></h1>
 <p id="rfc.section.13.6.3.1.p.1">WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via <strong>Session Meta Events</strong>. It also allows retrieving information about currently connected sessions via <strong>Session Meta Procedures</strong>.  </p>
 <p id="rfc.section.13.6.3.1.p.2">Meta events are created by the router itself. This means that the events, as well as the data received when calling a meta procedure, can be accorded the same trust level as the router.  </p>
@@ -4595,12 +4588,12 @@
 <ul class="empty">
   <li>Note in particular that the feature is announced on both the <em>Broker</em> and the <em>Dealer</em> roles.  </li>
 </ul>
-<h1 id="rfc.section.13.6.4"><a href="#rfc.section.13.6.4">13.6.4.</a> <a href="#patternbased-subscriptions" id="patternbased-subscriptions">Pattern-based Subscriptions</a></h1>
-<p id="rfc.section.13.6.4.p.1">Feature status: <strong>beta</strong> </p>
-<h1 id="rfc.section.13.6.4.1"><a href="#rfc.section.13.6.4.1">13.6.4.1.</a> <a href="#introdution" id="introdution">Introdution</a></h1>
-<p id="rfc.section.13.6.4.1.p.1">By default, <em>Subscribers</em> subscribe to topics with <strong>exact matching policy</strong>. That is an event will only be dispatched to a <em>Subscriber</em> by the <em>Broker</em> if the topic published to (<samp>PUBLISH.Topic</samp>) <em>exactly</em> matches the topic subscribed to (<samp>SUBSCRIBE.Topic</samp>).  </p>
-<p id="rfc.section.13.6.4.1.p.2">A <em>Subscriber</em> might want to subscribe to topics based on a <em>pattern</em>. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the <em>Subscriber</em> is not aware of at the time of subscription, or which do not yet exist at this time.  </p>
-<p id="rfc.section.13.6.4.1.p.3">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by </p>
+<h1 id="rfc.section.13.6.4"><a href="#rfc.section.13.6.4">13.6.4.</a> <a href="#subscription-meta-api" id="subscription-meta-api">Subscription Meta API</a></h1>
+<h1 id="rfc.section.13.6.5"><a href="#rfc.section.13.6.5">13.6.5.</a> <a href="#patternbased-subscriptions" id="patternbased-subscriptions">Pattern-based Subscriptions</a></h1>
+<h1 id="rfc.section.13.6.5.1"><a href="#rfc.section.13.6.5.1">13.6.5.1.</a> <a href="#introdution" id="introdution">Introdution</a></h1>
+<p id="rfc.section.13.6.5.1.p.1">By default, <em>Subscribers</em> subscribe to topics with <strong>exact matching policy</strong>. That is an event will only be dispatched to a <em>Subscriber</em> by the <em>Broker</em> if the topic published to (<samp>PUBLISH.Topic</samp>) <em>exactly</em> matches the topic subscribed to (<samp>SUBSCRIBE.Topic</samp>).  </p>
+<p id="rfc.section.13.6.5.1.p.2">A <em>Subscriber</em> might want to subscribe to topics based on a <em>pattern</em>. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the <em>Subscriber</em> is not aware of at the time of subscription, or which do not yet exist at this time.  </p>
+<p id="rfc.section.13.6.5.1.p.3">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by </p>
 <p/>
 
 <ul>
@@ -4609,8 +4602,8 @@
 </ul>
 
 <p> </p>
-<h1 id="rfc.section.13.6.4.2"><a href="#rfc.section.13.6.4.2">13.6.4.2.</a> <a href="#prefix-matching-1" id="prefix-matching-1">Prefix Matching</a></h1>
-<p id="rfc.section.13.6.4.2.p.1">A <em>Subscriber</em> requests <strong>prefix-matching policy</strong> with a subscription request by setting </p>
+<h1 id="rfc.section.13.6.5.2"><a href="#rfc.section.13.6.5.2">13.6.5.2.</a> <a href="#prefix-matching-1" id="prefix-matching-1">Prefix Matching</a></h1>
+<p id="rfc.section.13.6.5.2.p.1">A <em>Subscriber</em> requests <strong>prefix-matching policy</strong> with a subscription request by setting </p>
 <pre>
     SUBSCRIBE.Options.match|string := "prefix"
 </pre>
@@ -4625,8 +4618,8 @@
         "com.myapp.topic.emergency"
     ]
 </pre>
-<p id="rfc.section.13.6.4.2.p.3">When a <strong>prefix-matching policy</strong> is in place, any event with a topic that has <samp>SUBSCRIBE.Topic</samp> as a <em>prefix</em> will match the subscription, and potentially be delivered to <em>Subscribers</em> on the subscription.  </p>
-<p id="rfc.section.13.6.4.2.p.4">In the above example, events with <samp>PUBLISH.Topic</samp> </p>
+<p id="rfc.section.13.6.5.2.p.3">When a <strong>prefix-matching policy</strong> is in place, any event with a topic that has <samp>SUBSCRIBE.Topic</samp> as a <em>prefix</em> will match the subscription, and potentially be delivered to <em>Subscribers</em> on the subscription.  </p>
+<p id="rfc.section.13.6.5.2.p.4">In the above example, events with <samp>PUBLISH.Topic</samp> </p>
 <p/>
 
 <ul>
@@ -4645,13 +4638,13 @@
 </ul>
 
 <p> </p>
-<p id="rfc.section.13.6.4.2.p.6">will all apply for dispatching. An event with <samp>PUBLISH.Topic</samp> e.g. <samp>com.myapp.topic.emerge</samp> will not apply.  </p>
-<h1 id="rfc.section.13.6.4.3"><a href="#rfc.section.13.6.4.3">13.6.4.3.</a> <a href="#wildcard-matching-1" id="wildcard-matching-1">Wildcard Matching</a></h1>
-<p id="rfc.section.13.6.4.3.p.1">A <em>Subscriber</em> requests <strong>wildcard-matching policy</strong> with a subscription request by setting </p>
+<p id="rfc.section.13.6.5.2.p.6">will all apply for dispatching. An event with <samp>PUBLISH.Topic</samp> e.g. <samp>com.myapp.topic.emerge</samp> will not apply.  </p>
+<h1 id="rfc.section.13.6.5.3"><a href="#rfc.section.13.6.5.3">13.6.5.3.</a> <a href="#wildcard-matching-1" id="wildcard-matching-1">Wildcard Matching</a></h1>
+<p id="rfc.section.13.6.5.3.p.1">A <em>Subscriber</em> requests <strong>wildcard-matching policy</strong> with a subscription request by setting </p>
 <pre>
     SUBSCRIBE.Options.match|string := "wildcard"
 </pre>
-<p id="rfc.section.13.6.4.3.p.2">Wildcard-matching allows to provide wildcards for <strong>whole</strong> URI components.  </p>
+<p id="rfc.section.13.6.5.3.p.2">Wildcard-matching allows to provide wildcards for <strong>whole</strong> URI components.  </p>
 <p><em>Example</em> </p>
 <pre>
     [
@@ -4663,7 +4656,7 @@
         "com.myapp..userevent"
     ]
 </pre>
-<p id="rfc.section.13.6.4.3.p.4">In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with <samp>PUBLISH.Topic</samp> </p>
+<p id="rfc.section.13.6.5.3.p.4">In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with <samp>PUBLISH.Topic</samp> </p>
 <p/>
 
 <ul>
@@ -4679,7 +4672,7 @@
 </ul>
 
 <p> </p>
-<p id="rfc.section.13.6.4.3.p.6">will all apply for dispatching. Events with <samp>PUBLISH.Topic</samp> </p>
+<p id="rfc.section.13.6.5.3.p.6">will all apply for dispatching. Events with <samp>PUBLISH.Topic</samp> </p>
 <p/>
 
 <ul>
@@ -4695,20 +4688,20 @@
 </ul>
 
 <p> </p>
-<p id="rfc.section.13.6.4.3.p.8">will not apply for dispatching.  </p>
-<h1 id="rfc.section.13.6.4.4"><a href="#rfc.section.13.6.4.4">13.6.4.4.</a> <a href="#general-1" id="general-1">General</a></h1>
-<h1 id="rfc.section.13.6.4.4.1"><a href="#rfc.section.13.6.4.4.1">13.6.4.4.1.</a> <a href="#no-set-semantics-1" id="no-set-semantics-1">No set semantics</a></h1>
-<p id="rfc.section.13.6.4.4.1.p.1">Since each <em>Subscriber's</em> subscription "stands on its own", there is no <em>set semantics</em> implied by pattern-based subscriptions.  </p>
-<p id="rfc.section.13.6.4.4.1.p.2">E.g. a <em>Subscriber</em> cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.  </p>
-<h1 id="rfc.section.13.6.4.4.2"><a href="#rfc.section.13.6.4.4.2">13.6.4.4.2.</a> <a href="#events-matching-multiple-subscriptions" id="events-matching-multiple-subscriptions">Events matching multiple subscriptions</a></h1>
-<p id="rfc.section.13.6.4.4.2.p.1">When a single event matches more than one of a <em>Subscriber's</em> subscriptions, the event will be delivered for each subscription.  </p>
-<p id="rfc.section.13.6.4.4.2.p.2">The <em>Subscriber</em> can detect the delivery of that same event on multiple subscriptions via <samp>EVENT.PUBLISHED.Publication</samp>, which will be identical.  </p>
-<h1 id="rfc.section.13.6.4.4.3"><a href="#rfc.section.13.6.4.4.3">13.6.4.4.3.</a> <a href="#concrete-topic-published-to" id="concrete-topic-published-to">Concrete topic published to</a></h1>
-<p id="rfc.section.13.6.4.4.3.p.1">If a subscription was established with a pattern-based matching policy, a <em>Broker</em> MUST supply the original <samp>PUBLISH.Topic</samp> as provided by the <em>Publisher</em> in </p>
+<p id="rfc.section.13.6.5.3.p.8">will not apply for dispatching.  </p>
+<h1 id="rfc.section.13.6.5.4"><a href="#rfc.section.13.6.5.4">13.6.5.4.</a> <a href="#general-1" id="general-1">General</a></h1>
+<h1 id="rfc.section.13.6.5.4.1"><a href="#rfc.section.13.6.5.4.1">13.6.5.4.1.</a> <a href="#no-set-semantics-1" id="no-set-semantics-1">No set semantics</a></h1>
+<p id="rfc.section.13.6.5.4.1.p.1">Since each <em>Subscriber's</em> subscription "stands on its own", there is no <em>set semantics</em> implied by pattern-based subscriptions.  </p>
+<p id="rfc.section.13.6.5.4.1.p.2">E.g. a <em>Subscriber</em> cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.  </p>
+<h1 id="rfc.section.13.6.5.4.2"><a href="#rfc.section.13.6.5.4.2">13.6.5.4.2.</a> <a href="#events-matching-multiple-subscriptions" id="events-matching-multiple-subscriptions">Events matching multiple subscriptions</a></h1>
+<p id="rfc.section.13.6.5.4.2.p.1">When a single event matches more than one of a <em>Subscriber's</em> subscriptions, the event will be delivered for each subscription.  </p>
+<p id="rfc.section.13.6.5.4.2.p.2">The <em>Subscriber</em> can detect the delivery of that same event on multiple subscriptions via <samp>EVENT.PUBLISHED.Publication</samp>, which will be identical.  </p>
+<h1 id="rfc.section.13.6.5.4.3"><a href="#rfc.section.13.6.5.4.3">13.6.5.4.3.</a> <a href="#concrete-topic-published-to" id="concrete-topic-published-to">Concrete topic published to</a></h1>
+<p id="rfc.section.13.6.5.4.3.p.1">If a subscription was established with a pattern-based matching policy, a <em>Broker</em> MUST supply the original <samp>PUBLISH.Topic</samp> as provided by the <em>Publisher</em> in </p>
 <pre>
     EVENT.Details.topic|uri
 </pre>
-<p id="rfc.section.13.6.4.4.3.p.2">to the <em>Subscribers</em>.  </p>
+<p id="rfc.section.13.6.5.4.3.p.2">to the <em>Subscribers</em>.  </p>
 <p><em>Example</em> </p>
 <pre>
     [
@@ -4721,26 +4714,26 @@
         ["Hello, world!"]
     ]
 </pre>
-<h1 id="rfc.section.13.6.4.5"><a href="#rfc.section.13.6.4.5">13.6.4.5.</a> <a href="#feature-announcement-14" id="feature-announcement-14">Feature Announcement</a></h1>
-<p id="rfc.section.13.6.4.5.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
+<h1 id="rfc.section.13.6.5.5"><a href="#rfc.section.13.6.5.5">13.6.5.5.</a> <a href="#feature-announcement-14" id="feature-announcement-14">Feature Announcement</a></h1>
+<p id="rfc.section.13.6.5.5.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
 <pre>
     HELLO.Details.roles.&lt;role&gt;.features.
         pattern_based_subscription|bool := true
 </pre>
-<h1 id="rfc.section.13.6.5"><a href="#rfc.section.13.6.5">13.6.5.</a> <a href="#sharded-subscription" id="sharded-subscription">Sharded Subscription</a></h1>
-<p id="rfc.section.13.6.5.p.1">Feature status: <strong>alpha</strong> </p>
-<p id="rfc.section.13.6.5.p.2">-- Write me. -- </p>
-<h1 id="rfc.section.13.6.6"><a href="#rfc.section.13.6.6">13.6.6.</a> <a href="#event-history" id="event-history">Event History</a></h1>
-<h1 id="rfc.section.13.6.6.1"><a href="#rfc.section.13.6.6.1">13.6.6.1.</a> <a href="#feature-definition-14" id="feature-definition-14">Feature Definition</a></h1>
-<p id="rfc.section.13.6.6.1.p.1">Instead of complex QoS for message delivery, a <em>Broker</em> may provide <em>message history</em>. A <em>Subscriber</em> is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.  </p>
-<p id="rfc.section.13.6.6.1.p.2">The <em>Broker</em> may allow for configuration on a per-topic basis.  </p>
-<p id="rfc.section.13.6.6.1.p.3">The event history may be transient or persistent message history (surviving <em>Broker</em> restarts).  </p>
-<p id="rfc.section.13.6.6.1.p.4">A <em>Broker</em> that implements <em>event history</em> must (also) announce role <samp>HELLO.roles.callee</samp>, indicate <samp>HELLO.roles.broker.history == 1</samp> and provide the following (builtin) procedures.  </p>
-<p id="rfc.section.13.6.6.1.p.5">A <em>Caller</em> can request message history by calling the <em>Broker</em> procedure </p>
+<h1 id="rfc.section.13.6.6"><a href="#rfc.section.13.6.6">13.6.6.</a> <a href="#sharded-subscription" id="sharded-subscription">Sharded Subscription</a></h1>
+<p id="rfc.section.13.6.6.p.1">Feature status: <strong>alpha</strong> </p>
+<p id="rfc.section.13.6.6.p.2">-- Write me. -- </p>
+<h1 id="rfc.section.13.6.7"><a href="#rfc.section.13.6.7">13.6.7.</a> <a href="#event-history" id="event-history">Event History</a></h1>
+<h1 id="rfc.section.13.6.7.1"><a href="#rfc.section.13.6.7.1">13.6.7.1.</a> <a href="#feature-definition-14" id="feature-definition-14">Feature Definition</a></h1>
+<p id="rfc.section.13.6.7.1.p.1">Instead of complex QoS for message delivery, a <em>Broker</em> may provide <em>message history</em>. A <em>Subscriber</em> is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.  </p>
+<p id="rfc.section.13.6.7.1.p.2">The <em>Broker</em> may allow for configuration on a per-topic basis.  </p>
+<p id="rfc.section.13.6.7.1.p.3">The event history may be transient or persistent message history (surviving <em>Broker</em> restarts).  </p>
+<p id="rfc.section.13.6.7.1.p.4">A <em>Broker</em> that implements <em>event history</em> must (also) announce role <samp>HELLO.roles.callee</samp>, indicate <samp>HELLO.roles.broker.history == 1</samp> and provide the following (builtin) procedures.  </p>
+<p id="rfc.section.13.6.7.1.p.5">A <em>Caller</em> can request message history by calling the <em>Broker</em> procedure </p>
 <pre>
     wamp.topic.history.last
 </pre>
-<p id="rfc.section.13.6.6.1.p.6">with <samp>Arguments = [topic|uri, limit|integer]</samp> where </p>
+<p id="rfc.section.13.6.7.1.p.6">with <samp>Arguments = [topic|uri, limit|integer]</samp> where </p>
 <p/>
 
 <ul>
@@ -4749,11 +4742,11 @@
 </ul>
 
 <p> </p>
-<p id="rfc.section.13.6.6.1.p.8">or by calling </p>
+<p id="rfc.section.13.6.7.1.p.8">or by calling </p>
 <pre>
     wamp.topic.history.since
 </pre>
-<p id="rfc.section.13.6.6.1.p.9">with <samp>Arguments = [topic|uri, timestamp|string]</samp> where </p>
+<p id="rfc.section.13.6.7.1.p.9">with <samp>Arguments = [topic|uri, timestamp|string]</samp> where </p>
 <p/>
 
 <ul>
@@ -4762,11 +4755,11 @@
 </ul>
 
 <p> </p>
-<p id="rfc.section.13.6.6.1.p.11">or by calling </p>
+<p id="rfc.section.13.6.7.1.p.11">or by calling </p>
 <pre>
     wamp.topic.history.after
 </pre>
-<p id="rfc.section.13.6.6.1.p.12">with <samp>Arguments = [topic|uri, publication|id]</samp> </p>
+<p id="rfc.section.13.6.7.1.p.12">with <samp>Arguments = [topic|uri, publication|id]</samp> </p>
 <p/>
 
 <ul>
@@ -4786,12 +4779,16 @@
 </ol>
 
 <p> </p>
-<h1 id="rfc.section.13.6.6.2"><a href="#rfc.section.13.6.6.2">13.6.6.2.</a> <a href="#feature-announcement-15" id="feature-announcement-15">Feature Announcement</a></h1>
-<p id="rfc.section.13.6.6.2.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
+<h1 id="rfc.section.13.6.7.2"><a href="#rfc.section.13.6.7.2">13.6.7.2.</a> <a href="#feature-announcement-15" id="feature-announcement-15">Feature Announcement</a></h1>
+<p id="rfc.section.13.6.7.2.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
 <pre>
     HELLO.Details.roles.&lt;role&gt;.features.event_history|bool := true
 </pre>
-<h1 id="rfc.section.13.6.7"><a href="#rfc.section.13.6.7">13.6.7.</a> <a href="#topic-reflection" id="topic-reflection">Topic Reflection</a></h1>
+<h1 id="rfc.section.13.6.8"><a href="#rfc.section.13.6.8">13.6.8.</a> <a href="#registration-revocation-1" id="registration-revocation-1">Registration Revocation</a></h1>
+<h1 id="rfc.section.13.6.8.1"><a href="#rfc.section.13.6.8.1">13.6.8.1.</a> <a href="#feature-definition-15" id="feature-definition-15">Feature Definition</a></h1>
+<p id="rfc.section.13.6.8.1.p.1">Actively and forcefully revoke a previously granted subscription from a session.  </p>
+<h1 id="rfc.section.13.6.8.2"><a href="#rfc.section.13.6.8.2">13.6.8.2.</a> <a href="#feature-announcement-16" id="feature-announcement-16">Feature Announcement</a></h1>
+<h1 id="rfc.section.13.6.9"><a href="#rfc.section.13.6.9">13.6.9.</a> <a href="#topic-reflection" id="topic-reflection">Topic Reflection</a></h1>
 <p/>
 
 <ul>
@@ -4894,7 +4891,7 @@
        raw_out += String.fromCharCode(data_in[i]);
     }
 
-    // base64 encode raw string, prepend with \0 
+    // base64 encode raw string, prepend with \0
     // and serialize to JSON
     var encoded = JSON.stringify("\0" + window.btoa(raw_out));
     console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="

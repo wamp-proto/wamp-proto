@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM 'rfc2629.dtd' []>
-<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-tavendo-wamp-01">
+<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-tavendo-wamp-02">
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
@@ -9,7 +9,7 @@
 <?rfc private=""?>
 <?rfc topblock="yes"?>
 <front>
-<title abbrev="WAMP">Web Application Messaging Protocol</title>
+<title abbrev="WAMP">The Web Application Messaging Protocol</title>
 
 <author initials="T.O." surname="Oberstein" fullname="Tobias G. Oberstein">
 <organization>Tavendo GmbH</organization>
@@ -2608,8 +2608,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <section anchor="advanced-rpc-features" title="Advanced RPC Features">
 
 <section anchor="progressive-call-results" title="Progressive Call Results">
-<t>Feature status: <spanx style="strong">beta</spanx>
-</t>
 
 <section anchor="feature-definition" title="Feature Definition">
 <t>A procedure implemented by a <spanx style="emph">Callee</spanx> and registered at a <spanx style="emph">Dealer</spanx> may produce progressive results. Progressive results can e.g. be used to return partial results for long-running operations, or to chunk the transmission of larger results sets.
@@ -2621,32 +2619,32 @@ The Callee will execute the procedure using the supplied arguments to the call a
  ,------.           ,------.          ,------.
  |Caller|           |Dealer|          |Callee|
  `--+---'           `--+---'          `--+---'
-    |       CALL       |                 |    
-    | -----------------&gt;                 |    
-    |                  |                 |    
-    |                  |    INVOCATION   |    
-    |                  | ----------------&gt;    
-    |                  |                 |    
-    |                  | YIELD (progress)|    
-    |                  | &lt;----------------    
-    |                  |                 |    
-    | RESULT (progress)|                 |    
-    | &lt;-----------------                 |    
-    |                  |                 |    
-    |                  | YIELD (progress)|    
-    |                  | &lt;----------------    
-    |                  |                 |    
-    | RESULT (progress)|                 |    
-    | &lt;-----------------                 |    
-    |                  |                 |    
-    |                  |                 |        
+    |       CALL       |                 |
+    | -----------------&gt;                 |
+    |                  |                 |
+    |                  |    INVOCATION   |
+    |                  | ----------------&gt;
+    |                  |                 |
+    |                  | YIELD (progress)|
+    |                  | &lt;----------------
+    |                  |                 |
+    | RESULT (progress)|                 |
+    | &lt;-----------------                 |
+    |                  |                 |
+    |                  | YIELD (progress)|
+    |                  | &lt;----------------
+    |                  |                 |
+    | RESULT (progress)|                 |
+    | &lt;-----------------                 |
+    |                  |                 |
+    |                  |                 |
     |       ...        |       ...       |
     |                  |                 |
-    |                  |  YIELD or ERROR |    
-    |                  | &lt;----------------    
-    |                  |                 |    
-    |  RESULT or ERROR |                 |    
-    | &lt;-----------------                 |    
+    |                  |  YIELD or ERROR |
+    |                  | &lt;----------------
+    |                  |                 |
+    |  RESULT or ERROR |                 |
+    | &lt;-----------------                 |
  ,--+---.           ,--+---.          ,--+---.
  |Caller|           |Dealer|          |Callee|
  `------'           `------'          `------'
@@ -2751,6 +2749,8 @@ The Callee will execute the procedure using the supplied arguments to the call a
         ["Y2011", 205]
     ]
 </artwork></figure>
+<t>...
+</t>
 <t>An invocation MUST <spanx style="emph">always</spanx> end in either a <spanx style="emph">normal</spanx> <spanx style="verb">RESULT</spanx> or <spanx style="verb">ERROR</spanx> message being sent by the <spanx style="emph">Callee</spanx> and received by the <spanx style="emph">Dealer</spanx>.
 </t>
 <t><spanx style="emph">Example.</spanx> Callee-to-Dealer final <spanx style="verb">YIELD</spanx>
@@ -2834,7 +2834,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
     [70, 87683, {"progress": true}]
     [70, 87683, {"progress": true}]
     ...
-    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., 
+    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ...,
         ["Total", 490]]]
 </artwork></figure>
 <t><spanx style="emph">Example.</spanx> Dealer-to-Caller <spanx style="verb">RESULTs</spanx>
@@ -2844,7 +2844,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
     [50, 77133, {"progress": true}]
     [50, 77133, {"progress": true}]
     ...
-    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., 
+    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ...,
         ["Total", 490]]]
 </artwork></figure>
 <t><list style="empty">
@@ -2856,7 +2856,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 
 <figure align="left"><artwork align="left">
     [70, 87683, {"progress": true}, ["partial 1", 10]]
-    [70, 87683, {"progress": true}, [], {"foo": 10, 
+    [70, 87683, {"progress": true}, [], {"foo": 10,
         "bar": "partial 1"}]
      ...
     [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
@@ -2866,7 +2866,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 
 <figure align="left"><artwork align="left">
     [50, 77133, {"progress": true}, ["partial 1", 10]]
-    [50, 77133, {"progress": true}, [], {"foo": 10, 
+    [50, 77133, {"progress": true}, [], {"foo": 10,
         "bar": "partial 1"}]
      ...
     [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
@@ -2887,8 +2887,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="progressive-calls" title="Progressive Calls">
-<t>Feature status: <spanx style="strong">sketch</spanx>
-</t>
 
 <section anchor="feature-definition-1" title="Feature Definition">
 <t>A procedure implemented by a <spanx style="emph">Callee</spanx> and registered at a <spanx style="emph">Dealer</spanx> may receive a progressive call. Progressive results can e.g. be used to start processing initial data where a larger data set may not yet have been generated or received by the <spanx style="emph">Caller</spanx>.
@@ -2899,8 +2897,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="call-timeouts" title="Call Timeouts">
-<t>Feature status: <spanx style="strong">alpha</spanx>
-</t>
 
 <section anchor="feature-definition-2" title="Feature Definition">
 <t>A <spanx style="emph">Caller</spanx> might want to issue a call providing a <spanx style="emph">timeout</spanx> for the call to finish.
@@ -3038,8 +3034,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="caller-identification" title="Caller Identification">
-<t>Feature status: <spanx style="strong">alpha</spanx>
-</t>
 
 <section anchor="feature-definition-4" title="Feature Definition">
 <t>A <spanx style="emph">Caller</spanx> MAY <spanx style="strong">request</spanx> the disclosure of its identity (its WAMP session ID) to endpoints of a routed call via
@@ -3052,7 +3046,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 
 <figure align="left"><artwork align="left">
-    [48, 7814135, {"disclose_me": true}, "com.myapp.echo", 
+    [48, 7814135, {"disclose_me": true}, "com.myapp.echo",
         ["Hello, world!"]]
 </artwork></figure>
 <t>If above call is issued by a <spanx style="emph">Caller</spanx> with WAMP session ID <spanx style="verb">3335656</spanx>, the <spanx style="emph">Dealer</spanx> sends an <spanx style="verb">INVOCATION</spanx> message to <spanx style="emph">Callee</spanx> with the <spanx style="emph">Caller's</spanx> WAMP session ID in <spanx style="verb">INVOCATION.Details.caller</spanx>:
@@ -3083,7 +3077,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 
 <figure align="left"><artwork align="left">
-    [64, 927639114088448, {"disclose_caller":true}, 
+    [64, 927639114088448, {"disclose_caller":true},
         "com.maypp.add2"]
 </artwork></figure>
 <t>With the above registration, the registered procedure is called with the caller's sessionID as part of the call details object.
@@ -3102,8 +3096,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="call-trust-levels" title="Call Trust Levels">
-<t>Feature status: <spanx style="strong">alpha</spanx>
-</t>
 
 <section anchor="feature-defintion" title="Feature Defintion">
 <t>A <spanx style="emph">Dealer</spanx> may be configured to automatically assign <spanx style="emph">trust levels</spanx> to calls issued by <spanx style="emph">Callers</spanx> according to the <spanx style="emph">Dealer</spanx> configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) <spanx style="emph">Caller</spanx>.
@@ -3137,8 +3129,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="registration-meta-api" title="Registration Meta API">
-<t>Feature status: <spanx style="strong">beta</spanx>
-</t>
 
 <section anchor="feature-definition-5" title="Feature Definition">
 
@@ -3466,8 +3456,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="patternbased-registrations" title="Pattern-based Registrations">
-<t>Feature status: <spanx style="strong">beta</spanx>
-</t>
 
 <section anchor="feature-definition-6" title="Feature Definition">
 
@@ -3699,8 +3687,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="registration-revocation" title="Registration Revocation">
-<t>Feature status: <spanx style="strong">alpha</spanx>
-</t>
 
 <section anchor="feature-definition-9" title="Feature Definition">
 <t>Actively and forcefully revoke a previously granted registration from a session.
@@ -3792,11 +3778,9 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 </section>
 
-<section anchor="advanced-pubsub-featrues" title="Advanced PubSub Featrues">
+<section anchor="advanced-pubsub-features" title="Advanced PubSub Features">
 
 <section anchor="subscriber-black-and-whitelisting" title="Subscriber Black- and Whitelisting">
-<t>Feature status: <spanx style="strong">stable</spanx>
-</t>
 
 <section anchor="introduction-3" title="Introduction">
 <t><spanx style="strong">Subscriber Black- and Whitelisting</spanx> is an advanced <spanx style="emph">Broker</spanx> feature where a <spanx style="emph">Publisher</spanx> is able to restrict the set of receivers of a published event.
@@ -3960,8 +3944,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="publisher-exclusion" title="Publisher Exclusion">
-<t>Feature status: <spanx style="strong">stable</spanx>
-</t>
 </section>
 </section>
 
@@ -4004,8 +3986,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </artwork></figure>
 
 <section anchor="publisher-identification" title="Publisher Identification">
-<t>Feature status: <spanx style="strong">alpha</spanx>
-</t>
 
 <section anchor="feature-definition-12" title="Feature Definition">
 <t>A <spanx style="emph">Publisher</spanx> may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting
@@ -4018,7 +3998,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 
 <figure align="left"><artwork align="left">
-    [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1", 
+    [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1",
         ["Hello, world!"]]
 </artwork></figure>
 <t>If above event is published by a <spanx style="emph">Publisher</spanx> with WAMP session ID <spanx style="verb">3335656</spanx>, the <spanx style="emph">Broker</spanx> would send an <spanx style="verb">EVENT</spanx> message to <spanx style="emph">Subscribers</spanx> with the <spanx style="emph">Publisher's</spanx> WAMP session ID in <spanx style="verb">EVENT.Details.publisher</spanx>:
@@ -4027,7 +4007,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 
 <figure align="left"><artwork align="left">
-    [36, 5512315355, 4429313566, {"publisher": 3335656}, 
+    [36, 5512315355, 4429313566, {"publisher": 3335656},
         ["Hello, world!"]]
 </artwork></figure>
 <t>Note that a <spanx style="emph">Broker</spanx> may deny a <spanx style="emph">Publisher's</spanx> request to disclose its identity:
@@ -4089,8 +4069,6 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="session-meta-api" title="Session Meta API">
-<t>Feature status: <spanx style="strong">beta</spanx>
-</t>
 
 <section anchor="introduction-4" title="Introduction">
 <t>WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via <spanx style="strong">Session Meta Events</spanx>. It also allows retrieving information about currently connected sessions via <spanx style="strong">Session Meta Procedures</spanx>.
@@ -4273,9 +4251,10 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 </section>
 
+<section anchor="subscription-meta-api" title="Subscription Meta API">
+</section>
+
 <section anchor="patternbased-subscriptions" title="Pattern-based Subscriptions">
-<t>Feature status: <spanx style="strong">beta</spanx>
-</t>
 
 <section anchor="introdution" title="Introdution">
 <t>By default, <spanx style="emph">Subscribers</spanx> subscribe to topics with <spanx style="strong">exact matching policy</spanx>. That is an event will only be dispatched to a <spanx style="emph">Subscriber</spanx> by the <spanx style="emph">Broker</spanx> if the topic published to (<spanx style="verb">PUBLISH.Topic</spanx>) <spanx style="emph">exactly</spanx> matches the topic subscribed to (<spanx style="verb">SUBSCRIBE.Topic</spanx>).
@@ -4511,6 +4490,17 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 </section>
 
+<section anchor="registration-revocation-1" title="Registration Revocation">
+
+<section anchor="feature-definition-15" title="Feature Definition">
+<t>Actively and forcefully revoke a previously granted subscription from a session.
+</t>
+</section>
+
+<section anchor="feature-announcement-16" title="Feature Announcement">
+</section>
+</section>
+
 <section anchor="topic-reflection" title="Topic Reflection">
 <t>
 <list style="symbols">
@@ -4632,7 +4622,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
        raw_out += String.fromCharCode(data_in[i]);
     }
 
-    // base64 encode raw string, prepend with \0 
+    // base64 encode raw string, prepend with \0
     // and serialize to JSON
     var encoded = JSON.stringify("\0" + window.btoa(raw_out));
     console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="
