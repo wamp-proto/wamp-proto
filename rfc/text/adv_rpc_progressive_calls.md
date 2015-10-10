@@ -1,7 +1,5 @@
 ### Progressive Calls
 
-Feature status: **sketch**
-
 #### Feature Definition
 
 A procedure implemented by a *Callee* and registered at a *Dealer* may receive a progressive call. Progressive results can e.g. be used to start processing initial data where a larger data set may not yet have been generated or received by the *Caller*.

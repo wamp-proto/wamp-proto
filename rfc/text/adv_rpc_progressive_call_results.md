@@ -1,6 +1,4 @@
-### Progressive Call Results 
-
-Feature status: **beta**
+### Progressive Call Results
 
 #### Feature Definition
 
@@ -11,32 +9,32 @@ The message flow for progressive results involves:
      ,------.           ,------.          ,------.
      |Caller|           |Dealer|          |Callee|
      `--+---'           `--+---'          `--+---'
-        |       CALL       |                 |    
-        | ----------------->                 |    
-        |                  |                 |    
-        |                  |    INVOCATION   |    
-        |                  | ---------------->    
-        |                  |                 |    
-        |                  | YIELD (progress)|    
-        |                  | <----------------    
-        |                  |                 |    
-        | RESULT (progress)|                 |    
-        | <-----------------                 |    
-        |                  |                 |    
-        |                  | YIELD (progress)|    
-        |                  | <----------------    
-        |                  |                 |    
-        | RESULT (progress)|                 |    
-        | <-----------------                 |    
-        |                  |                 |    
-        |                  |                 |        
+        |       CALL       |                 |
+        | ----------------->                 |
+        |                  |                 |
+        |                  |    INVOCATION   |
+        |                  | ---------------->
+        |                  |                 |
+        |                  | YIELD (progress)|
+        |                  | <----------------
+        |                  |                 |
+        | RESULT (progress)|                 |
+        | <-----------------                 |
+        |                  |                 |
+        |                  | YIELD (progress)|
+        |                  | <----------------
+        |                  |                 |
+        | RESULT (progress)|                 |
+        | <-----------------                 |
+        |                  |                 |
+        |                  |                 |
         |       ...        |       ...       |
         |                  |                 |
-        |                  |  YIELD or ERROR |    
-        |                  | <----------------    
-        |                  |                 |    
-        |  RESULT or ERROR |                 |    
-        | <-----------------                 |    
+        |                  |  YIELD or ERROR |
+        |                  | <----------------
+        |                  |                 |
+        |  RESULT or ERROR |                 |
+        | <-----------------                 |
      ,--+---.           ,--+---.          ,--+---.
      |Caller|           |Dealer|          |Callee|
      `------'           `------'          `------'
@@ -144,6 +142,7 @@ Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress =
         ["Y2011", 205]
     ]
 ```
+...
 
 
 An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
@@ -235,7 +234,7 @@ The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when th
     [70, 87683, {"progress": true}]
     [70, 87683, {"progress": true}]
     ...
-    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ..., 
+    [70, 87683, {}, [["Y2010", 120], ["Y2011", 205], ...,
         ["Total", 490]]]
 ```
 
@@ -246,7 +245,7 @@ The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when th
     [50, 77133, {"progress": true}]
     [50, 77133, {"progress": true}]
     ...
-    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ..., 
+    [50, 77133, {}, [["Y2010", 120], ["Y2011", 205], ...,
         ["Total", 490]]]
 ```
 
@@ -257,7 +256,7 @@ The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when th
 {align="left"}
 ```
     [70, 87683, {"progress": true}, ["partial 1", 10]]
-    [70, 87683, {"progress": true}, [], {"foo": 10, 
+    [70, 87683, {"progress": true}, [], {"foo": 10,
         "bar": "partial 1"}]
      ...
     [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
@@ -268,13 +267,14 @@ The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when th
 {align="left"}
 ```
     [50, 77133, {"progress": true}, ["partial 1", 10]]
-    [50, 77133, {"progress": true}, [], {"foo": 10, 
+    [50, 77133, {"progress": true}, [], {"foo": 10,
         "bar": "partial 1"}]
      ...
     [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
 ```
 
 Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Options.receive_progress` are simply indications that the *Caller* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
+
 
 #### Feature Announcement
 

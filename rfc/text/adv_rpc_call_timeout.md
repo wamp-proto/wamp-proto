@@ -1,7 +1,5 @@
 ### Call Timeouts
 
-Feature status: **alpha**
-
 #### Feature Definition
 
 A *Caller* might want to issue a call providing a *timeout* for the call to finish.

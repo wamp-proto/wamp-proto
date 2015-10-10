@@ -1,7 +1,7 @@
-% Title = "Web Application Messaging Protocol"
+% Title = "The Web Application Messaging Protocol"
 % abbrev = "WAMP"
 % category = "std"
-% docName = "draft-oberstet-hybi-tavendo-wamp-01"
+% docName = "draft-oberstet-hybi-tavendo-wamp-02"
 % ipr= "trust200902"
 % area = "Applications and Real-Time (art)"
 % workgroup = "BiDirectional or Server-Initiated HTTP"
@@ -27,11 +27,11 @@
 % organization = "Tavendo GmbH"
 %   [author.address]
 %   email = "alexander.goedde@tavendo.de"
-%   
+%
 
 .# Abstract
 
-This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications. 
+This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.
 
 {mainmatter}
 
@@ -116,7 +116,7 @@ This allows the transparent exchange of Broker and Dealer implementations withou
 
 ### Language Agnostic
 
-WAMP is language agnostic, i.e. can be implemented in any programming language. At the level of arguments that may be part of a WAMP message, WAMP takes a 'superset of all' approach. WAMP implementations may support features of the implementing language for use in arguments, e.g. keyword arguments. 
+WAMP is language agnostic, i.e. can be implemented in any programming language. At the level of arguments that may be part of a WAMP message, WAMP takes a 'superset of all' approach. WAMP implementations may support features of the implementing language for use in arguments, e.g. keyword arguments.
 
 ### Router Implementation Specifics
 
@@ -2192,7 +2192,7 @@ Here is a complete example in JavaScript showing how byte arrays are converted t
            raw_out += String.fromCharCode(data_in[i]);
         }
 
-        // base64 encode raw string, prepend with \0 
+        // base64 encode raw string, prepend with \0
         // and serialize to JSON
         var encoded = JSON.stringify("\0" + window.btoa(raw_out));
         console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="

@@ -1,7 +1,5 @@
 ### Caller Identification
 
-Feature status: **alpha**
-
 #### Feature Definition
 
 A *Caller* MAY **request** the disclosure of its identity (its WAMP session ID) to endpoints of a routed call via
@@ -12,7 +10,7 @@ A *Caller* MAY **request** the disclosure of its identity (its WAMP session ID) 
 *Example*
 
 {align="left"}
-        [48, 7814135, {"disclose_me": true}, "com.myapp.echo", 
+        [48, 7814135, {"disclose_me": true}, "com.myapp.echo",
             ["Hello, world!"]]
 
 If above call is issued by a *Caller* with WAMP session ID `3335656`, the *Dealer* sends an `INVOCATION` message to *Callee* with the *Caller's* WAMP session ID in `INVOCATION.Details.caller`:
@@ -39,10 +37,11 @@ A *Callee* MAY **request** the disclosure of caller identity via
 *Example*
 
 {align="left"}
-        [64, 927639114088448, {"disclose_caller":true}, 
+        [64, 927639114088448, {"disclose_caller":true},
             "com.maypp.add2"]
 
 With the above registration, the registered procedure is called with the caller's sessionID as part of the call details object.
+
 
 #### Feature Announcement
 

@@ -1,7 +1,5 @@
 ### Publisher Identification
 
-Feature status: **alpha**
-
 #### Feature Definition
 
 A *Publisher* may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting
@@ -12,7 +10,7 @@ A *Publisher* may request the disclosure of its identity (its WAMP session ID) t
 *Example*
 
 {align="left"}
-        [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1", 
+        [16, 239714735, {"disclose_me": true}, "com.myapp.mytopic1",
             ["Hello, world!"]]
 
 If above event is published by a *Publisher* with WAMP session ID `3335656`, the *Broker* would send an `EVENT` message to *Subscribers* with the *Publisher's* WAMP session ID in `EVENT.Details.publisher`:
@@ -20,7 +18,7 @@ If above event is published by a *Publisher* with WAMP session ID `3335656`, the
 *Example*
 
 {align="left"}
-        [36, 5512315355, 4429313566, {"publisher": 3335656}, 
+        [36, 5512315355, 4429313566, {"publisher": 3335656},
             ["Hello, world!"]]
 
 Note that a *Broker* may deny a *Publisher's* request to disclose its identity:

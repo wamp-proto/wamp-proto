@@ -1,7 +1,5 @@
 ### Registration Meta API
 
-Feature status: **beta**
-
 #### Feature Definition
 
 ##### Introduction

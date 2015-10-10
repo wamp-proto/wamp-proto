@@ -1,7 +1,5 @@
 ### Pattern-based Registrations
 
-Feature status: **beta**
-
 #### Feature Definition
 
 ##### Introduction
