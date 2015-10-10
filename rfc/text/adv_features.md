@@ -13,7 +13,7 @@ stable | The feature definition in the spec is complete and stable and the featu
 ### RPC Features
 
 | Feature                    | Status | P | B | S | Cr | D | Ce|
-|----------------------------|--------|---|---|---|----|- -|---|
+|----------------------------|--------|---|---|---|----|---|---|
 | progressive_call_results   | beta   |   |   |   | X  | X | X |
 | progressive_calls          | sketch |   |   |   | X  | X | X |
 | call_timeout               | alpha  |   |   |   | X  | X | X |

@@ -172,7 +172,7 @@ Internet-Draft                    WAMP                      October 2015
 
      13.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  58
        13.2.1.  RPC Features . . . . . . . . . . . . . . . . . . . .  58
-       13.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  58
+       13.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  59
        13.2.3.  Other Advanced Features  . . . . . . . . . . . . . .  59
      13.3.  Advanced RPC Features  . . . . . . . . . . . . . . . . .  60
        13.3.1.  Progressive Call Results . . . . . . . . . . . . . .  60
@@ -3228,20 +3228,20 @@ Internet-Draft                    WAMP                      October 2015
 
 13.2.1.  RPC Features
 
-   | Feature | Status | P | B | S | Cr | D | Ce|
-   |----------------------------|--------|---|---|---|----|- -|---| |
-   progressive_call_results | beta | | | | X | X | X | |
-   progressive_calls | sketch | | | | X | X | X | | call_timeout | alpha
-   | | | | X | X | X | | call_canceling | alpha | | | | X | X | X | |
-   caller_identification | alpha | | | | X | X | X | | call_trustlevels
-   | alpha | | | | | X | X | | registration_meta_api | beta | | | | | X
-   | | | pattern_based_registration | beta | | | | | X | X | |
-   shared_registration | beta | | | | | X | X | | sharded_registration |
-   alpha | | | | | X | X | | registration_revocation | alpha | | | | | X
-   | X | | procedure_reflection | sketch | | | | | X | |
-
-13.2.2.  PubSub Features
-
+     +----------------------------+--------+---+---+---+----+---+----+
+     |          Feature           | Status | P | B | S | Cr | D | Ce |
+     +----------------------------+--------+---+---+---+----+---+----+
+     |  progressive_call_results  |  beta  |   |   |   | X  | X | X  |
+     |     progressive_calls      | sketch |   |   |   | X  | X | X  |
+     |        call_timeout        | alpha  |   |   |   | X  | X | X  |
+     |       call_canceling       | alpha  |   |   |   | X  | X | X  |
+     |   caller_identification    | alpha  |   |   |   | X  | X | X  |
+     |      call_trustlevels      | alpha  |   |   |   |    | X | X  |
+     |   registration_meta_api    |  beta  |   |   |   |    | X |    |
+     | pattern_based_registration |  beta  |   |   |   |    | X | X  |
+     |    shared_registration     |  beta  |   |   |   |    | X | X  |
+     |    sharded_registration    | alpha  |   |   |   |    | X | X  |
+     |  registration_revocation   | alpha  |   |   |   |    | X | X  |
 
 
 
@@ -3249,6 +3249,11 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 58]
 
 Internet-Draft                    WAMP                      October 2015
 
+
+     |    procedure_reflection    | sketch |   |   |   |    | X |    |
+     +----------------------------+--------+---+---+---+----+---+----+
+
+13.2.2.  PubSub Features
 
    +-------------------------------+--------+---+---+---+----+---+----+
    |            Feature            | Status | P | B | S | Cr | D | Ce |
@@ -3293,11 +3298,6 @@ Internet-Draft                    WAMP                      October 2015
 
    ?
 
-   o  partitioned registration
-
-   o  partitioned subscription
-
-
 
 
 
@@ -3305,6 +3305,10 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 59]
 
 Internet-Draft                    WAMP                      October 2015
 
+
+   o  partitioned registration
+
+   o  partitioned subscription
 
 13.3.  Advanced RPC Features
 
@@ -3350,10 +3354,6 @@ Internet-Draft                    WAMP                      October 2015
                   |                  |                 |
                   |  RESULT or ERROR |                 |
                   | <-----------------                 |
-               ,--+---.           ,--+---.          ,--+---.
-               |Caller|           |Dealer|          |Callee|
-               `------'           `------'          `------'
-
 
 
 
@@ -3361,6 +3361,10 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 60]
 
 Internet-Draft                    WAMP                      October 2015
 
+
+               ,--+---.           ,--+---.          ,--+---.
+               |Caller|           |Dealer|          |Callee|
+               `------'           `------'          `------'
 
    A _Caller_ indicates its willingness to receive progressive results
    by setting
@@ -3403,13 +3407,9 @@ Internet-Draft                    WAMP                      October 2015
 
    _Example._ Callee-to-Dealer progressive "YIELDs"
 
-
-
-
-
-
-
-
+    [
+        70,
+        87683,
 
 
 
@@ -3418,9 +3418,6 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 61]
 Internet-Draft                    WAMP                      October 2015
 
 
-    [
-        70,
-        87683,
         {
             "progress": true
         },
@@ -3467,14 +3464,15 @@ Internet-Draft                    WAMP                      October 2015
    "ERROR" message being sent by the _Callee_ and received by the
    _Dealer_.
 
+   _Example._ Callee-to-Dealer final "YIELD"
+
+
 
 
 Oberstein & Goedde       Expires April 12, 2016                [Page 62]
 
 Internet-Draft                    WAMP                      October 2015
 
-
-   _Example._ Callee-to-Dealer final "YIELD"
 
     [
         70,
@@ -3523,14 +3521,14 @@ Internet-Draft                    WAMP                      October 2015
    actual results have already been transmitted in progressive result
    messages.
 
+   _Example._ Callee-to-Dealer "YIELDs"
+
 
 
 Oberstein & Goedde       Expires April 12, 2016                [Page 63]
 
 Internet-Draft                    WAMP                      October 2015
 
-
-   _Example._ Callee-to-Dealer "YIELDs"
 
     [70, 87683, {"progress": true}, ["Y2010", 120]]
     [70, 87683, {"progress": true}, ["Y2011", 205]]
@@ -3574,9 +3572,11 @@ Internet-Draft                    WAMP                      October 2015
 
    _Example._ Callee-to-Dealer "YIELDs"
 
-
-
-
+    [70, 87683, {"progress": true}, ["partial 1", 10]]
+    [70, 87683, {"progress": true}, [], {"foo": 10,
+        "bar": "partial 1"}]
+     ...
+    [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
 
 
 
@@ -3585,12 +3585,6 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 64]
 
 Internet-Draft                    WAMP                      October 2015
 
-
-    [70, 87683, {"progress": true}, ["partial 1", 10]]
-    [70, 87683, {"progress": true}, [], {"foo": 10,
-        "bar": "partial 1"}]
-     ...
-    [70, 87683, {}, [1, 2, 3], {"moo": "hello"}]
 
    _Example._ Dealer-to-Caller "RESULTs"
 
@@ -3634,6 +3628,12 @@ Internet-Draft                    WAMP                      October 2015
 13.3.3.  Call Timeouts
 
    Feature status: *alpha*
+
+
+
+
+
+
 
 
 
