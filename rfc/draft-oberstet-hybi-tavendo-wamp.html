@@ -12,6 +12,28 @@
 	  a {
 	  text-decoration: none;
 	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
 	  a.smpl {
 	  color: black;
 	  }
@@ -485,7 +507,7 @@
 <link href="#rfc.authors" rel="Chapter"/>
 
 
-  <meta name="generator" content="xml2rfc version 2.4.3 - http://tools.ietf.org/tools/xml2rfc" />
+  <meta name="generator" content="xml2rfc version 2.5.0 - http://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Oberstein, T. and A. Goedde" />
@@ -548,102 +570,102 @@
   <ul class="toc">
 
   	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
-<li>1.1.   <a href="#rfc.section.1.1">Background</a></li>
+<ul><li>1.1.   <a href="#rfc.section.1.1">Background</a></li>
 <li>1.2.   <a href="#rfc.section.1.2">Protocol Overview</a></li>
 <li>1.3.   <a href="#rfc.section.1.3">Design Philosophy</a></li>
-<li>1.3.1.   <a href="#rfc.section.1.3.1">Basic and Advanced Profiles</a></li>
+<ul><li>1.3.1.   <a href="#rfc.section.1.3.1">Basic and Advanced Profiles</a></li>
 <li>1.3.2.   <a href="#rfc.section.1.3.2">Application Code</a></li>
 <li>1.3.3.   <a href="#rfc.section.1.3.3">Language Agnostic</a></li>
 <li>1.3.4.   <a href="#rfc.section.1.3.4">Router Implementation Specifics</a></li>
-<li>1.4.   <a href="#rfc.section.1.4">Relationship to WebSocket</a></li>
-<li>2.   <a href="#rfc.section.2">Conformance Requirements</a></li>
-<li>2.1.   <a href="#rfc.section.2.1">Terminology and Other Conventions</a></li>
-<li>3.   <a href="#rfc.section.3">Realms, Sessions and Transports</a></li>
+</ul><li>1.4.   <a href="#rfc.section.1.4">Relationship to WebSocket</a></li>
+</ul><li>2.   <a href="#rfc.section.2">Conformance Requirements</a></li>
+<ul><li>2.1.   <a href="#rfc.section.2.1">Terminology and Other Conventions</a></li>
+</ul><li>3.   <a href="#rfc.section.3">Realms, Sessions and Transports</a></li>
 <li>4.   <a href="#rfc.section.4">Peers and Roles</a></li>
-<li>4.1.   <a href="#rfc.section.4.1">Symmetric Messaging</a></li>
+<ul><li>4.1.   <a href="#rfc.section.4.1">Symmetric Messaging</a></li>
 <li>4.2.   <a href="#rfc.section.4.2">Remote Procedure Call Roles</a></li>
 <li>4.3.   <a href="#rfc.section.4.3">Publish &amp; Subscribe Roles</a></li>
 <li>4.4.   <a href="#rfc.section.4.4">Peers with multiple Roles</a></li>
-<li>5.   <a href="#rfc.section.5">Building Blocks</a></li>
-<li>5.1.   <a href="#rfc.section.5.1">Identifiers</a></li>
-<li>5.1.1.   <a href="#rfc.section.5.1.1">URIs</a></li>
+</ul><li>5.   <a href="#rfc.section.5">Building Blocks</a></li>
+<ul><li>5.1.   <a href="#rfc.section.5.1">Identifiers</a></li>
+<ul><li>5.1.1.   <a href="#rfc.section.5.1.1">URIs</a></li>
 <li>5.1.2.   <a href="#rfc.section.5.1.2">IDs</a></li>
-<li>5.2.   <a href="#rfc.section.5.2">Serializations</a></li>
-<li>5.2.1.   <a href="#rfc.section.5.2.1">JSON</a></li>
+</ul><li>5.2.   <a href="#rfc.section.5.2">Serializations</a></li>
+<ul><li>5.2.1.   <a href="#rfc.section.5.2.1">JSON</a></li>
 <li>5.2.2.   <a href="#rfc.section.5.2.2">MsgPack</a></li>
-<li>5.3.   <a href="#rfc.section.5.3">Transports</a></li>
-<li>5.3.1.   <a href="#rfc.section.5.3.1">WebSocket Transport</a></li>
+</ul><li>5.3.   <a href="#rfc.section.5.3">Transports</a></li>
+<ul><li>5.3.1.   <a href="#rfc.section.5.3.1">WebSocket Transport</a></li>
 <li>5.3.2.   <a href="#rfc.section.5.3.2">Transport and Session Lifetime</a></li>
-<li>6.   <a href="#rfc.section.6">Messages</a></li>
-<li>6.1.   <a href="#rfc.section.6.1">Extensibility</a></li>
+</ul></ul><li>6.   <a href="#rfc.section.6">Messages</a></li>
+<ul><li>6.1.   <a href="#rfc.section.6.1">Extensibility</a></li>
 <li>6.2.   <a href="#rfc.section.6.2">No Polymorphism</a></li>
 <li>6.3.   <a href="#rfc.section.6.3">Structure</a></li>
 <li>6.4.   <a href="#rfc.section.6.4">Message Definitions</a></li>
-<li>6.4.1.   <a href="#rfc.section.6.4.1">Session Lifecycle</a></li>
+<ul><li>6.4.1.   <a href="#rfc.section.6.4.1">Session Lifecycle</a></li>
 <li>6.4.2.   <a href="#rfc.section.6.4.2">Publish &amp; Subscribe</a></li>
 <li>6.4.3.   <a href="#rfc.section.6.4.3">Routed Remote Procedure Calls</a></li>
-<li>6.5.   <a href="#rfc.section.6.5">Message Codes and Direction</a></li>
+</ul><li>6.5.   <a href="#rfc.section.6.5">Message Codes and Direction</a></li>
 <li>6.6.   <a href="#rfc.section.6.6">Extension Messages</a></li>
 <li>6.7.   <a href="#rfc.section.6.7">Empty Arguments and Keyword Arguments</a></li>
-<li>7.   <a href="#rfc.section.7">Sessions</a></li>
-<li>7.1.   <a href="#rfc.section.7.1">Session Establishment</a></li>
-<li>7.1.1.   <a href="#rfc.section.7.1.1">HELLO</a></li>
+</ul><li>7.   <a href="#rfc.section.7">Sessions</a></li>
+<ul><li>7.1.   <a href="#rfc.section.7.1">Session Establishment</a></li>
+<ul><li>7.1.1.   <a href="#rfc.section.7.1.1">HELLO</a></li>
 <li>7.1.2.   <a href="#rfc.section.7.1.2">WELCOME</a></li>
 <li>7.1.3.   <a href="#rfc.section.7.1.3">ABORT</a></li>
-<li>7.2.   <a href="#rfc.section.7.2">Session Closing</a></li>
-<li>7.2.1.   <a href="#rfc.section.7.2.1">Difference between ABORT and GOODBYE</a></li>
-<li>7.3.   <a href="#rfc.section.7.3">Agent Identification</a></li>
-<li>8.   <a href="#rfc.section.8">Publish and Subscribe</a></li>
-<li>8.1.   <a href="#rfc.section.8.1">Subscribing and Unsubscribing</a></li>
-<li>8.1.1.   <a href="#rfc.section.8.1.1">SUBSCRIBE</a></li>
+</ul><li>7.2.   <a href="#rfc.section.7.2">Session Closing</a></li>
+<ul><li>7.2.1.   <a href="#rfc.section.7.2.1">Difference between ABORT and GOODBYE</a></li>
+</ul><li>7.3.   <a href="#rfc.section.7.3">Agent Identification</a></li>
+</ul><li>8.   <a href="#rfc.section.8">Publish and Subscribe</a></li>
+<ul><li>8.1.   <a href="#rfc.section.8.1">Subscribing and Unsubscribing</a></li>
+<ul><li>8.1.1.   <a href="#rfc.section.8.1.1">SUBSCRIBE</a></li>
 <li>8.1.2.   <a href="#rfc.section.8.1.2">SUBSCRIBED</a></li>
 <li>8.1.3.   <a href="#rfc.section.8.1.3">Subscribe ERROR</a></li>
 <li>8.1.4.   <a href="#rfc.section.8.1.4">UNSUBSCRIBE</a></li>
 <li>8.1.5.   <a href="#rfc.section.8.1.5">UNSUBSCRIBED</a></li>
 <li>8.1.6.   <a href="#rfc.section.8.1.6">Unsubscribe ERROR</a></li>
-<li>8.2.   <a href="#rfc.section.8.2">Publishing and Events</a></li>
-<li>8.2.1.   <a href="#rfc.section.8.2.1">PUBLISH</a></li>
+</ul><li>8.2.   <a href="#rfc.section.8.2">Publishing and Events</a></li>
+<ul><li>8.2.1.   <a href="#rfc.section.8.2.1">PUBLISH</a></li>
 <li>8.2.2.   <a href="#rfc.section.8.2.2">PUBLISHED</a></li>
 <li>8.2.3.   <a href="#rfc.section.8.2.3">Publish ERROR</a></li>
 <li>8.2.4.   <a href="#rfc.section.8.2.4">EVENT</a></li>
-<li>9.   <a href="#rfc.section.9">Remote Procedure Calls</a></li>
-<li>9.1.   <a href="#rfc.section.9.1">Registering and Unregistering</a></li>
-<li>9.1.1.   <a href="#rfc.section.9.1.1">REGISTER</a></li>
+</ul></ul><li>9.   <a href="#rfc.section.9">Remote Procedure Calls</a></li>
+<ul><li>9.1.   <a href="#rfc.section.9.1">Registering and Unregistering</a></li>
+<ul><li>9.1.1.   <a href="#rfc.section.9.1.1">REGISTER</a></li>
 <li>9.1.2.   <a href="#rfc.section.9.1.2">REGISTERED</a></li>
 <li>9.1.3.   <a href="#rfc.section.9.1.3">Register ERROR</a></li>
 <li>9.1.4.   <a href="#rfc.section.9.1.4">UNREGISTER</a></li>
 <li>9.1.5.   <a href="#rfc.section.9.1.5">UNREGISTERED</a></li>
 <li>9.1.6.   <a href="#rfc.section.9.1.6">Unregister ERROR</a></li>
-<li>9.2.   <a href="#rfc.section.9.2">Calling and Invocations</a></li>
-<li>9.2.1.   <a href="#rfc.section.9.2.1">CALL</a></li>
+</ul><li>9.2.   <a href="#rfc.section.9.2">Calling and Invocations</a></li>
+<ul><li>9.2.1.   <a href="#rfc.section.9.2.1">CALL</a></li>
 <li>9.2.2.   <a href="#rfc.section.9.2.2">INVOCATION</a></li>
 <li>9.2.3.   <a href="#rfc.section.9.2.3">YIELD</a></li>
 <li>9.2.4.   <a href="#rfc.section.9.2.4">RESULT</a></li>
 <li>9.2.5.   <a href="#rfc.section.9.2.5">Invocation ERROR</a></li>
 <li>9.2.6.   <a href="#rfc.section.9.2.6">Call ERROR</a></li>
-<li>10.   <a href="#rfc.section.10">Predefined URIs</a></li>
-<li>10.1.   <a href="#rfc.section.10.1">Incorrect URIs</a></li>
+</ul></ul><li>10.   <a href="#rfc.section.10">Predefined URIs</a></li>
+<ul><li>10.1.   <a href="#rfc.section.10.1">Incorrect URIs</a></li>
 <li>10.2.   <a href="#rfc.section.10.2">Interaction</a></li>
 <li>10.3.   <a href="#rfc.section.10.3">Session Close</a></li>
 <li>10.4.   <a href="#rfc.section.10.4">Authorization</a></li>
-<li>11.   <a href="#rfc.section.11">Ordering Guarantees</a></li>
-<li>11.1.   <a href="#rfc.section.11.1">Publish &amp; Subscribe Ordering</a></li>
+</ul><li>11.   <a href="#rfc.section.11">Ordering Guarantees</a></li>
+<ul><li>11.1.   <a href="#rfc.section.11.1">Publish &amp; Subscribe Ordering</a></li>
 <li>11.2.   <a href="#rfc.section.11.2">Remote Procedure Call Ordering</a></li>
-<li>12.   <a href="#rfc.section.12">Security Model</a></li>
-<li>12.1.   <a href="#rfc.section.12.1">Transport Encryption and Integrity</a></li>
+</ul><li>12.   <a href="#rfc.section.12">Security Model</a></li>
+<ul><li>12.1.   <a href="#rfc.section.12.1">Transport Encryption and Integrity</a></li>
 <li>12.2.   <a href="#rfc.section.12.2">Router Authentication</a></li>
 <li>12.3.   <a href="#rfc.section.12.3">Client Authentication</a></li>
-<li>12.3.1.   <a href="#rfc.section.12.3.1">Routers are trusted</a></li>
-<li>13.   <a href="#rfc.section.13">Advanced Profile</a></li>
-<li>13.1.   <a href="#rfc.section.13.1">Messages</a></li>
-<li>13.1.1.   <a href="#rfc.section.13.1.1">Message Definitions</a></li>
+<ul><li>12.3.1.   <a href="#rfc.section.12.3.1">Routers are trusted</a></li>
+</ul></ul><li>13.   <a href="#rfc.section.13">Advanced Profile</a></li>
+<ul><li>13.1.   <a href="#rfc.section.13.1">Messages</a></li>
+<ul><li>13.1.1.   <a href="#rfc.section.13.1.1">Message Definitions</a></li>
 <li>13.1.2.   <a href="#rfc.section.13.1.2">Message Codes and Direction</a></li>
-<li>13.2.   <a href="#rfc.section.13.2">Features</a></li>
-<li>13.2.1.   <a href="#rfc.section.13.2.1">RPC Features</a></li>
+</ul><li>13.2.   <a href="#rfc.section.13.2">Features</a></li>
+<ul><li>13.2.1.   <a href="#rfc.section.13.2.1">RPC Features</a></li>
 <li>13.2.2.   <a href="#rfc.section.13.2.2">PubSub Features</a></li>
 <li>13.2.3.   <a href="#rfc.section.13.2.3">Other Advanced Features</a></li>
-<li>13.3.   <a href="#rfc.section.13.3">Advanced RPC Features</a></li>
-<li>13.3.1.   <a href="#rfc.section.13.3.1">Progressive Call Results</a></li>
+</ul><li>13.3.   <a href="#rfc.section.13.3">Advanced RPC Features</a></li>
+<ul><li>13.3.1.   <a href="#rfc.section.13.3.1">Progressive Call Results</a></li>
 <li>13.3.2.   <a href="#rfc.section.13.3.2">Progressive Calls</a></li>
 <li>13.3.3.   <a href="#rfc.section.13.3.3">Call Timeouts</a></li>
 <li>13.3.4.   <a href="#rfc.section.13.3.4">Call Canceling</a></li>
@@ -655,29 +677,29 @@
 <li>13.3.10.   <a href="#rfc.section.13.3.10">Sharded Registration</a></li>
 <li>13.3.11.   <a href="#rfc.section.13.3.11">Registration Revocation</a></li>
 <li>13.3.12.   <a href="#rfc.section.13.3.12">Procedure Reflection</a></li>
-<li>13.4.   <a href="#rfc.section.13.4">Advanced PubSub Featrues</a></li>
-<li>13.4.1.   <a href="#rfc.section.13.4.1">Subscriber Black- and Whitelisting</a></li>
+</ul><li>13.4.   <a href="#rfc.section.13.4">Advanced PubSub Featrues</a></li>
+<ul><li>13.4.1.   <a href="#rfc.section.13.4.1">Subscriber Black- and Whitelisting</a></li>
 <li>13.4.2.   <a href="#rfc.section.13.4.2">Publisher Exclusion</a></li>
-<li>13.5.   <a href="#rfc.section.13.5">Feature Definition</a></li>
+</ul><li>13.5.   <a href="#rfc.section.13.5">Feature Definition</a></li>
 <li>13.6.   <a href="#rfc.section.13.6">Feature Announcement</a></li>
-<li>13.6.1.   <a href="#rfc.section.13.6.1">Publisher Identification</a></li>
+<ul><li>13.6.1.   <a href="#rfc.section.13.6.1">Publisher Identification</a></li>
 <li>13.6.2.   <a href="#rfc.section.13.6.2">Publication Trust Levels</a></li>
 <li>13.6.3.   <a href="#rfc.section.13.6.3">Session Meta API</a></li>
 <li>13.6.4.   <a href="#rfc.section.13.6.4">Pattern-based Subscriptions</a></li>
 <li>13.6.5.   <a href="#rfc.section.13.6.5">Sharded Subscription</a></li>
 <li>13.6.6.   <a href="#rfc.section.13.6.6">Event History</a></li>
 <li>13.6.7.   <a href="#rfc.section.13.6.7">Topic Reflection</a></li>
-<li>14.   <a href="#rfc.section.14">Binary conversion of JSON Strings</a></li>
-<li>14.1.   <a href="#rfc.section.14.1">Python</a></li>
+</ul></ul><li>14.   <a href="#rfc.section.14">Binary conversion of JSON Strings</a></li>
+<ul><li>14.1.   <a href="#rfc.section.14.1">Python</a></li>
 <li>14.2.   <a href="#rfc.section.14.2">JavaScript</a></li>
-<li>15.   <a href="#rfc.section.15">Security Considerations</a></li>
+</ul><li>15.   <a href="#rfc.section.15">Security Considerations</a></li>
 <li>16.   <a href="#rfc.section.16">IANA Considerations</a></li>
 <li>17.   <a href="#rfc.section.17">Contributors</a></li>
 <li>18.   <a href="#rfc.section.18">Acknowledgements</a></li>
 <li>19.   <a href="#rfc.references">References</a></li>
-<li>19.1.   <a href="#rfc.references.1">Normative References</a></li>
+<ul><li>19.1.   <a href="#rfc.references.1">Normative References</a></li>
 <li>19.2.   <a href="#rfc.references.2">Informative References</a></li>
-<li><a href="#rfc.authors">Authors' Addresses</a></li>
+</ul><li><a href="#rfc.authors">Authors' Addresses</a></li>
 
 
   </ul>
@@ -3506,7 +3528,7 @@
 <p id="rfc.section.13.3.2.p.1">Feature status: <strong>sketch</strong> </p>
 <h1 id="rfc.section.13.3.2.1"><a href="#rfc.section.13.3.2.1">13.3.2.1.</a> <a href="#feature-definition-1" id="feature-definition-1">Feature Definition</a></h1>
 <p id="rfc.section.13.3.2.1.p.1">A procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may receive a progressive call. Progressive results can e.g. be used to start processing initial data where a larger data set may not yet have been generated or received by the <em>Caller</em>.  </p>
-<p id="rfc.section.13.3.2.1.p.2">See this GitHub issue for more discussion: <a href="https://github.com/wamp-proto/wamp-proto/issues/167">https://github.com/wamp-proto/wamp-proto/issues/167</a> </p>
+<p id="rfc.section.13.3.2.1.p.2">See this GitHub issue for more discussion: <span>&lt;</span><a href="https://github.com/wamp-proto/wamp-proto/issues/167">https://github.com/wamp-proto/wamp-proto/issues/167</a><span>&gt;</span> </p>
 <h1 id="rfc.section.13.3.3"><a href="#rfc.section.13.3.3">13.3.3.</a> <a href="#call-timeouts" id="call-timeouts">Call Timeouts</a></h1>
 <p id="rfc.section.13.3.3.p.1">Feature status: <strong>alpha</strong> </p>
 <h1 id="rfc.section.13.3.3.1"><a href="#rfc.section.13.3.3.1">13.3.3.1.</a> <a href="#feature-definition-2" id="feature-definition-2">Feature Definition</a></h1>
@@ -4092,7 +4114,7 @@
 <p id="rfc.section.13.3.8.1.4.1.p.1">Since each <em>Callee</em>'s' registrations "stands on it's own", there is no <em>set semantics</em> implied by pattern-based registrations.  </p>
 <p id="rfc.section.13.3.8.1.4.1.p.2">E.g. a <em>Callee</em> cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.  </p>
 <h1 id="rfc.section.13.3.8.1.4.2"><a href="#rfc.section.13.3.8.1.4.2">13.3.8.1.4.2.</a> <a href="#calls-matching-multiple-registrations" id="calls-matching-multiple-registrations">Calls matching multiple registrations</a></h1>
-<p id="rfc.section.13.3.8.1.4.2.p.1">The behavior when a single call matches more than one of a <em>Callee's</em> registrations or more than one registration in general is still being discussed - see <a href="https://github.com/tavendo/WAMP/issues/182">https://github.com/tavendo/WAMP/issues/182</a>.  </p>
+<p id="rfc.section.13.3.8.1.4.2.p.1">The behavior when a single call matches more than one of a <em>Callee's</em> registrations or more than one registration in general is still being discussed - see <span>&lt;</span><a href="https://github.com/tavendo/WAMP/issues/182">https://github.com/tavendo/WAMP/issues/182</a><span>&gt;</span>.  </p>
 <h1 id="rfc.section.13.3.8.1.4.3"><a href="#rfc.section.13.3.8.1.4.3">13.3.8.1.4.3.</a> <a href="#concrete-procedure-called" id="concrete-procedure-called">Concrete procedure called</a></h1>
 <p id="rfc.section.13.3.8.1.4.3.p.1">If an endpoint was registered with a pattern-based matching policy, a <em>Dealer</em> MUST supply the original <samp>CALL.Procedure</samp> as provided by the <em>Caller</em> in </p>
 <pre>
