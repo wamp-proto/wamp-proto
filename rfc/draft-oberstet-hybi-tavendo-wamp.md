@@ -1,7 +1,7 @@
 % Title = "The Web Application Messaging Protocol"
 % abbrev = "WAMP"
 % category = "std"
-% docName = "draft-oberstet-hybi-tavendo-wamp-03"
+% docName = "draft-oberstet-hybi-tavendo-wamp-02"
 % ipr= "trust200902"
 % area = "Applications and Real-Time (art)"
 % workgroup = "BiDirectional or Server-Initiated HTTP"
