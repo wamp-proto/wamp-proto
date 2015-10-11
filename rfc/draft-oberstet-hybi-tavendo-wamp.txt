@@ -146,22 +146,22 @@ Internet-Draft                    WAMP                      October 2015
        9.2.5.  Invocation ERROR  . . . . . . . . . . . . . . . . . .  51
        9.2.6.  Call ERROR  . . . . . . . . . . . . . . . . . . . . .  52
    10. Predefined URIs . . . . . . . . . . . . . . . . . . . . . . .  53
-     10.1.  Incorrect URIs . . . . . . . . . . . . . . . . . . . . .  53
-     10.2.  Interaction  . . . . . . . . . . . . . . . . . . . . . .  53
-     10.3.  Session Close  . . . . . . . . . . . . . . . . . . . . .  54
-     10.4.  Authorization  . . . . . . . . . . . . . . . . . . . . .  54
+     10.1.  Basic Profile  . . . . . . . . . . . . . . . . . . . . .  53
+       10.1.1.  Incorrect URIs . . . . . . . . . . . . . . . . . . .  53
+       10.1.2.  Interaction  . . . . . . . . . . . . . . . . . . . .  53
+       10.1.3.  Session Close  . . . . . . . . . . . . . . . . . . .  54
+       10.1.4.  Authorization  . . . . . . . . . . . . . . . . . . .  54
+     10.2.  Advanced Profile . . . . . . . . . . . . . . . . . . . .  55
    11. Ordering Guarantees . . . . . . . . . . . . . . . . . . . . .  55
      11.1.  Publish & Subscribe Ordering . . . . . . . . . . . . . .  55
-     11.2.  Remote Procedure Call Ordering . . . . . . . . . . . . .  55
+     11.2.  Remote Procedure Call Ordering . . . . . . . . . . . . .  56
    12. Security Model  . . . . . . . . . . . . . . . . . . . . . . .  56
-     12.1.  Transport Encryption and Integrity . . . . . . . . . . .  56
+     12.1.  Transport Encryption and Integrity . . . . . . . . . . .  57
      12.2.  Router Authentication  . . . . . . . . . . . . . . . . .  57
-     12.3.  Client Authentication  . . . . . . . . . . . . . . . . .  57
-       12.3.1.  Routers are trusted  . . . . . . . . . . . . . . . .  57
+     12.3.  Client Authentication  . . . . . . . . . . . . . . . . .  58
+       12.3.1.  Routers are trusted  . . . . . . . . . . . . . . . .  58
    13. Advanced Profile  . . . . . . . . . . . . . . . . . . . . . .  58
-     13.1.  Messages . . . . . . . . . . . . . . . . . . . . . . . .  58
-       13.1.1.  Message Definitions  . . . . . . . . . . . . . . . .  58
-       13.1.2.  Message Codes and Direction  . . . . . . . . . . . .  59
+     13.1.  Messages . . . . . . . . . . . . . . . . . . . . . . . .  59
 
 
 
@@ -170,54 +170,54 @@ Oberstein & Goedde       Expires April 12, 2016                 [Page 3]
 Internet-Draft                    WAMP                      October 2015
 
 
-     13.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  59
+       13.1.1.  Message Definitions  . . . . . . . . . . . . . . . .  59
+       13.1.2.  Message Codes and Direction  . . . . . . . . . . . .  59
+     13.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  60
        13.2.1.  RPC Features . . . . . . . . . . . . . . . . . . . .  60
-       13.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  60
+       13.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  61
        13.2.3.  Other Advanced Features  . . . . . . . . . . . . . .  61
      13.3.  Advanced RPC Features  . . . . . . . . . . . . . . . . .  62
        13.3.1.  Progressive Call Results . . . . . . . . . . . . . .  62
-       13.3.2.  Progressive Calls  . . . . . . . . . . . . . . . . .  67
-       13.3.3.  Call Timeouts  . . . . . . . . . . . . . . . . . . .  67
-       13.3.4.  Call Canceling . . . . . . . . . . . . . . . . . . .  68
-       13.3.5.  Caller Identification  . . . . . . . . . . . . . . .  71
-       13.3.6.  Call Trust Levels  . . . . . . . . . . . . . . . . .  72
-       13.3.7.  Registration Meta API  . . . . . . . . . . . . . . .  72
-       13.3.8.  Pattern-based Registrations  . . . . . . . . . . . .  79
-       13.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  82
-       13.3.10. Sharded Registration . . . . . . . . . . . . . . . .  84
-       13.3.11. Registration Revocation  . . . . . . . . . . . . . .  84
-       13.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  84
-     13.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  86
-       13.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  86
-       13.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  90
-     13.5.  Feature Definition . . . . . . . . . . . . . . . . . . .  90
-     13.6.  Feature Announcement . . . . . . . . . . . . . . . . . .  91
-       13.6.1.  Publisher Identification . . . . . . . . . . . . . .  91
-       13.6.2.  Publication Trust Levels . . . . . . . . . . . . . .  92
-       13.6.3.  Session Meta API . . . . . . . . . . . . . . . . . .  93
-       13.6.4.  Subscription Meta API  . . . . . . . . . . . . . . .  97
-       13.6.5.  Pattern-based Subscriptions  . . . . . . . . . . . .  97
-       13.6.6.  Sharded Subscription . . . . . . . . . . . . . . . . 100
-       13.6.7.  Event History  . . . . . . . . . . . . . . . . . . . 100
-       13.6.8.  Registration Revocation  . . . . . . . . . . . . . . 102
-       13.6.9.  Topic Reflection . . . . . . . . . . . . . . . . . . 102
-   14. Binary conversion of JSON Strings . . . . . . . . . . . . . . 102
-     14.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 103
-     14.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 104
-   15. Security Considerations . . . . . . . . . . . . . . . . . . . 105
-   16. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 105
-   17. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 105
-   18. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 105
-   19. References  . . . . . . . . . . . . . . . . . . . . . . . . . 105
-     19.1.  Normative References . . . . . . . . . . . . . . . . . . 105
-     19.2.  Informative References . . . . . . . . . . . . . . . . . 105
-     19.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 105
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 106
-
-
-
-
-
+       13.3.2.  Progressive Calls  . . . . . . . . . . . . . . . . .  68
+       13.3.3.  Call Timeouts  . . . . . . . . . . . . . . . . . . .  68
+       13.3.4.  Call Canceling . . . . . . . . . . . . . . . . . . .  69
+       13.3.5.  Caller Identification  . . . . . . . . . . . . . . .  72
+       13.3.6.  Call Trust Levels  . . . . . . . . . . . . . . . . .  73
+       13.3.7.  Registration Meta API  . . . . . . . . . . . . . . .  73
+       13.3.8.  Pattern-based Registrations  . . . . . . . . . . . .  80
+       13.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  83
+       13.3.10. Sharded Registration . . . . . . . . . . . . . . . .  85
+       13.3.11. Registration Revocation  . . . . . . . . . . . . . .  86
+       13.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  86
+     13.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  87
+       13.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  87
+       13.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  92
+     13.5.  Feature Definition . . . . . . . . . . . . . . . . . . .  92
+     13.6.  Feature Announcement . . . . . . . . . . . . . . . . . .  92
+       13.6.1.  Publisher Identification . . . . . . . . . . . . . .  93
+       13.6.2.  Publication Trust Levels . . . . . . . . . . . . . .  94
+       13.6.3.  Subscription Meta API  . . . . . . . . . . . . . . .  94
+       13.6.4.  Pattern-based Subscriptions  . . . . . . . . . . . . 100
+       13.6.5.  Sharded Subscriptions  . . . . . . . . . . . . . . . 103
+       13.6.6.  Event History  . . . . . . . . . . . . . . . . . . . 103
+       13.6.7.  Registration Revocation  . . . . . . . . . . . . . . 105
+       13.6.8.  Topic Reflection . . . . . . . . . . . . . . . . . . 105
+     13.7.  Other Advanced Features  . . . . . . . . . . . . . . . . 105
+       13.7.1.  Session Meta API . . . . . . . . . . . . . . . . . . 105
+       13.7.2.  Authentication . . . . . . . . . . . . . . . . . . . 109
+       13.7.3.  Alternative Transports . . . . . . . . . . . . . . . 117
+   14. Binary conversion of JSON Strings . . . . . . . . . . . . . . 132
+     14.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 133
+     14.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 134
+   15. Security Considerations . . . . . . . . . . . . . . . . . . . 136
+   16. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 136
+   17. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 136
+   18. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 136
+   19. References  . . . . . . . . . . . . . . . . . . . . . . . . . 136
+     19.1.  Normative References . . . . . . . . . . . . . . . . . . 136
+     19.2.  Informative References . . . . . . . . . . . . . . . . . 136
+     19.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 136
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 137
 
 
 
@@ -2916,13 +2916,13 @@ Internet-Draft                    WAMP                      October 2015
 
 10.  Predefined URIs
 
-   WAMP pre-defines the following error URIs as part of this Basic
-   Profile, which cover the full set of error states for the Basic
-   Profile.  Additional error URIs are defined as part of the Advanced
-   Profile to cover error states for the Advanced Profile.  WAMP peers
-   MUST use only the defined error messages.
+   WAMP pre-defines the following error URIs for the basic and for the
+   advanced profile.  WAMP peers MUST use only the defined error
+   messages.
 
-10.1.  Incorrect URIs
+10.1.  Basic Profile
+
+10.1.1.  Incorrect URIs
 
    When a _Peer_ provides an incorrect URI for any URI-based attribute
    of a WAMP message (e.g. realm, topic), then the other _Peer_ MUST
@@ -2930,7 +2930,7 @@ Internet-Draft                    WAMP                      October 2015
 
        wamp.error.invalid_uri
 
-10.2.  Interaction
+10.1.2.  Interaction
 
    _Peer_ provided an incorrect URI for any URI-based attribute of WAMP
    message, such as realm, topic or procedure
@@ -2972,7 +2972,7 @@ Internet-Draft                    WAMP                      October 2015
 
        wamp.error.invalid_argument
 
-10.3.  Session Close
+10.1.3.  Session Close
 
    The _Peer_ is shutting down completely - used as a "GOODBYE" (or
    "ABORT") reason.
@@ -2988,7 +2988,7 @@ Internet-Draft                    WAMP                      October 2015
 
        wamp.error.goodbye_and_out
 
-10.4.  Authorization
+10.1.4.  Authorization
 
    A join, call, register, publish or subscribe failed, since the _Peer_
    is not authorized to perform the operation.
@@ -3026,6 +3026,32 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 54]
 Internet-Draft                    WAMP                      October 2015
 
 
+10.2.  Advanced Profile
+
+   uri_Dealer_ or _Callee_ canceled a call previously issued
+
+       wamp.error.canceled
+
+   A _Peer_ requested an interaction with an option that was disallowed
+   by the _Router_
+
+       wamp.error.option_not_allowed
+
+   A _Dealer_ could not perform a call, since a procedure with the given
+   URI is registered, but _Callee Black- and Whitelisting_ and/or
+   _Caller Exclusion_ lead to the exclusion of (any) _Callee_ providing
+   the procedure.
+
+       wamp.error.no_eligible_callee
+
+   A _Router_ rejected client request to disclose its identity
+
+       wamp.error.option_disallowed.disclose_me
+
+   A _Router_ encountered a network failure
+
+       wamp.error.network_failure
+
 11.  Ordering Guarantees
 
    All WAMP implementations, in particular _Routers_ MUST support the
@@ -3047,6 +3073,14 @@ Internet-Draft                    WAMP                      October 2015
 
    In other words, WAMP guarantees ordering of events between any given
    _pair_ of _Publisher_ and _Subscriber_.
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 55]
+
+Internet-Draft                    WAMP                      October 2015
+
 
    Further, if _Subscriber A_ subscribes to *Topic 1*, the "SUBSCRIBED"
    message will be sent by the _Broker_ to _Subscriber A_ before any
@@ -3074,14 +3108,6 @@ Internet-Draft                    WAMP                      October 2015
 
    There are no guarantees on the order of call results and errors in
    relation to _different_ calls, since the execution of calls upon
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 55]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    different invocations of endpoints in _Callees_ are running
    independently.  A first call might require an expensive, long-running
    computation, whereas a second, subsequent call might finish
@@ -3101,6 +3127,16 @@ Internet-Draft                    WAMP                      October 2015
    The following discusses the security model for the Basic Profile.
    Any changes or extensions to this for the Advanced Profile are
    discussed further on as part of the Advanced Profile definition.
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 56]
+
+Internet-Draft                    WAMP                      October 2015
+
 
 12.1.  Transport Encryption and Integrity
 
@@ -3126,18 +3162,6 @@ Internet-Draft                    WAMP                      October 2015
    (no one can tap a Unix domain socket without appropriate permissions
    or being root).
 
-
-
-
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 56]
-
-Internet-Draft                    WAMP                      October 2015
-
-
 12.2.  Router Authentication
 
    To authenticate _Routers_ to _Clients_, deployments MUST run TLS and
@@ -3161,6 +3185,14 @@ Internet-Draft                    WAMP                      October 2015
    which the _Router_ runs has the permission to create a Unix domain
    socket under a specific path, _Clients_ connecting to that path can
    trust in the router authenticity.
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 57]
+
+Internet-Draft                    WAMP                      October 2015
+
 
 12.3.  Client Authentication
 
@@ -3186,14 +3218,6 @@ Internet-Draft                    WAMP                      October 2015
    _Routers_ need to read the application payloads in cases of automatic
    conversion between different serialization formats.
 
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 57]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    Further, _Routers_ are trusted to *actually perform* routing as
    specified.  E.g. a _Client_ that publishes an event has to trust a
    _Router_ that the event is actually dispatched to all (eligible)
@@ -3215,6 +3239,16 @@ Internet-Draft                    WAMP                      October 2015
       specification is very much a work in progress.  An approximate
       status of each feature is given at the beginning of the feature
       section.
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 58]
+
+Internet-Draft                    WAMP                      October 2015
+
 
 13.1.  Messages
 
@@ -3242,14 +3276,6 @@ Internet-Draft                    WAMP                      October 2015
 
                [AUTHENTICATE, Signature|string, Extra|dict]
 
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 58]
-
-Internet-Draft                    WAMP                      October 2015
-
-
 13.1.1.3.  CANCEL
 
    The "CANCEL" message is used with the Call Canceling advanced
@@ -3272,6 +3298,14 @@ Internet-Draft                    WAMP                      October 2015
    messages* defined in this part of the document and their direction
    between peer roles.
 
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 59]
+
+Internet-Draft                    WAMP                      October 2015
+
+
     +-----+----------------+-----+-----+------+------+-------+--------+
     | Cod |    Message     | Pub | Brk | Subs | Calr | Dealr | Callee |
     +-----+----------------+-----+-----+------+------+-------+--------+
@@ -3289,22 +3323,6 @@ Internet-Draft                    WAMP                      October 2015
    Support for advanced features must be announced by the peers which
    implement them.  The following is a complete list of advanced
    features currently defined or proposed.
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 59]
-
-Internet-Draft                    WAMP                      October 2015
-
 
    +--------+----------------------------------------------------------+
    | Status |                       Description                        |
@@ -3327,6 +3345,23 @@ Internet-Draft                    WAMP                      October 2015
 
 13.2.1.  RPC Features
 
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 60]
+
+Internet-Draft                    WAMP                      October 2015
+
+
      +----------------------------+--------+---+---+---+----+---+----+
      |          Feature           | Status | P | B | S | Cr | D | Ce |
      +----------------------------+--------+---+---+---+----+---+----+
@@ -3345,22 +3380,6 @@ Internet-Draft                    WAMP                      October 2015
      +----------------------------+--------+---+---+---+----+---+----+
 
 13.2.2.  PubSub Features
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 60]
-
-Internet-Draft                    WAMP                      October 2015
-
 
    +-------------------------------+--------+---+---+---+----+---+----+
    |            Feature            | Status | P | B | S | Cr | D | Ce |
@@ -3391,6 +3410,14 @@ Internet-Draft                    WAMP                      October 2015
 
       *  batched WS transport
 
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 61]
+
+Internet-Draft                    WAMP                      October 2015
+
+
       *  longpoll transport
 
       *  rawsocket transport
@@ -3409,15 +3436,6 @@ Internet-Draft                    WAMP                      October 2015
 
    o  partitioned subscription
 
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 61]
-
-Internet-Draft                    WAMP                      October 2015
-
-
 13.3.  Advanced RPC Features
 
 13.3.1.  Progressive Call Results
@@ -3430,6 +3448,31 @@ Internet-Draft                    WAMP                      October 2015
    chunk the transmission of larger results sets.
 
    The message flow for progressive results involves:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 62]
+
+Internet-Draft                    WAMP                      October 2015
+
 
                ,------.           ,------.          ,------.
                |Caller|           |Dealer|          |Callee|
@@ -3467,16 +3510,25 @@ Internet-Draft                    WAMP                      October 2015
    A _Caller_ indicates its willingness to receive progressive results
    by setting
 
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 62]
-
-Internet-Draft                    WAMP                      October 2015
-
-
        CALL.Options.receive_progress|bool := true
 
    _Example._ Caller-to-Dealer "CALL"
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 63]
+
+Internet-Draft                    WAMP                      October 2015
+
 
        [
            48,
@@ -3525,7 +3577,11 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 63]
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 64]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3581,7 +3637,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 64]
+Oberstein & Goedde       Expires April 12, 2016                [Page 65]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3637,7 +3693,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 65]
+Oberstein & Goedde       Expires April 12, 2016                [Page 66]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3693,7 +3749,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 66]
+Oberstein & Goedde       Expires April 12, 2016                [Page 67]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3749,7 +3805,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 67]
+Oberstein & Goedde       Expires April 12, 2016                [Page 68]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3805,7 +3861,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 68]
+Oberstein & Goedde       Expires April 12, 2016                [Page 69]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3861,7 +3917,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 69]
+Oberstein & Goedde       Expires April 12, 2016                [Page 70]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3917,7 +3973,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 70]
+Oberstein & Goedde       Expires April 12, 2016                [Page 71]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3973,7 +4029,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 71]
+Oberstein & Goedde       Expires April 12, 2016                [Page 72]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4029,7 +4085,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 72]
+Oberstein & Goedde       Expires April 12, 2016                [Page 73]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4085,7 +4141,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 73]
+Oberstein & Goedde       Expires April 12, 2016                [Page 74]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4141,7 +4197,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 74]
+Oberstein & Goedde       Expires April 12, 2016                [Page 75]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4197,7 +4253,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 75]
+Oberstein & Goedde       Expires April 12, 2016                [Page 76]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4253,7 +4309,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 76]
+Oberstein & Goedde       Expires April 12, 2016                [Page 77]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4309,7 +4365,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 77]
+Oberstein & Goedde       Expires April 12, 2016                [Page 78]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4365,7 +4421,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 78]
+Oberstein & Goedde       Expires April 12, 2016                [Page 79]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4421,7 +4477,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 79]
+Oberstein & Goedde       Expires April 12, 2016                [Page 80]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4477,7 +4533,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 80]
+Oberstein & Goedde       Expires April 12, 2016                [Page 81]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4533,7 +4589,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 81]
+Oberstein & Goedde       Expires April 12, 2016                [Page 82]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4589,7 +4645,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 82]
+Oberstein & Goedde       Expires April 12, 2016                [Page 83]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4645,7 +4701,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 83]
+Oberstein & Goedde       Expires April 12, 2016                [Page 84]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4677,6 +4733,35 @@ Internet-Draft                    WAMP                      October 2015
    which is offered by a sharded database, by routing the call to a
    single shard.
 
+13.3.10.2.  "Partitioned" Calls
+
+   If "CALL.Options.runmode == "partition"", then "CALL.Options.rkey"
+   MUST be present.
+
+   The call is then routed to all endpoints that were registered ..
+
+   The call is then processed as for "All" Calls.
+
+13.3.10.3.  Feature Announcement
+
+   Support for this feature MUST be announced by _Callers_ ("role :=
+   "caller""), _Callees_ ("role := "callee"") and _Dealers_ ("role :=
+   "dealer"") via
+
+   HELLO.Details.roles.<role>.features.sharded_registration|bool := true
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 85]
+
+Internet-Draft                    WAMP                      October 2015
+
+
 13.3.11.  Registration Revocation
 
 13.3.11.1.  Feature Definition
@@ -4697,14 +4782,6 @@ Internet-Draft                    WAMP                      October 2015
    interested in retrieving a machine readable list and description of
    WAMP procedures and topics it is authorized to access or provide in
    the context of a WAMP session with a _Dealer_ or _Broker_.
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 84]
-
-Internet-Draft                    WAMP                      October 2015
-
 
    Reflection may be useful in the following cases:
 
@@ -4733,6 +4810,14 @@ Internet-Draft                    WAMP                      October 2015
    A peer that acts as a _Broker_ SHOULD announce support for the
    reflection API by sending
 
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 86]
+
+Internet-Draft                    WAMP                      October 2015
+
+
        HELLO.Details.roles.broker.reflection|bool := true
 
    A peer that acts as a _Dealer_ SHOULD announce support for the
@@ -4754,13 +4839,6 @@ Internet-Draft                    WAMP                      October 2015
    A topic or procedure was asked to be described (reflected upon):
 
        wamp.reflect.describe
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 85]
-
-Internet-Draft                    WAMP                      October 2015
-
 
    *Reflection*
 
@@ -4788,6 +4866,14 @@ Internet-Draft                    WAMP                      October 2015
    reduced on a per-publication basis by the _Publisher_ using
    *Subscriber Black- and Whitelisting*.
 
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 87]
+
+Internet-Draft                    WAMP                      October 2015
+
+
    The _Publisher_ can explicitly *exclude* _Subscribers_ based on WAMP
    "sessionid", "authid" or "authrole".  This is referred to as
    *Blacklisting*.
@@ -4809,15 +4895,6 @@ Internet-Draft                    WAMP                      October 2015
    However, the application might want to exclude the originator of the
    product price update (the *Caller* of the price update procedure)
    from receiving the update event - as the originator naturally already
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 86]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    knows the new price, and might get confused when it receives an
    update the *Caller* has triggered himself.
 
@@ -4846,6 +4923,13 @@ Internet-Draft                    WAMP                      October 2015
    sensitive information.  A user under "authrole" "staff" might only be
    allowed to receive a subset of events.
 
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 88]
+
+Internet-Draft                    WAMP                      October 2015
+
+
    The application can publish *all* customer updates to the *same*
    topic "com.example.myapp.customer.<customer ID>" and use
    "PUBLISH.Options.eligible_authrole|list[string]" to safely restrict
@@ -4865,14 +4949,6 @@ Internet-Draft                    WAMP                      October 2015
       *  "PUBLISH.Options.exclude_authrole|list[string]"
 
    o  Whitelisting Options
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 87]
-
-Internet-Draft                    WAMP                      October 2015
-
 
       *  "PUBLISH.Options.eligible|list[int]"
 
@@ -4903,6 +4979,13 @@ Internet-Draft                    WAMP                      October 2015
    1.  if there is an "eligible" attribute present, the _Subscriber_'s
        "sessionid" is in this list
 
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 89]
+
+Internet-Draft                    WAMP                      October 2015
+
+
    2.  if there is an "eligible_authid" attribute present, the
        _Subscriber_'s "authid" is in this list
 
@@ -4921,15 +5004,6 @@ Internet-Draft                    WAMP                      October 2015
    For example, if both "PUBLISH.Options.exclude" and
    "PUBLISH.Options.eligible" are present, the _Broker_ will dispatch
    events published only to _Subscribers_ that are not explicitly
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 88]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    excluded in "PUBLISH.Options.exclude" *and* which are explicitly
    eligible via "PUBLISH.Options.eligible".
 
@@ -4956,6 +5030,18 @@ Internet-Draft                    WAMP                      October 2015
 
    _Example_
 
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 90]
+
+Internet-Draft                    WAMP                      October 2015
+
+
        [
           16,
           239714735,
@@ -4976,15 +5062,6 @@ Internet-Draft                    WAMP                      October 2015
    subscribed to the topic "com.myapp.mytopic1".
 
    _Example_
-
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 89]
-
-Internet-Draft                    WAMP                      October 2015
-
 
        [
           16,
@@ -5008,6 +5085,18 @@ Internet-Draft                    WAMP                      October 2015
    The above event will get dispatched to WAMP sessions with IDs
    "1245751" or "9912315" only, since "7891255" is excluded - but only
    if those are actually subscribed to the topic "com.myapp.mytopic1".
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 91]
+
+Internet-Draft                    WAMP                      October 2015
+
 
 13.4.1.4.  Feature Announcement
 
@@ -5035,13 +5124,6 @@ Internet-Draft                    WAMP                      October 2015
    _Publisher_ of the event will receive that event, if it is subscribed
    to the "Topic" published to.
 
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 90]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    _Example_
 
        [
@@ -5064,6 +5146,13 @@ Internet-Draft                    WAMP                      October 2015
 
        HELLO.Details.roles.<role>.features.
            publisher_exclusion|bool := true
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 92]
+
+Internet-Draft                    WAMP                      October 2015
+
 
 13.6.1.  Publisher Identification
 
@@ -5089,15 +5178,6 @@ Internet-Draft                    WAMP                      October 2015
        [36, 5512315355, 4429313566, {"publisher": 3335656},
            ["Hello, world!"]]
 
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 91]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    Note that a _Broker_ may deny a _Publisher's_ request to disclose its
    identity:
 
@@ -5118,6 +5198,17 @@ Internet-Draft                    WAMP                      October 2015
 
        HELLO.Details.roles.<role>.features.
            publisher_identification|bool := true
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 93]
+
+Internet-Draft                    WAMP                      October 2015
+
 
 13.6.2.  Publication Trust Levels
 
@@ -5144,16 +5235,6 @@ Internet-Draft                    WAMP                      October 2015
    In above event, the _Broker_ has (by configuration and/or other
    information) deemed the event publication to be of trustlevel "2".
 
-
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 92]
-
-Internet-Draft                    WAMP                      October 2015
-
-
 13.6.2.2.  Feature Announcement
 
    Support for this feature MUST be announced by _Subscribers_ ("role :=
@@ -5162,102 +5243,21 @@ Internet-Draft                    WAMP                      October 2015
        HELLO.Details.roles.<role>.features.
            publication_trustlevels|bool := true
 
-13.6.3.  Session Meta API
+13.6.3.  Subscription Meta API
 
-13.6.3.1.  Introduction
+   Within an application, it may be desirable for a publisher to know
+   whether a publication to a specific topic currently makes sense, i.e.
+   whether there are any subscribers who would receive an event based on
+   the publication.  It may also be desirable to keep a current count of
+   subscribers to a topic to then be able to filter out any subscribers
+   who are not supposed to receive an event.
 
-   WAMP enables the monitoring of when sessions join a realm on the
-   router or when they leave it via *Session Meta Events*. It also
-   allows retrieving information about currently connected sessions via
-   *Session Meta Procedures*.
+   Subscription _meta-events_ are fired when topics are first created,
+   when clients subscribe/unsubscribe to them, and when topics are
+   deleted.  WAMP allows retrieving information about subscriptions via
+   subscription _meta-procedures_.
 
-   Meta events are created by the router itself.  This means that the
-   events, as well as the data received when calling a meta procedure,
-   can be accorded the same trust level as the router.
-
-      Note that an implementation that only supports a _Broker_ or
-      _Dealer_ role, not both at the same time, essentially cannot offer
-      the *Session Meta API*, as it requires both roles to support this
-      feature.
-
-13.6.3.2.  Session Meta Events
-
-   A client can subscribe to the following session meta-events, which
-   cover the lifecycle of a session:
-
-   o  "wamp.session.on_join": Fired when a session joins a realm on the
-      router.
-
-   o  "wamp.session.on_leave": Fired when a session leaves a realm on
-      the router or is disconnected.
-
-   *Session Meta Events* MUST be dispatched by the _Router_ to the same
-   realm as the WAMP session which triggered the event.
-
-13.6.3.2.1.  wamp.session.on_join
-
-   Fired when a session joins a realm on the router.  The event payload
-   consists of a single positional argument "details|dict":
-
-   o  "session|id" - The session ID of the session that joined
-
-   o  "authid|string" - The authentication ID of the session that joined
-
-
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 93]
-
-Internet-Draft                    WAMP                      October 2015
-
-
-   o  "authrole|string" - The authentication role of the session that
-      joined
-
-   o  "authmethod|string" - The authentication method that was used for
-      authentication the session that joined
-
-   o  "authprovider|string"- The provider that performed the
-      authentication of the session that joined
-
-   o  "transport|dict" - Optional, implementation defined information
-      about the WAMP transport the joined session is running over.
-
-      See *Authentication* for a description of the "authid",
-      "authrole", "authmethod" and "authprovider" properties.
-
-13.6.3.2.2.  wamp.session.on_leave
-
-   Fired when a session leaves a realm on the router or is disconnected.
-   The event payload consists of a single positional argument
-   "session|id" with the session ID of the session that left.
-
-13.6.3.3.  Session Meta Procedures
-
-   A client can actively retrieve information about sessions via the
-   following meta-procedures:
-
-   o  "wamp.session.count": Obtains the number of sessions currently
-      attached to the realm.
-
-   o  "wamp.session.list": Retrieves a list of the session IDs for all
-      sessions currently attached to the realm.
-
-   o  "wamp.session.get": Retrieves information on a specific session.
-
-   Session meta procedures MUST be registered by the _Router_ on the
-   same realm as the WAMP session about which information is retrieved.
-
-13.6.3.3.1.  wamp.session.count
-
-   Obtains the number of sessions currently attached to the realm:
-
-   *Positional arguments*
-
-   1.  "filter_authroles|list[string]" - Optional filter: if provided,
-       only count sessions with an "authrole" from this list.
-
-   *Positional results*
-
+   Support for this feature MUST be announced by Brokers via
 
 
 
@@ -5266,53 +5266,53 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 94]
 Internet-Draft                    WAMP                      October 2015
 
 
-   1.  "count|int" - The number of sessions currently attached to the
-       realm.
+       HELLO.Details.roles.broker.features.subscription_meta_api|
+           bool := true
 
-13.6.3.3.2.  wamp.session.list
+   Meta-events are created by the router itself.  This means that the
+   events as well as the data received when calling a meta-procedure can
+   be accorded the same trust level as the router.
 
-   Retrieves a list of the session IDs for all sessions currently
-   attached to the realm.
+13.6.3.1.  Subscription Meta-Events
 
-   *Positional arguments*
+   A client can subscribe to the following session meta-events, which
+   cover the lifecycle of a subscription:
 
-   1.  "filter_authroles|list[string]" - Optional filter: if provided,
-       only count sessions with an "authrole" from this list.
+   o  "wamp.subscription.on_create": Fired when a subscription is
+      created through a subscription request for a topic which was
+      previously without subscribers.
 
-   *Positional results*
+   o  "wamp.subscription.on_subscribe": Fired when a session is added to
+      a subscription.
 
-   1.  "session_ids|list" - List of WAMP session IDs (order undefined).
+   o  "wamp.subscription.on_unsubscribe": Fired when a session is
+      removed from a subscription.
 
-13.6.3.3.3.  wamp.session.get
+   o  "wamp.subscription.on_delete": Fired when a subscription is
+      deleted after the last session attached to it has been removed.
 
-   Retrieves information on a specific session.
+   A "wamp.subscription.on_subscribe" event MUST always be fired
+   subsequent to a "wamp.subscription.on_create" event, since the first
+   subscribe results in both the creation of the subscription and the
+   addition of a session.  Similarly, the "wamp.subscription.on_delete"
+   event MUST always be preceded by a "wamp.subscription.on_unsubscribe"
+   event.
 
-   *Positional arguments*
+   The WAMP subscription meta events shall be dispatched by the router
+   to the same realm as the WAMP session which triggered the event.
 
-   1.  "session|id" - The session ID of the session to retrieve details
-       for.
+13.6.3.1.1.  Meta-Event Specifications
 
-   *Positional results*
+13.6.3.1.1.1.  wamp.subscription.on_create
 
-   1.  "details|dict" - Information on a particular session:
+   Fired when a subscription is created through a subscription request
+   for a topic which was previously without subscribers.
 
-       *  "session|id" - The session ID of the session that joined
+   *Event Arguments*
 
-       *  "authid|string" - The authentication ID of the session that
-          joined
+   o  "session|id": ID of the session performing the subscription
+      request.
 
-       *  "authrole|string" - The authentication role of the session
-          that joined
-
-       *  "authmethod|string" - The authentication method that was used
-          for authentication the session that joined
-
-       *  "authprovider|string"- The provider that performed the
-          authentication of the session that joined
-
-       *  "transport|dict" - Optional, implementation defined
-          information about the WAMP transport the joined session is
-          running over.
 
 
 
@@ -5322,54 +5322,54 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 95]
 Internet-Draft                    WAMP                      October 2015
 
 
-      See *Authentication* for a description of the "authid",
-      "authrole", "authmethod" and "authprovider" properties.
+   o  "SubscriptionDetails|dict": Information on the created
+      subscription.
 
-   *Errors*
+   *Object Schemas*
 
-   o  "wamp.error.no_such_session" - No session with the given ID exists
-      on the router.
+         SubscriptionDetails :=
+         {
+             "id": subscription|id,
+             "created": time_created|iso_8601_string,
+             "uri": topic|uri,
+             "match": match_policy|string
+         }
 
-13.6.3.4.  Feature Announcement
+   See Section 13.6.4 for a description of "match_policy".
 
-   Support for this feature MUST be announced by *both* _Dealers_ and
-   _Brokers_ via:
+13.6.3.1.1.2.  wamp.subscription.on_subscribe
 
-       HELLO.Details.roles.<role>.features.
-           session_meta_api|bool := true
+   Fired when a session is added to a subscription.
 
-   *Example*
+   *Event Arguments*
 
-   Here is a "WELCOME" message from a _Router_ with support for both the
-   _Broker_ and _Dealer_ role, and with support for *Session Meta API*:
+   o  "session|id": ID of the session being added to a subscription.
 
-       [
-           2,
-           4580268554656113,
-           {
-               "authid":"OL3AeppwDLXiAAPbqm9IVhnw",
-               "authrole": "anonymous",
-               "authmethod": "anonymous",
-               "roles": {
-                   "broker": {
-                       "features": {
-                           "session_meta_api": true
-                       }
-                   },
-                   "dealer": {
-                       "features": {
-                           "session_meta_api": true
-                       }
-                   }
-               }
-           }
-       ]
+   o  "subscription|id": ID of the subscription to which the session is
+      being added.
 
-      Note in particular that the feature is announced on both the
-      _Broker_ and the _Dealer_ roles.
+13.6.3.1.1.3.  wamp.subscription.on_unsubscribe
 
+   Fired when a session is removed from a subscription.
 
+   *Event Arguments*
 
+   o  "session|id": ID of the session being removed from a subscription.
+
+   o  "subscription|id": ID of the subscription from which the session
+      is being removed.
+
+13.6.3.1.1.4.  wamp.subscription.on_delete
+
+   Fired when a subscription is deleted after the last session attached
+   to it has been removed.
+
+   *Arguments*
+
+   o  "session|id": ID of the last session being removed from a
+      subscription.
+
+   o  "subscription|id": ID of the subscription being deleted.
 
 
 
@@ -5378,11 +5378,180 @@ Oberstein & Goedde       Expires April 12, 2016                [Page 96]
 Internet-Draft                    WAMP                      October 2015
 
 
-13.6.4.  Subscription Meta API
+13.6.3.2.  Subscription Meta-Procedures
 
-13.6.5.  Pattern-based Subscriptions
+   A client can actively retrieve information about subscriptions via
+   the following meta-procedures:
 
-13.6.5.1.  Introdution
+   o  "wamp.subscription.list": Retrieves subscription IDs listed
+      according to match policies.
+
+   o  "wamp.subscription.lookup": Obtains the subscription (if any)
+      managing a topic, according to some match policy.
+
+   o  "wamp.subscription.match": Retrieves a list of IDs of
+      subscriptions matching a topic URI, irrespective of match policy.
+
+   o  "wamp.subscription.get": Retrieves information on a particular
+      subscription.
+
+   o  "wamp.subscription.list_subscribers": Retrieves a list of session
+      IDs for sessions currently attached to the subscription.
+
+   o  "wamp.subscription.count_subscribers": Obtains the number of
+      sessions currently attached to the subscription.
+
+13.6.3.2.1.  Meta-Procedure Specifications
+
+13.6.3.2.1.1.  wamp.subscription.list
+
+   Retrieves subscription IDs listed according to match policies.
+
+   *Arguments*
+
+   o  None
+
+   *Results*
+
+   o  "SubscriptionLists|dict": A dictionary with a list of subscription
+      IDs for each match policy.
+
+   *Object Schemas*
+
+         SubscriptionLists :=
+         {
+             "exact": subscription_ids|list,
+             "prefix": subscription_ids|list,
+             "wildcard": subscription_ids|list
+         }
+
+   See Section 13.6.4 for information on match policies.
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 97]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+13.6.3.2.1.2.  wamp.subscription.lookup
+
+   Obtains the subscription (if any) managing a topic, according to some
+   match policy.
+
+   *Arguments*
+
+   o  "topic|uri": The URI of the topic.
+
+   o  (Optional) "options|dict": Same options as when subscribing to a
+      topic.
+
+   *Results*
+
+   o  (Nullable) "subscription|id": The ID of the subscription managing
+      the topic, if found, or null.
+
+13.6.3.2.1.3.  wamp.subscription.match
+
+   Retrieves a list of IDs of subscriptions matching a topic URI,
+   irrespective of match policy.
+
+   *Arguments*
+
+   o  "topic|uri": The topic to match.
+
+   *Results*
+
+   o  (Nullable) "subscription_ids|list": A list of all matching
+      subscription IDs, or null.
+
+13.6.3.2.1.4.  wamp.subscription.get
+
+   Retrieves information on a particular subscription.
+
+   *Arguments*
+
+   o  "subscription|id": The ID of the subscription to retrieve.
+
+   *Results*
+
+   o  "SubscriptionDetails|dict": Details on the subscription.
+
+   *Error URIs*
+
+   o  "wamp.error.no_such_subscription": No subscription with the given
+      ID exists on the router.
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 98]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   *Object Schemas*
+
+         SubscriptionDetails :=
+         {
+             "id": subscription|id,
+             "created": time_created|iso_8601_string,
+             "uri": topic|uri,
+             "match": match_policy|string
+         }
+
+   See Section 13.6.4 for information on match policies.
+
+13.6.3.2.1.5.  wamp.subscription.list_subscribers
+
+   Retrieves a list of session IDs for sessions currently attached to
+   the subscription.
+
+   *Arguments*
+
+   o  "subscription|id": The ID of the subscription to get subscribers
+      for.
+
+   *Results*
+
+   o  "subscribers_ids|list": A list of WAMP session IDs of subscribers
+      currently attached to the subscription.
+
+   *Error URIs*
+
+   o  "wamp.error.no_such_subscription": No subscription with the given
+      ID exists on the router.
+
+13.6.3.2.1.6.  wamp.subscription.count_subscribers
+
+   Obtains the number of sessions currently attached to a subscription.
+
+   *Arguments*
+
+   o  "subscription|id": The ID of the subscription to get the number of
+      subscribers for.
+
+   *Results*
+
+   o  "count|int": The number of sessions currently attached to a
+      subscription.
+
+   *Error URIs*
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016                [Page 99]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   o  "wamp.error.no_such_subscription": No subscription with the given
+      ID exists on the router.
+
+13.6.4.  Pattern-based Subscriptions
+
+13.6.4.1.  Introdution
 
    By default, _Subscribers_ subscribe to topics with *exact matching
    policy*. That is an event will only be dispatched to a _Subscriber_
@@ -5402,7 +5571,7 @@ Internet-Draft                    WAMP                      October 2015
 
    o  wildcard-matching policy
 
-13.6.5.2.  Prefix Matching
+13.6.4.2.  Prefix Matching
 
    A _Subscriber_ requests *prefix-matching policy* with a subscription
    request by setting
@@ -5428,8 +5597,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-
-Oberstein & Goedde       Expires April 12, 2016                [Page 97]
+Oberstein & Goedde       Expires April 12, 2016               [Page 100]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5445,7 +5613,7 @@ Internet-Draft                    WAMP                      October 2015
    will all apply for dispatching.  An event with "PUBLISH.Topic" e.g.
    "com.myapp.topic.emerge" will not apply.
 
-13.6.5.3.  Wildcard Matching
+13.6.4.3.  Wildcard Matching
 
    A _Subscriber_ requests *wildcard-matching policy* with a
    subscription request by setting
@@ -5485,7 +5653,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 98]
+Oberstein & Goedde       Expires April 12, 2016               [Page 101]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5494,9 +5662,9 @@ Internet-Draft                    WAMP                      October 2015
 
    will not apply for dispatching.
 
-13.6.5.4.  General
+13.6.4.4.  General
 
-13.6.5.4.1.  No set semantics
+13.6.4.4.1.  No set semantics
 
    Since each _Subscriber's_ subscription "stands on its own", there is
    no _set semantics_ implied by pattern-based subscriptions.
@@ -5505,7 +5673,7 @@ Internet-Draft                    WAMP                      October 2015
    unsubscribe from a subset of that broad pattern to form a more
    complex subscription.  Each subscription is separate.
 
-13.6.5.4.2.  Events matching multiple subscriptions
+13.6.4.4.2.  Events matching multiple subscriptions
 
    When a single event matches more than one of a _Subscriber's_
    subscriptions, the event will be delivered for each subscription.
@@ -5514,7 +5682,7 @@ Internet-Draft                    WAMP                      October 2015
    multiple subscriptions via "EVENT.PUBLISHED.Publication", which will
    be identical.
 
-13.6.5.4.3.  Concrete topic published to
+13.6.4.4.3.  Concrete topic published to
 
    If a subscription was established with a pattern-based matching
    policy, a _Broker_ MUST supply the original "PUBLISH.Topic" as
@@ -5541,12 +5709,12 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016                [Page 99]
+Oberstein & Goedde       Expires April 12, 2016               [Page 102]
 
 Internet-Draft                    WAMP                      October 2015
 
 
-13.6.5.5.  Feature Announcement
+13.6.4.5.  Feature Announcement
 
    Support for this feature MUST be announced by _Subscribers_ ("role :=
    "subscriber"") and _Brokers_ ("role := "broker"") via
@@ -5554,18 +5722,54 @@ Internet-Draft                    WAMP                      October 2015
        HELLO.Details.roles.<role>.features.
            pattern_based_subscription|bool := true
 
-13.6.6.  Sharded Subscription
+13.6.5.  Sharded Subscriptions
 
    Feature status: *alpha*
 
-   -- Write me. --
+   Support for this feature MUST be announced by _Publishers_ ("role :=
+   "publisher""), _Subscribers_ ("role := "subscriber"") and _Brokers_
+   ("role := "broker"") via
 
-13.6.7.  Event History
+       HELLO.Details.roles.<role>.features.shareded_subscriptions|
+           bool := true
 
-13.6.7.1.  Feature Definition
+   Resource keys: "PUBLISH.Options.rkey|string" is a stable, technical
+   *resource key*.
+
+      E.g. if your sensor has a unique serial identifier, you can use
+      that.
+
+   _Example_
+
+       [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.
+           temperature", [33.9]]
+
+   Node keys: "SUBSCRIBE.Options.nkey|string" is a stable, technical
+   *node key*.
+
+      E.g. if your backend process runs on a dedicated host, you can use
+      its hostname.
+
+   _Example_
+
+       [32, 912873614, {"match": "wildcard", "nkey": "node23"},
+           "com.myapp.sensor..temperature"]
+
+13.6.6.  Event History
+
+13.6.6.1.  Feature Definition
 
    Instead of complex QoS for message delivery, a _Broker_ may provide
    _message history_. A _Subscriber_ is responsible to handle overlaps
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 103]
+
+Internet-Draft                    WAMP                      October 2015
+
+
    (duplicates) when it wants "exactly-once" message processing across
    restarts.
 
@@ -5595,13 +5799,6 @@ Internet-Draft                    WAMP                      October 2015
 
    with "Arguments = [topic|uri, timestamp|string]" where
 
-
-
-Oberstein & Goedde       Expires April 12, 2016               [Page 100]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    o  "topic" is the topic to retrieve event history for
 
    o  "timestamp" indicates the UTC timestamp since when to retrieve the
@@ -5620,6 +5817,14 @@ Internet-Draft                    WAMP                      October 2015
       events to retrieve from history
 
    _FIXME_
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 104]
+
+Internet-Draft                    WAMP                      October 2015
+
 
    1.  Should we use "topic|uri" or "subscription|id" in "Arguments"?
 
@@ -5642,34 +5847,1524 @@ Internet-Draft                    WAMP                      October 2015
        separate peer which implements the callee role.  Here we do not
        have a mechanism to get the history from the broker.
 
-13.6.7.2.  Feature Announcement
+13.6.6.2.  Feature Announcement
 
    Support for this feature MUST be announced by _Subscribers_ ("role :=
    "subscriber"") and _Brokers_ ("role := "broker"") via
 
        HELLO.Details.roles.<role>.features.event_history|bool := true
 
+13.6.7.  Registration Revocation
 
-
-
-
-Oberstein & Goedde       Expires April 12, 2016               [Page 101]
-
-Internet-Draft                    WAMP                      October 2015
-
-
-13.6.8.  Registration Revocation
-
-13.6.8.1.  Feature Definition
+13.6.7.1.  Feature Definition
 
    Actively and forcefully revoke a previously granted subscription from
    a session.
 
-13.6.8.2.  Feature Announcement
+13.6.7.2.  Feature Announcement
 
-13.6.9.  Topic Reflection
+13.6.8.  Topic Reflection
 
    o  see *Procedure Reflection* for now
+
+13.7.  Other Advanced Features
+
+13.7.1.  Session Meta API
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 105]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+13.7.1.1.  Introduction
+
+   WAMP enables the monitoring of when sessions join a realm on the
+   router or when they leave it via *Session Meta Events*. It also
+   allows retrieving information about currently connected sessions via
+   *Session Meta Procedures*.
+
+   Meta events are created by the router itself.  This means that the
+   events, as well as the data received when calling a meta procedure,
+   can be accorded the same trust level as the router.
+
+      Note that an implementation that only supports a _Broker_ or
+      _Dealer_ role, not both at the same time, essentially cannot offer
+      the *Session Meta API*, as it requires both roles to support this
+      feature.
+
+13.7.1.2.  Session Meta Events
+
+   A client can subscribe to the following session meta-events, which
+   cover the lifecycle of a session:
+
+   o  "wamp.session.on_join": Fired when a session joins a realm on the
+      router.
+
+   o  "wamp.session.on_leave": Fired when a session leaves a realm on
+      the router or is disconnected.
+
+   *Session Meta Events* MUST be dispatched by the _Router_ to the same
+   realm as the WAMP session which triggered the event.
+
+13.7.1.2.1.  wamp.session.on_join
+
+   Fired when a session joins a realm on the router.  The event payload
+   consists of a single positional argument "details|dict":
+
+   o  "session|id" - The session ID of the session that joined
+
+   o  "authid|string" - The authentication ID of the session that joined
+
+   o  "authrole|string" - The authentication role of the session that
+      joined
+
+   o  "authmethod|string" - The authentication method that was used for
+      authentication the session that joined
+
+   o  "authprovider|string"- The provider that performed the
+      authentication of the session that joined
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 106]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   o  "transport|dict" - Optional, implementation defined information
+      about the WAMP transport the joined session is running over.
+
+      See *Authentication* for a description of the "authid",
+      "authrole", "authmethod" and "authprovider" properties.
+
+13.7.1.2.2.  wamp.session.on_leave
+
+   Fired when a session leaves a realm on the router or is disconnected.
+   The event payload consists of a single positional argument
+   "session|id" with the session ID of the session that left.
+
+13.7.1.3.  Session Meta Procedures
+
+   A client can actively retrieve information about sessions via the
+   following meta-procedures:
+
+   o  "wamp.session.count": Obtains the number of sessions currently
+      attached to the realm.
+
+   o  "wamp.session.list": Retrieves a list of the session IDs for all
+      sessions currently attached to the realm.
+
+   o  "wamp.session.get": Retrieves information on a specific session.
+
+   Session meta procedures MUST be registered by the _Router_ on the
+   same realm as the WAMP session about which information is retrieved.
+
+13.7.1.3.1.  wamp.session.count
+
+   Obtains the number of sessions currently attached to the realm:
+
+   *Positional arguments*
+
+   1.  "filter_authroles|list[string]" - Optional filter: if provided,
+       only count sessions with an "authrole" from this list.
+
+   *Positional results*
+
+   1.  "count|int" - The number of sessions currently attached to the
+       realm.
+
+13.7.1.3.2.  wamp.session.list
+
+   Retrieves a list of the session IDs for all sessions currently
+   attached to the realm.
+
+   *Positional arguments*
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 107]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   1.  "filter_authroles|list[string]" - Optional filter: if provided,
+       only count sessions with an "authrole" from this list.
+
+   *Positional results*
+
+   1.  "session_ids|list" - List of WAMP session IDs (order undefined).
+
+13.7.1.3.3.  wamp.session.get
+
+   Retrieves information on a specific session.
+
+   *Positional arguments*
+
+   1.  "session|id" - The session ID of the session to retrieve details
+       for.
+
+   *Positional results*
+
+   1.  "details|dict" - Information on a particular session:
+
+       *  "session|id" - The session ID of the session that joined
+
+       *  "authid|string" - The authentication ID of the session that
+          joined
+
+       *  "authrole|string" - The authentication role of the session
+          that joined
+
+       *  "authmethod|string" - The authentication method that was used
+          for authentication the session that joined
+
+       *  "authprovider|string"- The provider that performed the
+          authentication of the session that joined
+
+       *  "transport|dict" - Optional, implementation defined
+          information about the WAMP transport the joined session is
+          running over.
+
+      See *Authentication* for a description of the "authid",
+      "authrole", "authmethod" and "authprovider" properties.
+
+   *Errors*
+
+   o  "wamp.error.no_such_session" - No session with the given ID exists
+      on the router.
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 108]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+13.7.1.4.  Feature Announcement
+
+   Support for this feature MUST be announced by *both* _Dealers_ and
+   _Brokers_ via:
+
+       HELLO.Details.roles.<role>.features.
+           session_meta_api|bool := true
+
+   *Example*
+
+   Here is a "WELCOME" message from a _Router_ with support for both the
+   _Broker_ and _Dealer_ role, and with support for *Session Meta API*:
+
+       [
+           2,
+           4580268554656113,
+           {
+               "authid":"OL3AeppwDLXiAAPbqm9IVhnw",
+               "authrole": "anonymous",
+               "authmethod": "anonymous",
+               "roles": {
+                   "broker": {
+                       "features": {
+                           "session_meta_api": true
+                       }
+                   },
+                   "dealer": {
+                       "features": {
+                           "session_meta_api": true
+                       }
+                   }
+               }
+           }
+       ]
+
+      Note in particular that the feature is announced on both the
+      _Broker_ and the _Dealer_ roles.
+
+13.7.2.  Authentication
+
+   Authentication is a complex area.
+
+   Some applications might want to leverage authentication information
+   coming from the transport underlying WAMP, e.g.  HTTP cookies or TLS
+   certificates.
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 109]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   Some transports might imply trust or implicit authentication by their
+   very nature, e.g.  Unix domain sockets with appropriate file system
+   permissions in place.
+
+   Other application might want to perform their own authentication
+   using external mechanisms (completely outside and independent of
+   WAMP).
+
+   Some applications might want to perform their own authentication
+   schemes by using basic WAMP mechanisms, e.g. by using application-
+   defined remote procedure calls.
+
+   And some applications might want to use a transport independent
+   scheme, nevertheless predefined by WAMP.
+
+13.7.2.1.  WAMP-level Authentication
+
+   The message flow between Clients and Routers for establishing and
+   tearing down sessions MAY involve the following messages which
+   authenticate a session:
+
+   1.  "CHALLENGE"
+
+   2.  "AUTHENTICATE"
+
+        ,------.          ,------.
+        |Client|          |Router|
+        `--+---'          `--+---'
+           |      HELLO      |
+           | ---------------->
+           |                 |
+           |    CHALLENGE    |
+           | <----------------
+           |                 |
+           |   AUTHENTICATE  |
+           | ---------------->
+           |                 |
+           | WELCOME or ABORT|
+           | <----------------
+        ,--+---.          ,--+---.
+        |Client|          |Router|
+        `------'          `------'
+
+   Concrete use of "CHALLENGE" and "AUTHENTICATE" messages depends on
+   the specific authentication method.
+
+   See Section 13.7.2.3 or Section 13.7.2.4 for the use in these
+   authentication methods.
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 110]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   If two-factor authentication is desired, then two subsequent rounds
+   of "CHALLENGE" and "RESPONSE" may be employed.
+
+13.7.2.1.1.  CHALLENGE
+
+   An authentication MAY be required for the establishment of a session.
+   Such requirement MAY be based on the "Realm" the connection is
+   requested for.
+
+   To request authentication, the Router MUST send a "CHALLENGE" message
+   to the _Endpoint_.
+
+       [CHALLENGE, AuthMethod|string, Extra|dict]
+
+13.7.2.1.2.  AUTHENTICATE
+
+   In response to a "CHALLENGE" message, the Client MUST send an
+   "AUTHENTICATION" message.
+
+       [AUTHENTICATE, Signature|string, Extra|dict]
+
+   If the authentication succeeds, the Router MUST send a "WELCOME"
+   message, else it MUST send an "ABORT" message.
+
+13.7.2.2.  Transport-level Authentication
+
+13.7.2.2.1.  Cookie-based Authentication
+
+   When running WAMP over WebSocket, the transport provides HTTP client
+   cookies during the WebSocket opening handshake.  The cookies can be
+   used to authenticate one peer (the client) against the other (the
+   server).  The other authentication direction cannot be supported by
+   cookies.
+
+   This transport-level authentication information may be forward to the
+   WAMP level within "HELLO.Details.transport.auth|any" in the client-
+   to-server direction.
+
+13.7.2.2.2.  TLS Certificate Authentication
+
+   When running WAMP over a TLS (either secure WebSocket or raw TCP)
+   transport, a peer may authenticate to the other via the TLS
+   certificate mechanism.  A server might authenticate to the client,
+   and a client may authenticate to the server (TLS client-certificate
+   based authentication).
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 111]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   This transport-level authentication information may be forward to the
+   WAMP level within "HELLO.Details.transport.auth|any" in both
+   directions (if available).
+
+13.7.2.3.  Challenge Response Authentication
+
+   WAMP Challenge-Response ("WAMP-CRA") authentication is a simple,
+   secure authentication mechanism using a shared secret.  The client
+   and the server share a secret.  The secret never travels the wire,
+   hence WAMP-CRA can be used via non-TLS connections.  The actual pre-
+   sharing of the secret is outside the scope of the authentication
+   mechanism.
+
+   A typical authentication begins with the client sending a "HELLO"
+   message specifying the "wampcra" method as (one of) the
+   authentication methods:
+
+       [1, "realm1",
+           {
+               "roles": ...,
+               "authmethods": ["wampcra"],
+               "authid": "peter"
+           }
+       ]
+
+   The "HELLO.Details.authmethods|list" is used by the client to
+   announce the authentication methods it is prepared to perform.  For
+   WAMP-CRA, this MUST include ""wampcra"".
+
+   The "HELLO.Details.authid|string" is the authentication ID (e.g.
+   username) the client wishes to authenticate as.  For WAMP-CRA, this
+   MUST be provided.
+
+   If the server is unwilling or unable to perform WAMP-CRA
+   authentication, it MAY either skip forward trying other
+   authentication methods (if the client announced any) or send an
+   "ABORT" message.
+
+   If the server is willing to let the client authenticate using WAMP-
+   CRA, and the server recognizes the provided "authid", it MUST send a
+   "CHALLENGE" message:
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 112]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+       [4, "wampcra",
+           {
+               "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
+                   \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                   \"timestamp\": \"2014-06-22T16:36:25.448Z\",
+                   \"authrole\": \"user\", \"authmethod\": \"wampcra\",
+                   \"session\": 3251278072152162}"
+           }
+       ]
+
+   The "CHALLENGE.Details.challenge|string" is a string the client needs
+   to create a signature for.  The string MUST BE a JSON serialized
+   object which MUST contain:
+
+   1.  "authid|string": The authentication ID the client will be
+       authenticated as when the authentication succeeds.
+
+   2.  "authrole|string": The authentication role the client will be
+       authenticated as when the authentication succeeds.
+
+   3.  "authmethod|string": The authentication methods, here ""wampcra""
+
+   4.  "authprovider|string": The actual provider of authentication.
+       For WAMP-CRA, this can be freely chosen by the app, e.g.
+       "userdb".
+
+   5.  "nonce|string": A random value.
+
+   6.  "timestamp|string": The UTC timestamp (ISO8601 format) the
+       authentication was started, e.g. "2014-06-22T16:51:41.643Z".
+
+   7.  "session|int": The WAMP session ID that will be assigned to the
+       session once it is authenticated successfully.
+
+   The client needs to compute the signature as follows:
+
+       signature := HMAC[SHA256]_{secret} (challenge)
+
+   That is, compute the HMAC-SHA256 using the shared "secret" over the
+   "challenge".
+
+   After computing the signature, the client will send an "AUTHENTICATE"
+   message containing the signature:
+
+       [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
+
+   The server will then check if
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 113]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   o  the signature matches the one expected
+
+   o  the "AUTHENTICATE" message was sent in due time
+
+   If the authentication succeeds, the server will finally respond with
+   a "WELCOME" message:
+
+       [2, 3251278072152162,
+           {
+               "authid": "peter",
+               "authrole": "user",
+               "authmethod": "wampcra",
+               "authprovider": "userdb",
+               "roles": ...
+           }
+       ]
+
+   The "WELCOME.Details" again contain the actual authentication
+   information active.
+
+   If the authentication fails, the server will response with an "ABORT"
+   message.
+
+13.7.2.3.1.  Server-side Verification
+
+   The challenge sent during WAMP-CRA contains
+
+   1.  random information (the "nonce") to make WAMP-CRA robust against
+       replay attacks
+
+   2.  timestamp information (the "timestamp") to allow WAMP-CRA timeout
+       on authentication requests that took too long
+
+   3.  session information (the "session") to bind the authentication to
+       a WAMP session ID
+
+   4.  all the authentication information that relates to authorization
+       like "authid" and "authrole"
+
+13.7.2.3.2.  Three-legged Authentication
+
+   The signing of the challenge sent by the server usually is done
+   directly on the client.  However, this is no strict requirement.
+
+   E.g. a client might forward the challenge to another party (hence the
+   "three-legged") for creating the signature.  This can be used when
+   the client was previously already authenticated to that third party,
+   and WAMP-CRA should run piggy packed on that authentication.
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 114]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   The third party would, upon receiving a signing request, simply check
+   if the client is already authenticated, and if so, create a signature
+   for WAMP-CRA.
+
+   In this case, the secret is actually shared between the WAMP server
+   who wants to authenticate clients using WAMP-CRA and the third party
+   server, who shares a secret with the WAMP server.
+
+   This scenario is also the reason the challenge sent with WAMP-CRA is
+   not simply a random value, but a JSON serialized object containing
+   sufficient authentication information for the thrid party to check.
+
+13.7.2.3.3.  Password Salting
+
+   WAMP-CRA operates using a shared secret.  While the secret is never
+   sent over the wire, a shared secret often requires storage of that
+   secret on the client and the server - and storing a password verbatim
+   (unencrypted) is not recommended in general.
+
+   WAMP-CRA allows the use of salted passwords following the PBKDF2 [5]
+   key derivation scheme.  With salted passwords, the password itself is
+   never stored, but only a key derived from the password and a password
+   salt.  This derived key is then practically working as the new shared
+   secret.
+
+   When the password is salted, the server will during WAMP-CRA send a
+   "CHALLENGE" message containing additional information:
+
+       [4, "wampcra",
+           {
+               "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
+                   \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                   \"timestamp\": \"2014-06-22T16:36:25.448Z\",
+                   \"authrole\": \"user\", \"authmethod\": \"wampcra\",
+                   \"session\": 3251278072152162}",
+               "salt": "salt123",
+               "keylen": 32,
+               "iterations": 1000
+           }
+       ]
+
+   The "CHALLENGE.Details.salt|string" is the password salt in use.  The
+   "CHALLENGE.Details.keylen|int" and "CHALLENGE.Details.iterations|int"
+   are parameters for the PBKDF2 algorithm.
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 115]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+13.7.2.4.  Ticket-based Authentication
+
+   With _Ticket-based authentication_, the client needs to present the
+   server an authentication "ticket" - some magic value to authenticate
+   itself to the server.
+
+   This "ticket" could be a long-lived, pre-agreed secret (e.g. a user
+   password) or a short-lived authentication token (like a Kerberos
+   token).  WAMP does not care or interpret the ticket presented by the
+   client.
+
+      Caution: This scheme is extremely simple and flexible, but the
+      resulting security may be limited.  E.g., the ticket value will be
+      sent over the wire.  If the transport WAMP is running over is not
+      encrypted, a man-in-the-middle can sniff and possibly hijack the
+      ticket.  If the ticket value is reused, that might enable replay
+      attacks.
+
+   A typical authentication begins with the client sending a "HELLO"
+   message specifying the "ticket" method as (one of) the authentication
+   methods:
+
+       [1, "realm1",
+         {
+           "roles": ...,
+           "authmethods": ["ticket"],
+           "authid": "joe"
+         }
+       ]
+
+   The "HELLO.Details.authmethods|list" is used by the client to
+   announce the authentication methods it is prepared to perform.  For
+   Ticket-based, this MUST include ""ticket"".
+
+   The "HELLO.Details.authid|string" is the authentication ID (e.g.
+   username) the client wishes to authenticate as.  For Ticket-based
+   authentication, this MUST be provided.
+
+   If the server is unwilling or unable to perform Ticket-based
+   authentication, it'll either skip forward trying other authentication
+   methods (if the client announced any) or send an "ABORT" message.
+
+   If the server is willing to let the client authenticate using a
+   ticket and the server recognizes the provided "authid", it'll send a
+   "CHALLENGE" message:
+
+       [4, "ticket", {}]
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 116]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   The client will send an "AUTHENTICATE" message containing a ticket:
+
+       [5, "secret!!!", {}]
+
+   The server will then check if the ticket provided is permissible (for
+   the "authid" given).
+
+   If the authentication succeeds, the server will finally respond with
+   a "WELCOME" message:
+
+       [2, 3251278072152162,
+         {
+           "authid": "joe",
+           "authrole": "user",
+           "authmethod": "ticket",
+           "authprovider": "static",
+           "roles": ...
+         }
+       ]
+
+   where
+
+   1.  "authid|string": The authentication ID the client was (actually)
+       authenticated as.
+
+   2.  "authrole|string": The authentication role the client was
+       authenticated for.
+
+   3.  "authmethod|string": The authentication method, here ""ticket""
+
+   4.  "authprovider|string": The actual provider of authentication.
+       For Ticket-based authentication, this can be freely chosen by the
+       app, e.g. "static" or "dynamic".
+
+   The "WELCOME.Details" again contain the actual authentication
+   information active.  If the authentication fails, the server will
+   response with an "ABORT" message.
+
+13.7.3.  Alternative Transports
+
+   The only requirements that WAMP expects from a transport are: the
+   transport must be message-based, bidirectional, reliable and ordered.
+   This allows WAMP to run over different transports without any impact
+   at the application layer.
+
+   Besides the WebSocket transport, the following WAMP transports are
+   currently specified:
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 117]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   o  Section 13.7.3.1
+
+   o  Section 13.7.3.2
+
+   o  Section 13.7.3.3
+
+   o  Section 13.7.3.4
+
+      Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined
+      in the future.
+
+13.7.3.1.  RawSocket Transport
+
+   *WAMP-over-RawSocket* is an (alternative) transport for WAMP that
+   uses length-prefixed, binary messages - a message framing different
+   from WebSocket.
+
+   Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is simple to
+   implement, since there is no need to implement the WebSocket protocol
+   which has some features that make it non-trivial (like a full HTTP-
+   based opening handshake, message fragmentation, masking and variable
+   length integers).
+
+   WAMP-over-RawSocket has even lower overhead than WebSocket, which can
+   be desirable in particular when running on local connections like
+   loopback TCP or Unix domain sockets.  It is also expected to allow
+   implementations in microcontrollers in under 2KB RAM.
+
+   WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any
+   reliable streaming underlying transport.  When run over TLS on the
+   standard port for secure HTTPS (443), it is also able to traverse
+   most locked down networking environments such as enterprise or mobile
+   networks (unless man-in-the-middle TLS intercepting proxies are in
+   use).
+
+   However, WAMP-over-RawSocket cannot be used with Web browser clients,
+   since browsers do not allow raw TCP connections.  Browser extensions
+   would do, but those need to be installed in a browser.  WAMP-over-
+   RawSocket also (currently) does not support transport-level
+   compression as WebSocket does provide ("permessage-deflate" WebSocket
+   extension).
+
+13.7.3.1.1.  Endianess
+
+   WAMP-over-RawSocket uses _network byte order_ ("big-endian").  That
+   means, given a unsigned 32 bit integer
+
+   0x 11 22 33 44
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 118]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   the first octet sent out to (or received from) the wire is "0x11" and
+   the last octet sent out (or received) is "0x44".
+
+   Here is how you would convert octets received from the wire into an
+   integer in Python:
+
+       import struct
+
+       octets_received = b"\x11\x22\x33\x44"
+       i = struct.unpack(">L", octets_received)[0]
+
+   The integer received has the value "287454020".
+
+   And here is how you would send out an integer to the wire in Python:
+
+       octets_to_be_send = struct.pack(">L", i)
+
+   The octets to be sent are "b"\x11\x22\x33\x44"".
+
+13.7.3.1.2.  Handshake
+
+   *Client-to-Router Request*
+
+   WAMP-over-RawSocket starts with a handshake where the client
+   connecting to a router sends 4 octets:
+
+                  MSB                                 LSB
+                  31                                    0
+                  0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+
+   The _first octet_ is a magic octet with value "0x7F".  This value is
+   chosen to avoid any possible collision with the first octet of a
+   valid HTTP request (see here [6] and here [7]).  No valid HTTP
+   request can have "0x7F" as its first octet.
+
+      By using a magic first octet that cannot appear in a regular HTTP
+      request, WAMP-over-RawSocket can be run e.g. on the same TCP
+      listening port as WAMP-over-WebSocket or WAMP-over-LongPoll.
+
+   The _second octet_ consists of a 4 bit "LENGTH" field and a 4 bit
+   "SERIALIZER" field.
+
+   The "LENGTH" value is used by the _Client_ to signal the *maximum
+   message length* of messages it is willing to *receive*. When the
+   handshake completes successfully, a _Router_ MUST NOT send messages
+   larger than this size.
+
+   The possible values for "LENGTH" are:
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 119]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+                              0: 2**9 octets
+                              1: 2**10 octets
+                             ...
+                             15: 2**24 octets
+
+   This means a _Client_ can choose the maximum message length between
+   *512* and *16M* octets.
+
+   The "SERIALIZER" value is used by the _Client_ to request a specific
+   serializer to be used.  When the handshake completes successfully,
+   the _Client_ and _Router_ will use the serializer requested by the
+   _Client_.
+
+   The possible values for "SERIALIZER" are:
+
+                  0: illegal
+                  1: JSON
+                  2: MsgPack
+                  3 - 15: reserved for future serializers
+
+   Here is a Python program that prints all (currently) permissible
+   values for the _second octet_:
+
+    SERMAP = {
+       1: 'json',
+       2: 'msgpack'
+    }
+
+    ## map serializer / max. msg length to RawSocket handshake request
+    ## or success reply (2nd octet)
+    ##
+    for ser in SERMAP:
+       for l in range(16):
+          octet_2 = (l << 4) | ser
+          print("serializer: {}, maxlen: {} =>
+              0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+
+   The _third and forth octet_ are *reserved* and MUST be all zeros for
+   now.
+
+   *Router-to-Client Reply*
+
+   After a _Client_ has connected to a _Router_, the _Router_ will first
+   receive the 4 octets handshake request from the _Client_.
+
+   If the _first octet_ differs from "0x7F", it is not a WAMP-over-
+   RawSocket request.  Unless the _Router_ also supports other
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 120]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   transports on the connecting port (such as WebSocket or LongPoll),
+   the _Router_ MUST *fail the connection*.
+
+   Here is an example of how a _Router_ could parse the _second octet_
+   in a _Clients_ handshake request:
+
+       ## map RawSocket handshake request (2nd octet) to
+       ## serializer / max. msg length
+       ##
+       for i in range(256):
+          ser_id = i & 0x0f
+          if ser_id != 0:
+             ser = SERMAP.get(ser_id, 'currently undefined')
+             maxlen = 2 ** ((i >> 4) + 9)
+             print("{:02x} => serializer: {}, maxlen: {}".
+                 format(i, ser, maxlen))
+          else:
+             print("fail the connection: illegal serializer value")
+
+   When the _Router_ is willing to speak the serializer requested by the
+   _Client_, it will answer with a 4 octets response of identical
+   structure as the _Client_ request:
+
+                  MSB                                 LSB
+                  31                                    0
+                  0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+
+   Again, the _first octet_ MUST be the value "0x7F".  The _third and
+   forth octets_ are reserved and MUST be all zeros for now.
+
+   In the _second octet_, the _Router_ MUST echo the serializer value in
+   "SERIALIZER" as requested by the _Client_.
+
+   Similar to the _Client_, the _Router_ sets the "LENGTH" field to
+   request a limit on the length of messages sent by the _Client_.
+
+   During the connection, _Router_ MUST NOT send messages to the
+   _Client_ longer than the "LENGTH" requested by the _Client_, and the
+   _Client_ MUST NOT send messages larger than the maximum requested by
+   the _Router_ in it's handshake reply.
+
+   If a message received during a connection exceeds the limit
+   requested, a _Peer_ MUST *fail the connection*.
+
+   When the _Router_ is unable to speak the serializer requested by the
+   _Client_, or it is denying the _Client_ for other reasons, the
+   _Router_ replies with an error:
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 121]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+                  MSB                                 LSB
+                  31                                    0
+                  0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
+
+   An error reply has 4 octets: the _first octet_ is again the magic
+   "0x7F", and the _third and forth octet_ are reserved and MUST all be
+   zeros for now.
+
+   The _second octet_ has its lower 4 bits zero'ed (which distinguishes
+   the reply from an success/accepting reply) and the upper 4 bits
+   encode the error:
+
+               0: illegal (must not be used)
+               1: serializer unsupported
+               2: maximum message length unacceptable
+               3: use of reserved bits (unsupported feature)
+               4: maximum connection count reached
+               5 - 15: reserved for future errors
+
+      Note that the error code "0" MUST not be used.  This is to allow
+      storage of error state in a host language variable, while allowing
+      "0" to signal the current state "no error"
+
+   Here is an example of how a _Router_ might create the _second octet_
+   in an error response:
+
+        ERRMAP = {
+           0: "illegal (must not be used)",
+           1: "serializer unsupported",
+           2: "maximum message length unacceptable",
+           3: "use of reserved bits (unsupported feature)",
+           4: "maximum connection count reached"
+        }
+
+        ## map error to RawSocket handshake error reply (2nd octet)
+        ##
+        for err in ERRMAP:
+           octet_2 = err << 4
+           print("error: {} => 0x{:02x}").format(ERRMAP[err], err)
+
+   The _Client_ - after having sent its handshake request - will wait
+   for the 4 octets from _Router_ handshake reply.
+
+   Here is an example of how a _Client_ might parse the _second octet_
+   in a _Router_ handshake reply:
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 122]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+          ## map RawSocket handshake reply (2nd octet)
+          ##
+          for i in range(256):
+             ser_id = i & 0x0f
+             if ser_id:
+                ## verify the serializer is the one we requested!
+                ## if not, fail the connection!
+                ser = SERMAP.get(ser_id, 'currently undefined')
+                maxlen = 2 ** ((i >> 4) + 9)
+                print("{:02x} => serializer: {}, maxlen: {}".
+                    format(i, ser, maxlen))
+             else:
+                err = i >> 4
+                print("error: {}".format(ERRMAP.get(err,
+                    'currently undefined')))
+
+13.7.3.1.3.  Serialization
+
+   To send a WAMP message, the message is serialized according to the
+   WAMP serializer agreed in the handshake (e.g.  JSON or MsgPack).
+
+   The length of the serialized messages in octets MUST NOT exceed the
+   maximum requested by the _Peer_.
+
+   If the serialized length exceed the maximum requested, the WAMP
+   message can not be sent to the _Peer_. Handling situations like the
+   latter is left to the implementation.
+
+   E.g. a _Router_ that is to forward a WAMP "EVENT" to a _Client_ which
+   exceeds the maximum length requested by the _Client_ when serialized
+   might:
+
+   o  drop the event (not forwarding to that specific client) and track
+      dropped events
+
+   o  prohibit publishing to the topic already
+
+   o  remove the event payload, and send an event with extra information
+      ("payload_limit_exceeded = true")
+
+13.7.3.1.4.  Framing
+
+   The serialized octets for a message to be sent are prefixed with
+   exactly 4 octets.
+
+                  MSB                                 LSB
+                  31                                    0
+                  RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 123]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   The _first octet_ has the following structure
+
+                                 MSB   LSB
+                                 7       0
+                                 RRRR RTTT
+
+   The five bits "RRRRR" are reserved for future use and MUST be all
+   zeros for now.
+
+   The three bits "TTT" encode the type of the transport message:
+
+                          0: regular WAMP message
+                          1: PING
+                          2: PONG
+                          3-7: reserved
+
+   The _three remaining octets_ constitute an unsigned 24 bit integer
+   that provides the length of transport message payload following,
+   excluding the 4 octets that constitute the prefix.
+
+   For a regular WAMP message ("TTT == 0"), the length is the length of
+   the serialized WAMP message: the number of octets after serialization
+   (excluding the 4 octets of the prefix).
+
+   For a "PING" message ("TTT == 1"), the length is the length of the
+   arbitrary payload that follows.  A _Peer_ MUST reply to each "PING"
+   by sending exactly one "PONG" immediately, and the "PONG" MUST echo
+   back the payload of the "PING" exactly.
+
+   For receiving messages with WAMP-over-RawSocket, a _Peer_ will
+   usually read exactly 4 octets from the incoming stream, decode the
+   transport level message type and payload length, and then receive as
+   many octets as the length was giving.
+
+   When the transport level message type indicates a regular WAMP
+   message, the transport level message payload is unserialized
+   according to the serializer agreed in the handshake and the processed
+   at the WAMP level.
+
+13.7.3.2.  Batched WebSocket Transport for WAMP
+
+   _WAMP-over-Batched-WebSocket_ is a variant of WAMP-over-WebSocket
+   where multiple WAMP messages are sent in one WebSocket message.
+
+   Using WAMP message batching can increase wire level efficiency
+   further.  In particular when using TLS and the WebSocket
+   implementation is forcing every WebSocket message into a new TLS
+   segment.
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 124]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   WAMP-over-Batched-WebSocket is negotiated between Peers in the
+   WebSocket opening handshake by agreeing on one of the following
+   WebSocket subprotocols:
+
+   o  "wamp.2.json.batched"
+
+   o  "wamp.2.msgpack.batched"
+
+   Batching with JSON works by serializing each WAMP message to JSON as
+   normally, appending the single ASCII control character "\30" (record
+   separator [8]) octet "0x1e" to _each_ serialized messages, and
+   packing a sequence of such serialized messages into a single
+   WebSocket message:
+
+       Serialized JSON WAMP Msg 1 | 0x1e |
+           Serialized JSON WAMP Msg 2 | 0x1e | ...
+
+   Batching with MsgPack works by serializing each WAMP message to
+   MsgPack as normally, prepending a 32 bit unsigned integer (4 octets
+   in big-endian byte order) with the length of the serialized MsgPack
+   message (excluding the 4 octets for the length prefix), and packing a
+   sequence of such serialized (length-prefixed) messages into a single
+   WebSocket message:
+
+       Length of Msg 1 serialization (uint32) |
+           serialized MsgPack WAMP Msg 1 | ...
+
+   With batched transport, even if only a single WAMP message is to be
+   sent in a WebSocket message, the (single) WAMP message needs to be
+   framed as described above.  In other words, a single WAMP message is
+   sent as a batch of length *1*. Sending a batch of length *0* (no WAMP
+   message) is illegal and a _Peer_ MUST fail the transport upon
+   receiving such a transport message.
+
+13.7.3.3.  A HTTP Longpoll Transport for WAMP
+
+   The _Long-Poll Transport_ is able to transmit a WAMP session over
+   plain old HTTP 1.0/1.1.  This is realized by the Client issuing HTTP/
+   POSTs requests, one for sending, and one for receiving.  Those latter
+   requests are kept open at the server when there are no messages
+   currently pending to be received.
+
+   *Opening a Session*
+
+   With the Long-Poll Transport, a Client opens a new WAMP session by
+   sending a HTTP/POST request to a well-known URL, e.g.
+
+       http://mypp.com/longpoll/open
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 125]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   Here, "http://mypp.com/longpoll" is the base URL for the Long-Poll
+   Transport and "/open" is a path dedicated for opening new sessions.
+
+   The HTTP/POST request SHOULD have a "Content-Type" header set to
+   "application/json" and MUST have a request body with a JSON document
+   that is a dictionary:
+
+       {
+          "protocols": ["wamp.2.json"]
+       }
+
+   The (mandatory) "protocols" attribute specifies the protocols the
+   client is willing to speak.  The server will chose one from this list
+   when establishing the session or fail the request when no protocol
+   overlap was found.
+
+   The valid protocols are:
+
+   o  "wamp.2.json.batched"
+
+   o  "wamp.2.json"
+
+   o  "wamp.2.msgpack.batched"
+
+   o  "wamp.2.msgpack"
+
+      The request path with this and subsequently described HTTP/POST
+      requests MAY contain a query parameter "x" with some random or
+      sequentially incremented value:
+
+      <http://mypp.com/longpoll/open?x=382913>
+
+      The value is ignored, but may help in certain situations to
+      prevent intermediaries from caching the request.
+
+   Returned is a JSON document containing a transport ID and the
+   protocol to speak:
+
+       {
+          "protocol": "wamp.2.json",
+          "transport": "kjmd3sBLOUnb3Fyr"
+       }
+
+   As an implied side-effect, two HTTP endpoints are created
+
+       http://mypp.com/longpoll/<transport_id>/receive
+       http://mypp.com/longpoll/<transport_id>/send
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 126]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   where "transport_id" is the transport ID returned from "open", e.g.
+
+       http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
+       http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
+
+   *Receiving WAMP Messages*
+
+   The Client will then issue HTTP/POST requests (with empty request
+   body) to
+
+       http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
+
+   When there are WAMP messages pending downstream, a request will
+   return with a single WAMP message (unbatched modes) or a batch of
+   serialized WAMP messages (batched mode).
+
+   The serialization format used is the one agreed during opening the
+   session.
+
+   The batching uses the same scheme as with "wamp.2.json.batched" and
+   "wamp.2.msgpack.batched" transport over WebSocket.
+
+      Note: In unbatched mode, when there is more than one message
+      pending, there will be at most one message returned for each
+      request.  The other pending messages must be retrieved by new
+      requests.  With batched mode, all messages pending at request time
+      will be returned in one batch of messages.
+
+   *Sending WAMP Messages*
+
+   For sending WAMP messages, the _Client_ will issue HTTP/POST requests
+   to
+
+       http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
+
+   with request body being a single WAMP message (unbatched modes) or a
+   batch of serialized WAMP messages (batched mode).
+
+   The serialization format used is the one agreed during opening the
+   session.
+
+   The batching uses the same scheme as with "wamp.2.json.batched" and
+   "wamp.2.msgpack.batched" transport over WebSocket.
+
+   Upon success, the request will return with HTTP status code 202 ("no
+   content").  Upon error, the request will return with HTTP status code
+   400 ("bad request").
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 127]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   *Closing a Session*
+
+   To orderly close a session, a Client will issue a HTTP/POST to
+
+       http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
+
+   with an empty request body.  Upon success, the request will return
+   with HTTP status code 202 ("no content").
+
+13.7.3.4.  Multiplexed Transport
+
+   A Transport may support the multiplexing of multiple logical
+   transports over a single "physical" transport.
+
+   By using such a Transport, multiple WAMP sessions can be transported
+   over a single underlying transport at the same time.
+
+   As an example, the proposed WebSocket extension "permessage-priority"
+   [9] would allow creating multiple logical Transports for WAMP over a
+   single underlying WebSocket connection.
+
+   Sessions running over a multiplexed Transport are completely
+   independent: they get assigned different session IDs, may join
+   different realms and each session needs to authenticate itself.
+
+   Because of above, Multiplexed Transports for WAMP are actually not
+   detailed in the WAMP spec, but a feature of the transport being used.
+
+      Note: Currently no WAMP transport supports multiplexing.  The work
+      on the MUX extension with WebSocket has stalled, and the
+      "permessage-priority" proposal above is still just a proposal.
+      However, with RawSocket, we should be able to add multiplexing in
+      the the future (with downward compatibility).
+
+13.7.3.5.  Ticket-based Authentication
+
+   With _Ticket-based authentication_, the client needs to present the
+   server an authentication "ticket" - some magic value to authenticate
+   itself to the server.
+
+   This "ticket" could be a long-lived, pre-agreed secret (e.g. a user
+   password) or a short-lived authentication token (like a Kerberos
+   token).  WAMP does not care or interpret the ticket presented by the
+   client.
+
+      Caution: This scheme is extremely simple and flexible, but the
+      resulting security may be limited.  E.g., the ticket value will be
+      sent over the wire.  If the transport WAMP is running over is not
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 128]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+      encrypted, a man-in-the-middle can sniff and possibly hijack the
+      ticket.  If the ticket value is reused, that might enable replay
+      attacks.
+
+   A typical authentication begins with the client sending a "HELLO"
+   message specifying the "ticket" method as (one of) the authentication
+   methods:
+
+       [1, "realm1",
+         {
+           "roles": ...,
+           "authmethods": ["ticket"],
+           "authid": "joe"
+         }
+       ]
+
+   The "HELLO.Details.authmethods|list" is used by the client to
+   announce the authentication methods it is prepared to perform.  For
+   Ticket-based, this MUST include ""ticket"".
+
+   The "HELLO.Details.authid|string" is the authentication ID (e.g.
+   username) the client wishes to authenticate as.  For Ticket-based
+   authentication, this MUST be provided.
+
+   If the server is unwilling or unable to perform Ticket-based
+   authentication, it'll either skip forward trying other authentication
+   methods (if the client announced any) or send an "ABORT" message.
+
+   If the server is willing to let the client authenticate using a
+   ticket and the server recognizes the provided "authid", it'll send a
+   "CHALLENGE" message:
+
+       [4, "ticket", {}]
+
+   The client will send an "AUTHENTICATE" message containing a ticket:
+
+       [5, "secret!!!", {}]
+
+   The server will then check if the ticket provided is permissible (for
+   the "authid" given).
+
+   If the authentication succeeds, the server will finally respond with
+   a "WELCOME" message:
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 129]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+       [2, 3251278072152162,
+         {
+           "authid": "joe",
+           "authrole": "user",
+           "authmethod": "ticket",
+           "authprovider": "static",
+           "roles": ...
+         }
+       ]
+
+   where
+
+   1.  "authid|string": The authentication ID the client was (actually)
+       authenticated as.
+
+   2.  "authrole|string": The authentication role the client was
+       authenticated for.
+
+   3.  "authmethod|string": The authentication method, here ""ticket""
+
+   4.  "authprovider|string": The actual provider of authentication.
+       For Ticket-based authentication, this can be freely chosen by the
+       app, e.g. "static" or "dynamic".
+
+   The "WELCOME.Details" again contain the actual authentication
+   information active.  If the authentication fails, the server will
+   response with an "ABORT" message.
+
+13.7.3.6.  Ticket-based Authentication
+
+   With _Ticket-based authentication_, the client needs to present the
+   server an authentication "ticket" - some magic value to authenticate
+   itself to the server.
+
+   This "ticket" could be a long-lived, pre-agreed secret (e.g. a user
+   password) or a short-lived authentication token (like a Kerberos
+   token).  WAMP does not care or interpret the ticket presented by the
+   client.
+
+      Caution: This scheme is extremely simple and flexible, but the
+      resulting security may be limited.  E.g., the ticket value will be
+      sent over the wire.  If the transport WAMP is running over is not
+      encrypted, a man-in-the-middle can sniff and possibly hijack the
+      ticket.  If the ticket value is reused, that might enable replay
+      attacks.
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 130]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+   A typical authentication begins with the client sending a "HELLO"
+   message specifying the "ticket" method as (one of) the authentication
+   methods:
+
+       [1, "realm1",
+         {
+           "roles": ...,
+           "authmethods": ["ticket"],
+           "authid": "joe"
+         }
+       ]
+
+   The "HELLO.Details.authmethods|list" is used by the client to
+   announce the authentication methods it is prepared to perform.  For
+   Ticket-based, this MUST include ""ticket"".
+
+   The "HELLO.Details.authid|string" is the authentication ID (e.g.
+   username) the client wishes to authenticate as.  For Ticket-based
+   authentication, this MUST be provided.
+
+   If the server is unwilling or unable to perform Ticket-based
+   authentication, it'll either skip forward trying other authentication
+   methods (if the client announced any) or send an "ABORT" message.
+
+   If the server is willing to let the client authenticate using a
+   ticket and the server recognizes the provided "authid", it'll send a
+   "CHALLENGE" message:
+
+       [4, "ticket", {}]
+
+   The client will send an "AUTHENTICATE" message containing a ticket:
+
+       [5, "secret!!!", {}]
+
+   The server will then check if the ticket provided is permissible (for
+   the "authid" given).
+
+   If the authentication succeeds, the server will finally respond with
+   a "WELCOME" message:
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 131]
+
+Internet-Draft                    WAMP                      October 2015
+
+
+       [2, 3251278072152162,
+         {
+           "authid": "joe",
+           "authrole": "user",
+           "authmethod": "ticket",
+           "authprovider": "static",
+           "roles": ...
+         }
+       ]
+
+   where
+
+   1.  "authid|string": The authentication ID the client was (actually)
+       authenticated as.
+
+   2.  "authrole|string": The authentication role the client was
+       authenticated for.
+
+   3.  "authmethod|string": The authentication method, here ""ticket""
+
+   4.  "authprovider|string": The actual provider of authentication.
+       For Ticket-based authentication, this can be freely chosen by the
+       app, e.g. "static" or "dynamic".
+
+   The "WELCOME.Details" again contain the actual authentication
+   information active.  If the authentication fails, the server will
+   response with an "ABORT" message.
 
 14.  Binary conversion of JSON Strings
 
@@ -5691,6 +7386,14 @@ Internet-Draft                    WAMP                      October 2015
 
    This will get converted to Base64
 
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 132]
+
+Internet-Draft                    WAMP                      October 2015
+
+
        EOP/kFMHXFJvX8BtT+N82w==
 
    prepended with "\0"
@@ -5706,14 +7409,6 @@ Internet-Draft                    WAMP                      October 2015
 
    1.  Unserialize a JSON string to a host language (Unicode) string
 
-
-
-
-Oberstein & Goedde       Expires April 12, 2016               [Page 102]
-
-Internet-Draft                    WAMP                      October 2015
-
-
    2.  If the string starts with a "\0" character, interpret the rest
        (after the first character) as Base64 and decode to a byte array
 
@@ -5726,6 +7421,34 @@ Internet-Draft                    WAMP                      October 2015
 
    Here is a complete example in Python showing how byte arrays are
    converted to and from JSON:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 133]
+
+Internet-Draft                    WAMP                      October 2015
+
 
        ```python
        <CODE BEGINS>
@@ -5759,21 +7482,29 @@ Internet-Draft                    WAMP                      October 2015
        <CODE ENDS>
        ```
 
-
-
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016               [Page 103]
-
-Internet-Draft                    WAMP                      October 2015
-
-
 14.2.  JavaScript
 
    Here is a complete example in JavaScript showing how byte arrays are
    converted to and from JSON:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 134]
+
+Internet-Draft                    WAMP                      October 2015
+
 
        ```javascript
        <CODE BEGINS>
@@ -5821,7 +7552,12 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 12, 2016               [Page 104]
+
+
+
+
+
+Oberstein & Goedde       Expires April 12, 2016               [Page 135]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5872,15 +7608,24 @@ Internet-Draft                    WAMP                      October 2015
 
    [4] pattern-based-registration.md
 
+   [5] http://en.wikipedia.org/wiki/PBKDF2
 
 
 
 
-
-Oberstein & Goedde       Expires April 12, 2016               [Page 105]
+Oberstein & Goedde       Expires April 12, 2016               [Page 136]
 
 Internet-Draft                    WAMP                      October 2015
 
+
+   [6] http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1
+
+   [7] http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2
+
+   [8] http://en.wikipedia.org/wiki/Record_separator#Field_separators
+
+   [9] https://github.com/oberstet/permessage-priority/blob/master/
+       draft-oberstein-hybi-permessage-priority.txt
 
 Authors' Addresses
 
@@ -5924,13 +7669,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde       Expires April 12, 2016               [Page 106]
+Oberstein & Goedde       Expires April 12, 2016               [Page 137]

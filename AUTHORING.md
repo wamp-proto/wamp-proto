@@ -185,3 +185,16 @@ Terms that we define as part of the WAMP spec are
 **WAMP message texts** are in all caps.
 
 **Arguments of WAMP messages** are in backticks, e.g. "Keys in `Options` and `Details` must be of type ...".
+
+
+## Internal links
+
+[what the link is about](#linktitle) 
+
+or 
+
+(#linktitle)
+
+where the link is
+
+{#linktitle}

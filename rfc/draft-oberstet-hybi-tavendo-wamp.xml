@@ -20,7 +20,6 @@
 <code></code>
 <country></country>
 </postal>
-<phone></phone>
 <email>tobias.oberstein@tavendo.de</email>
 <uri></uri>
 </address>
@@ -34,7 +33,6 @@
 <code></code>
 <country></country>
 </postal>
-<phone></phone>
 <email>alexander.goedde@tavendo.de</email>
 <uri></uri>
 </address>
@@ -2239,8 +2237,10 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="predefined-uris" title="Predefined URIs">
-<t>WAMP pre-defines the following error URIs as part of this Basic Profile, which cover the full set of error states for the Basic Profile. Additional error URIs are defined as part of the Advanced Profile to cover error states for the Advanced Profile. WAMP peers MUST use only the defined error messages.
+<t>WAMP pre-defines the following error URIs for the basic and for the advanced profile. WAMP peers MUST use only the defined error messages.
 </t>
+
+<section anchor="basic-profile" title="Basic Profile">
 
 <section anchor="incorrect-uris" title="Incorrect URIs">
 <t>When a <spanx style="emph">Peer</spanx> provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other <spanx style="emph">Peer</spanx> MUST respond with an <spanx style="verb">ERROR</spanx> message and give the following <spanx style="emph">Error URI</spanx>:
@@ -2339,6 +2339,40 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 </section>
 
+<section anchor="advanced-profile" title="Advanced Profile">
+<t>uri<spanx style="emph">Dealer</spanx> or <spanx style="emph">Callee</spanx> canceled a call previously issued
+</t>
+
+<figure align="left"><artwork align="left">
+    wamp.error.canceled
+</artwork></figure>
+<t>A <spanx style="emph">Peer</spanx> requested an interaction with an option that was disallowed by the <spanx style="emph">Router</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+    wamp.error.option_not_allowed
+</artwork></figure>
+<t>A <spanx style="emph">Dealer</spanx> could not perform a call, since a procedure with the given URI is registered, but <spanx style="emph">Callee Black- and Whitelisting</spanx> and/or <spanx style="emph">Caller Exclusion</spanx> lead to the exclusion of (any) <spanx style="emph">Callee</spanx> providing the procedure.
+</t>
+
+<figure align="left"><artwork align="left">
+    wamp.error.no_eligible_callee
+</artwork></figure>
+<t>A <spanx style="emph">Router</spanx> rejected client request to disclose its identity
+</t>
+
+<figure align="left"><artwork align="left">
+    wamp.error.option_disallowed.disclose_me
+</artwork></figure>
+<t>A <spanx style="emph">Router</spanx> encountered a network failure
+</t>
+
+<figure align="left"><artwork align="left">
+    wamp.error.network_failure
+</artwork></figure>
+</section>
+</section>
+
 <section anchor="ordering-guarantees" title="Ordering Guarantees">
 <t>All WAMP implementations, in particular <spanx style="emph">Routers</spanx> MUST support the following ordering guarantees.
 </t>
@@ -2432,7 +2466,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 </section>
 
-<section anchor="advanced-profile" title="Advanced Profile">
+<section anchor="advanced-profile-1" title="Advanced Profile">
 <t>While implementations MUST implement the subset of the Basic Profile necessary for the particular set of WAMP roles they provide, they MAY implement any subset of features from the Advanced Profile. Implementers SHOULD implement the maximum of features possible considering the aims of an implementation.
 </t>
 <t><list style="empty">
@@ -3684,6 +3718,24 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t><spanx style="strong">Sharded Registrations</spanx> are intended to allow calling a procedure which is offered by a sharded database, by routing the call to a single shard.
 </t>
 </section>
+
+<section anchor="partitioned-calls" title="&quot;Partitioned&quot; Calls">
+<t>If <spanx style="verb">CALL.Options.runmode == "partition"</spanx>, then <spanx style="verb">CALL.Options.rkey</spanx> MUST be present.
+</t>
+<t>The call is then routed to all endpoints that were registered ..
+</t>
+<t>The call is then processed as for &quot;All&quot; Calls.
+</t>
+</section>
+
+<section anchor="feature-announcement-8" title="Feature Announcement">
+<t>Support for this feature MUST be announced by <spanx style="emph">Callers</spanx> (<spanx style="verb">role := "caller"</spanx>), <spanx style="emph">Callees</spanx> (<spanx style="verb">role := "callee"</spanx>) and <spanx style="emph">Dealers</spanx> (<spanx style="verb">role := "dealer"</spanx>) via
+</t>
+
+<figure align="center"><artwork align="center">
+HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
+</artwork></figure>
+</section>
 </section>
 
 <section anchor="registration-revocation" title="Registration Revocation">
@@ -3693,7 +3745,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 </section>
 
-<section anchor="feature-announcement-8" title="Feature Announcement">
+<section anchor="feature-announcement-9" title="Feature Announcement">
 </section>
 </section>
 
@@ -3932,7 +3984,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 </section>
 
-<section anchor="feature-announcement-9" title="Feature Announcement">
+<section anchor="feature-announcement-10" title="Feature Announcement">
 <t>Support for this feature MUST be announced by <spanx style="emph">Publishers</spanx> (<spanx style="verb">role := "publisher"</spanx>) and <spanx style="emph">Brokers</spanx> (<spanx style="verb">role := "broker"</spanx>) via
 </t>
 
@@ -3976,7 +4028,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 </section>
 
-<section anchor="feature-announcement-10" title="Feature Announcement">
+<section anchor="feature-announcement-11" title="Feature Announcement">
 <t>Support for this feature MUST be announced by <spanx style="emph">Publishers</spanx> (<spanx style="verb">role := "publisher"</spanx>) and <spanx style="emph">Brokers</spanx> (<spanx style="verb">role := "broker"</spanx>) via
 </t>
 
@@ -4022,7 +4074,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 </section>
 
-<section anchor="feature-announcement-11" title="Feature Announcement">
+<section anchor="feature-announcement-12" title="Feature Announcement">
 <t>Support for this feature MUST be announced by <spanx style="emph">Publishers</spanx> (<spanx style="verb">role := "publisher"</spanx>), <spanx style="emph">Brokers</spanx> (<spanx style="verb">role := "broker"</spanx>) and <spanx style="emph">Subscribers</spanx> (<spanx style="verb">role := "subscriber"</spanx>) via
 </t>
 
@@ -4057,7 +4109,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 </section>
 
-<section anchor="feature-announcement-12" title="Feature Announcement">
+<section anchor="feature-announcement-13" title="Feature Announcement">
 <t>Support for this feature MUST be announced by <spanx style="emph">Subscribers</spanx> (<spanx style="verb">role := "subscriber"</spanx>) and <spanx style="emph">Brokers</spanx> (<spanx style="verb">role := "broker"</spanx>) via
 </t>
 
@@ -4068,193 +4120,290 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 </section>
 
-<section anchor="session-meta-api" title="Session Meta API">
-
-<section anchor="introduction-4" title="Introduction">
-<t>WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via <spanx style="strong">Session Meta Events</spanx>. It also allows retrieving information about currently connected sessions via <spanx style="strong">Session Meta Procedures</spanx>.
-</t>
-<t>Meta events are created by the router itself. This means that the events, as well as the data received when calling a meta procedure, can be accorded the same trust level as the router.
-</t>
-<t><list style="empty">
-<t>Note that an implementation that only supports a <spanx style="emph">Broker</spanx> or <spanx style="emph">Dealer</spanx> role, not both at the same time, essentially cannot offer the <spanx style="strong">Session Meta API</spanx>, as it requires both roles to support this feature.
-</t>
-</list></t>
-</section>
-
-<section anchor="session-meta-events" title="Session Meta Events">
-<t>A client can subscribe to the following session meta-events, which cover the lifecycle of a session:
-</t>
-<t>
-<list style="symbols">
-<t><spanx style="verb">wamp.session.on_join</spanx>: Fired when a session joins a realm on the router.</t>
-<t><spanx style="verb">wamp.session.on_leave</spanx>: Fired when a session leaves a realm on the router or is disconnected.</t>
-</list>
-</t>
-<t><spanx style="strong">Session Meta Events</spanx> MUST be dispatched by the <spanx style="emph">Router</spanx> to the same realm as the WAMP session which triggered the event.
-</t>
-
-<section anchor="wampsessiononjoin" title="wamp.session.on_join">
-<t>Fired when a session joins a realm on the router. The event payload consists of a single positional argument <spanx style="verb">details|dict</spanx>:
-</t>
-<t>
-<list style="symbols">
-<t><spanx style="verb">session|id</spanx> - The session ID of the session that joined</t>
-<t><spanx style="verb">authid|string</spanx> - The authentication ID of the session that joined</t>
-<t><spanx style="verb">authrole|string</spanx> - The authentication role of the session that joined</t>
-<t><spanx style="verb">authmethod|string</spanx> - The authentication method that was used for authentication the session that joined</t>
-<t><spanx style="verb">authprovider|string</spanx>- The provider that performed the authentication of the session that joined</t>
-<t><spanx style="verb">transport|dict</spanx> - Optional, implementation defined information about the WAMP transport the joined session is running over.</t>
-</list>
-</t>
-<t><list style="empty">
-<t>See <spanx style="strong">Authentication</spanx> for a description of the <spanx style="verb">authid</spanx>, <spanx style="verb">authrole</spanx>, <spanx style="verb">authmethod</spanx> and <spanx style="verb">authprovider</spanx> properties.
-</t>
-</list></t>
-</section>
-
-<section anchor="wampsessiononleave" title="wamp.session.on_leave">
-<t>Fired when a session leaves a realm on the router or is disconnected. The event payload consists of a single positional argument <spanx style="verb">session|id</spanx> with the session ID of the session that left.
-</t>
-</section>
-</section>
-
-<section anchor="session-meta-procedures" title="Session Meta Procedures">
-<t>A client can actively retrieve information about sessions via the following meta-procedures:
-</t>
-<t>
-<list style="symbols">
-<t><spanx style="verb">wamp.session.count</spanx>: Obtains the number of sessions currently attached to the realm.</t>
-<t><spanx style="verb">wamp.session.list</spanx>: Retrieves a list of the session IDs for all sessions currently attached to the realm.</t>
-<t><spanx style="verb">wamp.session.get</spanx>: Retrieves information on a specific session.</t>
-</list>
-</t>
-<t>Session meta procedures MUST be registered by the <spanx style="emph">Router</spanx> on the same realm as the WAMP session about which information is retrieved.
-</t>
-
-<section anchor="wampsessioncount" title="wamp.session.count">
-<t>Obtains the number of sessions currently attached to the realm:
-</t>
-<t><spanx style="strong">Positional arguments</spanx>
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">filter_authroles|list[string]</spanx> - Optional filter: if provided, only count sessions with an <spanx style="verb">authrole</spanx> from this list.</t>
-</list>
-</t>
-<t><spanx style="strong">Positional results</spanx>
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">count|int</spanx> - The number of sessions currently attached to the realm.</t>
-</list>
-</t>
-</section>
-
-<section anchor="wampsessionlist" title="wamp.session.list">
-<t>Retrieves a list of the session IDs for all sessions currently attached to the realm.
-</t>
-<t><spanx style="strong">Positional arguments</spanx>
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">filter_authroles|list[string]</spanx> - Optional filter: if provided, only count sessions with an <spanx style="verb">authrole</spanx> from this list.</t>
-</list>
-</t>
-<t><spanx style="strong">Positional results</spanx>
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">session_ids|list</spanx> - List of WAMP session IDs (order undefined).</t>
-</list>
-</t>
-</section>
-
-<section anchor="wampsessionget" title="wamp.session.get">
-<t>Retrieves information on a specific session.
-</t>
-<t><spanx style="strong">Positional arguments</spanx>
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">session|id</spanx> - The session ID of the session to retrieve details for.</t>
-</list>
-</t>
-<t><spanx style="strong">Positional results</spanx>
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">details|dict</spanx> - Information on a particular session:
-<list style="symbols">
-<t><spanx style="verb">session|id</spanx> - The session ID of the session that joined</t>
-<t><spanx style="verb">authid|string</spanx> - The authentication ID of the session that joined</t>
-<t><spanx style="verb">authrole|string</spanx> - The authentication role of the session that joined</t>
-<t><spanx style="verb">authmethod|string</spanx> - The authentication method that was used for authentication the session that joined</t>
-<t><spanx style="verb">authprovider|string</spanx>- The provider that performed the authentication of the session that joined</t>
-<t><spanx style="verb">transport|dict</spanx> - Optional, implementation defined information about the WAMP transport the joined session is running over.</t>
-</list></t>
-</list>
-</t>
-<t><list style="empty">
-<t>See <spanx style="strong">Authentication</spanx> for a description of the <spanx style="verb">authid</spanx>, <spanx style="verb">authrole</spanx>, <spanx style="verb">authmethod</spanx> and <spanx style="verb">authprovider</spanx> properties.
-</t>
-</list></t>
-<t><spanx style="strong">Errors</spanx>
-</t>
-<t>
-<list style="symbols">
-<t><spanx style="verb">wamp.error.no_such_session</spanx> - No session with the given ID exists on the router.</t>
-</list>
-</t>
-</section>
-</section>
-
-<section anchor="feature-announcement-13" title="Feature Announcement">
-<t>Support for this feature MUST be announced by <spanx style="strong">both</spanx> <spanx style="emph">Dealers</spanx> and <spanx style="emph">Brokers</spanx> via:
-</t>
-
-<figure align="left"><artwork align="left">
-    HELLO.Details.roles.&lt;role&gt;.features.
-        session_meta_api|bool := true
-</artwork></figure>
-<t><spanx style="strong">Example</spanx>
-</t>
-<t>Here is a <spanx style="verb">WELCOME</spanx> message from a <spanx style="emph">Router</spanx> with support for both the <spanx style="emph">Broker</spanx> and <spanx style="emph">Dealer</spanx> role, and with support for <spanx style="strong">Session Meta API</spanx>:
-</t>
-
-<figure align="left"><artwork align="left">
-    [
-        2,
-        4580268554656113,
-        {
-            "authid":"OL3AeppwDLXiAAPbqm9IVhnw",
-            "authrole": "anonymous",
-            "authmethod": "anonymous",
-            "roles": {
-                "broker": {
-                    "features": {
-                        "session_meta_api": true
-                    }
-                },
-                "dealer": {
-                    "features": {
-                        "session_meta_api": true
-                    }
-                }
-            }
-        }
-    ]
-</artwork></figure>
-<t><list style="empty">
-<t>Note in particular that the feature is announced on both the <spanx style="emph">Broker</spanx> and the <spanx style="emph">Dealer</spanx> roles.
-</t>
-</list></t>
-</section>
-</section>
-
 <section anchor="subscription-meta-api" title="Subscription Meta API">
+<t>Within an application, it may be desirable for a publisher to know whether a publication to a specific topic currently makes sense, i.e. whether there are any subscribers who would receive an event based on the publication. It may also be desirable to keep a current count of subscribers to a topic to then be able to filter out any subscribers who are not supposed to receive an event.
+</t>
+<t>Subscription <spanx style="emph">meta-events</spanx> are fired when topics are first created, when clients subscribe/unsubscribe to them, and when topics are deleted. WAMP allows retrieving information about subscriptions via subscription <spanx style="emph">meta-procedures</spanx>.
+</t>
+<t>Support for this feature MUST be announced by Brokers via
+</t>
+
+<figure align="left"><artwork align="left">
+    HELLO.Details.roles.broker.features.subscription_meta_api|
+        bool := true
+</artwork></figure>
+<t>Meta-events are created by the router itself. This means that the events as well as the data received when calling a meta-procedure can be accorded the same trust level as the router.
+</t>
+
+<section anchor="subscription-metaevents" title="Subscription Meta-Events">
+<t>A client can subscribe to the following session meta-events, which cover the lifecycle of a subscription:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.subscription.on_create</spanx>: Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.</t>
+<t><spanx style="verb">wamp.subscription.on_subscribe</spanx>: Fired when a session is added to a subscription.</t>
+<t><spanx style="verb">wamp.subscription.on_unsubscribe</spanx>: Fired when a session is removed from a subscription.</t>
+<t><spanx style="verb">wamp.subscription.on_delete</spanx>: Fired when a subscription is deleted after the last session attached to it has been removed.</t>
+</list>
+</t>
+<t>A <spanx style="verb">wamp.subscription.on_subscribe</spanx> event MUST always be fired subsequent to a <spanx style="verb">wamp.subscription.on_create</spanx> event, since the first subscribe results in both the creation of the subscription and the addition of a session. Similarly, the <spanx style="verb">wamp.subscription.on_delete</spanx> event MUST always be preceded by a <spanx style="verb">wamp.subscription.on_unsubscribe</spanx> event.
+</t>
+<t>The WAMP subscription meta events shall be dispatched by the router to the same realm as the WAMP session which triggered the event.
+</t>
+
+<section anchor="metaevent-specifications" title="Meta-Event Specifications">
+
+<section anchor="wampsubscriptiononcreate" title="wamp.subscription.on_create">
+<t>Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.
+</t>
+<t><spanx style="strong">Event Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">session|id</spanx>: ID of the session performing the subscription request.</t>
+<t><spanx style="verb">SubscriptionDetails|dict</spanx>: Information on the created subscription.</t>
+</list>
+</t>
+<t><spanx style="strong">Object Schemas</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+      SubscriptionDetails :=
+      {
+          "id": subscription|id,
+          "created": time_created|iso_8601_string,
+          "uri": topic|uri,
+          "match": match_policy|string
+      }
+</artwork></figure>
+<t>See <xref target="pattern-based-subscriptions"/> for a description of <spanx style="verb">match_policy</spanx>.
+</t>
 </section>
 
-<section anchor="patternbased-subscriptions" title="Pattern-based Subscriptions">
+<section anchor="wampsubscriptiononsubscribe" title="wamp.subscription.on_subscribe">
+<t>Fired when a session is added to a subscription.
+</t>
+<t><spanx style="strong">Event Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">session|id</spanx>: ID of the session being added to a subscription.</t>
+<t><spanx style="verb">subscription|id</spanx>: ID of the subscription to which the session is being added.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsubscriptiononunsubscribe" title="wamp.subscription.on_unsubscribe">
+<t>Fired when a session is removed from a subscription.
+</t>
+<t><spanx style="strong">Event Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">session|id</spanx>: ID of the session being removed from a subscription.</t>
+<t><spanx style="verb">subscription|id</spanx>: ID of the subscription from which the session is being removed.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsubscriptionondelete" title="wamp.subscription.on_delete">
+<t>Fired when a subscription is deleted after the last session attached to it has been removed.
+</t>
+<t><spanx style="strong">Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">session|id</spanx>: ID of the last session being removed from a subscription.</t>
+<t><spanx style="verb">subscription|id</spanx>: ID of the subscription being deleted.</t>
+</list>
+</t>
+</section>
+</section>
+</section>
+
+<section anchor="subscription-metaprocedures" title="Subscription Meta-Procedures">
+<t>A client can actively retrieve information about subscriptions via the following meta-procedures:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.subscription.list</spanx>: Retrieves subscription IDs listed according to match policies.</t>
+<t><spanx style="verb">wamp.subscription.lookup</spanx>: Obtains the subscription (if any) managing a topic, according to some match policy.</t>
+<t><spanx style="verb">wamp.subscription.match</spanx>: Retrieves a list of IDs of subscriptions matching a topic URI, irrespective of match policy.</t>
+<t><spanx style="verb">wamp.subscription.get</spanx>: Retrieves information on a particular subscription.</t>
+<t><spanx style="verb">wamp.subscription.list_subscribers</spanx>: Retrieves a list of session IDs for sessions currently attached to the subscription.</t>
+<t><spanx style="verb">wamp.subscription.count_subscribers</spanx>: Obtains the number of sessions currently attached to the subscription.</t>
+</list>
+</t>
+
+<section anchor="metaprocedure-specifications" title="Meta-Procedure Specifications">
+
+<section anchor="wampsubscriptionlist" title="wamp.subscription.list">
+<t>Retrieves subscription IDs listed according to match policies.
+</t>
+<t><spanx style="strong">Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t>None</t>
+</list>
+</t>
+<t><spanx style="strong">Results</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">SubscriptionLists|dict</spanx>: A dictionary with a list of subscription IDs for each match policy.</t>
+</list>
+</t>
+<t><spanx style="strong">Object Schemas</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+      SubscriptionLists :=
+      {
+          "exact": subscription_ids|list,
+          "prefix": subscription_ids|list,
+          "wildcard": subscription_ids|list
+      }
+</artwork></figure>
+<t>See <xref target="pattern-based-subscriptions"/> for information on match policies.
+</t>
+</section>
+
+<section anchor="wampsubscriptionlookup" title="wamp.subscription.lookup">
+<t>Obtains the subscription (if any) managing a topic, according to some match policy.
+</t>
+<t><spanx style="strong">Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">topic|uri</spanx>: The URI of the topic.</t>
+<t>(Optional) <spanx style="verb">options|dict</spanx>: Same options as when subscribing to a topic.</t>
+</list>
+</t>
+<t><spanx style="strong">Results</spanx>
+</t>
+<t>
+<list style="symbols">
+<t>(Nullable) <spanx style="verb">subscription|id</spanx>: The ID of the subscription managing the topic, if found, or null.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsubscriptionmatch" title="wamp.subscription.match">
+<t>Retrieves a list of IDs of subscriptions matching a topic URI, irrespective of match policy.
+</t>
+<t><spanx style="strong">Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">topic|uri</spanx>: The topic to match.</t>
+</list>
+</t>
+<t><spanx style="strong">Results</spanx>
+</t>
+<t>
+<list style="symbols">
+<t>(Nullable) <spanx style="verb">subscription_ids|list</spanx>: A list of all matching subscription IDs, or null.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsubscriptionget" title="wamp.subscription.get">
+<t>Retrieves information on a particular subscription.
+</t>
+<t><spanx style="strong">Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">subscription|id</spanx>: The ID of the subscription to retrieve.</t>
+</list>
+</t>
+<t><spanx style="strong">Results</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">SubscriptionDetails|dict</spanx>: Details on the subscription.</t>
+</list>
+</t>
+<t><spanx style="strong">Error URIs</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.no_such_subscription</spanx>: No subscription with the given ID exists on the router.</t>
+</list>
+</t>
+<t><spanx style="strong">Object Schemas</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+      SubscriptionDetails :=
+      {
+          "id": subscription|id,
+          "created": time_created|iso_8601_string,
+          "uri": topic|uri,
+          "match": match_policy|string
+      }
+</artwork></figure>
+<t>See <xref target="pattern-based-subscriptions"/> for information on match policies.
+</t>
+</section>
+
+<section anchor="wampsubscriptionlistsubscribers" title="wamp.subscription.list_subscribers">
+<t>Retrieves a list of session IDs for sessions currently attached to the subscription.
+</t>
+<t><spanx style="strong">Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">subscription|id</spanx>: The ID of the subscription to get subscribers for.</t>
+</list>
+</t>
+<t><spanx style="strong">Results</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">subscribers_ids|list</spanx>: A list of WAMP session IDs of subscribers currently attached to the subscription.</t>
+</list>
+</t>
+<t><spanx style="strong">Error URIs</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.no_such_subscription</spanx>: No subscription with the given ID exists on the router.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsubscriptioncountsubscribers" title="wamp.subscription.count_subscribers">
+<t>Obtains the number of sessions currently attached to a subscription.
+</t>
+<t><spanx style="strong">Arguments</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">subscription|id</spanx>: The ID of the subscription to get the number of subscribers for.</t>
+</list>
+</t>
+<t><spanx style="strong">Results</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">count|int</spanx>: The number of sessions currently attached to a subscription.</t>
+</list>
+</t>
+<t><spanx style="strong">Error URIs</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.no_such_subscription</spanx>: No subscription with the given ID exists on the router.</t>
+</list>
+</t>
+</section>
+</section>
+</section>
+</section>
+
+<section anchor="pattern-based-subscriptions" title="Pattern-based Subscriptions">
 
 <section anchor="introdution" title="Introdution">
 <t>By default, <spanx style="emph">Subscribers</spanx> subscribe to topics with <spanx style="strong">exact matching policy</spanx>. That is an event will only be dispatched to a <spanx style="emph">Subscriber</spanx> by the <spanx style="emph">Broker</spanx> if the topic published to (<spanx style="verb">PUBLISH.Topic</spanx>) <spanx style="emph">exactly</spanx> matches the topic subscribed to (<spanx style="verb">SUBSCRIBE.Topic</spanx>).
@@ -4404,11 +4553,42 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 </section>
 
-<section anchor="sharded-subscription" title="Sharded Subscription">
+<section anchor="sharded-subscriptions" title="Sharded Subscriptions">
 <t>Feature status: <spanx style="strong">alpha</spanx>
 </t>
-<t>-- Write me. --
+<t>Support for this feature MUST be announced by <spanx style="emph">Publishers</spanx> (<spanx style="verb">role := "publisher"</spanx>), <spanx style="emph">Subscribers</spanx> (<spanx style="verb">role := "subscriber"</spanx>) and <spanx style="emph">Brokers</spanx> (<spanx style="verb">role := "broker"</spanx>) via
 </t>
+
+<figure align="left"><artwork align="left">
+    HELLO.Details.roles.&lt;role&gt;.features.shareded_subscriptions|
+        bool := true
+</artwork></figure>
+<t>Resource keys: <spanx style="verb">PUBLISH.Options.rkey|string</spanx> is a stable, technical <spanx style="strong">resource key</spanx>.
+</t>
+<t><list style="empty">
+<t>E.g. if your sensor has a unique serial identifier, you can use that.
+</t>
+</list></t>
+<t><spanx style="emph">Example</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+    [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019. 
+        temperature", [33.9]]
+</artwork></figure>
+<t>Node keys: <spanx style="verb">SUBSCRIBE.Options.nkey|string</spanx> is a stable, technical <spanx style="strong">node key</spanx>.
+</t>
+<t><list style="empty">
+<t>E.g. if your backend process runs on a dedicated host, you can use its hostname.
+</t>
+</list></t>
+<t><spanx style="emph">Example</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+    [32, 912873614, {"match": "wildcard", "nkey": "node23"}, 
+        "com.myapp.sensor..temperature"]
+</artwork></figure>
 </section>
 
 <section anchor="event-history" title="Event History">
@@ -4507,6 +4687,1079 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>see <spanx style="strong">Procedure Reflection</spanx> for now</t>
 </list>
 </t>
+</section>
+</section>
+
+<section anchor="other-advanced-features-1" title="Other Advanced Features">
+
+<section anchor="session-meta-api" title="Session Meta API">
+
+<section anchor="introduction-4" title="Introduction">
+<t>WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via <spanx style="strong">Session Meta Events</spanx>. It also allows retrieving information about currently connected sessions via <spanx style="strong">Session Meta Procedures</spanx>.
+</t>
+<t>Meta events are created by the router itself. This means that the events, as well as the data received when calling a meta procedure, can be accorded the same trust level as the router.
+</t>
+<t><list style="empty">
+<t>Note that an implementation that only supports a <spanx style="emph">Broker</spanx> or <spanx style="emph">Dealer</spanx> role, not both at the same time, essentially cannot offer the <spanx style="strong">Session Meta API</spanx>, as it requires both roles to support this feature.
+</t>
+</list></t>
+</section>
+
+<section anchor="session-meta-events" title="Session Meta Events">
+<t>A client can subscribe to the following session meta-events, which cover the lifecycle of a session:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.session.on_join</spanx>: Fired when a session joins a realm on the router.</t>
+<t><spanx style="verb">wamp.session.on_leave</spanx>: Fired when a session leaves a realm on the router or is disconnected.</t>
+</list>
+</t>
+<t><spanx style="strong">Session Meta Events</spanx> MUST be dispatched by the <spanx style="emph">Router</spanx> to the same realm as the WAMP session which triggered the event.
+</t>
+
+<section anchor="wampsessiononjoin" title="wamp.session.on_join">
+<t>Fired when a session joins a realm on the router. The event payload consists of a single positional argument <spanx style="verb">details|dict</spanx>:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">session|id</spanx> - The session ID of the session that joined</t>
+<t><spanx style="verb">authid|string</spanx> - The authentication ID of the session that joined</t>
+<t><spanx style="verb">authrole|string</spanx> - The authentication role of the session that joined</t>
+<t><spanx style="verb">authmethod|string</spanx> - The authentication method that was used for authentication the session that joined</t>
+<t><spanx style="verb">authprovider|string</spanx>- The provider that performed the authentication of the session that joined</t>
+<t><spanx style="verb">transport|dict</spanx> - Optional, implementation defined information about the WAMP transport the joined session is running over.</t>
+</list>
+</t>
+<t><list style="empty">
+<t>See <spanx style="strong">Authentication</spanx> for a description of the <spanx style="verb">authid</spanx>, <spanx style="verb">authrole</spanx>, <spanx style="verb">authmethod</spanx> and <spanx style="verb">authprovider</spanx> properties.
+</t>
+</list></t>
+</section>
+
+<section anchor="wampsessiononleave" title="wamp.session.on_leave">
+<t>Fired when a session leaves a realm on the router or is disconnected. The event payload consists of a single positional argument <spanx style="verb">session|id</spanx> with the session ID of the session that left.
+</t>
+</section>
+</section>
+
+<section anchor="session-meta-procedures" title="Session Meta Procedures">
+<t>A client can actively retrieve information about sessions via the following meta-procedures:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.session.count</spanx>: Obtains the number of sessions currently attached to the realm.</t>
+<t><spanx style="verb">wamp.session.list</spanx>: Retrieves a list of the session IDs for all sessions currently attached to the realm.</t>
+<t><spanx style="verb">wamp.session.get</spanx>: Retrieves information on a specific session.</t>
+</list>
+</t>
+<t>Session meta procedures MUST be registered by the <spanx style="emph">Router</spanx> on the same realm as the WAMP session about which information is retrieved.
+</t>
+
+<section anchor="wampsessioncount" title="wamp.session.count">
+<t>Obtains the number of sessions currently attached to the realm:
+</t>
+<t><spanx style="strong">Positional arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">filter_authroles|list[string]</spanx> - Optional filter: if provided, only count sessions with an <spanx style="verb">authrole</spanx> from this list.</t>
+</list>
+</t>
+<t><spanx style="strong">Positional results</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">count|int</spanx> - The number of sessions currently attached to the realm.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsessionlist" title="wamp.session.list">
+<t>Retrieves a list of the session IDs for all sessions currently attached to the realm.
+</t>
+<t><spanx style="strong">Positional arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">filter_authroles|list[string]</spanx> - Optional filter: if provided, only count sessions with an <spanx style="verb">authrole</spanx> from this list.</t>
+</list>
+</t>
+<t><spanx style="strong">Positional results</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">session_ids|list</spanx> - List of WAMP session IDs (order undefined).</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsessionget" title="wamp.session.get">
+<t>Retrieves information on a specific session.
+</t>
+<t><spanx style="strong">Positional arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">session|id</spanx> - The session ID of the session to retrieve details for.</t>
+</list>
+</t>
+<t><spanx style="strong">Positional results</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">details|dict</spanx> - Information on a particular session:
+<list style="symbols">
+<t><spanx style="verb">session|id</spanx> - The session ID of the session that joined</t>
+<t><spanx style="verb">authid|string</spanx> - The authentication ID of the session that joined</t>
+<t><spanx style="verb">authrole|string</spanx> - The authentication role of the session that joined</t>
+<t><spanx style="verb">authmethod|string</spanx> - The authentication method that was used for authentication the session that joined</t>
+<t><spanx style="verb">authprovider|string</spanx>- The provider that performed the authentication of the session that joined</t>
+<t><spanx style="verb">transport|dict</spanx> - Optional, implementation defined information about the WAMP transport the joined session is running over.</t>
+</list></t>
+</list>
+</t>
+<t><list style="empty">
+<t>See <spanx style="strong">Authentication</spanx> for a description of the <spanx style="verb">authid</spanx>, <spanx style="verb">authrole</spanx>, <spanx style="verb">authmethod</spanx> and <spanx style="verb">authprovider</spanx> properties.
+</t>
+</list></t>
+<t><spanx style="strong">Errors</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.no_such_session</spanx> - No session with the given ID exists on the router.</t>
+</list>
+</t>
+</section>
+</section>
+
+<section anchor="feature-announcement-17" title="Feature Announcement">
+<t>Support for this feature MUST be announced by <spanx style="strong">both</spanx> <spanx style="emph">Dealers</spanx> and <spanx style="emph">Brokers</spanx> via:
+</t>
+
+<figure align="left"><artwork align="left">
+    HELLO.Details.roles.&lt;role&gt;.features.
+        session_meta_api|bool := true
+</artwork></figure>
+<t><spanx style="strong">Example</spanx>
+</t>
+<t>Here is a <spanx style="verb">WELCOME</spanx> message from a <spanx style="emph">Router</spanx> with support for both the <spanx style="emph">Broker</spanx> and <spanx style="emph">Dealer</spanx> role, and with support for <spanx style="strong">Session Meta API</spanx>:
+</t>
+
+<figure align="left"><artwork align="left">
+    [
+        2,
+        4580268554656113,
+        {
+            "authid":"OL3AeppwDLXiAAPbqm9IVhnw",
+            "authrole": "anonymous",
+            "authmethod": "anonymous",
+            "roles": {
+                "broker": {
+                    "features": {
+                        "session_meta_api": true
+                    }
+                },
+                "dealer": {
+                    "features": {
+                        "session_meta_api": true
+                    }
+                }
+            }
+        }
+    ]
+</artwork></figure>
+<t><list style="empty">
+<t>Note in particular that the feature is announced on both the <spanx style="emph">Broker</spanx> and the <spanx style="emph">Dealer</spanx> roles.
+</t>
+</list></t>
+</section>
+</section>
+
+<section anchor="authentication" title="Authentication">
+<t>Authentication is a complex area.
+</t>
+<t>Some applications might want to leverage authentication information coming from the transport underlying WAMP, e.g. HTTP cookies or TLS certificates.
+</t>
+<t>Some transports might imply trust or implicit authentication by their very nature, e.g. Unix domain sockets with appropriate file system permissions in place.
+</t>
+<t>Other application might want to perform their own authentication using external mechanisms (completely outside and independent of WAMP).
+</t>
+<t>Some applications might want to perform their own authentication schemes by using basic WAMP mechanisms, e.g. by using application-defined remote procedure calls.
+</t>
+<t>And some applications might want to use a transport independent scheme, nevertheless predefined by WAMP.
+</t>
+
+<section anchor="wamplevel-authentication" title="WAMP-level Authentication">
+<t>The message flow between Clients and Routers for establishing and tearing down sessions MAY involve the following messages which authenticate a session:
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">CHALLENGE</spanx></t>
+<t><spanx style="verb">AUTHENTICATE</spanx></t>
+</list>
+</t>
+
+<figure align="left"><artwork align="left">
+     ,------.          ,------.
+     |Client|          |Router|
+     `--+---'          `--+---'
+        |      HELLO      |    
+        | ----------------&gt;    
+        |                 |    
+        |    CHALLENGE    |    
+        | &lt;----------------    
+        |                 |    
+        |   AUTHENTICATE  |    
+        | ----------------&gt;    
+        |                 |    
+        | WELCOME or ABORT|    
+        | &lt;----------------    
+     ,--+---.          ,--+---.
+     |Client|          |Router|
+     `------'          `------'
+</artwork></figure>
+<t>Concrete use of <spanx style="verb">CHALLENGE</spanx> and <spanx style="verb">AUTHENTICATE</spanx> messages depends on the specific authentication method.
+</t>
+<t>See <xref target="wampcra"/> or <xref target="ticketauth"/> for the use in these authentication methods.
+</t>
+<t>If two-factor authentication is desired, then two subsequent rounds of <spanx style="verb">CHALLENGE</spanx> and <spanx style="verb">RESPONSE</spanx> may be employed.
+</t>
+
+<section anchor="challenge-1" title="CHALLENGE">
+<t>An authentication MAY be required for the establishment of a session. Such requirement MAY be based on the <spanx style="verb">Realm</spanx> the connection is requested for.
+</t>
+<t>To request authentication, the Router MUST send a <spanx style="verb">CHALLENGE</spanx> message to the <spanx style="emph">Endpoint</spanx>.
+</t>
+
+<figure align="left"><artwork align="left">
+    [CHALLENGE, AuthMethod|string, Extra|dict]
+</artwork></figure>
+</section>
+
+<section anchor="authenticate-1" title="AUTHENTICATE">
+<t>In response to a <spanx style="verb">CHALLENGE</spanx> message, the Client MUST send an <spanx style="verb">AUTHENTICATION</spanx> message.
+</t>
+
+<figure align="left"><artwork align="left">
+    [AUTHENTICATE, Signature|string, Extra|dict]
+</artwork></figure>
+<t>If the authentication succeeds, the Router MUST send a <spanx style="verb">WELCOME</spanx> message, else it MUST send an <spanx style="verb">ABORT</spanx> message.
+</t>
+</section>
+</section>
+
+<section anchor="transportlevel-authentication" title="Transport-level Authentication">
+
+<section anchor="cookiebased-authentication" title="Cookie-based Authentication">
+<t>When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
+</t>
+<t>This transport-level authentication information may be forward to the WAMP level within <spanx style="verb">HELLO.Details.transport.auth|any</spanx> in the client-to-server direction.
+</t>
+</section>
+
+<section anchor="tls-certificate-authentication" title="TLS Certificate Authentication">
+<t>When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
+</t>
+<t>This transport-level authentication information may be forward to the WAMP level within <spanx style="verb">HELLO.Details.transport.auth|any</spanx> in both directions (if available).
+</t>
+</section>
+</section>
+
+<section anchor="wampcra" title="Challenge Response Authentication">
+<t>WAMP Challenge-Response (&quot;WAMP-CRA&quot;) authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a secret. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.
+</t>
+<t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">wampcra</spanx> method as (one of) the authentication methods:
+</t>
+
+<figure align="left"><artwork align="left">
+    [1, "realm1",
+        {
+            "roles": ...,
+            "authmethods": ["wampcra"],
+            "authid": "peter"
+        }
+    ]
+</artwork></figure>
+<t>The <spanx style="verb">HELLO.Details.authmethods|list</spanx> is used by the client to announce the authentication methods it is prepared to perform. For WAMP-CRA, this MUST include <spanx style="verb">"wampcra"</spanx>.
+</t>
+<t>The <spanx style="verb">HELLO.Details.authid|string</spanx> is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-CRA, this MUST be provided.
+</t>
+<t>If the server is unwilling or unable to perform WAMP-CRA authentication, it MAY either skip forward trying other authentication methods (if the client announced any) or send an <spanx style="verb">ABORT</spanx> message.
+</t>
+<t>If the server is willing to let the client authenticate using WAMP-CRA, and the server recognizes the provided <spanx style="verb">authid</spanx>, it MUST send a <spanx style="verb">CHALLENGE</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [4, "wampcra",
+        {
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
+                \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
+                \"session\": 3251278072152162}"
+        }
+    ]
+</artwork></figure>
+<t>The <spanx style="verb">CHALLENGE.Details.challenge|string</spanx> is a string the client needs to create a signature for. The string MUST BE a JSON serialized object which MUST contain:
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">authid|string</spanx>: The authentication ID the client will be authenticated as when the authentication succeeds.</t>
+<t><spanx style="verb">authrole|string</spanx>: The authentication role the client will be authenticated as when the authentication succeeds.</t>
+<t><spanx style="verb">authmethod|string</spanx>: The authentication methods, here <spanx style="verb">"wampcra"</spanx></t>
+<t><spanx style="verb">authprovider|string</spanx>: The actual provider of authentication. For WAMP-CRA, this can be freely chosen by the app, e.g. <spanx style="verb">userdb</spanx>.</t>
+<t><spanx style="verb">nonce|string</spanx>: A random value.</t>
+<t><spanx style="verb">timestamp|string</spanx>: The UTC timestamp (ISO8601 format) the authentication was started, e.g. <spanx style="verb">2014-06-22T16:51:41.643Z</spanx>.</t>
+<t><spanx style="verb">session|int</spanx>: The WAMP session ID that will be assigned to the session once it is authenticated successfully.</t>
+</list>
+</t>
+<t>The client needs to compute the signature as follows:
+</t>
+
+<figure align="left"><artwork align="left">
+    signature := HMAC[SHA256]_{secret} (challenge)
+</artwork></figure>
+<t>That is, compute the HMAC-SHA256 using the shared <spanx style="verb">secret</spanx> over the <spanx style="verb">challenge</spanx>.
+</t>
+<t>After computing the signature, the client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing the signature:
+</t>
+
+<figure align="left"><artwork align="left">
+    [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
+</artwork></figure>
+<t>The server will then check if
+</t>
+<t>
+<list style="symbols">
+<t>the signature matches the one expected</t>
+<t>the <spanx style="verb">AUTHENTICATE</spanx> message was sent in due time</t>
+</list>
+</t>
+<t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [2, 3251278072152162,
+        {
+            "authid": "peter",
+            "authrole": "user",
+            "authmethod": "wampcra",
+            "authprovider": "userdb",
+            "roles": ...
+        }
+    ]
+</artwork></figure>
+<t>The <spanx style="verb">WELCOME.Details</spanx> again contain the actual authentication information active.
+</t>
+<t>If the authentication fails, the server will response with an <spanx style="verb">ABORT</spanx> message.
+</t>
+
+<section anchor="serverside-verification" title="Server-side Verification">
+<t>The challenge sent during WAMP-CRA contains
+</t>
+<t>
+<list style="numbers">
+<t>random information (the <spanx style="verb">nonce</spanx>) to make WAMP-CRA robust against replay attacks</t>
+<t>timestamp information (the <spanx style="verb">timestamp</spanx>) to allow WAMP-CRA timeout on authentication requests that took too long</t>
+<t>session information (the <spanx style="verb">session</spanx>) to bind the authentication to a WAMP session ID</t>
+<t>all the authentication information that relates to authorization like <spanx style="verb">authid</spanx> and <spanx style="verb">authrole</spanx></t>
+</list>
+</t>
+</section>
+
+<section anchor="threelegged-authentication" title="Three-legged Authentication">
+<t>The signing of the challenge sent by the server usually is done directly on the client. However, this is no strict requirement.
+</t>
+<t>E.g. a client might forward the challenge to another party (hence the &quot;three-legged&quot;) for creating the signature. This can be used when the client was previously already authenticated to that third party, and WAMP-CRA should run piggy packed on that authentication.
+</t>
+<t>The third party would, upon receiving a signing request, simply check if the client is already authenticated, and if so, create a signature for WAMP-CRA.
+</t>
+<t>In this case, the secret is actually shared between the WAMP server who wants to authenticate clients using WAMP-CRA and the third party server, who shares a secret with the WAMP server.
+</t>
+<t>This scenario is also the reason the challenge sent with WAMP-CRA is not simply a random value, but a JSON serialized object containing sufficient authentication information for the thrid party to check.
+</t>
+</section>
+
+<section anchor="password-salting" title="Password Salting">
+<t>WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret often requires storage of that secret on the client and the server - and storing a password verbatim (unencrypted) is not recommended in general.
+</t>
+<t>WAMP-CRA allows the use of salted passwords following the <eref target="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</eref> key derivation scheme. With salted passwords, the password itself is never stored, but only a key derived from the password and a password salt. This derived key is then practically working as the new shared secret.
+</t>
+<t>When the password is salted, the server will during WAMP-CRA send a <spanx style="verb">CHALLENGE</spanx> message containing additional information:
+</t>
+
+<figure align="left"><artwork align="left">
+    [4, "wampcra",
+        {
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
+                \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
+                \"session\": 3251278072152162}",
+            "salt": "salt123",
+            "keylen": 32,
+            "iterations": 1000
+        }
+    ]
+</artwork></figure>
+<t>The <spanx style="verb">CHALLENGE.Details.salt|string</spanx> is the password salt in use. The <spanx style="verb">CHALLENGE.Details.keylen|int</spanx> and <spanx style="verb">CHALLENGE.Details.iterations|int</spanx> are parameters for the PBKDF2 algorithm.
+</t>
+</section>
+</section>
+
+<section anchor="ticketauth" title="Ticket-based Authentication">
+<t>With <spanx style="emph">Ticket-based authentication</spanx>, the client needs to present the server an authentication &quot;ticket&quot; - some magic value to authenticate itself to the server.
+</t>
+<t>This &quot;ticket&quot; could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
+</t>
+<t><list style="empty">
+<t>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
+</t>
+</list></t>
+<t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">ticket</spanx> method as (one of) the authentication methods:
+</t>
+
+<figure align="left"><artwork align="left">
+    [1, "realm1",
+      {
+        "roles": ...,
+        "authmethods": ["ticket"],
+        "authid": "joe"
+      }
+    ]
+</artwork></figure>
+<t>The <spanx style="verb">HELLO.Details.authmethods|list</spanx> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <spanx style="verb">"ticket"</spanx>.
+</t>
+<t>The <spanx style="verb">HELLO.Details.authid|string</spanx> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+</t>
+<t>If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <spanx style="verb">ABORT</spanx> message.
+</t>
+<t>If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <spanx style="verb">authid</spanx>, it'll send a <spanx style="verb">CHALLENGE</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [4, "ticket", {}]
+</artwork></figure>
+<t>The client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing a ticket:
+</t>
+
+<figure align="left"><artwork align="left">
+    [5, "secret!!!", {}]
+</artwork></figure>
+<t>The server will then check if the ticket provided is permissible (for the <spanx style="verb">authid</spanx> given).
+</t>
+<t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [2, 3251278072152162,
+      {
+        "authid": "joe",
+        "authrole": "user",
+        "authmethod": "ticket",
+        "authprovider": "static",
+        "roles": ...
+      }
+    ]
+</artwork></figure>
+<t>where
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">authid|string</spanx>: The authentication ID the client was (actually) authenticated as.</t>
+<t><spanx style="verb">authrole|string</spanx>: The authentication role the client was authenticated for.</t>
+<t><spanx style="verb">authmethod|string</spanx>: The authentication method, here <spanx style="verb">"ticket"</spanx></t>
+<t><spanx style="verb">authprovider|string</spanx>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <spanx style="verb">static</spanx> or <spanx style="verb">dynamic</spanx>.</t>
+</list>
+</t>
+<t>The <spanx style="verb">WELCOME.Details</spanx> again contain the actual authentication information active. If the authentication fails, the server will response with an <spanx style="verb">ABORT</spanx> message.
+</t>
+</section>
+</section>
+
+<section anchor="alternative-transports" title="Alternative Transports">
+<t>The only requirements that WAMP expects from a transport are: the transport must be message-based, bidirectional, reliable and ordered. This allows WAMP to run over different transports without any impact at the application layer.
+</t>
+<t>Besides the WebSocket transport, the following WAMP transports are currently specified:
+</t>
+<t>
+<list style="symbols">
+<t><xref target="rawsocket"/></t>
+<t><xref target="batchedwebsocket"/></t>
+<t><xref target="longpoll"/></t>
+<t><xref target="multiplexed"/></t>
+</list>
+</t>
+<t><list style="empty">
+<t>Other transports such as HTTP 2.0 (&quot;SPDY&quot;) or UDP might be defined in the future.
+</t>
+</list></t>
+
+<section anchor="rawsocket" title="RawSocket Transport">
+<t><spanx style="strong">WAMP-over-RawSocket</spanx> is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.
+</t>
+<t>Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is simple to implement, since there is no need to implement the WebSocket protocol which has some features that make it non-trivial (like a full HTTP-based opening handshake, message fragmentation, masking and variable length integers).
+</t>
+<t>WAMP-over-RawSocket has even lower overhead than WebSocket, which can be desirable in particular when running on local connections like loopback TCP or Unix domain sockets. It is also expected to allow implementations in microcontrollers in under 2KB RAM.
+</t>
+<t>WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on the standard port for secure HTTPS (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).
+</t>
+<t>However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers do not allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (<spanx style="verb">permessage-deflate</spanx> WebSocket extension).
+</t>
+
+<section anchor="endianess" title="Endianess">
+<t>WAMP-over-RawSocket uses <spanx style="emph">network byte order</spanx> (&quot;big-endian&quot;). That means, given a unsigned 32 bit integer
+</t>
+<t>0x 11 22 33 44
+</t>
+<t>the first octet sent out to (or received from) the wire is <spanx style="verb">0x11</spanx> and the last octet sent out (or received) is <spanx style="verb">0x44</spanx>.
+</t>
+<t>Here is how you would convert octets received from the wire into an integer in Python:
+</t>
+
+<figure align="left"><artwork align="left">
+    import struct
+    
+    octets_received = b"\x11\x22\x33\x44"
+    i = struct.unpack("&gt;L", octets_received)[0]
+</artwork></figure>
+<t>The integer received has the value <spanx style="verb">287454020</spanx>.
+</t>
+<t>And here is how you would send out an integer to the wire in Python:
+</t>
+
+<figure align="left"><artwork align="left">
+    octets_to_be_send = struct.pack("&gt;L", i)
+</artwork></figure>
+<t>The octets to be sent are <spanx style="verb">b"\x11\x22\x33\x44"</spanx>.
+</t>
+</section>
+
+<section anchor="handshake" title="Handshake">
+<t><spanx style="strong">Client-to-Router Request</spanx>
+</t>
+<t>WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets:
+</t>
+
+<figure align="center"><artwork align="center">
+MSB                                 LSB
+31                                    0
+0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+</artwork></figure>
+<t>The <spanx style="emph">first octet</spanx> is a magic octet with value <spanx style="verb">0x7F</spanx>. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see <eref target="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1">here</eref> and <eref target="http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2">here</eref>). No valid HTTP request can have <spanx style="verb">0x7F</spanx> as its first octet.
+</t>
+<t><list style="empty">
+<t>By using a magic first octet that cannot appear in a regular HTTP request, WAMP-over-RawSocket can be run e.g. on the same TCP listening port as WAMP-over-WebSocket or WAMP-over-LongPoll.
+</t>
+</list></t>
+<t>The <spanx style="emph">second octet</spanx> consists of a 4 bit <spanx style="verb">LENGTH</spanx> field and a 4 bit <spanx style="verb">SERIALIZER</spanx> field.
+</t>
+<t>The <spanx style="verb">LENGTH</spanx> value is used by the <spanx style="emph">Client</spanx> to signal the <spanx style="strong">maximum message length</spanx> of messages it is willing to <spanx style="strong">receive</spanx>. When the handshake completes successfully, a <spanx style="emph">Router</spanx> MUST NOT send messages larger than this size.
+</t>
+<t>The possible values for <spanx style="verb">LENGTH</spanx> are:
+</t>
+
+<figure align="center"><artwork align="center">
+ 0: 2**9 octets
+ 1: 2**10 octets
+...
+15: 2**24 octets
+</artwork></figure>
+<t>This means a <spanx style="emph">Client</spanx> can choose the maximum message length between <spanx style="strong">512</spanx> and <spanx style="strong">16M</spanx> octets.
+</t>
+<t>The <spanx style="verb">SERIALIZER</spanx> value is used by the <spanx style="emph">Client</spanx> to request a specific serializer to be used. When the handshake completes successfully, the <spanx style="emph">Client</spanx> and <spanx style="emph">Router</spanx> will use the serializer requested by the <spanx style="emph">Client</spanx>.
+</t>
+<t>The possible values for <spanx style="verb">SERIALIZER</spanx> are:
+</t>
+
+<figure align="center"><artwork align="center">
+0: illegal
+1: JSON
+2: MsgPack
+3 - 15: reserved for future serializers
+</artwork></figure>
+<t>Here is a Python program that prints all (currently) permissible values for the <spanx style="emph">second octet</spanx>:
+</t>
+
+<figure align="center"><artwork align="center">
+SERMAP = {
+   1: 'json',
+   2: 'msgpack'
+}
+
+## map serializer / max. msg length to RawSocket handshake request 
+## or success reply (2nd octet)
+##
+for ser in SERMAP:
+   for l in range(16):
+      octet_2 = (l &lt;&lt; 4) | ser
+      print("serializer: {}, maxlen: {} =&gt; 
+          0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+</artwork></figure>
+<t>The <spanx style="emph">third and forth octet</spanx> are <spanx style="strong">reserved</spanx> and MUST be all zeros for now.
+</t>
+<t><spanx style="strong">Router-to-Client Reply</spanx>
+</t>
+<t>After a <spanx style="emph">Client</spanx> has connected to a <spanx style="emph">Router</spanx>, the <spanx style="emph">Router</spanx> will first receive the 4 octets handshake request from the <spanx style="emph">Client</spanx>.
+</t>
+<t>If the <spanx style="emph">first octet</spanx> differs from <spanx style="verb">0x7F</spanx>, it is not a WAMP-over-RawSocket request. Unless the <spanx style="emph">Router</spanx> also supports other transports on the connecting port (such as WebSocket or LongPoll), the <spanx style="emph">Router</spanx> MUST <spanx style="strong">fail the connection</spanx>.
+</t>
+<t>Here is an example of how a <spanx style="emph">Router</spanx> could parse the <spanx style="emph">second octet</spanx> in a <spanx style="emph">Clients</spanx> handshake request:
+</t>
+
+<figure align="center"><artwork align="center">
+## map RawSocket handshake request (2nd octet) to 
+## serializer / max. msg length
+##
+for i in range(256):
+   ser_id = i &amp; 0x0f
+   if ser_id != 0:
+      ser = SERMAP.get(ser_id, 'currently undefined')
+      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+      print("{:02x} =&gt; serializer: {}, maxlen: {}".
+          format(i, ser, maxlen))
+   else:
+      print("fail the connection: illegal serializer value")
+</artwork></figure>
+<t>When the <spanx style="emph">Router</spanx> is willing to speak the serializer requested by the <spanx style="emph">Client</spanx>, it will answer with a 4 octets response of identical structure as the <spanx style="emph">Client</spanx> request:
+</t>
+
+<figure align="center"><artwork align="center">
+MSB                                 LSB
+31                                    0
+0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+</artwork></figure>
+<t>Again, the <spanx style="emph">first octet</spanx> MUST be the value <spanx style="verb">0x7F</spanx>. The <spanx style="emph">third and forth octets</spanx> are reserved and MUST be all zeros for now.
+</t>
+<t>In the <spanx style="emph">second octet</spanx>, the <spanx style="emph">Router</spanx> MUST echo the serializer value in <spanx style="verb">SERIALIZER</spanx> as requested by the <spanx style="emph">Client</spanx>.
+</t>
+<t>Similar to the <spanx style="emph">Client</spanx>, the <spanx style="emph">Router</spanx> sets the <spanx style="verb">LENGTH</spanx> field to request a limit on the length of messages sent by the <spanx style="emph">Client</spanx>.
+</t>
+<t>During the connection, <spanx style="emph">Router</spanx> MUST NOT send messages to the <spanx style="emph">Client</spanx> longer than the <spanx style="verb">LENGTH</spanx> requested by the <spanx style="emph">Client</spanx>, and the <spanx style="emph">Client</spanx> MUST NOT send messages larger than the maximum requested by the <spanx style="emph">Router</spanx> in it's handshake reply.
+</t>
+<t>If a message received during a connection exceeds the limit requested, a <spanx style="emph">Peer</spanx> MUST <spanx style="strong">fail the connection</spanx>.
+</t>
+<t>When the <spanx style="emph">Router</spanx> is unable to speak the serializer requested by the <spanx style="emph">Client</spanx>, or it is denying the <spanx style="emph">Client</spanx> for other reasons, the <spanx style="emph">Router</spanx> replies with an error:
+</t>
+
+<figure align="center"><artwork align="center">
+MSB                                 LSB
+31                                    0
+0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
+</artwork></figure>
+<t>An error reply has 4 octets: the <spanx style="emph">first octet</spanx> is again the magic <spanx style="verb">0x7F</spanx>, and the <spanx style="emph">third and forth octet</spanx> are reserved and MUST all be zeros for now.
+</t>
+<t>The <spanx style="emph">second octet</spanx> has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error:
+</t>
+
+<figure align="center"><artwork align="center">
+0: illegal (must not be used)
+1: serializer unsupported
+2: maximum message length unacceptable
+3: use of reserved bits (unsupported feature)
+4: maximum connection count reached
+5 - 15: reserved for future errors
+</artwork></figure>
+<t><list style="empty">
+<t>Note that the error code <spanx style="verb">0</spanx> MUST not be used. This is to allow storage of error state in a host language variable, while allowing <spanx style="verb">0</spanx> to signal the current state &quot;no error&quot;
+</t>
+</list></t>
+<t>Here is an example of how a <spanx style="emph">Router</spanx> might create the <spanx style="emph">second octet</spanx> in an error response:
+</t>
+
+<figure align="center"><artwork align="center">
+ERRMAP = {
+   0: "illegal (must not be used)",
+   1: "serializer unsupported",
+   2: "maximum message length unacceptable",
+   3: "use of reserved bits (unsupported feature)",
+   4: "maximum connection count reached"
+}
+
+## map error to RawSocket handshake error reply (2nd octet)
+##
+for err in ERRMAP:
+   octet_2 = err &lt;&lt; 4
+   print("error: {} =&gt; 0x{:02x}").format(ERRMAP[err], err)
+</artwork></figure>
+<t>The <spanx style="emph">Client</spanx> - after having sent its handshake request - will wait for the 4 octets from <spanx style="emph">Router</spanx> handshake reply.
+</t>
+<t>Here is an example of how a <spanx style="emph">Client</spanx> might parse the <spanx style="emph">second octet</spanx> in a <spanx style="emph">Router</spanx> handshake reply:
+</t>
+
+<figure align="center"><artwork align="center">
+## map RawSocket handshake reply (2nd octet)
+##
+for i in range(256):
+   ser_id = i &amp; 0x0f
+   if ser_id:
+      ## verify the serializer is the one we requested! 
+      ## if not, fail the connection!
+      ser = SERMAP.get(ser_id, 'currently undefined')
+      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+      print("{:02x} =&gt; serializer: {}, maxlen: {}".
+          format(i, ser, maxlen))
+   else:
+      err = i &gt;&gt; 4
+      print("error: {}".format(ERRMAP.get(err, 
+          'currently undefined')))
+</artwork></figure>
+</section>
+
+<section anchor="serialization" title="Serialization">
+<t>To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MsgPack).
+</t>
+<t>The length of the serialized messages in octets MUST NOT exceed the maximum requested by the <spanx style="emph">Peer</spanx>.
+</t>
+<t>If the serialized length exceed the maximum requested, the WAMP message can not be sent to the <spanx style="emph">Peer</spanx>. Handling situations like the latter is left to the implementation.
+</t>
+<t>E.g. a <spanx style="emph">Router</spanx> that is to forward a WAMP <spanx style="verb">EVENT</spanx> to a <spanx style="emph">Client</spanx> which exceeds the maximum length requested by the <spanx style="emph">Client</spanx> when serialized might:
+</t>
+<t>
+<list style="symbols">
+<t>drop the event (not forwarding to that specific client) and track dropped events</t>
+<t>prohibit publishing to the topic already</t>
+<t>remove the event payload, and send an event with extra information (<spanx style="verb">payload_limit_exceeded = true</spanx>)</t>
+</list>
+</t>
+</section>
+
+<section anchor="framing" title="Framing">
+<t>The serialized octets for a message to be sent are prefixed with exactly 4 octets.
+</t>
+
+<figure align="center"><artwork align="center">
+MSB                                 LSB
+31                                    0
+RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
+</artwork></figure>
+<t>The <spanx style="emph">first octet</spanx> has the following structure
+</t>
+
+<figure align="center"><artwork align="center">
+MSB   LSB
+7       0
+RRRR RTTT
+</artwork></figure>
+<t>The five bits <spanx style="verb">RRRRR</spanx> are reserved for future use and MUST be all zeros for now.
+</t>
+<t>The three bits <spanx style="verb">TTT</spanx> encode the type of the transport message:
+</t>
+
+<figure align="center"><artwork align="center">
+0: regular WAMP message
+1: PING
+2: PONG
+3-7: reserved
+</artwork></figure>
+<t>The <spanx style="emph">three remaining octets</spanx> constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
+</t>
+<t>For a regular WAMP message (<spanx style="verb">TTT == 0</spanx>), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).
+</t>
+<t>For a <spanx style="verb">PING</spanx> message (<spanx style="verb">TTT == 1</spanx>), the length is the length of the arbitrary payload that follows. A <spanx style="emph">Peer</spanx> MUST reply to each <spanx style="verb">PING</spanx> by sending exactly one <spanx style="verb">PONG</spanx> immediately, and the <spanx style="verb">PONG</spanx> MUST echo back the payload of the <spanx style="verb">PING</spanx> exactly.
+</t>
+<t>For receiving messages with WAMP-over-RawSocket, a <spanx style="emph">Peer</spanx> will usually read exactly 4 octets from the incoming stream, decode the transport level message type and payload length, and then receive as many octets as the length was giving.
+</t>
+<t>When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake and the processed at the WAMP level.
+</t>
+</section>
+</section>
+
+<section anchor="batchedwebsocket" title="Batched WebSocket Transport for WAMP">
+<t><spanx style="emph">WAMP-over-Batched-WebSocket</spanx> is a variant of WAMP-over-WebSocket where multiple WAMP messages are sent in one WebSocket message.
+</t>
+<t>Using WAMP message batching can increase wire level efficiency further. In particular when using TLS and the WebSocket implementation is forcing every WebSocket message into a new TLS segment.
+</t>
+<t>WAMP-over-Batched-WebSocket is negotiated between Peers in the WebSocket opening handshake by agreeing on one of the following WebSocket subprotocols:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.2.json.batched</spanx></t>
+<t><spanx style="verb">wamp.2.msgpack.batched</spanx></t>
+</list>
+</t>
+<t>Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character <spanx style="verb">\30</spanx> (<eref target="http://en.wikipedia.org/wiki/Record_separator#Field_separators">record separator</eref>) octet <spanx style="verb">0x1e</spanx> to <spanx style="emph">each</spanx> serialized messages, and packing a sequence of such serialized messages into a single WebSocket message:
+</t>
+
+<figure align="left"><artwork align="left">
+    Serialized JSON WAMP Msg 1 | 0x1e | 
+        Serialized JSON WAMP Msg 2 | 0x1e | ...
+</artwork></figure>
+<t>Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MsgPack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
+</t>
+
+<figure align="left"><artwork align="left">
+    Length of Msg 1 serialization (uint32) | 
+        serialized MsgPack WAMP Msg 1 | ...
+</artwork></figure>
+<t>With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length <spanx style="strong">1</spanx>. Sending a batch of length <spanx style="strong">0</spanx> (no WAMP message) is illegal and a <spanx style="emph">Peer</spanx> MUST fail the transport upon receiving such a transport message.
+</t>
+</section>
+
+<section anchor="longpoll" title="A HTTP Longpoll Transport for WAMP">
+<t>The <spanx style="emph">Long-Poll Transport</spanx> is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the Client issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
+</t>
+<t><spanx style="strong">Opening a Session</spanx>
+</t>
+<t>With the Long-Poll Transport, a Client opens a new WAMP session by sending a HTTP/POST request to a well-known URL, e.g.
+</t>
+
+<figure align="left"><artwork align="left">
+    http://mypp.com/longpoll/open
+</artwork></figure>
+<t>Here, <spanx style="verb">http://mypp.com/longpoll</spanx> is the base URL for the Long-Poll Transport and <spanx style="verb">/open</spanx> is a path dedicated for opening new sessions.
+</t>
+<t>The HTTP/POST request SHOULD have a <spanx style="verb">Content-Type</spanx> header set to <spanx style="verb">application/json</spanx> and MUST have a request body with a JSON document that is a dictionary:
+</t>
+
+<figure align="left"><artwork align="left">
+    {
+       "protocols": ["wamp.2.json"]
+    }
+</artwork></figure>
+<t>The (mandatory) <spanx style="verb">protocols</spanx> attribute specifies the protocols the client is willing to speak. The server will chose one from this list when establishing the session or fail the request when no protocol overlap was found.
+</t>
+<t>The valid protocols are:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.2.json.batched</spanx></t>
+<t><spanx style="verb">wamp.2.json</spanx></t>
+<t><spanx style="verb">wamp.2.msgpack.batched</spanx></t>
+<t><spanx style="verb">wamp.2.msgpack</spanx></t>
+</list>
+</t>
+<t><list style="empty">
+<t>The request path with this and subsequently described HTTP/POST requests MAY contain a query parameter <spanx style="verb">x</spanx> with some random or sequentially incremented value:
+</t>
+<t><eref target="http://mypp.com/longpoll/open?x=382913"/>
+</t>
+<t>The value is ignored, but may help in certain situations to prevent intermediaries from caching the request.
+</t>
+</list></t>
+<t>Returned is a JSON document containing a transport ID and the protocol to speak:
+</t>
+
+<figure align="left"><artwork align="left">
+    {
+       "protocol": "wamp.2.json",
+       "transport": "kjmd3sBLOUnb3Fyr"
+    }
+</artwork></figure>
+<t>As an implied side-effect, two HTTP endpoints are created
+</t>
+
+<figure align="left"><artwork align="left">
+    http://mypp.com/longpoll/&lt;transport_id&gt;/receive
+    http://mypp.com/longpoll/&lt;transport_id&gt;/send
+</artwork></figure>
+<t>where <spanx style="verb">transport_id</spanx> is the transport ID returned from <spanx style="verb">open</spanx>, e.g.
+</t>
+
+<figure align="left"><artwork align="left">
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
+</artwork></figure>
+<t><spanx style="strong">Receiving WAMP Messages</spanx>
+</t>
+<t>The Client will then issue HTTP/POST requests (with empty request body) to
+</t>
+
+<figure align="left"><artwork align="left">
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
+</artwork></figure>
+<t>When there are WAMP messages pending downstream, a request will return with a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).
+</t>
+<t>The serialization format used is the one agreed during opening the session.
+</t>
+<t>The batching uses the same scheme as with <spanx style="verb">wamp.2.json.batched</spanx> and <spanx style="verb">wamp.2.msgpack.batched</spanx> transport over WebSocket.
+</t>
+<t><list style="empty">
+<t>Note: In unbatched mode, when there is more than one message pending, there will be at most one message returned for each request. The other pending messages must be retrieved by new requests. With batched mode, all messages pending at request time will be returned in one batch of messages.
+</t>
+</list></t>
+<t><spanx style="strong">Sending WAMP Messages</spanx>
+</t>
+<t>For sending WAMP messages, the <spanx style="emph">Client</spanx> will issue HTTP/POST requests to
+</t>
+
+<figure align="left"><artwork align="left">
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
+</artwork></figure>
+<t>with request body being a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).
+</t>
+<t>The serialization format used is the one agreed during opening the session.
+</t>
+<t>The batching uses the same scheme as with <spanx style="verb">wamp.2.json.batched</spanx> and <spanx style="verb">wamp.2.msgpack.batched</spanx> transport over WebSocket.
+</t>
+<t>Upon success, the request will return with HTTP status code 202 (&quot;no content&quot;). Upon error, the request will return with HTTP status code 400 (&quot;bad request&quot;).
+</t>
+<t><spanx style="strong">Closing a Session</spanx>
+</t>
+<t>To orderly close a session, a Client will issue a HTTP/POST to
+</t>
+
+<figure align="left"><artwork align="left">
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
+</artwork></figure>
+<t>with an empty request body. Upon success, the request will return with HTTP status code 202 (&quot;no content&quot;).
+</t>
+</section>
+
+<section anchor="multiplexed" title="Multiplexed Transport">
+<t>A Transport may support the multiplexing of multiple logical transports over a single &quot;physical&quot; transport.
+</t>
+<t>By using such a Transport, multiple WAMP sessions can be transported over a single underlying transport at the same time.
+</t>
+<t>As an example, the proposed <eref target="https://github.com/oberstet/permessage-priority/blob/master/draft-oberstein-hybi-permessage-priority.txt">WebSocket extension &quot;permessage-priority&quot;</eref> would allow creating multiple logical Transports for WAMP over a single underlying WebSocket connection.
+</t>
+<t>Sessions running over a multiplexed Transport are completely independent: they get assigned different session IDs, may join different realms and each session needs to authenticate itself.
+</t>
+<t>Because of above, Multiplexed Transports for WAMP are actually not detailed in the WAMP spec, but a feature of the transport being used.
+</t>
+<t><list style="empty">
+<t>Note: Currently no WAMP transport supports multiplexing. The work on the MUX extension with WebSocket has stalled, and the <spanx style="verb">permessage-priority</spanx> proposal above is still just a proposal. However, with RawSocket, we should be able to add multiplexing in the the future (with downward compatibility).
+</t>
+</list></t>
+</section>
+
+<section anchor="ticketauth-1" title="Ticket-based Authentication">
+<t>With <spanx style="emph">Ticket-based authentication</spanx>, the client needs to present the server an authentication &quot;ticket&quot; - some magic value to authenticate itself to the server.
+</t>
+<t>This &quot;ticket&quot; could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
+</t>
+<t><list style="empty">
+<t>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
+</t>
+</list></t>
+<t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">ticket</spanx> method as (one of) the authentication methods:
+</t>
+
+<figure align="left"><artwork align="left">
+    [1, "realm1",
+      {
+        "roles": ...,
+        "authmethods": ["ticket"],
+        "authid": "joe"
+      }
+    ]
+</artwork></figure>
+<t>The <spanx style="verb">HELLO.Details.authmethods|list</spanx> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <spanx style="verb">"ticket"</spanx>.
+</t>
+<t>The <spanx style="verb">HELLO.Details.authid|string</spanx> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+</t>
+<t>If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <spanx style="verb">ABORT</spanx> message.
+</t>
+<t>If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <spanx style="verb">authid</spanx>, it'll send a <spanx style="verb">CHALLENGE</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [4, "ticket", {}]
+</artwork></figure>
+<t>The client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing a ticket:
+</t>
+
+<figure align="left"><artwork align="left">
+    [5, "secret!!!", {}]
+</artwork></figure>
+<t>The server will then check if the ticket provided is permissible (for the <spanx style="verb">authid</spanx> given).
+</t>
+<t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [2, 3251278072152162,
+      {
+        "authid": "joe",
+        "authrole": "user",
+        "authmethod": "ticket",
+        "authprovider": "static",
+        "roles": ...
+      }
+    ]
+</artwork></figure>
+<t>where
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">authid|string</spanx>: The authentication ID the client was (actually) authenticated as.</t>
+<t><spanx style="verb">authrole|string</spanx>: The authentication role the client was authenticated for.</t>
+<t><spanx style="verb">authmethod|string</spanx>: The authentication method, here <spanx style="verb">"ticket"</spanx></t>
+<t><spanx style="verb">authprovider|string</spanx>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <spanx style="verb">static</spanx> or <spanx style="verb">dynamic</spanx>.</t>
+</list>
+</t>
+<t>The <spanx style="verb">WELCOME.Details</spanx> again contain the actual authentication information active. If the authentication fails, the server will response with an <spanx style="verb">ABORT</spanx> message.
+</t>
+</section>
+
+<section anchor="ticketauth-2" title="Ticket-based Authentication">
+<t>With <spanx style="emph">Ticket-based authentication</spanx>, the client needs to present the server an authentication &quot;ticket&quot; - some magic value to authenticate itself to the server.
+</t>
+<t>This &quot;ticket&quot; could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
+</t>
+<t><list style="empty">
+<t>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
+</t>
+</list></t>
+<t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">ticket</spanx> method as (one of) the authentication methods:
+</t>
+
+<figure align="left"><artwork align="left">
+    [1, "realm1",
+      {
+        "roles": ...,
+        "authmethods": ["ticket"],
+        "authid": "joe"
+      }
+    ]
+</artwork></figure>
+<t>The <spanx style="verb">HELLO.Details.authmethods|list</spanx> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <spanx style="verb">"ticket"</spanx>.
+</t>
+<t>The <spanx style="verb">HELLO.Details.authid|string</spanx> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
+</t>
+<t>If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <spanx style="verb">ABORT</spanx> message.
+</t>
+<t>If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <spanx style="verb">authid</spanx>, it'll send a <spanx style="verb">CHALLENGE</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [4, "ticket", {}]
+</artwork></figure>
+<t>The client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing a ticket:
+</t>
+
+<figure align="left"><artwork align="left">
+    [5, "secret!!!", {}]
+</artwork></figure>
+<t>The server will then check if the ticket provided is permissible (for the <spanx style="verb">authid</spanx> given).
+</t>
+<t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
+</t>
+
+<figure align="left"><artwork align="left">
+    [2, 3251278072152162,
+      {
+        "authid": "joe",
+        "authrole": "user",
+        "authmethod": "ticket",
+        "authprovider": "static",
+        "roles": ...
+      }
+    ]
+</artwork></figure>
+<t>where
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">authid|string</spanx>: The authentication ID the client was (actually) authenticated as.</t>
+<t><spanx style="verb">authrole|string</spanx>: The authentication role the client was authenticated for.</t>
+<t><spanx style="verb">authmethod|string</spanx>: The authentication method, here <spanx style="verb">"ticket"</spanx></t>
+<t><spanx style="verb">authprovider|string</spanx>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <spanx style="verb">static</spanx> or <spanx style="verb">dynamic</spanx>.</t>
+</list>
+</t>
+<t>The <spanx style="verb">WELCOME.Details</spanx> again contain the actual authentication information active. If the authentication fails, the server will response with an <spanx style="verb">ABORT</spanx> message.
+</t>
+</section>
 </section>
 </section>
 </section>

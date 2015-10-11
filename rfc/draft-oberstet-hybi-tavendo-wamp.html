@@ -449,10 +449,12 @@
 <link href="#rfc.section.9.2.5" rel="Chapter" title="9.2.5 Invocation ERROR"/>
 <link href="#rfc.section.9.2.6" rel="Chapter" title="9.2.6 Call ERROR"/>
 <link href="#rfc.section.10" rel="Chapter" title="10 Predefined URIs"/>
-<link href="#rfc.section.10.1" rel="Chapter" title="10.1 Incorrect URIs"/>
-<link href="#rfc.section.10.2" rel="Chapter" title="10.2 Interaction"/>
-<link href="#rfc.section.10.3" rel="Chapter" title="10.3 Session Close"/>
-<link href="#rfc.section.10.4" rel="Chapter" title="10.4 Authorization"/>
+<link href="#rfc.section.10.1" rel="Chapter" title="10.1 Basic Profile"/>
+<link href="#rfc.section.10.1.1" rel="Chapter" title="10.1.1 Incorrect URIs"/>
+<link href="#rfc.section.10.1.2" rel="Chapter" title="10.1.2 Interaction"/>
+<link href="#rfc.section.10.1.3" rel="Chapter" title="10.1.3 Session Close"/>
+<link href="#rfc.section.10.1.4" rel="Chapter" title="10.1.4 Authorization"/>
+<link href="#rfc.section.10.2" rel="Chapter" title="10.2 Advanced Profile"/>
 <link href="#rfc.section.11" rel="Chapter" title="11 Ordering Guarantees"/>
 <link href="#rfc.section.11.1" rel="Chapter" title="11.1 Publish &amp; Subscribe Ordering"/>
 <link href="#rfc.section.11.2" rel="Chapter" title="11.2 Remote Procedure Call Ordering"/>
@@ -489,13 +491,16 @@
 <link href="#rfc.section.13.6" rel="Chapter" title="13.6 Feature Announcement"/>
 <link href="#rfc.section.13.6.1" rel="Chapter" title="13.6.1 Publisher Identification"/>
 <link href="#rfc.section.13.6.2" rel="Chapter" title="13.6.2 Publication Trust Levels"/>
-<link href="#rfc.section.13.6.3" rel="Chapter" title="13.6.3 Session Meta API"/>
-<link href="#rfc.section.13.6.4" rel="Chapter" title="13.6.4 Subscription Meta API"/>
-<link href="#rfc.section.13.6.5" rel="Chapter" title="13.6.5 Pattern-based Subscriptions"/>
-<link href="#rfc.section.13.6.6" rel="Chapter" title="13.6.6 Sharded Subscription"/>
-<link href="#rfc.section.13.6.7" rel="Chapter" title="13.6.7 Event History"/>
-<link href="#rfc.section.13.6.8" rel="Chapter" title="13.6.8 Registration Revocation"/>
-<link href="#rfc.section.13.6.9" rel="Chapter" title="13.6.9 Topic Reflection"/>
+<link href="#rfc.section.13.6.3" rel="Chapter" title="13.6.3 Subscription Meta API"/>
+<link href="#rfc.section.13.6.4" rel="Chapter" title="13.6.4 Pattern-based Subscriptions"/>
+<link href="#rfc.section.13.6.5" rel="Chapter" title="13.6.5 Sharded Subscriptions"/>
+<link href="#rfc.section.13.6.6" rel="Chapter" title="13.6.6 Event History"/>
+<link href="#rfc.section.13.6.7" rel="Chapter" title="13.6.7 Registration Revocation"/>
+<link href="#rfc.section.13.6.8" rel="Chapter" title="13.6.8 Topic Reflection"/>
+<link href="#rfc.section.13.7" rel="Chapter" title="13.7 Other Advanced Features"/>
+<link href="#rfc.section.13.7.1" rel="Chapter" title="13.7.1 Session Meta API"/>
+<link href="#rfc.section.13.7.2" rel="Chapter" title="13.7.2 Authentication"/>
+<link href="#rfc.section.13.7.3" rel="Chapter" title="13.7.3 Alternative Transports"/>
 <link href="#rfc.section.14" rel="Chapter" title="14 Binary conversion of JSON Strings"/>
 <link href="#rfc.section.14.1" rel="Chapter" title="14.1 Python"/>
 <link href="#rfc.section.14.2" rel="Chapter" title="14.2 JavaScript"/>
@@ -646,10 +651,12 @@
 <li>9.2.5.   <a href="#rfc.section.9.2.5">Invocation ERROR</a></li>
 <li>9.2.6.   <a href="#rfc.section.9.2.6">Call ERROR</a></li>
 </ul></ul><li>10.   <a href="#rfc.section.10">Predefined URIs</a></li>
-<ul><li>10.1.   <a href="#rfc.section.10.1">Incorrect URIs</a></li>
-<li>10.2.   <a href="#rfc.section.10.2">Interaction</a></li>
-<li>10.3.   <a href="#rfc.section.10.3">Session Close</a></li>
-<li>10.4.   <a href="#rfc.section.10.4">Authorization</a></li>
+<ul><li>10.1.   <a href="#rfc.section.10.1">Basic Profile</a></li>
+<ul><li>10.1.1.   <a href="#rfc.section.10.1.1">Incorrect URIs</a></li>
+<li>10.1.2.   <a href="#rfc.section.10.1.2">Interaction</a></li>
+<li>10.1.3.   <a href="#rfc.section.10.1.3">Session Close</a></li>
+<li>10.1.4.   <a href="#rfc.section.10.1.4">Authorization</a></li>
+</ul><li>10.2.   <a href="#rfc.section.10.2">Advanced Profile</a></li>
 </ul><li>11.   <a href="#rfc.section.11">Ordering Guarantees</a></li>
 <ul><li>11.1.   <a href="#rfc.section.11.1">Publish &amp; Subscribe Ordering</a></li>
 <li>11.2.   <a href="#rfc.section.11.2">Remote Procedure Call Ordering</a></li>
@@ -686,13 +693,16 @@
 <li>13.6.   <a href="#rfc.section.13.6">Feature Announcement</a></li>
 <ul><li>13.6.1.   <a href="#rfc.section.13.6.1">Publisher Identification</a></li>
 <li>13.6.2.   <a href="#rfc.section.13.6.2">Publication Trust Levels</a></li>
-<li>13.6.3.   <a href="#rfc.section.13.6.3">Session Meta API</a></li>
-<li>13.6.4.   <a href="#rfc.section.13.6.4">Subscription Meta API</a></li>
-<li>13.6.5.   <a href="#rfc.section.13.6.5">Pattern-based Subscriptions</a></li>
-<li>13.6.6.   <a href="#rfc.section.13.6.6">Sharded Subscription</a></li>
-<li>13.6.7.   <a href="#rfc.section.13.6.7">Event History</a></li>
-<li>13.6.8.   <a href="#rfc.section.13.6.8">Registration Revocation</a></li>
-<li>13.6.9.   <a href="#rfc.section.13.6.9">Topic Reflection</a></li>
+<li>13.6.3.   <a href="#rfc.section.13.6.3">Subscription Meta API</a></li>
+<li>13.6.4.   <a href="#rfc.section.13.6.4">Pattern-based Subscriptions</a></li>
+<li>13.6.5.   <a href="#rfc.section.13.6.5">Sharded Subscriptions</a></li>
+<li>13.6.6.   <a href="#rfc.section.13.6.6">Event History</a></li>
+<li>13.6.7.   <a href="#rfc.section.13.6.7">Registration Revocation</a></li>
+<li>13.6.8.   <a href="#rfc.section.13.6.8">Topic Reflection</a></li>
+</ul><li>13.7.   <a href="#rfc.section.13.7">Other Advanced Features</a></li>
+<ul><li>13.7.1.   <a href="#rfc.section.13.7.1">Session Meta API</a></li>
+<li>13.7.2.   <a href="#rfc.section.13.7.2">Authentication</a></li>
+<li>13.7.3.   <a href="#rfc.section.13.7.3">Alternative Transports</a></li>
 </ul></ul><li>14.   <a href="#rfc.section.14">Binary conversion of JSON Strings</a></li>
 <ul><li>14.1.   <a href="#rfc.section.14.1">Python</a></li>
 <li>14.2.   <a href="#rfc.section.14.2">JavaScript</a></li>
@@ -2786,56 +2796,57 @@
     [8, 48, 7814135, {}, "wamp.error.no_such_procedure"]
 </pre>
 <h1 id="rfc.section.10"><a href="#rfc.section.10">10.</a> <a href="#predefined-uris" id="predefined-uris">Predefined URIs</a></h1>
-<p id="rfc.section.10.p.1">WAMP pre-defines the following error URIs as part of this Basic Profile, which cover the full set of error states for the Basic Profile. Additional error URIs are defined as part of the Advanced Profile to cover error states for the Advanced Profile. WAMP peers MUST use only the defined error messages.  </p>
-<h1 id="rfc.section.10.1"><a href="#rfc.section.10.1">10.1.</a> <a href="#incorrect-uris" id="incorrect-uris">Incorrect URIs</a></h1>
-<p id="rfc.section.10.1.p.1">When a <em>Peer</em> provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other <em>Peer</em> MUST respond with an <samp>ERROR</samp> message and give the following <em>Error URI</em>: </p>
+<p id="rfc.section.10.p.1">WAMP pre-defines the following error URIs for the basic and for the advanced profile. WAMP peers MUST use only the defined error messages.  </p>
+<h1 id="rfc.section.10.1"><a href="#rfc.section.10.1">10.1.</a> <a href="#basic-profile" id="basic-profile">Basic Profile</a></h1>
+<h1 id="rfc.section.10.1.1"><a href="#rfc.section.10.1.1">10.1.1.</a> <a href="#incorrect-uris" id="incorrect-uris">Incorrect URIs</a></h1>
+<p id="rfc.section.10.1.1.p.1">When a <em>Peer</em> provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other <em>Peer</em> MUST respond with an <samp>ERROR</samp> message and give the following <em>Error URI</em>: </p>
 <pre>
     wamp.error.invalid_uri
 </pre>
-<h1 id="rfc.section.10.2"><a href="#rfc.section.10.2">10.2.</a> <a href="#interaction" id="interaction">Interaction</a></h1>
+<h1 id="rfc.section.10.1.2"><a href="#rfc.section.10.1.2">10.1.2.</a> <a href="#interaction" id="interaction">Interaction</a></h1>
 <p><em>Peer</em> provided an incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure </p>
 <pre>
     wamp.error.invalid_uri
 </pre>
-<p id="rfc.section.10.2.p.2">A <em>Dealer</em> could not perform a call, since no procedure is currently registered under the given URI.  </p>
+<p id="rfc.section.10.1.2.p.2">A <em>Dealer</em> could not perform a call, since no procedure is currently registered under the given URI.  </p>
 <pre>
     wamp.error.no_such_procedure
 </pre>
-<p id="rfc.section.10.2.p.3">A procedure could not be registered, since a procedure with the given URI is already registered.  </p>
+<p id="rfc.section.10.1.2.p.3">A procedure could not be registered, since a procedure with the given URI is already registered.  </p>
 <pre>
     wamp.error.procedure_already_exists
 </pre>
-<p id="rfc.section.10.2.p.4">A <em>Dealer</em> could not perform an unregister, since the given registration is not active.  </p>
+<p id="rfc.section.10.1.2.p.4">A <em>Dealer</em> could not perform an unregister, since the given registration is not active.  </p>
 <pre>
     wamp.error.no_such_registration
 </pre>
-<p id="rfc.section.10.2.p.5">A <em>Broker</em> could not perform an unsubscribe, since the given subscription is not active.  </p>
+<p id="rfc.section.10.1.2.p.5">A <em>Broker</em> could not perform an unsubscribe, since the given subscription is not active.  </p>
 <pre>
     wamp.error.no_such_subscription
 </pre>
-<p id="rfc.section.10.2.p.6">A call failed since the given argument types or values are not acceptable to the called procedure. In this case the <em>Callee</em> may throw this error. Alternatively a <em>Router</em> may throw this error if it performed <em>payload validation</em> of a call, call result, call error or publish, and the payload did not conform to the requirements.  </p>
+<p id="rfc.section.10.1.2.p.6">A call failed since the given argument types or values are not acceptable to the called procedure. In this case the <em>Callee</em> may throw this error. Alternatively a <em>Router</em> may throw this error if it performed <em>payload validation</em> of a call, call result, call error or publish, and the payload did not conform to the requirements.  </p>
 <pre>
     wamp.error.invalid_argument
 </pre>
-<h1 id="rfc.section.10.3"><a href="#rfc.section.10.3">10.3.</a> <a href="#session-close" id="session-close">Session Close</a></h1>
-<p id="rfc.section.10.3.p.1">The <em>Peer</em> is shutting down completely - used as a <samp>GOODBYE</samp> (or <samp>ABORT</samp>) reason.  </p>
+<h1 id="rfc.section.10.1.3"><a href="#rfc.section.10.1.3">10.1.3.</a> <a href="#session-close" id="session-close">Session Close</a></h1>
+<p id="rfc.section.10.1.3.p.1">The <em>Peer</em> is shutting down completely - used as a <samp>GOODBYE</samp> (or <samp>ABORT</samp>) reason.  </p>
 <pre>
     wamp.error.system_shutdown
 </pre>
-<p id="rfc.section.10.3.p.2">The <em>Peer</em> want to leave the realm - used as a <samp>GOODBYE</samp> reason.  </p>
+<p id="rfc.section.10.1.3.p.2">The <em>Peer</em> want to leave the realm - used as a <samp>GOODBYE</samp> reason.  </p>
 <pre>
     wamp.error.close_realm
 </pre>
-<p id="rfc.section.10.3.p.3">A <em>Peer</em> acknowledges ending of a session - used as a <samp>GOODBYE</samp> reply reason.  </p>
+<p id="rfc.section.10.1.3.p.3">A <em>Peer</em> acknowledges ending of a session - used as a <samp>GOODBYE</samp> reply reason.  </p>
 <pre>
     wamp.error.goodbye_and_out
 </pre>
-<h1 id="rfc.section.10.4"><a href="#rfc.section.10.4">10.4.</a> <a href="#authorization" id="authorization">Authorization</a></h1>
-<p id="rfc.section.10.4.p.1">A join, call, register, publish or subscribe failed, since the <em>Peer</em> is not authorized to perform the operation.  </p>
+<h1 id="rfc.section.10.1.4"><a href="#rfc.section.10.1.4">10.1.4.</a> <a href="#authorization" id="authorization">Authorization</a></h1>
+<p id="rfc.section.10.1.4.p.1">A join, call, register, publish or subscribe failed, since the <em>Peer</em> is not authorized to perform the operation.  </p>
 <pre>
     wamp.error.not_authorized
 </pre>
-<p id="rfc.section.10.4.p.2">A <em>Dealer</em> or <em>Broker</em> could not determine if the <em>Peer</em> is authorized to perform a join, call, register, publish or subscribe, since the authorization operation <em>itself</em> failed. E.g. a custom authorizer did run into an error.  </p>
+<p id="rfc.section.10.1.4.p.2">A <em>Dealer</em> or <em>Broker</em> could not determine if the <em>Peer</em> is authorized to perform a join, call, register, publish or subscribe, since the authorization operation <em>itself</em> failed. E.g. a custom authorizer did run into an error.  </p>
 <pre>
     wamp.error.authorization_failed
 </pre>
@@ -2843,9 +2854,30 @@
 <pre>
     wamp.error.no_such_realm
 </pre>
-<p id="rfc.section.10.4.p.4">A <em>Peer</em> was to be authenticated under a Role that does not (or no longer) exists on the Router. For example, the <em>Peer</em> was successfully authenticated, but the Role configured does not exists - hence there is some misconfiguration in the Router.  </p>
+<p id="rfc.section.10.1.4.p.4">A <em>Peer</em> was to be authenticated under a Role that does not (or no longer) exists on the Router. For example, the <em>Peer</em> was successfully authenticated, but the Role configured does not exists - hence there is some misconfiguration in the Router.  </p>
 <pre>
     wamp.error.no_such_role
+</pre>
+<h1 id="rfc.section.10.2"><a href="#rfc.section.10.2">10.2.</a> <a href="#advanced-profile" id="advanced-profile">Advanced Profile</a></h1>
+<p id="rfc.section.10.2.p.1">uri<em>Dealer</em> or&#160;<em>Callee</em> canceled a call previously issued </p>
+<pre>
+    wamp.error.canceled
+</pre>
+<p id="rfc.section.10.2.p.2">A <em>Peer</em> requested an interaction with an option that was disallowed by the <em>Router</em> </p>
+<pre>
+    wamp.error.option_not_allowed
+</pre>
+<p id="rfc.section.10.2.p.3">A <em>Dealer</em> could not perform a call, since a procedure with the given URI is registered, but <em>Callee Black- and Whitelisting</em> and/or <em>Caller Exclusion</em> lead to the exclusion of (any) <em>Callee</em> providing the procedure.  </p>
+<pre>
+    wamp.error.no_eligible_callee
+</pre>
+<p id="rfc.section.10.2.p.4">A <em>Router</em> rejected client request to disclose its identity </p>
+<pre>
+    wamp.error.option_disallowed.disclose_me
+</pre>
+<p id="rfc.section.10.2.p.5">A <em>Router</em> encountered a network failure </p>
+<pre>
+    wamp.error.network_failure
 </pre>
 <h1 id="rfc.section.11"><a href="#rfc.section.11">11.</a> <a href="#ordering-guarantees" id="ordering-guarantees">Ordering Guarantees</a></h1>
 <p id="rfc.section.11.p.1">All WAMP implementations, in particular <em>Routers</em> MUST support the following ordering guarantees.  </p>
@@ -2898,7 +2930,7 @@
 <p><em>Routers</em> need to read the application payloads in cases of automatic conversion between different serialization formats.  </p>
 <p id="rfc.section.12.3.1.p.5">Further, <em>Routers</em> are trusted to <strong>actually perform</strong> routing as specified. E.g. a <em>Client</em> that publishes an event has to trust a <em>Router</em> that the event is actually dispatched to all (eligible) <em>Subscribers</em> by the <em>Router</em>.  </p>
 <p id="rfc.section.12.3.1.p.6">A rogue <em>Router</em> might deny normal routing operation without a <em>Client</em> taking notice.  </p>
-<h1 id="rfc.section.13"><a href="#rfc.section.13">13.</a> <a href="#advanced-profile" id="advanced-profile">Advanced Profile</a></h1>
+<h1 id="rfc.section.13"><a href="#rfc.section.13">13.</a> <a href="#advanced-profile-1" id="advanced-profile-1">Advanced Profile</a></h1>
 <p id="rfc.section.13.p.1">While implementations MUST implement the subset of the Basic Profile necessary for the particular set of WAMP roles they provide, they MAY implement any subset of features from the Advanced Profile. Implementers SHOULD implement the maximum of features possible considering the aims of an implementation.  </p>
 <p/>
 
@@ -4178,10 +4210,19 @@
 <p id="rfc.section.13.3.10.p.1">Feature status: <strong>sketch</strong> </p>
 <h1 id="rfc.section.13.3.10.1"><a href="#rfc.section.13.3.10.1">13.3.10.1.</a> <a href="#feature-definition-8" id="feature-definition-8">Feature Definition</a></h1>
 <p><strong>Sharded Registrations</strong> are intended to allow calling a procedure which is offered by a sharded database, by routing the call to a single shard.  </p>
+<h1 id="rfc.section.13.3.10.2"><a href="#rfc.section.13.3.10.2">13.3.10.2.</a> <a href="#partitioned-calls" id="partitioned-calls">"Partitioned" Calls</a></h1>
+<p id="rfc.section.13.3.10.2.p.1">If <samp>CALL.Options.runmode == "partition"</samp>, then <samp>CALL.Options.rkey</samp> MUST be present.  </p>
+<p id="rfc.section.13.3.10.2.p.2">The call is then routed to all endpoints that were registered ..  </p>
+<p id="rfc.section.13.3.10.2.p.3">The call is then processed as for "All" Calls.  </p>
+<h1 id="rfc.section.13.3.10.3"><a href="#rfc.section.13.3.10.3">13.3.10.3.</a> <a href="#feature-announcement-8" id="feature-announcement-8">Feature Announcement</a></h1>
+<p id="rfc.section.13.3.10.3.p.1">Support for this feature MUST be announced by <em>Callers</em> (<samp>role := "caller"</samp>), <em>Callees</em> (<samp>role := "callee"</samp>) and <em>Dealers</em> (<samp>role := "dealer"</samp>) via </p>
+<pre>
+HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
+</pre>
 <h1 id="rfc.section.13.3.11"><a href="#rfc.section.13.3.11">13.3.11.</a> <a href="#registration-revocation" id="registration-revocation">Registration Revocation</a></h1>
 <h1 id="rfc.section.13.3.11.1"><a href="#rfc.section.13.3.11.1">13.3.11.1.</a> <a href="#feature-definition-9" id="feature-definition-9">Feature Definition</a></h1>
 <p id="rfc.section.13.3.11.1.p.1">Actively and forcefully revoke a previously granted registration from a session.  </p>
-<h1 id="rfc.section.13.3.11.2"><a href="#rfc.section.13.3.11.2">13.3.11.2.</a> <a href="#feature-announcement-8" id="feature-announcement-8">Feature Announcement</a></h1>
+<h1 id="rfc.section.13.3.11.2"><a href="#rfc.section.13.3.11.2">13.3.11.2.</a> <a href="#feature-announcement-9" id="feature-announcement-9">Feature Announcement</a></h1>
 <h1 id="rfc.section.13.3.12"><a href="#rfc.section.13.3.12">13.3.12.</a> <a href="#procedure-reflection" id="procedure-reflection">Procedure Reflection</a></h1>
 <p id="rfc.section.13.3.12.p.1">Feature status: <strong>sketch</strong> </p>
 <p><em>Reflection</em> denotes the ability of WAMP peers to examine the procedures, topics and errors provided or used by other peers.  </p>
@@ -4350,7 +4391,7 @@
     ]
 </pre>
 <p id="rfc.section.13.4.1.3.p.14">The above event will get dispatched to WAMP sessions with IDs <samp>1245751</samp> or <samp>9912315</samp> only, since <samp>7891255</samp> is excluded - but only if those are actually subscribed to the topic <samp>com.myapp.mytopic1</samp>.  </p>
-<h1 id="rfc.section.13.4.1.4"><a href="#rfc.section.13.4.1.4">13.4.1.4.</a> <a href="#feature-announcement-9" id="feature-announcement-9">Feature Announcement</a></h1>
+<h1 id="rfc.section.13.4.1.4"><a href="#rfc.section.13.4.1.4">13.4.1.4.</a> <a href="#feature-announcement-10" id="feature-announcement-10">Feature Announcement</a></h1>
 <p id="rfc.section.13.4.1.4.p.1">Support for this feature MUST be announced by <em>Publishers</em> (<samp>role := "publisher"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
 <pre>
     HELLO.Details.roles.&lt;role&gt;.features.
@@ -4377,7 +4418,7 @@
     ]
 </pre>
 <p id="rfc.section.13.5.p.5">In this example, the <em>Publisher</em> will receive the published event, if it is subscribed to <samp>com.myapp.mytopic1</samp>.  </p>
-<h1 id="rfc.section.13.6"><a href="#rfc.section.13.6">13.6.</a> <a href="#feature-announcement-10" id="feature-announcement-10">Feature Announcement</a></h1>
+<h1 id="rfc.section.13.6"><a href="#rfc.section.13.6">13.6.</a> <a href="#feature-announcement-11" id="feature-announcement-11">Feature Announcement</a></h1>
 <p id="rfc.section.13.6.p.1">Support for this feature MUST be announced by <em>Publishers</em> (<samp>role := "publisher"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
 <pre>
     HELLO.Details.roles.&lt;role&gt;.features.
@@ -4406,7 +4447,7 @@
     [8, 239714735, {}, "wamp.error.option_disallowed.disclose_me"]
 </pre>
 <p id="rfc.section.13.6.1.1.p.7">A <em>Broker</em> may also (automatically) disclose the identity of a <em>Publisher</em> even without the <em>Publisher</em> having explicitly requested to do so when the <em>Broker</em> configuration (for the publication topic) is set up to do so.  </p>
-<h1 id="rfc.section.13.6.1.2"><a href="#rfc.section.13.6.1.2">13.6.1.2.</a> <a href="#feature-announcement-11" id="feature-announcement-11">Feature Announcement</a></h1>
+<h1 id="rfc.section.13.6.1.2"><a href="#rfc.section.13.6.1.2">13.6.1.2.</a> <a href="#feature-announcement-12" id="feature-announcement-12">Feature Announcement</a></h1>
 <p id="rfc.section.13.6.1.2.p.1">Support for this feature MUST be announced by <em>Publishers</em> (<samp>role := "publisher"</samp>), <em>Brokers</em> (<samp>role := "broker"</samp>) and <em>Subscribers</em> (<samp>role := "subscriber"</samp>) via </p>
 <pre>
     HELLO.Details.roles.&lt;role&gt;.features.
@@ -4426,23 +4467,505 @@
         ["Hello, world!"]]
 </pre>
 <p id="rfc.section.13.6.2.1.p.5">In above event, the <em>Broker</em> has (by configuration and/or other information) deemed the event publication to be of trustlevel <samp>2</samp>.  </p>
-<h1 id="rfc.section.13.6.2.2"><a href="#rfc.section.13.6.2.2">13.6.2.2.</a> <a href="#feature-announcement-12" id="feature-announcement-12">Feature Announcement</a></h1>
+<h1 id="rfc.section.13.6.2.2"><a href="#rfc.section.13.6.2.2">13.6.2.2.</a> <a href="#feature-announcement-13" id="feature-announcement-13">Feature Announcement</a></h1>
 <p id="rfc.section.13.6.2.2.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
 <pre>
     HELLO.Details.roles.&lt;role&gt;.features.
         publication_trustlevels|bool := true
 </pre>
-<h1 id="rfc.section.13.6.3"><a href="#rfc.section.13.6.3">13.6.3.</a> <a href="#session-meta-api" id="session-meta-api">Session Meta API</a></h1>
-<h1 id="rfc.section.13.6.3.1"><a href="#rfc.section.13.6.3.1">13.6.3.1.</a> <a href="#introduction-4" id="introduction-4">Introduction</a></h1>
-<p id="rfc.section.13.6.3.1.p.1">WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via <strong>Session Meta Events</strong>. It also allows retrieving information about currently connected sessions via <strong>Session Meta Procedures</strong>.  </p>
-<p id="rfc.section.13.6.3.1.p.2">Meta events are created by the router itself. This means that the events, as well as the data received when calling a meta procedure, can be accorded the same trust level as the router.  </p>
+<h1 id="rfc.section.13.6.3"><a href="#rfc.section.13.6.3">13.6.3.</a> <a href="#subscription-meta-api" id="subscription-meta-api">Subscription Meta API</a></h1>
+<p id="rfc.section.13.6.3.p.1">Within an application, it may be desirable for a publisher to know whether a publication to a specific topic currently makes sense, i.e. whether there are any subscribers who would receive an event based on the publication. It may also be desirable to keep a current count of subscribers to a topic to then be able to filter out any subscribers who are not supposed to receive an event.  </p>
+<p id="rfc.section.13.6.3.p.2">Subscription <em>meta-events</em> are fired when topics are first created, when clients subscribe/unsubscribe to them, and when topics are deleted. WAMP allows retrieving information about subscriptions via subscription <em>meta-procedures</em>.  </p>
+<p id="rfc.section.13.6.3.p.3">Support for this feature MUST be announced by Brokers via </p>
+<pre>
+    HELLO.Details.roles.broker.features.subscription_meta_api|
+        bool := true
+</pre>
+<p id="rfc.section.13.6.3.p.4">Meta-events are created by the router itself. This means that the events as well as the data received when calling a meta-procedure can be accorded the same trust level as the router.  </p>
+<h1 id="rfc.section.13.6.3.1"><a href="#rfc.section.13.6.3.1">13.6.3.1.</a> <a href="#subscription-metaevents" id="subscription-metaevents">Subscription Meta-Events</a></h1>
+<p id="rfc.section.13.6.3.1.p.1">A client can subscribe to the following session meta-events, which cover the lifecycle of a subscription: </p>
+<p/>
+
+<ul>
+  <li><samp>wamp.subscription.on_create</samp>: Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.</li>
+  <li><samp>wamp.subscription.on_subscribe</samp>: Fired when a session is added to a subscription.</li>
+  <li><samp>wamp.subscription.on_unsubscribe</samp>: Fired when a session is removed from a subscription.</li>
+  <li><samp>wamp.subscription.on_delete</samp>: Fired when a subscription is deleted after the last session attached to it has been removed.</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.13.6.3.1.p.3">A <samp>wamp.subscription.on_subscribe</samp> event MUST always be fired subsequent to a <samp>wamp.subscription.on_create</samp> event, since the first subscribe results in both the creation of the subscription and the addition of a session. Similarly, the <samp>wamp.subscription.on_delete</samp> event MUST always be preceded by a <samp>wamp.subscription.on_unsubscribe</samp> event.  </p>
+<p id="rfc.section.13.6.3.1.p.4">The WAMP subscription meta events shall be dispatched by the router to the same realm as the WAMP session which triggered the event.  </p>
+<h1 id="rfc.section.13.6.3.1.1"><a href="#rfc.section.13.6.3.1.1">13.6.3.1.1.</a> <a href="#metaevent-specifications" id="metaevent-specifications">Meta-Event Specifications</a></h1>
+<h1 id="rfc.section.13.6.3.1.1.1"><a href="#rfc.section.13.6.3.1.1.1">13.6.3.1.1.1.</a> <a href="#wampsubscriptiononcreate" id="wampsubscriptiononcreate">wamp.subscription.on_create</a></h1>
+<p id="rfc.section.13.6.3.1.1.1.p.1">Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.  </p>
+<p><strong>Event Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>session|id</samp>: ID of the session performing the subscription request.</li>
+  <li><samp>SubscriptionDetails|dict</samp>: Information on the created subscription.</li>
+</ul>
+
+<p> </p>
+<p><strong>Object Schemas</strong> </p>
+<pre>
+      SubscriptionDetails :=
+      {
+          "id": subscription|id,
+          "created": time_created|iso_8601_string,
+          "uri": topic|uri,
+          "match": match_policy|string
+      }
+</pre>
+<p id="rfc.section.13.6.3.1.1.1.p.5">See <a href="#pattern-based-subscriptions">Section 13.6.4</a> for a description of <samp>match_policy</samp>.  </p>
+<h1 id="rfc.section.13.6.3.1.1.2"><a href="#rfc.section.13.6.3.1.1.2">13.6.3.1.1.2.</a> <a href="#wampsubscriptiononsubscribe" id="wampsubscriptiononsubscribe">wamp.subscription.on_subscribe</a></h1>
+<p id="rfc.section.13.6.3.1.1.2.p.1">Fired when a session is added to a subscription.  </p>
+<p><strong>Event Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>session|id</samp>: ID of the session being added to a subscription.</li>
+  <li><samp>subscription|id</samp>: ID of the subscription to which the session is being added.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.3.1.1.3"><a href="#rfc.section.13.6.3.1.1.3">13.6.3.1.1.3.</a> <a href="#wampsubscriptiononunsubscribe" id="wampsubscriptiononunsubscribe">wamp.subscription.on_unsubscribe</a></h1>
+<p id="rfc.section.13.6.3.1.1.3.p.1">Fired when a session is removed from a subscription.  </p>
+<p><strong>Event Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>session|id</samp>: ID of the session being removed from a subscription.</li>
+  <li><samp>subscription|id</samp>: ID of the subscription from which the session is being removed.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.3.1.1.4"><a href="#rfc.section.13.6.3.1.1.4">13.6.3.1.1.4.</a> <a href="#wampsubscriptionondelete" id="wampsubscriptionondelete">wamp.subscription.on_delete</a></h1>
+<p id="rfc.section.13.6.3.1.1.4.p.1">Fired when a subscription is deleted after the last session attached to it has been removed.  </p>
+<p><strong>Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>session|id</samp>: ID of the last session being removed from a subscription.</li>
+  <li><samp>subscription|id</samp>: ID of the subscription being deleted.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.3.2"><a href="#rfc.section.13.6.3.2">13.6.3.2.</a> <a href="#subscription-metaprocedures" id="subscription-metaprocedures">Subscription Meta-Procedures</a></h1>
+<p id="rfc.section.13.6.3.2.p.1">A client can actively retrieve information about subscriptions via the following meta-procedures: </p>
+<p/>
+
+<ul>
+  <li><samp>wamp.subscription.list</samp>: Retrieves subscription IDs listed according to match policies.</li>
+  <li><samp>wamp.subscription.lookup</samp>: Obtains the subscription (if any) managing a topic, according to some match policy.</li>
+  <li><samp>wamp.subscription.match</samp>: Retrieves a list of IDs of subscriptions matching a topic URI, irrespective of match policy.</li>
+  <li><samp>wamp.subscription.get</samp>: Retrieves information on a particular subscription.</li>
+  <li><samp>wamp.subscription.list_subscribers</samp>: Retrieves a list of session IDs for sessions currently attached to the subscription.</li>
+  <li><samp>wamp.subscription.count_subscribers</samp>: Obtains the number of sessions currently attached to the subscription.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.3.2.1"><a href="#rfc.section.13.6.3.2.1">13.6.3.2.1.</a> <a href="#metaprocedure-specifications" id="metaprocedure-specifications">Meta-Procedure Specifications</a></h1>
+<h1 id="rfc.section.13.6.3.2.1.1"><a href="#rfc.section.13.6.3.2.1.1">13.6.3.2.1.1.</a> <a href="#wampsubscriptionlist" id="wampsubscriptionlist">wamp.subscription.list</a></h1>
+<p id="rfc.section.13.6.3.2.1.1.p.1">Retrieves subscription IDs listed according to match policies.  </p>
+<p><strong>Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li>None</li>
+</ul>
+
+<p> </p>
+<p><strong>Results</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>SubscriptionLists|dict</samp>: A dictionary with a list of subscription IDs for each match policy.</li>
+</ul>
+
+<p> </p>
+<p><strong>Object Schemas</strong> </p>
+<pre>
+      SubscriptionLists :=
+      {
+          "exact": subscription_ids|list,
+          "prefix": subscription_ids|list,
+          "wildcard": subscription_ids|list
+      }
+</pre>
+<p id="rfc.section.13.6.3.2.1.1.p.7">See <a href="#pattern-based-subscriptions">Section 13.6.4</a> for information on match policies.  </p>
+<h1 id="rfc.section.13.6.3.2.1.2"><a href="#rfc.section.13.6.3.2.1.2">13.6.3.2.1.2.</a> <a href="#wampsubscriptionlookup" id="wampsubscriptionlookup">wamp.subscription.lookup</a></h1>
+<p id="rfc.section.13.6.3.2.1.2.p.1">Obtains the subscription (if any) managing a topic, according to some match policy.  </p>
+<p><strong>Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>topic|uri</samp>: The URI of the topic.</li>
+  <li>(Optional) <samp>options|dict</samp>: Same options as when subscribing to a topic.</li>
+</ul>
+
+<p> </p>
+<p><strong>Results</strong> </p>
+<p/>
+
+<ul>
+  <li>(Nullable) <samp>subscription|id</samp>: The ID of the subscription managing the topic, if found, or null.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.3.2.1.3"><a href="#rfc.section.13.6.3.2.1.3">13.6.3.2.1.3.</a> <a href="#wampsubscriptionmatch" id="wampsubscriptionmatch">wamp.subscription.match</a></h1>
+<p id="rfc.section.13.6.3.2.1.3.p.1">Retrieves a list of IDs of subscriptions matching a topic URI, irrespective of match policy.  </p>
+<p><strong>Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>topic|uri</samp>: The topic to match.</li>
+</ul>
+
+<p> </p>
+<p><strong>Results</strong> </p>
+<p/>
+
+<ul>
+  <li>(Nullable) <samp>subscription_ids|list</samp>: A list of all matching subscription IDs, or null.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.3.2.1.4"><a href="#rfc.section.13.6.3.2.1.4">13.6.3.2.1.4.</a> <a href="#wampsubscriptionget" id="wampsubscriptionget">wamp.subscription.get</a></h1>
+<p id="rfc.section.13.6.3.2.1.4.p.1">Retrieves information on a particular subscription.  </p>
+<p><strong>Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>subscription|id</samp>: The ID of the subscription to retrieve.</li>
+</ul>
+
+<p> </p>
+<p><strong>Results</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>SubscriptionDetails|dict</samp>: Details on the subscription.</li>
+</ul>
+
+<p> </p>
+<p><strong>Error URIs</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>wamp.error.no_such_subscription</samp>: No subscription with the given ID exists on the router.</li>
+</ul>
+
+<p> </p>
+<p><strong>Object Schemas</strong> </p>
+<pre>
+      SubscriptionDetails :=
+      {
+          "id": subscription|id,
+          "created": time_created|iso_8601_string,
+          "uri": topic|uri,
+          "match": match_policy|string
+      }
+</pre>
+<p id="rfc.section.13.6.3.2.1.4.p.9">See <a href="#pattern-based-subscriptions">Section 13.6.4</a> for information on match policies.  </p>
+<h1 id="rfc.section.13.6.3.2.1.5"><a href="#rfc.section.13.6.3.2.1.5">13.6.3.2.1.5.</a> <a href="#wampsubscriptionlistsubscribers" id="wampsubscriptionlistsubscribers">wamp.subscription.list_subscribers</a></h1>
+<p id="rfc.section.13.6.3.2.1.5.p.1">Retrieves a list of session IDs for sessions currently attached to the subscription.  </p>
+<p><strong>Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>subscription|id</samp>: The ID of the subscription to get subscribers for.</li>
+</ul>
+
+<p> </p>
+<p><strong>Results</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>subscribers_ids|list</samp>: A list of WAMP session IDs of subscribers currently attached to the subscription.</li>
+</ul>
+
+<p> </p>
+<p><strong>Error URIs</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>wamp.error.no_such_subscription</samp>: No subscription with the given ID exists on the router.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.3.2.1.6"><a href="#rfc.section.13.6.3.2.1.6">13.6.3.2.1.6.</a> <a href="#wampsubscriptioncountsubscribers" id="wampsubscriptioncountsubscribers">wamp.subscription.count_subscribers</a></h1>
+<p id="rfc.section.13.6.3.2.1.6.p.1">Obtains the number of sessions currently attached to a subscription.  </p>
+<p><strong>Arguments</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>subscription|id</samp>: The ID of the subscription to get the number of subscribers for.</li>
+</ul>
+
+<p> </p>
+<p><strong>Results</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>count|int</samp>: The number of sessions currently attached to a subscription.</li>
+</ul>
+
+<p> </p>
+<p><strong>Error URIs</strong> </p>
+<p/>
+
+<ul>
+  <li><samp>wamp.error.no_such_subscription</samp>: No subscription with the given ID exists on the router.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.4"><a href="#rfc.section.13.6.4">13.6.4.</a> <a href="#pattern-based-subscriptions" id="pattern-based-subscriptions">Pattern-based Subscriptions</a></h1>
+<h1 id="rfc.section.13.6.4.1"><a href="#rfc.section.13.6.4.1">13.6.4.1.</a> <a href="#introdution" id="introdution">Introdution</a></h1>
+<p id="rfc.section.13.6.4.1.p.1">By default, <em>Subscribers</em> subscribe to topics with <strong>exact matching policy</strong>. That is an event will only be dispatched to a <em>Subscriber</em> by the <em>Broker</em> if the topic published to (<samp>PUBLISH.Topic</samp>) <em>exactly</em> matches the topic subscribed to (<samp>SUBSCRIBE.Topic</samp>).  </p>
+<p id="rfc.section.13.6.4.1.p.2">A <em>Subscriber</em> might want to subscribe to topics based on a <em>pattern</em>. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the <em>Subscriber</em> is not aware of at the time of subscription, or which do not yet exist at this time.  </p>
+<p id="rfc.section.13.6.4.1.p.3">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by </p>
+<p/>
+
+<ul>
+  <li>prefix-matching policy</li>
+  <li>wildcard-matching policy</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.6.4.2"><a href="#rfc.section.13.6.4.2">13.6.4.2.</a> <a href="#prefix-matching-1" id="prefix-matching-1">Prefix Matching</a></h1>
+<p id="rfc.section.13.6.4.2.p.1">A <em>Subscriber</em> requests <strong>prefix-matching policy</strong> with a subscription request by setting </p>
+<pre>
+    SUBSCRIBE.Options.match|string := "prefix"
+</pre>
+<p><em>Example</em> </p>
+<pre>
+    [
+        32,
+        912873614,
+        {
+            "match": "prefix"
+        },
+        "com.myapp.topic.emergency"
+    ]
+</pre>
+<p id="rfc.section.13.6.4.2.p.3">When a <strong>prefix-matching policy</strong> is in place, any event with a topic that has <samp>SUBSCRIBE.Topic</samp> as a <em>prefix</em> will match the subscription, and potentially be delivered to <em>Subscribers</em> on the subscription.  </p>
+<p id="rfc.section.13.6.4.2.p.4">In the above example, events with <samp>PUBLISH.Topic</samp> </p>
+<p/>
+
+<ul>
+  <li>
+    <samp>com.myapp.topic.emergency.11</samp>
+  </li>
+  <li>
+    <samp>com.myapp.topic.emergency-low</samp>
+  </li>
+  <li>
+    <samp>com.myapp.topic.emergency.category.severe</samp>
+  </li>
+  <li>
+    <samp>com.myapp.topic.emergency</samp>
+  </li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.13.6.4.2.p.6">will all apply for dispatching. An event with <samp>PUBLISH.Topic</samp> e.g. <samp>com.myapp.topic.emerge</samp> will not apply.  </p>
+<h1 id="rfc.section.13.6.4.3"><a href="#rfc.section.13.6.4.3">13.6.4.3.</a> <a href="#wildcard-matching-1" id="wildcard-matching-1">Wildcard Matching</a></h1>
+<p id="rfc.section.13.6.4.3.p.1">A <em>Subscriber</em> requests <strong>wildcard-matching policy</strong> with a subscription request by setting </p>
+<pre>
+    SUBSCRIBE.Options.match|string := "wildcard"
+</pre>
+<p id="rfc.section.13.6.4.3.p.2">Wildcard-matching allows to provide wildcards for <strong>whole</strong> URI components.  </p>
+<p><em>Example</em> </p>
+<pre>
+    [
+        32,
+        912873614,
+        {
+            "match": "wildcard"
+        },
+        "com.myapp..userevent"
+    ]
+</pre>
+<p id="rfc.section.13.6.4.3.p.4">In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with <samp>PUBLISH.Topic</samp> </p>
+<p/>
+
+<ul>
+  <li>
+    <samp>com.myapp.foo.userevent</samp>
+  </li>
+  <li>
+    <samp>com.myapp.bar.userevent</samp>
+  </li>
+  <li>
+    <samp>com.myapp.a12.userevent</samp>
+  </li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.13.6.4.3.p.6">will all apply for dispatching. Events with <samp>PUBLISH.Topic</samp> </p>
+<p/>
+
+<ul>
+  <li>
+    <samp>com.myapp.foo.userevent.bar</samp>
+  </li>
+  <li>
+    <samp>com.myapp.foo.user</samp>
+  </li>
+  <li>
+    <samp>com.myapp2.foo.userevent</samp>
+  </li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.13.6.4.3.p.8">will not apply for dispatching.  </p>
+<h1 id="rfc.section.13.6.4.4"><a href="#rfc.section.13.6.4.4">13.6.4.4.</a> <a href="#general-1" id="general-1">General</a></h1>
+<h1 id="rfc.section.13.6.4.4.1"><a href="#rfc.section.13.6.4.4.1">13.6.4.4.1.</a> <a href="#no-set-semantics-1" id="no-set-semantics-1">No set semantics</a></h1>
+<p id="rfc.section.13.6.4.4.1.p.1">Since each <em>Subscriber's</em> subscription "stands on its own", there is no <em>set semantics</em> implied by pattern-based subscriptions.  </p>
+<p id="rfc.section.13.6.4.4.1.p.2">E.g. a <em>Subscriber</em> cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.  </p>
+<h1 id="rfc.section.13.6.4.4.2"><a href="#rfc.section.13.6.4.4.2">13.6.4.4.2.</a> <a href="#events-matching-multiple-subscriptions" id="events-matching-multiple-subscriptions">Events matching multiple subscriptions</a></h1>
+<p id="rfc.section.13.6.4.4.2.p.1">When a single event matches more than one of a <em>Subscriber's</em> subscriptions, the event will be delivered for each subscription.  </p>
+<p id="rfc.section.13.6.4.4.2.p.2">The <em>Subscriber</em> can detect the delivery of that same event on multiple subscriptions via <samp>EVENT.PUBLISHED.Publication</samp>, which will be identical.  </p>
+<h1 id="rfc.section.13.6.4.4.3"><a href="#rfc.section.13.6.4.4.3">13.6.4.4.3.</a> <a href="#concrete-topic-published-to" id="concrete-topic-published-to">Concrete topic published to</a></h1>
+<p id="rfc.section.13.6.4.4.3.p.1">If a subscription was established with a pattern-based matching policy, a <em>Broker</em> MUST supply the original <samp>PUBLISH.Topic</samp> as provided by the <em>Publisher</em> in </p>
+<pre>
+    EVENT.Details.topic|uri
+</pre>
+<p id="rfc.section.13.6.4.4.3.p.2">to the <em>Subscribers</em>.  </p>
+<p><em>Example</em> </p>
+<pre>
+    [
+        36,
+        5512315355,
+        4429313566,
+        {
+            "topic": "com.myapp.topic.emergency.category.severe"
+        },
+        ["Hello, world!"]
+    ]
+</pre>
+<h1 id="rfc.section.13.6.4.5"><a href="#rfc.section.13.6.4.5">13.6.4.5.</a> <a href="#feature-announcement-14" id="feature-announcement-14">Feature Announcement</a></h1>
+<p id="rfc.section.13.6.4.5.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
+<pre>
+    HELLO.Details.roles.&lt;role&gt;.features.
+        pattern_based_subscription|bool := true
+</pre>
+<h1 id="rfc.section.13.6.5"><a href="#rfc.section.13.6.5">13.6.5.</a> <a href="#sharded-subscriptions" id="sharded-subscriptions">Sharded Subscriptions</a></h1>
+<p id="rfc.section.13.6.5.p.1">Feature status: <strong>alpha</strong> </p>
+<p id="rfc.section.13.6.5.p.2">Support for this feature MUST be announced by <em>Publishers</em> (<samp>role := "publisher"</samp>), <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
+<pre>
+    HELLO.Details.roles.&lt;role&gt;.features.shareded_subscriptions|
+        bool := true
+</pre>
+<p id="rfc.section.13.6.5.p.3">Resource keys: <samp>PUBLISH.Options.rkey|string</samp> is a stable, technical <strong>resource key</strong>.  </p>
+<p/>
+
+<ul class="empty">
+  <li>E.g. if your sensor has a unique serial identifier, you can use that.  </li>
+</ul>
+<p><em>Example</em> </p>
+<pre>
+    [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019. 
+        temperature", [33.9]]
+</pre>
+<p id="rfc.section.13.6.5.p.6">Node keys: <samp>SUBSCRIBE.Options.nkey|string</samp> is a stable, technical <strong>node key</strong>.  </p>
+<p/>
+
+<ul class="empty">
+  <li>E.g. if your backend process runs on a dedicated host, you can use its hostname.  </li>
+</ul>
+<p><em>Example</em> </p>
+<pre>
+    [32, 912873614, {"match": "wildcard", "nkey": "node23"}, 
+        "com.myapp.sensor..temperature"]
+</pre>
+<h1 id="rfc.section.13.6.6"><a href="#rfc.section.13.6.6">13.6.6.</a> <a href="#event-history" id="event-history">Event History</a></h1>
+<h1 id="rfc.section.13.6.6.1"><a href="#rfc.section.13.6.6.1">13.6.6.1.</a> <a href="#feature-definition-14" id="feature-definition-14">Feature Definition</a></h1>
+<p id="rfc.section.13.6.6.1.p.1">Instead of complex QoS for message delivery, a <em>Broker</em> may provide <em>message history</em>. A <em>Subscriber</em> is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.  </p>
+<p id="rfc.section.13.6.6.1.p.2">The <em>Broker</em> may allow for configuration on a per-topic basis.  </p>
+<p id="rfc.section.13.6.6.1.p.3">The event history may be transient or persistent message history (surviving <em>Broker</em> restarts).  </p>
+<p id="rfc.section.13.6.6.1.p.4">A <em>Broker</em> that implements <em>event history</em> must (also) announce role <samp>HELLO.roles.callee</samp>, indicate <samp>HELLO.roles.broker.history == 1</samp> and provide the following (builtin) procedures.  </p>
+<p id="rfc.section.13.6.6.1.p.5">A <em>Caller</em> can request message history by calling the <em>Broker</em> procedure </p>
+<pre>
+    wamp.topic.history.last
+</pre>
+<p id="rfc.section.13.6.6.1.p.6">with <samp>Arguments = [topic|uri, limit|integer]</samp> where </p>
+<p/>
+
+<ul>
+  <li><samp>topic</samp> is the topic to retrieve event history for</li>
+  <li><samp>limit</samp> indicates the number of last N events to retrieve</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.13.6.6.1.p.8">or by calling </p>
+<pre>
+    wamp.topic.history.since
+</pre>
+<p id="rfc.section.13.6.6.1.p.9">with <samp>Arguments = [topic|uri, timestamp|string]</samp> where </p>
+<p/>
+
+<ul>
+  <li><samp>topic</samp> is the topic to retrieve event history for</li>
+  <li><samp>timestamp</samp> indicates the UTC timestamp since when to retrieve the events in the ISO-8601 format <samp>yyyy-MM-ddThh:mm:ss:SSSZ</samp> (e.g. <samp>"2013-12-21T13:43:11:000Z"</samp>)</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.13.6.6.1.p.11">or by calling </p>
+<pre>
+    wamp.topic.history.after
+</pre>
+<p id="rfc.section.13.6.6.1.p.12">with <samp>Arguments = [topic|uri, publication|id]</samp> </p>
+<p/>
+
+<ul>
+  <li><samp>topic</samp> is the topic to retrieve event history for</li>
+  <li><samp>publication</samp> is the id of an event which marks the start of the events to retrieve from history</li>
+</ul>
+
+<p> </p>
+<p><em>FIXME</em> </p>
+<p/>
+
+<ol>
+  <li>Should we use <samp>topic|uri</samp> or <samp>subscription|id</samp> in <samp>Arguments</samp>? <ul><li>Since we need to be able to get history for pattern-based subscriptions as well, a subscription|id makes more sense: create pattern-based subscription, then get the event history for this.</li><li>The only restriction then is that we may not get event history without a current subscription covering the events. This is a minor inconvenience at worst.</li></ul></li>
+  <li>Can <samp>wamp.topic.history.after</samp> be implemented (efficiently) at all?</li>
+  <li>How does that interact with pattern-based subscriptions?</li>
+  <li>The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.</li>
+</ol>
+
+<p> </p>
+<h1 id="rfc.section.13.6.6.2"><a href="#rfc.section.13.6.6.2">13.6.6.2.</a> <a href="#feature-announcement-15" id="feature-announcement-15">Feature Announcement</a></h1>
+<p id="rfc.section.13.6.6.2.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
+<pre>
+    HELLO.Details.roles.&lt;role&gt;.features.event_history|bool := true
+</pre>
+<h1 id="rfc.section.13.6.7"><a href="#rfc.section.13.6.7">13.6.7.</a> <a href="#registration-revocation-1" id="registration-revocation-1">Registration Revocation</a></h1>
+<h1 id="rfc.section.13.6.7.1"><a href="#rfc.section.13.6.7.1">13.6.7.1.</a> <a href="#feature-definition-15" id="feature-definition-15">Feature Definition</a></h1>
+<p id="rfc.section.13.6.7.1.p.1">Actively and forcefully revoke a previously granted subscription from a session.  </p>
+<h1 id="rfc.section.13.6.7.2"><a href="#rfc.section.13.6.7.2">13.6.7.2.</a> <a href="#feature-announcement-16" id="feature-announcement-16">Feature Announcement</a></h1>
+<h1 id="rfc.section.13.6.8"><a href="#rfc.section.13.6.8">13.6.8.</a> <a href="#topic-reflection" id="topic-reflection">Topic Reflection</a></h1>
+<p/>
+
+<ul>
+  <li>see <strong>Procedure Reflection</strong> for now</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.7"><a href="#rfc.section.13.7">13.7.</a> <a href="#other-advanced-features-1" id="other-advanced-features-1">Other Advanced Features</a></h1>
+<h1 id="rfc.section.13.7.1"><a href="#rfc.section.13.7.1">13.7.1.</a> <a href="#session-meta-api" id="session-meta-api">Session Meta API</a></h1>
+<h1 id="rfc.section.13.7.1.1"><a href="#rfc.section.13.7.1.1">13.7.1.1.</a> <a href="#introduction-4" id="introduction-4">Introduction</a></h1>
+<p id="rfc.section.13.7.1.1.p.1">WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via <strong>Session Meta Events</strong>. It also allows retrieving information about currently connected sessions via <strong>Session Meta Procedures</strong>.  </p>
+<p id="rfc.section.13.7.1.1.p.2">Meta events are created by the router itself. This means that the events, as well as the data received when calling a meta procedure, can be accorded the same trust level as the router.  </p>
 <p/>
 
 <ul class="empty">
   <li>Note that an implementation that only supports a <em>Broker</em> or <em>Dealer</em> role, not both at the same time, essentially cannot offer the <strong>Session Meta API</strong>, as it requires both roles to support this feature.  </li>
 </ul>
-<h1 id="rfc.section.13.6.3.2"><a href="#rfc.section.13.6.3.2">13.6.3.2.</a> <a href="#session-meta-events" id="session-meta-events">Session Meta Events</a></h1>
-<p id="rfc.section.13.6.3.2.p.1">A client can subscribe to the following session meta-events, which cover the lifecycle of a session: </p>
+<h1 id="rfc.section.13.7.1.2"><a href="#rfc.section.13.7.1.2">13.7.1.2.</a> <a href="#session-meta-events" id="session-meta-events">Session Meta Events</a></h1>
+<p id="rfc.section.13.7.1.2.p.1">A client can subscribe to the following session meta-events, which cover the lifecycle of a session: </p>
 <p/>
 
 <ul>
@@ -4452,8 +4975,8 @@
 
 <p> </p>
 <p><strong>Session Meta Events</strong> MUST be dispatched by the <em>Router</em> to the same realm as the WAMP session which triggered the event.  </p>
-<h1 id="rfc.section.13.6.3.2.1"><a href="#rfc.section.13.6.3.2.1">13.6.3.2.1.</a> <a href="#wampsessiononjoin" id="wampsessiononjoin">wamp.session.on_join</a></h1>
-<p id="rfc.section.13.6.3.2.1.p.1">Fired when a session joins a realm on the router. The event payload consists of a single positional argument <samp>details|dict</samp>: </p>
+<h1 id="rfc.section.13.7.1.2.1"><a href="#rfc.section.13.7.1.2.1">13.7.1.2.1.</a> <a href="#wampsessiononjoin" id="wampsessiononjoin">wamp.session.on_join</a></h1>
+<p id="rfc.section.13.7.1.2.1.p.1">Fired when a session joins a realm on the router. The event payload consists of a single positional argument <samp>details|dict</samp>: </p>
 <p/>
 
 <ul>
@@ -4471,10 +4994,10 @@
 <ul class="empty">
   <li>See <strong>Authentication</strong> for a description of the <samp>authid</samp>, <samp>authrole</samp>, <samp>authmethod</samp> and <samp>authprovider</samp> properties.  </li>
 </ul>
-<h1 id="rfc.section.13.6.3.2.2"><a href="#rfc.section.13.6.3.2.2">13.6.3.2.2.</a> <a href="#wampsessiononleave" id="wampsessiononleave">wamp.session.on_leave</a></h1>
-<p id="rfc.section.13.6.3.2.2.p.1">Fired when a session leaves a realm on the router or is disconnected. The event payload consists of a single positional argument <samp>session|id</samp> with the session ID of the session that left.  </p>
-<h1 id="rfc.section.13.6.3.3"><a href="#rfc.section.13.6.3.3">13.6.3.3.</a> <a href="#session-meta-procedures" id="session-meta-procedures">Session Meta Procedures</a></h1>
-<p id="rfc.section.13.6.3.3.p.1">A client can actively retrieve information about sessions via the following meta-procedures: </p>
+<h1 id="rfc.section.13.7.1.2.2"><a href="#rfc.section.13.7.1.2.2">13.7.1.2.2.</a> <a href="#wampsessiononleave" id="wampsessiononleave">wamp.session.on_leave</a></h1>
+<p id="rfc.section.13.7.1.2.2.p.1">Fired when a session leaves a realm on the router or is disconnected. The event payload consists of a single positional argument <samp>session|id</samp> with the session ID of the session that left.  </p>
+<h1 id="rfc.section.13.7.1.3"><a href="#rfc.section.13.7.1.3">13.7.1.3.</a> <a href="#session-meta-procedures" id="session-meta-procedures">Session Meta Procedures</a></h1>
+<p id="rfc.section.13.7.1.3.p.1">A client can actively retrieve information about sessions via the following meta-procedures: </p>
 <p/>
 
 <ul>
@@ -4484,9 +5007,9 @@
 </ul>
 
 <p> </p>
-<p id="rfc.section.13.6.3.3.p.3">Session meta procedures MUST be registered by the <em>Router</em> on the same realm as the WAMP session about which information is retrieved.  </p>
-<h1 id="rfc.section.13.6.3.3.1"><a href="#rfc.section.13.6.3.3.1">13.6.3.3.1.</a> <a href="#wampsessioncount" id="wampsessioncount">wamp.session.count</a></h1>
-<p id="rfc.section.13.6.3.3.1.p.1">Obtains the number of sessions currently attached to the realm: </p>
+<p id="rfc.section.13.7.1.3.p.3">Session meta procedures MUST be registered by the <em>Router</em> on the same realm as the WAMP session about which information is retrieved.  </p>
+<h1 id="rfc.section.13.7.1.3.1"><a href="#rfc.section.13.7.1.3.1">13.7.1.3.1.</a> <a href="#wampsessioncount" id="wampsessioncount">wamp.session.count</a></h1>
+<p id="rfc.section.13.7.1.3.1.p.1">Obtains the number of sessions currently attached to the realm: </p>
 <p><strong>Positional arguments</strong> </p>
 <p/>
 
@@ -4503,8 +5026,8 @@
 </ol>
 
 <p> </p>
-<h1 id="rfc.section.13.6.3.3.2"><a href="#rfc.section.13.6.3.3.2">13.6.3.3.2.</a> <a href="#wampsessionlist" id="wampsessionlist">wamp.session.list</a></h1>
-<p id="rfc.section.13.6.3.3.2.p.1">Retrieves a list of the session IDs for all sessions currently attached to the realm.  </p>
+<h1 id="rfc.section.13.7.1.3.2"><a href="#rfc.section.13.7.1.3.2">13.7.1.3.2.</a> <a href="#wampsessionlist" id="wampsessionlist">wamp.session.list</a></h1>
+<p id="rfc.section.13.7.1.3.2.p.1">Retrieves a list of the session IDs for all sessions currently attached to the realm.  </p>
 <p><strong>Positional arguments</strong> </p>
 <p/>
 
@@ -4521,8 +5044,8 @@
 </ol>
 
 <p> </p>
-<h1 id="rfc.section.13.6.3.3.3"><a href="#rfc.section.13.6.3.3.3">13.6.3.3.3.</a> <a href="#wampsessionget" id="wampsessionget">wamp.session.get</a></h1>
-<p id="rfc.section.13.6.3.3.3.p.1">Retrieves information on a specific session.  </p>
+<h1 id="rfc.section.13.7.1.3.3"><a href="#rfc.section.13.7.1.3.3">13.7.1.3.3.</a> <a href="#wampsessionget" id="wampsessionget">wamp.session.get</a></h1>
+<p id="rfc.section.13.7.1.3.3.p.1">Retrieves information on a specific session.  </p>
 <p><strong>Positional arguments</strong> </p>
 <p/>
 
@@ -4552,14 +5075,14 @@
 </ul>
 
 <p> </p>
-<h1 id="rfc.section.13.6.3.4"><a href="#rfc.section.13.6.3.4">13.6.3.4.</a> <a href="#feature-announcement-13" id="feature-announcement-13">Feature Announcement</a></h1>
-<p id="rfc.section.13.6.3.4.p.1">Support for this feature MUST be announced by <strong>both</strong> <em>Dealers</em> and <em>Brokers</em> via: </p>
+<h1 id="rfc.section.13.7.1.4"><a href="#rfc.section.13.7.1.4">13.7.1.4.</a> <a href="#feature-announcement-17" id="feature-announcement-17">Feature Announcement</a></h1>
+<p id="rfc.section.13.7.1.4.p.1">Support for this feature MUST be announced by <strong>both</strong> <em>Dealers</em> and <em>Brokers</em> via: </p>
 <pre>
     HELLO.Details.roles.&lt;role&gt;.features.
         session_meta_api|bool := true
 </pre>
 <p><strong>Example</strong> </p>
-<p id="rfc.section.13.6.3.4.p.3">Here is a <samp>WELCOME</samp> message from a <em>Router</em> with support for both the <em>Broker</em> and <em>Dealer</em> role, and with support for <strong>Session Meta API</strong>: </p>
+<p id="rfc.section.13.7.1.4.p.3">Here is a <samp>WELCOME</samp> message from a <em>Router</em> with support for both the <em>Broker</em> and <em>Dealer</em> role, and with support for <strong>Session Meta API</strong>: </p>
 <pre>
     [
         2,
@@ -4588,214 +5111,687 @@
 <ul class="empty">
   <li>Note in particular that the feature is announced on both the <em>Broker</em> and the <em>Dealer</em> roles.  </li>
 </ul>
-<h1 id="rfc.section.13.6.4"><a href="#rfc.section.13.6.4">13.6.4.</a> <a href="#subscription-meta-api" id="subscription-meta-api">Subscription Meta API</a></h1>
-<h1 id="rfc.section.13.6.5"><a href="#rfc.section.13.6.5">13.6.5.</a> <a href="#patternbased-subscriptions" id="patternbased-subscriptions">Pattern-based Subscriptions</a></h1>
-<h1 id="rfc.section.13.6.5.1"><a href="#rfc.section.13.6.5.1">13.6.5.1.</a> <a href="#introdution" id="introdution">Introdution</a></h1>
-<p id="rfc.section.13.6.5.1.p.1">By default, <em>Subscribers</em> subscribe to topics with <strong>exact matching policy</strong>. That is an event will only be dispatched to a <em>Subscriber</em> by the <em>Broker</em> if the topic published to (<samp>PUBLISH.Topic</samp>) <em>exactly</em> matches the topic subscribed to (<samp>SUBSCRIBE.Topic</samp>).  </p>
-<p id="rfc.section.13.6.5.1.p.2">A <em>Subscriber</em> might want to subscribe to topics based on a <em>pattern</em>. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the <em>Subscriber</em> is not aware of at the time of subscription, or which do not yet exist at this time.  </p>
-<p id="rfc.section.13.6.5.1.p.3">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by </p>
-<p/>
-
-<ul>
-  <li>prefix-matching policy</li>
-  <li>wildcard-matching policy</li>
-</ul>
-
-<p> </p>
-<h1 id="rfc.section.13.6.5.2"><a href="#rfc.section.13.6.5.2">13.6.5.2.</a> <a href="#prefix-matching-1" id="prefix-matching-1">Prefix Matching</a></h1>
-<p id="rfc.section.13.6.5.2.p.1">A <em>Subscriber</em> requests <strong>prefix-matching policy</strong> with a subscription request by setting </p>
-<pre>
-    SUBSCRIBE.Options.match|string := "prefix"
-</pre>
-<p><em>Example</em> </p>
-<pre>
-    [
-        32,
-        912873614,
-        {
-            "match": "prefix"
-        },
-        "com.myapp.topic.emergency"
-    ]
-</pre>
-<p id="rfc.section.13.6.5.2.p.3">When a <strong>prefix-matching policy</strong> is in place, any event with a topic that has <samp>SUBSCRIBE.Topic</samp> as a <em>prefix</em> will match the subscription, and potentially be delivered to <em>Subscribers</em> on the subscription.  </p>
-<p id="rfc.section.13.6.5.2.p.4">In the above example, events with <samp>PUBLISH.Topic</samp> </p>
-<p/>
-
-<ul>
-  <li>
-    <samp>com.myapp.topic.emergency.11</samp>
-  </li>
-  <li>
-    <samp>com.myapp.topic.emergency-low</samp>
-  </li>
-  <li>
-    <samp>com.myapp.topic.emergency.category.severe</samp>
-  </li>
-  <li>
-    <samp>com.myapp.topic.emergency</samp>
-  </li>
-</ul>
-
-<p> </p>
-<p id="rfc.section.13.6.5.2.p.6">will all apply for dispatching. An event with <samp>PUBLISH.Topic</samp> e.g. <samp>com.myapp.topic.emerge</samp> will not apply.  </p>
-<h1 id="rfc.section.13.6.5.3"><a href="#rfc.section.13.6.5.3">13.6.5.3.</a> <a href="#wildcard-matching-1" id="wildcard-matching-1">Wildcard Matching</a></h1>
-<p id="rfc.section.13.6.5.3.p.1">A <em>Subscriber</em> requests <strong>wildcard-matching policy</strong> with a subscription request by setting </p>
-<pre>
-    SUBSCRIBE.Options.match|string := "wildcard"
-</pre>
-<p id="rfc.section.13.6.5.3.p.2">Wildcard-matching allows to provide wildcards for <strong>whole</strong> URI components.  </p>
-<p><em>Example</em> </p>
-<pre>
-    [
-        32,
-        912873614,
-        {
-            "match": "wildcard"
-        },
-        "com.myapp..userevent"
-    ]
-</pre>
-<p id="rfc.section.13.6.5.3.p.4">In above subscription request, the 3rd URI component is empty, which signals a wildcard in that URI component position. In this example, events with <samp>PUBLISH.Topic</samp> </p>
-<p/>
-
-<ul>
-  <li>
-    <samp>com.myapp.foo.userevent</samp>
-  </li>
-  <li>
-    <samp>com.myapp.bar.userevent</samp>
-  </li>
-  <li>
-    <samp>com.myapp.a12.userevent</samp>
-  </li>
-</ul>
-
-<p> </p>
-<p id="rfc.section.13.6.5.3.p.6">will all apply for dispatching. Events with <samp>PUBLISH.Topic</samp> </p>
-<p/>
-
-<ul>
-  <li>
-    <samp>com.myapp.foo.userevent.bar</samp>
-  </li>
-  <li>
-    <samp>com.myapp.foo.user</samp>
-  </li>
-  <li>
-    <samp>com.myapp2.foo.userevent</samp>
-  </li>
-</ul>
-
-<p> </p>
-<p id="rfc.section.13.6.5.3.p.8">will not apply for dispatching.  </p>
-<h1 id="rfc.section.13.6.5.4"><a href="#rfc.section.13.6.5.4">13.6.5.4.</a> <a href="#general-1" id="general-1">General</a></h1>
-<h1 id="rfc.section.13.6.5.4.1"><a href="#rfc.section.13.6.5.4.1">13.6.5.4.1.</a> <a href="#no-set-semantics-1" id="no-set-semantics-1">No set semantics</a></h1>
-<p id="rfc.section.13.6.5.4.1.p.1">Since each <em>Subscriber's</em> subscription "stands on its own", there is no <em>set semantics</em> implied by pattern-based subscriptions.  </p>
-<p id="rfc.section.13.6.5.4.1.p.2">E.g. a <em>Subscriber</em> cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.  </p>
-<h1 id="rfc.section.13.6.5.4.2"><a href="#rfc.section.13.6.5.4.2">13.6.5.4.2.</a> <a href="#events-matching-multiple-subscriptions" id="events-matching-multiple-subscriptions">Events matching multiple subscriptions</a></h1>
-<p id="rfc.section.13.6.5.4.2.p.1">When a single event matches more than one of a <em>Subscriber's</em> subscriptions, the event will be delivered for each subscription.  </p>
-<p id="rfc.section.13.6.5.4.2.p.2">The <em>Subscriber</em> can detect the delivery of that same event on multiple subscriptions via <samp>EVENT.PUBLISHED.Publication</samp>, which will be identical.  </p>
-<h1 id="rfc.section.13.6.5.4.3"><a href="#rfc.section.13.6.5.4.3">13.6.5.4.3.</a> <a href="#concrete-topic-published-to" id="concrete-topic-published-to">Concrete topic published to</a></h1>
-<p id="rfc.section.13.6.5.4.3.p.1">If a subscription was established with a pattern-based matching policy, a <em>Broker</em> MUST supply the original <samp>PUBLISH.Topic</samp> as provided by the <em>Publisher</em> in </p>
-<pre>
-    EVENT.Details.topic|uri
-</pre>
-<p id="rfc.section.13.6.5.4.3.p.2">to the <em>Subscribers</em>.  </p>
-<p><em>Example</em> </p>
-<pre>
-    [
-        36,
-        5512315355,
-        4429313566,
-        {
-            "topic": "com.myapp.topic.emergency.category.severe"
-        },
-        ["Hello, world!"]
-    ]
-</pre>
-<h1 id="rfc.section.13.6.5.5"><a href="#rfc.section.13.6.5.5">13.6.5.5.</a> <a href="#feature-announcement-14" id="feature-announcement-14">Feature Announcement</a></h1>
-<p id="rfc.section.13.6.5.5.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
-<pre>
-    HELLO.Details.roles.&lt;role&gt;.features.
-        pattern_based_subscription|bool := true
-</pre>
-<h1 id="rfc.section.13.6.6"><a href="#rfc.section.13.6.6">13.6.6.</a> <a href="#sharded-subscription" id="sharded-subscription">Sharded Subscription</a></h1>
-<p id="rfc.section.13.6.6.p.1">Feature status: <strong>alpha</strong> </p>
-<p id="rfc.section.13.6.6.p.2">-- Write me. -- </p>
-<h1 id="rfc.section.13.6.7"><a href="#rfc.section.13.6.7">13.6.7.</a> <a href="#event-history" id="event-history">Event History</a></h1>
-<h1 id="rfc.section.13.6.7.1"><a href="#rfc.section.13.6.7.1">13.6.7.1.</a> <a href="#feature-definition-14" id="feature-definition-14">Feature Definition</a></h1>
-<p id="rfc.section.13.6.7.1.p.1">Instead of complex QoS for message delivery, a <em>Broker</em> may provide <em>message history</em>. A <em>Subscriber</em> is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.  </p>
-<p id="rfc.section.13.6.7.1.p.2">The <em>Broker</em> may allow for configuration on a per-topic basis.  </p>
-<p id="rfc.section.13.6.7.1.p.3">The event history may be transient or persistent message history (surviving <em>Broker</em> restarts).  </p>
-<p id="rfc.section.13.6.7.1.p.4">A <em>Broker</em> that implements <em>event history</em> must (also) announce role <samp>HELLO.roles.callee</samp>, indicate <samp>HELLO.roles.broker.history == 1</samp> and provide the following (builtin) procedures.  </p>
-<p id="rfc.section.13.6.7.1.p.5">A <em>Caller</em> can request message history by calling the <em>Broker</em> procedure </p>
-<pre>
-    wamp.topic.history.last
-</pre>
-<p id="rfc.section.13.6.7.1.p.6">with <samp>Arguments = [topic|uri, limit|integer]</samp> where </p>
-<p/>
-
-<ul>
-  <li><samp>topic</samp> is the topic to retrieve event history for</li>
-  <li><samp>limit</samp> indicates the number of last N events to retrieve</li>
-</ul>
-
-<p> </p>
-<p id="rfc.section.13.6.7.1.p.8">or by calling </p>
-<pre>
-    wamp.topic.history.since
-</pre>
-<p id="rfc.section.13.6.7.1.p.9">with <samp>Arguments = [topic|uri, timestamp|string]</samp> where </p>
-<p/>
-
-<ul>
-  <li><samp>topic</samp> is the topic to retrieve event history for</li>
-  <li><samp>timestamp</samp> indicates the UTC timestamp since when to retrieve the events in the ISO-8601 format <samp>yyyy-MM-ddThh:mm:ss:SSSZ</samp> (e.g. <samp>"2013-12-21T13:43:11:000Z"</samp>)</li>
-</ul>
-
-<p> </p>
-<p id="rfc.section.13.6.7.1.p.11">or by calling </p>
-<pre>
-    wamp.topic.history.after
-</pre>
-<p id="rfc.section.13.6.7.1.p.12">with <samp>Arguments = [topic|uri, publication|id]</samp> </p>
-<p/>
-
-<ul>
-  <li><samp>topic</samp> is the topic to retrieve event history for</li>
-  <li><samp>publication</samp> is the id of an event which marks the start of the events to retrieve from history</li>
-</ul>
-
-<p> </p>
-<p><em>FIXME</em> </p>
+<h1 id="rfc.section.13.7.2"><a href="#rfc.section.13.7.2">13.7.2.</a> <a href="#authentication" id="authentication">Authentication</a></h1>
+<p id="rfc.section.13.7.2.p.1">Authentication is a complex area.  </p>
+<p id="rfc.section.13.7.2.p.2">Some applications might want to leverage authentication information coming from the transport underlying WAMP, e.g. HTTP cookies or TLS certificates.  </p>
+<p id="rfc.section.13.7.2.p.3">Some transports might imply trust or implicit authentication by their very nature, e.g. Unix domain sockets with appropriate file system permissions in place.  </p>
+<p id="rfc.section.13.7.2.p.4">Other application might want to perform their own authentication using external mechanisms (completely outside and independent of WAMP).  </p>
+<p id="rfc.section.13.7.2.p.5">Some applications might want to perform their own authentication schemes by using basic WAMP mechanisms, e.g. by using application-defined remote procedure calls.  </p>
+<p id="rfc.section.13.7.2.p.6">And some applications might want to use a transport independent scheme, nevertheless predefined by WAMP.  </p>
+<h1 id="rfc.section.13.7.2.1"><a href="#rfc.section.13.7.2.1">13.7.2.1.</a> <a href="#wamplevel-authentication" id="wamplevel-authentication">WAMP-level Authentication</a></h1>
+<p id="rfc.section.13.7.2.1.p.1">The message flow between Clients and Routers for establishing and tearing down sessions MAY involve the following messages which authenticate a session: </p>
 <p/>
 
 <ol>
-  <li>Should we use <samp>topic|uri</samp> or <samp>subscription|id</samp> in <samp>Arguments</samp>? <ul><li>Since we need to be able to get history for pattern-based subscriptions as well, a subscription|id makes more sense: create pattern-based subscription, then get the event history for this.</li><li>The only restriction then is that we may not get event history without a current subscription covering the events. This is a minor inconvenience at worst.</li></ul></li>
-  <li>Can <samp>wamp.topic.history.after</samp> be implemented (efficiently) at all?</li>
-  <li>How does that interact with pattern-based subscriptions?</li>
-  <li>The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.</li>
+  <li>
+    <samp>CHALLENGE</samp>
+  </li>
+  <li>
+    <samp>AUTHENTICATE</samp>
+  </li>
 </ol>
 
 <p> </p>
-<h1 id="rfc.section.13.6.7.2"><a href="#rfc.section.13.6.7.2">13.6.7.2.</a> <a href="#feature-announcement-15" id="feature-announcement-15">Feature Announcement</a></h1>
-<p id="rfc.section.13.6.7.2.p.1">Support for this feature MUST be announced by <em>Subscribers</em> (<samp>role := "subscriber"</samp>) and <em>Brokers</em> (<samp>role := "broker"</samp>) via </p>
 <pre>
-    HELLO.Details.roles.&lt;role&gt;.features.event_history|bool := true
+     ,------.          ,------.
+     |Client|          |Router|
+     `--+---'          `--+---'
+        |      HELLO      |    
+        | ----------------&gt;    
+        |                 |    
+        |    CHALLENGE    |    
+        | &lt;----------------    
+        |                 |    
+        |   AUTHENTICATE  |    
+        | ----------------&gt;    
+        |                 |    
+        | WELCOME or ABORT|    
+        | &lt;----------------    
+     ,--+---.          ,--+---.
+     |Client|          |Router|
+     `------'          `------'
 </pre>
-<h1 id="rfc.section.13.6.8"><a href="#rfc.section.13.6.8">13.6.8.</a> <a href="#registration-revocation-1" id="registration-revocation-1">Registration Revocation</a></h1>
-<h1 id="rfc.section.13.6.8.1"><a href="#rfc.section.13.6.8.1">13.6.8.1.</a> <a href="#feature-definition-15" id="feature-definition-15">Feature Definition</a></h1>
-<p id="rfc.section.13.6.8.1.p.1">Actively and forcefully revoke a previously granted subscription from a session.  </p>
-<h1 id="rfc.section.13.6.8.2"><a href="#rfc.section.13.6.8.2">13.6.8.2.</a> <a href="#feature-announcement-16" id="feature-announcement-16">Feature Announcement</a></h1>
-<h1 id="rfc.section.13.6.9"><a href="#rfc.section.13.6.9">13.6.9.</a> <a href="#topic-reflection" id="topic-reflection">Topic Reflection</a></h1>
+<p id="rfc.section.13.7.2.1.p.3">Concrete use of <samp>CHALLENGE</samp> and <samp>AUTHENTICATE</samp> messages depends on the specific authentication method.  </p>
+<p id="rfc.section.13.7.2.1.p.4">See <a href="#wampcra">Section 13.7.2.3</a> or <a href="#ticketauth">Section 13.7.2.4</a> for the use in these authentication methods.  </p>
+<p id="rfc.section.13.7.2.1.p.5">If two-factor authentication is desired, then two subsequent rounds of <samp>CHALLENGE</samp> and <samp>RESPONSE</samp> may be employed.  </p>
+<h1 id="rfc.section.13.7.2.1.1"><a href="#rfc.section.13.7.2.1.1">13.7.2.1.1.</a> <a href="#challenge-1" id="challenge-1">CHALLENGE</a></h1>
+<p id="rfc.section.13.7.2.1.1.p.1">An authentication MAY be required for the establishment of a session. Such requirement MAY be based on the <samp>Realm</samp> the connection is requested for.  </p>
+<p id="rfc.section.13.7.2.1.1.p.2">To request authentication, the Router MUST send a <samp>CHALLENGE</samp> message to the <em>Endpoint</em>.  </p>
+<pre>
+    [CHALLENGE, AuthMethod|string, Extra|dict]
+</pre>
+<h1 id="rfc.section.13.7.2.1.2"><a href="#rfc.section.13.7.2.1.2">13.7.2.1.2.</a> <a href="#authenticate-1" id="authenticate-1">AUTHENTICATE</a></h1>
+<p id="rfc.section.13.7.2.1.2.p.1">In response to a <samp>CHALLENGE</samp> message, the Client MUST send an <samp>AUTHENTICATION</samp> message.  </p>
+<pre>
+    [AUTHENTICATE, Signature|string, Extra|dict]
+</pre>
+<p id="rfc.section.13.7.2.1.2.p.2">If the authentication succeeds, the Router MUST send a <samp>WELCOME</samp> message, else it MUST send an <samp>ABORT</samp> message.  </p>
+<h1 id="rfc.section.13.7.2.2"><a href="#rfc.section.13.7.2.2">13.7.2.2.</a> <a href="#transportlevel-authentication" id="transportlevel-authentication">Transport-level Authentication</a></h1>
+<h1 id="rfc.section.13.7.2.2.1"><a href="#rfc.section.13.7.2.2.1">13.7.2.2.1.</a> <a href="#cookiebased-authentication" id="cookiebased-authentication">Cookie-based Authentication</a></h1>
+<p id="rfc.section.13.7.2.2.1.p.1">When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.  </p>
+<p id="rfc.section.13.7.2.2.1.p.2">This transport-level authentication information may be forward to the WAMP level within <samp>HELLO.Details.transport.auth|any</samp> in the client-to-server direction.  </p>
+<h1 id="rfc.section.13.7.2.2.2"><a href="#rfc.section.13.7.2.2.2">13.7.2.2.2.</a> <a href="#tls-certificate-authentication" id="tls-certificate-authentication">TLS Certificate Authentication</a></h1>
+<p id="rfc.section.13.7.2.2.2.p.1">When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).  </p>
+<p id="rfc.section.13.7.2.2.2.p.2">This transport-level authentication information may be forward to the WAMP level within <samp>HELLO.Details.transport.auth|any</samp> in both directions (if available).  </p>
+<h1 id="rfc.section.13.7.2.3"><a href="#rfc.section.13.7.2.3">13.7.2.3.</a> <a href="#wampcra" id="wampcra">Challenge Response Authentication</a></h1>
+<p id="rfc.section.13.7.2.3.p.1">WAMP Challenge-Response ("WAMP-CRA") authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a secret. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.  </p>
+<p id="rfc.section.13.7.2.3.p.2">A typical authentication begins with the client sending a <samp>HELLO</samp> message specifying the <samp>wampcra</samp> method as (one of) the authentication methods: </p>
+<pre>
+    [1, "realm1",
+        {
+            "roles": ...,
+            "authmethods": ["wampcra"],
+            "authid": "peter"
+        }
+    ]
+</pre>
+<p id="rfc.section.13.7.2.3.p.3">The <samp>HELLO.Details.authmethods|list</samp> is used by the client to announce the authentication methods it is prepared to perform. For WAMP-CRA, this MUST include <samp>"wampcra"</samp>.  </p>
+<p id="rfc.section.13.7.2.3.p.4">The <samp>HELLO.Details.authid|string</samp> is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-CRA, this MUST be provided.  </p>
+<p id="rfc.section.13.7.2.3.p.5">If the server is unwilling or unable to perform WAMP-CRA authentication, it MAY either skip forward trying other authentication methods (if the client announced any) or send an <samp>ABORT</samp> message.  </p>
+<p id="rfc.section.13.7.2.3.p.6">If the server is willing to let the client authenticate using WAMP-CRA, and the server recognizes the provided <samp>authid</samp>, it MUST send a <samp>CHALLENGE</samp> message: </p>
+<pre>
+    [4, "wampcra",
+        {
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
+                \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
+                \"session\": 3251278072152162}"
+        }
+    ]
+</pre>
+<p id="rfc.section.13.7.2.3.p.7">The <samp>CHALLENGE.Details.challenge|string</samp> is a string the client needs to create a signature for. The string MUST BE a JSON serialized object which MUST contain: </p>
+<p/>
+
+<ol>
+  <li><samp>authid|string</samp>: The authentication ID the client will be authenticated as when the authentication succeeds.</li>
+  <li><samp>authrole|string</samp>: The authentication role the client will be authenticated as when the authentication succeeds.</li>
+  <li><samp>authmethod|string</samp>: The authentication methods, here <samp>"wampcra"</samp></li>
+  <li><samp>authprovider|string</samp>: The actual provider of authentication. For WAMP-CRA, this can be freely chosen by the app, e.g. <samp>userdb</samp>.</li>
+  <li><samp>nonce|string</samp>: A random value.</li>
+  <li><samp>timestamp|string</samp>: The UTC timestamp (ISO8601 format) the authentication was started, e.g. <samp>2014-06-22T16:51:41.643Z</samp>.</li>
+  <li><samp>session|int</samp>: The WAMP session ID that will be assigned to the session once it is authenticated successfully.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.13.7.2.3.p.9">The client needs to compute the signature as follows: </p>
+<pre>
+    signature := HMAC[SHA256]_{secret} (challenge)
+</pre>
+<p id="rfc.section.13.7.2.3.p.10">That is, compute the HMAC-SHA256 using the shared <samp>secret</samp> over the <samp>challenge</samp>.  </p>
+<p id="rfc.section.13.7.2.3.p.11">After computing the signature, the client will send an <samp>AUTHENTICATE</samp> message containing the signature: </p>
+<pre>
+    [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
+</pre>
+<p id="rfc.section.13.7.2.3.p.12">The server will then check if </p>
 <p/>
 
 <ul>
-  <li>see <strong>Procedure Reflection</strong> for now</li>
+  <li>the signature matches the one expected</li>
+  <li>the <samp>AUTHENTICATE</samp> message was sent in due time</li>
 </ul>
 
 <p> </p>
+<p id="rfc.section.13.7.2.3.p.14">If the authentication succeeds, the server will finally respond with a <samp>WELCOME</samp> message: </p>
+<pre>
+    [2, 3251278072152162,
+        {
+            "authid": "peter",
+            "authrole": "user",
+            "authmethod": "wampcra",
+            "authprovider": "userdb",
+            "roles": ...
+        }
+    ]
+</pre>
+<p id="rfc.section.13.7.2.3.p.15">The <samp>WELCOME.Details</samp> again contain the actual authentication information active.  </p>
+<p id="rfc.section.13.7.2.3.p.16">If the authentication fails, the server will response with an <samp>ABORT</samp> message.  </p>
+<h1 id="rfc.section.13.7.2.3.1"><a href="#rfc.section.13.7.2.3.1">13.7.2.3.1.</a> <a href="#serverside-verification" id="serverside-verification">Server-side Verification</a></h1>
+<p id="rfc.section.13.7.2.3.1.p.1">The challenge sent during WAMP-CRA contains </p>
+<p/>
+
+<ol>
+  <li>random information (the <samp>nonce</samp>) to make WAMP-CRA robust against replay attacks</li>
+  <li>timestamp information (the <samp>timestamp</samp>) to allow WAMP-CRA timeout on authentication requests that took too long</li>
+  <li>session information (the <samp>session</samp>) to bind the authentication to a WAMP session ID</li>
+  <li>all the authentication information that relates to authorization like <samp>authid</samp> and <samp>authrole</samp></li>
+</ol>
+
+<p> </p>
+<h1 id="rfc.section.13.7.2.3.2"><a href="#rfc.section.13.7.2.3.2">13.7.2.3.2.</a> <a href="#threelegged-authentication" id="threelegged-authentication">Three-legged Authentication</a></h1>
+<p id="rfc.section.13.7.2.3.2.p.1">The signing of the challenge sent by the server usually is done directly on the client. However, this is no strict requirement.  </p>
+<p id="rfc.section.13.7.2.3.2.p.2">E.g. a client might forward the challenge to another party (hence the "three-legged") for creating the signature. This can be used when the client was previously already authenticated to that third party, and WAMP-CRA should run piggy packed on that authentication.  </p>
+<p id="rfc.section.13.7.2.3.2.p.3">The third party would, upon receiving a signing request, simply check if the client is already authenticated, and if so, create a signature for WAMP-CRA.  </p>
+<p id="rfc.section.13.7.2.3.2.p.4">In this case, the secret is actually shared between the WAMP server who wants to authenticate clients using WAMP-CRA and the third party server, who shares a secret with the WAMP server.  </p>
+<p id="rfc.section.13.7.2.3.2.p.5">This scenario is also the reason the challenge sent with WAMP-CRA is not simply a random value, but a JSON serialized object containing sufficient authentication information for the thrid party to check.  </p>
+<h1 id="rfc.section.13.7.2.3.3"><a href="#rfc.section.13.7.2.3.3">13.7.2.3.3.</a> <a href="#password-salting" id="password-salting">Password Salting</a></h1>
+<p id="rfc.section.13.7.2.3.3.p.1">WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret often requires storage of that secret on the client and the server - and storing a password verbatim (unencrypted) is not recommended in general.  </p>
+<p id="rfc.section.13.7.2.3.3.p.2">WAMP-CRA allows the use of salted passwords following the <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> key derivation scheme. With salted passwords, the password itself is never stored, but only a key derived from the password and a password salt. This derived key is then practically working as the new shared secret.  </p>
+<p id="rfc.section.13.7.2.3.3.p.3">When the password is salted, the server will during WAMP-CRA send a <samp>CHALLENGE</samp> message containing additional information: </p>
+<pre>
+    [4, "wampcra",
+        {
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
+                \"authprovider\": \"userdb\", \"authid\": \"peter\",
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
+                \"session\": 3251278072152162}",
+            "salt": "salt123",
+            "keylen": 32,
+            "iterations": 1000
+        }
+    ]
+</pre>
+<p id="rfc.section.13.7.2.3.3.p.4">The <samp>CHALLENGE.Details.salt|string</samp> is the password salt in use. The <samp>CHALLENGE.Details.keylen|int</samp> and <samp>CHALLENGE.Details.iterations|int</samp> are parameters for the PBKDF2 algorithm.  </p>
+<h1 id="rfc.section.13.7.2.4"><a href="#rfc.section.13.7.2.4">13.7.2.4.</a> <a href="#ticketauth" id="ticketauth">Ticket-based Authentication</a></h1>
+<p id="rfc.section.13.7.2.4.p.1">With <em>Ticket-based authentication</em>, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.  </p>
+<p id="rfc.section.13.7.2.4.p.2">This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.  </p>
+<p/>
+
+<ul class="empty">
+  <li>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.  </li>
+</ul>
+<p id="rfc.section.13.7.2.4.p.4">A typical authentication begins with the client sending a <samp>HELLO</samp> message specifying the <samp>ticket</samp> method as (one of) the authentication methods: </p>
+<pre>
+    [1, "realm1",
+      {
+        "roles": ...,
+        "authmethods": ["ticket"],
+        "authid": "joe"
+      }
+    ]
+</pre>
+<p id="rfc.section.13.7.2.4.p.5">The <samp>HELLO.Details.authmethods|list</samp> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <samp>"ticket"</samp>.  </p>
+<p id="rfc.section.13.7.2.4.p.6">The <samp>HELLO.Details.authid|string</samp> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.  </p>
+<p id="rfc.section.13.7.2.4.p.7">If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <samp>ABORT</samp> message.  </p>
+<p id="rfc.section.13.7.2.4.p.8">If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <samp>authid</samp>, it'll send a <samp>CHALLENGE</samp> message: </p>
+<pre>
+    [4, "ticket", {}]
+</pre>
+<p id="rfc.section.13.7.2.4.p.9">The client will send an <samp>AUTHENTICATE</samp> message containing a ticket: </p>
+<pre>
+    [5, "secret!!!", {}]
+</pre>
+<p id="rfc.section.13.7.2.4.p.10">The server will then check if the ticket provided is permissible (for the <samp>authid</samp> given).  </p>
+<p id="rfc.section.13.7.2.4.p.11">If the authentication succeeds, the server will finally respond with a <samp>WELCOME</samp> message: </p>
+<pre>
+    [2, 3251278072152162,
+      {
+        "authid": "joe",
+        "authrole": "user",
+        "authmethod": "ticket",
+        "authprovider": "static",
+        "roles": ...
+      }
+    ]
+</pre>
+<p id="rfc.section.13.7.2.4.p.12">where </p>
+<p/>
+
+<ol>
+  <li><samp>authid|string</samp>: The authentication ID the client was (actually) authenticated as.</li>
+  <li><samp>authrole|string</samp>: The authentication role the client was authenticated for.</li>
+  <li><samp>authmethod|string</samp>: The authentication method, here <samp>"ticket"</samp></li>
+  <li><samp>authprovider|string</samp>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <samp>static</samp> or <samp>dynamic</samp>.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.13.7.2.4.p.14">The <samp>WELCOME.Details</samp> again contain the actual authentication information active. If the authentication fails, the server will response with an <samp>ABORT</samp> message.  </p>
+<h1 id="rfc.section.13.7.3"><a href="#rfc.section.13.7.3">13.7.3.</a> <a href="#alternative-transports" id="alternative-transports">Alternative Transports</a></h1>
+<p id="rfc.section.13.7.3.p.1">The only requirements that WAMP expects from a transport are: the transport must be message-based, bidirectional, reliable and ordered. This allows WAMP to run over different transports without any impact at the application layer.  </p>
+<p id="rfc.section.13.7.3.p.2">Besides the WebSocket transport, the following WAMP transports are currently specified: </p>
+<p/>
+
+<ul>
+  <li>
+    <a href="#rawsocket">Section 13.7.3.1</a>
+  </li>
+  <li>
+    <a href="#batchedwebsocket">Section 13.7.3.2</a>
+  </li>
+  <li>
+    <a href="#longpoll">Section 13.7.3.3</a>
+  </li>
+  <li>
+    <a href="#multiplexed">Section 13.7.3.4</a>
+  </li>
+</ul>
+
+<p> </p>
+<p/>
+
+<ul class="empty">
+  <li>Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined in the future.  </li>
+</ul>
+<h1 id="rfc.section.13.7.3.1"><a href="#rfc.section.13.7.3.1">13.7.3.1.</a> <a href="#rawsocket" id="rawsocket">RawSocket Transport</a></h1>
+<p><strong>WAMP-over-RawSocket</strong> is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.  </p>
+<p id="rfc.section.13.7.3.1.p.2">Compared to WAMP-over-WebSocket, WAMP-over-RawSocket is simple to implement, since there is no need to implement the WebSocket protocol which has some features that make it non-trivial (like a full HTTP-based opening handshake, message fragmentation, masking and variable length integers).  </p>
+<p id="rfc.section.13.7.3.1.p.3">WAMP-over-RawSocket has even lower overhead than WebSocket, which can be desirable in particular when running on local connections like loopback TCP or Unix domain sockets. It is also expected to allow implementations in microcontrollers in under 2KB RAM.  </p>
+<p id="rfc.section.13.7.3.1.p.4">WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable streaming underlying transport. When run over TLS on the standard port for secure HTTPS (443), it is also able to traverse most locked down networking environments such as enterprise or mobile networks (unless man-in-the-middle TLS intercepting proxies are in use).  </p>
+<p id="rfc.section.13.7.3.1.p.5">However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers do not allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (<samp>permessage-deflate</samp> WebSocket extension).  </p>
+<h1 id="rfc.section.13.7.3.1.1"><a href="#rfc.section.13.7.3.1.1">13.7.3.1.1.</a> <a href="#endianess" id="endianess">Endianess</a></h1>
+<p id="rfc.section.13.7.3.1.1.p.1">WAMP-over-RawSocket uses <em>network byte order</em> ("big-endian"). That means, given a unsigned 32 bit integer </p>
+<p id="rfc.section.13.7.3.1.1.p.2">0x 11 22 33 44 </p>
+<p id="rfc.section.13.7.3.1.1.p.3">the first octet sent out to (or received from) the wire is <samp>0x11</samp> and the last octet sent out (or received) is <samp>0x44</samp>.  </p>
+<p id="rfc.section.13.7.3.1.1.p.4">Here is how you would convert octets received from the wire into an integer in Python: </p>
+<pre>
+    import struct
+    
+    octets_received = b"\x11\x22\x33\x44"
+    i = struct.unpack("&gt;L", octets_received)[0]
+</pre>
+<p id="rfc.section.13.7.3.1.1.p.5">The integer received has the value <samp>287454020</samp>.  </p>
+<p id="rfc.section.13.7.3.1.1.p.6">And here is how you would send out an integer to the wire in Python: </p>
+<pre>
+    octets_to_be_send = struct.pack("&gt;L", i)
+</pre>
+<p id="rfc.section.13.7.3.1.1.p.7">The octets to be sent are <samp>b"\x11\x22\x33\x44"</samp>.  </p>
+<h1 id="rfc.section.13.7.3.1.2"><a href="#rfc.section.13.7.3.1.2">13.7.3.1.2.</a> <a href="#handshake" id="handshake">Handshake</a></h1>
+<p><strong>Client-to-Router Request</strong> </p>
+<p id="rfc.section.13.7.3.1.2.p.2">WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets: </p>
+<pre>
+MSB                                 LSB
+31                                    0
+0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.3">The <em>first octet</em> is a magic octet with value <samp>0x7F</samp>. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1">here</a> and <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2">here</a>). No valid HTTP request can have <samp>0x7F</samp> as its first octet.  </p>
+<p/>
+
+<ul class="empty">
+  <li>By using a magic first octet that cannot appear in a regular HTTP request, WAMP-over-RawSocket can be run e.g. on the same TCP listening port as WAMP-over-WebSocket or WAMP-over-LongPoll.  </li>
+</ul>
+<p id="rfc.section.13.7.3.1.2.p.5">The <em>second octet</em> consists of a 4 bit <samp>LENGTH</samp> field and a 4 bit <samp>SERIALIZER</samp> field.  </p>
+<p id="rfc.section.13.7.3.1.2.p.6">The <samp>LENGTH</samp> value is used by the <em>Client</em> to signal the <strong>maximum message length</strong> of messages it is willing to <strong>receive</strong>. When the handshake completes successfully, a <em>Router</em> MUST NOT send messages larger than this size.  </p>
+<p id="rfc.section.13.7.3.1.2.p.7">The possible values for <samp>LENGTH</samp> are: </p>
+<pre>
+ 0: 2**9 octets
+ 1: 2**10 octets
+...
+15: 2**24 octets
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.8">This means a <em>Client</em> can choose the maximum message length between <strong>512</strong> and <strong>16M</strong> octets.  </p>
+<p id="rfc.section.13.7.3.1.2.p.9">The <samp>SERIALIZER</samp> value is used by the <em>Client</em> to request a specific serializer to be used. When the handshake completes successfully, the <em>Client</em> and <em>Router</em> will use the serializer requested by the <em>Client</em>.  </p>
+<p id="rfc.section.13.7.3.1.2.p.10">The possible values for <samp>SERIALIZER</samp> are: </p>
+<pre>
+0: illegal
+1: JSON
+2: MsgPack
+3 - 15: reserved for future serializers
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.11">Here is a Python program that prints all (currently) permissible values for the <em>second octet</em>: </p>
+<pre>
+SERMAP = {
+   1: 'json',
+   2: 'msgpack'
+}
+
+## map serializer / max. msg length to RawSocket handshake request 
+## or success reply (2nd octet)
+##
+for ser in SERMAP:
+   for l in range(16):
+      octet_2 = (l &lt;&lt; 4) | ser
+      print("serializer: {}, maxlen: {} =&gt; 
+          0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.12">The <em>third and forth octet</em> are <strong>reserved</strong> and MUST be all zeros for now.  </p>
+<p><strong>Router-to-Client Reply</strong> </p>
+<p id="rfc.section.13.7.3.1.2.p.14">After a <em>Client</em> has connected to a <em>Router</em>, the <em>Router</em> will first receive the 4 octets handshake request from the <em>Client</em>.  </p>
+<p id="rfc.section.13.7.3.1.2.p.15">If the <em>first octet</em> differs from <samp>0x7F</samp>, it is not a WAMP-over-RawSocket request. Unless the <em>Router</em> also supports other transports on the connecting port (such as WebSocket or LongPoll), the <em>Router</em> MUST <strong>fail the connection</strong>.  </p>
+<p id="rfc.section.13.7.3.1.2.p.16">Here is an example of how a <em>Router</em> could parse the <em>second octet</em> in a <em>Clients</em> handshake request: </p>
+<pre>
+## map RawSocket handshake request (2nd octet) to 
+## serializer / max. msg length
+##
+for i in range(256):
+   ser_id = i &amp; 0x0f
+   if ser_id != 0:
+      ser = SERMAP.get(ser_id, 'currently undefined')
+      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+      print("{:02x} =&gt; serializer: {}, maxlen: {}".
+          format(i, ser, maxlen))
+   else:
+      print("fail the connection: illegal serializer value")
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.17">When the <em>Router</em> is willing to speak the serializer requested by the <em>Client</em>, it will answer with a 4 octets response of identical structure as the <em>Client</em> request: </p>
+<pre>
+MSB                                 LSB
+31                                    0
+0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.18">Again, the <em>first octet</em> MUST be the value <samp>0x7F</samp>. The <em>third and forth octets</em> are reserved and MUST be all zeros for now.  </p>
+<p id="rfc.section.13.7.3.1.2.p.19">In the <em>second octet</em>, the <em>Router</em> MUST echo the serializer value in <samp>SERIALIZER</samp> as requested by the <em>Client</em>.  </p>
+<p id="rfc.section.13.7.3.1.2.p.20">Similar to the <em>Client</em>, the <em>Router</em> sets the <samp>LENGTH</samp> field to request a limit on the length of messages sent by the <em>Client</em>.  </p>
+<p id="rfc.section.13.7.3.1.2.p.21">During the connection, <em>Router</em> MUST NOT send messages to the <em>Client</em> longer than the <samp>LENGTH</samp> requested by the <em>Client</em>, and the <em>Client</em> MUST NOT send messages larger than the maximum requested by the <em>Router</em> in it's handshake reply.  </p>
+<p id="rfc.section.13.7.3.1.2.p.22">If a message received during a connection exceeds the limit requested, a <em>Peer</em> MUST <strong>fail the connection</strong>.  </p>
+<p id="rfc.section.13.7.3.1.2.p.23">When the <em>Router</em> is unable to speak the serializer requested by the <em>Client</em>, or it is denying the <em>Client</em> for other reasons, the <em>Router</em> replies with an error: </p>
+<pre>
+MSB                                 LSB
+31                                    0
+0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.24">An error reply has 4 octets: the <em>first octet</em> is again the magic <samp>0x7F</samp>, and the <em>third and forth octet</em> are reserved and MUST all be zeros for now.  </p>
+<p id="rfc.section.13.7.3.1.2.p.25">The <em>second octet</em> has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error: </p>
+<pre>
+0: illegal (must not be used)
+1: serializer unsupported
+2: maximum message length unacceptable
+3: use of reserved bits (unsupported feature)
+4: maximum connection count reached
+5 - 15: reserved for future errors
+</pre>
+<p/>
+
+<ul class="empty">
+  <li>Note that the error code <samp>0</samp> MUST not be used. This is to allow storage of error state in a host language variable, while allowing <samp>0</samp> to signal the current state "no error" </li>
+</ul>
+<p id="rfc.section.13.7.3.1.2.p.27">Here is an example of how a <em>Router</em> might create the <em>second octet</em> in an error response: </p>
+<pre>
+ERRMAP = {
+   0: "illegal (must not be used)",
+   1: "serializer unsupported",
+   2: "maximum message length unacceptable",
+   3: "use of reserved bits (unsupported feature)",
+   4: "maximum connection count reached"
+}
+
+## map error to RawSocket handshake error reply (2nd octet)
+##
+for err in ERRMAP:
+   octet_2 = err &lt;&lt; 4
+   print("error: {} =&gt; 0x{:02x}").format(ERRMAP[err], err)
+</pre>
+<p id="rfc.section.13.7.3.1.2.p.28">The <em>Client</em> - after having sent its handshake request - will wait for the 4 octets from <em>Router</em> handshake reply.  </p>
+<p id="rfc.section.13.7.3.1.2.p.29">Here is an example of how a <em>Client</em> might parse the <em>second octet</em> in a <em>Router</em> handshake reply: </p>
+<pre>
+## map RawSocket handshake reply (2nd octet)
+##
+for i in range(256):
+   ser_id = i &amp; 0x0f
+   if ser_id:
+      ## verify the serializer is the one we requested! 
+      ## if not, fail the connection!
+      ser = SERMAP.get(ser_id, 'currently undefined')
+      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+      print("{:02x} =&gt; serializer: {}, maxlen: {}".
+          format(i, ser, maxlen))
+   else:
+      err = i &gt;&gt; 4
+      print("error: {}".format(ERRMAP.get(err, 
+          'currently undefined')))
+</pre>
+<h1 id="rfc.section.13.7.3.1.3"><a href="#rfc.section.13.7.3.1.3">13.7.3.1.3.</a> <a href="#serialization" id="serialization">Serialization</a></h1>
+<p id="rfc.section.13.7.3.1.3.p.1">To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MsgPack).  </p>
+<p id="rfc.section.13.7.3.1.3.p.2">The length of the serialized messages in octets MUST NOT exceed the maximum requested by the <em>Peer</em>.  </p>
+<p id="rfc.section.13.7.3.1.3.p.3">If the serialized length exceed the maximum requested, the WAMP message can not be sent to the <em>Peer</em>. Handling situations like the latter is left to the implementation.  </p>
+<p id="rfc.section.13.7.3.1.3.p.4">E.g. a <em>Router</em> that is to forward a WAMP <samp>EVENT</samp> to a <em>Client</em> which exceeds the maximum length requested by the <em>Client</em> when serialized might: </p>
+<p/>
+
+<ul>
+  <li>drop the event (not forwarding to that specific client) and track dropped events</li>
+  <li>prohibit publishing to the topic already</li>
+  <li>remove the event payload, and send an event with extra information (<samp>payload_limit_exceeded = true</samp>)</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.13.7.3.1.4"><a href="#rfc.section.13.7.3.1.4">13.7.3.1.4.</a> <a href="#framing" id="framing">Framing</a></h1>
+<p id="rfc.section.13.7.3.1.4.p.1">The serialized octets for a message to be sent are prefixed with exactly 4 octets.  </p>
+<pre>
+MSB                                 LSB
+31                                    0
+RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
+</pre>
+<p id="rfc.section.13.7.3.1.4.p.2">The <em>first octet</em> has the following structure </p>
+<pre>
+MSB   LSB
+7       0
+RRRR RTTT
+</pre>
+<p id="rfc.section.13.7.3.1.4.p.3">The five bits <samp>RRRRR</samp> are reserved for future use and MUST be all zeros for now.  </p>
+<p id="rfc.section.13.7.3.1.4.p.4">The three bits <samp>TTT</samp> encode the type of the transport message: </p>
+<pre>
+0: regular WAMP message
+1: PING
+2: PONG
+3-7: reserved
+</pre>
+<p id="rfc.section.13.7.3.1.4.p.5">The <em>three remaining octets</em> constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.  </p>
+<p id="rfc.section.13.7.3.1.4.p.6">For a regular WAMP message (<samp>TTT == 0</samp>), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).  </p>
+<p id="rfc.section.13.7.3.1.4.p.7">For a <samp>PING</samp> message (<samp>TTT == 1</samp>), the length is the length of the arbitrary payload that follows. A <em>Peer</em> MUST reply to each <samp>PING</samp> by sending exactly one <samp>PONG</samp> immediately, and the <samp>PONG</samp> MUST echo back the payload of the <samp>PING</samp> exactly.  </p>
+<p id="rfc.section.13.7.3.1.4.p.8">For receiving messages with WAMP-over-RawSocket, a <em>Peer</em> will usually read exactly 4 octets from the incoming stream, decode the transport level message type and payload length, and then receive as many octets as the length was giving.  </p>
+<p id="rfc.section.13.7.3.1.4.p.9">When the transport level message type indicates a regular WAMP message, the transport level message payload is unserialized according to the serializer agreed in the handshake and the processed at the WAMP level.  </p>
+<h1 id="rfc.section.13.7.3.2"><a href="#rfc.section.13.7.3.2">13.7.3.2.</a> <a href="#batchedwebsocket" id="batchedwebsocket">Batched WebSocket Transport for WAMP</a></h1>
+<p><em>WAMP-over-Batched-WebSocket</em> is a variant of WAMP-over-WebSocket where multiple WAMP messages are sent in one WebSocket message.  </p>
+<p id="rfc.section.13.7.3.2.p.2">Using WAMP message batching can increase wire level efficiency further. In particular when using TLS and the WebSocket implementation is forcing every WebSocket message into a new TLS segment.  </p>
+<p id="rfc.section.13.7.3.2.p.3">WAMP-over-Batched-WebSocket is negotiated between Peers in the WebSocket opening handshake by agreeing on one of the following WebSocket subprotocols: </p>
+<p/>
+
+<ul>
+  <li>
+    <samp>wamp.2.json.batched</samp>
+  </li>
+  <li>
+    <samp>wamp.2.msgpack.batched</samp>
+  </li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.13.7.3.2.p.5">Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character <samp>\30</samp> (<a href="http://en.wikipedia.org/wiki/Record_separator#Field_separators">record separator</a>) octet <samp>0x1e</samp> to <em>each</em> serialized messages, and packing a sequence of such serialized messages into a single WebSocket message: </p>
+<pre>
+    Serialized JSON WAMP Msg 1 | 0x1e | 
+        Serialized JSON WAMP Msg 2 | 0x1e | ...
+</pre>
+<p id="rfc.section.13.7.3.2.p.6">Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MsgPack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message: </p>
+<pre>
+    Length of Msg 1 serialization (uint32) | 
+        serialized MsgPack WAMP Msg 1 | ...
+</pre>
+<p id="rfc.section.13.7.3.2.p.7">With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length <strong>1</strong>. Sending a batch of length <strong>0</strong> (no WAMP message) is illegal and a <em>Peer</em> MUST fail the transport upon receiving such a transport message.  </p>
+<h1 id="rfc.section.13.7.3.3"><a href="#rfc.section.13.7.3.3">13.7.3.3.</a> <a href="#longpoll" id="longpoll">A HTTP Longpoll Transport for WAMP</a></h1>
+<p id="rfc.section.13.7.3.3.p.1">The <em>Long-Poll Transport</em> is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the Client issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.  </p>
+<p><strong>Opening a Session</strong> </p>
+<p id="rfc.section.13.7.3.3.p.3">With the Long-Poll Transport, a Client opens a new WAMP session by sending a HTTP/POST request to a well-known URL, e.g.  </p>
+<pre>
+    http://mypp.com/longpoll/open
+</pre>
+<p id="rfc.section.13.7.3.3.p.4">Here, <samp>http://mypp.com/longpoll</samp> is the base URL for the Long-Poll Transport and <samp>/open</samp> is a path dedicated for opening new sessions.  </p>
+<p id="rfc.section.13.7.3.3.p.5">The HTTP/POST request SHOULD have a <samp>Content-Type</samp> header set to <samp>application/json</samp> and MUST have a request body with a JSON document that is a dictionary: </p>
+<pre>
+    {
+       "protocols": ["wamp.2.json"]
+    }
+</pre>
+<p id="rfc.section.13.7.3.3.p.6">The (mandatory) <samp>protocols</samp> attribute specifies the protocols the client is willing to speak. The server will chose one from this list when establishing the session or fail the request when no protocol overlap was found.  </p>
+<p id="rfc.section.13.7.3.3.p.7">The valid protocols are: </p>
+<p/>
+
+<ul>
+  <li>
+    <samp>wamp.2.json.batched</samp>
+  </li>
+  <li>
+    <samp>wamp.2.json</samp>
+  </li>
+  <li>
+    <samp>wamp.2.msgpack.batched</samp>
+  </li>
+  <li>
+    <samp>wamp.2.msgpack</samp>
+  </li>
+</ul>
+
+<p> </p>
+<p/>
+
+<ul class="empty">
+  <li>The request path with this and subsequently described HTTP/POST requests MAY contain a query parameter <samp>x</samp> with some random or sequentially incremented value: </li>
+  <li><span>&lt;</span><a href="http://mypp.com/longpoll/open?x=382913">http://mypp.com/longpoll/open?x=382913</a><span>&gt;</span> </li>
+  <li>The value is ignored, but may help in certain situations to prevent intermediaries from caching the request.  </li>
+</ul>
+<p id="rfc.section.13.7.3.3.p.10">Returned is a JSON document containing a transport ID and the protocol to speak: </p>
+<pre>
+    {
+       "protocol": "wamp.2.json",
+       "transport": "kjmd3sBLOUnb3Fyr"
+    }
+</pre>
+<p id="rfc.section.13.7.3.3.p.11">As an implied side-effect, two HTTP endpoints are created </p>
+<pre>
+    http://mypp.com/longpoll/&lt;transport_id&gt;/receive
+    http://mypp.com/longpoll/&lt;transport_id&gt;/send
+</pre>
+<p id="rfc.section.13.7.3.3.p.12">where <samp>transport_id</samp> is the transport ID returned from <samp>open</samp>, e.g.  </p>
+<pre>
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
+</pre>
+<p><strong>Receiving WAMP Messages</strong> </p>
+<p id="rfc.section.13.7.3.3.p.14">The Client will then issue HTTP/POST requests (with empty request body) to </p>
+<pre>
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
+</pre>
+<p id="rfc.section.13.7.3.3.p.15">When there are WAMP messages pending downstream, a request will return with a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).  </p>
+<p id="rfc.section.13.7.3.3.p.16">The serialization format used is the one agreed during opening the session.  </p>
+<p id="rfc.section.13.7.3.3.p.17">The batching uses the same scheme as with <samp>wamp.2.json.batched</samp> and <samp>wamp.2.msgpack.batched</samp> transport over WebSocket.  </p>
+<p/>
+
+<ul class="empty">
+  <li>Note: In unbatched mode, when there is more than one message pending, there will be at most one message returned for each request. The other pending messages must be retrieved by new requests. With batched mode, all messages pending at request time will be returned in one batch of messages.  </li>
+</ul>
+<p><strong>Sending WAMP Messages</strong> </p>
+<p id="rfc.section.13.7.3.3.p.20">For sending WAMP messages, the <em>Client</em> will issue HTTP/POST requests to </p>
+<pre>
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
+</pre>
+<p id="rfc.section.13.7.3.3.p.21">with request body being a single WAMP message (unbatched modes) or a batch of serialized WAMP messages (batched mode).  </p>
+<p id="rfc.section.13.7.3.3.p.22">The serialization format used is the one agreed during opening the session.  </p>
+<p id="rfc.section.13.7.3.3.p.23">The batching uses the same scheme as with <samp>wamp.2.json.batched</samp> and <samp>wamp.2.msgpack.batched</samp> transport over WebSocket.  </p>
+<p id="rfc.section.13.7.3.3.p.24">Upon success, the request will return with HTTP status code 202 ("no content"). Upon error, the request will return with HTTP status code 400 ("bad request").  </p>
+<p><strong>Closing a Session</strong> </p>
+<p id="rfc.section.13.7.3.3.p.26">To orderly close a session, a Client will issue a HTTP/POST to </p>
+<pre>
+    http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/close
+</pre>
+<p id="rfc.section.13.7.3.3.p.27">with an empty request body. Upon success, the request will return with HTTP status code 202 ("no content").  </p>
+<h1 id="rfc.section.13.7.3.4"><a href="#rfc.section.13.7.3.4">13.7.3.4.</a> <a href="#multiplexed" id="multiplexed">Multiplexed Transport</a></h1>
+<p id="rfc.section.13.7.3.4.p.1">A Transport may support the multiplexing of multiple logical transports over a single "physical" transport.  </p>
+<p id="rfc.section.13.7.3.4.p.2">By using such a Transport, multiple WAMP sessions can be transported over a single underlying transport at the same time.  </p>
+<p id="rfc.section.13.7.3.4.p.3">As an example, the proposed <a href="https://github.com/oberstet/permessage-priority/blob/master/draft-oberstein-hybi-permessage-priority.txt">WebSocket extension "permessage-priority"</a> would allow creating multiple logical Transports for WAMP over a single underlying WebSocket connection.  </p>
+<p id="rfc.section.13.7.3.4.p.4">Sessions running over a multiplexed Transport are completely independent: they get assigned different session IDs, may join different realms and each session needs to authenticate itself.  </p>
+<p id="rfc.section.13.7.3.4.p.5">Because of above, Multiplexed Transports for WAMP are actually not detailed in the WAMP spec, but a feature of the transport being used.  </p>
+<p/>
+
+<ul class="empty">
+  <li>Note: Currently no WAMP transport supports multiplexing. The work on the MUX extension with WebSocket has stalled, and the <samp>permessage-priority</samp> proposal above is still just a proposal. However, with RawSocket, we should be able to add multiplexing in the the future (with downward compatibility).  </li>
+</ul>
+<h1 id="rfc.section.13.7.3.5"><a href="#rfc.section.13.7.3.5">13.7.3.5.</a> <a href="#ticketauth-1" id="ticketauth-1">Ticket-based Authentication</a></h1>
+<p id="rfc.section.13.7.3.5.p.1">With <em>Ticket-based authentication</em>, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.  </p>
+<p id="rfc.section.13.7.3.5.p.2">This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.  </p>
+<p/>
+
+<ul class="empty">
+  <li>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.  </li>
+</ul>
+<p id="rfc.section.13.7.3.5.p.4">A typical authentication begins with the client sending a <samp>HELLO</samp> message specifying the <samp>ticket</samp> method as (one of) the authentication methods: </p>
+<pre>
+    [1, "realm1",
+      {
+        "roles": ...,
+        "authmethods": ["ticket"],
+        "authid": "joe"
+      }
+    ]
+</pre>
+<p id="rfc.section.13.7.3.5.p.5">The <samp>HELLO.Details.authmethods|list</samp> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <samp>"ticket"</samp>.  </p>
+<p id="rfc.section.13.7.3.5.p.6">The <samp>HELLO.Details.authid|string</samp> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.  </p>
+<p id="rfc.section.13.7.3.5.p.7">If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <samp>ABORT</samp> message.  </p>
+<p id="rfc.section.13.7.3.5.p.8">If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <samp>authid</samp>, it'll send a <samp>CHALLENGE</samp> message: </p>
+<pre>
+    [4, "ticket", {}]
+</pre>
+<p id="rfc.section.13.7.3.5.p.9">The client will send an <samp>AUTHENTICATE</samp> message containing a ticket: </p>
+<pre>
+    [5, "secret!!!", {}]
+</pre>
+<p id="rfc.section.13.7.3.5.p.10">The server will then check if the ticket provided is permissible (for the <samp>authid</samp> given).  </p>
+<p id="rfc.section.13.7.3.5.p.11">If the authentication succeeds, the server will finally respond with a <samp>WELCOME</samp> message: </p>
+<pre>
+    [2, 3251278072152162,
+      {
+        "authid": "joe",
+        "authrole": "user",
+        "authmethod": "ticket",
+        "authprovider": "static",
+        "roles": ...
+      }
+    ]
+</pre>
+<p id="rfc.section.13.7.3.5.p.12">where </p>
+<p/>
+
+<ol>
+  <li><samp>authid|string</samp>: The authentication ID the client was (actually) authenticated as.</li>
+  <li><samp>authrole|string</samp>: The authentication role the client was authenticated for.</li>
+  <li><samp>authmethod|string</samp>: The authentication method, here <samp>"ticket"</samp></li>
+  <li><samp>authprovider|string</samp>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <samp>static</samp> or <samp>dynamic</samp>.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.13.7.3.5.p.14">The <samp>WELCOME.Details</samp> again contain the actual authentication information active. If the authentication fails, the server will response with an <samp>ABORT</samp> message.  </p>
+<h1 id="rfc.section.13.7.3.6"><a href="#rfc.section.13.7.3.6">13.7.3.6.</a> <a href="#ticketauth-2" id="ticketauth-2">Ticket-based Authentication</a></h1>
+<p id="rfc.section.13.7.3.6.p.1">With <em>Ticket-based authentication</em>, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.  </p>
+<p id="rfc.section.13.7.3.6.p.2">This "ticket" could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.  </p>
+<p/>
+
+<ul class="empty">
+  <li>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.  </li>
+</ul>
+<p id="rfc.section.13.7.3.6.p.4">A typical authentication begins with the client sending a <samp>HELLO</samp> message specifying the <samp>ticket</samp> method as (one of) the authentication methods: </p>
+<pre>
+    [1, "realm1",
+      {
+        "roles": ...,
+        "authmethods": ["ticket"],
+        "authid": "joe"
+      }
+    ]
+</pre>
+<p id="rfc.section.13.7.3.6.p.5">The <samp>HELLO.Details.authmethods|list</samp> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <samp>"ticket"</samp>.  </p>
+<p id="rfc.section.13.7.3.6.p.6">The <samp>HELLO.Details.authid|string</samp> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.  </p>
+<p id="rfc.section.13.7.3.6.p.7">If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <samp>ABORT</samp> message.  </p>
+<p id="rfc.section.13.7.3.6.p.8">If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <samp>authid</samp>, it'll send a <samp>CHALLENGE</samp> message: </p>
+<pre>
+    [4, "ticket", {}]
+</pre>
+<p id="rfc.section.13.7.3.6.p.9">The client will send an <samp>AUTHENTICATE</samp> message containing a ticket: </p>
+<pre>
+    [5, "secret!!!", {}]
+</pre>
+<p id="rfc.section.13.7.3.6.p.10">The server will then check if the ticket provided is permissible (for the <samp>authid</samp> given).  </p>
+<p id="rfc.section.13.7.3.6.p.11">If the authentication succeeds, the server will finally respond with a <samp>WELCOME</samp> message: </p>
+<pre>
+    [2, 3251278072152162,
+      {
+        "authid": "joe",
+        "authrole": "user",
+        "authmethod": "ticket",
+        "authprovider": "static",
+        "roles": ...
+      }
+    ]
+</pre>
+<p id="rfc.section.13.7.3.6.p.12">where </p>
+<p/>
+
+<ol>
+  <li><samp>authid|string</samp>: The authentication ID the client was (actually) authenticated as.</li>
+  <li><samp>authrole|string</samp>: The authentication role the client was authenticated for.</li>
+  <li><samp>authmethod|string</samp>: The authentication method, here <samp>"ticket"</samp></li>
+  <li><samp>authprovider|string</samp>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <samp>static</samp> or <samp>dynamic</samp>.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.13.7.3.6.p.14">The <samp>WELCOME.Details</samp> again contain the actual authentication information active. If the authentication fails, the server will response with an <samp>ABORT</samp> message.  </p>
 <h1 id="rfc.section.14"><a href="#rfc.section.14">14.</a> <a href="#binary-conversion-of-json-strings" id="binary-conversion-of-json-strings">Binary conversion of JSON Strings</a></h1>
 <p id="rfc.section.14.p.1">Binary data follows a convention for conversion to JSON strings.  </p>
 <p id="rfc.section.14.p.2">A <strong>byte array</strong> is converted to a <strong>JSON string</strong> as follows: </p>

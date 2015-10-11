@@ -63,8 +63,8 @@ Fired when a session is added to a registration.
 
 **Event Arguments**
 
-- `session|id`: The ID of the session being added to a registration.
-- `registration|id`: The ID of the registration to which a session is being added.
+* `session|id`: The ID of the session being added to a registration.
+* `registration|id`: The ID of the registration to which a session is being added.
 
 
 ###### wamp.registration.on_unregister
@@ -73,8 +73,8 @@ Fired when a session is removed from a subscription.
 
 **Event Arguments**
 
-- `session|id`: The ID of the session being removed from a registration.
-- `registration|id`: The ID of the registration from which a session is being removed.
+* `session|id`: The ID of the session being removed from a registration.
+* `registration|id`: The ID of the registration from which a session is being removed.
 
 
 ###### wamp.registration.on_delete
@@ -83,8 +83,8 @@ Fired when a registration is deleted after the last session attached to it has b
 
 **Event Arguments**
 
-- `session|id`: The ID of the last session being removed from a registration.
-- `registration|id`: The ID of the registration being deleted.
+* `session|id`: The ID of the last session being removed from a registration.
+* `registration|id`: The ID of the registration being deleted.
 
 
 ##### Registration Meta-Procedures
@@ -105,11 +105,11 @@ Retrieves registration IDs listed according to match policies.
 
 **Arguments**
 
-- None
+* None
 
 **Results**
 
-- `RegistrationLists|dict`: A dictionary with a list of registration IDs for each match policy.
+* `RegistrationLists|dict`: A dictionary with a list of registration IDs for each match policy.
 
 **Object Schemas**
 
@@ -131,12 +131,12 @@ Obtains the registration (if any) managing a procedure, according to some match 
 
 **Arguments**
 
-- `procedure|uri`: The procedure to lookup the registration for.
-- (Optional) `options|dict`: Same options as when registering a procedure.
+* `procedure|uri`: The procedure to lookup the registration for.
+* (Optional) `options|dict`: Same options as when registering a procedure.
 
 **Results**
 
-- (Nullable) `registration|id`: The ID of the registration managing the procedure, if found, or null.
+* (Nullable) `registration|id`: The ID of the registration managing the procedure, if found, or null.
 
 ###### wamp.registration.match
 
@@ -144,11 +144,11 @@ Obtains the registration best matching a given procedure URI.
 
 **Arguments**
 
-- `procedure|uri`: The procedure URI to match
+* `procedure|uri`: The procedure URI to match
 
 **Results**
 
-- (Nullable) `registration|id`: The ID of best matching registration, or null.
+* (Nullable) `registration|id`: The ID of best matching registration, or null.
 
 ###### wamp.registration.get
 
@@ -156,11 +156,11 @@ Retrieves information on a particular registration.
 
 **Arguments**
 
-- `registration|id`: The ID of the registration to retrieve.
+* `registration|id`: The ID of the registration to retrieve.
 
 **Results**
 
-- `RegistrationDetails|dict`: Details on the registration.
+* `RegistrationDetails|dict`: Details on the registration.
 
 **Error URIs**
 
@@ -190,15 +190,15 @@ Retrieves a list of session IDs for sessions currently attached to the registrat
 
 **Arguments**
 
-- `registration|id`: The ID of the registration to get calles for.
+* `registration|id`: The ID of the registration to get calles for.
 
 **Results**
 
-- `callee_ids|list`: A list of WAMP session IDs of callees currently attached to the registration.
+* `callee_ids|list`: A list of WAMP session IDs of callees currently attached to the registration.
 
 **Error URIs**
 
-- `wamp.error.no_such_registration`: No registration with the given ID exists on the router.
+* `wamp.error.no_such_registration`: No registration with the given ID exists on the router.
 
 ###### wamp.registration.count_callees
 
@@ -206,15 +206,15 @@ Obtains the number of sessions currently attached to a registration.
 
 **Arguments**
 
-- `registration|id`: The ID of the registration to get the number of callees for.
+* `registration|id`: The ID of the registration to get the number of callees for.
 
 **Results**
 
-- `count|int`: The number of callees currently attached to a registration.
+* `count|int`: The number of callees currently attached to a registration.
 
 **Error URIs**
 
-- `wamp.error.no_such_registration`: No registration with the given ID exists on the router.
+* `wamp.error.no_such_registration`: No registration with the given ID exists on the router.
 
 
 

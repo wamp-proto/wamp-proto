@@ -1,0 +1,9 @@
+@startuml
+participant Client
+participant Router
+
+Client -> Router: HELLO
+Router -> Client: CHALLENGE
+Client -> Router: AUTHENTICATE
+Router -> Client: WELCOME or ABORT
+@enduml
