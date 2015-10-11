@@ -4,14 +4,14 @@ We are presently starting the process of standardizing WAMP as an IETF standard.
 
 This is via the [hybi working group](), which was formed to create the WebSocket protocol and needs to be re-chartered to standardize WAMP.
 
-There is already an [early draft version]() of this online, and a current working version [in this repo]()
+There is already an [draft version](https://tools.ietf.org/html/draft-oberstet-hybi-tavendo-wamp) of this online, and a current working version [in this repository](https://github.com/wamp-proto/wamp-proto/)
 
 Before submitting feedback, please 
 
-* take a look at the [most current draft document]()
-* familiarize yourself with our current issues list here on GitHub
+* take a look at the [most current draft document](https://tools.ietf.org/html/draft-oberstet-hybi-tavendo-wamp)
+* familiarize yourself with our current [issues list](https://github.com/wamp-proto/wamp-proto/issues) here on GitHub
 
-While the issues list should reflect the current state of discussion, there may be more on the [hybi mailing list](), so subscribing to this and browsing things there can't hurt.
+While the issues list should reflect the current state of discussion, there may be more on the [hybi mailing list](https://mailarchive.ietf.org/arch/search/?email_list=hybi), so [subscribing to this](https://www.ietf.org/mailman/listinfo/hybi) and browsing things there can't hurt.
 
 If you're new to this, you may also want to read the [Tao of the IETF](http://www.ietf.org/tao.html).
 
@@ -35,9 +35,11 @@ For non-editorial (i.e., **design**) issues you should create an issue on Github
 
 ## Working With the Drafts
 
-The draft is written in markdown, with [draft-oberstet-hybi-tavendo-wamp-00.md](draft-oberstet-hybi-tavendo-wamp-00.md) being the main document.
+The draft is written in markdown, with draft-oberstet-hybi-tavendo-wamp-XX.md in the `rfc`folder being the main document.
 
-To keep document length manageable we use file includes.
+To keep document length manageable we use file includes, so for actual content see the `text` sub-folder.
+
+When you want to contribute, then you can file an issue or send us a pull request.
 
 For the tooling required to work with this, see the [README file](README.md).
 
