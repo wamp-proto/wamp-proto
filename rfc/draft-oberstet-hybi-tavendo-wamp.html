@@ -518,8 +518,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Oberstein, T. and A. Goedde" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-oberstet-hybi-tavendo-wamp-02" />
-  <meta name="dct.issued" scheme="ISO8601" content="2015-10-10" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-oberstet-hybi-tavendo-wamp-03" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-10-11" />
   <meta name="dct.abstract" content="This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.  " />
   <meta name="description" content="This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.  " />
 
@@ -543,8 +543,8 @@
   <td class="right">Tavendo GmbH</td>
 </tr>
 <tr>
-  <td class="left">Expires: April 12, 2016</td>
-  <td class="right">October 10, 2015</td>
+  <td class="left">Expires: April 13, 2016</td>
+  <td class="right">October 11, 2015</td>
 </tr>
 
     	
@@ -552,7 +552,7 @@
   </table>
 
   <p class="title">The Web Application Messaging Protocol<br />
-  <span class="filename">draft-oberstet-hybi-tavendo-wamp-02</span></p>
+  <span class="filename">draft-oberstet-hybi-tavendo-wamp-03</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -564,7 +564,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on April 12, 2016.</p>
+<p>This Internet-Draft will expire on April 13, 2016.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -1266,7 +1266,7 @@
 <h1 id="rfc.section.6.4.1.3"><a href="#rfc.section.6.4.1.3">6.4.1.3.</a> <a href="#abort" id="abort">ABORT</a></h1>
 <p id="rfc.section.6.4.1.3.p.1">Sent by a Peer*to abort the opening of a WAMP session. No response is expected.  </p>
 <pre>
-  [ABORT, Details|dict, Reason|uri]
+    [ABORT, Details|dict, Reason|uri]
 </pre>
 <h1 id="rfc.section.6.4.1.4"><a href="#rfc.section.6.4.1.4">6.4.1.4.</a> <a href="#goodbye" id="goodbye">GOODBYE</a></h1>
 <p id="rfc.section.6.4.1.4.p.1">Sent by a Peer to close a previously opened WAMP session. Must be echo'ed by the receiving Peer.  </p>
@@ -2944,22 +2944,22 @@
 <h1 id="rfc.section.13.1.1.1"><a href="#rfc.section.13.1.1.1">13.1.1.1.</a> <a href="#challenge" id="challenge">CHALLENGE</a></h1>
 <p id="rfc.section.13.1.1.1.p.1">The <samp>CHALLENGE</samp> message is used with certain Authentication Methods. During authenticated session establishment, a <strong>Router</strong> sends a challenge message.  </p>
 <pre>
-[CHALLENGE, AuthMethod|string, Extra|dict]
+    [CHALLENGE, AuthMethod|string, Extra|dict]
 </pre>
 <h1 id="rfc.section.13.1.1.2"><a href="#rfc.section.13.1.1.2">13.1.1.2.</a> <a href="#authenticate" id="authenticate">AUTHENTICATE</a></h1>
 <p id="rfc.section.13.1.1.2.p.1">The <samp>AUTHENTICATE</samp> message is used with certain Authentication Methods. A <strong>Client</strong> having received a challenge is expected to respond by sending a signature or token.  </p>
 <pre>
-[AUTHENTICATE, Signature|string, Extra|dict]
+    [AUTHENTICATE, Signature|string, Extra|dict]
 </pre>
 <h1 id="rfc.section.13.1.1.3"><a href="#rfc.section.13.1.1.3">13.1.1.3.</a> <a href="#cancel" id="cancel">CANCEL</a></h1>
 <p id="rfc.section.13.1.1.3.p.1">The <samp>CANCEL</samp> message is used with the Call Canceling advanced feature. A <em>Caller</em> can cancel and issued call actively by sending a cancel message to the <em>Dealer</em>.  </p>
 <pre>
-[CANCEL, CALL.Request|id, Options|dict]
+    [CANCEL, CALL.Request|id, Options|dict]
 </pre>
 <h1 id="rfc.section.13.1.1.4"><a href="#rfc.section.13.1.1.4">13.1.1.4.</a> <a href="#interrupt" id="interrupt">INTERRUPT</a></h1>
 <p id="rfc.section.13.1.1.4.p.1">The <samp>INTERRUPT</samp> message is used with the Call Canceling advanced feature. Upon receiving a cancel for a pending call, a <em>Dealer</em> will issue an interrupt to the <em>Callee</em>.  </p>
 <pre>
-[INTERRUPT, INVOCATION.Request|id, Options|dict]
+    [INTERRUPT, INVOCATION.Request|id, Options|dict]
 </pre>
 <h1 id="rfc.section.13.1.2"><a href="#rfc.section.13.1.2">13.1.2.</a> <a href="#message-codes-and-direction-1" id="message-codes-and-direction-1">Message Codes and Direction</a></h1>
 <p id="rfc.section.13.1.2.p.1">The following table list the message type code for <strong>the OPTIONAL messages</strong> defined in this part of the document and their direction between peer roles.  </p>
@@ -3061,7 +3061,7 @@
   </tbody>
 </table>
 <h1 id="rfc.section.13.2.1"><a href="#rfc.section.13.2.1">13.2.1.</a> <a href="#rpc-features" id="rpc-features">RPC Features</a></h1>
-<table cellpadding="3" cellspacing="0" class="tt full center">
+<table cellpadding="3" cellspacing="0" class="tt full left">
   <thead>
     <tr>
       <th class="center">Feature</th>
@@ -3198,7 +3198,7 @@
   </tbody>
 </table>
 <h1 id="rfc.section.13.2.2"><a href="#rfc.section.13.2.2">13.2.2.</a> <a href="#pubsub-features" id="pubsub-features">PubSub Features</a></h1>
-<table cellpadding="3" cellspacing="0" class="tt full center">
+<table cellpadding="3" cellspacing="0" class="tt full left">
   <thead>
     <tr>
       <th class="center">Feature</th>
@@ -3315,26 +3315,44 @@
   </tbody>
 </table>
 <h1 id="rfc.section.13.2.3"><a href="#rfc.section.13.2.3">13.2.3.</a> <a href="#other-advanced-features" id="other-advanced-features">Other Advanced Features</a></h1>
-<p/>
-
-<ul>
-  <li>authentication <ul><li>WAMP CRA</li><li>cookie (entirely missing)</li><li>OTP --&gt; ticket?</li></ul></li>
-  <li>transports <ul><li>batched WS transport</li><li>longpoll transport</li><li>rawsocket transport</li><li>multiplexed transport</li></ul></li>
-  <li>pre-defined URIs</li>
-  <li>reflection</li>
-  <li>session meta-api</li>
-</ul>
-
-<p> </p>
-<p id="rfc.section.13.2.3.p.2">? </p>
-<p/>
-
-<ul>
-  <li>partitioned registration</li>
-  <li>partitioned subscription</li>
-</ul>
-
-<p> </p>
+<table cellpadding="3" cellspacing="0" class="tt full left">
+  <thead>
+    <tr>
+      <th class="center">Feature</th>
+      <th class="center">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="center">challenge-response authentication</td>
+      <td class="center">beta</td>
+    </tr>
+    <tr>
+      <td class="center">cookie authentication</td>
+      <td class="center">beta</td>
+    </tr>
+    <tr>
+      <td class="center">ticket authentication</td>
+      <td class="center">beta</td>
+    </tr>
+    <tr>
+      <td class="center">rawsocket transport</td>
+      <td class="center">stable</td>
+    </tr>
+    <tr>
+      <td class="center">batched WS transport</td>
+      <td class="center">sketch</td>
+    </tr>
+    <tr>
+      <td class="center">longpoll transport</td>
+      <td class="center">beta</td>
+    </tr>
+    <tr>
+      <td class="center">session meta api</td>
+      <td class="center">beta</td>
+    </tr>
+  </tbody>
+</table>
 <h1 id="rfc.section.13.3"><a href="#rfc.section.13.3">13.3.</a> <a href="#advanced-rpc-features" id="advanced-rpc-features">Advanced RPC Features</a></h1>
 <h1 id="rfc.section.13.3.1"><a href="#rfc.section.13.3.1">13.3.1.</a> <a href="#progressive-call-results" id="progressive-call-results">Progressive Call Results</a></h1>
 <h1 id="rfc.section.13.3.1.1"><a href="#rfc.section.13.3.1.1">13.3.1.1.</a> <a href="#feature-definition" id="feature-definition">Feature Definition</a></h1>
@@ -5371,28 +5389,34 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <p id="rfc.section.13.7.3.1.p.5">However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers do not allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (<samp>permessage-deflate</samp> WebSocket extension).  </p>
 <h1 id="rfc.section.13.7.3.1.1"><a href="#rfc.section.13.7.3.1.1">13.7.3.1.1.</a> <a href="#endianess" id="endianess">Endianess</a></h1>
 <p id="rfc.section.13.7.3.1.1.p.1">WAMP-over-RawSocket uses <em>network byte order</em> ("big-endian"). That means, given a unsigned 32 bit integer </p>
-<p id="rfc.section.13.7.3.1.1.p.2">0x 11 22 33 44 </p>
-<p id="rfc.section.13.7.3.1.1.p.3">the first octet sent out to (or received from) the wire is <samp>0x11</samp> and the last octet sent out (or received) is <samp>0x44</samp>.  </p>
-<p id="rfc.section.13.7.3.1.1.p.4">Here is how you would convert octets received from the wire into an integer in Python: </p>
 <pre>
+    0x 11 22 33 44
+</pre>
+<p id="rfc.section.13.7.3.1.1.p.2">the first octet sent out to (or received from) the wire is <samp>0x11</samp> and the last octet sent out (or received) is <samp>0x44</samp>.  </p>
+<p id="rfc.section.13.7.3.1.1.p.3">Here is how you would convert octets received from the wire into an integer in Python: </p>
+<pre>
+    &lt;CODE BEGINS&gt;
     import struct
     
     octets_received = b"\x11\x22\x33\x44"
     i = struct.unpack("&gt;L", octets_received)[0]
+    &lt;CODE ENDS&gt;
 </pre>
-<p id="rfc.section.13.7.3.1.1.p.5">The integer received has the value <samp>287454020</samp>.  </p>
-<p id="rfc.section.13.7.3.1.1.p.6">And here is how you would send out an integer to the wire in Python: </p>
+<p id="rfc.section.13.7.3.1.1.p.4">The integer received has the value <samp>287454020</samp>.  </p>
+<p id="rfc.section.13.7.3.1.1.p.5">And here is how you would send out an integer to the wire in Python: </p>
 <pre>
+    &lt;CODE BEGINS&gt;
     octets_to_be_send = struct.pack("&gt;L", i)
+    &lt;CODE ENDS&gt;
 </pre>
-<p id="rfc.section.13.7.3.1.1.p.7">The octets to be sent are <samp>b"\x11\x22\x33\x44"</samp>.  </p>
+<p id="rfc.section.13.7.3.1.1.p.6">The octets to be sent are <samp>b"\x11\x22\x33\x44"</samp>.  </p>
 <h1 id="rfc.section.13.7.3.1.2"><a href="#rfc.section.13.7.3.1.2">13.7.3.1.2.</a> <a href="#handshake" id="handshake">Handshake</a></h1>
 <p><strong>Client-to-Router Request</strong> </p>
 <p id="rfc.section.13.7.3.1.2.p.2">WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets: </p>
 <pre>
-MSB                                 LSB
-31                                    0
-0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+    MSB                                 LSB
+    31                                    0
+    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.3">The <em>first octet</em> is a magic octet with value <samp>0x7F</samp>. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1">here</a> and <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2">here</a>). No valid HTTP request can have <samp>0x7F</samp> as its first octet.  </p>
 <p/>
@@ -5404,35 +5428,37 @@ MSB                                 LSB
 <p id="rfc.section.13.7.3.1.2.p.6">The <samp>LENGTH</samp> value is used by the <em>Client</em> to signal the <strong>maximum message length</strong> of messages it is willing to <strong>receive</strong>. When the handshake completes successfully, a <em>Router</em> MUST NOT send messages larger than this size.  </p>
 <p id="rfc.section.13.7.3.1.2.p.7">The possible values for <samp>LENGTH</samp> are: </p>
 <pre>
- 0: 2**9 octets
- 1: 2**10 octets
-...
-15: 2**24 octets
+     0: 2**9 octets
+     1: 2**10 octets
+    ...
+    15: 2**24 octets
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.8">This means a <em>Client</em> can choose the maximum message length between <strong>512</strong> and <strong>16M</strong> octets.  </p>
 <p id="rfc.section.13.7.3.1.2.p.9">The <samp>SERIALIZER</samp> value is used by the <em>Client</em> to request a specific serializer to be used. When the handshake completes successfully, the <em>Client</em> and <em>Router</em> will use the serializer requested by the <em>Client</em>.  </p>
 <p id="rfc.section.13.7.3.1.2.p.10">The possible values for <samp>SERIALIZER</samp> are: </p>
 <pre>
-0: illegal
-1: JSON
-2: MsgPack
-3 - 15: reserved for future serializers
+    0: illegal
+    1: JSON
+    2: MsgPack
+    3 - 15: reserved for future serializers
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.11">Here is a Python program that prints all (currently) permissible values for the <em>second octet</em>: </p>
 <pre>
-SERMAP = {
-   1: 'json',
-   2: 'msgpack'
-}
+    &lt;CODE BEGINS&gt;
+    SERMAP = {
+       1: 'json',
+       2: 'msgpack'
+    }
 
-## map serializer / max. msg length to RawSocket handshake request 
-## or success reply (2nd octet)
-##
-for ser in SERMAP:
-   for l in range(16):
-      octet_2 = (l &lt;&lt; 4) | ser
-      print("serializer: {}, maxlen: {} =&gt; 
-          0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+    ## map serializer / max. msg length to RawSocket handshake request 
+    ## or success reply (2nd octet)
+    ##
+    for ser in SERMAP:
+       for l in range(16):
+          octet_2 = (l &lt;&lt; 4) | ser
+          print("serializer: {}, maxlen: {} =&gt; 
+              0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+    &lt;CODE ENDS&gt;
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.12">The <em>third and forth octet</em> are <strong>reserved</strong> and MUST be all zeros for now.  </p>
 <p><strong>Router-to-Client Reply</strong> </p>
@@ -5440,24 +5466,26 @@ for ser in SERMAP:
 <p id="rfc.section.13.7.3.1.2.p.15">If the <em>first octet</em> differs from <samp>0x7F</samp>, it is not a WAMP-over-RawSocket request. Unless the <em>Router</em> also supports other transports on the connecting port (such as WebSocket or LongPoll), the <em>Router</em> MUST <strong>fail the connection</strong>.  </p>
 <p id="rfc.section.13.7.3.1.2.p.16">Here is an example of how a <em>Router</em> could parse the <em>second octet</em> in a <em>Clients</em> handshake request: </p>
 <pre>
-## map RawSocket handshake request (2nd octet) to 
-## serializer / max. msg length
-##
-for i in range(256):
-   ser_id = i &amp; 0x0f
-   if ser_id != 0:
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
-      print("{:02x} =&gt; serializer: {}, maxlen: {}".
-          format(i, ser, maxlen))
-   else:
-      print("fail the connection: illegal serializer value")
+    &lt;CODE BEGINS&gt;
+    ## map RawSocket handshake request (2nd octet) to 
+    ## serializer / max. msg length
+    ##
+    for i in range(256):
+       ser_id = i &amp; 0x0f
+       if ser_id != 0:
+          ser = SERMAP.get(ser_id, 'currently undefined')
+          maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+          print("{:02x} =&gt; serializer: {}, maxlen: {}".
+              format(i, ser, maxlen))
+       else:
+          print("fail the connection: illegal serializer value")
+    &lt;CODE ENDS&gt;
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.17">When the <em>Router</em> is willing to speak the serializer requested by the <em>Client</em>, it will answer with a 4 octets response of identical structure as the <em>Client</em> request: </p>
 <pre>
-MSB                                 LSB
-31                                    0
-0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+    MSB                                 LSB
+    31                                    0
+    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.18">Again, the <em>first octet</em> MUST be the value <samp>0x7F</samp>. The <em>third and forth octets</em> are reserved and MUST be all zeros for now.  </p>
 <p id="rfc.section.13.7.3.1.2.p.19">In the <em>second octet</em>, the <em>Router</em> MUST echo the serializer value in <samp>SERIALIZER</samp> as requested by the <em>Client</em>.  </p>
@@ -5466,59 +5494,63 @@ MSB                                 LSB
 <p id="rfc.section.13.7.3.1.2.p.22">If a message received during a connection exceeds the limit requested, a <em>Peer</em> MUST <strong>fail the connection</strong>.  </p>
 <p id="rfc.section.13.7.3.1.2.p.23">When the <em>Router</em> is unable to speak the serializer requested by the <em>Client</em>, or it is denying the <em>Client</em> for other reasons, the <em>Router</em> replies with an error: </p>
 <pre>
-MSB                                 LSB
-31                                    0
-0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
+    MSB                                 LSB
+    31                                    0
+    0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.24">An error reply has 4 octets: the <em>first octet</em> is again the magic <samp>0x7F</samp>, and the <em>third and forth octet</em> are reserved and MUST all be zeros for now.  </p>
 <p id="rfc.section.13.7.3.1.2.p.25">The <em>second octet</em> has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error: </p>
 <pre>
-0: illegal (must not be used)
-1: serializer unsupported
-2: maximum message length unacceptable
-3: use of reserved bits (unsupported feature)
-4: maximum connection count reached
-5 - 15: reserved for future errors
+    0: illegal (must not be used)
+    1: serializer unsupported
+    2: maximum message length unacceptable
+    3: use of reserved bits (unsupported feature)
+    4: maximum connection count reached
+    5 - 15: reserved for future errors
 </pre>
 <p/>
 
 <ul class="empty">
-  <li>Note that the error code <samp>0</samp> MUST not be used. This is to allow storage of error state in a host language variable, while allowing <samp>0</samp> to signal the current state "no error" </li>
+  <li>Note that the error code <samp>0</samp> MUST NOT be used. This is to allow storage of error state in a host language variable, while allowing <samp>0</samp> to signal the current state "no error" </li>
 </ul>
 <p id="rfc.section.13.7.3.1.2.p.27">Here is an example of how a <em>Router</em> might create the <em>second octet</em> in an error response: </p>
 <pre>
-ERRMAP = {
-   0: "illegal (must not be used)",
-   1: "serializer unsupported",
-   2: "maximum message length unacceptable",
-   3: "use of reserved bits (unsupported feature)",
-   4: "maximum connection count reached"
-}
+    &lt;CODE BEGINS&gt;
+    ERRMAP = {
+       0: "illegal (must not be used)",
+       1: "serializer unsupported",
+       2: "maximum message length unacceptable",
+       3: "use of reserved bits (unsupported feature)",
+       4: "maximum connection count reached"
+    }
 
-## map error to RawSocket handshake error reply (2nd octet)
-##
-for err in ERRMAP:
-   octet_2 = err &lt;&lt; 4
-   print("error: {} =&gt; 0x{:02x}").format(ERRMAP[err], err)
+    ## map error to RawSocket handshake error reply (2nd octet)
+    ##
+    for err in ERRMAP:
+       octet_2 = err &lt;&lt; 4
+       print("error: {} =&gt; 0x{:02x}").format(ERRMAP[err], err)
+    &lt;CODE ENDS&gt;
 </pre>
 <p id="rfc.section.13.7.3.1.2.p.28">The <em>Client</em> - after having sent its handshake request - will wait for the 4 octets from <em>Router</em> handshake reply.  </p>
 <p id="rfc.section.13.7.3.1.2.p.29">Here is an example of how a <em>Client</em> might parse the <em>second octet</em> in a <em>Router</em> handshake reply: </p>
 <pre>
-## map RawSocket handshake reply (2nd octet)
-##
-for i in range(256):
-   ser_id = i &amp; 0x0f
-   if ser_id:
-      ## verify the serializer is the one we requested! 
-      ## if not, fail the connection!
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
-      print("{:02x} =&gt; serializer: {}, maxlen: {}".
-          format(i, ser, maxlen))
-   else:
-      err = i &gt;&gt; 4
-      print("error: {}".format(ERRMAP.get(err, 
-          'currently undefined')))
+    &lt;CODE BEGINS&gt;
+    ## map RawSocket handshake reply (2nd octet)
+    ##
+    for i in range(256):
+       ser_id = i &amp; 0x0f
+       if ser_id:
+          ## verify the serializer is the one we requested! 
+          ## if not, fail the connection!
+          ser = SERMAP.get(ser_id, 'currently undefined')
+          maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+          print("{:02x} =&gt; serializer: {}, maxlen: {}".
+              format(i, ser, maxlen))
+       else:
+          err = i &gt;&gt; 4
+          print("error: {}".format(ERRMAP.get(err, 
+              'currently undefined')))
+    &lt;CODE ENDS&gt;
 </pre>
 <h1 id="rfc.section.13.7.3.1.3"><a href="#rfc.section.13.7.3.1.3">13.7.3.1.3.</a> <a href="#serialization" id="serialization">Serialization</a></h1>
 <p id="rfc.section.13.7.3.1.3.p.1">To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MsgPack).  </p>
@@ -5537,23 +5569,23 @@ for i in range(256):
 <h1 id="rfc.section.13.7.3.1.4"><a href="#rfc.section.13.7.3.1.4">13.7.3.1.4.</a> <a href="#framing" id="framing">Framing</a></h1>
 <p id="rfc.section.13.7.3.1.4.p.1">The serialized octets for a message to be sent are prefixed with exactly 4 octets.  </p>
 <pre>
-MSB                                 LSB
-31                                    0
-RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
+    MSB                                 LSB
+    31                                    0
+    RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
 </pre>
 <p id="rfc.section.13.7.3.1.4.p.2">The <em>first octet</em> has the following structure </p>
 <pre>
-MSB   LSB
-7       0
-RRRR RTTT
+    MSB   LSB
+    7       0
+    RRRR RTTT
 </pre>
 <p id="rfc.section.13.7.3.1.4.p.3">The five bits <samp>RRRRR</samp> are reserved for future use and MUST be all zeros for now.  </p>
 <p id="rfc.section.13.7.3.1.4.p.4">The three bits <samp>TTT</samp> encode the type of the transport message: </p>
 <pre>
-0: regular WAMP message
-1: PING
-2: PONG
-3-7: reserved
+    0: regular WAMP message
+    1: PING
+    2: PONG
+    3-7: reserved
 </pre>
 <p id="rfc.section.13.7.3.1.4.p.5">The <em>three remaining octets</em> constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.  </p>
 <p id="rfc.section.13.7.3.1.4.p.6">For a regular WAMP message (<samp>TTT == 0</samp>), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).  </p>
@@ -5835,7 +5867,6 @@ RRRR RTTT
 <h1 id="rfc.section.14.1"><a href="#rfc.section.14.1">14.1.</a> <a href="#python" id="python">Python</a></h1>
 <p id="rfc.section.14.1.p.1">Here is a complete example in Python showing how byte arrays are converted to and from JSON: </p>
 <pre>
-    ```python
     &lt;CODE BEGINS&gt;
 
     import os, base64, json, sys, binascii
@@ -5865,12 +5896,10 @@ RRRR RTTT
     assert(data_out == data_in)
 
     &lt;CODE ENDS&gt;
-    ```
 </pre>
 <h1 id="rfc.section.14.2"><a href="#rfc.section.14.2">14.2.</a> <a href="#javascript" id="javascript">JavaScript</a></h1>
 <p id="rfc.section.14.2.p.1">Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON: </p>
 <pre>
-    ```javascript
     &lt;CODE BEGINS&gt;
 
     var data_in = new Uint8Array(new ArrayBuffer(16));
@@ -5912,7 +5941,6 @@ RRRR RTTT
     console.log(data_out);
 
     &lt;CODE ENDS&gt;
-    ```
 </pre>
 <h1 id="rfc.section.15"><a href="#rfc.section.15">15.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
 <p id="rfc.section.15.p.1">-- write me -- </p>

@@ -10,25 +10,29 @@ The following 4 additional message types MAY be used in the Advanced Profile.
 
 The `CHALLENGE` message is used with certain Authentication Methods. During authenticated session establishment, a **Router** sends a challenge message.
 
-    [CHALLENGE, AuthMethod|string, Extra|dict]
+{align="left"}
+        [CHALLENGE, AuthMethod|string, Extra|dict]
 
 #### AUTHENTICATE
 
 The `AUTHENTICATE` message is used with certain Authentication Methods. A **Client** having received a challenge is expected to respond by sending a signature or token.
 
-    [AUTHENTICATE, Signature|string, Extra|dict]
+{align="left"}
+        [AUTHENTICATE, Signature|string, Extra|dict]
 
 #### CANCEL
 
 The `CANCEL` message is used with the Call Canceling advanced feature. A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
 
-    [CANCEL, CALL.Request|id, Options|dict]
+{align="left"}
+        [CANCEL, CALL.Request|id, Options|dict]
 
 #### INTERRUPT
 
 The `INTERRUPT` message is used with the Call Canceling advanced feature. Upon receiving a cancel for a pending call, a *Dealer* will issue an interrupt to the *Callee*.
 
-    [INTERRUPT, INVOCATION.Request|id, Options|dict]
+{align="left"}
+        [INTERRUPT, INVOCATION.Request|id, Options|dict]
 
 ### Message Codes and Direction
 

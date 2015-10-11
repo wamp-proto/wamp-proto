@@ -1,13 +1,13 @@
 % Title = "The Web Application Messaging Protocol"
 % abbrev = "WAMP"
 % category = "std"
-% docName = "draft-oberstet-hybi-tavendo-wamp-02"
+% docName = "draft-oberstet-hybi-tavendo-wamp-03"
 % ipr= "trust200902"
 % area = "Applications and Real-Time (art)"
 % workgroup = "BiDirectional or Server-Initiated HTTP"
 % keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 %
-% date = 2015-10-10T00:00:00Z
+% date = 2015-10-11T00:00:00Z
 %
 % [pi]
 % toc = "yes"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM 'rfc2629.dtd' []>
-<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-tavendo-wamp-02">
+<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-tavendo-wamp-03">
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
@@ -37,7 +37,7 @@
 <uri></uri>
 </address>
 </author>
-<date year="2015" month="October" day="10"/>
+<date year="2015" month="October" day="11"/>
 
 <area>Applications and Real-Time (art)</area>
 <workgroup>BiDirectional or Server-Initiated HTTP</workgroup>
@@ -684,7 +684,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 
 <figure align="left"><artwork align="left">
-  [ABORT, Details|dict, Reason|uri]
+    [ABORT, Details|dict, Reason|uri]
 </artwork></figure>
 </section>
 
@@ -2486,8 +2486,8 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>The <spanx style="verb">CHALLENGE</spanx> message is used with certain Authentication Methods. During authenticated session establishment, a <spanx style="strong">Router</spanx> sends a challenge message.
 </t>
 
-<figure align="center"><artwork align="center">
-[CHALLENGE, AuthMethod|string, Extra|dict]
+<figure align="left"><artwork align="left">
+    [CHALLENGE, AuthMethod|string, Extra|dict]
 </artwork></figure>
 </section>
 
@@ -2495,8 +2495,8 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>The <spanx style="verb">AUTHENTICATE</spanx> message is used with certain Authentication Methods. A <spanx style="strong">Client</spanx> having received a challenge is expected to respond by sending a signature or token.
 </t>
 
-<figure align="center"><artwork align="center">
-[AUTHENTICATE, Signature|string, Extra|dict]
+<figure align="left"><artwork align="left">
+    [AUTHENTICATE, Signature|string, Extra|dict]
 </artwork></figure>
 </section>
 
@@ -2504,8 +2504,8 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>The <spanx style="verb">CANCEL</spanx> message is used with the Call Canceling advanced feature. A <spanx style="emph">Caller</spanx> can cancel and issued call actively by sending a cancel message to the <spanx style="emph">Dealer</spanx>.
 </t>
 
-<figure align="center"><artwork align="center">
-[CANCEL, CALL.Request|id, Options|dict]
+<figure align="left"><artwork align="left">
+    [CANCEL, CALL.Request|id, Options|dict]
 </artwork></figure>
 </section>
 
@@ -2513,8 +2513,8 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>The <spanx style="verb">INTERRUPT</spanx> message is used with the Call Canceling advanced feature. Upon receiving a cancel for a pending call, a <spanx style="emph">Dealer</spanx> will issue an interrupt to the <spanx style="emph">Callee</spanx>.
 </t>
 
-<figure align="center"><artwork align="center">
-[INTERRUPT, INVOCATION.Request|id, Options|dict]
+<figure align="left"><artwork align="left">
+    [INTERRUPT, INVOCATION.Request|id, Options|dict]
 </artwork></figure>
 </section>
 </section>
@@ -2558,7 +2558,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </texttable>
 
 <section anchor="rpc-features" title="RPC Features">
-<texttable>
+<texttable align="left">
 <ttcol align="center">Feature</ttcol>
 <ttcol align="center">Status</ttcol>
 <ttcol align="center">P</ttcol>
@@ -2584,7 +2584,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="pubsub-features" title="PubSub Features">
-<texttable>
+<texttable align="left">
 <ttcol align="center">Feature</ttcol>
 <ttcol align="center">Status</ttcol>
 <ttcol align="center">P</ttcol>
@@ -2608,34 +2608,18 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="other-advanced-features" title="Other Advanced Features">
-<t>
-<list style="symbols">
-<t>authentication
-<list style="symbols">
-<t>WAMP CRA</t>
-<t>cookie (entirely missing)</t>
-<t>OTP --&gt; ticket?</t>
-</list></t>
-<t>transports
-<list style="symbols">
-<t>batched WS transport</t>
-<t>longpoll transport</t>
-<t>rawsocket transport</t>
-<t>multiplexed transport</t>
-</list></t>
-<t>pre-defined URIs</t>
-<t>reflection</t>
-<t>session meta-api</t>
-</list>
-</t>
-<t>?
-</t>
-<t>
-<list style="symbols">
-<t>partitioned registration</t>
-<t>partitioned subscription</t>
-</list>
-</t>
+<texttable align="left">
+<ttcol align="center">Feature</ttcol>
+<ttcol align="center">Status</ttcol>
+
+<c>challenge-response authentication</c><c>beta</c>
+<c>cookie authentication</c><c>beta</c>
+<c>ticket authentication</c><c>beta</c>
+<c>rawsocket transport</c><c>stable</c>
+<c>batched WS transport</c><c>sketch</c>
+<c>longpoll transport</c><c>beta</c>
+<c>session meta api</c><c>beta</c>
+</texttable>
 </section>
 </section>
 
@@ -5210,18 +5194,22 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <section anchor="endianess" title="Endianess">
 <t>WAMP-over-RawSocket uses <spanx style="emph">network byte order</spanx> (&quot;big-endian&quot;). That means, given a unsigned 32 bit integer
 </t>
-<t>0x 11 22 33 44
-</t>
+
+<figure align="left"><artwork align="left">
+    0x 11 22 33 44
+</artwork></figure>
 <t>the first octet sent out to (or received from) the wire is <spanx style="verb">0x11</spanx> and the last octet sent out (or received) is <spanx style="verb">0x44</spanx>.
 </t>
 <t>Here is how you would convert octets received from the wire into an integer in Python:
 </t>
 
 <figure align="left"><artwork align="left">
+    &lt;CODE BEGINS&gt;
     import struct
     
     octets_received = b"\x11\x22\x33\x44"
     i = struct.unpack("&gt;L", octets_received)[0]
+    &lt;CODE ENDS&gt;
 </artwork></figure>
 <t>The integer received has the value <spanx style="verb">287454020</spanx>.
 </t>
@@ -5229,7 +5217,9 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 
 <figure align="left"><artwork align="left">
+    &lt;CODE BEGINS&gt;
     octets_to_be_send = struct.pack("&gt;L", i)
+    &lt;CODE ENDS&gt;
 </artwork></figure>
 <t>The octets to be sent are <spanx style="verb">b"\x11\x22\x33\x44"</spanx>.
 </t>
@@ -5241,10 +5231,10 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t>WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets:
 </t>
 
-<figure align="center"><artwork align="center">
-MSB                                 LSB
-31                                    0
-0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+<figure align="left"><artwork align="left">
+    MSB                                 LSB
+    31                                    0
+    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 </artwork></figure>
 <t>The <spanx style="emph">first octet</spanx> is a magic octet with value <spanx style="verb">0x7F</spanx>. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see <eref target="http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1">here</eref> and <eref target="http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2">here</eref>). No valid HTTP request can have <spanx style="verb">0x7F</spanx> as its first octet.
 </t>
@@ -5259,11 +5249,11 @@ MSB                                 LSB
 <t>The possible values for <spanx style="verb">LENGTH</spanx> are:
 </t>
 
-<figure align="center"><artwork align="center">
- 0: 2**9 octets
- 1: 2**10 octets
-...
-15: 2**24 octets
+<figure align="left"><artwork align="left">
+     0: 2**9 octets
+     1: 2**10 octets
+    ...
+    15: 2**24 octets
 </artwork></figure>
 <t>This means a <spanx style="emph">Client</spanx> can choose the maximum message length between <spanx style="strong">512</spanx> and <spanx style="strong">16M</spanx> octets.
 </t>
@@ -5272,29 +5262,31 @@ MSB                                 LSB
 <t>The possible values for <spanx style="verb">SERIALIZER</spanx> are:
 </t>
 
-<figure align="center"><artwork align="center">
-0: illegal
-1: JSON
-2: MsgPack
-3 - 15: reserved for future serializers
+<figure align="left"><artwork align="left">
+    0: illegal
+    1: JSON
+    2: MsgPack
+    3 - 15: reserved for future serializers
 </artwork></figure>
 <t>Here is a Python program that prints all (currently) permissible values for the <spanx style="emph">second octet</spanx>:
 </t>
 
 <figure align="center"><artwork align="center">
-SERMAP = {
-   1: 'json',
-   2: 'msgpack'
-}
+    &lt;CODE BEGINS&gt;
+    SERMAP = {
+       1: 'json',
+       2: 'msgpack'
+    }
 
-## map serializer / max. msg length to RawSocket handshake request 
-## or success reply (2nd octet)
-##
-for ser in SERMAP:
-   for l in range(16):
-      octet_2 = (l &lt;&lt; 4) | ser
-      print("serializer: {}, maxlen: {} =&gt; 
-          0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+    ## map serializer / max. msg length to RawSocket handshake request 
+    ## or success reply (2nd octet)
+    ##
+    for ser in SERMAP:
+       for l in range(16):
+          octet_2 = (l &lt;&lt; 4) | ser
+          print("serializer: {}, maxlen: {} =&gt; 
+              0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+    &lt;CODE ENDS&gt;
 </artwork></figure>
 <t>The <spanx style="emph">third and forth octet</spanx> are <spanx style="strong">reserved</spanx> and MUST be all zeros for now.
 </t>
@@ -5307,27 +5299,29 @@ for ser in SERMAP:
 <t>Here is an example of how a <spanx style="emph">Router</spanx> could parse the <spanx style="emph">second octet</spanx> in a <spanx style="emph">Clients</spanx> handshake request:
 </t>
 
-<figure align="center"><artwork align="center">
-## map RawSocket handshake request (2nd octet) to 
-## serializer / max. msg length
-##
-for i in range(256):
-   ser_id = i &amp; 0x0f
-   if ser_id != 0:
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
-      print("{:02x} =&gt; serializer: {}, maxlen: {}".
-          format(i, ser, maxlen))
-   else:
-      print("fail the connection: illegal serializer value")
+<figure align="left"><artwork align="left">
+    &lt;CODE BEGINS&gt;
+    ## map RawSocket handshake request (2nd octet) to 
+    ## serializer / max. msg length
+    ##
+    for i in range(256):
+       ser_id = i &amp; 0x0f
+       if ser_id != 0:
+          ser = SERMAP.get(ser_id, 'currently undefined')
+          maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+          print("{:02x} =&gt; serializer: {}, maxlen: {}".
+              format(i, ser, maxlen))
+       else:
+          print("fail the connection: illegal serializer value")
+    &lt;CODE ENDS&gt;
 </artwork></figure>
 <t>When the <spanx style="emph">Router</spanx> is willing to speak the serializer requested by the <spanx style="emph">Client</spanx>, it will answer with a 4 octets response of identical structure as the <spanx style="emph">Client</spanx> request:
 </t>
 
-<figure align="center"><artwork align="center">
-MSB                                 LSB
-31                                    0
-0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+<figure align="left"><artwork align="left">
+    MSB                                 LSB
+    31                                    0
+    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 </artwork></figure>
 <t>Again, the <spanx style="emph">first octet</spanx> MUST be the value <spanx style="verb">0x7F</spanx>. The <spanx style="emph">third and forth octets</spanx> are reserved and MUST be all zeros for now.
 </t>
@@ -5342,67 +5336,71 @@ MSB                                 LSB
 <t>When the <spanx style="emph">Router</spanx> is unable to speak the serializer requested by the <spanx style="emph">Client</spanx>, or it is denying the <spanx style="emph">Client</spanx> for other reasons, the <spanx style="emph">Router</spanx> replies with an error:
 </t>
 
-<figure align="center"><artwork align="center">
-MSB                                 LSB
-31                                    0
-0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
+<figure align="left"><artwork align="left">
+    MSB                                 LSB
+    31                                    0
+    0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
 </artwork></figure>
 <t>An error reply has 4 octets: the <spanx style="emph">first octet</spanx> is again the magic <spanx style="verb">0x7F</spanx>, and the <spanx style="emph">third and forth octet</spanx> are reserved and MUST all be zeros for now.
 </t>
 <t>The <spanx style="emph">second octet</spanx> has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error:
 </t>
 
-<figure align="center"><artwork align="center">
-0: illegal (must not be used)
-1: serializer unsupported
-2: maximum message length unacceptable
-3: use of reserved bits (unsupported feature)
-4: maximum connection count reached
-5 - 15: reserved for future errors
+<figure align="left"><artwork align="left">
+    0: illegal (must not be used)
+    1: serializer unsupported
+    2: maximum message length unacceptable
+    3: use of reserved bits (unsupported feature)
+    4: maximum connection count reached
+    5 - 15: reserved for future errors
 </artwork></figure>
 <t><list style="empty">
-<t>Note that the error code <spanx style="verb">0</spanx> MUST not be used. This is to allow storage of error state in a host language variable, while allowing <spanx style="verb">0</spanx> to signal the current state &quot;no error&quot;
+<t>Note that the error code <spanx style="verb">0</spanx> MUST NOT be used. This is to allow storage of error state in a host language variable, while allowing <spanx style="verb">0</spanx> to signal the current state &quot;no error&quot;
 </t>
 </list></t>
 <t>Here is an example of how a <spanx style="emph">Router</spanx> might create the <spanx style="emph">second octet</spanx> in an error response:
 </t>
 
-<figure align="center"><artwork align="center">
-ERRMAP = {
-   0: "illegal (must not be used)",
-   1: "serializer unsupported",
-   2: "maximum message length unacceptable",
-   3: "use of reserved bits (unsupported feature)",
-   4: "maximum connection count reached"
-}
+<figure align="left"><artwork align="left">
+    &lt;CODE BEGINS&gt;
+    ERRMAP = {
+       0: "illegal (must not be used)",
+       1: "serializer unsupported",
+       2: "maximum message length unacceptable",
+       3: "use of reserved bits (unsupported feature)",
+       4: "maximum connection count reached"
+    }
 
-## map error to RawSocket handshake error reply (2nd octet)
-##
-for err in ERRMAP:
-   octet_2 = err &lt;&lt; 4
-   print("error: {} =&gt; 0x{:02x}").format(ERRMAP[err], err)
+    ## map error to RawSocket handshake error reply (2nd octet)
+    ##
+    for err in ERRMAP:
+       octet_2 = err &lt;&lt; 4
+       print("error: {} =&gt; 0x{:02x}").format(ERRMAP[err], err)
+    &lt;CODE ENDS&gt;
 </artwork></figure>
 <t>The <spanx style="emph">Client</spanx> - after having sent its handshake request - will wait for the 4 octets from <spanx style="emph">Router</spanx> handshake reply.
 </t>
 <t>Here is an example of how a <spanx style="emph">Client</spanx> might parse the <spanx style="emph">second octet</spanx> in a <spanx style="emph">Router</spanx> handshake reply:
 </t>
 
-<figure align="center"><artwork align="center">
-## map RawSocket handshake reply (2nd octet)
-##
-for i in range(256):
-   ser_id = i &amp; 0x0f
-   if ser_id:
-      ## verify the serializer is the one we requested! 
-      ## if not, fail the connection!
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i &gt;&gt; 4) + 9)
-      print("{:02x} =&gt; serializer: {}, maxlen: {}".
-          format(i, ser, maxlen))
-   else:
-      err = i &gt;&gt; 4
-      print("error: {}".format(ERRMAP.get(err, 
-          'currently undefined')))
+<figure align="left"><artwork align="left">
+    &lt;CODE BEGINS&gt;
+    ## map RawSocket handshake reply (2nd octet)
+    ##
+    for i in range(256):
+       ser_id = i &amp; 0x0f
+       if ser_id:
+          ## verify the serializer is the one we requested! 
+          ## if not, fail the connection!
+          ser = SERMAP.get(ser_id, 'currently undefined')
+          maxlen = 2 ** ((i &gt;&gt; 4) + 9)
+          print("{:02x} =&gt; serializer: {}, maxlen: {}".
+              format(i, ser, maxlen))
+       else:
+          err = i &gt;&gt; 4
+          print("error: {}".format(ERRMAP.get(err, 
+              'currently undefined')))
+    &lt;CODE ENDS&gt;
 </artwork></figure>
 </section>
 
@@ -5428,29 +5426,29 @@ for i in range(256):
 <t>The serialized octets for a message to be sent are prefixed with exactly 4 octets.
 </t>
 
-<figure align="center"><artwork align="center">
-MSB                                 LSB
-31                                    0
-RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
+<figure align="left"><artwork align="left">
+    MSB                                 LSB
+    31                                    0
+    RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
 </artwork></figure>
 <t>The <spanx style="emph">first octet</spanx> has the following structure
 </t>
 
-<figure align="center"><artwork align="center">
-MSB   LSB
-7       0
-RRRR RTTT
+<figure align="left"><artwork align="left">
+    MSB   LSB
+    7       0
+    RRRR RTTT
 </artwork></figure>
 <t>The five bits <spanx style="verb">RRRRR</spanx> are reserved for future use and MUST be all zeros for now.
 </t>
 <t>The three bits <spanx style="verb">TTT</spanx> encode the type of the transport message:
 </t>
 
-<figure align="center"><artwork align="center">
-0: regular WAMP message
-1: PING
-2: PONG
-3-7: reserved
+<figure align="left"><artwork align="left">
+    0: regular WAMP message
+    1: PING
+    2: PONG
+    3-7: reserved
 </artwork></figure>
 <t>The <spanx style="emph">three remaining octets</spanx> constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
 </t>
@@ -5819,7 +5817,6 @@ RRRR RTTT
 </t>
 
 <figure align="left"><artwork align="left">
-    ```python
     &lt;CODE BEGINS&gt;
 
     import os, base64, json, sys, binascii
@@ -5849,7 +5846,6 @@ RRRR RTTT
     assert(data_out == data_in)
 
     &lt;CODE ENDS&gt;
-    ```
 </artwork></figure>
 </section>
 
@@ -5858,7 +5854,6 @@ RRRR RTTT
 </t>
 
 <figure align="left"><artwork align="left">
-    ```javascript
     &lt;CODE BEGINS&gt;
 
     var data_in = new Uint8Array(new ArrayBuffer(16));
@@ -5900,7 +5895,6 @@ RRRR RTTT
     console.log(data_out);
 
     &lt;CODE ENDS&gt;
-    ```
 </artwork></figure>
 </section>
 </section>

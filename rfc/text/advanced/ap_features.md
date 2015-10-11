@@ -12,6 +12,7 @@ stable | The feature definition in the spec is complete and stable and the featu
 
 ### RPC Features
 
+{align="left"}
 | Feature                    | Status | P | B | S | Cr | D | Ce|
 |----------------------------|--------|---|---|---|----|---|---|
 | progressive_call_results   | beta   |   |   |   | X  | X | X |
@@ -31,6 +32,7 @@ stable | The feature definition in the spec is complete and stable and the featu
 
 ### PubSub Features
 
+{align="left"}
 | Feature                       | Status | P | B | S | Cr | D | Ce |
 |-------------------------------|--------|---|---|---|----|---|----|
 | subscriber_blackwhite_listing | stable | X | X |   |    |   |    |
@@ -47,20 +49,14 @@ stable | The feature definition in the spec is complete and stable and the featu
 
 ### Other Advanced Features
 
-- authentication
-    - WAMP CRA
-    - cookie (entirely missing)
-    - OTP --> ticket?
-- transports
-    - batched WS transport
-    - longpoll transport
-    - rawsocket transport
-    - multiplexed transport
-- pre-defined URIs
-- reflection
-- session meta-api
+{align="left"}
+| Feature                               | Status |
+|---------------------------------------|--------|
+| challenge-response authentication     | beta   |
+| cookie authentication                 | beta   |
+| ticket authentication                 | beta   |
+| rawsocket transport                   | stable |
+| batched WS transport                  | sketch |
+| longpoll transport                    | beta   |
+| session meta api                      | beta   |
 
-
-? 
-- partitioned registration
-- partitioned subscription

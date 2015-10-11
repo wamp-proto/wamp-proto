@@ -15,7 +15,8 @@ However, WAMP-over-RawSocket cannot be used with Web browser clients, since brow
 
 WAMP-over-RawSocket uses *network byte order* ("big-endian"). That means, given a unsigned 32 bit integer
 
-   0x 11 22 33 44
+{align="left"}
+        0x 11 22 33 44
 
 the first octet sent out to (or received from) the wire is `0x11` and the last octet sent out (or received) is `0x44`.
 
@@ -23,10 +24,12 @@ Here is how you would convert octets received from the wire into an integer in P
 
 {align="left"}
 ```python
+    <CODE BEGINS>
     import struct
     
     octets_received = b"\x11\x22\x33\x44"
     i = struct.unpack(">L", octets_received)[0]
+    <CODE ENDS>
 ```
 
 The integer received has the value `287454020`.
@@ -35,7 +38,9 @@ And here is how you would send out an integer to the wire in Python:
 
 {align="left"}
 ```python
+    <CODE BEGINS>
     octets_to_be_send = struct.pack(">L", i)
+    <CODE ENDS>
 ```
 
 The octets to be sent are `b"\x11\x22\x33\x44"`.
@@ -47,9 +52,10 @@ The octets to be sent are `b"\x11\x22\x33\x44"`.
 
 WAMP-over-RawSocket starts with a handshake where the client connecting to a router sends 4 octets:
 
-    MSB                                 LSB
-    31                                    0
-    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+{align="left"}
+        MSB                                 LSB
+        31                                    0
+        0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 
 The *first octet* is a magic octet with value `0x7F`. This value is chosen to avoid any possible collision with the first octet of a valid HTTP request (see [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1) and [here](http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2)). No valid HTTP request can have `0x7F` as its first octet.
 
@@ -61,10 +67,11 @@ The `LENGTH` value is used by the *Client* to signal the **maximum message lengt
 
 The possible values for `LENGTH` are:
 
-     0: 2**9 octets
-     1: 2**10 octets
-    ...
-    15: 2**24 octets
+{align="left"}
+         0: 2**9 octets
+         1: 2**10 octets
+        ...
+        15: 2**24 octets
 
 This means a *Client* can choose the maximum message length between **512** and **16M** octets.
 
@@ -72,27 +79,30 @@ The `SERIALIZER` value is used by the *Client* to request a specific serializer 
 
 The possible values for `SERIALIZER` are:
 
-    0: illegal
-    1: JSON
-    2: MsgPack
-    3 - 15: reserved for future serializers
+{align="left"}    
+        0: illegal
+        1: JSON
+        2: MsgPack
+        3 - 15: reserved for future serializers
 
 Here is a Python program that prints all (currently) permissible values for the *second octet*:
 
 ```python
-SERMAP = {
-   1: 'json',
-   2: 'msgpack'
-}
+    <CODE BEGINS>
+    SERMAP = {
+       1: 'json',
+       2: 'msgpack'
+    }
 
-## map serializer / max. msg length to RawSocket handshake request 
-## or success reply (2nd octet)
-##
-for ser in SERMAP:
-   for l in range(16):
-      octet_2 = (l << 4) | ser
-      print("serializer: {}, maxlen: {} => 
-          0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+    ## map serializer / max. msg length to RawSocket handshake request 
+    ## or success reply (2nd octet)
+    ##
+    for ser in SERMAP:
+       for l in range(16):
+          octet_2 = (l << 4) | ser
+          print("serializer: {}, maxlen: {} => 
+              0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+    <CODE ENDS>
 ```
 
 The *third and forth octet* are **reserved** and MUST be all zeros for now.
@@ -106,26 +116,30 @@ If the *first octet* differs from `0x7F`, it is not a WAMP-over-RawSocket reques
 
 Here is an example of how a *Router* could parse the *second octet* in a *Clients* handshake request:
 
+{align="left"}
 ```python
-## map RawSocket handshake request (2nd octet) to 
-## serializer / max. msg length
-##
-for i in range(256):
-   ser_id = i & 0x0f
-   if ser_id != 0:
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i >> 4) + 9)
-      print("{:02x} => serializer: {}, maxlen: {}".
-          format(i, ser, maxlen))
-   else:
-      print("fail the connection: illegal serializer value")
+    <CODE BEGINS>
+    ## map RawSocket handshake request (2nd octet) to 
+    ## serializer / max. msg length
+    ##
+    for i in range(256):
+       ser_id = i & 0x0f
+       if ser_id != 0:
+          ser = SERMAP.get(ser_id, 'currently undefined')
+          maxlen = 2 ** ((i >> 4) + 9)
+          print("{:02x} => serializer: {}, maxlen: {}".
+              format(i, ser, maxlen))
+       else:
+          print("fail the connection: illegal serializer value")
+    <CODE ENDS>
 ```
 
 When the *Router* is willing to speak the serializer requested by the *Client*, it will answer with a 4 octets response of identical structure as the *Client* request:
 
-    MSB                                 LSB
-    31                                    0
-    0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
+{align="left"}
+        MSB                                 LSB
+        31                                    0
+        0111 1111 LLLL SSSS RRRR RRRR RRRR RRRR
 
 Again, the *first octet* MUST be the value `0x7F`. The *third and forth octets* are reserved and MUST be all zeros for now.
 
@@ -139,62 +153,69 @@ If a message received during a connection exceeds the limit requested, a *Peer* 
 
 When the *Router* is unable to speak the serializer requested by the *Client*, or it is denying the *Client* for other reasons, the *Router* replies with an error:
 
-    MSB                                 LSB
-    31                                    0
-    0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
+{align="left"}
+        MSB                                 LSB
+        31                                    0
+        0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
 
 An error reply has 4 octets: the *first octet* is again the magic `0x7F`, and the *third and forth octet* are reserved and MUST all be zeros for now.
 
 The *second octet* has its lower 4 bits zero'ed (which distinguishes the reply from an success/accepting reply) and the upper 4 bits encode the error:
 
-    0: illegal (must not be used)
-    1: serializer unsupported
-    2: maximum message length unacceptable
-    3: use of reserved bits (unsupported feature)
-    4: maximum connection count reached
-    5 - 15: reserved for future errors
+{align="left"}
+        0: illegal (must not be used)
+        1: serializer unsupported
+        2: maximum message length unacceptable
+        3: use of reserved bits (unsupported feature)
+        4: maximum connection count reached
+        5 - 15: reserved for future errors
 
-> Note that the error code `0` MUST not be used. This is to allow storage of error state in a host language variable, while allowing `0` to signal the current state "no error"
+> Note that the error code `0` MUST NOT be used. This is to allow storage of error state in a host language variable, while allowing `0` to signal the current state "no error"
 
 Here is an example of how a *Router* might create the *second octet* in an error response:
 
+{align="left"}
 ```python
-ERRMAP = {
-   0: "illegal (must not be used)",
-   1: "serializer unsupported",
-   2: "maximum message length unacceptable",
-   3: "use of reserved bits (unsupported feature)",
-   4: "maximum connection count reached"
-}
+    <CODE BEGINS>
+    ERRMAP = {
+       0: "illegal (must not be used)",
+       1: "serializer unsupported",
+       2: "maximum message length unacceptable",
+       3: "use of reserved bits (unsupported feature)",
+       4: "maximum connection count reached"
+    }
 
-## map error to RawSocket handshake error reply (2nd octet)
-##
-for err in ERRMAP:
-   octet_2 = err << 4
-   print("error: {} => 0x{:02x}").format(ERRMAP[err], err)
+    ## map error to RawSocket handshake error reply (2nd octet)
+    ##
+    for err in ERRMAP:
+       octet_2 = err << 4
+       print("error: {} => 0x{:02x}").format(ERRMAP[err], err)
+    <CODE ENDS>
 ```
 
 The *Client* - after having sent its handshake request - will wait for the 4 octets from *Router* handshake reply.
 
 Here is an example of how a *Client* might parse the *second octet* in a *Router* handshake reply:
 
-
+{align="left"}
 ```python
-## map RawSocket handshake reply (2nd octet)
-##
-for i in range(256):
-   ser_id = i & 0x0f
-   if ser_id:
-      ## verify the serializer is the one we requested! 
-      ## if not, fail the connection!
-      ser = SERMAP.get(ser_id, 'currently undefined')
-      maxlen = 2 ** ((i >> 4) + 9)
-      print("{:02x} => serializer: {}, maxlen: {}".
-          format(i, ser, maxlen))
-   else:
-      err = i >> 4
-      print("error: {}".format(ERRMAP.get(err, 
-          'currently undefined')))
+    <CODE BEGINS>
+    ## map RawSocket handshake reply (2nd octet)
+    ##
+    for i in range(256):
+       ser_id = i & 0x0f
+       if ser_id:
+          ## verify the serializer is the one we requested! 
+          ## if not, fail the connection!
+          ser = SERMAP.get(ser_id, 'currently undefined')
+          maxlen = 2 ** ((i >> 4) + 9)
+          print("{:02x} => serializer: {}, maxlen: {}".
+              format(i, ser, maxlen))
+       else:
+          err = i >> 4
+          print("error: {}".format(ERRMAP.get(err, 
+              'currently undefined')))
+    <CODE ENDS>
 ```
 
 
@@ -217,24 +238,27 @@ E.g. a *Router* that is to forward a WAMP `EVENT` to a *Client* which exceeds th
 
 The serialized octets for a message to be sent are prefixed with exactly 4 octets.
 
-    MSB                                 LSB
-    31                                    0
-    RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
+{align="left"}
+        MSB                                 LSB
+        31                                    0
+        RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
 
 The *first octet* has the following structure
 
-    MSB   LSB
-    7       0
-    RRRR RTTT
+{align="left"}
+        MSB   LSB
+        7       0
+        RRRR RTTT
 
 The five bits `RRRRR` are reserved for future use and MUST be all zeros for now.
 
 The three bits `TTT` encode the type of the transport message:
 
-    0: regular WAMP message
-    1: PING
-    2: PONG
-    3-7: reserved
+{align="left"}
+        0: regular WAMP message
+        1: PING
+        2: PONG
+        3-7: reserved
 
 The *three remaining octets* constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
 
