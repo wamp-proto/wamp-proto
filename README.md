@@ -27,7 +27,7 @@ Your participation here is highly welcome!
 
 To participate in the process, please take a look at
 
-* [Contribung](CONTRIBUTING.md)
+* [Contributing](CONTRIBUTING.md)
 * [Authoring](AUTHORING.md)
 
 join the [mailing list](https://groups.google.com/forum/#!forum/wampws) and our [chat room](https://gitter.im/tavendo/WAMP).
