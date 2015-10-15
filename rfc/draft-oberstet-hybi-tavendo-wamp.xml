@@ -283,7 +283,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <section anchor="identifiers" title="Identifiers">
 
 <section anchor="uris" title="URIs">
-<t>WAMP needs to identify the following <spanx style="strong">persistent</spanx> resources:
+<t>WAMP needs to identify the following persistent resources:
 </t>
 <t>
 <list style="numbers">
@@ -292,7 +292,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>Errors</t>
 </list>
 </t>
-<t>These are identified in WAMP using <spanx style="emph">Uniform Resource Identifiers</spanx> (URIs) <xref target="RFC3986"/> that MUST be Unicode strings.
+<t>These are identified in WAMP using Uniform Resource Identifiers (URIs) <xref target="RFC3986"/> that MUST be Unicode strings.
 </t>
 <t><list style="empty">
 <t>When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 <xref target="RFC3629"/> encoding.
@@ -323,7 +323,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>The restriction not to allow <spanx style="verb">.</spanx> in component strings is due to the fact that <spanx style="verb">.</spanx> is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that are part of the Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in the Advanced Profile. The character <spanx style="verb">#</spanx> is not allowed since this is reserved for internal use by Dealers and Brokers.
 </t>
 </list></t>
-<t>As an example, the following regular expression could be used in Python to check URIs according to above rules:
+<t>As an example, the following regular expression could be used in Python to check URIs according to the above rules:
 </t>
 
 <figure align="left"><artwork align="left">
@@ -344,7 +344,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="strict-uris" title="Strict URIs">
-<t>While the above rules MUST be followed, following a stricter URI rule is recommended: URI components SHOULD only contain letters, digits and <spanx style="verb">_</spanx>.
+<t>While the above rules MUST be followed, following a stricter URI rule is recommended: URI components SHOULD only contain lower-case letters, digits and <spanx style="verb">_</spanx>.
 </t>
 <t>As an example, the following regular expression could be used in Python to check URIs according to the above rules:
 </t>
@@ -3980,8 +3980,6 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 
 <section anchor="publisher-exclusion" title="Publisher Exclusion">
-</section>
-</section>
 
 <section anchor="feature-definition-11" title="Feature Definition">
 <t>By default, a <spanx style="emph">Publisher</spanx> of an event will <spanx style="strong">not</spanx> itself receive an event published, even when subscribed to the <spanx style="verb">Topic</spanx> the <spanx style="emph">Publisher</spanx> is publishing to. This behavior can be overridden using this feature.
@@ -4020,6 +4018,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
     HELLO.Details.roles.&lt;role&gt;.features.
         publisher_exclusion|bool := true
 </artwork></figure>
+</section>
+</section>
 
 <section anchor="publisher-identification" title="Publisher Identification">
 
@@ -5765,7 +5765,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <section anchor="binary-conversion-of-json-strings" title="Binary conversion of JSON Strings">
 <t>Binary data follows a convention for conversion to JSON strings.
 </t>
-<t>A <spanx style="strong">byte array</spanx> is converted to a <spanx style="strong">JSON string</spanx> as follows:
+<t>A byte array is converted to a JSON string as follows:
 </t>
 <t>
 <list style="numbers">
@@ -5800,7 +5800,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <figure align="left"><artwork align="left">
     "\\u0000EOP/kFMHXFJvX8BtT+N82w=="
 </artwork></figure>
-<t>A <spanx style="strong">JSON string</spanx> is unserialized to either a <spanx style="strong">string</spanx> or a <spanx style="strong">byte array</spanx> using the following procedure:
+<t>A JSON string is unserialized to either a string or a byte array using the following procedure:
 </t>
 <t>
 <list style="numbers">
@@ -5913,6 +5913,10 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 
 <section anchor="acknowledgements" title="Acknowledgements">
+<t>WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned:
+</t>
+<t>Konstantin Burkalev (@KSDaemon on GitHub)
+</t>
 </section>
 
 </middle>

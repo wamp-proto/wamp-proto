@@ -2,13 +2,13 @@
 
 ### URIs {#uris}
 
-WAMP needs to identify the following **persistent** resources:
+WAMP needs to identify the following persistent resources:
 
 1.  Topics
 2.  Procedures
 3.  Errors
 
-These are identified in WAMP using *Uniform Resource Identifiers* (URIs) [@!RFC3986] that MUST be Unicode strings.
+These are identified in WAMP using Uniform Resource Identifiers (URIs) [@!RFC3986] that MUST be Unicode strings.
 
 > When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 [@!RFC3629] encoding.
 
@@ -31,7 +31,7 @@ URI components (the parts between two `.`s, the head part up to the first `.`, t
 
 > The restriction not to allow `.` in component strings is due to the fact that `.` is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that are part of the Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in the Advanced Profile. The character `#` is not allowed since this is reserved for internal use by Dealers and Brokers.
 
-As an example, the following regular expression could be used in Python to check URIs according to above rules:
+As an example, the following regular expression could be used in Python to check URIs according to the above rules:
 
 {align="left"}
 ``` python
@@ -53,7 +53,7 @@ When empty URI components are allowed (which is the case for specific messages t
 
 #### Strict URIs
 
-While the above rules MUST be followed, following a stricter URI rule is recommended: URI components SHOULD only contain letters, digits and `_`.
+While the above rules MUST be followed, following a stricter URI rule is recommended: URI components SHOULD only contain lower-case letters, digits and `_`.
 
 As an example, the following regular expression could be used in Python to check URIs according to the above rules:
 

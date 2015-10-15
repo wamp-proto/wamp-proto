@@ -266,4 +266,8 @@ TBD
 
 # Acknowledgements
 
+WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned:
+
+Konstantin Burkalev (@KSDaemon on GitHub)
+
 {backmatter}

@@ -2,7 +2,7 @@
 
 Binary data follows a convention for conversion to JSON strings.
 
-A **byte array** is converted to a **JSON string** as follows:
+A byte array is converted to a JSON string as follows:
 
 1. convert the byte array to a Base64 encoded (host language) string
 2. prepend the string with a `\0` character
@@ -30,7 +30,7 @@ and serialized to a JSON string
 {align="left"}
         "\\u0000EOP/kFMHXFJvX8BtT+N82w=="
 
-A **JSON string** is unserialized to either a **string** or a **byte array** using the following procedure:
+A JSON string is unserialized to either a string or a byte array using the following procedure:
 
 1. Unserialize a JSON string to a host language (Unicode) string
 2. If the string starts with a `\0` character, interpret the rest (after the first character) as Base64 and decode to a byte array
