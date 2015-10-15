@@ -24,7 +24,7 @@ Includes links to relevant GitHub issues [I] and mailing list discussions [D].
 |   Publishing & Events             |               |               | [basic/bp_pubsub_publishing_and_events.md](text/basic/bp_pubsub_publishing_and_events.md) |  |
 | Remote Procedure Calls            |               |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
 |   Registering & Unregistering     |               |               | [basic/bp_rpc_registering_and_unregistering.md](text/basic/bp_rpc_registering_and_unregistering.md) |  |
-|   Calling & Invocations           |               |               | [basic/bp_calling_and_invocation.md](text/basic/bp_calling_and_invocation.md) |  |
+|   Calling & Invocations           |               |               | [basic/bp_rpc_calling_and_invocation.md](text/basic/bp_rpc_calling_and_invocation.md) |  |
 | Predefined URIs                   |               |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
 |   Basic Profile                   |               |               | [basic/bp_uris.md](text/basic/bp_uris.md) |  |
 |   Advanced Profile                |               |               | [advanved/ap_uris.md](text/advanced/ap_uris.md) |  |
