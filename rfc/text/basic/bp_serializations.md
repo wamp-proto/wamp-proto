@@ -2,7 +2,7 @@
 
 WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
 
-A message *serialization* format is assumed that (at least) provides the following types:
+A message serialization format is assumed that (at least) provides the following types:
 
 * `integer` (non-negative)
 * `string` (UTF-8 encoded Unicode)
@@ -15,12 +15,12 @@ A message *serialization* format is assumed that (at least) provides the followi
 
 There is no required serialization or set of serializations for WAMP implementations (but each implementation MUST, of course, implement at least one serialization format). Routers SHOULD implement more than one serialization format, enabling components using different kinds of serializations to connect to each other.
 
-WAMP defines two bindings for message *serialization*:
+WAMP defines two bindings for message serialization:
 
 1. JSON
 2. MsgPack
 
-Other bindings for *serialization* may be defined in future WAMP versions.
+Other bindings for serialization may be defined in future WAMP versions.
 
 ### JSON
 

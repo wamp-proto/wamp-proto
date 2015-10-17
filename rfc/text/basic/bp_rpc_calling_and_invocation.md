@@ -1,6 +1,6 @@
 ## Calling and Invocations
 
-The message flow between *Callers*, a *Dealer* and *Callees* for calling procedures and invoking endpoints involves the following messages:
+The message flow between Callers, a Dealer and Callees for calling procedures and invoking endpoints involves the following messages:
 
 1. `CALL`
 2. `RESULT`
@@ -28,11 +28,11 @@ The message flow between *Callers*, a *Dealer* and *Callees* for calling procedu
         `------'          `------'          `------'
 
 
-The execution of remote procedure calls is asynchronous, and there may be more than one call outstanding. A call is called outstanding (from the point of view of the *Caller*), when a (final) result or error has not yet been received by the *Caller*.
+The execution of remote procedure calls is asynchronous, and there may be more than one call outstanding. A call is called outstanding (from the point of view of the Caller), when a (final) result or error has not yet been received by the Caller.
 
 ### CALL
 
-When a *Caller* wishes to call a remote procedure, it sends a `CALL` message to a *Dealer*:
+When a Caller wishes to call a remote procedure, it sends a `CALL` message to a Dealer:
 
 {align="left"}
         [CALL, Request|id, Options|dict, Procedure|uri]
@@ -50,7 +50,7 @@ or
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the *Caller* and used to correlate the *Dealer's* response with the request.
+* `Request` is a random, ephemeral ID chosen by the Caller and used to correlate the Dealer's response with the request.
 * `Options` is a dictionary that allows to provide additional call request details in an extensible way. This is described further below.
 * `Procedure` is the URI of the procedure to be called.
 * `Arguments` is a list of positional call arguments (each of arbitrary type). The list may be of zero length.
@@ -80,7 +80,7 @@ where
 
 ### INVOCATION
 
-If the *Dealer* is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective *Callee* implementing the procedure:
+If the Dealer is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective Callee implementing the procedure:
 
 {align="left"}
         [INVOCATION, Request|id, REGISTERED.Registration|id,
@@ -100,11 +100,11 @@ or
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the *Dealer* and used to correlate the *Callee's* response with the request.
-* `REGISTERED.Registration` is the registration ID under which the procedure was registered at the *Dealer*.
+* `Request` is a random, ephemeral ID chosen by the Dealer and used to correlate the *Callee's* response with the request.
+* `REGISTERED.Registration` is the registration ID under which the procedure was registered at the Dealer.
 * `Details` is a dictionary that allows to provide additional invocation request details in an extensible way. This is described further below.
-* `CALL.Arguments` is the original list of positional call arguments as provided by the *Caller*.
-* `CALL.ArgumentsKw` is the original dictionary of keyword call arguments as provided by the *Caller*.
+* `CALL.Arguments` is the original list of positional call arguments as provided by the Caller.
+* `CALL.ArgumentsKw` is the original dictionary of keyword call arguments as provided by the Caller.
 
 *Example*
 
@@ -130,7 +130,7 @@ where
 
 ### YIELD
 
-If the *Callee* is able to successfully process and finish the execution of the call, it answers by sending a `YIELD` message to the *Dealer*:
+If the Callee is able to successfully process and finish the execution of the call, it answers by sending a `YIELD` message to the Dealer:
 
 {align="left"}
         [YIELD, INVOCATION.Request|id, Options|dict]
@@ -177,7 +177,7 @@ where
 
 ### RESULT
 
-The *Dealer* will then send a `RESULT` message to the original *Caller*:
+The Dealer will then send a `RESULT` message to the original Caller:
 
 {align="left"}
         [RESULT, CALL.Request|id, Details|dict]
@@ -197,8 +197,8 @@ where
 
 * `CALL.Request` is the ID from the original call request.
 * `Details` is a dictionary of additional details.
-* `YIELD.Arguments` is the original list of positional result elements as returned by the *Callee*.
-* `YIELD.ArgumentsKw` is the original dictionary of keyword result elements as returned by the *Callee*.
+* `YIELD.Arguments` is the original list of positional result elements as returned by the Callee.
+* `YIELD.ArgumentsKw` is the original dictionary of keyword result elements as returned by the Callee.
 
 *Example*
 
@@ -224,7 +224,7 @@ where
 ### Invocation ERROR
 
 
-If the *Callee* is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the *Callee* sends an `ERROR` message to the *Dealer*:
+If the Callee is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the Callee sends an `ERROR` message to the Dealer:
 
 {align="left"}
         [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
@@ -244,11 +244,11 @@ or
 
 where
 
-* `INVOCATION.Request` is the ID from the original `INVOCATION` request previously sent by the *Dealer* to the *Callee*.
+* `INVOCATION.Request` is the ID from the original `INVOCATION` request previously sent by the Dealer to the Callee.
 * `Details` is a dictionary with additional error details.
 * `Error` is an URI that identifies the error of why the request could not be fulfilled.
-* `Arguments` is a list containing arbitrary, application defined, positional error information. This will be forwarded by the *Dealer* to the *Caller* that initiated the call.
-* `ArgumentsKw` is a dictionary containing arbitrary, application defined, keyword-based error information. This will be forwarded by the *Dealer* to the *Caller* that initiated the call.
+* `Arguments` is a list containing arbitrary, application defined, positional error information. This will be forwarded by the Dealer to the Caller that initiated the call.
+* `ArgumentsKw` is a dictionary containing arbitrary, application defined, keyword-based error information. This will be forwarded by the Dealer to the Caller that initiated the call.
 
 *Example*
 
@@ -259,7 +259,7 @@ where
 
 ### Call ERROR
 
-The *Dealer* will then send a `ERROR` message to the original *Caller*:
+The Dealer will then send a `ERROR` message to the original Caller:
 
 {align="left"}
         [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]
@@ -278,11 +278,11 @@ or
 
 where
 
-* `CALL.Request` is the ID from the original `CALL` request sent by the *Caller* to the *Dealer*.
+* `CALL.Request` is the ID from the original `CALL` request sent by the Caller to the Dealer.
 * `Details` is a dictionary with additional error details.
-* `Error` is an URI identifying the type of error as returned by the *Callee* to the *Dealer*.
-* `Arguments` is a list containing the original error payload list as returned by the *Callee* to the *Dealer*.
-* `ArgumentsKw` is a dictionary containing the original error payload dictionary as returned by the *Callee* to the *Dealer*
+* `Error` is an URI identifying the type of error as returned by the Callee to the Dealer.
+* `Arguments` is a list containing the original error payload list as returned by the Callee to the Dealer.
+* `ArgumentsKw` is a dictionary containing the original error payload dictionary as returned by the Callee to the Dealer
 
 *Example*
 
@@ -290,7 +290,7 @@ where
         [8, 48, 7814135, {}, "com.myapp.error.object_write_protected",
             ["Object is write protected."], {"severity": 3}]
 
-If the original call already failed at the *Dealer* **before** the call would have been forwarded to any *Callee*, the *Dealer* will send an `ERROR` message to the *Caller*:
+If the original call already failed at the Dealer **before** the call would have been forwarded to any Callee, the Dealer will send an `ERROR` message to the Caller:
 
 {align="left"}
         [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri]

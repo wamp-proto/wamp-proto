@@ -31,17 +31,17 @@ Here is an example message conforming to the above format
 
 ## Extensibility
 
-Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST be of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,}` for WAMP *predefined* keys. Implementations MAY use implementation-specific keys that MUST match the regular expression `_[a-z0-9_]{3,}`. Attributes unknown to an implementation MUST be ignored.
+Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST be of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,}` for WAMP predefined keys. Implementations MAY use implementation-specific keys that MUST match the regular expression `_[a-z0-9_]{3,}`. Attributes unknown to an implementation MUST be ignored.
 
 
 ## No Polymorphism
 
-For a given `MessageType` *and* number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
+For a given `MessageType` and number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
 
 
 ## Structure
 
-The *application* payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: Brokers and Dealers have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows Brokers and Dealers to skip parsing it altogether. This can improve efficiency and performance.
+The application payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: Brokers and Dealers have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows Brokers and Dealers to skip parsing it altogether. This can improve efficiency and performance.
 
 
 ## Message Definitions
@@ -50,7 +50,7 @@ WAMP defines the following messages that are explained in detail in the followin
 
 The messages concerning the WAMP session itself are mandatory for all Peers, i.e. a Client MUST implement `HELLO`, `ABORT` and `GOODBYE`, while a Router MUST implement `WELCOME`, `ABORT` and `GOODBYE`.
 
-All other messages are mandatory *per role*, i.e. in an implementation that only provides a Client with the role of Publisher MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
+All other messages are mandatory per role, i.e. in an implementation that only provides a Client with the role of Publisher MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
 
 ### Session Lifecycle
 
@@ -162,14 +162,14 @@ Event dispatched by Broker to Subscribers for subscriptions the event was matchi
             Details|dict, PUBLISH.Arguments|list,
             PUBLISH.ArgumentsKw|dict]
 
-> An event is dispatched to a Subscriber for a given `Subscription|id` *only once*. On the other hand, a Subscriber that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
+> An event is dispatched to a Subscriber for a given `Subscription|id` only once. On the other hand, a Subscriber that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
 >
 
 ### Routed Remote Procedure Calls
 
 #### CALL
 
-Call as originally issued by the *Caller* to the *Dealer*.
+Call as originally issued by the Caller to the Dealer.
 
 {align="left"}
       [CALL, Request|id, Options|dict, Procedure|uri]
@@ -181,7 +181,7 @@ Call as originally issued by the *Caller* to the *Dealer*.
 
 #### RESULT
 
-Result of a call as returned by *Dealer* to *Caller*.
+Result of a call as returned by Dealer to Caller.
 
 {align="left"}
         [RESULT, CALL.Request|id, Details|dict]
@@ -193,35 +193,35 @@ Result of a call as returned by *Dealer* to *Caller*.
 
 #### REGISTER
 
-A *Callees* request to register an endpoint at a *Dealer*.
+A Callees request to register an endpoint at a Dealer.
 
 {align="left"}
         [REGISTER, Request|id, Options|dict, Procedure|uri]
 
 #### REGISTERED
 
-Acknowledge sent by a *Dealer* to a *Callee* for successful registration.
+Acknowledge sent by a Dealer to a Callee for successful registration.
 
 {align="left"}
         [REGISTERED, REGISTER.Request|id, Registration|id]
 
 #### UNREGISTER
 
-A *Callees* request to unregister a previously established registration.
+A Callees request to unregister a previously established registration.
 
 {align="left"}
         [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
 #### UNREGISTERED
 
-Acknowledge sent by a *Dealer* to a *Callee* for successful unregistration.
+Acknowledge sent by a Dealer to a Callee for successful unregistration.
 
 {align="left"}
         [UNREGISTERED, UNREGISTER.Request|id]
 
 #### INVOCATION
 
-Actual invocation of an endpoint sent by *Dealer* to a *Callee*.
+Actual invocation of an endpoint sent by Dealer to a Callee.
 
 {align="left"}
         [INVOCATION, Request|id, REGISTERED.Registration|id,
@@ -235,7 +235,7 @@ Actual invocation of an endpoint sent by *Dealer* to a *Callee*.
 
 #### YIELD
 
-Actual yield from an endpoint sent by a *Callee* to *Dealer*.
+Actual yield from an endpoint sent by a Callee to Dealer.
 
 {align="left"}
         [YIELD, INVOCATION.Request|id, Options|dict]
@@ -249,7 +249,7 @@ Actual yield from an endpoint sent by a *Callee* to *Dealer*.
 
 ## Message Codes and Direction
 
-The following table lists the message type code for **all 25 messages defined in the WAMP basic profile** and their direction between peer roles.
+The following table lists the message type code for all 25 messages defined in the WAMP basic profile and their direction between peer roles.
 
 Reserved codes may be used to identify additional message types in future standards documents.
 

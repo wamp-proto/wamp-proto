@@ -1,6 +1,6 @@
 # Sessions
 
-The message flow between *Clients* and *Routers* for opening and closing WAMP sessions involves the following messages:
+The message flow between Clients and Routers for opening and closing WAMP sessions involves the following messages:
 
 1. `HELLO`
 2. `WELCOME`
@@ -11,7 +11,7 @@ The message flow between *Clients* and *Routers* for opening and closing WAMP se
 
 ### HELLO
 
-After the underlying transport has been established, the opening of a WAMP session is initiated by the *Client* sending a `HELLO` message to the *Router*
+After the underlying transport has been established, the opening of a WAMP session is initiated by the Client sending a `HELLO` message to the Router
 
 {align="left"}
         [HELLO, Realm|uri, Details|dict]
@@ -21,9 +21,9 @@ where
 * `Realm` is a string identifying the realm this session should attach to
 * `Details` is a dictionary that allows to provide additional opening information (see below).
 
-The `HELLO` message MUST be the very first message sent by the *Client* after the transport has been established.
+The `HELLO` message MUST be the very first message sent by the Client after the transport has been established.
 
-In the WAMP Basic Profile without session authentication the *Router* will reply with a `WELCOME` or `ABORT` message.
+In the WAMP Basic Profile without session authentication the Router will reply with a `WELCOME` or `ABORT` message.
 
 {align="left"}
         ,------.          ,------.
@@ -39,9 +39,9 @@ In the WAMP Basic Profile without session authentication the *Router* will reply
         `------'          `------'
 
 
-A WAMP session starts its lifetime when the *Router* has sent a `WELCOME` message to the *Client*, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message (see below).
+A WAMP session starts its lifetime when the Router has sent a `WELCOME` message to the Client, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message (see below).
 
-It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the *Peer* must fail the session if that happens.
+It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the Peer must fail the session if that happens.
 
 #### Client: Role and Feature Announcement
 
@@ -50,16 +50,16 @@ WAMP uses *Role & Feature announcement* instead of *protocol versioning* to allo
 * implementations only supporting subsets of functionality
 * future extensibility
 
-A *Client* must announce the **roles** it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
+A Client must announce the roles it supports via `Hello.Details.roles|dict`, with a key mapping to a `Hello.Details.roles.<role>|dict` where `<role>` can be:
 
 * `publisher`
 * `subscriber`
 * `caller`
 * `callee`
 
-A *Client* can support any combination of the above roles but must support at least one role.
+A Client can support any combination of the above roles but must support at least one role.
 
-The `<role>|dict` is a dictionary describing **features** supported by the peer for that role.
+The `<role>|dict` is a dictionary describing features supported by the peer for that role.
 
 This MUST be empty for WAMP Basic Profile implementations, and MUST be used by implementations implementing parts of the Advanced Profile to list the specific set of features they support.
 
@@ -75,7 +75,7 @@ This MUST be empty for WAMP Basic Profile implementations, and MUST be used by i
 
 ### WELCOME
 
-A *Router* completes the opening of a WAMP session by sending a `WELCOME` reply message to the *Client*.
+A Router completes the opening of a WAMP session by sending a `WELCOME` reply message to the Client.
 
 {align="left"}
         [WELCOME, Session|id, Details|dict]
@@ -85,23 +85,23 @@ where
 * `Session` MUST be a randomly generated ID specific to the WAMP session. This applies for the lifetime of the session.
 * `Details` is a dictionary that allows to provide additional information regarding the open session (see below).
 
-In the WAMP Basic Profile without session authentication, a `WELCOME` message MUST be the first message sent by the *Router*, directly in response to a `HELLO` message received from the *Client*. Extensions in the Advanced Profile MAY include intermediate steps and messages for authentication.
+In the WAMP Basic Profile without session authentication, a `WELCOME` message MUST be the first message sent by the Router, directly in response to a `HELLO` message received from the Client. Extensions in the Advanced Profile MAY include intermediate steps and messages for authentication.
 
 > Note. The behavior if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
 >
 
 #### Router: Role and Feature Announcement
 
-Similar to a *Client* announcing *Roles* and *Features* supported in the ``HELLO` message, a *Router* announces its supported *Roles* and *Features* in the `WELCOME` message.
+Similar to a Client announcing Roles and Features supported in the ``HELLO` message, a Router announces its supported Roles and Features in the `WELCOME` message.
 
-A *Router* MUST announce the **roles** it supports via `Welcome.Details.roles|dict`, with a key mapping to a `Welcome.Details.roles.<role>|dict` where `<role>` can be:
+A Router MUST announce the roles it supports via `Welcome.Details.roles|dict`, with a key mapping to a `Welcome.Details.roles.<role>|dict` where `<role>` can be:
 
 * `broker`
 * `dealer`
 
-A *Router* must support at least one role, and MAY support both roles.
+A Router must support at least one role, and MAY support both roles.
 
-The `<role>|dict` is a dictionary describing **features** supported by the peer for that role. With WAMP Basic Profile implementations, this MUST be empty, but MUST be used by implementations implementing parts of the Advanced Profile to list the specific set of features they support
+The `<role>|dict` is a dictionary describing features supported by the peer for that role. With WAMP Basic Profile implementations, this MUST be empty, but MUST be used by implementations implementing parts of the Advanced Profile to list the specific set of features they support
 
 *Example: A Router implementing the Broker role of the WAMP Basic Profile.*
 
@@ -114,7 +114,7 @@ The `<role>|dict` is a dictionary describing **features** supported by the peer 
 
 ### ABORT
 
-Both the *Router* and the *Client* may abort the opening of a WAMP session by sending an `ABORT` message.
+Both the Router and the Client may abort the opening of a WAMP session by sending an `ABORT` message.
 
 {align="left"}
         [ABORT, Details|dict, Reason|uri]
@@ -149,7 +149,7 @@ No response to an `ABORT` message is expected.
 
 ## Session Closing
 
-A WAMP session starts its lifetime with the *Router* sending a `WELCOME` message to the *Client* and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a `GOODBYE` message sent by one *Peer* and a `GOODBYE` message sent from the other *Peer* in response.
+A WAMP session starts its lifetime with the Router sending a `WELCOME` message to the Client and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a `GOODBYE` message sent by one Peer and a `GOODBYE` message sent from the other Peer in response.
 
 {align="left"}
         [GOODBYE, Details|dict, Reason|uri]
@@ -186,7 +186,7 @@ where
         |Client|          |Router|
         `------'          `------'
 
-*Example*. One *Peer* initiates closing
+*Example*. One Peer initiates closing
 
 {align="left"}
         [6, {"message": "The host is shutting down now."},
@@ -198,7 +198,7 @@ and the other peer replies
         [6, {}, "wamp.error.goodbye_and_out"]
 
 
-*Example*. One *Peer* initiates closing
+*Example*. One Peer initiates closing
 
 {align="left"}
         [6, {}, "wamp.error.close_realm"]
@@ -213,8 +213,8 @@ and the other peer replies
 
 The differences between `ABORT` and `GOODBYE` messages are:
 
-1. `ABORT` gets sent only *before* a *Session* is established, while `GOODBYE` is sent only *after* a *Session* is already established.
-2. `ABORT` is never replied to by a *Peer*, whereas `GOODBYE` must be replied to by the receiving *Peer*
+1. `ABORT` gets sent only *before* a Session is established, while `GOODBYE` is sent only *after* a Session is already established.
+2. `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
 >

@@ -1,6 +1,6 @@
 ## Transports
 
-WAMP assumes a *transport* with the following characteristics:
+WAMP assumes a transport with the following characteristics:
 
 1. message-based
 2. reliable

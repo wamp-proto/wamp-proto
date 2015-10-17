@@ -1,6 +1,6 @@
 ## Registering and Unregistering
 
-The message flow between *Callees* and a *Dealer* for registering and unregistering endpoints to be called over RPC involves the following messages:
+The message flow between Callees and a Dealer for registering and unregistering endpoints to be called over RPC involves the following messages:
 
 1. `REGISTER`
 2. `REGISTERED`
@@ -36,16 +36,16 @@ The message flow between *Callees* and a *Dealer* for registering and unregister
 
 ### REGISTER
 
-A *Callee* announces the availability of an endpoint implementing a procedure with a *Dealer* by sending a `REGISTER` message:
+A Callee announces the availability of an endpoint implementing a procedure with a Dealer by sending a `REGISTER` message:
 
 {align="left"}
         [REGISTER, Request|id, Options|dict, Procedure|uri]
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
+* `Request` is a random, ephemeral ID chosen by the Callee and used to correlate the Dealer's response with the request.
 * `Options` is a dictionary that allows to provide additional registration request details in a extensible way. This is described further below.
-* `Procedure`is the procedure the *Callee* wants to register
+* `Procedure`is the procedure the Callee wants to register
 
 *Example*
 
@@ -54,7 +54,7 @@ where
 
 ### REGISTERED
 
-If the *Dealer* is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
+If the Dealer is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
 
 {align="left"}
         [REGISTERED, REGISTER.Request|id, Registration|id]
@@ -62,7 +62,7 @@ If the *Dealer* is able to fulfill and allowing the registration, it answers by 
 where
 
 * `REGISTER.Request` is the ID from the original request.
-*  `Registration` is an ID chosen by the *Dealer* for the registration.
+*  `Registration` is an ID chosen by the Dealer for the registration.
 
 *Example*
 
@@ -71,7 +71,7 @@ where
 
 ### Register ERROR
 
-When the request for registration cannot be fulfilled by the *Dealer*, the *Dealer* sends back an `ERROR` message to the *Callee*:
+When the request for registration cannot be fulfilled by the Dealer, the Dealer sends back an `ERROR` message to the Callee:
 
 {align="left"}
         [ERROR, REGISTER, REGISTER.Request|id, Details|dict, Error|uri]
@@ -88,15 +88,15 @@ where
 
 ### UNREGISTER
 
-When a *Callee* is no longer willing to provide an implementation of the registered procedure, it sends an `UNREGISTER` message to the *Dealer*:
+When a Callee is no longer willing to provide an implementation of the registered procedure, it sends an `UNREGISTER` message to the Dealer:
 
 {align="left"}
         [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the *Callee* and used to correlate the *Dealer's* response with the request.
-* `REGISTERED.Registration` is the ID for the registration to revoke, originally handed out by the *Dealer* to the *Callee*.
+* `Request` is a random, ephemeral ID chosen by the Callee and used to correlate the Dealer's response with the request.
+* `REGISTERED.Registration` is the ID for the registration to revoke, originally handed out by the Dealer to the Callee.
 
 *Example*
 
@@ -105,7 +105,7 @@ where
 
 ### UNREGISTERED
 
-Upon successful unregistration, the *Dealer* sends an `UNREGISTERED` message to the *Callee*:
+Upon successful unregistration, the Dealer sends an `UNREGISTERED` message to the Callee:
 
 {align="left"}
         [UNREGISTERED, UNREGISTER.Request|id]
@@ -121,7 +121,7 @@ where
 
 ### Unregister ERROR
 
-When the unregistration request fails, the *Dealer* sends an `ERROR` message:
+When the unregistration request fails, the Dealer sends an `ERROR` message:
 
 {align="left"}
         [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict,
