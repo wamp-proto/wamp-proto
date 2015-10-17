@@ -39,7 +39,6 @@ stable | The feature definition in the spec is complete and stable and the featu
 | publisher_exclusion           | stable | X | X |   |    |   |    |
 | publisher_identification      | alpha  | X | X | X |    |   |    |
 | publication_trustlevels       | alpha  |   | X | X |    |   |    |
-| session_meta_api              | beta   |   | X |   |    |   |    |
 | subscription_meta_api         | beta   |   | X |   |    |   |    |
 | pattern_based_subscription    | beta   |   | X | X |    |   |    |
 | sharded_subscription          | alpha  |   | X | X |    |   |    |
