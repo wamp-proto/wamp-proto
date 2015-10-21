@@ -8,6 +8,8 @@ A byte array is converted to a JSON string as follows:
 2. prepend the string with a `\0` character
 3. serialize the string to a JSON string
 
+where Base64 encoding follows Section 4 of [@!RFC4648].
+
 *Example*
 
 Consider the byte array (hex representation):
