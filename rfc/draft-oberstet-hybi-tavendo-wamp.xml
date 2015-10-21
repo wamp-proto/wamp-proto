@@ -1251,6 +1251,11 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>Though <spanx style="verb">ABORT</spanx> and <spanx style="verb">GOODBYE</spanx> are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
 </t>
 </list></t>
+</section>
+
+<section anchor="session-statechart" title="Session Statechart">
+<t>The following state chart gives the states that a WAMP peer can be in during the session lifetime cycle.
+</t>
 
 <figure align="left"><artwork align="left">
                          +--------------+                           
@@ -1291,13 +1296,32 @@ The Callee will execute the procedure using the supplied arguments to the call a
 |   |               |(14) |              |                          
 |   +-------^-------+  |  +--------------+                          
 |           |----------+           |                                
-+----------------------------------+         
++----------------------------------+     
 </artwork></figure>
+<texttable>
+<ttcol align="center">#</ttcol>
+<ttcol align="center">State</ttcol>
+
+<c>1</c><c>Sent HELLO</c>
+<c>2</c><c>Received WELCOME</c>
+<c>3</c><c>Sent GOODBYE</c>
+<c>4</c><c>Received GOODBYE</c>
+<c>5</c><c>Received GOODBYE</c>
+<c>6</c><c>Sent GOODBYE</c>
+<c>7</c><c>Received invalid HELLO / Send ABORT</c>
+<c>8</c><c>Received HELLO or AUTHENTICATE</c>
+<c>9</c><c>Received other</c>
+<c>10</c><c>Received valid HELLO [needs authentication] / Send CHALLENGE</c>
+<c>11</c><c>Received invalid AUTHENTICATE / Send ABORT</c>
+<c>12</c><c>Received valid AUTHENTICATE / Send WELCOME</c>
+<c>13</c><c>Received other</c>
+<c>14</c><c>Received other / ignore</c>
+</texttable>
 </section>
 </section>
 </section>
 
-<section anchor="gent-identificati" title="gent Identificati">
+<section anchor="agent-identification" title="Agent Identification">
 <t>When a software agent operates in a network rotocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
 </t>
 <t>Similar to what browsers do with the <spanx style="verb">User-Agent</spanx> HTTP header, both the <spanx style="verb">HELLO</spanx> and the <spanx style="verb">WELCOME</spanx> message MAY disclose the WAMP implementation in use to its peer:
@@ -5319,8 +5343,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
        2: 'msgpack'
     }
 
-    ## map serializer / max. msg length to RawSocket handshake request 
-    ## or success reply (2nd octet)
+    ## map serializer / max. msg length to RawSocket handshake  
+    ## request or success reply (2nd octet)
     ##
     for ser in SERMAP:
        for l in range(16):
@@ -5815,6 +5839,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t>serialize the string to a JSON string</t>
 </list>
 </t>
+<t>where Base64 encoding follows Section 4 of <xref target="RFC4648"/>.
+</t>
 <t><spanx style="emph">Example</spanx>
 </t>
 <t>Consider the byte array (hex representation):
@@ -5965,6 +5991,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <references title="Normative References">
 <?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3629.xml"?>
 <?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"?>
+<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4648.xml"?>
 <?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6455.xml"?>
 </references>
 <references title="Informative References">

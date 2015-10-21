@@ -419,7 +419,8 @@
 <link href="#rfc.section.7.1.3" rel="Chapter" title="7.1.3 ABORT"/>
 <link href="#rfc.section.7.2" rel="Chapter" title="7.2 Session Closing"/>
 <link href="#rfc.section.7.2.1" rel="Chapter" title="7.2.1 Difference between ABORT and GOODBYE"/>
-<link href="#rfc.section.8" rel="Chapter" title="8 gent Identificati"/>
+<link href="#rfc.section.7.2.2" rel="Chapter" title="7.2.2 Session Statechart"/>
+<link href="#rfc.section.8" rel="Chapter" title="8 Agent Identification"/>
 <link href="#rfc.section.9" rel="Chapter" title="9 Publish and Subscribe"/>
 <link href="#rfc.section.9.1" rel="Chapter" title="9.1 Subscribing and Unsubscribing"/>
 <link href="#rfc.section.9.1.1" rel="Chapter" title="9.1.1 SUBSCRIBE"/>
@@ -619,7 +620,8 @@
 <li>7.1.3.   <a href="#rfc.section.7.1.3">ABORT</a></li>
 </ul><li>7.2.   <a href="#rfc.section.7.2">Session Closing</a></li>
 <ul><li>7.2.1.   <a href="#rfc.section.7.2.1">Difference between ABORT and GOODBYE</a></li>
-</ul></ul><li>8.   <a href="#rfc.section.8">gent Identificati</a></li>
+<li>7.2.2.   <a href="#rfc.section.7.2.2">Session Statechart</a></li>
+</ul></ul><li>8.   <a href="#rfc.section.8">Agent Identification</a></li>
 <li>9.   <a href="#rfc.section.9">Publish and Subscribe</a></li>
 <ul><li>9.1.   <a href="#rfc.section.9.1">Subscribing and Unsubscribing</a></li>
 <ul><li>9.1.1.   <a href="#rfc.section.9.1.1">SUBSCRIBE</a></li>
@@ -1982,6 +1984,8 @@
 <ul class="empty">
   <li>Though <samp>ABORT</samp> and <samp>GOODBYE</samp> are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.  </li>
 </ul>
+<h1 id="rfc.section.7.2.2"><a href="#rfc.section.7.2.2">7.2.2.</a> <a href="#session-statechart" id="session-statechart">Session Statechart</a></h1>
+<p id="rfc.section.7.2.2.p.1">The following state chart gives the states that a WAMP peer can be in during the session lifetime cycle.  </p>
 <pre>
 &#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;+--------------+&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;
 +--------(6)-------------&gt;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;|&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;
@@ -2021,9 +2025,75 @@
 |&#8201;&#8201;&#8201;|&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;|(14)&#8201;|&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;|&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;
 |&#8201;&#8201;&#8201;+-------^-------+&#8201;&#8201;|&#8201;&#8201;+--------------+&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;
 |&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;|----------+&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;|&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;
-+----------------------------------+&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;&#8201;
++----------------------------------+&#8201;&#8201;&#8201;&#8201;&#8201;
 </pre>
-<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#gent-identificati" id="gent-identificati">gent Identificati</a></h1>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <thead>
+    <tr>
+      <th class="center">#</th>
+      <th class="center">State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="center">1</td>
+      <td class="center">Sent HELLO</td>
+    </tr>
+    <tr>
+      <td class="center">2</td>
+      <td class="center">Received WELCOME</td>
+    </tr>
+    <tr>
+      <td class="center">3</td>
+      <td class="center">Sent GOODBYE</td>
+    </tr>
+    <tr>
+      <td class="center">4</td>
+      <td class="center">Received GOODBYE</td>
+    </tr>
+    <tr>
+      <td class="center">5</td>
+      <td class="center">Received GOODBYE</td>
+    </tr>
+    <tr>
+      <td class="center">6</td>
+      <td class="center">Sent GOODBYE</td>
+    </tr>
+    <tr>
+      <td class="center">7</td>
+      <td class="center">Received invalid HELLO / Send ABORT</td>
+    </tr>
+    <tr>
+      <td class="center">8</td>
+      <td class="center">Received HELLO or AUTHENTICATE</td>
+    </tr>
+    <tr>
+      <td class="center">9</td>
+      <td class="center">Received other</td>
+    </tr>
+    <tr>
+      <td class="center">10</td>
+      <td class="center">Received valid HELLO [needs authentication] / Send CHALLENGE</td>
+    </tr>
+    <tr>
+      <td class="center">11</td>
+      <td class="center">Received invalid AUTHENTICATE / Send ABORT</td>
+    </tr>
+    <tr>
+      <td class="center">12</td>
+      <td class="center">Received valid AUTHENTICATE / Send WELCOME</td>
+    </tr>
+    <tr>
+      <td class="center">13</td>
+      <td class="center">Received other</td>
+    </tr>
+    <tr>
+      <td class="center">14</td>
+      <td class="center">Received other / ignore</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.section.8"><a href="#rfc.section.8">8.</a> <a href="#agent-identification" id="agent-identification">Agent Identification</a></h1>
 <p id="rfc.section.8.p.1">When a software agent operates in a network rotocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.  </p>
 <p id="rfc.section.8.p.2">Similar to what browsers do with the <samp>User-Agent</samp> HTTP header, both the <samp>HELLO</samp> and the <samp>WELCOME</samp> message MAY disclose the WAMP implementation in use to its peer: </p>
 <pre>
@@ -5477,8 +5547,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
        2: 'msgpack'
     }
 
-    ## map serializer / max. msg length to RawSocket handshake request 
-    ## or success reply (2nd octet)
+    ## map serializer / max. msg length to RawSocket handshake  
+    ## request or success reply (2nd octet)
     ##
     for ser in SERMAP:
        for l in range(16):
@@ -5863,24 +5933,25 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </ol>
 
 <p> </p>
+<p id="rfc.section.15.p.4">where Base64 encoding follows Section 4 of <a href="#RFC4648">[RFC4648]</a>.  </p>
 <p><em>Example</em> </p>
-<p id="rfc.section.15.p.5">Consider the byte array (hex representation): </p>
+<p id="rfc.section.15.p.6">Consider the byte array (hex representation): </p>
 <pre>
     10e3ff9053075c526f5fc06d4fe37cdb
 </pre>
-<p id="rfc.section.15.p.6">This will get converted to Base64 </p>
+<p id="rfc.section.15.p.7">This will get converted to Base64 </p>
 <pre>
     EOP/kFMHXFJvX8BtT+N82w==
 </pre>
-<p id="rfc.section.15.p.7">prepended with <samp>\0</samp> </p>
+<p id="rfc.section.15.p.8">prepended with <samp>\0</samp> </p>
 <pre>
     \x00EOP/kFMHXFJvX8BtT+N82w==
 </pre>
-<p id="rfc.section.15.p.8">and serialized to a JSON string </p>
+<p id="rfc.section.15.p.9">and serialized to a JSON string </p>
 <pre>
     "\\u0000EOP/kFMHXFJvX8BtT+N82w=="
 </pre>
-<p id="rfc.section.15.p.9">A JSON string is unserialized to either a string or a byte array using the following procedure: </p>
+<p id="rfc.section.15.p.10">A JSON string is unserialized to either a string or a byte array using the following procedure: </p>
 <p/>
 
 <ol>
@@ -5890,7 +5961,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </ol>
 
 <p> </p>
-<p id="rfc.section.15.p.11">Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.  </p>
+<p id="rfc.section.15.p.12">Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.  </p>
 <h1 id="rfc.section.15.1"><a href="#rfc.section.15.1">15.1.</a> <a href="#python" id="python">Python</a></h1>
 <p id="rfc.section.15.1.p.1">Here is a complete example in Python showing how byte arrays are converted to and from JSON: </p>
 <pre>
@@ -5992,6 +6063,12 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
         <b id="RFC3986">[RFC3986]</b>
       </td>
       <td class="top"><a>Berners-Lee, T.</a>, <a>Fielding, R.</a> and <a>L. Masinter</a>, "<a href="http://tools.ietf.org/html/rfc3986">Uniform Resource Identifier (URI): Generic Syntax</a>", STD 66, RFC 3986, DOI 10.17487/RFC3986, January 2005.</td>
+    </tr>
+    <tr>
+      <td class="reference">
+        <b id="RFC4648">[RFC4648]</b>
+      </td>
+      <td class="top"><a>Josefsson, S.</a>, "<a href="http://tools.ietf.org/html/rfc4648">The Base16, Base32, and Base64 Data Encodings</a>", RFC 4648, DOI 10.17487/RFC4648, October 2006.</td>
     </tr>
     <tr>
       <td class="reference">

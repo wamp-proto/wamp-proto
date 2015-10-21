@@ -94,8 +94,8 @@ Here is a Python program that prints all (currently) permissible values for the 
        2: 'msgpack'
     }
 
-    ## map serializer / max. msg length to RawSocket handshake request 
-    ## or success reply (2nd octet)
+    ## map serializer / max. msg length to RawSocket handshake  
+    ## request or success reply (2nd octet)
     ##
     for ser in SERMAP:
        for l in range(16):

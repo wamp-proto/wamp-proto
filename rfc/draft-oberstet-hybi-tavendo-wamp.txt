@@ -116,52 +116,52 @@ Internet-Draft                    WAMP                      October 2015
 
      7.2.  Session Closing . . . . . . . . . . . . . . . . . . . . .  32
        7.2.1.  Difference between ABORT and GOODBYE  . . . . . . . .  33
-   8.  gent Identificati . . . . . . . . . . . . . . . . . . . . . .  34
-   9.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  35
-     9.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  35
+       7.2.2.  Session Statechart  . . . . . . . . . . . . . . . . .  33
+   8.  Agent Identification  . . . . . . . . . . . . . . . . . . . .  35
+   9.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  36
+     9.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  36
        9.1.1.  SUBSCRIBE . . . . . . . . . . . . . . . . . . . . . .  37
-       9.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  37
-       9.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  38
-       9.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  38
-       9.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  39
-       9.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  39
-     9.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  39
-       9.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  40
-       9.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  41
-       9.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  41
-       9.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  42
-   10. Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  43
-     10.1.  Registering and Unregistering  . . . . . . . . . . . . .  43
-       10.1.1.  REGISTER . . . . . . . . . . . . . . . . . . . . . .  44
-       10.1.2.  REGISTERED . . . . . . . . . . . . . . . . . . . . .  45
-       10.1.3.  Register ERROR . . . . . . . . . . . . . . . . . . .  45
-       10.1.4.  UNREGISTER . . . . . . . . . . . . . . . . . . . . .  45
-       10.1.5.  UNREGISTERED . . . . . . . . . . . . . . . . . . . .  46
-       10.1.6.  Unregister ERROR . . . . . . . . . . . . . . . . . .  46
-     10.2.  Calling and Invocations  . . . . . . . . . . . . . . . .  46
-       10.2.1.  CALL . . . . . . . . . . . . . . . . . . . . . . . .  47
-       10.2.2.  INVOCATION . . . . . . . . . . . . . . . . . . . . .  48
-       10.2.3.  YIELD  . . . . . . . . . . . . . . . . . . . . . . .  49
-       10.2.4.  RESULT . . . . . . . . . . . . . . . . . . . . . . .  50
-       10.2.5.  Invocation ERROR . . . . . . . . . . . . . . . . . .  51
-       10.2.6.  Call ERROR . . . . . . . . . . . . . . . . . . . . .  52
-   11. Predefined URIs . . . . . . . . . . . . . . . . . . . . . . .  53
-     11.1.  Basic Profile  . . . . . . . . . . . . . . . . . . . . .  53
-       11.1.1.  Incorrect URIs . . . . . . . . . . . . . . . . . . .  53
-       11.1.2.  Interaction  . . . . . . . . . . . . . . . . . . . .  53
-       11.1.3.  Session Close  . . . . . . . . . . . . . . . . . . .  54
-       11.1.4.  Authorization  . . . . . . . . . . . . . . . . . . .  55
-     11.2.  Advanced Profile . . . . . . . . . . . . . . . . . . . .  55
-   12. Ordering Guarantees . . . . . . . . . . . . . . . . . . . . .  56
-     12.1.  Publish & Subscribe Ordering . . . . . . . . . . . . . .  56
-     12.2.  Remote Procedure Call Ordering . . . . . . . . . . . . .  56
-   13. Security Model  . . . . . . . . . . . . . . . . . . . . . . .  57
-     13.1.  Transport Encryption and Integrity . . . . . . . . . . .  57
-     13.2.  Router Authentication  . . . . . . . . . . . . . . . . .  58
-     13.3.  Client Authentication  . . . . . . . . . . . . . . . . .  58
-       13.3.1.  Routers are trusted  . . . . . . . . . . . . . . . .  58
-   14. Advanced Profile  . . . . . . . . . . . . . . . . . . . . . .  59
-     14.1.  Messages . . . . . . . . . . . . . . . . . . . . . . . .  59
+       9.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  38
+       9.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  39
+       9.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  39
+       9.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  40
+       9.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  40
+     9.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  40
+       9.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  41
+       9.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  42
+       9.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  42
+       9.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  43
+   10. Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  44
+     10.1.  Registering and Unregistering  . . . . . . . . . . . . .  44
+       10.1.1.  REGISTER . . . . . . . . . . . . . . . . . . . . . .  45
+       10.1.2.  REGISTERED . . . . . . . . . . . . . . . . . . . . .  46
+       10.1.3.  Register ERROR . . . . . . . . . . . . . . . . . . .  46
+       10.1.4.  UNREGISTER . . . . . . . . . . . . . . . . . . . . .  46
+       10.1.5.  UNREGISTERED . . . . . . . . . . . . . . . . . . . .  47
+       10.1.6.  Unregister ERROR . . . . . . . . . . . . . . . . . .  47
+     10.2.  Calling and Invocations  . . . . . . . . . . . . . . . .  47
+       10.2.1.  CALL . . . . . . . . . . . . . . . . . . . . . . . .  48
+       10.2.2.  INVOCATION . . . . . . . . . . . . . . . . . . . . .  49
+       10.2.3.  YIELD  . . . . . . . . . . . . . . . . . . . . . . .  50
+       10.2.4.  RESULT . . . . . . . . . . . . . . . . . . . . . . .  51
+       10.2.5.  Invocation ERROR . . . . . . . . . . . . . . . . . .  52
+       10.2.6.  Call ERROR . . . . . . . . . . . . . . . . . . . . .  53
+   11. Predefined URIs . . . . . . . . . . . . . . . . . . . . . . .  54
+     11.1.  Basic Profile  . . . . . . . . . . . . . . . . . . . . .  54
+       11.1.1.  Incorrect URIs . . . . . . . . . . . . . . . . . . .  54
+       11.1.2.  Interaction  . . . . . . . . . . . . . . . . . . . .  54
+       11.1.3.  Session Close  . . . . . . . . . . . . . . . . . . .  55
+       11.1.4.  Authorization  . . . . . . . . . . . . . . . . . . .  56
+     11.2.  Advanced Profile . . . . . . . . . . . . . . . . . . . .  56
+   12. Ordering Guarantees . . . . . . . . . . . . . . . . . . . . .  57
+     12.1.  Publish & Subscribe Ordering . . . . . . . . . . . . . .  57
+     12.2.  Remote Procedure Call Ordering . . . . . . . . . . . . .  57
+   13. Security Model  . . . . . . . . . . . . . . . . . . . . . . .  58
+     13.1.  Transport Encryption and Integrity . . . . . . . . . . .  58
+     13.2.  Router Authentication  . . . . . . . . . . . . . . . . .  59
+     13.3.  Client Authentication  . . . . . . . . . . . . . . . . .  59
+       13.3.1.  Routers are trusted  . . . . . . . . . . . . . . . .  59
+   14. Advanced Profile  . . . . . . . . . . . . . . . . . . . . . .  60
 
 
 
@@ -170,53 +170,53 @@ Oberstein & Goedde       Expires April 13, 2016                 [Page 3]
 Internet-Draft                    WAMP                      October 2015
 
 
-       14.1.1.  Message Definitions  . . . . . . . . . . . . . . . .  59
-       14.1.2.  Message Codes and Direction  . . . . . . . . . . . .  60
-     14.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  60
-       14.2.1.  RPC Features . . . . . . . . . . . . . . . . . . . .  61
-       14.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  61
-       14.2.3.  Other Advanced Features  . . . . . . . . . . . . . .  62
-     14.3.  Advanced RPC Features  . . . . . . . . . . . . . . . . .  62
-       14.3.1.  Progressive Call Results . . . . . . . . . . . . . .  62
-       14.3.2.  Progressive Calls  . . . . . . . . . . . . . . . . .  68
-       14.3.3.  Call Timeouts  . . . . . . . . . . . . . . . . . . .  68
-       14.3.4.  Call Canceling . . . . . . . . . . . . . . . . . . .  69
-       14.3.5.  Caller Identification  . . . . . . . . . . . . . . .  72
-       14.3.6.  Call Trust Levels  . . . . . . . . . . . . . . . . .  73
-       14.3.7.  Registration Meta API  . . . . . . . . . . . . . . .  73
-       14.3.8.  Pattern-based Registrations  . . . . . . . . . . . .  80
-       14.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  83
-       14.3.10. Sharded Registration . . . . . . . . . . . . . . . .  85
-       14.3.11. Registration Revocation  . . . . . . . . . . . . . .  86
-       14.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  86
-     14.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  87
-       14.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  87
-       14.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  92
-       14.4.3.  Publisher Identification . . . . . . . . . . . . . .  93
-       14.4.4.  Publication Trust Levels . . . . . . . . . . . . . .  94
-       14.4.5.  Subscription Meta API  . . . . . . . . . . . . . . .  94
-       14.4.6.  Pattern-based Subscriptions  . . . . . . . . . . . . 100
-       14.4.7.  Sharded Subscriptions  . . . . . . . . . . . . . . . 103
-       14.4.8.  Event History  . . . . . . . . . . . . . . . . . . . 103
-       14.4.9.  Registration Revocation  . . . . . . . . . . . . . . 105
-       14.4.10. Topic Reflection . . . . . . . . . . . . . . . . . . 105
-     14.5.  Other Advanced Features  . . . . . . . . . . . . . . . . 105
-       14.5.1.  Session Meta API . . . . . . . . . . . . . . . . . . 105
-       14.5.2.  Authentication . . . . . . . . . . . . . . . . . . . 109
-       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 117
-   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 132
-     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 133
-     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 134
-   16. Security Considerations . . . . . . . . . . . . . . . . . . . 135
-   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 136
-   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 136
-   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 136
-   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 136
-     20.1.  Normative References . . . . . . . . . . . . . . . . . . 136
-     20.2.  Informative References . . . . . . . . . . . . . . . . . 136
-     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 136
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 137
-
+     14.1.  Messages . . . . . . . . . . . . . . . . . . . . . . . .  60
+       14.1.1.  Message Definitions  . . . . . . . . . . . . . . . .  60
+       14.1.2.  Message Codes and Direction  . . . . . . . . . . . .  61
+     14.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  61
+       14.2.1.  RPC Features . . . . . . . . . . . . . . . . . . . .  62
+       14.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  62
+       14.2.3.  Other Advanced Features  . . . . . . . . . . . . . .  63
+     14.3.  Advanced RPC Features  . . . . . . . . . . . . . . . . .  63
+       14.3.1.  Progressive Call Results . . . . . . . . . . . . . .  63
+       14.3.2.  Progressive Calls  . . . . . . . . . . . . . . . . .  69
+       14.3.3.  Call Timeouts  . . . . . . . . . . . . . . . . . . .  69
+       14.3.4.  Call Canceling . . . . . . . . . . . . . . . . . . .  70
+       14.3.5.  Caller Identification  . . . . . . . . . . . . . . .  73
+       14.3.6.  Call Trust Levels  . . . . . . . . . . . . . . . . .  74
+       14.3.7.  Registration Meta API  . . . . . . . . . . . . . . .  74
+       14.3.8.  Pattern-based Registrations  . . . . . . . . . . . .  81
+       14.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  84
+       14.3.10. Sharded Registration . . . . . . . . . . . . . . . .  86
+       14.3.11. Registration Revocation  . . . . . . . . . . . . . .  87
+       14.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  87
+     14.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  88
+       14.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  88
+       14.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  93
+       14.4.3.  Publisher Identification . . . . . . . . . . . . . .  94
+       14.4.4.  Publication Trust Levels . . . . . . . . . . . . . .  95
+       14.4.5.  Subscription Meta API  . . . . . . . . . . . . . . .  95
+       14.4.6.  Pattern-based Subscriptions  . . . . . . . . . . . . 101
+       14.4.7.  Sharded Subscriptions  . . . . . . . . . . . . . . . 104
+       14.4.8.  Event History  . . . . . . . . . . . . . . . . . . . 104
+       14.4.9.  Registration Revocation  . . . . . . . . . . . . . . 106
+       14.4.10. Topic Reflection . . . . . . . . . . . . . . . . . . 106
+     14.5.  Other Advanced Features  . . . . . . . . . . . . . . . . 106
+       14.5.1.  Session Meta API . . . . . . . . . . . . . . . . . . 106
+       14.5.2.  Authentication . . . . . . . . . . . . . . . . . . . 110
+       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 118
+   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 133
+     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 134
+     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 135
+   16. Security Considerations . . . . . . . . . . . . . . . . . . . 136
+   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 137
+   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 137
+   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 137
+   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 137
+     20.1.  Normative References . . . . . . . . . . . . . . . . . . 137
+     20.2.  Informative References . . . . . . . . . . . . . . . . . 137
+     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 137
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 138
 
 
 
@@ -1837,10 +1837,10 @@ Internet-Draft                    WAMP                      October 2015
       different message types serves to reduce overloaded meaning of
       messages and simplify message handling code.
 
+7.2.2.  Session Statechart
 
-
-
-
+   The following state chart gives the states that a WAMP peer can be in
+   during the session lifetime cycle.
 
 
 
@@ -1890,12 +1890,12 @@ Internet-Draft                    WAMP                      October 2015
    |           |----------+           |
    +----------------------------------+
 
-8.  gent Identificati
 
-   When a software agent operates in a network rotocol, it often
-   identifies itself, its application type, operating system, software
-   vendor, or software revision, by submitting a characteristic
-   identification string to its operating peer.
+
+
+
+
+
 
 
 
@@ -1905,6 +1905,32 @@ Oberstein & Goedde       Expires April 13, 2016                [Page 34]
 
 Internet-Draft                    WAMP                      October 2015
 
+
+   +----+--------------------------------------------------------------+
+   | #  |                            State                             |
+   +----+--------------------------------------------------------------+
+   | 1  |                          Sent HELLO                          |
+   | 2  |                       Received WELCOME                       |
+   | 3  |                         Sent GOODBYE                         |
+   | 4  |                       Received GOODBYE                       |
+   | 5  |                       Received GOODBYE                       |
+   | 6  |                         Sent GOODBYE                         |
+   | 7  |             Received invalid HELLO / Send ABORT              |
+   | 8  |                Received HELLO or AUTHENTICATE                |
+   | 9  |                        Received other                        |
+   | 10 | Received valid HELLO [needs authentication] / Send CHALLENGE |
+   | 11 |          Received invalid AUTHENTICATE / Send ABORT          |
+   | 12 |          Received valid AUTHENTICATE / Send WELCOME          |
+   | 13 |                        Received other                        |
+   | 14 |                   Received other / ignore                    |
+   +----+--------------------------------------------------------------+
+
+8.  Agent Identification
+
+   When a software agent operates in a network rotocol, it often
+   identifies itself, its application type, operating system, software
+   vendor, or software revision, by submitting a characteristic
+   identification string to its operating peer.
 
    Similar to what browsers do with the "User-Agent" HTTP header, both
    the "HELLO" and the "WELCOME" message MAY disclose the WAMP
@@ -1927,6 +1953,14 @@ Internet-Draft                    WAMP                      October 2015
        }]
 
    _Example: A Router "WELCOME" message._
+
+
+
+
+Oberstein & Goedde       Expires April 13, 2016                [Page 35]
+
+Internet-Draft                    WAMP                      October 2015
+
 
        [2, 9129137332, {
            "agent": "Crossbar.io-0.10.11",
@@ -1955,14 +1989,34 @@ Internet-Draft                    WAMP                      October 2015
 
    4.  "UNSUBSCRIBED"
 
+   5.  "ERROR"
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 35]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde       Expires April 13, 2016                [Page 36]
 
 Internet-Draft                    WAMP                      October 2015
 
-
-   5.  "ERROR"
 
        ,---------.          ,------.             ,----------.
        |Publisher|          |Broker|             |Subscriber|
@@ -2007,21 +2061,18 @@ Internet-Draft                    WAMP                      October 2015
       "SUBSCRIBED.Subscription|id" it already knows about, attach the
       handler to the existing subscription
 
-
-
-
-
-
-
-Oberstein & Goedde       Expires April 13, 2016                [Page 36]
-
-Internet-Draft                    WAMP                      October 2015
-
-
 9.1.1.  SUBSCRIBE
 
    A Subscriber communicates its interest in a topic to a Broker by
    sending a "SUBSCRIBE" message:
+
+
+
+
+Oberstein & Goedde       Expires April 13, 2016                [Page 37]
+
+Internet-Draft                    WAMP                      October 2015
+
 
        [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
@@ -2066,18 +2117,18 @@ Internet-Draft                    WAMP                      October 2015
       unique to the subscription of a single Subscriber, but may be
       assigned to the "Topic", or the combination of the "Topic" and
       some or all "Options", such as the topic pattern matching method
-
-
-
-Oberstein & Goedde       Expires April 13, 2016                [Page 37]
-
-Internet-Draft                    WAMP                      October 2015
-
-
       to be used.  Then this ID may be sent to all Subscribers for the
       "Topic" or "Topic" / "Options" combination.  This allows the
       Broker to serialize an event to be delivered only once for all
       actual receivers of the event.
+
+
+
+
+Oberstein & Goedde       Expires April 13, 2016                [Page 38]
+
+Internet-Draft                    WAMP                      October 2015
+
 
       In case of receiving a "SUBSCRIBE" message from the same
       Subscriber and to already subscribed topic, Broker should answer
@@ -2125,7 +2176,12 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 38]
+
+
+
+
+
+Oberstein & Goedde       Expires April 13, 2016                [Page 39]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2181,7 +2237,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 39]
+Oberstein & Goedde       Expires April 13, 2016                [Page 40]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2237,7 +2293,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 40]
+Oberstein & Goedde       Expires April 13, 2016                [Page 41]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2293,7 +2349,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 41]
+Oberstein & Goedde       Expires April 13, 2016                [Page 42]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2349,7 +2405,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 42]
+Oberstein & Goedde       Expires April 13, 2016                [Page 43]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2405,7 +2461,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 43]
+Oberstein & Goedde       Expires April 13, 2016                [Page 44]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2461,7 +2517,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 44]
+Oberstein & Goedde       Expires April 13, 2016                [Page 45]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2517,7 +2573,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 45]
+Oberstein & Goedde       Expires April 13, 2016                [Page 46]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2573,7 +2629,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 46]
+Oberstein & Goedde       Expires April 13, 2016                [Page 47]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2629,7 +2685,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 47]
+Oberstein & Goedde       Expires April 13, 2016                [Page 48]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2685,7 +2741,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 48]
+Oberstein & Goedde       Expires April 13, 2016                [Page 49]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2741,7 +2797,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 49]
+Oberstein & Goedde       Expires April 13, 2016                [Page 50]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2797,7 +2853,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 50]
+Oberstein & Goedde       Expires April 13, 2016                [Page 51]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2853,7 +2909,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 51]
+Oberstein & Goedde       Expires April 13, 2016                [Page 52]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2909,7 +2965,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 52]
+Oberstein & Goedde       Expires April 13, 2016                [Page 53]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -2965,7 +3021,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 53]
+Oberstein & Goedde       Expires April 13, 2016                [Page 54]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3021,7 +3077,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 54]
+Oberstein & Goedde       Expires April 13, 2016                [Page 55]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3077,7 +3133,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 55]
+Oberstein & Goedde       Expires April 13, 2016                [Page 56]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3133,7 +3189,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 56]
+Oberstein & Goedde       Expires April 13, 2016                [Page 57]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3189,7 +3245,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 57]
+Oberstein & Goedde       Expires April 13, 2016                [Page 58]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3245,7 +3301,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 58]
+Oberstein & Goedde       Expires April 13, 2016                [Page 59]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3301,7 +3357,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 59]
+Oberstein & Goedde       Expires April 13, 2016                [Page 60]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3357,7 +3413,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 60]
+Oberstein & Goedde       Expires April 13, 2016                [Page 61]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3413,7 +3469,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 61]
+Oberstein & Goedde       Expires April 13, 2016                [Page 62]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3469,7 +3525,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 62]
+Oberstein & Goedde       Expires April 13, 2016                [Page 63]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3525,7 +3581,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 63]
+Oberstein & Goedde       Expires April 13, 2016                [Page 64]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3581,7 +3637,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 64]
+Oberstein & Goedde       Expires April 13, 2016                [Page 65]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3637,7 +3693,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 65]
+Oberstein & Goedde       Expires April 13, 2016                [Page 66]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3693,7 +3749,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 66]
+Oberstein & Goedde       Expires April 13, 2016                [Page 67]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3749,7 +3805,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 67]
+Oberstein & Goedde       Expires April 13, 2016                [Page 68]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3805,7 +3861,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 68]
+Oberstein & Goedde       Expires April 13, 2016                [Page 69]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3861,7 +3917,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 69]
+Oberstein & Goedde       Expires April 13, 2016                [Page 70]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3917,7 +3973,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 70]
+Oberstein & Goedde       Expires April 13, 2016                [Page 71]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -3973,7 +4029,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 71]
+Oberstein & Goedde       Expires April 13, 2016                [Page 72]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4029,7 +4085,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 72]
+Oberstein & Goedde       Expires April 13, 2016                [Page 73]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4085,7 +4141,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 73]
+Oberstein & Goedde       Expires April 13, 2016                [Page 74]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4141,7 +4197,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 74]
+Oberstein & Goedde       Expires April 13, 2016                [Page 75]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4197,7 +4253,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 75]
+Oberstein & Goedde       Expires April 13, 2016                [Page 76]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4253,7 +4309,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 76]
+Oberstein & Goedde       Expires April 13, 2016                [Page 77]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4309,7 +4365,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 77]
+Oberstein & Goedde       Expires April 13, 2016                [Page 78]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4365,7 +4421,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 78]
+Oberstein & Goedde       Expires April 13, 2016                [Page 79]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4421,7 +4477,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 79]
+Oberstein & Goedde       Expires April 13, 2016                [Page 80]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4477,7 +4533,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 80]
+Oberstein & Goedde       Expires April 13, 2016                [Page 81]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4533,7 +4589,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 81]
+Oberstein & Goedde       Expires April 13, 2016                [Page 82]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4589,7 +4645,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 82]
+Oberstein & Goedde       Expires April 13, 2016                [Page 83]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4645,7 +4701,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 83]
+Oberstein & Goedde       Expires April 13, 2016                [Page 84]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4701,7 +4757,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 84]
+Oberstein & Goedde       Expires April 13, 2016                [Page 85]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4757,7 +4813,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 85]
+Oberstein & Goedde       Expires April 13, 2016                [Page 86]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4813,7 +4869,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 86]
+Oberstein & Goedde       Expires April 13, 2016                [Page 87]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4869,7 +4925,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 87]
+Oberstein & Goedde       Expires April 13, 2016                [Page 88]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4925,7 +4981,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 88]
+Oberstein & Goedde       Expires April 13, 2016                [Page 89]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -4981,7 +5037,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 89]
+Oberstein & Goedde       Expires April 13, 2016                [Page 90]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5037,7 +5093,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 90]
+Oberstein & Goedde       Expires April 13, 2016                [Page 91]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5093,7 +5149,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 91]
+Oberstein & Goedde       Expires April 13, 2016                [Page 92]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5149,7 +5205,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 92]
+Oberstein & Goedde       Expires April 13, 2016                [Page 93]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5205,7 +5261,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 93]
+Oberstein & Goedde       Expires April 13, 2016                [Page 94]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5261,7 +5317,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 94]
+Oberstein & Goedde       Expires April 13, 2016                [Page 95]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5317,7 +5373,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 95]
+Oberstein & Goedde       Expires April 13, 2016                [Page 96]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5373,7 +5429,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 96]
+Oberstein & Goedde       Expires April 13, 2016                [Page 97]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5429,7 +5485,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 97]
+Oberstein & Goedde       Expires April 13, 2016                [Page 98]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5485,7 +5541,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 98]
+Oberstein & Goedde       Expires April 13, 2016                [Page 99]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5541,7 +5597,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016                [Page 99]
+Oberstein & Goedde       Expires April 13, 2016               [Page 100]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5597,7 +5653,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 100]
+Oberstein & Goedde       Expires April 13, 2016               [Page 101]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5653,7 +5709,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 101]
+Oberstein & Goedde       Expires April 13, 2016               [Page 102]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5709,7 +5765,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 102]
+Oberstein & Goedde       Expires April 13, 2016               [Page 103]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5765,7 +5821,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 103]
+Oberstein & Goedde       Expires April 13, 2016               [Page 104]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5821,7 +5877,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 104]
+Oberstein & Goedde       Expires April 13, 2016               [Page 105]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5877,7 +5933,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 105]
+Oberstein & Goedde       Expires April 13, 2016               [Page 106]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5933,7 +5989,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 106]
+Oberstein & Goedde       Expires April 13, 2016               [Page 107]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -5989,7 +6045,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 107]
+Oberstein & Goedde       Expires April 13, 2016               [Page 108]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6045,7 +6101,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 108]
+Oberstein & Goedde       Expires April 13, 2016               [Page 109]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6101,7 +6157,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 109]
+Oberstein & Goedde       Expires April 13, 2016               [Page 110]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6157,7 +6213,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 110]
+Oberstein & Goedde       Expires April 13, 2016               [Page 111]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6213,7 +6269,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 111]
+Oberstein & Goedde       Expires April 13, 2016               [Page 112]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6269,7 +6325,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 112]
+Oberstein & Goedde       Expires April 13, 2016               [Page 113]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6325,7 +6381,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 113]
+Oberstein & Goedde       Expires April 13, 2016               [Page 114]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6381,7 +6437,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 114]
+Oberstein & Goedde       Expires April 13, 2016               [Page 115]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6437,7 +6493,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 115]
+Oberstein & Goedde       Expires April 13, 2016               [Page 116]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6493,7 +6549,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 116]
+Oberstein & Goedde       Expires April 13, 2016               [Page 117]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6549,7 +6605,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 117]
+Oberstein & Goedde       Expires April 13, 2016               [Page 118]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6605,7 +6661,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 118]
+Oberstein & Goedde       Expires April 13, 2016               [Page 119]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6661,7 +6717,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 119]
+Oberstein & Goedde       Expires April 13, 2016               [Page 120]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6694,21 +6750,21 @@ Internet-Draft                    WAMP                      October 2015
    Here is a Python program that prints all (currently) permissible
    values for the _second octet_:
 
-      <CODE BEGINS>
-      SERMAP = {
-         1: 'json',
-         2: 'msgpack'
-      }
+        <CODE BEGINS>
+        SERMAP = {
+           1: 'json',
+           2: 'msgpack'
+        }
 
-      ## map serializer / max. msg length to RawSocket handshake request
-      ## or success reply (2nd octet)
-      ##
-      for ser in SERMAP:
-         for l in range(16):
-            octet_2 = (l << 4) | ser
-            print("serializer: {}, maxlen: {} =>
-                0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
-      <CODE ENDS>
+        ## map serializer / max. msg length to RawSocket handshake
+        ## request or success reply (2nd octet)
+        ##
+        for ser in SERMAP:
+           for l in range(16):
+              octet_2 = (l << 4) | ser
+              print("serializer: {}, maxlen: {} =>
+                  0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
+        <CODE ENDS>
 
    The _third and forth octet_ are *reserved* and MUST be all zeros for
    now.
@@ -6717,7 +6773,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 120]
+Oberstein & Goedde       Expires April 13, 2016               [Page 121]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6773,7 +6829,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 121]
+Oberstein & Goedde       Expires April 13, 2016               [Page 122]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6829,7 +6885,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 122]
+Oberstein & Goedde       Expires April 13, 2016               [Page 123]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6885,7 +6941,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 123]
+Oberstein & Goedde       Expires April 13, 2016               [Page 124]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6941,7 +6997,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 124]
+Oberstein & Goedde       Expires April 13, 2016               [Page 125]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -6997,7 +7053,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 125]
+Oberstein & Goedde       Expires April 13, 2016               [Page 126]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7053,7 +7109,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 126]
+Oberstein & Goedde       Expires April 13, 2016               [Page 127]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7109,7 +7165,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 127]
+Oberstein & Goedde       Expires April 13, 2016               [Page 128]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7165,7 +7221,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 128]
+Oberstein & Goedde       Expires April 13, 2016               [Page 129]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7221,7 +7277,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 129]
+Oberstein & Goedde       Expires April 13, 2016               [Page 130]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7277,7 +7333,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 130]
+Oberstein & Goedde       Expires April 13, 2016               [Page 131]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7333,7 +7389,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 131]
+Oberstein & Goedde       Expires April 13, 2016               [Page 132]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7378,21 +7434,23 @@ Internet-Draft                    WAMP                      October 2015
 
    3.  serialize the string to a JSON string
 
+   where Base64 encoding follows Section 4 of [RFC4648].
+
    _Example_
 
    Consider the byte array (hex representation):
 
        10e3ff9053075c526f5fc06d4fe37cdb
 
-   This will get converted to Base64
 
 
 
-
-Oberstein & Goedde       Expires April 13, 2016               [Page 132]
+Oberstein & Goedde       Expires April 13, 2016               [Page 133]
 
 Internet-Draft                    WAMP                      October 2015
 
+
+   This will get converted to Base64
 
        EOP/kFMHXFJvX8BtT+N82w==
 
@@ -7443,9 +7501,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-
-
-Oberstein & Goedde       Expires April 13, 2016               [Page 133]
+Oberstein & Goedde       Expires April 13, 2016               [Page 134]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7501,7 +7557,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 134]
+Oberstein & Goedde       Expires April 13, 2016               [Page 135]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7557,7 +7613,7 @@ Internet-Draft                    WAMP                      October 2015
 
 
 
-Oberstein & Goedde       Expires April 13, 2016               [Page 135]
+Oberstein & Goedde       Expires April 13, 2016               [Page 136]
 
 Internet-Draft                    WAMP                      October 2015
 
@@ -7589,6 +7645,10 @@ Internet-Draft                    WAMP                      October 2015
               3986, DOI 10.17487/RFC3986, January 2005,
               <http://www.rfc-editor.org/info/rfc3986>.
 
+   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
+              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
+              <http://www.rfc-editor.org/info/rfc4648>.
+
    [RFC6455]  Fette, I. and A. Melnikov, "The WebSocket Protocol", RFC
               6455, DOI 10.17487/RFC6455, December 2011,
               <http://www.rfc-editor.org/info/rfc6455>.
@@ -7606,17 +7666,17 @@ Internet-Draft                    WAMP                      October 2015
 
    [2] pattern-based-registration.md
 
-   [3] pattern-based-registration.md
-
-   [4] pattern-based-registration.md
 
 
 
-
-Oberstein & Goedde       Expires April 13, 2016               [Page 136]
+Oberstein & Goedde       Expires April 13, 2016               [Page 137]
 
 Internet-Draft                    WAMP                      October 2015
 
+
+   [3] pattern-based-registration.md
+
+   [4] pattern-based-registration.md
 
    [5] http://en.wikipedia.org/wiki/PBKDF2
 
@@ -7665,8 +7725,4 @@ Authors' Addresses
 
 
 
-
-
-
-
-Oberstein & Goedde       Expires April 13, 2016               [Page 137]
+Oberstein & Goedde       Expires April 13, 2016               [Page 138]
