@@ -31,3 +31,5 @@ To participate in the process, please take a look at
 * [Authoring](AUTHORING.md)
 
 join the [mailing list](https://groups.google.com/forum/#!forum/wampws) and our [chat room](https://gitter.im/tavendo/WAMP).
+
+The current state of both the RFC and the protocol definition is summarized in [rfc/STATUS.md](rfc/STATUS.md) which also links to the individual parts of the spec.
