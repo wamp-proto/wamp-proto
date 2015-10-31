@@ -13,7 +13,7 @@ stable         | The feature definition in the spec is complete and stable and t
 
 
 Spec Status    | Description
-----------------------------------------------------------------
+---------------|------------------------------------------------
 missing        | There is no text, or what is there is not sufficient to even cover the basics of the feature/section
 sketch         | The text is sufficient to give the reader some idea of the feature/section content.
 draft          | Some content is missing, or the language/structure is in clear need of improvement.
