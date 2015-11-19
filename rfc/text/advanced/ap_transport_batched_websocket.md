@@ -15,10 +15,10 @@ Batching with JSON works by serializing each WAMP message to JSON as normally, a
         Serialized JSON WAMP Msg 1 | 0x1e | 
             Serialized JSON WAMP Msg 2 | 0x1e | ...
 
-Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MsgPack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
+Batching with MessagePack works by serializing each WAMP message to MessagePack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MessagePack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
 
 {align="left"}
         Length of Msg 1 serialization (uint32) | 
-            serialized MsgPack WAMP Msg 1 | ...
+            serialized MessagePack WAMP Msg 1 | ...
 
 With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length **1**. Sending a batch of length **0** (no WAMP message) is illegal and a *Peer* MUST fail the transport upon receiving such a transport message.

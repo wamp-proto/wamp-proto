@@ -82,7 +82,7 @@ The possible values for `SERIALIZER` are:
 {align="left"}    
         0: illegal
         1: JSON
-        2: MsgPack
+        2: MessagePack
         3 - 15: reserved for future serializers
 
 Here is a Python program that prints all (currently) permissible values for the *second octet*:
@@ -91,7 +91,7 @@ Here is a Python program that prints all (currently) permissible values for the 
     <CODE BEGINS>
     SERMAP = {
        1: 'json',
-       2: 'msgpack'
+       2: 'messagepack'
     }
 
     ## map serializer / max. msg length to RawSocket handshake  
@@ -221,7 +221,7 @@ Here is an example of how a *Client* might parse the *second octet* in a *Router
 
 ##### Serialization
 
-To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MsgPack).
+To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MessagePack).
 
 The length of the serialized messages in octets MUST NOT exceed the maximum requested by the *Peer*.
 

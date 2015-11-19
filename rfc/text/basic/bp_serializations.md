@@ -18,7 +18,7 @@ There is no required serialization or set of serializations for WAMP implementat
 WAMP defines two bindings for message serialization:
 
 1. JSON
-2. MsgPack
+2. MessagePack
 
 Other bindings for serialization may be defined in future WAMP versions.
 
@@ -28,8 +28,8 @@ With JSON serialization, each WAMP message is serialized according to the JSON s
 
 Further, binary data follows a convention for conversion to JSON strings. For details see the Appendix.
 
-### MsgPack
+### MessagePack
 
-With MsgPack serialization, each WAMP message is serialized according to the MsgPack specification.
+With MessagePack serialization, each WAMP message is serialized according to the MessagePack specification.
 
-> Version 5 or later of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.
+> Version 5 or later of MessagePack MUST BE used, since this version is able to differentiate between strings and binary values.
