@@ -13,7 +13,7 @@
 
 Using WAMP you can build distributed systems out of application components which are loosely coupled and communicate in (soft) real-time.
 
-The [WAMP spec](https://github.com/wamp-proto/wamp-proto/blob/master/spec/) is a community effort and the spec is made available for free under an [open license](LEGAL.md) for everyone to use or implement.
+The [WAMP spec](https://github.com/wamp-proto/wamp-proto/blob/master/rfc/draft-oberstet-hybi-tavendo-wamp.txt) is a community effort and the spec is made available for free under an [open license](LEGAL.md) for everyone to use or implement.
 
 [WAMP implementations](http://wamp-proto.org/implementations/) are available for many different languages and run-time environments.
 

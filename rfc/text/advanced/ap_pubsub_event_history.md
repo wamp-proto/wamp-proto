@@ -49,6 +49,7 @@ with `Arguments = [topic|uri, publication|id]`
 2. Can `wamp.topic.history.after` be implemented (efficiently) at all?
 3. How does that interact with pattern-based subscriptions?
 4. The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.
+5. How are black/whitelisted sessionIDs treated? A client which requests event history will have a different sessionID than on previous connections, and may receive events for which it was excluded in the previous session, or not receive events for which it was whitelisted. - see https://github.com/wamp-proto/wamp-proto/issues/206
 
 
 #### Feature Announcement
