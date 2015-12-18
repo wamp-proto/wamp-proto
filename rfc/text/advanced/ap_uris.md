@@ -1,6 +1,6 @@
 ## Advanced Profile
 
-uri*Dealer* or *Callee* canceled a call previously issued
+A *Dealer* or *Callee* canceled a call previously issued
 
 {align="left"}
         wamp.error.canceled
