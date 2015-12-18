@@ -238,19 +238,6 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{rfc/text/advanced/ap_transport_multiplexed.md}}
 
-
-
-
-{{rfc/text/advanced/ap_authentication_ticket.md}}
-
-{{rfc/text/advanced/ap_authentication_ticket.md}}
-
-
-
-
-
-
-
 {{rfc/text/basic/bp_binary_conversion_of_json.md}}
 
 
