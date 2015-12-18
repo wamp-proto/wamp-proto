@@ -39,7 +39,7 @@ The draft is written in markdown, with draft-oberstet-hybi-tavendo-wamp-XX.md in
 
 To keep document length manageable we use file includes, so for actual content see the `text` sub-folder.
 
-For the tooling required to work with this, see the [README file](README.md).
+For the tooling required to work with this, see the [AUTHORING.md file](AUTHORING.md).
 
 
 # NOTE WELL
