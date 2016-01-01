@@ -56,7 +56,7 @@ To request authentication, the Router MUST send a `CHALLENGE` message to the *En
 
 ##### AUTHENTICATE
 
-In response to a `CHALLENGE` message, the Client MUST send an `AUTHENTICATION` message.
+In response to a `CHALLENGE` message, the Client MUST send an `AUTHENTICATE` message.
 
 {align="left"}
         [AUTHENTICATE, Signature|string, Extra|dict]
