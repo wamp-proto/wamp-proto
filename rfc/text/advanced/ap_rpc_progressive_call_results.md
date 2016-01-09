@@ -63,7 +63,7 @@ A *Caller* indicates its willingness to receive progressive results by setting
 If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
 
 {align="left"}
-        INVOCATION.Options.receive_progress|bool := true
+        INVOCATION.Details.receive_progress|bool := true
 
 *Example.* Dealer-to-Callee `INVOCATION`
 
@@ -273,12 +273,12 @@ The progressive `YIELD` and progressive `RESULT` may also be empty, e.g. when th
     [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
 ```
 
-Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Options.receive_progress` are simply indications that the *Caller* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
+Even if a *Caller* has indicated it's expectation to receive progressive results by setting `CALL.Options.receive_progress|bool := true`, a *Callee* is **not required** to produce progressive results. `CALL.Options.receive_progress` and `INVOCATION.Details.receive_progress` are simply indications that the *Caller* is prepared to process progressive results, should there be any produced. In other words, *Callees* are free to ignore such `receive_progress` hints at any time.
 
 
 #### Callee
 
-A Callee that does not support progressive results SHOULD ignore any `INVOCATION.Options.receive_progress` flag.
+A Callee that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
 
 
 #### Feature Announcement
