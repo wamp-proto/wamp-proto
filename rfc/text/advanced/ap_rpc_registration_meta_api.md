@@ -224,7 +224,7 @@ Support for this feature MUST be announced by a *Dealers* (`role := "dealer"`) v
 
 {align="left"}
         HELLO.Details.roles.<role>.features.
-            session_meta_api|bool := true
+            registration_meta_api|bool := true
 
 **Example**
 
