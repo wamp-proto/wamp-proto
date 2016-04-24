@@ -49,7 +49,7 @@ The Publish & Subscribe messaging pattern involves peers of three different role
 * Publisher (Client)
 * Broker (Router)
 
-A Publishers publishes events to topics by providing the topic URI and any payload for the event. Subscribers of the topic will receive the event together with the event payload.
+A Publisher publishes events to topics by providing the topic URI and any payload for the event. Subscribers of the topic will receive the event together with the event payload.
 
 Subscribers subscribe to topics they are interested in with Brokers. Publishers initiate publication first at Brokers. Brokers route events incoming from Publishers to Subscribers that are subscribed to respective topics.
 
