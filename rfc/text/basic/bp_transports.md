@@ -12,11 +12,11 @@ There is no required transport or set of transports for WAMP implementations (bu
 
 ### WebSocket Transport
 
-The default transport binding for WAMP is WebSocket.
+The default transport binding for WAMP is WebSocket ([@!6455]).
 
 In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). The Advanced Profile may define other modes, e.g. a **batched mode** where multiple WAMP messages are transmitted via single WebSocket message.
 
-The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism.
+The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism ([@!6455] section 4).
 
 WAMP uses the following WebSocket subprotocol identifiers for unbatched modes:
 
