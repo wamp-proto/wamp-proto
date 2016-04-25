@@ -6,7 +6,7 @@ Feature status: **alpha**
 
 As a default, only a single **Callee** may register a procedure for an URI.
 
-There are use cases where more flexibility is required. As an example, for an application component with a high computing load, several instances may run, and load balancing of calls across these may be desired. As another example, in an an application a second or third component providing a procedure may run, which are only to be called in case the primary component is no longer reachable (hot standby).
+There are use cases where more flexibility is required. As an example, for an application component with a high computing load, several instances may run, and load balancing of calls across these may be desired. As another example, in an application a second or third component providing a procedure may run, which are only to be called in case the primary component is no longer reachable (hot standby).
 
 When shared registrations are supported, then the first **Callee** to register a procedure for a particular URI MAY determine that additional registrations for this URI are allowed, and what **Invocation Rules** to apply in case such additional registrations are made.
 
