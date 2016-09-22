@@ -3365,7 +3365,7 @@ Internet-Draft                    WAMP                      October 2015
 14.1.1.3.  CANCEL
 
    The "CANCEL" message is used with the Call Canceling advanced
-   feature.  A _Caller_ can cancel and issued call actively by sending a
+   feature.  A _Caller_ can cancel an issued call actively by sending a
    cancel message to the _Dealer_.
 
        [CANCEL, CALL.Request|id, Options|dict]

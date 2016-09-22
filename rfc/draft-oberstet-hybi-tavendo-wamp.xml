@@ -2567,7 +2567,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="cancel" title="CANCEL">
-<t>The <spanx style="verb">CANCEL</spanx> message is used with the Call Canceling advanced feature. A <spanx style="emph">Caller</spanx> can cancel and issued call actively by sending a cancel message to the <spanx style="emph">Dealer</spanx>.
+<t>The <spanx style="verb">CANCEL</spanx> message is used with the Call Canceling advanced feature. A <spanx style="emph">Caller</spanx> can cancel an issued call actively by sending a cancel message to the <spanx style="emph">Dealer</spanx>.
 </t>
 
 <figure align="left"><artwork align="left">
