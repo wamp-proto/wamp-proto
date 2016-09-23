@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
@@ -53,7 +53,7 @@
 	  font-family: verdana, helvetica, arial, sans-serif;
 	  font-size: 10pt;
 	  max-width: 55em;
-	  
+
 	  }
 	  cite {
 	  font-style: normal;
@@ -64,7 +64,7 @@
 	  dl {
 	  margin-left: 2em;
 	  }
-	
+
 	  ul.empty {
 	  list-style-type: none;
 	  }
@@ -193,7 +193,7 @@
 	  font-size: 9pt;
 	  margin-top: .5em;
 	  }
-	
+
 	  table.header {
 	  border-spacing: 1px;
 	  width: 95%;
@@ -205,7 +205,7 @@
 	  }
 	  td.topnowrap {
 	  vertical-align: top;
-	  white-space: nowrap; 
+	  white-space: nowrap;
 	  }
 	  table.header td {
 	  background-color: gray;
@@ -248,7 +248,7 @@
 	  ul p {
 	  margin-left: 0em;
 	  }
-	
+
 	  .comment {
 	  background-color: yellow;
 	  }
@@ -299,22 +299,22 @@
 	  font-size: 14pt;
 	  background-color: yellow;
 	  }
-	
-	
+
+
 	  @media print {
 	  .noprint {
 		display: none;
 	  }
-	
+
 	  a {
 		color: black;
 		text-decoration: none;
 	  }
-	
+
 	  table.header {
 		width: 90%;
 	  }
-	
+
 	  td.header {
 		width: 50%;
 		color: black;
@@ -322,44 +322,44 @@
 		vertical-align: top;
 		font-size: 12pt;
 	  }
-	
+
 	  ul.toc a::after {
 		content: leader('.') target-counter(attr(href), page);
 	  }
-	
+
 	  ul.ind li li a {
 		content: target-counter(attr(href), page);
 	  }
-	
+
 	  .print2col {
 		column-count: 2;
 		-moz-column-count: 2;
 		column-fill: auto;
 	  }
 	  }
-	
+
 	  @page {
 	  @top-left {
-		   content: "Internet-Draft"; 
-	  } 
+		   content: "Internet-Draft";
+	  }
 	  @top-right {
-		   content: "December 2010"; 
-	  } 
+		   content: "December 2010";
+	  }
 	  @top-center {
 		   content: "Abbreviated Title";
-	  } 
-	  @bottom-left {
-		   content: "Doe"; 
-	  } 
-	  @bottom-center {
-		   content: "Expires June 2011"; 
-	  } 
-	  @bottom-right {
-		   content: "[Page " counter(page) "]"; 
-	  } 
 	  }
-	
-	  @page:first { 
+	  @bottom-left {
+		   content: "Doe";
+	  }
+	  @bottom-center {
+		   content: "Expires June 2011";
+	  }
+	  @bottom-right {
+		   content: "[Page " counter(page) "]";
+	  }
+	  }
+
+	  @page:first {
 		@top-left {
 		  content: normal;
 		}
@@ -528,7 +528,7 @@
 
   <table class="header">
     <tbody>
-    
+
     	<tr>
   <td class="left">BiDirectional or Server-Initiated HTTP</td>
   <td class="right">T. Oberstein</td>
@@ -546,13 +546,13 @@
   <td class="right">October 11, 2015</td>
 </tr>
 
-    	
+
     </tbody>
   </table>
 
   <p class="title">The Web Application Messaging Protocol<br />
   <span class="filename">draft-oberstet-hybi-tavendo-wamp-02</span></p>
-  
+
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
 </h1>
@@ -570,7 +570,7 @@
 <p>Copyright (c) 2015 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
 
-  
+
   <hr class="noprint" />
   <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
   <ul class="toc">
@@ -3059,7 +3059,7 @@
     [AUTHENTICATE, Signature|string, Extra|dict]
 </pre>
 <h1 id="rfc.section.14.1.1.3"><a href="#rfc.section.14.1.1.3">14.1.1.3.</a> <a href="#cancel" id="cancel">CANCEL</a></h1>
-<p id="rfc.section.14.1.1.3.p.1">The <samp>CANCEL</samp> message is used with the Call Canceling advanced feature. A <em>Caller</em> can cancel and issued call actively by sending a cancel message to the <em>Dealer</em>.  </p>
+<p id="rfc.section.14.1.1.3.p.1">The <samp>CANCEL</samp> message is used with the Call Canceling advanced feature. A <em>Caller</em> can cancel an issued call actively by sending a cancel message to the <em>Dealer</em>.  </p>
 <pre>
     [CANCEL, CALL.Request|id, Options|dict]
 </pre>
@@ -3731,23 +3731,23 @@
     ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
     `--+---'          `--+---'          `--+---'
-       |       CALL      |                 |    
-       | ----------------&gt;                 |    
-       |                 |                 |    
-       |                 |    INVOCATION   |    
-       |                 | ----------------&gt;    
-       |                 |                 |    
-       |      CANCEL     |                 |    
-       | ----------------&gt;                 |    
-       |                 |                 |    
-       |                 |    INTERRUPT    |    
-       |                 | ----------------&gt;    
-       |                 |                 |    
-       |                 |      ERROR      |    
-       |                 | &lt;----------------    
-       |                 |                 |    
-       |      ERROR      |                 |    
-       | &lt;----------------                 |    
+       |       CALL      |                 |
+       | ----------------&gt;                 |
+       |                 |                 |
+       |                 |    INVOCATION   |
+       |                 | ----------------&gt;
+       |                 |                 |
+       |      CANCEL     |                 |
+       | ----------------&gt;                 |
+       |                 |                 |
+       |                 |    INTERRUPT    |
+       |                 | ----------------&gt;
+       |                 |                 |
+       |                 |      ERROR      |
+       |                 | &lt;----------------
+       |                 |                 |
+       |      ERROR      |                 |
+       | &lt;----------------                 |
     ,--+---.          ,--+---.          ,--+---.
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
@@ -3757,23 +3757,23 @@
     ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
     `--+---'          `--+---'          `--+---'
-       |       CALL      |                 |    
-       | ----------------&gt;                 |    
-       |                 |                 |    
-       |                 |    INVOCATION   |    
-       |                 | ----------------&gt;    
-       |                 |                 |    
-       |      CANCEL     |                 |    
-       | ----------------&gt;                 |    
-       |                 |                 |    
-       |      ERROR      |                 |    
-       | &lt;----------------                 |    
-       |                 |                 |    
-       |                 |    INTERRUPT    |    
-       |                 | ----------------&gt;    
-       |                 |                 |    
-       |                 |      ERROR      |    
-       |                 | &lt;----------------    
+       |       CALL      |                 |
+       | ----------------&gt;                 |
+       |                 |                 |
+       |                 |    INVOCATION   |
+       |                 | ----------------&gt;
+       |                 |                 |
+       |      CANCEL     |                 |
+       | ----------------&gt;                 |
+       |                 |                 |
+       |      ERROR      |                 |
+       | &lt;----------------                 |
+       |                 |                 |
+       |                 |    INTERRUPT    |
+       |                 | ----------------&gt;
+       |                 |                 |
+       |                 |      ERROR      |
+       |                 | &lt;----------------
     ,--+---.          ,--+---.          ,--+---.
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
@@ -4578,7 +4578,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <p id="rfc.section.14.4.4.1.p.3">in an <samp>EVENT</samp> message sent to a <em>Subscriber</em>. The trustlevel <samp>0</samp> means lowest trust, and higher integers represent (application-defined) higher levels of trust.  </p>
 <p><em>Example</em> </p>
 <pre>
-    [36, 5512315355, 4429313566, {"trustlevel": 2}, 
+    [36, 5512315355, 4429313566, {"trustlevel": 2},
         ["Hello, world!"]]
 </pre>
 <p id="rfc.section.14.4.4.1.p.5">In above event, the <em>Broker</em> has (by configuration and/or other information) deemed the event publication to be of trustlevel <samp>2</samp>.  </p>
@@ -4982,7 +4982,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </ul>
 <p><em>Example</em> </p>
 <pre>
-    [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019. 
+    [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.
         temperature", [33.9]]
 </pre>
 <p id="rfc.section.14.4.7.p.6">Node keys: <samp>SUBSCRIBE.Options.nkey|string</samp> is a stable, technical <strong>node key</strong>.  </p>
@@ -4993,7 +4993,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </ul>
 <p><em>Example</em> </p>
 <pre>
-    [32, 912873614, {"match": "wildcard", "nkey": "node23"}, 
+    [32, 912873614, {"match": "wildcard", "nkey": "node23"},
         "com.myapp.sensor..temperature"]
 </pre>
 <h1 id="rfc.section.14.4.8"><a href="#rfc.section.14.4.8">14.4.8.</a> <a href="#event-history" id="event-history">Event History</a></h1>
@@ -5251,17 +5251,17 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
      ,------.          ,------.
      |Client|          |Router|
      `--+---'          `--+---'
-        |      HELLO      |    
-        | ----------------&gt;    
-        |                 |    
-        |    CHALLENGE    |    
-        | &lt;----------------    
-        |                 |    
-        |   AUTHENTICATE  |    
-        | ----------------&gt;    
-        |                 |    
-        | WELCOME or ABORT|    
-        | &lt;----------------    
+        |      HELLO      |
+        | ----------------&gt;
+        |                 |
+        |    CHALLENGE    |
+        | &lt;----------------
+        |                 |
+        |   AUTHENTICATE  |
+        | ----------------&gt;
+        |                 |
+        | WELCOME or ABORT|
+        | &lt;----------------
      ,--+---.          ,--+---.
      |Client|          |Router|
      `------'          `------'
@@ -5307,10 +5307,10 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <pre>
     [4, "wampcra",
         {
-            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
                 \"authprovider\": \"userdb\", \"authid\": \"peter\",
-                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
-                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\",
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\",
                 \"session\": 3251278072152162}"
         }
     ]
@@ -5386,10 +5386,10 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <pre>
     [4, "wampcra",
         {
-            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
                 \"authprovider\": \"userdb\", \"authid\": \"peter\",
-                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
-                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\",
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\",
                 \"session\": 3251278072152162}",
             "salt": "salt123",
             "keylen": 32,
@@ -5494,7 +5494,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <pre>
     &lt;CODE BEGINS&gt;
     import struct
-    
+
     octets_received = b"\x11\x22\x33\x44"
     i = struct.unpack("&gt;L", octets_received)[0]
     &lt;CODE ENDS&gt;
@@ -5547,13 +5547,13 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
        2: 'msgpack'
     }
 
-    ## map serializer / max. msg length to RawSocket handshake  
+    ## map serializer / max. msg length to RawSocket handshake
     ## request or success reply (2nd octet)
     ##
     for ser in SERMAP:
        for l in range(16):
           octet_2 = (l &lt;&lt; 4) | ser
-          print("serializer: {}, maxlen: {} =&gt; 
+          print("serializer: {}, maxlen: {} =&gt;
               0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
     &lt;CODE ENDS&gt;
 </pre>
@@ -5564,7 +5564,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <p id="rfc.section.14.5.3.1.2.p.16">Here is an example of how a <em>Router</em> could parse the <em>second octet</em> in a <em>Clients</em> handshake request: </p>
 <pre>
     &lt;CODE BEGINS&gt;
-    ## map RawSocket handshake request (2nd octet) to 
+    ## map RawSocket handshake request (2nd octet) to
     ## serializer / max. msg length
     ##
     for i in range(256):
@@ -5637,7 +5637,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
     for i in range(256):
        ser_id = i &amp; 0x0f
        if ser_id:
-          ## verify the serializer is the one we requested! 
+          ## verify the serializer is the one we requested!
           ## if not, fail the connection!
           ser = SERMAP.get(ser_id, 'currently undefined')
           maxlen = 2 ** ((i &gt;&gt; 4) + 9)
@@ -5645,7 +5645,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
               format(i, ser, maxlen))
        else:
           err = i &gt;&gt; 4
-          print("error: {}".format(ERRMAP.get(err, 
+          print("error: {}".format(ERRMAP.get(err,
               'currently undefined')))
     &lt;CODE ENDS&gt;
 </pre>
@@ -5707,12 +5707,12 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <p> </p>
 <p id="rfc.section.14.5.3.2.p.5">Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character <samp>\30</samp> (<a href="http://en.wikipedia.org/wiki/Record_separator#Field_separators">record separator</a>) octet <samp>0x1e</samp> to <em>each</em> serialized messages, and packing a sequence of such serialized messages into a single WebSocket message: </p>
 <pre>
-    Serialized JSON WAMP Msg 1 | 0x1e | 
+    Serialized JSON WAMP Msg 1 | 0x1e |
         Serialized JSON WAMP Msg 2 | 0x1e | ...
 </pre>
 <p id="rfc.section.14.5.3.2.p.6">Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MsgPack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message: </p>
 <pre>
-    Length of Msg 1 serialization (uint32) | 
+    Length of Msg 1 serialization (uint32) |
         serialized MsgPack WAMP Msg 1 | ...
 </pre>
 <p id="rfc.section.14.5.3.2.p.7">With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length <strong>1</strong>. Sending a batch of length <strong>0</strong> (no WAMP message) is illegal and a <em>Peer</em> MUST fail the transport upon receiving such a transport message.  </p>
@@ -6095,16 +6095,16 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <div class="avoidbreak">
   <address class="vcard">
 	<span class="vcardline">
-	  <span class="fn">Tobias G. Oberstein</span> 
+	  <span class="fn">Tobias G. Oberstein</span>
 	  <span class="n hidden">
 		<span class="family-name">Oberstein</span>
 	  </span>
 	</span>
 	<span class="org vcardline">Tavendo GmbH</span>
 	<span class="adr">
-	  
+
 	  <span class="vcardline">
-		<span class="locality"></span> 
+		<span class="locality"></span>
 		<span class="region"></span>
 		<span class="code"></span>
 	  </span>
@@ -6116,16 +6116,16 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </div><div class="avoidbreak">
   <address class="vcard">
 	<span class="vcardline">
-	  <span class="fn">Alexander Goedde</span> 
+	  <span class="fn">Alexander Goedde</span>
 	  <span class="n hidden">
 		<span class="family-name">Goedde</span>
 	  </span>
 	</span>
 	<span class="org vcardline">Tavendo GmbH</span>
 	<span class="adr">
-	  
+
 	  <span class="vcardline">
-		<span class="locality"></span> 
+		<span class="locality"></span>
 		<span class="region"></span>
 		<span class="code"></span>
 	  </span>
