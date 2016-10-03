@@ -41,7 +41,7 @@ In the WAMP Basic Profile without session authentication the Router will reply w
 
 A WAMP session starts its lifetime when the Router has sent a `WELCOME` message to the Client, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the `GOODBYE` message (see below).
 
-It is a protocol error to receive a second `HELLO` message during the lifetime of the session and the Peer must fail the session if that happens.
+It is a [protocol error](#protocol_error) to receive a second `HELLO` message during the lifetime of the session and the Peer MUST close the session if that happens.
 
 #### Client: Role and Feature Announcement
 

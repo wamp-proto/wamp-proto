@@ -77,3 +77,16 @@ The diagram below illustrates the full transport connection and session lifecycl
         ,--+---.                                    ,--+---.
         | Peer |                                    | Peer |
         `------'                                    `------'
+
+
+### Protocol errors {#protocol_errors}
+
+WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
+
+Those implementations that MIGHT have chosen to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session MUST also close the transport connection if any protocol error occurs.
+
+Following scenarios have to be considered protocol errors:
+
+ - Receiving messages implicitly and clearly unexpected for the current state (such as receiving ``GOODBYE`` if no session has been established yet or receiving ``ABORT`` in response to ``PUBLISH``).
+ 
+ - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second ``HELLO`` within the lifetime of a session). 
