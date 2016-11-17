@@ -16,17 +16,25 @@
 % initials="T.O."
 % surname="Oberstein"
 % fullname="Tobias G. Oberstein"
-% organization = "Tavendo GmbH"
+% organization = "Crossbar.io Technologies GmbH"
 %   [author.address]
-%   email = "tobias.oberstein@tavendo.de"
+%   email = "tobias.oberstein@crossbario.com"
 %
 % [[author]]
 % initials="A.G."
 % surname="Goedde"
 % fullname="Alexander Goedde"
-% organization = "Tavendo GmbH"
+% organization = "Crossbar.io Technologies GmbH"
 %   [author.address]
-%   email = "alexander.goedde@tavendo.de"
+%   email = "alexander.goedde@crossbario.com"
+%
+% [[author]]
+% initials="A.B."
+% surname="Brown"
+% fullname="Amber H. Brown"
+% organization = "Crossbar.io Technologies GmbH"
+%   [author.address]
+%   email = "amber.brown@crossbario.com"
 %
 
 .# Abstract
