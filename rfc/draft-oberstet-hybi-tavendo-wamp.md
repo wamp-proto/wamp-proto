@@ -210,6 +210,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{rfc/text/advanced/ap_pubsub_event_history.md}}
 
+{{rfc/text/advanced/ap_pubsub_event_retention.md}}
+
 {{rfc/text/advanced/ap_pubsub_subscription_revocation.md}}
 
 {{rfc/text/advanced/ap_pubsub_topic_reflection.md}}
@@ -219,6 +221,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 
 {{rfc/text/advanced/ap_session_meta_api.md}}
+
+{{rfc/text/advanced/ap_session_resumption.md}}
 
 
 {{rfc/text/advanced/ap_authentication.md}}
