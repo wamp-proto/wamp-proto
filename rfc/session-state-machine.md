@@ -6,8 +6,6 @@ A *Transport* may outlive the lifetime of a *Session*, and a *Session* can exist
 
 Usually, a WAMP client will establish a new *Transport* connecting to a *Router*, create a new *Session*, attach the *Transport* to the *Session* and then perform an initial authentication handshake joining a *Realm* on the *Router*. After that, the *Session* can be used for PubSub and RPC.
 
-The *Session* can leave the *Realm*, and join a different *Realm*, performing a new (different) authentication handshake.
-
 The *Session* can also be **paused (frozen)**, when the *Transport* is lost or actively **detached** from the *Session*. In this case, the *Router* is expected to retain it's router-side *Session* representation and allow the client to reconnect, and **resume** the *Session*.
 
 
@@ -19,12 +17,6 @@ The *Session* can also be **paused (frozen)**, when the *Transport* is lost or a
 * `DETACHED-RESUMABLE` ("`DETACHED`")
 * `ATTACHED-NONRESUMABLE` ("`ATTACHED`")
 * `ATTACHED-RESUMABLE` ("`ATTACHED`")
-
-## Realm States (in-session)
-
-* `UNJOINED`
-* `JOINING`
-* `JOINED`
 
 ## Transport States
 
@@ -187,46 +179,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 ```
 
-**Joining**
-
-To initiate a new authentication handshake, a *Session* in the `ATTACHED` state and with an `UNJOINED` realm state sends a `JOIN` message to the *Router* and starts a **authentication handshake completion timer**.
-
-    [JOIN, Realm|uri, Details|dict]
-
-Using `Realm|uri`, the client anounces the realm it wishes to join.
-
-The `uri` MUST be a proper WAMP URI. The *Router* MUST **fail the connection** when the `uri` is not a valid WAMP URI.
-
-The `Realm|uri` MAY be `null`, when the *Router* support dynamic realm assignment.
-
-The `Details` dict may include authentication information, similar to `HELLO`, and `Challenge`/`Authenticate` packets may be sent to provide challenge based authentication, like a `HELLO`.
-
-The *Session* realm state will then move from `UNJOINED` to `JOINING` whilst it waits for the following message.
-
-The *Router*, if it accepts this `JOIN`, will send a `JOINED` message:
-
-    [JOINED, Realm|uri, Details|dict]
-
-The `Details` dict may contain authentication details like the `WELCOME` packet.
-
-The *Session* realm state will then move from `JOINING` to the `JOINED` state on success.
-
-If the *Router* does not accept this `JOIN`, it will respond with an `ABORT`.
-
-**Leaving**
-
-TODO: Router-initiated session quits? Maybe just destroy the session.
-
-An attached *Session* in the `JOINED` realm state can leave the realm it is joined to by sending a `LEAVE` message to the *Router*.
-
-    [LEAVE, Details|dict]
-
-The *Router* will then respond with a `LEFT` message to confirm:
-
-    [LEFT, Details|dict]
-
-This then moves the *Session* realm state into `UNJOINED`.
-
 **Pausing**
 
 A *Session* in the `ATTACHED-RESUMABLE` state may pause (freeze) a *Session* by sending a `GOODBYE` packet to the *Router* requesting later resumption:
@@ -251,7 +203,7 @@ Lack of `Goodbye.Details.resumable` sent from either the client or the Router MU
 
 **Resuming**
 
-When the *Session* has been previously joined a realm, and then the transport was lost or actively detached from the session, and the *Router* supports session pause/resume, the *Session* will have received
+When the *Session* has been previously attached, and then the transport was lost or actively detached from the session, and the *Router* supports session pause/resume and allows the session to be resumed, the *Session* will have received a confirmation in `Welcome.Details.resumable` and a resume token in `Welcome.Details.resume-token`.
 
 
 **Router-initiated Disconnection**
