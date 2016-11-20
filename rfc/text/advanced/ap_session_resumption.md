@@ -37,7 +37,7 @@ As an example of a conformant `HELLO` message:
 If the *Router* supports Session Resumption, they can signal whether the newly created *Session* is resumable by setting `Welcome.Details.resumable|bool`.
 If this flag is missing or set to `false`, a client MUST NOT attempt resumption of the session.
 If the flag is set to `true`, it MUST be accompanied by `Welcome.Details.resume-token|string`, which contains the "resume token" that a client can use to resume this session.
-This "resume token" MUST be a Base64 encoded string of a 16 octet cryptographically generated random token, and MUST NOT be reused for other sessions, or used again as the resume token for this session if it were detatched and reattached again.
+This "resume token" MUST be a Base64 encoded string of a 16 octet cryptographically generated random token, and MUST NOT be reused for other sessions, or used again as the resume token for this session if it were detached and reattached again.
 The Router MUST also set `Welcome.Details.resumed|bool` to `false` if it is a new session.
 Clients MUST assume that that lack of this flag means the session is new, and is not resumed.
 Clients MUST be able to handle a resumable session request being denied (where `Hello.Details.resumable` is `true` but `Welcome.Details.resumable` is `false`).
@@ -83,6 +83,9 @@ As an example of a conformant `GOODBYE` message:
 A *Router* may forcibly pause or destroy a *Session* by sending a `GOODBYE` to the *Client*.
 As with *Client* initiated disconnections, the `Goodbye.Details.resumable` flag from the server dictates whether the open session can be resumed at a later time.
 In *Router* initiated disconnections, a *Client*-sent `GOODBYE` MUST NOT have the `Goodbye.Details.resumable` flag set.
+
+If a *Client* detaches or becomes detached from a *Session*, it MUST be able to attach to the same or other Sessions on the same *Transport*, without reconnection.
+*Routers* MAY decide to timeout and disconnect the *Transport* of the *Client* if it stays connected without being attached to a realm for an unreasonable amount of time.
 
 To resume an resumable *Session*, a *Client* sends a special `HELLO` message to the *Router*.
 It can send one of two types -- an opportunistic resume, or a dedicated resume.
@@ -170,6 +173,10 @@ A resumed *Session* MUST maintain the same *Registrations* and *Subscriptions* t
 Messages sent to the *Session* whilst the *Session* was unattached MUST NOT be resent after the Session reconnects, the Session should use Event History to recover messages during unattachment.
 Procedures that the *Session* has registered MUST return with an `ERROR` with error URI `wamp.error.session_unattached` for single-registered procedures, and MUST NOT be taken into consideration for load balancing in a shared registration.
 
+If a *Client* attempts to resume a non-paused *Session* on the *Broker*, the Broker MUST detatch the Session from the Client it is currently attached to, and attach it on the new Client.
+It must detatch it by way of a `GOODBYE` message with `Goodbye.Details.resumable|bool` set to `false` (as the single-use token will have been used by the new client) and `Goodbye.Reason|uri` set to `wamp.error.other_client_attached`.
+This can be used for Sessions which are attached to Clients that are disconnected, but have not yet timed out (for example, on high-latency wireless networks).
+
 #### Session Resumption Meta Events
 
 Furthermore, two new Session Meta Events are defined:
@@ -178,19 +185,18 @@ Furthermore, two new Session Meta Events are defined:
 
 Fired when a session is attached to a transport.
 This SHOULD fired BEFORE `wamp.session.on_join`, if it is a new session, or fired when a client resumes a session.
+The event payload consists of a single positional argument, `session|id`, the session ID of the attached session.
 
+##### wamp.session.on_detach
 
-##### wamp.session.on_detatch
-
-Fired when a session is detatched from a transport.
-This SHOULD fired AFTER `wamp.session.on_attach`, if the session is closing, or fired when a client detatches from a session.
-
-
+Fired when a session is detached from a transport.
+This SHOULD fired AFTER `wamp.session.on_attach`, if the session is closing, or fired when a client detaches from a session.
+The event payload consists of a single positional argument, `session|id`, the session ID of the detached session.
 
 
 #### Feature Announcement
 
-Because of the non-
+Because of the requirement for a *Client* to handle servers denying a request to create a resumable *Session*, clients that implement this Advanced Profile feature will operate backwards-compatibly with non-implementing *Servers*.
 
 Support for the Session Resumption Meta Events MUST be announced by the *Broker*:
 
