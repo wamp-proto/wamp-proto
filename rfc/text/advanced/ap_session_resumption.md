@@ -106,10 +106,10 @@ As an example of a dedicated resume `HELLO` message:
 ]
 ```
 
-If the session can be resumed, the *Router* will respond with a similarly small `WELCOME` packet, with `Welcome.Session|id` set to the resumed session ID, `Welcome.Details.resumed|bool` set to `true`, `Welcome.Details.resumable|bool` set to `true` if the session can be resumed (`false` otherwise), and `Welcome.Details.resume-token|string` set to a new cryptographically secure resume token (as per the `WELCOME` in the original session creation) if `Welcome.Details.resumable` is `true`.
+If the session can be resumed, the *Router* will respond with a similarly small `WELCOME` message, with `Welcome.Session|id` set to the resumed session ID, `Welcome.Details.resumed|bool` set to `true`, `Welcome.Details.resumable|bool` set to `true` if the session can be resumed (`false` otherwise), and `Welcome.Details.resume-token|string` set to a new cryptographically secure resume token (as per the `WELCOME` in the original session creation) if `Welcome.Details.resumable` is `true`.
 A session that cannot be resumed again MUST NOT have `Welcome.Details.resume-token` set, and `Welcome.Details.resumable` MUST explicitly be set to `false`.
 
-As an example of this small `WELCOME` packet:
+As an example of this small `WELCOME` message:
 
 ```json
 [
@@ -123,10 +123,13 @@ As an example of this small `WELCOME` packet:
 ]
 ```
 
+If the *Session* cannot be resumed either, the *Router* will respond with an `ABORT` message, with `Abort.Reason|uri` set to `wamp.error.nonresumable_session`.
+The *Client* will stay unattached and MUST be able to retry without having to create a new *Transport*.
+
 In an opportunistic resume, the *Session* is either resumed or a new *Session* is created.
 This is useful if a second round trip if the session is not resumable is too high of a cost.
-An opportunistic resume can be initiated by the unattached *Client* sending a `HELLO` packet to the *Router* as if they were creating a new resumable *Session*, but with the extra `Hello.Details.resume-session|id` and `Hello.Details.resume-token|string` keys set as if it were a dedicated resume.
-The *Router* will then attempt to resume the requested *Session*, but will create a new one if the *Session* is no longer available.
+An opportunistic resume can be initiated by the unattached *Client* sending a `HELLO` message to the *Router* as if they were creating a new resumable *Session*, but with the extra `Hello.Details.resume-session|id` and `Hello.Details.resume-token|string` keys set as if it were a dedicated resume.
+The *Router* will then attempt to resume the requested *Session*, but will create a new one if the *Session* is no longer available, the resume token is invalid, or `Hello.Realm|uri` does not match the realm of the *Session*.
 As an example of an opportunistic resume `HELLO` message:
 
 ```json
@@ -148,7 +151,7 @@ As an example of an opportunistic resume `HELLO` message:
 ]
 ```
 
-If the *Router* can resume the session, it will send back a small `WELCOME` packet the same as a dedicated resume, but if it cannot, it will create a new session and send back a full `WELCOME` packet with `Welcome.Details.resumed|bool` set to `false`.
+If the *Router* can resume the session, it will send back a small `WELCOME` message the same as a dedicated resume, but if it cannot, it will create a new session and send back a full `WELCOME` message with `Welcome.Details.resumed|bool` set to `false`.
 As an example of a `WELCOME` message from the *Router* that has not been able to resume the session:
 
 ```json
