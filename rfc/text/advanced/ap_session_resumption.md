@@ -106,7 +106,7 @@ As an example of a dedicated resume `HELLO` message:
 ]
 ```
 
-If the session can be resumed, the *Router* will respond with a similarly small `WELCOME` packet, with `Welcome.Session|id` set to the resumed session ID, `Welcome.Details.resumed|bool` set to `true`, `Welcome.Details.resumable|bool` set to `true` if the session can be resumed (`false` otherwise), and `Welcome.Details.resume-token|string` set to a new cryptographically secure resume token (as per the `WELCOME` in the original session creation`) if `Welcome.Details.resumable` is `true`.
+If the session can be resumed, the *Router* will respond with a similarly small `WELCOME` packet, with `Welcome.Session|id` set to the resumed session ID, `Welcome.Details.resumed|bool` set to `true`, `Welcome.Details.resumable|bool` set to `true` if the session can be resumed (`false` otherwise), and `Welcome.Details.resume-token|string` set to a new cryptographically secure resume token (as per the `WELCOME` in the original session creation) if `Welcome.Details.resumable` is `true`.
 A session that cannot be resumed again MUST NOT have `Welcome.Details.resume-token` set, and `Welcome.Details.resumable` MUST explicitly be set to `false`.
 
 As an example of this small `WELCOME` packet:
