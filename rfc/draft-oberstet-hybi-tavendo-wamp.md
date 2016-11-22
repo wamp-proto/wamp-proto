@@ -214,6 +214,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{rfc/text/advanced/ap_pubsub_topic_reflection.md}}
 
+{{rfc/text/advanced/ap_pubsub_testament.md}}
+
 
 ## Other Advanced Features
 
