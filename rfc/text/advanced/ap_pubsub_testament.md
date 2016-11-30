@@ -73,3 +73,11 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 ```
 
 The *Router* will then flush all Testaments stored for the given scope.
+
+#### Feature Announcement
+
+Support for this feature MUST be announced by *Dealers* (`role := "dealer"`) via
+
+{align="left"}
+        HELLO.Details.roles.dealer.features.
+            testament_meta_api|bool := true
