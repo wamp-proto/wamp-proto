@@ -16,17 +16,25 @@
 % initials="T.O."
 % surname="Oberstein"
 % fullname="Tobias G. Oberstein"
-% organization = "Tavendo GmbH"
+% organization = "Crossbar.io Technologies GmbH"
 %   [author.address]
-%   email = "tobias.oberstein@tavendo.de"
+%   email = "tobias.oberstein@crossbario.com"
 %
 % [[author]]
 % initials="A.G."
 % surname="Goedde"
 % fullname="Alexander Goedde"
-% organization = "Tavendo GmbH"
+% organization = "Crossbar.io Technologies GmbH"
 %   [author.address]
-%   email = "alexander.goedde@tavendo.de"
+%   email = "alexander.goedde@crossbario.com"
+%
+% [[author]]
+% initials="A.B."
+% surname="Brown"
+% fullname="Amber H. Brown"
+% organization = "Crossbar.io Technologies GmbH"
+%   [author.address]
+%   email = "amber.brown@crossbario.com"
 %
 
 .# Abstract
@@ -210,6 +218,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{rfc/text/advanced/ap_pubsub_event_history.md}}
 
+{{rfc/text/advanced/ap_pubsub_event_retention.md}}
+
 {{rfc/text/advanced/ap_pubsub_subscription_revocation.md}}
 
 {{rfc/text/advanced/ap_pubsub_topic_reflection.md}}
@@ -221,6 +231,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 
 {{rfc/text/advanced/ap_session_meta_api.md}}
+
+{{rfc/text/advanced/ap_session_resumption.md}}
 
 
 {{rfc/text/advanced/ap_authentication.md}}
