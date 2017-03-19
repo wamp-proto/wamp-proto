@@ -139,7 +139,7 @@
 </section>
 
 <section anchor="router-implementation-specifics" title="Router Implementation Specifics">
-<t>This specification only deals with the protcol level. Specific WAMP Broker and Dealer implementations may differ in aspects such as support for:
+<t>This specification only deals with the protocol level. Specific WAMP Broker and Dealer implementations may differ in aspects such as support for:
 </t>
 <t>
 <list style="symbols">
