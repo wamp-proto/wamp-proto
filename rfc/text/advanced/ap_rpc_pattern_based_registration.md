@@ -101,7 +101,7 @@ E.g. a *Callee* cannot register to a broad pattern, and then unregister from a s
 
 ###### Calls matching multiple registrations
 
-The behavior when a single call matches more than one of a *Callee's* registrations or more than one registration in general is still being discussed - see https://github.com/tavendo/WAMP/issues/182.
+The behavior when a single call matches more than one of a *Callee's* registrations or more than one registration in general is still being discussed.
 
 ###### Concrete procedure called
 

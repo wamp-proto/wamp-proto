@@ -2,12 +2,12 @@
 
 ## Copyright
 
-The WAMP protocol specification and materials contained in this repository are copyright (c) by [Tavendo GmbH](http://www.tavendo.de) and contributors.
+The WAMP protocol specification and materials contained in this repository are copyright (c) by [Crossbar.io Technologies GmbH](http://crossbario.com) and contributors.
 
 The specification is licensed under the [Creative Commons CC-BY-SA license](http://creativecommons.org/licenses/by-sa/3.0/), and code examples and snippets contained in the WAMP protocol specification are licensed under the [2-clause BSD license](https://opensource.org/licenses/BSD-2-Clause).
 
-**The WAMP Interned-Drafts submitted to the IETF [here](https://tools.ietf.org/html/draft-oberstet-hybi-tavendo-wamp) are subject to the IETF [Note Well](https://www.ietf.org/about/note-well.html) policy.**
+**The WAMP Interned-Drafts submitted to the IETF [here](https://tools.ietf.org/html/draft-oberstet-hybi-crossbar-wamp) are subject to the IETF [Note Well](https://www.ietf.org/about/note-well.html) policy.**
 
 ## Trademarks
 
-**"WAMP"** and the **WAMP logo** are trademarks of [Tavendo GmbH](http://www.tavendo.de). All rights reserved. All other trademarks are those of their respective owners.
+**"WAMP"** and the **WAMP logo** are trademarks of [Crossbar.io Technologies GmbH](http://crossbario.com). All rights reserved. All other trademarks are those of their respective owners.

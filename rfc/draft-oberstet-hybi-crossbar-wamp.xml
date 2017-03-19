@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM 'rfc2629.dtd' []>
-<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-tavendo-wamp-02">
+<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-crossbar-wamp-01">
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
@@ -13,7 +13,7 @@
 <title abbrev="WAMP">The Web Application Messaging Protocol</title>
 
 <author initials="T.O." surname="Oberstein" fullname="Tobias G. Oberstein">
-<organization>Tavendo GmbH</organization>
+<organization>Crossbar.io Technologies GmbH</organization>
 <address>
 <postal>
 <street></street>
@@ -23,12 +23,12 @@
 <region></region>
 </postal>
 <phone></phone>
-<email>tobias.oberstein@tavendo.de</email>
+<email>tobias.oberstein@crossbario.com</email>
 <uri></uri>
 </address>
 </author>
 <author initials="A.G." surname="Goedde" fullname="Alexander Goedde">
-<organization>Tavendo GmbH</organization>
+<organization>Crossbar.io Technologies GmbH</organization>
 <address>
 <postal>
 <street></street>
@@ -38,11 +38,11 @@
 <region></region>
 </postal>
 <phone></phone>
-<email>alexander.goedde@tavendo.de</email>
+<email>alexander.goedde@crossbario.com</email>
 <uri></uri>
 </address>
 </author>
-<date year="2015" month="October" day="11"/>
+<date year="2017" month="March" day="19"/>
 
 <area>Applications and Real-Time (art)</area>
 <workgroup>BiDirectional or Server-Initiated HTTP</workgroup>
@@ -3679,7 +3679,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="calls-matching-multiple-registrations" title="Calls matching multiple registrations">
-<t>The behavior when a single call matches more than one of a <spanx style="emph">Callee's</spanx> registrations or more than one registration in general is still being discussed - see <eref target="https://github.com/tavendo/WAMP/issues/182"/>.
+<t>The behavior when a single call matches more than one of a <spanx style="emph">Callee's</spanx> registrations or more than one registration in general is still being discussed.
 </t>
 </section>
 

@@ -1,8 +1,8 @@
 # Status Overview
 
 Overview of the present state of the WAMP spec RFC.
-Generally follows the current file structure to enable a per-file status. 
-Includes links to relevant GitHub issues [I] and mailing list discussions [D]. 
+Generally follows the current file structure to enable a per-file status.
+Includes links to relevant GitHub issues [I] and mailing list discussions [D].
 
 Feature Status | Description
 ---------------|--------------------------------------------------
@@ -18,7 +18,7 @@ missing        | There is no text, or what is there is not sufficient to even co
 sketch         | The text is sufficient to give the reader some idea of the feature/section content.
 draft          | Some content is missing, or the language/structure is in clear need of improvement.
 polish         | The section has all content and is free of errors. The language may be improved, though.
-final          | The section does not require any more attention. 
+final          | The section does not require any more attention.
 
 
 | Spec Part                         | feat. status  |  spec status  |  File            | Issues & Discussions   |
@@ -27,26 +27,26 @@ final          | The section does not require any more attention.
 |   Background                      | -             |  draft        | [basic/bp_intro_background.md](text/basic/bp_intro_background.md) |  |
 |   Protocol Overview               | -             |  draft        | [basic/bp_intro_protocol_overview.md](text/basic/bp_intro_protocol_overview.md) |  |
 |   Design Philosophy               | -             |  draft        | [basic/bp_intro_design_philosophy.md](text/basic/bp_intro_design_philosophy.md) |  |
-| Realms, Sessions & Transports     | -             |  polish       | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
+| Realms, Sessions & Transports     | -             |  polish       | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
 | Peers and Roles                   | -             |  polish       | [basic/bp_peers_and_roles.md](text/basic/bp_peers_and_roles.md) |  |
-| Building Blocks                   | -             |  polish       | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
+| Building Blocks                   | -             |  polish       | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
 |   Identifiers                     | stable        |  draft        | [basic/bp_identifiers.md](text/basic/bp_identifiers.md) | https://github.com/wamp-proto/wamp-proto/issues/161, https://github.com/wamp-proto/wamp-proto/issues/121, https://github.com/wamp-proto/wamp-proto/issues/115  |
 |   Serializations                  | stable        |               | [basic/bp_serializations.md](text/basic/bp_serializations.md) | https://github.com/wamp-proto/wamp-proto/issues/191, https://github.com/wamp-proto/wamp-proto/issues/151, https://github.com/wamp-proto/wamp-proto/issues/72 |
 |   Transports                      | stable        |               | [basic/bp_transports.md](text/basic/bp_transports.md) |  |
 | Messages                          | stable        |               | [basic/bp_messages.md](text/basic/bp_messages.md) | https://github.com/wamp-proto/wamp-proto/issues/192, https://github.com/wamp-proto/wamp-proto/issues/150, https://github.com/wamp-proto/wamp-proto/issues/120 |
 | Sessions                          | stable        |               | [basic/bp_sessions.md](text/basic/bp_sessions.md) | https://github.com/wamp-proto/wamp-proto/issues/145, https://github.com/wamp-proto/wamp-proto/issues/127, https://github.com/wamp-proto/wamp-proto/issues/108 |
-| Publish & Subscribe               | -             |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
+| Publish & Subscribe               | -             |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
 |   Subscribing & Unsubscribing     | stable        |               | [basic/bp_pubsub_subscribing_and_unsubscribing.md](text/basic/bp_pubsub_subscribing_and_unsubscribing.md) | https://github.com/wamp-proto/wamp-proto/issues/142 |
 |   Publishing & Events             | stable        |               | [basic/bp_pubsub_publishing_and_events.md](text/basic/bp_pubsub_publishing_and_events.md) |  |
-| Remote Procedure Calls            | -             |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
+| Remote Procedure Calls            | -             |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
 |   Registering & Unregistering     | stable        |               | [basic/bp_rpc_registering_and_unregistering.md](text/basic/bp_rpc_registering_and_unregistering.md) | https://github.com/wamp-proto/wamp-proto/issues/104 |
 |   Calling & Invocations           | stable        |               | [basic/bp_rpc_calling_and_invocation.md](text/basic/bp_rpc_calling_and_invocation.md) |  |
-| Predefined URIs                   | -             |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
+| Predefined URIs                   | -             |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
 |   Basic Profile                   | stable        |               | [basic/bp_uris.md](text/basic/bp_uris.md) |  |
 |   Advanced Profile                |               |               | [advanved/ap_uris.md](text/advanced/ap_uris.md) |  |
 | Ordering Guarantees               | stable        |               | [basic/bp_ordering_guarantees.md](text/basic/bp_ordering_guarantees.md) |  |
 | Security Model                    |               |               | [basic/bp_security_model.md](text/basic/bp_security_model.md) |  |
-| Advanced Profile                  |               |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) | https://github.com/wamp-proto/wamp-proto/issues/159, https://github.com/wamp-proto/wamp-proto/issues/157 |
+| Advanced Profile                  |               |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) | https://github.com/wamp-proto/wamp-proto/issues/159, https://github.com/wamp-proto/wamp-proto/issues/157 |
 |   Messages                        |               |               | [advanced/ap_messages.md](text/advanced/ap_messages.md) |  |
 |   Features                        |               |               | [advanced/ap_features.md](text/advanced/ap_features.md) |  |
 |   Adv. RPC Features               | -             |               | -
@@ -84,10 +84,10 @@ final          | The section does not require any more attention.
 |       HTTP Longpoll               | beta          |               | [advanced/ap_transport_http_longpoll.md](text/advanced/ap_transport_http_longpoll.md) |  |
 |       Multiplexed                 | sketch        |               | [advanced/ap_transport_multiplexed.md](text/advanced/ap_transport_multiplexed.md) |  | |  |
 | Binary Conversion of JSON Strings | stable        | polish        | [basic/bp_binary_conversion_of_json.md](text/basic/bp_binary_conversion_of_json.md) |  |
-| Security Considerations           | -             | missing       | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
-| Contributors                      | -             |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
-| Acknowledgements                  | -             |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
-| References                        | -             |               | [main doc](draft-oberstet-hybi-tavendo-wamp.md) |  |
+| Security Considerations           | -             | missing       | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
+| Contributors                      | -             |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
+| Acknowledgements                  | -             |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
+| References                        | -             |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
 
 
 not directly fitting into any of the sections, but still protocol related:
