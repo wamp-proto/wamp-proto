@@ -424,7 +424,7 @@ Internet-Draft                    WAMP                      October 2015
 
 1.3.4.  Router Implementation Specifics
 
-   This specification only deals with the protcol level.  Specific WAMP
+   This specification only deals with the protocol level.  Specific WAMP
    Broker and Dealer implementations may differ in aspects such as
    support for:
 
