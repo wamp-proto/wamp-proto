@@ -8,6 +8,7 @@
 <?rfc subcompact="no"?>
 <?rfc private=""?>
 <?rfc topblock="yes"?>
+<?rfc comments="no"?>
 <front>
 <title abbrev="WAMP">The Web Application Messaging Protocol</title>
 
@@ -19,7 +20,9 @@
 <city></city>
 <code></code>
 <country></country>
+<region></region>
 </postal>
+<phone></phone>
 <email>tobias.oberstein@tavendo.de</email>
 <uri></uri>
 </address>
@@ -32,7 +35,9 @@
 <city></city>
 <code></code>
 <country></country>
+<region></region>
 </postal>
+<phone></phone>
 <email>alexander.goedde@tavendo.de</email>
 <uri></uri>
 </address>
@@ -85,11 +90,9 @@
 </t>
 <t>The routed RPC messaging pattern also defines three roles: <spanx style="emph">Callers</spanx> and <spanx style="emph">Callees</spanx>, which communicate via a <spanx style="emph">Dealer</spanx>.
 </t>
-<t>WAMP Connections are established by <spanx style="emph">Clients</spanx> to a <spanx style="emph">Router</spanx>. Connections can use any transport that is message-based, ordered, reliable and bi-directional, with WebSocket as the default transport.
+<t>A <spanx style="emph">Router</spanx> is a component which implements one or both of the Broker and Dealer roles. A <spanx style="emph">Client</spanx> is a component which implements any or all of the Subscriber, Publisher, Caller, or Callee roles.
 </t>
-<t>A Router is a component which implements one or both of the Broker and Dealer roles. A Client is a component which implements any or all of the Subscriber, Publisher, Caller, or Callee roles.
-</t>
-<t>WAMP <spanx style="emph">Connections</spanx> are established by Clients to a Router. Connections can use any transport which is message-oriented, ordered, reliable and bi-directional, with WebSocket as the default transport.
+<t>WAMP <spanx style="emph">Connections</spanx> are established by Clients to a Router. Connections can use any <spanx style="emph">transport</spanx> that is message-based, ordered, reliable and bi-directional, with WebSocket as the default transport.
 </t>
 <t>WAMP <spanx style="emph">Sessions</spanx> are established over a WAMP Connection. A WAMP Session is joined to a <spanx style="emph">Realm</spanx> on a Router. Routing occurs only between WAMP Sessions that have joined the same Realm.
 </t>
@@ -253,7 +256,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>Broker (Router)</t>
 </list>
 </t>
-<t>A Publishers publishes events to topics by providing the topic URI and any payload for the event. Subscribers of the topic will receive the event together with the event payload.
+<t>A Publisher publishes events to topics by providing the topic URI and any payload for the event. Subscribers of the topic will receive the event together with the event payload.
 </t>
 <t>Subscribers subscribe to topics they are interested in with Brokers. Publishers initiate publication first at Brokers. Brokers route events incoming from Publishers to Subscribers that are subscribed to respective topics.
 </t>
@@ -486,7 +489,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>
 <list style="numbers">
 <t>JSON</t>
-<t>MsgPack</t>
+<t>MessagePack</t>
 </list>
 </t>
 <t>Other bindings for serialization may be defined in future WAMP versions.
@@ -499,11 +502,11 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 </section>
 
-<section anchor="msgpack" title="MsgPack">
-<t>With MsgPack serialization, each WAMP message is serialized according to the MsgPack specification.
+<section anchor="messagepack" title="MessagePack">
+<t>With MessagePack serialization, each WAMP message is serialized according to the MessagePack specification.
 </t>
 <t><list style="empty">
-<t>Version 5 or later of MsgPack MUST BE used, since this version is able to differentiate between strings and binary values.
+<t>Version 5 or later of MessagePack MUST BE used, since this version is able to differentiate between strings and binary values.
 </t>
 </list></t>
 </section>
@@ -524,11 +527,11 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 
 <section anchor="websocket-transport" title="WebSocket Transport">
-<t>The default transport binding for WAMP is WebSocket.
+<t>The default transport binding for WAMP is WebSocket (<xref target="RFC6455"/>).
 </t>
 <t>In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). The Advanced Profile may define other modes, e.g. a <spanx style="strong">batched mode</spanx> where multiple WAMP messages are transmitted via single WebSocket message.
 </t>
-<t>The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism.
+<t>The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism (<xref target="RFC6455"/> section 4).
 </t>
 <t>WAMP uses the following WebSocket subprotocol identifiers for unbatched modes:
 </t>
@@ -540,7 +543,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 <t>With <spanx style="verb">wamp.2.json</spanx>, <spanx style="emph">all</spanx> WebSocket messages MUST BE of type <spanx style="strong">text</spanx> (UTF8 encoded payload) and use the JSON message serialization.
 </t>
-<t>With <spanx style="verb">wamp.2.msgpack</spanx>, <spanx style="emph">all</spanx> WebSocket messages MUST BE of type <spanx style="strong">binary</spanx> and use the MsgPack message serialization.
+<t>With <spanx style="verb">wamp.2.msgpack</spanx>, <spanx style="emph">all</spanx> WebSocket messages MUST BE of type <spanx style="strong">binary</spanx> and use the MessagePack message serialization.
 </t>
 <t><list style="empty">
 <t>To avoid incompatibilities merely due to naming conflicts with WebSocket subprotocol identifiers, implementers SHOULD register identifiers for additional serialization formats with the official WebSocket subprotocol registry.
@@ -596,6 +599,21 @@ The Callee will execute the procedure using the supplied arguments to the call a
     | Peer |                                    | Peer |
     `------'                                    `------'
 </artwork></figure>
+</section>
+
+<section anchor="protocol_errors" title="Protocol errors">
+<t>WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
+</t>
+<t>Those implementations that MIGHT have chosen to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session MUST also close the transport connection if any protocol error occurs.
+</t>
+<t>Following scenarios have to be considered protocol errors:
+</t>
+<t>
+<list style="symbols">
+<t>Receiving messages implicitly and clearly unexpected for the current state (such as receiving <spanx style="verb">GOODBYE</spanx> if no session has been established yet or receiving <spanx style="verb">ABORT</spanx> in response to <spanx style="verb">PUBLISH</spanx>).</t>
+<t>Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second <spanx style="verb">HELLO</spanx> within the lifetime of a session).</t>
+</list>
+</t>
 </section>
 </section>
 </section>
@@ -1036,7 +1054,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </artwork></figure>
 <t>A WAMP session starts its lifetime when the Router has sent a <spanx style="verb">WELCOME</spanx> message to the Client, and ends when the underlying transport closes or when the session is closed explicitly by either peer sending the <spanx style="verb">GOODBYE</spanx> message (see below).
 </t>
-<t>It is a protocol error to receive a second <spanx style="verb">HELLO</spanx> message during the lifetime of the session and the Peer must fail the session if that happens.
+<t>It is a <xref target="protocol_errors"/> to receive a second <spanx style="verb">HELLO</spanx> message during the lifetime of the session and the Peer MUST close the session if that happens.
 </t>
 
 <section anchor="client-role-and-feature-announcement" title="Client: Role and Feature Announcement">
@@ -1322,7 +1340,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="agent-identification" title="Agent Identification">
-<t>When a software agent operates in a network rotocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
+<t>When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
 </t>
 <t>Similar to what browsers do with the <spanx style="verb">User-Agent</spanx> HTTP header, both the <spanx style="verb">HELLO</spanx> and the <spanx style="verb">WELCOME</spanx> message MAY disclose the WAMP implementation in use to its peer:
 </t>
@@ -2406,7 +2424,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="advanced-profile" title="Advanced Profile">
-<t>uri<spanx style="emph">Dealer</spanx> or <spanx style="emph">Callee</spanx> canceled a call previously issued
+<t>A <spanx style="emph">Dealer</spanx> or <spanx style="emph">Callee</spanx> canceled a call previously issued
 </t>
 
 <figure align="left"><artwork align="left">
@@ -2536,7 +2554,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>While implementations MUST implement the subset of the Basic Profile necessary for the particular set of WAMP roles they provide, they MAY implement any subset of features from the Advanced Profile. Implementers SHOULD implement the maximum of features possible considering the aims of an implementation.
 </t>
 <t><list style="empty">
-<t>Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This is part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.
+<t>Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.
 </t>
 </list></t>
 
@@ -2567,7 +2585,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="cancel" title="CANCEL">
-<t>The <spanx style="verb">CANCEL</spanx> message is used with the Call Canceling advanced feature. A <spanx style="emph">Caller</spanx> can cancel an issued call actively by sending a cancel message to the <spanx style="emph">Dealer</spanx>.
+<t>The <spanx style="verb">CANCEL</spanx> message is used with the Call Canceling advanced feature. A <spanx style="emph">Caller</spanx> can cancel and issued call actively by sending a cancel message to the <spanx style="emph">Dealer</spanx>.
 </t>
 
 <figure align="left"><artwork align="left">
@@ -2958,6 +2976,11 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 </section>
 
+<section anchor="callee" title="Callee">
+<t>A Callee that does not support progressive results SHOULD ignore any <spanx style="verb">INVOCATION.Details.receive_progress</spanx> flag.
+</t>
+</section>
+
 <section anchor="feature-announcement" title="Feature Announcement">
 <t>Support for this advanced feature MUST be announced by <spanx style="emph">Callers</spanx> (<spanx style="verb">role := "caller"</spanx>), <spanx style="emph">Callees</spanx> (<spanx style="verb">role := "callee"</spanx>) and <spanx style="emph">Dealers</spanx> (<spanx style="verb">role := "dealer"</spanx>) via
 </t>
@@ -3037,23 +3060,23 @@ The Callee will execute the procedure using the supplied arguments to the call a
     ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
     `--+---'          `--+---'          `--+---'
-       |       CALL      |                 |
-       | ----------------&gt;                 |
-       |                 |                 |
-       |                 |    INVOCATION   |
-       |                 | ----------------&gt;
-       |                 |                 |
-       |      CANCEL     |                 |
-       | ----------------&gt;                 |
-       |                 |                 |
-       |                 |    INTERRUPT    |
-       |                 | ----------------&gt;
-       |                 |                 |
-       |                 |      ERROR      |
-       |                 | &lt;----------------
-       |                 |                 |
-       |      ERROR      |                 |
-       | &lt;----------------                 |
+       |       CALL      |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |                 |    INVOCATION   |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |      CANCEL     |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |                 |    INTERRUPT    |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |                 |      ERROR      |    
+       |                 | &lt;----------------    
+       |                 |                 |    
+       |      ERROR      |                 |    
+       | &lt;----------------                 |    
     ,--+---.          ,--+---.          ,--+---.
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
@@ -3065,23 +3088,23 @@ The Callee will execute the procedure using the supplied arguments to the call a
     ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
     `--+---'          `--+---'          `--+---'
-       |       CALL      |                 |
-       | ----------------&gt;                 |
-       |                 |                 |
-       |                 |    INVOCATION   |
-       |                 | ----------------&gt;
-       |                 |                 |
-       |      CANCEL     |                 |
-       | ----------------&gt;                 |
-       |                 |                 |
-       |      ERROR      |                 |
-       | &lt;----------------                 |
-       |                 |                 |
-       |                 |    INTERRUPT    |
-       |                 | ----------------&gt;
-       |                 |                 |
-       |                 |      ERROR      |
-       |                 | &lt;----------------
+       |       CALL      |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |                 |    INVOCATION   |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |      CANCEL     |                 |    
+       | ----------------&gt;                 |    
+       |                 |                 |    
+       |      ERROR      |                 |    
+       | &lt;----------------                 |    
+       |                 |                 |    
+       |                 |    INTERRUPT    |    
+       |                 | ----------------&gt;    
+       |                 |                 |    
+       |                 |      ERROR      |    
+       |                 | &lt;----------------    
     ,--+---.          ,--+---.          ,--+---.
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
@@ -3506,7 +3529,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 
 <figure align="left"><artwork align="left">
     HELLO.Details.roles.&lt;role&gt;.features.
-        session_meta_api|bool := true
+        registration_meta_api|bool := true
 </artwork></figure>
 <t><spanx style="strong">Example</spanx>
 </t>
@@ -3705,7 +3728,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <section anchor="feature-definition-7" title="Feature Definition">
 <t>As a default, only a single <spanx style="strong">Callee</spanx> may register a procedure for an URI.
 </t>
-<t>There are use cases where more flexibility is required. As an example, for an application component with a high computing load, several instances may run, and load balancing of calls across these may be desired. As another example, in an an application a second or third component providing a procedure may run, which are only to be called in case the primary component is no longer reachable (hot standby).
+<t>There are use cases where more flexibility is required. As an example, for an application component with a high computing load, several instances may run, and load balancing of calls across these may be desired. As another example, in an application a second or third component providing a procedure may run, which are only to be called in case the primary component is no longer reachable (hot standby).
 </t>
 <t>When shared registrations are supported, then the first <spanx style="strong">Callee</spanx> to register a procedure for a particular URI MAY determine that additional registrations for this URI are allowed, and what <spanx style="strong">Invocation Rules</spanx> to apply in case such additional registrations are made.
 </t>
@@ -3715,7 +3738,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <figure align="left"><artwork align="left">
     REGISTER.Options.invoke|string := &lt;invocation_policy&gt;
 </artwork></figure>
-<t>where  is one of
+<t>where <spanx style="verb">&lt;invocation_policy&gt;</spanx> is one of
 </t>
 <t>
 <list style="symbols">
@@ -4151,7 +4174,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 
 <figure align="left"><artwork align="left">
-    [36, 5512315355, 4429313566, {"trustlevel": 2},
+    [36, 5512315355, 4429313566, {"trustlevel": 2}, 
         ["Hello, world!"]]
 </artwork></figure>
 <t>In above event, the <spanx style="emph">Broker</spanx> has (by configuration and/or other information) deemed the event publication to be of trustlevel <spanx style="verb">2</spanx>.
@@ -4622,7 +4645,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 
 <figure align="left"><artwork align="left">
-    [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.
+    [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019. 
         temperature", [33.9]]
 </artwork></figure>
 <t>Node keys: <spanx style="verb">SUBSCRIBE.Options.nkey|string</spanx> is a stable, technical <spanx style="strong">node key</spanx>.
@@ -4635,7 +4658,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 
 <figure align="left"><artwork align="left">
-    [32, 912873614, {"match": "wildcard", "nkey": "node23"},
+    [32, 912873614, {"match": "wildcard", "nkey": "node23"}, 
         "com.myapp.sensor..temperature"]
 </artwork></figure>
 </section>
@@ -4705,6 +4728,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t>Can <spanx style="verb">wamp.topic.history.after</spanx> be implemented (efficiently) at all?</t>
 <t>How does that interact with pattern-based subscriptions?</t>
 <t>The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.</t>
+<t>How are black/whitelisted sessionIDs treated? A client which requests event history will have a different sessionID than on previous connections, and may receive events for which it was excluded in the previous session, or not receive events for which it was whitelisted. - see <eref target="https://github.com/wamp-proto/wamp-proto/issues/206"/></t>
 </list>
 </t>
 </section>
@@ -4736,6 +4760,110 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t>see <spanx style="strong">Procedure Reflection</spanx> for now</t>
 </list>
 </t>
+</section>
+
+<section anchor="testament" title="Testament">
+
+<section anchor="feature-definition-16" title="Feature Definition">
+<t>When a WAMP client disconnects, or the WAMP session is destroyed, it may want to notify other subscribers or publish some fixed data.
+Since a client may disconnect uncleanly, this can't be done reliably by them.
+A <spanx style="emph">Testament</spanx>, however, set on the server, can be reliably sent by the <spanx style="emph">Broker</spanx> once either the WAMP session has detached or the client connection has been lost, and allows this functionality.
+It can be triggered when a Session is either detached (the client has disconnected from it, or frozen it, in the case of Session Resumption) or destroyed (when the WAMP session no longer exists on the server).
+</t>
+<t>This allows clients that otherwise would not be able to know when other clients disconnect get a notification (for example, by using the WAMP Session Meta API) with a format the disconnected client chose.
+</t>
+</section>
+
+<section anchor="testament-meta-procedures" title="Testament Meta Procedures">
+<t>A <spanx style="emph">Client</spanx> can call the following procedures to set/flush Testaments:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.session.add_testament</spanx> to add a Testament which will be published on a particular topic when the Session is detatched or destroyed.</t>
+<t><spanx style="verb">wamp.session.flush_testaments</spanx> to remove the Testaments for that Session, either for when it is detatched or destroyed.</t>
+</list>
+</t>
+
+<section anchor="wampsessionaddtestament" title="wamp.session.add_testament">
+<t>Adds a new testament:
+</t>
+<t><spanx style="strong">Positional arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">topic|uri</spanx> - the topic to publish the event on</t>
+<t><spanx style="verb">args|list</spanx> - positional arguments for the event</t>
+<t><spanx style="verb">kwargs|dict</spanx> - keyword arguments for the event</t>
+</list>
+</t>
+<t><spanx style="strong">Keyword arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">publish_options|dict</spanx> - options for the event when it is published -- see <spanx style="verb">Publish.Options</spanx>. Not all options may be honoured (for example, <spanx style="verb">acknowledge</spanx>). By default, there are no options.</t>
+<t><spanx style="verb">scope|string</spanx> - When the testament should be published. Valid values are <spanx style="verb">detatched</spanx> (when the WAMP session is detatched, for example, when using Event Retention) or <spanx style="verb">destroyed</spanx> (when the WAMP session is finalised and destroyed on the Broker). Default MUST be <spanx style="verb">destroyed</spanx>.</t>
+</list>
+</t>
+<t><spanx style="verb">wamp.session.add_testament</spanx> does not return a value.
+</t>
+</section>
+
+<section anchor="wampsessionflushtestaments" title="wamp.session.flush_testaments">
+<t>Removes testaments for the given scope:
+</t>
+<t><spanx style="strong">Keyword arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">scope|string</spanx> - Which set of testaments to be removed. Valid values are the same as <spanx style="verb">wamp.session.add_testament</spanx>, and the default MUST be <spanx style="verb">destroyed</spanx>.</t>
+</list>
+</t>
+<t><spanx style="verb">wamp.session.flush_testaments</spanx> does not return a value.
+</t>
+</section>
+</section>
+
+<section anchor="testaments-in-use" title="Testaments in Use">
+<t>A <spanx style="emph">Client</spanx> that wishes to send some form of data when their <spanx style="emph">Session</spanx> ends unexpectedly or their <spanx style="emph">Transport</spanx> becomes lost can set a testament using the WAMP Testament Meta API, when a <spanx style="emph">Router</spanx> supports it.
+For example, a client may call <spanx style="verb">add_testament</spanx> (this example uses the implicit <spanx style="verb">scope</spanx> option of <spanx style="verb">destroyed</spanx>):
+</t>
+
+<figure align="center"><artwork align="center">
+yield self.call('wamp.session.add_testament',
+                'com.myapp.mytopic', ['Seeya!'], {'my_name': 'app1'})
+</artwork></figure>
+<t>The <spanx style="emph">Router</spanx> will then store this information on the WAMP Session, either in a <spanx style="verb">detatched</spanx> or <spanx style="verb">destroyed</spanx> bucket, in the order they were added.
+A client MUST be able to set multiple testaments per-scope.
+If the <spanx style="emph">Router</spanx> does not support Session Resumption (therefore removing the distinction between a detached and destroyed session), it MUST still use these two separate buckets to allow <spanx style="verb">wamp.session.flush_testaments</spanx> to work.
+</t>
+<t>When a <spanx style="emph">Session</spanx> is <spanx style="emph">detatched</spanx>, the <spanx style="emph">Router</spanx> will inspect it for any Testaments in the <spanx style="verb">detached</spanx> scope, and publish them in the order that the Router recieved them, on the specified topic, with the specified arguments, keyword arguments, and publish options.
+The <spanx style="emph">Router</spanx> MAY ignore publish options that do not make sense for a Testament (for example, acknowledged publishes).
+</t>
+<t>When a <spanx style="emph">Session</spanx> is going to be <spanx style="emph">destroyed</spanx>, the <spanx style="emph">Router</spanx> will inspect it for any Testaments in the <spanx style="verb">destroyed</spanx> scope, and publish them in the same way as it would for the <spanx style="verb">detached</spanx> scope, in the order that they were recieved.
+</t>
+<t>A <spanx style="emph">Router</spanx> that does not allow Session Resumption MUST send <spanx style="verb">detatched</spanx>-scope Testaments before <spanx style="verb">destroyed</spanx>-scope Testaments.
+</t>
+<t>A <spanx style="emph">Client</spanx> can also clear testaments if the information is no longer relevant (for example, it is shutting down completely cleanly).
+For example, a client may call <spanx style="verb">wamp.session.flush_testaments</spanx>:
+</t>
+
+<figure align="center"><artwork align="center">
+yield self.call('wamp.session.flush_testaments', scope='detatched')
+yield self.call('wamp.session.flush_testaments', scope='destroyed')
+</artwork></figure>
+<t>The <spanx style="emph">Router</spanx> will then flush all Testaments stored for the given scope.
+</t>
+</section>
+
+<section anchor="feature-announcement-17" title="Feature Announcement">
+<t>Support for this feature MUST be announced by <spanx style="emph">Dealers</spanx> (<spanx style="verb">role := "dealer"</spanx>) via
+</t>
+
+<figure align="left"><artwork align="left">
+    HELLO.Details.roles.dealer.features.
+        testament_meta_api|bool := true
+</artwork></figure>
+</section>
 </section>
 </section>
 
@@ -4881,7 +5009,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 </section>
 
-<section anchor="feature-announcement-17" title="Feature Announcement">
+<section anchor="feature-announcement-18" title="Feature Announcement">
 <t>Support for this feature MUST be announced by <spanx style="strong">both</spanx> <spanx style="emph">Dealers</spanx> and <spanx style="emph">Brokers</spanx> via:
 </t>
 
@@ -4952,17 +5080,17 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
      ,------.          ,------.
      |Client|          |Router|
      `--+---'          `--+---'
-        |      HELLO      |
-        | ----------------&gt;
-        |                 |
-        |    CHALLENGE    |
-        | &lt;----------------
-        |                 |
-        |   AUTHENTICATE  |
-        | ----------------&gt;
-        |                 |
-        | WELCOME or ABORT|
-        | &lt;----------------
+        |      HELLO      |    
+        | ----------------&gt;    
+        |                 |    
+        |    CHALLENGE    |    
+        | &lt;----------------    
+        |                 |    
+        |   AUTHENTICATE  |    
+        | ----------------&gt;    
+        |                 |    
+        | WELCOME or ABORT|    
+        | &lt;----------------    
      ,--+---.          ,--+---.
      |Client|          |Router|
      `------'          `------'
@@ -4986,7 +5114,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 
 <section anchor="authenticate-1" title="AUTHENTICATE">
-<t>In response to a <spanx style="verb">CHALLENGE</spanx> message, the Client MUST send an <spanx style="verb">AUTHENTICATION</spanx> message.
+<t>In response to a <spanx style="verb">CHALLENGE</spanx> message, the Client MUST send an <spanx style="verb">AUTHENTICATE</spanx> message.
 </t>
 
 <figure align="left"><artwork align="left">
@@ -5041,10 +5169,10 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <figure align="left"><artwork align="left">
     [4, "wampcra",
         {
-            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
                 \"authprovider\": \"userdb\", \"authid\": \"peter\",
-                \"timestamp\": \"2014-06-22T16:36:25.448Z\",
-                \"authrole\": \"user\", \"authmethod\": \"wampcra\",
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
                 \"session\": 3251278072152162}"
         }
     ]
@@ -5140,10 +5268,10 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <figure align="left"><artwork align="left">
     [4, "wampcra",
         {
-            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
+            "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
                 \"authprovider\": \"userdb\", \"authid\": \"peter\",
-                \"timestamp\": \"2014-06-22T16:36:25.448Z\",
-                \"authrole\": \"user\", \"authmethod\": \"wampcra\",
+                \"timestamp\": \"2014-06-22T16:36:25.448Z\", 
+                \"authrole\": \"user\", \"authmethod\": \"wampcra\", 
                 \"session\": 3251278072152162}",
             "salt": "salt123",
             "keylen": 32,
@@ -5271,7 +5399,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <figure align="left"><artwork align="left">
     &lt;CODE BEGINS&gt;
     import struct
-
+    
     octets_received = b"\x11\x22\x33\x44"
     i = struct.unpack("&gt;L", octets_received)[0]
     &lt;CODE ENDS&gt;
@@ -5330,7 +5458,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <figure align="left"><artwork align="left">
     0: illegal
     1: JSON
-    2: MsgPack
+    2: MessagePack
     3 - 15: reserved for future serializers
 </artwork></figure>
 <t>Here is a Python program that prints all (currently) permissible values for the <spanx style="emph">second octet</spanx>:
@@ -5340,16 +5468,16 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
     &lt;CODE BEGINS&gt;
     SERMAP = {
        1: 'json',
-       2: 'msgpack'
+       2: 'messagepack'
     }
 
-    ## map serializer / max. msg length to RawSocket handshake
+    ## map serializer / max. msg length to RawSocket handshake  
     ## request or success reply (2nd octet)
     ##
     for ser in SERMAP:
        for l in range(16):
           octet_2 = (l &lt;&lt; 4) | ser
-          print("serializer: {}, maxlen: {} =&gt;
+          print("serializer: {}, maxlen: {} =&gt; 
               0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
     &lt;CODE ENDS&gt;
 </artwork></figure>
@@ -5366,7 +5494,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <figure align="left"><artwork align="left">
     &lt;CODE BEGINS&gt;
-    ## map RawSocket handshake request (2nd octet) to
+    ## map RawSocket handshake request (2nd octet) to 
     ## serializer / max. msg length
     ##
     for i in range(256):
@@ -5455,7 +5583,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
     for i in range(256):
        ser_id = i &amp; 0x0f
        if ser_id:
-          ## verify the serializer is the one we requested!
+          ## verify the serializer is the one we requested! 
           ## if not, fail the connection!
           ser = SERMAP.get(ser_id, 'currently undefined')
           maxlen = 2 ** ((i &gt;&gt; 4) + 9)
@@ -5463,14 +5591,14 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
               format(i, ser, maxlen))
        else:
           err = i &gt;&gt; 4
-          print("error: {}".format(ERRMAP.get(err,
+          print("error: {}".format(ERRMAP.get(err, 
               'currently undefined')))
     &lt;CODE ENDS&gt;
 </artwork></figure>
 </section>
 
 <section anchor="serialization" title="Serialization">
-<t>To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MsgPack).
+<t>To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MessagePack).
 </t>
 <t>The length of the serialized messages in octets MUST NOT exceed the maximum requested by the <spanx style="emph">Peer</spanx>.
 </t>
@@ -5545,15 +5673,15 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 
 <figure align="left"><artwork align="left">
-    Serialized JSON WAMP Msg 1 | 0x1e |
+    Serialized JSON WAMP Msg 1 | 0x1e | 
         Serialized JSON WAMP Msg 2 | 0x1e | ...
 </artwork></figure>
-<t>Batching with MsgPack works by serializing each WAMP message to MsgPack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MsgPack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
+<t>Batching with MessagePack works by serializing each WAMP message to MessagePack as normally, prepending a 32 bit unsigned integer (4 octets in big-endian byte order) with the length of the serialized MessagePack message (excluding the 4 octets for the length prefix), and packing a sequence of such serialized (length-prefixed) messages into a single WebSocket message:
 </t>
 
 <figure align="left"><artwork align="left">
-    Length of Msg 1 serialization (uint32) |
-        serialized MsgPack WAMP Msg 1 | ...
+    Length of Msg 1 serialization (uint32) | 
+        serialized MessagePack WAMP Msg 1 | ...
 </artwork></figure>
 <t>With batched transport, even if only a single WAMP message is to be sent in a WebSocket message, the (single) WAMP message needs to be framed as described above. In other words, a single WAMP message is sent as a batch of length <spanx style="strong">1</spanx>. Sending a batch of length <spanx style="strong">0</spanx> (no WAMP message) is illegal and a <spanx style="emph">Peer</spanx> MUST fail the transport upon receiving such a transport message.
 </t>
@@ -5684,144 +5812,6 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t>Note: Currently no WAMP transport supports multiplexing. The work on the MUX extension with WebSocket has stalled, and the <spanx style="verb">permessage-priority</spanx> proposal above is still just a proposal. However, with RawSocket, we should be able to add multiplexing in the the future (with downward compatibility).
 </t>
 </list></t>
-</section>
-
-<section anchor="ticketauth-1" title="Ticket-based Authentication">
-<t>With <spanx style="emph">Ticket-based authentication</spanx>, the client needs to present the server an authentication &quot;ticket&quot; - some magic value to authenticate itself to the server.
-</t>
-<t>This &quot;ticket&quot; could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
-</t>
-<t><list style="empty">
-<t>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
-</t>
-</list></t>
-<t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">ticket</spanx> method as (one of) the authentication methods:
-</t>
-
-<figure align="left"><artwork align="left">
-    [1, "realm1",
-      {
-        "roles": ...,
-        "authmethods": ["ticket"],
-        "authid": "joe"
-      }
-    ]
-</artwork></figure>
-<t>The <spanx style="verb">HELLO.Details.authmethods|list</spanx> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <spanx style="verb">"ticket"</spanx>.
-</t>
-<t>The <spanx style="verb">HELLO.Details.authid|string</spanx> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
-</t>
-<t>If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <spanx style="verb">ABORT</spanx> message.
-</t>
-<t>If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <spanx style="verb">authid</spanx>, it'll send a <spanx style="verb">CHALLENGE</spanx> message:
-</t>
-
-<figure align="left"><artwork align="left">
-    [4, "ticket", {}]
-</artwork></figure>
-<t>The client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing a ticket:
-</t>
-
-<figure align="left"><artwork align="left">
-    [5, "secret!!!", {}]
-</artwork></figure>
-<t>The server will then check if the ticket provided is permissible (for the <spanx style="verb">authid</spanx> given).
-</t>
-<t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
-</t>
-
-<figure align="left"><artwork align="left">
-    [2, 3251278072152162,
-      {
-        "authid": "joe",
-        "authrole": "user",
-        "authmethod": "ticket",
-        "authprovider": "static",
-        "roles": ...
-      }
-    ]
-</artwork></figure>
-<t>where
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">authid|string</spanx>: The authentication ID the client was (actually) authenticated as.</t>
-<t><spanx style="verb">authrole|string</spanx>: The authentication role the client was authenticated for.</t>
-<t><spanx style="verb">authmethod|string</spanx>: The authentication method, here <spanx style="verb">"ticket"</spanx></t>
-<t><spanx style="verb">authprovider|string</spanx>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <spanx style="verb">static</spanx> or <spanx style="verb">dynamic</spanx>.</t>
-</list>
-</t>
-<t>The <spanx style="verb">WELCOME.Details</spanx> again contain the actual authentication information active. If the authentication fails, the server will response with an <spanx style="verb">ABORT</spanx> message.
-</t>
-</section>
-
-<section anchor="ticketauth-2" title="Ticket-based Authentication">
-<t>With <spanx style="emph">Ticket-based authentication</spanx>, the client needs to present the server an authentication &quot;ticket&quot; - some magic value to authenticate itself to the server.
-</t>
-<t>This &quot;ticket&quot; could be a long-lived, pre-agreed secret (e.g. a user password) or a short-lived authentication token (like a Kerberos token). WAMP does not care or interpret the ticket presented by the client.
-</t>
-<t><list style="empty">
-<t>Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.
-</t>
-</list></t>
-<t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">ticket</spanx> method as (one of) the authentication methods:
-</t>
-
-<figure align="left"><artwork align="left">
-    [1, "realm1",
-      {
-        "roles": ...,
-        "authmethods": ["ticket"],
-        "authid": "joe"
-      }
-    ]
-</artwork></figure>
-<t>The <spanx style="verb">HELLO.Details.authmethods|list</spanx> is used by the client to announce the authentication methods it is prepared to perform. For Ticket-based, this MUST include <spanx style="verb">"ticket"</spanx>.
-</t>
-<t>The <spanx style="verb">HELLO.Details.authid|string</spanx> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.
-</t>
-<t>If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <spanx style="verb">ABORT</spanx> message.
-</t>
-<t>If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <spanx style="verb">authid</spanx>, it'll send a <spanx style="verb">CHALLENGE</spanx> message:
-</t>
-
-<figure align="left"><artwork align="left">
-    [4, "ticket", {}]
-</artwork></figure>
-<t>The client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing a ticket:
-</t>
-
-<figure align="left"><artwork align="left">
-    [5, "secret!!!", {}]
-</artwork></figure>
-<t>The server will then check if the ticket provided is permissible (for the <spanx style="verb">authid</spanx> given).
-</t>
-<t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
-</t>
-
-<figure align="left"><artwork align="left">
-    [2, 3251278072152162,
-      {
-        "authid": "joe",
-        "authrole": "user",
-        "authmethod": "ticket",
-        "authprovider": "static",
-        "roles": ...
-      }
-    ]
-</artwork></figure>
-<t>where
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">authid|string</spanx>: The authentication ID the client was (actually) authenticated as.</t>
-<t><spanx style="verb">authrole|string</spanx>: The authentication role the client was authenticated for.</t>
-<t><spanx style="verb">authmethod|string</spanx>: The authentication method, here <spanx style="verb">"ticket"</spanx></t>
-<t><spanx style="verb">authprovider|string</spanx>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <spanx style="verb">static</spanx> or <spanx style="verb">dynamic</spanx>.</t>
-</list>
-</t>
-<t>The <spanx style="verb">WELCOME.Details</spanx> again contain the actual authentication information active. If the authentication fails, the server will response with an <spanx style="verb">ABORT</spanx> message.
-</t>
 </section>
 </section>
 </section>
@@ -5982,7 +5972,11 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <section anchor="acknowledgements" title="Acknowledgements">
 <t>WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned:
 </t>
-<t>Konstantin Burkalev (@KSDaemon on GitHub)
+<t>
+<list style="symbols">
+<t>Konstantin Burkalev</t>
+<t>Emile Cormier</t>
+</list>
 </t>
 </section>
 

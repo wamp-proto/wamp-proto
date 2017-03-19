@@ -12,11 +12,11 @@ There is no required transport or set of transports for WAMP implementations (bu
 
 ### WebSocket Transport
 
-The default transport binding for WAMP is WebSocket ([@!6455]).
+The default transport binding for WAMP is WebSocket ([@!RFC6455]).
 
 In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). The Advanced Profile may define other modes, e.g. a **batched mode** where multiple WAMP messages are transmitted via single WebSocket message.
 
-The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism ([@!6455] section 4).
+The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism ([@!RFC6455] section 4).
 
 WAMP uses the following WebSocket subprotocol identifiers for unbatched modes:
 
@@ -88,5 +88,5 @@ Those implementations that MIGHT have chosen to tie the lifetime of the underlyi
 Following scenarios have to be considered protocol errors:
 
  - Receiving messages implicitly and clearly unexpected for the current state (such as receiving ``GOODBYE`` if no session has been established yet or receiving ``ABORT`` in response to ``PUBLISH``).
- 
- - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second ``HELLO`` within the lifetime of a session). 
+
+ - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second ``HELLO`` within the lifetime of a session).

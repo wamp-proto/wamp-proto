@@ -15,7 +15,7 @@ This is done through setting
 {align="left"}
         REGISTER.Options.invoke|string := <invocation_policy>
 
-where <invocation_policy> is one of
+where `<invocation_policy>` is one of
 
 * 'single'
 * 'roundrobin'
@@ -27,11 +27,11 @@ If the option is not set, 'single' is applied as a default.
 
 With 'single', the **Dealer** MUST fail all subsequent attempts to register a procedure for the URI while the registration remains in existence.
 
-With the other values, the **Dealer** MUST fail all subsequent attempst to register a procedure for the URI where the value for this option does not match that of the initial registration. 
+With the other values, the **Dealer** MUST fail all subsequent attempst to register a procedure for the URI where the value for this option does not match that of the initial registration.
 
 ##### Load Balancing
 
-For sets of registrations registered using either 'roundrobin' or 'random', load balancing is performed across calls to the URI. 
+For sets of registrations registered using either 'roundrobin' or 'random', load balancing is performed across calls to the URI.
 
 For 'roundrobin', callees are picked subsequently from the list of registrations (ordered by the order of registration), with the picking looping back to the beginning of the list once the end has been reached.
 
@@ -39,10 +39,7 @@ For 'random' a callee is picked randomly from the list of registrations for each
 
 ##### Hot Stand-By
 
-For sets of registrations registered using either 'first' or 'last', the first respectively last callee on the current list of registrations (ordered by the order of registration) is called. 
-
-
-
+For sets of registrations registered using either 'first' or 'last', the first respectively last callee on the current list of registrations (ordered by the order of registration) is called.
 
 #### Feature Announcement
 
