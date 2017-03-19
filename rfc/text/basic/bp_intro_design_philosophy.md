@@ -37,7 +37,7 @@ WAMP is language agnostic, i.e. can be implemented in any programming language. 
 
 ### Router Implementation Specifics
 
-This specification only deals with the protcol level. Specific WAMP Broker and Dealer implementations may differ in aspects such as support for:
+This specification only deals with the protocol level. Specific WAMP Broker and Dealer implementations may differ in aspects such as support for:
 
 * router networks (clustering and federation),
 * authentication and authorization schemes,
