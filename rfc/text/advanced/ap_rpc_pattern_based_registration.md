@@ -95,7 +95,7 @@ When a single call matches more than one of a *Callees* registrations, the call 
 
 ###### No set semantics
 
-Since each *Callee*'s' registrations "stands on it's own", there is no *set semantics* implied by pattern-based registrations.
+Since each *Callee*'s' registrations "stands on its own", there is no *set semantics* implied by pattern-based registrations.
 
 E.g. a *Callee* cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.
 

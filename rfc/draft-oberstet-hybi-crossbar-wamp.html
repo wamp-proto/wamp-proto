@@ -3683,7 +3683,7 @@
      ...
     [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
 </pre>
-<p id="rfc.section.14.3.1.1.p.28">Even if a <em>Caller</em> has indicated it's expectation to receive progressive results by setting <samp>CALL.Options.receive_progress|bool := true</samp>, a <em>Callee</em> is <strong>not required</strong> to produce progressive results. <samp>CALL.Options.receive_progress</samp> and <samp>INVOCATION.Details.receive_progress</samp> are simply indications that the <em>Caller</em> is prepared to process progressive results, should there be any produced. In other words, <em>Callees</em> are free to ignore such <samp>receive_progress</samp> hints at any time.  </p>
+<p id="rfc.section.14.3.1.1.p.28">Even if a <em>Caller</em> has indicated its expectation to receive progressive results by setting <samp>CALL.Options.receive_progress|bool := true</samp>, a <em>Callee</em> is <strong>not required</strong> to produce progressive results. <samp>CALL.Options.receive_progress</samp> and <samp>INVOCATION.Details.receive_progress</samp> are simply indications that the <em>Caller</em> is prepared to process progressive results, should there be any produced. In other words, <em>Callees</em> are free to ignore such <samp>receive_progress</samp> hints at any time.  </p>
 <h1 id="rfc.section.14.3.1.2"><a href="#rfc.section.14.3.1.2">14.3.1.2.</a> <a href="#callee" id="callee">Callee</a></h1>
 <p id="rfc.section.14.3.1.2.p.1">A Callee that does not support progressive results SHOULD ignore any <samp>INVOCATION.Details.receive_progress</samp> flag.  </p>
 <h1 id="rfc.section.14.3.1.3"><a href="#rfc.section.14.3.1.3">14.3.1.3.</a> <a href="#feature-announcement" id="feature-announcement">Feature Announcement</a></h1>
@@ -4273,7 +4273,7 @@
 <p id="rfc.section.14.3.8.1.3.p.9">When a single call matches more than one of a <em>Callees</em> registrations, the call MAY be routed for invocation on multiple registrations, depending on call settings.  </p>
 <h1 id="rfc.section.14.3.8.1.4"><a href="#rfc.section.14.3.8.1.4">14.3.8.1.4.</a> <a href="#general" id="general">General</a></h1>
 <h1 id="rfc.section.14.3.8.1.4.1"><a href="#rfc.section.14.3.8.1.4.1">14.3.8.1.4.1.</a> <a href="#no-set-semantics" id="no-set-semantics">No set semantics</a></h1>
-<p id="rfc.section.14.3.8.1.4.1.p.1">Since each <em>Callee</em>'s' registrations "stands on it's own", there is no <em>set semantics</em> implied by pattern-based registrations.  </p>
+<p id="rfc.section.14.3.8.1.4.1.p.1">Since each <em>Callee</em>'s' registrations "stands on its own", there is no <em>set semantics</em> implied by pattern-based registrations.  </p>
 <p id="rfc.section.14.3.8.1.4.1.p.2">E.g. a <em>Callee</em> cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.  </p>
 <h1 id="rfc.section.14.3.8.1.4.2"><a href="#rfc.section.14.3.8.1.4.2">14.3.8.1.4.2.</a> <a href="#calls-matching-multiple-registrations" id="calls-matching-multiple-registrations">Calls matching multiple registrations</a></h1>
 <p id="rfc.section.14.3.8.1.4.2.p.1">The behavior when a single call matches more than one of a <em>Callee's</em> registrations or more than one registration in general is still being discussed.  </p>
@@ -4532,7 +4532,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <h1 id="rfc.section.14.4.2"><a href="#rfc.section.14.4.2">14.4.2.</a> <a href="#publisher-exclusion" id="publisher-exclusion">Publisher Exclusion</a></h1>
 <h1 id="rfc.section.14.4.2.1"><a href="#rfc.section.14.4.2.1">14.4.2.1.</a> <a href="#feature-definition-11" id="feature-definition-11">Feature Definition</a></h1>
 <p id="rfc.section.14.4.2.1.p.1">By default, a <em>Publisher</em> of an event will <strong>not</strong> itself receive an event published, even when subscribed to the <samp>Topic</samp> the <em>Publisher</em> is publishing to. This behavior can be overridden using this feature.  </p>
-<p id="rfc.section.14.4.2.1.p.2">To override the exclusion of a publisher from it's own publication, the <samp>PUBLISH</samp> message must include the following option: </p>
+<p id="rfc.section.14.4.2.1.p.2">To override the exclusion of a publisher from its own publication, the <samp>PUBLISH</samp> message must include the following option: </p>
 <pre>
     PUBLISH.Options.exclude_me|bool
 </pre>
@@ -5674,7 +5674,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <p id="rfc.section.14.5.3.1.2.p.18">Again, the <em>first octet</em> MUST be the value <samp>0x7F</samp>. The <em>third and forth octets</em> are reserved and MUST be all zeros for now.  </p>
 <p id="rfc.section.14.5.3.1.2.p.19">In the <em>second octet</em>, the <em>Router</em> MUST echo the serializer value in <samp>SERIALIZER</samp> as requested by the <em>Client</em>.  </p>
 <p id="rfc.section.14.5.3.1.2.p.20">Similar to the <em>Client</em>, the <em>Router</em> sets the <samp>LENGTH</samp> field to request a limit on the length of messages sent by the <em>Client</em>.  </p>
-<p id="rfc.section.14.5.3.1.2.p.21">During the connection, <em>Router</em> MUST NOT send messages to the <em>Client</em> longer than the <samp>LENGTH</samp> requested by the <em>Client</em>, and the <em>Client</em> MUST NOT send messages larger than the maximum requested by the <em>Router</em> in it's handshake reply.  </p>
+<p id="rfc.section.14.5.3.1.2.p.21">During the connection, <em>Router</em> MUST NOT send messages to the <em>Client</em> longer than the <samp>LENGTH</samp> requested by the <em>Client</em>, and the <em>Client</em> MUST NOT send messages larger than the maximum requested by the <em>Router</em> in its handshake reply.  </p>
 <p id="rfc.section.14.5.3.1.2.p.22">If a message received during a connection exceeds the limit requested, a <em>Peer</em> MUST <strong>fail the connection</strong>.  </p>
 <p id="rfc.section.14.5.3.1.2.p.23">When the <em>Router</em> is unable to speak the serializer requested by the <em>Client</em>, or it is denying the <em>Client</em> for other reasons, the <em>Router</em> replies with an error: </p>
 <pre>

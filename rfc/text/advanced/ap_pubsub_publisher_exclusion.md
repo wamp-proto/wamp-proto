@@ -4,7 +4,7 @@
 
 By default, a *Publisher* of an event will **not** itself receive an event published, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden using this feature.
 
-To override the exclusion of a publisher from it's own publication, the `PUBLISH` message must include the following option:
+To override the exclusion of a publisher from its own publication, the `PUBLISH` message must include the following option:
 
 {align="left"}
         PUBLISH.Options.exclude_me|bool

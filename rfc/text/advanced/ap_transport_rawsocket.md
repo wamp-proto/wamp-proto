@@ -147,7 +147,7 @@ In the *second octet*, the *Router* MUST echo the serializer value in `SERIALIZE
 
 Similar to the *Client*, the *Router* sets the `LENGTH` field to request a limit on the length of messages sent by the *Client*.
 
-During the connection, *Router* MUST NOT send messages to the *Client* longer than the `LENGTH` requested by the *Client*, and the *Client* MUST NOT send messages larger than the maximum requested by the *Router* in it's handshake reply.
+During the connection, *Router* MUST NOT send messages to the *Client* longer than the `LENGTH` requested by the *Client*, and the *Client* MUST NOT send messages larger than the maximum requested by the *Router* in its handshake reply.
 
 If a message received during a connection exceeds the limit requested, a *Peer* MUST **fail the connection**.
 
