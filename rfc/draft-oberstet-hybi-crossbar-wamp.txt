@@ -3818,7 +3818,7 @@ Internet-Draft                    WAMP                        March 2017
         ...
        [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
 
-   Even if a _Caller_ has indicated it's expectation to receive
+   Even if a _Caller_ has indicated its expectation to receive
    progressive results by setting "CALL.Options.receive_progress|bool :=
    true", a _Callee_ is *not required* to produce progressive results.
    "CALL.Options.receive_progress" and
@@ -4634,7 +4634,7 @@ Internet-Draft                    WAMP                        March 2017
 
 14.3.8.1.4.1.  No set semantics
 
-   Since each _Callee_'s' registrations "stands on it's own", there is
+   Since each _Callee_'s' registrations "stands on its own", there is
    no _set semantics_ implied by pattern-based registrations.
 
    E.g. a _Callee_ cannot register to a broad pattern, and then
@@ -5171,7 +5171,7 @@ Internet-Draft                    WAMP                        March 2017
    is publishing to.  This behavior can be overridden using this
    feature.
 
-   To override the exclusion of a publisher from it's own publication,
+   To override the exclusion of a publisher from its own publication,
    the "PUBLISH" message must include the following option:
 
        PUBLISH.Options.exclude_me|bool
@@ -6981,7 +6981,7 @@ Internet-Draft                    WAMP                        March 2017
    During the connection, _Router_ MUST NOT send messages to the
    _Client_ longer than the "LENGTH" requested by the _Client_, and the
    _Client_ MUST NOT send messages larger than the maximum requested by
-   the _Router_ in it's handshake reply.
+   the _Router_ in its handshake reply.
 
    If a message received during a connection exceeds the limit
    requested, a _Peer_ MUST *fail the connection*.

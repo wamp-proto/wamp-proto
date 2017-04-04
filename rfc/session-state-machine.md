@@ -8,7 +8,7 @@ Usually, a WAMP client will establish a new *Transport* connecting to a *Router*
 
 The *Session* can leave the *Realm*, and join a different *Realm*, performing a new (different) authentication handshake.
 
-The *Session* can also be **paused (frozen)**, when the *Transport* is lost or actively **detached** from the *Session*. In this case, the *Router* is expected to retain it's router-side *Session* representation and allow the client to reconnect, and **resume** the *Session*.
+The *Session* can also be **paused (frozen)**, when the *Transport* is lost or actively **detached** from the *Session*. In this case, the *Router* is expected to retain its router-side *Session* representation and allow the client to reconnect, and **resume** the *Session*.
 
 
 # Client Session
@@ -128,7 +128,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>>
 ```
 
-A *Router*, upon receiving a `HELLO` message from the client asking for resuming a session will lookup the `resume-session` ID in it's map of paused session. If the session is found and the `resume-token` provided by the client matches, the *Router* will unpause the router side representation of the *Session*, generate a new `resume-ticket` (if the router is willing to let the client resume again later) and send a `WELCOME` message
+A *Router*, upon receiving a `HELLO` message from the client asking for resuming a session will lookup the `resume-session` ID in its map of paused session. If the session is found and the `resume-token` provided by the client matches, the *Router* will unpause the router side representation of the *Session*, generate a new `resume-ticket` (if the router is willing to let the client resume again later) and send a `WELCOME` message
 
     [WELCOME, Session|id, Details|dict]
 

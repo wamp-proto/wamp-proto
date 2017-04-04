@@ -2972,7 +2972,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
      ...
     [50, 77133, {}, [1, 2, 3], {"moo": "hello"}]
 </artwork></figure>
-<t>Even if a <spanx style="emph">Caller</spanx> has indicated it's expectation to receive progressive results by setting <spanx style="verb">CALL.Options.receive_progress|bool := true</spanx>, a <spanx style="emph">Callee</spanx> is <spanx style="strong">not required</spanx> to produce progressive results. <spanx style="verb">CALL.Options.receive_progress</spanx> and <spanx style="verb">INVOCATION.Details.receive_progress</spanx> are simply indications that the <spanx style="emph">Caller</spanx> is prepared to process progressive results, should there be any produced. In other words, <spanx style="emph">Callees</spanx> are free to ignore such <spanx style="verb">receive_progress</spanx> hints at any time.
+<t>Even if a <spanx style="emph">Caller</spanx> has indicated its expectation to receive progressive results by setting <spanx style="verb">CALL.Options.receive_progress|bool := true</spanx>, a <spanx style="emph">Callee</spanx> is <spanx style="strong">not required</spanx> to produce progressive results. <spanx style="verb">CALL.Options.receive_progress</spanx> and <spanx style="verb">INVOCATION.Details.receive_progress</spanx> are simply indications that the <spanx style="emph">Caller</spanx> is prepared to process progressive results, should there be any produced. In other words, <spanx style="emph">Callees</spanx> are free to ignore such <spanx style="verb">receive_progress</spanx> hints at any time.
 </t>
 </section>
 
@@ -3672,7 +3672,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <section anchor="general" title="General">
 
 <section anchor="no-set-semantics" title="No set semantics">
-<t>Since each <spanx style="emph">Callee</spanx>'s' registrations &quot;stands on it's own&quot;, there is no <spanx style="emph">set semantics</spanx> implied by pattern-based registrations.
+<t>Since each <spanx style="emph">Callee</spanx>'s' registrations &quot;stands on its own&quot;, there is no <spanx style="emph">set semantics</spanx> implied by pattern-based registrations.
 </t>
 <t>E.g. a <spanx style="emph">Callee</spanx> cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.
 </t>
@@ -4072,7 +4072,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <section anchor="feature-definition-11" title="Feature Definition">
 <t>By default, a <spanx style="emph">Publisher</spanx> of an event will <spanx style="strong">not</spanx> itself receive an event published, even when subscribed to the <spanx style="verb">Topic</spanx> the <spanx style="emph">Publisher</spanx> is publishing to. This behavior can be overridden using this feature.
 </t>
-<t>To override the exclusion of a publisher from it's own publication, the <spanx style="verb">PUBLISH</spanx> message must include the following option:
+<t>To override the exclusion of a publisher from its own publication, the <spanx style="verb">PUBLISH</spanx> message must include the following option:
 </t>
 
 <figure align="left"><artwork align="left">
@@ -5522,7 +5522,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </t>
 <t>Similar to the <spanx style="emph">Client</spanx>, the <spanx style="emph">Router</spanx> sets the <spanx style="verb">LENGTH</spanx> field to request a limit on the length of messages sent by the <spanx style="emph">Client</spanx>.
 </t>
-<t>During the connection, <spanx style="emph">Router</spanx> MUST NOT send messages to the <spanx style="emph">Client</spanx> longer than the <spanx style="verb">LENGTH</spanx> requested by the <spanx style="emph">Client</spanx>, and the <spanx style="emph">Client</spanx> MUST NOT send messages larger than the maximum requested by the <spanx style="emph">Router</spanx> in it's handshake reply.
+<t>During the connection, <spanx style="emph">Router</spanx> MUST NOT send messages to the <spanx style="emph">Client</spanx> longer than the <spanx style="verb">LENGTH</spanx> requested by the <spanx style="emph">Client</spanx>, and the <spanx style="emph">Client</spanx> MUST NOT send messages larger than the maximum requested by the <spanx style="emph">Router</spanx> in its handshake reply.
 </t>
 <t>If a message received during a connection exceeds the limit requested, a <spanx style="emph">Peer</spanx> MUST <spanx style="strong">fail the connection</spanx>.
 </t>
