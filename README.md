@@ -1,6 +1,6 @@
 # The Web Application Messaging Protocol
 
-**Quick Links:** [Project homepage](http://wamp-proto.org) | [Latest Internet Draft (ID)](https://tools.ietf.org/html/draft-oberstet-hybi-crossbar-wamp) | [Project mailing list](https://groups.google.com/forum/#!forum/wampws) | [IETF mailing list](https://www.ietf.org/mailman/listinfo/hybi)
+**Quick Links:** [Project homepage](http://wamp-proto.org) | [Latest Internet Draft (ID)](http://wamp-proto.org/static/rfc/draft-oberstet-hybi-crossbar-wamp.html) | [Project mailing list](https://groups.google.com/forum/#!forum/wampws) | [IETF mailing list](https://www.ietf.org/mailman/listinfo/hybi)
 
 [![Chat about WAMP at https://gitter.im/crossbar/WAMP](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/crossbar/WAMP?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
