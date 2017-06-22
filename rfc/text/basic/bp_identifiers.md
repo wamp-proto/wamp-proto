@@ -97,12 +97,13 @@ WAMP needs to identify the following ephemeral entities each in the scope noted:
 4. Registrations (*router scope*)
 5. Requests (*session scope*)
 
-These are identified in WAMP using IDs that are integers between (inclusive) **0** and **2^53** (9007199254740992):
+These are identified in WAMP using IDs that are integers between (inclusive) **1** and **2^53** (9007199254740992):
 
-* IDs in the *global scope* MUST be drawn *randomly* from a *uniform distribution* over the complete range [0, 2^53]
-* IDs in the *router scope* can be chosen freely by the specific router implementation
-* IDs in the *session scope* SHOULD be incremented by 1 beginning with 1 (for each direction - *Client-to-Router* and *Router-to-Client*)
+* IDs in the *global scope* MUST be drawn *randomly* from a *uniform distribution* over the complete range [1, 2^53]
+* IDs in the *router scope* CAN be chosen freely by the specific router implementation
+* IDs in the *session scope* MUST be incremented by 1 beginning with 1 (for each direction - *Client-to-Router* and *Router-to-Client*)
 
+> The reason to choose the specific lower bound as 1 rather than 0 is that 0 is the null-like (falsy) value for many programming languages.
 > The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.
 >
 
