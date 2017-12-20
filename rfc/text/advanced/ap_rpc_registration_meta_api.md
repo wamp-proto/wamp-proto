@@ -31,9 +31,7 @@ Similarly, the `wamp.registration.on_delete` event MUST be preceded by a `wamp.r
 
 ###### wamp.registration.on_create
 
-Fired when a registration is created through a registration request for an URI which was previously without a registration.
-
-**Event Arguments**
+Fired when a registration is created through a registration request for an URI which was previously without a registration. The event payload consists of positional arguments:
 
 - `session|id`: The session ID performing the registration request.
 - `RegistrationDetails|dict`: Information on the created registration.
@@ -59,9 +57,7 @@ See [Pattern-based Registrations](pattern-based-registration.md) for a descripti
 
 ###### wamp.registration.on_register
 
-Fired when a session is added to a registration.
-
-**Event Arguments**
+Fired when a session is added to a registration. The event payload consists of positional arguments:
 
 * `session|id`: The ID of the session being added to a registration.
 * `registration|id`: The ID of the registration to which a session is being added.
@@ -69,9 +65,7 @@ Fired when a session is added to a registration.
 
 ###### wamp.registration.on_unregister
 
-Fired when a session is removed from a subscription.
-
-**Event Arguments**
+Fired when a session is removed from a subscription. The event payload consists of positional arguments:
 
 * `session|id`: The ID of the session being removed from a registration.
 * `registration|id`: The ID of the registration from which a session is being removed.
@@ -79,9 +73,7 @@ Fired when a session is removed from a subscription.
 
 ###### wamp.registration.on_delete
 
-Fired when a registration is deleted after the last session attached to it has been removed.
-
-**Event Arguments**
+Fired when a registration is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
 
 * `session|id`: The ID of the last session being removed from a registration.
 * `registration|id`: The ID of the registration being deleted.

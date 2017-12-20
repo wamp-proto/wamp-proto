@@ -31,12 +31,10 @@ The WAMP subscription meta events shall be dispatched by the router to the same 
 
 ###### wamp.subscription.on_create
 
-Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.
+Fired when a subscription is created through a subscription request for a topic which was previously without subscribers. The event payload consists of positional arguments:
 
-**Event Arguments**
-
-- `session|id`: ID of the session performing the subscription request.
-- `SubscriptionDetails|dict`: Information on the created subscription.
+* `session|id`: ID of the session performing the subscription request.
+* `SubscriptionDetails|dict`: Information on the created subscription.
 
 **Object Schemas**
 
@@ -56,32 +54,26 @@ See [Pattern-based Subscriptions](#pattern-based-subscriptions) for a descriptio
 
 ###### wamp.subscription.on_subscribe
 
-Fired when a session is added to a subscription.
+Fired when a session is added to a subscription.  The event payload consists of positional arguments:
 
-**Event Arguments**
-
-- `session|id`: ID of the session being added to a subscription.
-- `subscription|id`: ID of the subscription to which the session is being added.
+* `session|id`: ID of the session being added to a subscription.
+* `subscription|id`: ID of the subscription to which the session is being added.
 
 
 ###### wamp.subscription.on_unsubscribe
 
-Fired when a session is removed from a subscription.
+Fired when a session is removed from a subscription. The event payload consists of positional arguments:
 
-**Event Arguments**
-
-- `session|id`: ID of the session being removed from a subscription.
-- `subscription|id`: ID of the subscription from which the session is being removed.
+* `session|id`: ID of the session being removed from a subscription.
+* `subscription|id`: ID of the subscription from which the session is being removed.
 
 
 ###### wamp.subscription.on_delete
 
-Fired when a subscription is deleted after the last session attached to it has been removed.
+Fired when a subscription is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
 
-**Arguments**
-
-- `session|id`: ID of the last session being removed from a subscription.
-- `subscription|id`: ID of the subscription being deleted.
+* `session|id`: ID of the last session being removed from a subscription.
+* `subscription|id`: ID of the subscription being deleted.
 
 
 
