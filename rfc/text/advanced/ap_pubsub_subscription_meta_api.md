@@ -102,6 +102,8 @@ Retrieves subscription IDs listed according to match policies.
 
 **Results**
 
+The result consists of one positional argument:
+
 - `SubscriptionLists|dict`: A dictionary with a list of subscription IDs for each match policy.
 
 **Object Schemas**
@@ -130,6 +132,8 @@ Obtains the subscription (if any) managing a topic, according to some match poli
 
 **Results**
 
+The result consists of one positional argument:
+
 - (Nullable) `subscription|id`: The ID of the subscription managing the topic, if found, or null.
 
 
@@ -143,6 +147,8 @@ Retrieves a list of IDs of subscriptions matching a topic URI, irrespective of m
 
 **Results**
 
+The result consists of positional arguments:
+
 - (Nullable) `subscription_ids|list`: A list of all matching subscription IDs, or null.
 
 
@@ -155,6 +161,8 @@ Retrieves information on a particular subscription.
 - `subscription|id`: The ID of the subscription to retrieve.
 
 **Results**
+
+The result consists of one positional argument:
 
 - `SubscriptionDetails|dict`: Details on the subscription.
 
@@ -182,11 +190,12 @@ See [Pattern-based Subscriptions](#pattern-based-subscriptions) for information 
 
 Retrieves a list of session IDs for sessions currently attached to the subscription.
 
-
 **Arguments**
 - `subscription|id`: The ID of the subscription to get subscribers for.
 
 **Results**
+
+The result consists of positional arguments:
 
 - `subscribers_ids|list`: A list of WAMP session IDs of subscribers currently attached to the subscription.
 
@@ -204,6 +213,8 @@ Obtains the number of sessions currently attached to a subscription.
 - `subscription|id`: The ID of the subscription to get the number of subscribers for.
 
 **Results**
+
+The result consists of one positional argument:
 
 - `count|int`: The number of sessions currently attached to a subscription.
 
