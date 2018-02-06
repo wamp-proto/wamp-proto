@@ -31,12 +31,10 @@ The WAMP subscription meta events shall be dispatched by the router to the same 
 
 ###### wamp.subscription.on_create
 
-Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.
+Fired when a subscription is created through a subscription request for a topic which was previously without subscribers. The event payload consists of positional arguments:
 
-**Event Arguments**
-
-- `session|id`: ID of the session performing the subscription request.
-- `SubscriptionDetails|dict`: Information on the created subscription.
+* `session|id`: ID of the session performing the subscription request.
+* `SubscriptionDetails|dict`: Information on the created subscription.
 
 **Object Schemas**
 
@@ -56,32 +54,26 @@ See [Pattern-based Subscriptions](#pattern-based-subscriptions) for a descriptio
 
 ###### wamp.subscription.on_subscribe
 
-Fired when a session is added to a subscription.
+Fired when a session is added to a subscription.  The event payload consists of positional arguments:
 
-**Event Arguments**
-
-- `session|id`: ID of the session being added to a subscription.
-- `subscription|id`: ID of the subscription to which the session is being added.
+* `session|id`: ID of the session being added to a subscription.
+* `subscription|id`: ID of the subscription to which the session is being added.
 
 
 ###### wamp.subscription.on_unsubscribe
 
-Fired when a session is removed from a subscription.
+Fired when a session is removed from a subscription. The event payload consists of positional arguments:
 
-**Event Arguments**
-
-- `session|id`: ID of the session being removed from a subscription.
-- `subscription|id`: ID of the subscription from which the session is being removed.
+* `session|id`: ID of the session being removed from a subscription.
+* `subscription|id`: ID of the subscription from which the session is being removed.
 
 
 ###### wamp.subscription.on_delete
 
-Fired when a subscription is deleted after the last session attached to it has been removed.
+Fired when a subscription is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
 
-**Arguments**
-
-- `session|id`: ID of the last session being removed from a subscription.
-- `subscription|id`: ID of the subscription being deleted.
+* `session|id`: ID of the last session being removed from a subscription.
+* `subscription|id`: ID of the subscription being deleted.
 
 
 
@@ -109,6 +101,8 @@ Retrieves subscription IDs listed according to match policies.
 - None
 
 **Results**
+
+The result consists of one positional argument:
 
 - `SubscriptionLists|dict`: A dictionary with a list of subscription IDs for each match policy.
 
@@ -138,6 +132,8 @@ Obtains the subscription (if any) managing a topic, according to some match poli
 
 **Results**
 
+The result consists of one positional argument:
+
 - (Nullable) `subscription|id`: The ID of the subscription managing the topic, if found, or null.
 
 
@@ -151,6 +147,8 @@ Retrieves a list of IDs of subscriptions matching a topic URI, irrespective of m
 
 **Results**
 
+The result consists of positional arguments:
+
 - (Nullable) `subscription_ids|list`: A list of all matching subscription IDs, or null.
 
 
@@ -163,6 +161,8 @@ Retrieves information on a particular subscription.
 - `subscription|id`: The ID of the subscription to retrieve.
 
 **Results**
+
+The result consists of one positional argument:
 
 - `SubscriptionDetails|dict`: Details on the subscription.
 
@@ -190,11 +190,12 @@ See [Pattern-based Subscriptions](#pattern-based-subscriptions) for information 
 
 Retrieves a list of session IDs for sessions currently attached to the subscription.
 
-
 **Arguments**
 - `subscription|id`: The ID of the subscription to get subscribers for.
 
 **Results**
+
+The result consists of positional arguments:
 
 - `subscribers_ids|list`: A list of WAMP session IDs of subscribers currently attached to the subscription.
 
@@ -212,6 +213,8 @@ Obtains the number of sessions currently attached to a subscription.
 - `subscription|id`: The ID of the subscription to get the number of subscribers for.
 
 **Results**
+
+The result consists of one positional argument:
 
 - `count|int`: The number of sessions currently attached to a subscription.
 
