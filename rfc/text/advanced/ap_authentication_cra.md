@@ -53,7 +53,7 @@ The client needs to compute the signature as follows:
 
 That is, compute the HMAC-SHA256 using the shared `secret` over the `challenge`.
 
-After computing the signature, the client will send an `AUTHENTICATE` message containing the signature:
+After computing the signature, the client will send an `AUTHENTICATE` message containing the signature, as a base64-encoded string:
 
 {align="left"}
 ```javascript
