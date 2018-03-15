@@ -399,17 +399,18 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>Requests (<spanx style="emph">session scope</spanx>)</t>
 </list>
 </t>
-<t>These are identified in WAMP using IDs that are integers between (inclusive) <spanx style="strong">0</spanx> and <spanx style="strong">2^53</spanx> (9007199254740992):
+<t>These are identified in WAMP using IDs that are integers between (inclusive) <spanx style="strong">1</spanx> and <spanx style="strong">2^53</spanx> (9007199254740992):
 </t>
 <t>
 <list style="symbols">
-<t>IDs in the <spanx style="emph">global scope</spanx> MUST be drawn <spanx style="emph">randomly</spanx> from a <spanx style="emph">uniform distribution</spanx> over the complete range [0, 2^53]</t>
-<t>IDs in the <spanx style="emph">router scope</spanx> can be chosen freely by the specific router implementation</t>
-<t>IDs in the <spanx style="emph">session scope</spanx> SHOULD be incremented by 1 beginning with 1 (for each direction - <spanx style="emph">Client-to-Router</spanx> and <spanx style="emph">Router-to-Client</spanx>)</t>
+<t>IDs in the <spanx style="emph">global scope</spanx> MUST be drawn <spanx style="emph">randomly</spanx> from a <spanx style="emph">uniform distribution</spanx> over the complete range [1, 2^53]</t>
+<t>IDs in the <spanx style="emph">router scope</spanx> CAN be chosen freely by the specific router implementation</t>
+<t>IDs in the <spanx style="emph">session scope</spanx> MUST be incremented by 1 beginning with 1 (for each direction - <spanx style="emph">Client-to-Router</spanx> and <spanx style="emph">Router-to-Client</spanx>)</t>
 </list>
 </t>
 <t><list style="empty">
-<t>The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and <spanx style="emph">all</spanx> (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.
+<t>The reason to choose the specific lower bound as 1 rather than 0 is that 0 is the null-like (falsy) value for many programming languages.
+The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and <spanx style="emph">all</spanx> (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.
 </t>
 </list></t>
 <t>The following is a complete list of usage of IDs in the three categories for all WAMP messages. For a full definition of these see <xref target="messages"/>.
@@ -3051,9 +3052,21 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <list style="symbols">
 <t><spanx style="verb">CANCEL</spanx></t>
 <t><spanx style="verb">INTERRUPT</spanx></t>
+<t><spanx style="verb">ERROR</spanx></t>
 </list>
 </t>
-<t>A call may be cancelled at the <spanx style="emph">Callee</spanx>
+<t>A call may be canceled at the <spanx style="emph">Callee</spanx> or at the <spanx style="emph">Dealer</spanx> side. Cancelation behaves differently depending on the mode:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="strong">skip</spanx>: The pending call is canceled and <spanx style="verb">ERROR</spanx> is sent immediately back to the caller. No <spanx style="verb">INTERRUPT</spanx> is sent to the callee and the result is discarded when received.</t>
+<t><spanx style="strong">kill</spanx>: <spanx style="verb">INTERRUPT</spanx> is sent to the callee, but <spanx style="verb">ERROR</spanx> is not returned to the caller until after the callee has responded to the canceled call. In this case the caller may receive <spanx style="verb">RESULT</spanx> or <spanx style="verb">ERROR</spanx> depending whether the callee finishes processing the invocation or the interrupt first.</t>
+<t><spanx style="strong">killnowait</spanx>: The pending call is canceled and <spanx style="verb">ERROR</spanx> is send immediately back to the caller. <spanx style="verb">INTERRUPT</spanx> is sent to the callee and any response to the invocation or interrupt from the callee is discarded when received.</t>
+</list>
+</t>
+<t>If the callee does not support call canceling, then behavior is <spanx style="strong">skip</spanx>.
+</t>
+<t>Message flow during call canceling when <spanx style="emph">Callee</spanx> supports this feature and mode is <spanx style="verb">kill</spanx>
 </t>
 
 <figure align="left"><artwork align="left">
@@ -3081,7 +3094,35 @@ The Callee will execute the procedure using the supplied arguments to the call a
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
 </artwork></figure>
-<t>A call may be cancelled at the <spanx style="emph">Dealer</spanx>
+<t>Message flow during call canceling when <spanx style="emph">Callee</spanx> does not support this feature or mode is <spanx style="verb">skip</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+    ,------.          ,------.            ,------.
+    |Caller|          |Dealer|            |Callee|
+    `--+---'          `--+---'            `--+---'
+       |       CALL      |                   |    
+       | ----------------&gt;                   |    
+       |                 |                   |    
+       |                 |    INVOCATION     |    
+       |                 | ----------------&gt; |   
+       |                 |                   |    
+       |      CANCEL     |                   |    
+       | ----------------&gt;                   |    
+       |                 |                   |    
+       |      ERROR      |                   |    
+       | &lt;----------------                   |    
+       |                 |                   |    
+       |                 | RESULT (skipped)  |    
+       |                 | &lt;---------------- |    
+       |                 |                   |    
+       |                 | or ERROR (skipped)|    
+       |                 | &lt;-----------------    
+    ,--+---.          ,--+---.            ,--+---.
+    |Caller|          |Dealer|            |Callee|
+    `------'          `------'            `------'
+</artwork></figure>
+<t>Message flow during call canceling when <spanx style="emph">Callee</spanx> supports this feature and mode is <spanx style="verb">killnowait</spanx>
 </t>
 
 <figure align="left"><artwork align="left">
@@ -3099,12 +3140,12 @@ The Callee will execute the procedure using the supplied arguments to the call a
        |                 |                 |    
        |      ERROR      |                 |    
        | &lt;----------------                 |    
-       |                 |                 |    
        |                 |    INTERRUPT    |    
        |                 | ----------------&gt;    
        |                 |                 |    
        |                 |      ERROR      |    
        |                 | &lt;----------------    
+       |                 |                 |    
     ,--+---.          ,--+---.          ,--+---.
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
@@ -3270,9 +3311,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </t>
 
 <section anchor="wampregistrationoncreate" title="wamp.registration.on_create">
-<t>Fired when a registration is created through a registration request for an URI which was previously without a registration.
-</t>
-<t><spanx style="strong">Event Arguments</spanx>
+<t>Fired when a registration is created through a registration request for an URI which was previously without a registration. The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -3302,9 +3341,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="wampregistrationonregister" title="wamp.registration.on_register">
-<t>Fired when a session is added to a registration.
-</t>
-<t><spanx style="strong">Event Arguments</spanx>
+<t>Fired when a session is added to a registration. The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -3315,9 +3352,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="wampregistrationonunregister" title="wamp.registration.on_unregister">
-<t>Fired when a session is removed from a subscription.
-</t>
-<t><spanx style="strong">Event Arguments</spanx>
+<t>Fired when a session is removed from a subscription. The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -3328,9 +3363,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </section>
 
 <section anchor="wampregistrationondelete" title="wamp.registration.on_delete">
-<t>Fired when a registration is deleted after the last session attached to it has been removed.
-</t>
-<t><spanx style="strong">Event Arguments</spanx>
+<t>Fired when a registration is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -4226,9 +4259,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <section anchor="metaevent-specifications" title="Meta-Event Specifications">
 
 <section anchor="wampsubscriptiononcreate" title="wamp.subscription.on_create">
-<t>Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.
-</t>
-<t><spanx style="strong">Event Arguments</spanx>
+<t>Fired when a subscription is created through a subscription request for a topic which was previously without subscribers. The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -4253,9 +4284,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 
 <section anchor="wampsubscriptiononsubscribe" title="wamp.subscription.on_subscribe">
-<t>Fired when a session is added to a subscription.
-</t>
-<t><spanx style="strong">Event Arguments</spanx>
+<t>Fired when a session is added to a subscription.  The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -4266,9 +4295,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 
 <section anchor="wampsubscriptiononunsubscribe" title="wamp.subscription.on_unsubscribe">
-<t>Fired when a session is removed from a subscription.
-</t>
-<t><spanx style="strong">Event Arguments</spanx>
+<t>Fired when a session is removed from a subscription. The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -4279,9 +4306,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 
 <section anchor="wampsubscriptionondelete" title="wamp.subscription.on_delete">
-<t>Fired when a subscription is deleted after the last session attached to it has been removed.
-</t>
-<t><spanx style="strong">Arguments</spanx>
+<t>Fired when a subscription is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
 </t>
 <t>
 <list style="symbols">
@@ -4321,6 +4346,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 <t><spanx style="strong">Results</spanx>
 </t>
+<t>The result consists of one positional argument:
+</t>
 <t>
 <list style="symbols">
 <t><spanx style="verb">SubscriptionLists|dict</spanx>: A dictionary with a list of subscription IDs for each match policy.</t>
@@ -4354,6 +4381,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 <t><spanx style="strong">Results</spanx>
 </t>
+<t>The result consists of one positional argument:
+</t>
 <t>
 <list style="symbols">
 <t>(Nullable) <spanx style="verb">subscription|id</spanx>: The ID of the subscription managing the topic, if found, or null.</t>
@@ -4373,6 +4402,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 <t><spanx style="strong">Results</spanx>
 </t>
+<t>The result consists of positional arguments:
+</t>
 <t>
 <list style="symbols">
 <t>(Nullable) <spanx style="verb">subscription_ids|list</spanx>: A list of all matching subscription IDs, or null.</t>
@@ -4391,6 +4422,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </list>
 </t>
 <t><spanx style="strong">Results</spanx>
+</t>
+<t>The result consists of one positional argument:
 </t>
 <t>
 <list style="symbols">
@@ -4432,6 +4465,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 <t><spanx style="strong">Results</spanx>
 </t>
+<t>The result consists of positional arguments:
+</t>
 <t>
 <list style="symbols">
 <t><spanx style="verb">subscribers_ids|list</spanx>: A list of WAMP session IDs of subscribers currently attached to the subscription.</t>
@@ -4457,6 +4492,8 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </list>
 </t>
 <t><spanx style="strong">Results</spanx>
+</t>
+<t>The result consists of one positional argument:
 </t>
 <t>
 <list style="symbols">
@@ -5198,7 +5235,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </artwork></figure>
 <t>That is, compute the HMAC-SHA256 using the shared <spanx style="verb">secret</spanx> over the <spanx style="verb">challenge</spanx>.
 </t>
-<t>After computing the signature, the client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing the signature:
+<t>After computing the signature, the client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing the signature, as a base64-encoded string:
 </t>
 
 <figure align="left"><artwork align="left">
