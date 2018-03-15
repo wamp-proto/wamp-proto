@@ -973,20 +973,20 @@
 </ol>
 
 <p> </p>
-<p id="rfc.section.5.1.2.p.3">These are identified in WAMP using IDs that are integers between (inclusive) <strong>0</strong> and <strong>2^53</strong> (9007199254740992): </p>
+<p id="rfc.section.5.1.2.p.3">These are identified in WAMP using IDs that are integers between (inclusive) <strong>1</strong> and <strong>2^53</strong> (9007199254740992): </p>
 <p/>
 
 <ul>
-  <li>IDs in the <em>global scope</em> MUST be drawn <em>randomly</em> from a <em>uniform distribution</em> over the complete range [0, 2^53]</li>
-  <li>IDs in the <em>router scope</em> can be chosen freely by the specific router implementation</li>
-  <li>IDs in the <em>session scope</em> SHOULD be incremented by 1 beginning with 1 (for each direction - <em>Client-to-Router</em> and <em>Router-to-Client</em>)</li>
+  <li>IDs in the <em>global scope</em> MUST be drawn <em>randomly</em> from a <em>uniform distribution</em> over the complete range [1, 2^53]</li>
+  <li>IDs in the <em>router scope</em> CAN be chosen freely by the specific router implementation</li>
+  <li>IDs in the <em>session scope</em> MUST be incremented by 1 beginning with 1 (for each direction - <em>Client-to-Router</em> and <em>Router-to-Client</em>)</li>
 </ul>
 
 <p> </p>
 <p/>
 
 <ul class="empty">
-  <li>The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and <em>all</em> (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.  </li>
+  <li>The reason to choose the specific lower bound as 1 rather than 0 is that 0 is the null-like (falsy) value for many programming languages.  The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and <em>all</em> (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.  </li>
 </ul>
 <p id="rfc.section.5.1.2.p.6">The following is a complete list of usage of IDs in the three categories for all WAMP messages. For a full definition of these see <a href="#messages">Section 6</a>.  </p>
 <h1 id="rfc.section.5.1.2.1"><a href="#rfc.section.5.1.2.1">5.1.2.1.</a> <a href="#global-scope-ids" id="global-scope-ids">Global Scope IDs</a></h1>
@@ -3740,10 +3740,24 @@
   <li>
     <samp>INTERRUPT</samp>
   </li>
+  <li>
+    <samp>ERROR</samp>
+  </li>
 </ul>
 
 <p> </p>
-<p id="rfc.section.14.3.4.1.p.4">A call may be cancelled at the <em>Callee</em> </p>
+<p id="rfc.section.14.3.4.1.p.4">A call may be canceled at the <em>Callee</em> or&#160;at&#160;the&#160;<em>Dealer</em> side. Cancelation behaves differently depending on the mode: </p>
+<p/>
+
+<ul>
+  <li><strong>skip</strong>: The pending call is canceled and <samp>ERROR</samp> is sent immediately back to the caller. No <samp>INTERRUPT</samp> is sent to the callee and the result is discarded when received.</li>
+  <li><strong>kill</strong>: <samp>INTERRUPT</samp> is sent to the callee, but <samp>ERROR</samp> is not returned to the caller until after the callee has responded to the canceled call. In this case the caller may receive <samp>RESULT</samp> or <samp>ERROR</samp> depending whether the callee finishes processing the invocation or the interrupt first.</li>
+  <li><strong>killnowait</strong>: The pending call is canceled and <samp>ERROR</samp> is send immediately back to the caller. <samp>INTERRUPT</samp> is sent to the callee and any response to the invocation or interrupt from the callee is discarded when received.</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.14.3.4.1.p.6">If the callee does not support call canceling, then behavior is <strong>skip</strong>.  </p>
+<p id="rfc.section.14.3.4.1.p.7">Message flow during call canceling when&#160;<em>Callee</em> supports this feature and&#160;mode is <samp>kill</samp> </p>
 <pre>
     ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
@@ -3769,7 +3783,33 @@
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
 </pre>
-<p id="rfc.section.14.3.4.1.p.5">A call may be cancelled at the <em>Dealer</em> </p>
+<p id="rfc.section.14.3.4.1.p.8">Message flow during call canceling when&#160;<em>Callee</em> does not support this feature or&#160;mode is <samp>skip</samp> </p>
+<pre>
+    ,------.          ,------.            ,------.
+    |Caller|          |Dealer|            |Callee|
+    `--+---'          `--+---'            `--+---'
+       |       CALL      |                   |    
+       | ----------------&gt;                   |    
+       |                 |                   |    
+       |                 |    INVOCATION     |    
+       |                 | ----------------&gt; |   
+       |                 |                   |    
+       |      CANCEL     |                   |    
+       | ----------------&gt;                   |    
+       |                 |                   |    
+       |      ERROR      |                   |    
+       | &lt;----------------                   |    
+       |                 |                   |    
+       |                 | RESULT (skipped)  |    
+       |                 | &lt;---------------- |    
+       |                 |                   |    
+       |                 | or ERROR (skipped)|    
+       |                 | &lt;-----------------    
+    ,--+---.          ,--+---.            ,--+---.
+    |Caller|          |Dealer|            |Callee|
+    `------'          `------'            `------'
+</pre>
+<p id="rfc.section.14.3.4.1.p.9">Message flow during call canceling when&#160;<em>Callee</em> supports this feature and&#160;mode is <samp>killnowait</samp> </p>
 <pre>
     ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
@@ -3785,25 +3825,25 @@
        |                 |                 |    
        |      ERROR      |                 |    
        | &lt;----------------                 |    
-       |                 |                 |    
        |                 |    INTERRUPT    |    
        |                 | ----------------&gt;    
        |                 |                 |    
        |                 |      ERROR      |    
        |                 | &lt;----------------    
+       |                 |                 |    
     ,--+---.          ,--+---.          ,--+---.
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
 </pre>
-<p id="rfc.section.14.3.4.1.p.6">A <em>Caller</em> cancels a remote procedure call initiated (but not yet finished) by sending a <samp>CANCEL</samp> message to the <em>Dealer</em>: </p>
+<p id="rfc.section.14.3.4.1.p.10">A <em>Caller</em> cancels a remote procedure call initiated (but not yet finished) by sending a <samp>CANCEL</samp> message to the <em>Dealer</em>: </p>
 <pre>
     [CANCEL, CALL.Request|id, Options|dict]
 </pre>
-<p id="rfc.section.14.3.4.1.p.7">A <em>Dealer</em> cancels an invocation of an endpoint initiated (but not yet finished) by sending a <samp>INTERRUPT</samp> message to the <em>Callee</em>: </p>
+<p id="rfc.section.14.3.4.1.p.11">A <em>Dealer</em> cancels an invocation of an endpoint initiated (but not yet finished) by sending a <samp>INTERRUPT</samp> message to the <em>Callee</em>: </p>
 <pre>
     [INTERRUPT, INVOCATION.Request|id, Options|dict]
 </pre>
-<p id="rfc.section.14.3.4.1.p.8">Options: </p>
+<p id="rfc.section.14.3.4.1.p.12">Options: </p>
 <pre>
     CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
 </pre>
@@ -3895,8 +3935,7 @@
 <p id="rfc.section.14.3.7.1.2.p.4">Similarly, the <samp>wamp.registration.on_delete</samp> event MUST be preceded by a <samp>wamp.registration.on_unregister</samp> event.  </p>
 <p><strong>Registration Meta Events</strong> MUST be dispatched by the router to the same realm as the WAMP session which triggered the event.  </p>
 <h1 id="rfc.section.14.3.7.1.2.1"><a href="#rfc.section.14.3.7.1.2.1">14.3.7.1.2.1.</a> <a href="#wampregistrationoncreate" id="wampregistrationoncreate">wamp.registration.on_create</a></h1>
-<p id="rfc.section.14.3.7.1.2.1.p.1">Fired when a registration is created through a registration request for an URI which was previously without a registration.  </p>
-<p><strong>Event Arguments</strong> </p>
+<p id="rfc.section.14.3.7.1.2.1.p.1">Fired when a registration is created through a registration request for an URI which was previously without a registration. The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -3916,15 +3955,14 @@
         "invoke": invocation_policy|string
     }
 </pre>
-<p id="rfc.section.14.3.7.1.2.1.p.5">See <a href="pattern-based-registration.md">Pattern-based Registrations</a> for a description of <samp>match_policy</samp>.  </p>
+<p id="rfc.section.14.3.7.1.2.1.p.4">See <a href="pattern-based-registration.md">Pattern-based Registrations</a> for a description of <samp>match_policy</samp>.  </p>
 <p/>
 
 <ul class="empty">
   <li>NOTE: invocation_policy IS NOT YET DESCRIBED IN THE ADVANCED SPEC </li>
 </ul>
 <h1 id="rfc.section.14.3.7.1.2.2"><a href="#rfc.section.14.3.7.1.2.2">14.3.7.1.2.2.</a> <a href="#wampregistrationonregister" id="wampregistrationonregister">wamp.registration.on_register</a></h1>
-<p id="rfc.section.14.3.7.1.2.2.p.1">Fired when a session is added to a registration.  </p>
-<p><strong>Event Arguments</strong> </p>
+<p id="rfc.section.14.3.7.1.2.2.p.1">Fired when a session is added to a registration. The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -3934,8 +3972,7 @@
 
 <p> </p>
 <h1 id="rfc.section.14.3.7.1.2.3"><a href="#rfc.section.14.3.7.1.2.3">14.3.7.1.2.3.</a> <a href="#wampregistrationonunregister" id="wampregistrationonunregister">wamp.registration.on_unregister</a></h1>
-<p id="rfc.section.14.3.7.1.2.3.p.1">Fired when a session is removed from a subscription.  </p>
-<p><strong>Event Arguments</strong> </p>
+<p id="rfc.section.14.3.7.1.2.3.p.1">Fired when a session is removed from a subscription. The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -3945,8 +3982,7 @@
 
 <p> </p>
 <h1 id="rfc.section.14.3.7.1.2.4"><a href="#rfc.section.14.3.7.1.2.4">14.3.7.1.2.4.</a> <a href="#wampregistrationondelete" id="wampregistrationondelete">wamp.registration.on_delete</a></h1>
-<p id="rfc.section.14.3.7.1.2.4.p.1">Fired when a registration is deleted after the last session attached to it has been removed.  </p>
-<p><strong>Event Arguments</strong> </p>
+<p id="rfc.section.14.3.7.1.2.4.p.1">Fired when a registration is deleted after the last session attached to it has been removed. The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -4630,8 +4666,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <p id="rfc.section.14.4.5.1.p.4">The WAMP subscription meta events shall be dispatched by the router to the same realm as the WAMP session which triggered the event.  </p>
 <h1 id="rfc.section.14.4.5.1.1"><a href="#rfc.section.14.4.5.1.1">14.4.5.1.1.</a> <a href="#metaevent-specifications" id="metaevent-specifications">Meta-Event Specifications</a></h1>
 <h1 id="rfc.section.14.4.5.1.1.1"><a href="#rfc.section.14.4.5.1.1.1">14.4.5.1.1.1.</a> <a href="#wampsubscriptiononcreate" id="wampsubscriptiononcreate">wamp.subscription.on_create</a></h1>
-<p id="rfc.section.14.4.5.1.1.1.p.1">Fired when a subscription is created through a subscription request for a topic which was previously without subscribers.  </p>
-<p><strong>Event Arguments</strong> </p>
+<p id="rfc.section.14.4.5.1.1.1.p.1">Fired when a subscription is created through a subscription request for a topic which was previously without subscribers. The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -4650,10 +4685,9 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
           "match": match_policy|string
       }
 </pre>
-<p id="rfc.section.14.4.5.1.1.1.p.5">See <a href="#pattern-based-subscriptions">Section 14.4.6</a> for a description of <samp>match_policy</samp>.  </p>
+<p id="rfc.section.14.4.5.1.1.1.p.4">See <a href="#pattern-based-subscriptions">Section 14.4.6</a> for a description of <samp>match_policy</samp>.  </p>
 <h1 id="rfc.section.14.4.5.1.1.2"><a href="#rfc.section.14.4.5.1.1.2">14.4.5.1.1.2.</a> <a href="#wampsubscriptiononsubscribe" id="wampsubscriptiononsubscribe">wamp.subscription.on_subscribe</a></h1>
-<p id="rfc.section.14.4.5.1.1.2.p.1">Fired when a session is added to a subscription.  </p>
-<p><strong>Event Arguments</strong> </p>
+<p id="rfc.section.14.4.5.1.1.2.p.1">Fired when a session is added to a subscription.  The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -4663,8 +4697,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <h1 id="rfc.section.14.4.5.1.1.3"><a href="#rfc.section.14.4.5.1.1.3">14.4.5.1.1.3.</a> <a href="#wampsubscriptiononunsubscribe" id="wampsubscriptiononunsubscribe">wamp.subscription.on_unsubscribe</a></h1>
-<p id="rfc.section.14.4.5.1.1.3.p.1">Fired when a session is removed from a subscription.  </p>
-<p><strong>Event Arguments</strong> </p>
+<p id="rfc.section.14.4.5.1.1.3.p.1">Fired when a session is removed from a subscription. The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -4674,8 +4707,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <h1 id="rfc.section.14.4.5.1.1.4"><a href="#rfc.section.14.4.5.1.1.4">14.4.5.1.1.4.</a> <a href="#wampsubscriptionondelete" id="wampsubscriptionondelete">wamp.subscription.on_delete</a></h1>
-<p id="rfc.section.14.4.5.1.1.4.p.1">Fired when a subscription is deleted after the last session attached to it has been removed.  </p>
-<p><strong>Arguments</strong> </p>
+<p id="rfc.section.14.4.5.1.1.4.p.1">Fired when a subscription is deleted after the last session attached to it has been removed. The event payload consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -4710,6 +4742,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <p><strong>Results</strong> </p>
+<p id="rfc.section.14.4.5.2.1.1.p.5">The result consists of one positional argument: </p>
 <p/>
 
 <ul>
@@ -4726,7 +4759,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
           "wildcard": subscription_ids|list
       }
 </pre>
-<p id="rfc.section.14.4.5.2.1.1.p.7">See <a href="#pattern-based-subscriptions">Section 14.4.6</a> for information on match policies.  </p>
+<p id="rfc.section.14.4.5.2.1.1.p.8">See <a href="#pattern-based-subscriptions">Section 14.4.6</a> for information on match policies.  </p>
 <h1 id="rfc.section.14.4.5.2.1.2"><a href="#rfc.section.14.4.5.2.1.2">14.4.5.2.1.2.</a> <a href="#wampsubscriptionlookup" id="wampsubscriptionlookup">wamp.subscription.lookup</a></h1>
 <p id="rfc.section.14.4.5.2.1.2.p.1">Obtains the subscription (if any) managing a topic, according to some match policy.  </p>
 <p><strong>Arguments</strong> </p>
@@ -4739,6 +4772,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <p><strong>Results</strong> </p>
+<p id="rfc.section.14.4.5.2.1.2.p.5">The result consists of one positional argument: </p>
 <p/>
 
 <ul>
@@ -4757,6 +4791,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <p><strong>Results</strong> </p>
+<p id="rfc.section.14.4.5.2.1.3.p.5">The result consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -4775,6 +4810,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <p><strong>Results</strong> </p>
+<p id="rfc.section.14.4.5.2.1.4.p.5">The result consists of one positional argument: </p>
 <p/>
 
 <ul>
@@ -4800,7 +4836,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
           "match": match_policy|string
       }
 </pre>
-<p id="rfc.section.14.4.5.2.1.4.p.9">See <a href="#pattern-based-subscriptions">Section 14.4.6</a> for information on match policies.  </p>
+<p id="rfc.section.14.4.5.2.1.4.p.10">See <a href="#pattern-based-subscriptions">Section 14.4.6</a> for information on match policies.  </p>
 <h1 id="rfc.section.14.4.5.2.1.5"><a href="#rfc.section.14.4.5.2.1.5">14.4.5.2.1.5.</a> <a href="#wampsubscriptionlistsubscribers" id="wampsubscriptionlistsubscribers">wamp.subscription.list_subscribers</a></h1>
 <p id="rfc.section.14.4.5.2.1.5.p.1">Retrieves a list of session IDs for sessions currently attached to the subscription.  </p>
 <p><strong>Arguments</strong> </p>
@@ -4812,6 +4848,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <p><strong>Results</strong> </p>
+<p id="rfc.section.14.4.5.2.1.5.p.5">The result consists of positional arguments: </p>
 <p/>
 
 <ul>
@@ -4838,6 +4875,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <p> </p>
 <p><strong>Results</strong> </p>
+<p id="rfc.section.14.4.5.2.1.6.p.5">The result consists of one positional argument: </p>
 <p/>
 
 <ul>
@@ -5421,7 +5459,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
     signature := HMAC[SHA256]_{secret} (challenge)
 </pre>
 <p id="rfc.section.14.5.2.3.p.10">That is, compute the HMAC-SHA256 using the shared <samp>secret</samp> over the <samp>challenge</samp>.  </p>
-<p id="rfc.section.14.5.2.3.p.11">After computing the signature, the client will send an <samp>AUTHENTICATE</samp> message containing the signature: </p>
+<p id="rfc.section.14.5.2.3.p.11">After computing the signature, the client will send an <samp>AUTHENTICATE</samp> message containing the signature, as a base64-encoded string: </p>
 <pre>
     [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
 </pre>
