@@ -83,10 +83,28 @@ The diagram below illustrates the full transport connection and session lifecycl
 
 WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
 
-Those implementations that MIGHT have chosen to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session MUST also close the transport connection if any protocol error occurs.
-
 Following scenarios have to be considered protocol errors:
 
- - Receiving messages implicitly and clearly unexpected for the current state (such as receiving ``GOODBYE`` if no session has been established yet or receiving ``ABORT`` in response to ``PUBLISH``).
-
+ - Receiving `WELCOME` message, after session was established.
+ - Receiving `HELLO` message, after session was established.
+ - Receiving `CHALLENGE` message, after session was established.
+ - Receiving `GOODBYE` message, before session was established.
+ - Receiving `ERROR` message, before session was established.
+ - Receiving `ERROR` message with invalid REQUEST.Type.
+ - Receiving `SUBSCRIBED` message, before session was established.
+ - Receiving `UNSUBSCRIBED` message, before session was established.
+ - Receiving `PUBLISHED` message, before session was established.
+ - Receiving `RESULT` message, before session was established.
+ - Receiving `REGISTERED` message, before session was established.
+ - Receiving `UNREGISTERED` message, before session was established.
+ - Receiving `INVOCATION` message, before session was established.
+ - Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.
+ - Error during message encoding/decoding.
  - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second ``HELLO`` within the lifetime of a session).
+
+In all such cases WAMP Router implementations MUST send `GOODBYE` message with reason `wamp.error.protocol_violation` and close connection without waiting for any client response.
+
+In all such cases WAMP Client implementations MUST close connection.
+
+Those implementations that MIGHT have chosen to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session MUST also close the transport connection if any protocol error occurs.
+
