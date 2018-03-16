@@ -104,8 +104,6 @@ Following scenarios have to be considered protocol errors:
 
 In all such cases WAMP implementations:
 
- - MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
- - SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)
-
-WAMP Router implementations also MUST send an `ABORT` message to the offending client, having reason `wamp.error.protocol_violation` and optional attributes in ABORT.Details such as a human readable error message.
-
+1. MUST send an `ABORT` message to the offending client, having reason `wamp.error.protocol_violation` and optional attributes in ABORT.Details such as a human readable error message.
+2. MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
+3. SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)
