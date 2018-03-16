@@ -114,7 +114,7 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
 
 ### ABORT
 
-Both the Router and the Client may abort the opening of a WAMP session by sending an `ABORT` message.
+Both the Router and the Client may abort a WAMP session by sending an `ABORT` message.
 
 {align="left"}
         [ABORT, Details|dict, Reason|uri]
@@ -125,6 +125,10 @@ where
 * `Details` MUST be a dictionary that allows to provide additional, optional closing information (see below).
 
 No response to an `ABORT` message is expected.
+
+There are few scenarios, when `ABORT` is used:
+
+* During session opening, if peer decided to abort connect. 
 
 {align="left"}
         ,------.          ,------.
@@ -139,13 +143,27 @@ No response to an `ABORT` message is expected.
         |Client|          |Router|
         `------'          `------'
 
-
 *Example*
 
 {align="left"}
         [3, {"message": "The realm does not exist."},
             "wamp.error.no_such_realm"]
 
+* After session is opened, when protocol violation happens (see "Protocol errors" section).
+
+*Examples*
+
+* Router received second HELLO message.
+
+{align="left"}
+        [3, {"message": "Received HELLO message after session was established."},
+            "wamp.error.protocol_violation"]
+
+* Client peer received second WELCOME message
+
+{align="left"}
+        [3, {"message": "Received WELCOME message after session was established."},
+            "wamp.error.protocol_violation"]
 
 ## Session Closing
 
@@ -211,14 +229,9 @@ and the other peer replies
 
 ### Difference between ABORT and GOODBYE
 
-The differences between `ABORT` and `GOODBYE` messages are:
-
-1. `ABORT` gets sent only *before* a Session is established, while `GOODBYE` is sent only *after* a Session is already established.
-2. `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer
+The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
->
-
 
 ### Session Statechart
 
