@@ -128,7 +128,7 @@ No response to an `ABORT` message is expected.
 
 There are few scenarios, when `ABORT` is used:
 
-* During session establishment, if peer decided to abort connect. 
+* During session opening, if peer decided to abort connect. 
 
 {align="left"}
         ,------.          ,------.
@@ -149,12 +149,12 @@ There are few scenarios, when `ABORT` is used:
         [3, {"message": "The realm does not exist."},
             "wamp.error.no_such_realm"]
 
-* After session is established, when protocol violation happens (see "Protocol errors" section).
+* After session is opened, when protocol violation happens (see "Protocol errors" section).
 
 *Example*
 
 {align="left"}
-        [3, {"message": "Received WELCOME message after session was established."},
+        [3, {"message": "Received HELLO message after session was established."},
             "wamp.error.protocol_violation"]
 
 ## Session Closing

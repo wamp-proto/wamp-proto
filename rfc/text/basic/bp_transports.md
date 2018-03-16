@@ -102,13 +102,10 @@ Following scenarios have to be considered protocol errors:
  - Catching error during message encoding/decoding.
  - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second `HELLO` within the lifetime of a session).
 
-In all such cases WAMP Router implementations:
+In all such cases WAMP implementations:
 
- - MUST send an `ABORT` message to the offending client, having reason `wamp.error.protocol_violation` and optional attributes in ABORT.Details such as a human readable error message.
  - MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
  - SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)
 
-In all such cases WAMP Client implementations MUST close WAMP session.
-
-Those implementations that MIGHT have chosen to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session MUST also close the transport connection if any protocol error occurs.
+WAMP Router implementations also MUST send an `ABORT` message to the offending client, having reason `wamp.error.protocol_violation` and optional attributes in ABORT.Details such as a human readable error message.
 
