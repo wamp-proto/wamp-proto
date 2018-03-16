@@ -114,7 +114,7 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
 
 ### ABORT
 
-Both the Router and the Client may abort the opening of a WAMP session by sending an `ABORT` message.
+Both the Router and the Client may abort a WAMP session by sending an `ABORT` message.
 
 {align="left"}
         [ABORT, Details|dict, Reason|uri]
@@ -125,6 +125,10 @@ where
 * `Details` MUST be a dictionary that allows to provide additional, optional closing information (see below).
 
 No response to an `ABORT` message is expected.
+
+There are few scenarios, when `ABORT` is used:
+
+* During session establishment, if peer decided to abort connect. 
 
 {align="left"}
         ,------.          ,------.
@@ -139,13 +143,19 @@ No response to an `ABORT` message is expected.
         |Client|          |Router|
         `------'          `------'
 
-
 *Example*
 
 {align="left"}
         [3, {"message": "The realm does not exist."},
             "wamp.error.no_such_realm"]
 
+* After session is established, when protocol violation happens (see "Protocol errors" section).
+
+*Example*
+
+{align="left"}
+        [3, {"message": "Received WELCOME message after session was established."},
+            "wamp.error.protocol_violation"]
 
 ## Session Closing
 
