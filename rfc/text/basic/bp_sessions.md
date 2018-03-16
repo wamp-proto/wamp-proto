@@ -221,14 +221,9 @@ and the other peer replies
 
 ### Difference between ABORT and GOODBYE
 
-The differences between `ABORT` and `GOODBYE` messages are:
-
-1. `ABORT` gets sent only *before* a Session is established, while `GOODBYE` is sent only *after* a Session is already established.
-2. `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer
+The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
->
-
 
 ### Session Statechart
 
