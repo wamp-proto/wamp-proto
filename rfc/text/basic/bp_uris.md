@@ -57,7 +57,7 @@ A Peer acknowledges ending of a session - used as a `GOODBYE` reply reason.
 {align="left"}
         wamp.error.goodbye_and_out
 
-A Peer received invalid WAMP protocol message (e.g. `HELLO` message after session was already established) - used as a `GOODBYE` reply reason.
+A Peer received invalid WAMP protocol message (e.g. `HELLO` message after session was already established) - used as a `ABORT` reply reason.
 
 {align="left"}
         wamp.error.protocol_violation

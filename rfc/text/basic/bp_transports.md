@@ -99,10 +99,14 @@ Following scenarios have to be considered protocol errors:
  - Receiving `UNREGISTERED` message, before session was established.
  - Receiving `INVOCATION` message, before session was established.
  - Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.
- - Error during message encoding/decoding.
- - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second ``HELLO`` within the lifetime of a session).
+ - Catching error during message encoding/decoding.
+ - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second `HELLO` within the lifetime of a session).
 
-In all such cases WAMP Router implementations MUST send `GOODBYE` message with reason `wamp.error.protocol_violation` and close WAMP session without waiting for any client response.
+In all such cases WAMP Router implementations:
+
+ - MUST send an `ABORT` message to the offending client, having reason `wamp.error.protocol_violation` and optional attributes in ABORT.Details such as a human readable error message.
+ - MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
+ - SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)
 
 In all such cases WAMP Client implementations MUST close WAMP session.
 
