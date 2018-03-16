@@ -151,10 +151,18 @@ There are few scenarios, when `ABORT` is used:
 
 * After session is opened, when protocol violation happens (see "Protocol errors" section).
 
-*Example*
+*Examples*
+
+* Router received second HELLO message.
 
 {align="left"}
         [3, {"message": "Received HELLO message after session was established."},
+            "wamp.error.protocol_violation"]
+
+* Client peer received second WELCOME message
+
+{align="left"}
+        [3, {"message": "Received WELCOME message after session was established."},
             "wamp.error.protocol_violation"]
 
 ## Session Closing
