@@ -208,23 +208,23 @@ where
 
 {align="left"}
         [6, {"message": "The host is shutting down now."},
-            "wamp.error.system_shutdown"]
+            "wamp.close.system_shutdown"]
 
 and the other peer replies
 
 {align="left"}
-        [6, {}, "wamp.error.goodbye_and_out"]
+        [6, {}, "wamp.close.goodbye_and_out"]
 
 
 *Example*. One Peer initiates closing
 
 {align="left"}
-        [6, {}, "wamp.error.close_realm"]
+        [6, {}, "wamp.close.close_realm"]
 
 and the other peer replies
 
 {align="left"}
-        [6, {}, "wamp.error.goodbye_and_out"]
+        [6, {}, "wamp.close.goodbye_and_out"]
 
 
 ### Difference between ABORT and GOODBYE

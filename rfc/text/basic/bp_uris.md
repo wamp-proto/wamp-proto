@@ -45,17 +45,17 @@ A call failed since the given argument types or values are not acceptable to the
 The Peer is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
 
 {align="left"}
-        wamp.error.system_shutdown
+        wamp.close.system_shutdown
 
 The Peer want to leave the realm - used as a `GOODBYE` reason.
 
 {align="left"}
-        wamp.error.close_realm
+        wamp.close.close_realm
 
 A Peer acknowledges ending of a session - used as a `GOODBYE` reply reason.
 
 {align="left"}
-        wamp.error.goodbye_and_out
+        wamp.close.goodbye_and_out
 
 A Peer received invalid WAMP protocol message (e.g. `HELLO` message after session was already established) - used as a `ABORT` reply reason.
 
