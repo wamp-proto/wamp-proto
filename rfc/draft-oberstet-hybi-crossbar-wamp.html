@@ -1216,14 +1216,37 @@
 </pre>
 <h1 id="rfc.section.5.3.3"><a href="#rfc.section.5.3.3">5.3.3.</a> <a href="#protocol_errors" id="protocol_errors">Protocol errors</a></h1>
 <p id="rfc.section.5.3.3.p.1">WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.  </p>
-<p id="rfc.section.5.3.3.p.2">Those implementations that MIGHT have chosen to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session MUST also close the transport connection if any protocol error occurs.  </p>
-<p id="rfc.section.5.3.3.p.3">Following scenarios have to be considered protocol errors: </p>
+<p id="rfc.section.5.3.3.p.2">Following scenarios have to be considered protocol errors: </p>
 <p/>
 
 <ul>
-  <li>Receiving messages implicitly and clearly unexpected for the current state (such as receiving <samp>GOODBYE</samp> if no session has been established yet or receiving <samp>ABORT</samp> in response to <samp>PUBLISH</samp>).</li>
+  <li>Receiving <samp>WELCOME</samp> message, after session was established.</li>
+  <li>Receiving <samp>HELLO</samp> message, after session was established.</li>
+  <li>Receiving <samp>CHALLENGE</samp> message, after session was established.</li>
+  <li>Receiving <samp>GOODBYE</samp> message, before session was established.</li>
+  <li>Receiving <samp>ERROR</samp> message, before session was established.</li>
+  <li>Receiving <samp>ERROR</samp> message with invalid REQUEST.Type.</li>
+  <li>Receiving <samp>SUBSCRIBED</samp> message, before session was established.</li>
+  <li>Receiving <samp>UNSUBSCRIBED</samp> message, before session was established.</li>
+  <li>Receiving <samp>PUBLISHED</samp> message, before session was established.</li>
+  <li>Receiving <samp>RESULT</samp> message, before session was established.</li>
+  <li>Receiving <samp>REGISTERED</samp> message, before session was established.</li>
+  <li>Receiving <samp>UNREGISTERED</samp> message, before session was established.</li>
+  <li>Receiving <samp>INVOCATION</samp> message, before session was established.</li>
+  <li>Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.</li>
+  <li>Catching error during message encoding/decoding.</li>
   <li>Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second <samp>HELLO</samp> within the lifetime of a session).</li>
 </ul>
+
+<p> </p>
+<p id="rfc.section.5.3.3.p.4">In all such cases WAMP implementations: </p>
+<p/>
+
+<ol>
+  <li>MUST send an <samp>ABORT</samp> message to the offending peer, having reason <samp>wamp.error.protocol_violation</samp> and optional attributes in ABORT.Details such as a human readable error message.</li>
+  <li>MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,</li>
+  <li>SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)</li>
+</ol>
 
 <p> </p>
 <h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#messages" id="messages">Messages</a></h1>
@@ -1895,7 +1918,7 @@
     }]
 </pre>
 <h1 id="rfc.section.7.1.3"><a href="#rfc.section.7.1.3">7.1.3.</a> <a href="#abort-1" id="abort-1">ABORT</a></h1>
-<p id="rfc.section.7.1.3.p.1">Both the Router and the Client may abort the opening of a WAMP session by sending an <samp>ABORT</samp> message.  </p>
+<p id="rfc.section.7.1.3.p.1">Both the Router and the Client may abort a WAMP session by sending an <samp>ABORT</samp> message.  </p>
 <pre>
     [ABORT, Details|dict, Reason|uri]
 </pre>
@@ -1909,6 +1932,14 @@
 
 <p> </p>
 <p id="rfc.section.7.1.3.p.4">No response to an <samp>ABORT</samp> message is expected.  </p>
+<p id="rfc.section.7.1.3.p.5">There are few scenarios, when&#160;<samp>ABORT</samp> is used: </p>
+<p/>
+
+<ul>
+  <li>During session opening, if peer decided to abort connect.</li>
+</ul>
+
+<p> </p>
 <pre>
     ,------.          ,------.
     |Client|          |Router|
@@ -1926,6 +1957,36 @@
 <pre>
     [3, {"message": "The realm does not exist."},
         "wamp.error.no_such_realm"]
+</pre>
+<p/>
+
+<ul>
+  <li>After session is opened, when&#160;protocol violation happens (see "Protocol errors" section).</li>
+</ul>
+
+<p> </p>
+<p><em>Examples</em> </p>
+<p/>
+
+<ul>
+  <li>Router received second HELLO message.</li>
+</ul>
+
+<p> </p>
+<pre>
+    [3, {"message": "Received HELLO message after session was established."},
+        "wamp.error.protocol_violation"]
+</pre>
+<p/>
+
+<ul>
+  <li>Client peer received second WELCOME message</li>
+</ul>
+
+<p> </p>
+<pre>
+    [3, {"message": "Received WELCOME message after session was established."},
+        "wamp.error.protocol_violation"]
 </pre>
 <h1 id="rfc.section.7.2"><a href="#rfc.section.7.2">7.2.</a> <a href="#session-closing" id="session-closing">Session Closing</a></h1>
 <p id="rfc.section.7.2.p.1">A WAMP session starts its lifetime with the Router sending a <samp>WELCOME</samp> message to the Client and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a <samp>GOODBYE</samp> message sent by one Peer and a <samp>GOODBYE</samp> message sent from the other Peer in response.  </p>
@@ -1970,30 +2031,22 @@
 <p><em>Example</em>. One Peer initiates closing </p>
 <pre>
     [6, {"message": "The host is shutting down now."},
-        "wamp.error.system_shutdown"]
+        "wamp.close.system_shutdown"]
 </pre>
 <p id="rfc.section.7.2.p.5">and the other peer replies </p>
 <pre>
-    [6, {}, "wamp.error.goodbye_and_out"]
+    [6, {}, "wamp.close.goodbye_and_out"]
 </pre>
 <p><em>Example</em>. One Peer initiates closing </p>
 <pre>
-    [6, {}, "wamp.error.close_realm"]
+    [6, {}, "wamp.close.close_realm"]
 </pre>
 <p id="rfc.section.7.2.p.7">and the other peer replies </p>
 <pre>
-    [6, {}, "wamp.error.goodbye_and_out"]
+    [6, {}, "wamp.close.goodbye_and_out"]
 </pre>
 <h1 id="rfc.section.7.2.1"><a href="#rfc.section.7.2.1">7.2.1.</a> <a href="#difference-between-abort-and-goodbye" id="difference-between-abort-and-goodbye">Difference between ABORT and GOODBYE</a></h1>
-<p id="rfc.section.7.2.1.p.1">The differences between <samp>ABORT</samp> and <samp>GOODBYE</samp> messages are: </p>
-<p/>
-
-<ol>
-  <li><samp>ABORT</samp> gets sent only <em>before</em> a Session is established, while <samp>GOODBYE</samp> is sent only <em>after</em> a Session is already established.</li>
-  <li><samp>ABORT</samp> is never replied to by a Peer, whereas <samp>GOODBYE</samp> must be replied to by the receiving Peer</li>
-</ol>
-
-<p> </p>
+<p id="rfc.section.7.2.1.p.1">The differences between <samp>ABORT</samp> and <samp>GOODBYE</samp> messages is that&#160;<samp>ABORT</samp> is never replied to by a Peer, whereas <samp>GOODBYE</samp> must be replied to by the receiving Peer.  </p>
 <p/>
 
 <ul class="empty">
@@ -2953,15 +3006,19 @@
 <h1 id="rfc.section.11.1.3"><a href="#rfc.section.11.1.3">11.1.3.</a> <a href="#session-close" id="session-close">Session Close</a></h1>
 <p id="rfc.section.11.1.3.p.1">The Peer is shutting down completely - used as a <samp>GOODBYE</samp> (or <samp>ABORT</samp>) reason.  </p>
 <pre>
-    wamp.error.system_shutdown
+    wamp.close.system_shutdown
 </pre>
 <p id="rfc.section.11.1.3.p.2">The Peer want to leave the realm - used as a <samp>GOODBYE</samp> reason.  </p>
 <pre>
-    wamp.error.close_realm
+    wamp.close.close_realm
 </pre>
 <p id="rfc.section.11.1.3.p.3">A Peer acknowledges ending of a session - used as a <samp>GOODBYE</samp> reply reason.  </p>
 <pre>
-    wamp.error.goodbye_and_out
+    wamp.close.goodbye_and_out
+</pre>
+<p id="rfc.section.11.1.3.p.4">A Peer received invalid WAMP protocol message (e.g. <samp>HELLO</samp> message after session was already established) - used as a <samp>ABORT</samp> reply reason.  </p>
+<pre>
+    wamp.error.protocol_violation
 </pre>
 <h1 id="rfc.section.11.1.4"><a href="#rfc.section.11.1.4">11.1.4.</a> <a href="#authorization" id="authorization">Authorization</a></h1>
 <p id="rfc.section.11.1.4.p.1">A join, call, register, publish or subscribe failed, since the Peer is not authorized to perform the operation.  </p>

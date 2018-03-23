@@ -91,21 +91,21 @@ Table of Contents
        5.3.1.  WebSocket Transport . . . . . . . . . . . . . . . . .  18
        5.3.2.  Transport and Session Lifetime  . . . . . . . . . . .  19
        5.3.3.  Protocol errors . . . . . . . . . . . . . . . . . . .  20
-   6.  Messages  . . . . . . . . . . . . . . . . . . . . . . . . . .  21
+   6.  Messages  . . . . . . . . . . . . . . . . . . . . . . . . . .  22
      6.1.  Extensibility . . . . . . . . . . . . . . . . . . . . . .  22
-     6.2.  No Polymorphism . . . . . . . . . . . . . . . . . . . . .  22
-     6.3.  Structure . . . . . . . . . . . . . . . . . . . . . . . .  22
-     6.4.  Message Definitions . . . . . . . . . . . . . . . . . . .  22
+     6.2.  No Polymorphism . . . . . . . . . . . . . . . . . . . . .  23
+     6.3.  Structure . . . . . . . . . . . . . . . . . . . . . . . .  23
+     6.4.  Message Definitions . . . . . . . . . . . . . . . . . . .  23
        6.4.1.  Session Lifecycle . . . . . . . . . . . . . . . . . .  23
-       6.4.2.  Publish & Subscribe . . . . . . . . . . . . . . . . .  23
-       6.4.3.  Routed Remote Procedure Calls . . . . . . . . . . . .  25
-     6.5.  Message Codes and Direction . . . . . . . . . . . . . . .  27
+       6.4.2.  Publish & Subscribe . . . . . . . . . . . . . . . . .  24
+       6.4.3.  Routed Remote Procedure Calls . . . . . . . . . . . .  26
+     6.5.  Message Codes and Direction . . . . . . . . . . . . . . .  28
      6.6.  Extension Messages  . . . . . . . . . . . . . . . . . . .  28
-     6.7.  Empty Arguments and Keyword Arguments . . . . . . . . . .  28
-   7.  Sessions  . . . . . . . . . . . . . . . . . . . . . . . . . .  28
-     7.1.  Session Establishment . . . . . . . . . . . . . . . . . .  29
-       7.1.1.  HELLO . . . . . . . . . . . . . . . . . . . . . . . .  29
-       7.1.2.  WELCOME . . . . . . . . . . . . . . . . . . . . . . .  30
+     6.7.  Empty Arguments and Keyword Arguments . . . . . . . . . .  29
+   7.  Sessions  . . . . . . . . . . . . . . . . . . . . . . . . . .  29
+     7.1.  Session Establishment . . . . . . . . . . . . . . . . . .  30
+       7.1.1.  HELLO . . . . . . . . . . . . . . . . . . . . . . . .  30
+       7.1.2.  WELCOME . . . . . . . . . . . . . . . . . . . . . . .  31
 
 
 
@@ -114,54 +114,54 @@ Oberstein & Goedde     Expires September 20, 2017               [Page 2]
 Internet-Draft                    WAMP                        March 2017
 
 
-       7.1.3.  ABORT . . . . . . . . . . . . . . . . . . . . . . . .  32
-     7.2.  Session Closing . . . . . . . . . . . . . . . . . . . . .  32
-       7.2.1.  Difference between ABORT and GOODBYE  . . . . . . . .  34
-       7.2.2.  Session Statechart  . . . . . . . . . . . . . . . . .  34
-   8.  Agent Identification  . . . . . . . . . . . . . . . . . . . .  36
-   9.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  37
-     9.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  37
-       9.1.1.  SUBSCRIBE . . . . . . . . . . . . . . . . . . . . . .  38
-       9.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  39
-       9.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  40
-       9.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  40
-       9.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  41
-       9.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  41
-     9.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  41
-       9.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  42
-       9.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  43
-       9.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  43
-       9.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  44
-   10. Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  45
-     10.1.  Registering and Unregistering  . . . . . . . . . . . . .  45
-       10.1.1.  REGISTER . . . . . . . . . . . . . . . . . . . . . .  46
-       10.1.2.  REGISTERED . . . . . . . . . . . . . . . . . . . . .  47
-       10.1.3.  Register ERROR . . . . . . . . . . . . . . . . . . .  47
-       10.1.4.  UNREGISTER . . . . . . . . . . . . . . . . . . . . .  47
-       10.1.5.  UNREGISTERED . . . . . . . . . . . . . . . . . . . .  48
-       10.1.6.  Unregister ERROR . . . . . . . . . . . . . . . . . .  48
-     10.2.  Calling and Invocations  . . . . . . . . . . . . . . . .  48
-       10.2.1.  CALL . . . . . . . . . . . . . . . . . . . . . . . .  49
-       10.2.2.  INVOCATION . . . . . . . . . . . . . . . . . . . . .  50
-       10.2.3.  YIELD  . . . . . . . . . . . . . . . . . . . . . . .  51
-       10.2.4.  RESULT . . . . . . . . . . . . . . . . . . . . . . .  52
-       10.2.5.  Invocation ERROR . . . . . . . . . . . . . . . . . .  53
-       10.2.6.  Call ERROR . . . . . . . . . . . . . . . . . . . . .  54
-   11. Predefined URIs . . . . . . . . . . . . . . . . . . . . . . .  55
-     11.1.  Basic Profile  . . . . . . . . . . . . . . . . . . . . .  55
-       11.1.1.  Incorrect URIs . . . . . . . . . . . . . . . . . . .  55
-       11.1.2.  Interaction  . . . . . . . . . . . . . . . . . . . .  55
-       11.1.3.  Session Close  . . . . . . . . . . . . . . . . . . .  56
-       11.1.4.  Authorization  . . . . . . . . . . . . . . . . . . .  57
-     11.2.  Advanced Profile . . . . . . . . . . . . . . . . . . . .  57
-   12. Ordering Guarantees . . . . . . . . . . . . . . . . . . . . .  58
-     12.1.  Publish & Subscribe Ordering . . . . . . . . . . . . . .  58
-     12.2.  Remote Procedure Call Ordering . . . . . . . . . . . . .  58
-   13. Security Model  . . . . . . . . . . . . . . . . . . . . . . .  59
-     13.1.  Transport Encryption and Integrity . . . . . . . . . . .  59
-     13.2.  Router Authentication  . . . . . . . . . . . . . . . . .  60
-     13.3.  Client Authentication  . . . . . . . . . . . . . . . . .  60
-       13.3.1.  Routers are trusted  . . . . . . . . . . . . . . . .  60
+       7.1.3.  ABORT . . . . . . . . . . . . . . . . . . . . . . . .  33
+     7.2.  Session Closing . . . . . . . . . . . . . . . . . . . . .  34
+       7.2.1.  Difference between ABORT and GOODBYE  . . . . . . . .  35
+       7.2.2.  Session Statechart  . . . . . . . . . . . . . . . . .  35
+   8.  Agent Identification  . . . . . . . . . . . . . . . . . . . .  37
+   9.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  38
+     9.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  38
+       9.1.1.  SUBSCRIBE . . . . . . . . . . . . . . . . . . . . . .  39
+       9.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  40
+       9.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  41
+       9.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  41
+       9.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  42
+       9.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  42
+     9.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  42
+       9.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  43
+       9.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  44
+       9.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  44
+       9.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  45
+   10. Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  46
+     10.1.  Registering and Unregistering  . . . . . . . . . . . . .  46
+       10.1.1.  REGISTER . . . . . . . . . . . . . . . . . . . . . .  47
+       10.1.2.  REGISTERED . . . . . . . . . . . . . . . . . . . . .  48
+       10.1.3.  Register ERROR . . . . . . . . . . . . . . . . . . .  48
+       10.1.4.  UNREGISTER . . . . . . . . . . . . . . . . . . . . .  48
+       10.1.5.  UNREGISTERED . . . . . . . . . . . . . . . . . . . .  49
+       10.1.6.  Unregister ERROR . . . . . . . . . . . . . . . . . .  49
+     10.2.  Calling and Invocations  . . . . . . . . . . . . . . . .  49
+       10.2.1.  CALL . . . . . . . . . . . . . . . . . . . . . . . .  50
+       10.2.2.  INVOCATION . . . . . . . . . . . . . . . . . . . . .  51
+       10.2.3.  YIELD  . . . . . . . . . . . . . . . . . . . . . . .  52
+       10.2.4.  RESULT . . . . . . . . . . . . . . . . . . . . . . .  53
+       10.2.5.  Invocation ERROR . . . . . . . . . . . . . . . . . .  54
+       10.2.6.  Call ERROR . . . . . . . . . . . . . . . . . . . . .  55
+   11. Predefined URIs . . . . . . . . . . . . . . . . . . . . . . .  56
+     11.1.  Basic Profile  . . . . . . . . . . . . . . . . . . . . .  56
+       11.1.1.  Incorrect URIs . . . . . . . . . . . . . . . . . . .  56
+       11.1.2.  Interaction  . . . . . . . . . . . . . . . . . . . .  56
+       11.1.3.  Session Close  . . . . . . . . . . . . . . . . . . .  57
+       11.1.4.  Authorization  . . . . . . . . . . . . . . . . . . .  58
+     11.2.  Advanced Profile . . . . . . . . . . . . . . . . . . . .  58
+   12. Ordering Guarantees . . . . . . . . . . . . . . . . . . . . .  59
+     12.1.  Publish & Subscribe Ordering . . . . . . . . . . . . . .  59
+     12.2.  Remote Procedure Call Ordering . . . . . . . . . . . . .  59
+   13. Security Model  . . . . . . . . . . . . . . . . . . . . . . .  60
+     13.1.  Transport Encryption and Integrity . . . . . . . . . . .  60
+     13.2.  Router Authentication  . . . . . . . . . . . . . . . . .  61
+     13.3.  Client Authentication  . . . . . . . . . . . . . . . . .  61
+       13.3.1.  Routers are trusted  . . . . . . . . . . . . . . . .  61
 
 
 
@@ -170,54 +170,54 @@ Oberstein & Goedde     Expires September 20, 2017               [Page 3]
 Internet-Draft                    WAMP                        March 2017
 
 
-   14. Advanced Profile  . . . . . . . . . . . . . . . . . . . . . .  61
-     14.1.  Messages . . . . . . . . . . . . . . . . . . . . . . . .  61
-       14.1.1.  Message Definitions  . . . . . . . . . . . . . . . .  61
-       14.1.2.  Message Codes and Direction  . . . . . . . . . . . .  62
-     14.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  62
-       14.2.1.  RPC Features . . . . . . . . . . . . . . . . . . . .  63
-       14.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  63
-       14.2.3.  Other Advanced Features  . . . . . . . . . . . . . .  64
-     14.3.  Advanced RPC Features  . . . . . . . . . . . . . . . . .  64
-       14.3.1.  Progressive Call Results . . . . . . . . . . . . . .  64
-       14.3.2.  Progressive Calls  . . . . . . . . . . . . . . . . .  70
-       14.3.3.  Call Timeouts  . . . . . . . . . . . . . . . . . . .  70
-       14.3.4.  Call Canceling . . . . . . . . . . . . . . . . . . .  71
-       14.3.5.  Caller Identification  . . . . . . . . . . . . . . .  76
-       14.3.6.  Call Trust Levels  . . . . . . . . . . . . . . . . .  77
-       14.3.7.  Registration Meta API  . . . . . . . . . . . . . . .  77
-       14.3.8.  Pattern-based Registrations  . . . . . . . . . . . .  84
-       14.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  87
-       14.3.10. Sharded Registration . . . . . . . . . . . . . . . .  89
-       14.3.11. Registration Revocation  . . . . . . . . . . . . . .  90
-       14.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  90
-     14.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  91
-       14.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  91
-       14.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  96
-       14.4.3.  Publisher Identification . . . . . . . . . . . . . .  97
-       14.4.4.  Publication Trust Levels . . . . . . . . . . . . . .  98
-       14.4.5.  Subscription Meta API  . . . . . . . . . . . . . . .  98
-       14.4.6.  Pattern-based Subscriptions  . . . . . . . . . . . . 104
-       14.4.7.  Sharded Subscriptions  . . . . . . . . . . . . . . . 107
-       14.4.8.  Event History  . . . . . . . . . . . . . . . . . . . 108
-       14.4.9.  Registration Revocation  . . . . . . . . . . . . . . 110
-       14.4.10. Topic Reflection . . . . . . . . . . . . . . . . . . 110
-       14.4.11. Testament  . . . . . . . . . . . . . . . . . . . . . 110
-     14.5.  Other Advanced Features  . . . . . . . . . . . . . . . . 113
-       14.5.1.  Session Meta API . . . . . . . . . . . . . . . . . . 113
-       14.5.2.  Authentication . . . . . . . . . . . . . . . . . . . 116
-       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 125
-   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 136
-     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 137
-     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 138
-   16. Security Considerations . . . . . . . . . . . . . . . . . . . 139
-   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 140
-   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 140
-   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 140
-   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 140
-     20.1.  Normative References . . . . . . . . . . . . . . . . . . 140
-     20.2.  Informative References . . . . . . . . . . . . . . . . . 140
-     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 141
+   14. Advanced Profile  . . . . . . . . . . . . . . . . . . . . . .  62
+     14.1.  Messages . . . . . . . . . . . . . . . . . . . . . . . .  62
+       14.1.1.  Message Definitions  . . . . . . . . . . . . . . . .  62
+       14.1.2.  Message Codes and Direction  . . . . . . . . . . . .  63
+     14.2.  Features . . . . . . . . . . . . . . . . . . . . . . . .  63
+       14.2.1.  RPC Features . . . . . . . . . . . . . . . . . . . .  64
+       14.2.2.  PubSub Features  . . . . . . . . . . . . . . . . . .  64
+       14.2.3.  Other Advanced Features  . . . . . . . . . . . . . .  65
+     14.3.  Advanced RPC Features  . . . . . . . . . . . . . . . . .  65
+       14.3.1.  Progressive Call Results . . . . . . . . . . . . . .  65
+       14.3.2.  Progressive Calls  . . . . . . . . . . . . . . . . .  71
+       14.3.3.  Call Timeouts  . . . . . . . . . . . . . . . . . . .  71
+       14.3.4.  Call Canceling . . . . . . . . . . . . . . . . . . .  72
+       14.3.5.  Caller Identification  . . . . . . . . . . . . . . .  77
+       14.3.6.  Call Trust Levels  . . . . . . . . . . . . . . . . .  78
+       14.3.7.  Registration Meta API  . . . . . . . . . . . . . . .  78
+       14.3.8.  Pattern-based Registrations  . . . . . . . . . . . .  85
+       14.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  88
+       14.3.10. Sharded Registration . . . . . . . . . . . . . . . .  90
+       14.3.11. Registration Revocation  . . . . . . . . . . . . . .  91
+       14.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  91
+     14.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  92
+       14.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  92
+       14.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  97
+       14.4.3.  Publisher Identification . . . . . . . . . . . . . .  98
+       14.4.4.  Publication Trust Levels . . . . . . . . . . . . . .  99
+       14.4.5.  Subscription Meta API  . . . . . . . . . . . . . . .  99
+       14.4.6.  Pattern-based Subscriptions  . . . . . . . . . . . . 105
+       14.4.7.  Sharded Subscriptions  . . . . . . . . . . . . . . . 108
+       14.4.8.  Event History  . . . . . . . . . . . . . . . . . . . 109
+       14.4.9.  Registration Revocation  . . . . . . . . . . . . . . 111
+       14.4.10. Topic Reflection . . . . . . . . . . . . . . . . . . 111
+       14.4.11. Testament  . . . . . . . . . . . . . . . . . . . . . 111
+     14.5.  Other Advanced Features  . . . . . . . . . . . . . . . . 114
+       14.5.1.  Session Meta API . . . . . . . . . . . . . . . . . . 114
+       14.5.2.  Authentication . . . . . . . . . . . . . . . . . . . 117
+       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 126
+   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 137
+     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 138
+     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 139
+   16. Security Considerations . . . . . . . . . . . . . . . . . . . 140
+   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 141
+   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 141
+   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 141
+   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 141
+     20.1.  Normative References . . . . . . . . . . . . . . . . . . 141
+     20.2.  Informative References . . . . . . . . . . . . . . . . . 141
+     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 142
 
 
 
@@ -226,7 +226,7 @@ Oberstein & Goedde     Expires September 20, 2017               [Page 4]
 Internet-Draft                    WAMP                        March 2017
 
 
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 141
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 142
 
 1.  Introduction
 
@@ -1113,7 +1113,7 @@ Internet-Draft                    WAMP                        March 2017
    resources such as subscriptions and registrations) on protocol errors
    caused by offending peers.
 
-
+   Following scenarios have to be considered protocol errors:
 
 
 
@@ -1122,20 +1122,61 @@ Oberstein & Goedde     Expires September 20, 2017              [Page 20]
 Internet-Draft                    WAMP                        March 2017
 
 
-   Those implementations that MIGHT have chosen to tie the lifetime of
-   the underlying transport connection for a WAMP connection to that of
-   a WAMP session MUST also close the transport connection if any
-   protocol error occurs.
+   o  Receiving "WELCOME" message, after session was established.
 
-   Following scenarios have to be considered protocol errors:
+   o  Receiving "HELLO" message, after session was established.
 
-   o  Receiving messages implicitly and clearly unexpected for the
-      current state (such as receiving "GOODBYE" if no session has been
-      established yet or receiving "ABORT" in response to "PUBLISH").
+   o  Receiving "CHALLENGE" message, after session was established.
+
+   o  Receiving "GOODBYE" message, before session was established.
+
+   o  Receiving "ERROR" message, before session was established.
+
+   o  Receiving "ERROR" message with invalid REQUEST.Type.
+
+   o  Receiving "SUBSCRIBED" message, before session was established.
+
+   o  Receiving "UNSUBSCRIBED" message, before session was established.
+
+   o  Receiving "PUBLISHED" message, before session was established.
+
+   o  Receiving "RESULT" message, before session was established.
+
+   o  Receiving "REGISTERED" message, before session was established.
+
+   o  Receiving "UNREGISTERED" message, before session was established.
+
+   o  Receiving "INVOCATION" message, before session was established.
+
+   o  Receiving protocol incompatible message, such as empty array,
+      invalid WAMP message type id, etc.
+
+   o  Catching error during message encoding/decoding.
 
    o  Any other exceptional scenario explicitly defined in any relevant
       section of this specification below (such as receiving a second
       "HELLO" within the lifetime of a session).
+
+   In all such cases WAMP implementations:
+
+   1.  MUST send an "ABORT" message to the offending peer, having reason
+       "wamp.error.protocol_violation" and optional attributes in
+       ABORT.Details such as a human readable error message.
+
+   2.  MUST close the WAMP session by disposing any allocated
+       subscriptions/registrations for that particular client and
+       without waiting for or processing any messages subsequently
+       received from the peer,
+
+   3.  SHOULD also drop the WAMP connection at transport level
+       (recommended to prevent denial of service attacks)
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 21]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 6.  Messages
 
@@ -1170,14 +1211,6 @@ Internet-Draft                    WAMP                        March 2017
 
    A "SUBSCRIBE" message has the following format
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 21]
-
-Internet-Draft                    WAMP                        March 2017
-
-
        [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
    Here is an example message conforming to the above format
@@ -1192,6 +1225,15 @@ Internet-Draft                    WAMP                        March 2017
    attributes.  Keys in "Options" and "Details" MUST be of type "string"
    and MUST match the regular expression "[a-z][a-z0-9_]{2,}" for WAMP
    predefined keys.  Implementations MAY use implementation-specific
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 22]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    keys that MUST match the regular expression "_[a-z0-9_]{3,}".
    Attributes unknown to an implementation MUST be ignored.
 
@@ -1227,13 +1269,6 @@ Internet-Draft                    WAMP                        March 2017
    additionally implement sending "PUBLISH" and receiving "PUBLISHED"
    and "ERROR" messages.
 
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 22]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 6.4.1.  Session Lifecycle
 
 6.4.1.1.  HELLO
@@ -1242,6 +1277,18 @@ Internet-Draft                    WAMP                        March 2017
    attaching to a Realm.
 
        [HELLO, Realm|uri, Details|dict]
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 23]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 6.4.1.2.  WELCOME
 
@@ -1279,17 +1326,6 @@ Internet-Draft                    WAMP                        March 2017
 
 6.4.2.  Publish & Subscribe
 
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 23]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 6.4.2.1.  PUBLISH
 
    Sent by a Publisher to a Broker to publish an event.
@@ -1301,6 +1337,14 @@ Internet-Draft                    WAMP                        March 2017
 
        [PUBLISH, Request|id, Options|dict, Topic|uri,
            Arguments|list, ArgumentsKw|dict]
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 24]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 6.4.2.2.  PUBLISHED
 
@@ -1337,19 +1381,26 @@ Internet-Draft                    WAMP                        March 2017
 
        [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 24]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 6.4.2.7.  EVENT
 
    Event dispatched by Broker to Subscribers for subscriptions the event
    was matching.
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 25]
+
+Internet-Draft                    WAMP                        March 2017
+
 
        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
            Details|dict]
@@ -1391,22 +1442,21 @@ Internet-Draft                    WAMP                        March 2017
        [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
            YIELD.ArgumentsKw|dict]
 
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 25]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 6.4.3.3.  REGISTER
 
    A Callees request to register an endpoint at a Dealer.
 
        [REGISTER, Request|id, Options|dict, Procedure|uri]
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 26]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 6.4.3.4.  REGISTERED
 
@@ -1445,25 +1495,24 @@ Internet-Draft                    WAMP                        March 2017
 
    Actual yield from an endpoint sent by a Callee to Dealer.
 
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 26]
-
-Internet-Draft                    WAMP                        March 2017
-
-
        [YIELD, INVOCATION.Request|id, Options|dict]
 
        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
 
        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
            ArgumentsKw|dict]
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 27]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 6.5.  Message Codes and Direction
 
@@ -1507,18 +1556,20 @@ Internet-Draft                    WAMP                        March 2017
    |  70 |    "YIELD"     |      |      |      |      |   Rx  |   Tx   |
    +-----+----------------+------+------+------+------+-------+--------+
 
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 27]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 6.6.  Extension Messages
 
    WAMP uses type codes from the core range [0, 255].  Implementations
    MAY define and use implementation specific messages with message type
    codes from the extension message range [256, 1023].  For example, a
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 28]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    router MAY implement router-to-router communication by using
    extension messages.
 
@@ -1563,14 +1614,17 @@ Internet-Draft                    WAMP                        March 2017
 
    3.  "ABORT"
 
+   4.  "GOODBYE"
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 28]
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 29]
 
 Internet-Draft                    WAMP                        March 2017
 
-
-   4.  "GOODBYE"
 
 7.1.  Session Establishment
 
@@ -1621,7 +1675,9 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 29]
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 30]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -1677,7 +1733,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 30]
+Oberstein & Goedde     Expires September 20, 2017              [Page 31]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -1733,7 +1789,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 31]
+Oberstein & Goedde     Expires September 20, 2017              [Page 32]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -1746,8 +1802,8 @@ Internet-Draft                    WAMP                        March 2017
 
 7.1.3.  ABORT
 
-   Both the Router and the Client may abort the opening of a WAMP
-   session by sending an "ABORT" message.
+   Both the Router and the Client may abort a WAMP session by sending an
+   "ABORT" message.
 
        [ABORT, Details|dict, Reason|uri]
 
@@ -1759,6 +1815,10 @@ Internet-Draft                    WAMP                        March 2017
       optional closing information (see below).
 
    No response to an "ABORT" message is expected.
+
+   There are few scenarios, when "ABORT" is used:
+
+   o  During session opening, if peer decided to abort connect.
 
        ,------.          ,------.
        |Client|          |Router|
@@ -1777,6 +1837,29 @@ Internet-Draft                    WAMP                        March 2017
        [3, {"message": "The realm does not exist."},
            "wamp.error.no_such_realm"]
 
+   o  After session is opened, when protocol violation happens (see
+      "Protocol errors" section).
+
+   _Examples_
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 33]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   o  Router received second HELLO message.
+
+    [3, {"message": "Received HELLO message after session was established."},
+        "wamp.error.protocol_violation"]
+
+   o  Client peer received second WELCOME message
+
+    [3, {"message": "Received WELCOME message after session was established."},
+        "wamp.error.protocol_violation"]
+
 7.2.  Session Closing
 
    A WAMP session starts its lifetime with the Router sending a
@@ -1786,13 +1869,6 @@ Internet-Draft                    WAMP                        March 2017
    from the other Peer in response.
 
        [GOODBYE, Details|dict, Reason|uri]
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 32]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    where
 
@@ -1813,6 +1889,23 @@ Internet-Draft                    WAMP                        March 2017
        |Client|          |Router|
        `------'          `------'
 
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 34]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        ,------.          ,------.
        |Client|          |Router|
        `--+---'          `--+---'
@@ -1828,37 +1921,25 @@ Internet-Draft                    WAMP                        March 2017
    _Example_. One Peer initiates closing
 
        [6, {"message": "The host is shutting down now."},
-           "wamp.error.system_shutdown"]
+           "wamp.close.system_shutdown"]
 
    and the other peer replies
 
-       [6, {}, "wamp.error.goodbye_and_out"]
+       [6, {}, "wamp.close.goodbye_and_out"]
 
    _Example_. One Peer initiates closing
 
-       [6, {}, "wamp.error.close_realm"]
+       [6, {}, "wamp.close.close_realm"]
 
    and the other peer replies
 
-       [6, {}, "wamp.error.goodbye_and_out"]
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 33]
-
-Internet-Draft                    WAMP                        March 2017
-
+       [6, {}, "wamp.close.goodbye_and_out"]
 
 7.2.1.  Difference between ABORT and GOODBYE
 
-   The differences between "ABORT" and "GOODBYE" messages are:
-
-   1.  "ABORT" gets sent only _before_ a Session is established, while
-       "GOODBYE" is sent only _after_ a Session is already established.
-
-   2.  "ABORT" is never replied to by a Peer, whereas "GOODBYE" must be
-       replied to by the receiving Peer
+   The differences between "ABORT" and "GOODBYE" messages is
+   that "ABORT" is never replied to by a Peer, whereas "GOODBYE" must be
+   replied to by the receiving Peer.
 
       Though "ABORT" and "GOODBYE" are structurally identical, using
       different message types serves to reduce overloaded meaning of
@@ -1876,32 +1957,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 34]
+Oberstein & Goedde     Expires September 20, 2017              [Page 35]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -1957,7 +2013,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 35]
+Oberstein & Goedde     Expires September 20, 2017              [Page 36]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2013,7 +2069,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 36]
+Oberstein & Goedde     Expires September 20, 2017              [Page 37]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2069,7 +2125,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 37]
+Oberstein & Goedde     Expires September 20, 2017              [Page 38]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2125,7 +2181,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 38]
+Oberstein & Goedde     Expires September 20, 2017              [Page 39]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2181,7 +2237,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 39]
+Oberstein & Goedde     Expires September 20, 2017              [Page 40]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2237,7 +2293,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 40]
+Oberstein & Goedde     Expires September 20, 2017              [Page 41]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2293,7 +2349,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 41]
+Oberstein & Goedde     Expires September 20, 2017              [Page 42]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2349,7 +2405,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 42]
+Oberstein & Goedde     Expires September 20, 2017              [Page 43]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2405,7 +2461,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 43]
+Oberstein & Goedde     Expires September 20, 2017              [Page 44]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2461,7 +2517,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 44]
+Oberstein & Goedde     Expires September 20, 2017              [Page 45]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2517,7 +2573,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 45]
+Oberstein & Goedde     Expires September 20, 2017              [Page 46]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2573,7 +2629,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 46]
+Oberstein & Goedde     Expires September 20, 2017              [Page 47]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2629,7 +2685,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 47]
+Oberstein & Goedde     Expires September 20, 2017              [Page 48]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2685,7 +2741,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 48]
+Oberstein & Goedde     Expires September 20, 2017              [Page 49]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2741,7 +2797,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 49]
+Oberstein & Goedde     Expires September 20, 2017              [Page 50]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2797,7 +2853,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 50]
+Oberstein & Goedde     Expires September 20, 2017              [Page 51]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2853,7 +2909,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 51]
+Oberstein & Goedde     Expires September 20, 2017              [Page 52]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2909,7 +2965,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 52]
+Oberstein & Goedde     Expires September 20, 2017              [Page 53]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -2965,7 +3021,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 53]
+Oberstein & Goedde     Expires September 20, 2017              [Page 54]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3021,7 +3077,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 54]
+Oberstein & Goedde     Expires September 20, 2017              [Page 55]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3077,7 +3133,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 55]
+Oberstein & Goedde     Expires September 20, 2017              [Page 56]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3115,28 +3171,30 @@ Internet-Draft                    WAMP                        March 2017
    The Peer is shutting down completely - used as a "GOODBYE" (or
    "ABORT") reason.
 
-       wamp.error.system_shutdown
+       wamp.close.system_shutdown
 
    The Peer want to leave the realm - used as a "GOODBYE" reason.
 
-       wamp.error.close_realm
+       wamp.close.close_realm
 
    A Peer acknowledges ending of a session - used as a "GOODBYE" reply
    reason.
 
-       wamp.error.goodbye_and_out
+       wamp.close.goodbye_and_out
+
+   A Peer received invalid WAMP protocol message (e.g.  "HELLO" message
+   after session was already established) - used as a "ABORT" reply
+   reason.
 
 
 
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 56]
+Oberstein & Goedde     Expires September 20, 2017              [Page 57]
 
 Internet-Draft                    WAMP                        March 2017
 
+
+       wamp.error.protocol_violation
 
 11.1.4.  Authorization
 
@@ -3184,15 +3242,15 @@ Internet-Draft                    WAMP                        March 2017
 
    A _Router_ rejected client request to disclose its identity
 
-       wamp.error.option_disallowed.disclose_me
 
 
 
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 57]
+Oberstein & Goedde     Expires September 20, 2017              [Page 58]
 
 Internet-Draft                    WAMP                        March 2017
 
+
+       wamp.error.option_disallowed.disclose_me
 
    A _Router_ encountered a network failure
 
@@ -3243,9 +3301,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 58]
+Oberstein & Goedde     Expires September 20, 2017              [Page 59]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3301,7 +3357,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 59]
+Oberstein & Goedde     Expires September 20, 2017              [Page 60]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3357,7 +3413,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 60]
+Oberstein & Goedde     Expires September 20, 2017              [Page 61]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3413,7 +3469,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 61]
+Oberstein & Goedde     Expires September 20, 2017              [Page 62]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3469,7 +3525,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 62]
+Oberstein & Goedde     Expires September 20, 2017              [Page 63]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3525,7 +3581,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 63]
+Oberstein & Goedde     Expires September 20, 2017              [Page 64]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3581,7 +3637,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 64]
+Oberstein & Goedde     Expires September 20, 2017              [Page 65]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3637,7 +3693,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 65]
+Oberstein & Goedde     Expires September 20, 2017              [Page 66]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3693,7 +3749,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 66]
+Oberstein & Goedde     Expires September 20, 2017              [Page 67]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3749,7 +3805,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 67]
+Oberstein & Goedde     Expires September 20, 2017              [Page 68]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3805,7 +3861,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 68]
+Oberstein & Goedde     Expires September 20, 2017              [Page 69]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3861,7 +3917,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 69]
+Oberstein & Goedde     Expires September 20, 2017              [Page 70]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3917,7 +3973,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 70]
+Oberstein & Goedde     Expires September 20, 2017              [Page 71]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -3973,7 +4029,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 71]
+Oberstein & Goedde     Expires September 20, 2017              [Page 72]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4029,7 +4085,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 72]
+Oberstein & Goedde     Expires September 20, 2017              [Page 73]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4085,7 +4141,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 73]
+Oberstein & Goedde     Expires September 20, 2017              [Page 74]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4141,7 +4197,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 74]
+Oberstein & Goedde     Expires September 20, 2017              [Page 75]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4197,7 +4253,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 75]
+Oberstein & Goedde     Expires September 20, 2017              [Page 76]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4253,7 +4309,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 76]
+Oberstein & Goedde     Expires September 20, 2017              [Page 77]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4309,7 +4365,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 77]
+Oberstein & Goedde     Expires September 20, 2017              [Page 78]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4365,7 +4421,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 78]
+Oberstein & Goedde     Expires September 20, 2017              [Page 79]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4421,7 +4477,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 79]
+Oberstein & Goedde     Expires September 20, 2017              [Page 80]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4477,7 +4533,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 80]
+Oberstein & Goedde     Expires September 20, 2017              [Page 81]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4533,7 +4589,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 81]
+Oberstein & Goedde     Expires September 20, 2017              [Page 82]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4589,7 +4645,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 82]
+Oberstein & Goedde     Expires September 20, 2017              [Page 83]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4645,7 +4701,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 83]
+Oberstein & Goedde     Expires September 20, 2017              [Page 84]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4701,7 +4757,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 84]
+Oberstein & Goedde     Expires September 20, 2017              [Page 85]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4757,7 +4813,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 85]
+Oberstein & Goedde     Expires September 20, 2017              [Page 86]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4813,7 +4869,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 86]
+Oberstein & Goedde     Expires September 20, 2017              [Page 87]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4869,7 +4925,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 87]
+Oberstein & Goedde     Expires September 20, 2017              [Page 88]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4925,7 +4981,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 88]
+Oberstein & Goedde     Expires September 20, 2017              [Page 89]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -4981,7 +5037,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 89]
+Oberstein & Goedde     Expires September 20, 2017              [Page 90]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5037,7 +5093,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 90]
+Oberstein & Goedde     Expires September 20, 2017              [Page 91]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5093,7 +5149,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 91]
+Oberstein & Goedde     Expires September 20, 2017              [Page 92]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5149,7 +5205,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 92]
+Oberstein & Goedde     Expires September 20, 2017              [Page 93]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5205,7 +5261,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 93]
+Oberstein & Goedde     Expires September 20, 2017              [Page 94]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5261,7 +5317,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 94]
+Oberstein & Goedde     Expires September 20, 2017              [Page 95]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5317,7 +5373,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 95]
+Oberstein & Goedde     Expires September 20, 2017              [Page 96]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5373,7 +5429,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 96]
+Oberstein & Goedde     Expires September 20, 2017              [Page 97]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5429,7 +5485,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 97]
+Oberstein & Goedde     Expires September 20, 2017              [Page 98]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5485,7 +5541,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 98]
+Oberstein & Goedde     Expires September 20, 2017              [Page 99]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5541,7 +5597,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017              [Page 99]
+Oberstein & Goedde     Expires September 20, 2017             [Page 100]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5597,7 +5653,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 100]
+Oberstein & Goedde     Expires September 20, 2017             [Page 101]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5653,7 +5709,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 101]
+Oberstein & Goedde     Expires September 20, 2017             [Page 102]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5709,7 +5765,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 102]
+Oberstein & Goedde     Expires September 20, 2017             [Page 103]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5765,7 +5821,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 103]
+Oberstein & Goedde     Expires September 20, 2017             [Page 104]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5821,7 +5877,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 104]
+Oberstein & Goedde     Expires September 20, 2017             [Page 105]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5877,7 +5933,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 105]
+Oberstein & Goedde     Expires September 20, 2017             [Page 106]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5933,7 +5989,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 106]
+Oberstein & Goedde     Expires September 20, 2017             [Page 107]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -5989,7 +6045,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 107]
+Oberstein & Goedde     Expires September 20, 2017             [Page 108]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6045,7 +6101,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 108]
+Oberstein & Goedde     Expires September 20, 2017             [Page 109]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6101,7 +6157,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 109]
+Oberstein & Goedde     Expires September 20, 2017             [Page 110]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6157,7 +6213,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 110]
+Oberstein & Goedde     Expires September 20, 2017             [Page 111]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6213,7 +6269,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 111]
+Oberstein & Goedde     Expires September 20, 2017             [Page 112]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6269,7 +6325,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 112]
+Oberstein & Goedde     Expires September 20, 2017             [Page 113]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6325,7 +6381,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 113]
+Oberstein & Goedde     Expires September 20, 2017             [Page 114]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6381,7 +6437,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 114]
+Oberstein & Goedde     Expires September 20, 2017             [Page 115]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6437,7 +6493,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 115]
+Oberstein & Goedde     Expires September 20, 2017             [Page 116]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6493,7 +6549,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 116]
+Oberstein & Goedde     Expires September 20, 2017             [Page 117]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6549,7 +6605,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 117]
+Oberstein & Goedde     Expires September 20, 2017             [Page 118]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6605,7 +6661,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 118]
+Oberstein & Goedde     Expires September 20, 2017             [Page 119]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6661,7 +6717,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 119]
+Oberstein & Goedde     Expires September 20, 2017             [Page 120]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6717,7 +6773,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 120]
+Oberstein & Goedde     Expires September 20, 2017             [Page 121]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6773,7 +6829,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 121]
+Oberstein & Goedde     Expires September 20, 2017             [Page 122]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6829,7 +6885,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 122]
+Oberstein & Goedde     Expires September 20, 2017             [Page 123]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6885,7 +6941,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 123]
+Oberstein & Goedde     Expires September 20, 2017             [Page 124]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6941,7 +6997,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 124]
+Oberstein & Goedde     Expires September 20, 2017             [Page 125]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -6997,7 +7053,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 125]
+Oberstein & Goedde     Expires September 20, 2017             [Page 126]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7053,7 +7109,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 126]
+Oberstein & Goedde     Expires September 20, 2017             [Page 127]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7109,7 +7165,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 127]
+Oberstein & Goedde     Expires September 20, 2017             [Page 128]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7165,7 +7221,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 128]
+Oberstein & Goedde     Expires September 20, 2017             [Page 129]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7221,7 +7277,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 129]
+Oberstein & Goedde     Expires September 20, 2017             [Page 130]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7277,7 +7333,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 130]
+Oberstein & Goedde     Expires September 20, 2017             [Page 131]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7333,7 +7389,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 131]
+Oberstein & Goedde     Expires September 20, 2017             [Page 132]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7389,7 +7445,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 132]
+Oberstein & Goedde     Expires September 20, 2017             [Page 133]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7445,7 +7501,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 133]
+Oberstein & Goedde     Expires September 20, 2017             [Page 134]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7501,7 +7557,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 134]
+Oberstein & Goedde     Expires September 20, 2017             [Page 135]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7557,7 +7613,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 135]
+Oberstein & Goedde     Expires September 20, 2017             [Page 136]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7613,7 +7669,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 136]
+Oberstein & Goedde     Expires September 20, 2017             [Page 137]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7669,7 +7725,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 137]
+Oberstein & Goedde     Expires September 20, 2017             [Page 138]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7725,7 +7781,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 138]
+Oberstein & Goedde     Expires September 20, 2017             [Page 139]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7781,7 +7837,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 139]
+Oberstein & Goedde     Expires September 20, 2017             [Page 140]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7837,7 +7893,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 140]
+Oberstein & Goedde     Expires September 20, 2017             [Page 141]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7893,4 +7949,4 @@ Authors' Addresses
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 141]
+Oberstein & Goedde     Expires September 20, 2017             [Page 142]

@@ -605,14 +605,35 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <section anchor="protocol_errors" title="Protocol errors">
 <t>WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
 </t>
-<t>Those implementations that MIGHT have chosen to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session MUST also close the transport connection if any protocol error occurs.
-</t>
 <t>Following scenarios have to be considered protocol errors:
 </t>
 <t>
 <list style="symbols">
-<t>Receiving messages implicitly and clearly unexpected for the current state (such as receiving <spanx style="verb">GOODBYE</spanx> if no session has been established yet or receiving <spanx style="verb">ABORT</spanx> in response to <spanx style="verb">PUBLISH</spanx>).</t>
+<t>Receiving <spanx style="verb">WELCOME</spanx> message, after session was established.</t>
+<t>Receiving <spanx style="verb">HELLO</spanx> message, after session was established.</t>
+<t>Receiving <spanx style="verb">CHALLENGE</spanx> message, after session was established.</t>
+<t>Receiving <spanx style="verb">GOODBYE</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">ERROR</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">ERROR</spanx> message with invalid REQUEST.Type.</t>
+<t>Receiving <spanx style="verb">SUBSCRIBED</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">UNSUBSCRIBED</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">PUBLISHED</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">RESULT</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">REGISTERED</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">UNREGISTERED</spanx> message, before session was established.</t>
+<t>Receiving <spanx style="verb">INVOCATION</spanx> message, before session was established.</t>
+<t>Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.</t>
+<t>Catching error during message encoding/decoding.</t>
 <t>Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second <spanx style="verb">HELLO</spanx> within the lifetime of a session).</t>
+</list>
+</t>
+<t>In all such cases WAMP implementations:
+</t>
+<t>
+<list style="numbers">
+<t>MUST send an <spanx style="verb">ABORT</spanx> message to the offending peer, having reason <spanx style="verb">wamp.error.protocol_violation</spanx> and optional attributes in ABORT.Details such as a human readable error message.</t>
+<t>MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,</t>
+<t>SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)</t>
 </list>
 </t>
 </section>
@@ -1148,7 +1169,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </section>
 
 <section anchor="abort-1" title="ABORT">
-<t>Both the Router and the Client may abort the opening of a WAMP session by sending an <spanx style="verb">ABORT</spanx> message.
+<t>Both the Router and the Client may abort a WAMP session by sending an <spanx style="verb">ABORT</spanx> message.
 </t>
 
 <figure align="left"><artwork align="left">
@@ -1163,6 +1184,13 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </list>
 </t>
 <t>No response to an <spanx style="verb">ABORT</spanx> message is expected.
+</t>
+<t>There are few scenarios, when <spanx style="verb">ABORT</spanx> is used:
+</t>
+<t>
+<list style="symbols">
+<t>During session opening, if peer decided to abort connect.</t>
+</list>
 </t>
 
 <figure align="left"><artwork align="left">
@@ -1184,6 +1212,33 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <figure align="left"><artwork align="left">
     [3, {"message": "The realm does not exist."},
         "wamp.error.no_such_realm"]
+</artwork></figure>
+<t>
+<list style="symbols">
+<t>After session is opened, when protocol violation happens (see &quot;Protocol errors&quot; section).</t>
+</list>
+</t>
+<t><spanx style="emph">Examples</spanx>
+</t>
+<t>
+<list style="symbols">
+<t>Router received second HELLO message.</t>
+</list>
+</t>
+
+<figure align="left"><artwork align="left">
+    [3, {"message": "Received HELLO message after session was established."},
+        "wamp.error.protocol_violation"]
+</artwork></figure>
+<t>
+<list style="symbols">
+<t>Client peer received second WELCOME message</t>
+</list>
+</t>
+
+<figure align="left"><artwork align="left">
+    [3, {"message": "Received WELCOME message after session was established."},
+        "wamp.error.protocol_violation"]
 </artwork></figure>
 </section>
 </section>
@@ -1236,35 +1291,29 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 
 <figure align="left"><artwork align="left">
     [6, {"message": "The host is shutting down now."},
-        "wamp.error.system_shutdown"]
+        "wamp.close.system_shutdown"]
 </artwork></figure>
 <t>and the other peer replies
 </t>
 
 <figure align="left"><artwork align="left">
-    [6, {}, "wamp.error.goodbye_and_out"]
+    [6, {}, "wamp.close.goodbye_and_out"]
 </artwork></figure>
 <t><spanx style="emph">Example</spanx>. One Peer initiates closing
 </t>
 
 <figure align="left"><artwork align="left">
-    [6, {}, "wamp.error.close_realm"]
+    [6, {}, "wamp.close.close_realm"]
 </artwork></figure>
 <t>and the other peer replies
 </t>
 
 <figure align="left"><artwork align="left">
-    [6, {}, "wamp.error.goodbye_and_out"]
+    [6, {}, "wamp.close.goodbye_and_out"]
 </artwork></figure>
 
 <section anchor="difference-between-abort-and-goodbye" title="Difference between ABORT and GOODBYE">
-<t>The differences between <spanx style="verb">ABORT</spanx> and <spanx style="verb">GOODBYE</spanx> messages are:
-</t>
-<t>
-<list style="numbers">
-<t><spanx style="verb">ABORT</spanx> gets sent only <spanx style="emph">before</spanx> a Session is established, while <spanx style="verb">GOODBYE</spanx> is sent only <spanx style="emph">after</spanx> a Session is already established.</t>
-<t><spanx style="verb">ABORT</spanx> is never replied to by a Peer, whereas <spanx style="verb">GOODBYE</spanx> must be replied to by the receiving Peer</t>
-</list>
+<t>The differences between <spanx style="verb">ABORT</spanx> and <spanx style="verb">GOODBYE</spanx> messages is that <spanx style="verb">ABORT</spanx> is never replied to by a Peer, whereas <spanx style="verb">GOODBYE</spanx> must be replied to by the receiving Peer.
 </t>
 <t><list style="empty">
 <t>Though <spanx style="verb">ABORT</spanx> and <spanx style="verb">GOODBYE</spanx> are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
@@ -2380,19 +2429,25 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </t>
 
 <figure align="left"><artwork align="left">
-    wamp.error.system_shutdown
+    wamp.close.system_shutdown
 </artwork></figure>
 <t>The Peer want to leave the realm - used as a <spanx style="verb">GOODBYE</spanx> reason.
 </t>
 
 <figure align="left"><artwork align="left">
-    wamp.error.close_realm
+    wamp.close.close_realm
 </artwork></figure>
 <t>A Peer acknowledges ending of a session - used as a <spanx style="verb">GOODBYE</spanx> reply reason.
 </t>
 
 <figure align="left"><artwork align="left">
-    wamp.error.goodbye_and_out
+    wamp.close.goodbye_and_out
+</artwork></figure>
+<t>A Peer received invalid WAMP protocol message (e.g. <spanx style="verb">HELLO</spanx> message after session was already established) - used as a <spanx style="verb">ABORT</spanx> reply reason.
+</t>
+
+<figure align="left"><artwork align="left">
+    wamp.error.protocol_violation
 </artwork></figure>
 </section>
 
