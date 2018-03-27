@@ -13,7 +13,6 @@ If the *Dealer* and the *Callee* support **pattern-based registrations**, this m
 * **prefix-matching policy**
 * **wildcard-matching policy**
 
-
 ##### Prefix Matching
 
 A *Callee* requests **prefix-matching policy** with a registration request by setting
@@ -101,7 +100,37 @@ E.g. a *Callee* cannot register to a broad pattern, and then unregister from a s
 
 ###### Calls matching multiple registrations
 
-The behavior when a single call matches more than one of a *Callee's* registrations or more than one registration in general is still being discussed.
+There can be situations, when some call uri match more then one registration. In this case
+RPC CALL can be routed to one and only one best matched RPC registration or will fail with ERROR `wamp.error.no_such_procedure`.
+
+In general, next algorithm MUST be applied for finding RPC registrations to which call should be routed:
+
+1. Check for exact matching registration. If it exists — use it.
+2. If there are prefix-based registrations, then try to find registration with longest prefix match. Longest mean it has more URI components matched, e.g. for call uri `a1.b2.c3.d4` registration `a1.b2.c3` has higher priority then registration `a1.b2`. If it exists — use it.
+3. If there are wildcard-based registrations, then try to find registration with longest portion of URI components matched before each wildcard. E.g. for call uri `a1.b2.c3.d4` registration `a1.b2..d4` has higher priority then registration `a1...d4`, see more complex examples below. If it exists — use it.
+4. If there are no exact match, no prefix match, no wildcard match, then DEALER MUST return ERROR `wamp.error.no_such_procedure`.
+
+*Examples*
+
+{align="left"}
+```
+Registered RPCs:
+    1. 'a1.b2.c3.d4.e55' (exact),
+    2. 'a1.b2.c3' (prefix),
+    3. 'a1.b2.c3.d4' (prefix),
+    4. 'a1.b2..d4.e5',
+    5. 'a1.b2.c3..e5',
+    6. 'a1.b2..d4.e5..g7',
+    7. 'a1.b2..d4..f6.g7'
+
+Call request RPC URI: 'a1.b2.c3.d4.e55' → exact matching. Use RPC 1
+Call request RPC URI: 'a1.b2.c3.d98.e74' → no exact match, single prefix match. Use RPC 2
+Call request RPC URI: 'a1.b2.c3.d4.e325' → no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+Call request RPC URI: 'a1.b2.c55.d4.e5' → no exact match, no prefix match, single wildcard match. Use RPC 4
+Call request RPC URI: 'a1.b2.c3.d4.e5' → no exact match, no prefix match, 2 wildcard matches (4,5), select longest one. Use RPC 5
+Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' → no exact match, no prefix match, 2 wildcard matches (6,7), both having equal first portions (a1.b2), but RPC 6 has longer second portion (d4.e5). Use RPC 6
+Call request RPC URI: 'a2.b2.c2.d2.e2' → no exact match, no prefix match, no wildcard match. Return wamp.error.no_such_procedure
+```
 
 ###### Concrete procedure called
 
