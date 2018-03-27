@@ -13,7 +13,6 @@ If the *Dealer* and the *Callee* support **pattern-based registrations**, this m
 * **prefix-matching policy**
 * **wildcard-matching policy**
 
-
 ##### Prefix Matching
 
 A *Callee* requests **prefix-matching policy** with a registration request by setting
@@ -101,7 +100,8 @@ E.g. a *Callee* cannot register to a broad pattern, and then unregister from a s
 
 ###### Calls matching multiple registrations
 
-There can be situations, when some call uri match more then one registration.
+There can be situations, when some call uri match more then one registration. In this case
+RPC CALL can be routed to one and only one best matched RPC registration or will fail with ERROR `wamp.error.no_such_procedure`.
 
 In general, next algorithm MUST be applied for finding RPC registrations to which call should be routed:
 
@@ -123,13 +123,13 @@ Registered RPCs:
     6. 'a1.b2..d4.e5..g7',
     7. 'a1.b2..d4..f6.g7'
 
-
 Call request RPC URI: 'a1.b2.c3.d4.e55' → exact matching. Use RPC 1
 Call request RPC URI: 'a1.b2.c3.d98.e74' → no exact match, single prefix match. Use RPC 2
 Call request RPC URI: 'a1.b2.c3.d4.e325' → no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
 Call request RPC URI: 'a1.b2.c55.d4.e5' → no exact match, no prefix match, single wildcard match. Use RPC 4
 Call request RPC URI: 'a1.b2.c3.d4.e5' → no exact match, no prefix match, 2 wildcard matches (4,5), select longest one. Use RPC 5
 Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' → no exact match, no prefix match, 2 wildcard matches (6,7), both having equal first portions (a1.b2), but RPC 6 has longer second portion (d4.e5). Use RPC 6
+Call request RPC URI: 'a2.b2.c2.d2.e2' → no exact match, no prefix match, no wildcard match. Return wamp.error.no_such_procedure
 ```
 
 ###### Concrete procedure called
