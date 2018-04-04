@@ -122,13 +122,24 @@ Registered RPCs:
     6. 'a1.b2..d4.e5..g7',
     7. 'a1.b2..d4..f6.g7'
 
-Call request RPC URI: 'a1.b2.c3.d4.e55' → exact match. Use RPC 1
-Call request RPC URI: 'a1.b2.c3.d98.e74' → no exact match, single prefix match. Use RPC 2
-Call request RPC URI: 'a1.b2.c3.d4.e325' → no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
-Call request RPC URI: 'a1.b2.c55.d4.e5' → no exact match, no prefix match, single wildcard match. Use RPC 4
-Call request RPC URI: 'a1.b2.c3.d4.e5' → no exact match, no prefix match, 2 wildcard matches (4,5), select longest one. Use RPC 5
-Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' → no exact match, no prefix match, 2 wildcard matches (6,7), both having equal first portions (a1.b2), but RPC 6 has longer second portion (d4.e5). Use RPC 6
-Call request RPC URI: 'a2.b2.c2.d2.e2' → no exact match, no prefix match, no wildcard match. Return wamp.error.no_such_procedure
+Call request RPC URI: 'a1.b2.c3.d4.e55' → 
+    exact match. Use RPC 1
+Call request RPC URI: 'a1.b2.c3.d98.e74' → 
+    no exact match, single prefix match. Use RPC 2
+Call request RPC URI: 'a1.b2.c3.d4.e325' → 
+    no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+Call request RPC URI: 'a1.b2.c55.d4.e5' → 
+    no exact match, no prefix match, single wildcard match. Use RPC 4
+Call request RPC URI: 'a1.b2.c3.d4.e5' → 
+    no exact match, no prefix match, 2 wildcard matches (4,5), 
+    select longest one. Use RPC 5
+Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' → 
+    no exact match, no prefix match, 2 wildcard matches (6,7), 
+    both having equal first portions (a1.b2), but RPC 6 has longer 
+    second portion (d4.e5). Use RPC 6
+Call request RPC URI: 'a2.b2.c2.d2.e2' → 
+    no exact match, no prefix match, no wildcard match. 
+    Return wamp.error.no_such_procedure
 ```
 
 ###### Concrete procedure called
