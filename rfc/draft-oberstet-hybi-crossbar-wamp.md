@@ -229,6 +229,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{rfc/text/advanced/ap_authentication_ticket.md}}
 
+{{rfc/text/advanced/ap_authentication_scram.md}}
+
 
 {{rfc/text/advanced/ap_transports.md}}
 

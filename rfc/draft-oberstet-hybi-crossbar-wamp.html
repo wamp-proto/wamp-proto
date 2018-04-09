@@ -5675,6 +5675,405 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 
 <p> </p>
 <p id="rfc.section.14.5.2.4.p.14">The <samp>WELCOME.Details</samp> again contain the actual authentication information active. If the authentication fails, the server will response with an <samp>ABORT</samp> message.  </p>
+<h1 id="rfc.section.14.5.2.5"><a href="#rfc.section.14.5.2.5">14.5.2.5.</a> <a href="#wamp-scram" id="wamp-scram">Salted Challenge Response Authentication Mechanism</a></h1>
+<p id="rfc.section.14.5.2.5.p.1">The WAMP Salted Challenge Response Authentication Mechanism ("WAMP-SCRAM"), is a password-based authentication method where the shared secret is neither transmitted nor stored as cleartext. WAMP-SCRAM is based on <a href="https://tools.ietf.org/html/rfc5802">RFC5802</a> (<em>Salted Challenge Response Authentication Mechanism</em>) and <a href="https://tools.ietf.org/html/rfc7677">RFC7677</a> (<em>SCRAM-SHA-256 and SCRAM-SHA-256-PLUS</em>).  </p>
+<p id="rfc.section.14.5.2.5.p.2">WAMP-SCRAM supports the Argon2 (<a href="https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/">draft-irtf-cfrg-argon2</a>) password-based key derivation function, a memory-hard algorithm intended to resist cracking on GPU hardware. PBKDF2 (<a href="https://tools.ietf.org/html/rfc2898">RFC2898</a>) is also supported for applications that are required to use primitives currently approved by cryptographic standards.  </p>
+<h1 id="rfc.section.14.5.2.5.1"><a href="#rfc.section.14.5.2.5.1">14.5.2.5.1.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
+<p id="rfc.section.14.5.2.5.1.p.1">With WAMP-SCRAM, if the authentication database is stolen, an attacker cannot impersonate a user unless they guess the password offline by brute force.  </p>
+<p id="rfc.section.14.5.2.5.1.p.2">In the event that the server's authentication database is stolen, and the attacker either eavesdrops on one authentication exchange or impersonates a server, the attacker gains the ability to impersonate that particular user on that server. If the same salt is used on other servers, the attacker would gain the ability to impersonate that user on all servers using the same salt. That's why it's important to use a per-user random salt.  </p>
+<p id="rfc.section.14.5.2.5.1.p.3">An evesdropper that captures a user anthentication exchange has enough information to mount an offline, brute-force dictionary attack for that particular user. If passwords are sufficiently strong, the cost/time needed to crack a password becomes prohibitive.  </p>
+<p id="rfc.section.14.5.2.5.1.p.4">Note that when HTML/Javascript assets are served to a web browser, WAMP-SCRAM does not safeguard against a man-in-the-middle tampering with those assets. Those assets could be tampered with in a way that captures the user's password and sends it to the attacker.  </p>
+<p id="rfc.section.14.5.2.5.1.p.5">In light of the above security concerns, a secure TLS transport is therefore advised to prevent such attacks. The channel binding feature of SCRAM can be used to ensure that the TLS endpoints are the same between client and router.  </p>
+<h1 id="rfc.section.14.5.2.5.2"><a href="#rfc.section.14.5.2.5.2">14.5.2.5.2.</a> <a href="#deviations-from-rfc5802" id="deviations-from-rfc5802">Deviations from RFC5802</a></h1>
+<p/>
+
+<ol>
+  <li>To simplify parsing, SCRAM attributes in the authentication exchange messages are encoded as members of the <samp>Options</samp>/<samp>Details</samp> objects without escaping the <samp>,</samp> and <samp>=</samp> characters. However, the <samp>AuthMessage</samp> used to compute the client and server signatures DOES use the exact syntax specified in <a href="https://tools.ietf.org/html/rfc5802#section-7">RFC5802, section 7</a>. This makes it possible to use existing test vectors to verify WAMP-SCRAM implementations.</li>
+  <li>Hashing based on the weaker SHA-1 specified in <a href="https://tools.ietf.org/html/rfc5802">RFC5802</a> is intentionally not supported by WAMP-SCRAM, in favor of the stronger SHA-256 specified in <a href="https://tools.ietf.org/html/rfc7677">RFC7677</a>.</li>
+  <li>The <a href="https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2">Argon2</a> key derivation function MAY be used instead of PBKDF2.</li>
+  <li>Nonces are required to be base64-encoded, which is stricter than the <samp>printable</samp> syntax specification of <a href="https://tools.ietf.org/html/rfc5802">RFC5802</a>.</li>
+  <li>The <samp>"y"</samp> channel binding flag is not used as there is currently no standard way for WAMP routers to announce channel binding capabilities.</li>
+  <li>The use of <samp>authzid</samp> for user impersonation is not supported.</li>
+</ol>
+
+<p> </p>
+<h1 id="rfc.section.14.5.2.5.3"><a href="#rfc.section.14.5.2.5.3">14.5.2.5.3.</a> <a href="#authmethod-type-string" id="authmethod-type-string">authmethod Type String</a></h1>
+<p><samp>"wamp-scram"</samp> SHALL be used as the <samp>authmethod</samp> type string for WAMP-SCRAM authentication. Announcement by routers of WAMP-SCRAM support is outside the scope of this document.  </p>
+<h1 id="rfc.section.14.5.2.5.4"><a href="#rfc.section.14.5.2.5.4">14.5.2.5.4.</a> <a href="#conventions" id="conventions">Conventions</a></h1>
+<h1 id="rfc.section.14.5.2.5.4.1"><a href="#rfc.section.14.5.2.5.4.1">14.5.2.5.4.1.</a> <a href="#base64-encoding" id="base64-encoding">Base64 encoding</a></h1>
+<p id="rfc.section.14.5.2.5.4.1.p.1">Base64 encoding of octet strings is restricted to canonical form with no whitespace, as defined in <a href="https://tools.ietf.org/html/rfc4648">RFC4648</a> (<em>The Base16, Base32, and Base64 Data Encodings</em>).  </p>
+<h1 id="rfc.section.14.5.2.5.4.2"><a href="#rfc.section.14.5.2.5.4.2">14.5.2.5.4.2.</a> <a href="#nonces" id="nonces">Nonces</a></h1>
+<p id="rfc.section.14.5.2.5.4.2.p.1">In WAMP-SCRAM, a <em>nonce</em> (number used once) is a base64-encoded sequence of random octets. It SHOULD be of sufficient length to make a replay attack unfeasible. A length of 16 octets (128 bits) is recommended for each of the client and server-generated nonces.  </p>
+<p id="rfc.section.14.5.2.5.4.2.p.2">See <a href="https://tools.ietf.org/html/rfc4086">RFC4086</a> (<em>Randomness Requirements for Security</em>) for best practices concerning randomness.  </p>
+<h1 id="rfc.section.14.5.2.5.4.3"><a href="#rfc.section.14.5.2.5.4.3">14.5.2.5.4.3.</a> <a href="#salts" id="salts">Salts</a></h1>
+<p id="rfc.section.14.5.2.5.4.3.p.1">A <em>salt</em> is a base64-encoded sequence of random octets.  </p>
+<p id="rfc.section.14.5.2.5.4.3.p.2">To prevent rainbow table attacks in the event of database theft, the salt MUST be generated randomly by the server <strong>for each user</strong>. The random salt is stored with each user record in the authentication database.  </p>
+<h1 id="rfc.section.14.5.2.5.4.4"><a href="#rfc.section.14.5.2.5.4.4">14.5.2.5.4.4.</a> <a href="#usernamepassword-string-normalization" id="usernamepassword-string-normalization">Username/Password String Normalization</a></h1>
+<p id="rfc.section.14.5.2.5.4.4.p.1">Username and password strings SHALL be normalized according to the <em>SASLprep</em> profile described in <a href="https://tools.ietf.org/html/rfc4013">RFC4013</a>, using the <em>stringprep</em> algorithm described in <a href="https://tools.ietf.org/html/rfc3454">RFC3454</a>.  </p>
+<p id="rfc.section.14.5.2.5.4.4.p.2">While SASLprep preserves the case of usernames, the server MAY choose to perform case insensitve comparisons when searching for a username in the authentication database.  </p>
+<h1 id="rfc.section.14.5.2.5.5"><a href="#rfc.section.14.5.2.5.5">14.5.2.5.5.</a> <a href="#channel-binding" id="channel-binding">Channel Binding</a></h1>
+<p><em>Channel binding</em> is a feature that allows a higher layer to establish that the other end of an underlying secure channel is bound to its higher layer counterpart. See <a href="https://tools.ietf.org/html/rfc5056">RFC5056</a> (<em>On the Use of Channel Bindings</em>) for an in-depth discussion.  </p>
+<p><a href="https://tools.ietf.org/html/rfc5929">RFC5929</a> defines binding types for use with TLS transports, of which <samp>tls-unique</samp> and <samp>tls-server-end-point</samp> are applicable for WAMP-SCRAM. For each channel binding type, there is a corresponding definition of the <em>channel binding data</em> that must be sent in response to the authentication challenge.  </p>
+<p id="rfc.section.14.5.2.5.5.p.3">Negotiation and announcement of channel binding is outside the scope of this document. <a href="https://tools.ietf.org/html/rfc5929#section-6">RFC5929 section 6</a> recommends that application protocols use <samp>tls-unique</samp> exclusively, except perhaps where server-side proxies are commonly deployed.  </p>
+<p id="rfc.section.14.5.2.5.5.p.4">Note that WAMP-SCRAM channel binding is not generally possible with web browser clients due to the lack of a suitable API for this purpose.  </p>
+<h1 id="rfc.section.14.5.2.5.5.1"><a href="#rfc.section.14.5.2.5.5.1">14.5.2.5.5.1.</a> <a href="#the-tlsunique-channel-binding-type" id="the-tlsunique-channel-binding-type">The tls-unique Channel Binding Type</a></h1>
+<p id="rfc.section.14.5.2.5.5.1.p.1">The <samp>tls-unique</samp> channel binding type allows the WAMP layer to establish that the other peer is authenticating over the same, unique TLS connection. The channel binding data for this type corresponds to the bytes of the first TLS Finished message, as described in <a href="https://tools.ietf.org/html/rfc5929#section-3">RFC5929, section 3</a>. <a href="https://tools.ietf.org/html/rfc5929#section-10.2">RFC5929 section 10.2</a> addresses the concern of disclosing this data over the TLS channel (in short, the TLS Finished message would already be visible to evesdroppers).  </p>
+<p id="rfc.section.14.5.2.5.5.1.p.2">To safeguard against the <em>triple handshake attack</em> described in <a href="https://tools.ietf.org/html/rfc7627">RFC7627</a>, this channel binding type MUST be used over a TLS channel that uses the <em>extended master secret</em> extension, or over a TLS channel where session resumption is not permitted.  </p>
+<h1 id="rfc.section.14.5.2.5.5.2"><a href="#rfc.section.14.5.2.5.5.2">14.5.2.5.5.2.</a> <a href="#the-tlsserverendpoint-channel-binding-type" id="the-tlsserverendpoint-channel-binding-type">The tls-server-end-point Channel Binding Type</a></h1>
+<p id="rfc.section.14.5.2.5.5.2.p.1">The <samp>tls-server-end-point</samp> channel binding type allows the WAMP layer to establish that the other peer is authenticating over a TLS connection to a server having been issued a Public Key Infrastructure Certificate. The channel binding data for this type is a hash of the TLS server's certificate, computed as described in <a href="https://tools.ietf.org/html/rfc5929#section-4.1">RFC5929, section 4.1</a>. The certificate is hashed to accomodate memory-constrained implementations.  </p>
+<h1 id="rfc.section.14.5.2.5.6"><a href="#rfc.section.14.5.2.5.6">14.5.2.5.6.</a> <a href="#authentication-exchange" id="authentication-exchange">Authentication Exchange</a></h1>
+<p id="rfc.section.14.5.2.5.6.p.1">WAMP-SCRAM uses a single round of challenge/response pairs after the client authentication request and before the authentication outcome.  </p>
+<p id="rfc.section.14.5.2.5.6.p.2">The mapping of RFC5802 messages to WAMP messages is as follows: </p>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <thead>
+    <tr>
+      <th class="center">SCRAM Message</th>
+      <th class="center">WAMP Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="center">
+        <samp>client-first-message</samp>
+      </td>
+      <td class="center">
+        <samp>HELLO</samp>
+      </td>
+    </tr>
+    <tr>
+      <td class="center">
+        <samp>server-first-message</samp>
+      </td>
+      <td class="center">
+        <samp>CHALLENGE</samp>
+      </td>
+    </tr>
+    <tr>
+      <td class="center">
+        <samp>client-final-message</samp>
+      </td>
+      <td class="center">
+        <samp>AUTHENTICATE</samp>
+      </td>
+    </tr>
+    <tr>
+      <td class="center"><samp>server-final-message</samp> with <samp>verifier</samp></td>
+      <td class="center">
+        <samp>WELCOME</samp>
+      </td>
+    </tr>
+    <tr>
+      <td class="center"><samp>server-final-message</samp> with <samp>server-error</samp></td>
+      <td class="center">
+        <samp>ABORT</samp>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.section.14.5.2.5.6.1"><a href="#rfc.section.14.5.2.5.6.1">14.5.2.5.6.1.</a> <a href="#initial-client-authentication-message" id="initial-client-authentication-message">Initial Client Authentication Message</a></h1>
+<p id="rfc.section.14.5.2.5.6.1.p.1">WAMP-SCRAM authentication begins with the client sending a <samp>HELLO</samp> message specifying the <samp>wamp-scram</samp> method as (one of) the authentication methods: </p>
+<pre>
+    [1, "realm1",
+        {
+            "roles": ...,
+            "authmethods": ["wamp-scram"],
+            "authid": "user",
+            "authextra":
+                {
+                    "nonce": "egVDf3DMJh0=",
+                    "channel_binding": null
+                }
+
+        }
+    ]
+</pre>
+<p id="rfc.section.14.5.2.5.6.1.p.2">where: </p>
+<p/>
+
+<ol>
+  <li><samp>authid|string</samp>: The identity of the user performing authentication. This corresponds to the <samp>username</samp> parameter in RFC5802.</li>
+  <li><samp>authextra.nonce|string</samp>: A base64-encoded sequence of random octets, generated by the client. See <a href="#nonces">Section 14.5.2.5.4.2</a>.</li>
+  <li><samp>authextra.channel_binding|string</samp>: Optional string containing the desired channel binding type. See <a href="#channel-binding">Section 14.5.2.5.5</a>.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.14.5.2.5.6.1.p.4">Upon receiving the <samp>HELLO</samp> message, the server MUST terminate the authentication process by sending an <samp>ABORT</samp> message under any of the following circumstances: </p>
+<p/>
+
+<ul>
+  <li>The server does not support the WAMP-SCRAM <samp>authmethods</samp>, and there are no other methods left that the server supports for this <samp>authid</samp>.</li>
+  <li>The the server does not support the requested <samp>channel_binding</samp> type.</li>
+  <li>(Optional) The server does not recognize the given <samp>authid</samp>. In this case, the server MAY proceed with a mock <samp>CHALLENGE</samp> message to avoid leaking information on the existence of usernames. This mock <samp>CHALLENGE</samp> SHOULD contain a generated <samp>salt</samp> value that is always the same for a given <samp>authid</samp>, otherwise an attacker may discover that the user doesn't actually exist.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.14.5.2.5.6.2"><a href="#rfc.section.14.5.2.5.6.2">14.5.2.5.6.2.</a> <a href="#initial-server-authentication-message" id="initial-server-authentication-message">Initial Server Authentication Message</a></h1>
+<p id="rfc.section.14.5.2.5.6.2.p.1">If none of the above failure conditions apply, and the server is ready to let the client authenticate using WAMP-SCRAM, then it SHALL send a <samp>CHALLENGE</samp> message: </p>
+<pre>
+    [4, "wamp-scram",
+        {
+            "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
+            "salt": "aBc+fx0NAVA=",
+            "kdf": "pbkdf2",
+            "iterations": 4096,
+            "memory": null
+        }
+    ]
+</pre>
+<p id="rfc.section.14.5.2.5.6.2.p.2">where: </p>
+<p/>
+
+<ol>
+  <li><samp>nonce|string</samp>: A server-generatated nonce that is appended to the client-generated nonce sent in the previous <samp>HELLO</samp> message. See <a href="#nonces">Section 14.5.2.5.4.2</a>.</li>
+  <li><samp>salt|string</samp>: The base64-encoded salt for this user, to be passed to the key derivation function. This value is stored with each user record in the authentication database. See <a href="#salts">Section 14.5.2.5.4.3</a>.</li>
+  <li><samp>kdf</samp>: The key derivation function (KDF) used to hash the password. This value is stored with each user record in the authentication database. See <a href="#key-derivation-functions">Section 14.5.2.5.8</a>.</li>
+  <li><samp>iterations|integer</samp>: The execution time cost factor to use for generating the <samp>SaltedPassword</samp> hash. This value is stored with each user record in the authentication database.</li>
+  <li><samp>memory|integer</samp>: The memory cost factor to use for generating the <samp>SaltedPassword</samp> hash. This is only used by the Argon2 key derivation function, where it is stored with each user record in the authentication database.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.14.5.2.5.6.2.p.4">The client MUST respond with an ABORT message if <samp>CHALLENGE.Details.nonce</samp> does not begin with the client nonce sent in <samp>HELLO.Details.nonce</samp>.  </p>
+<p id="rfc.section.14.5.2.5.6.2.p.5">The client SHOULD respond with an ABORT message if it detects that the cost parameters are unusually low. Such low-cost parameters could be the result of a rogue server attempting to obtain a weak password hash that can be easily cracked. What constitutes unusually low parameters is implementation-specific and is not covered by this document.  </p>
+<h1 id="rfc.section.14.5.2.5.6.3"><a href="#rfc.section.14.5.2.5.6.3">14.5.2.5.6.3.</a> <a href="#final-client-authentication-message" id="final-client-authentication-message">Final Client Authentication Message</a></h1>
+<p id="rfc.section.14.5.2.5.6.3.p.1">Upon receiving a valid <samp>CHALLENGE</samp> message, the client SHALL respond with an <samp>AUTHENTICATE</samp> message: </p>
+<pre>
+    [5, "dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ=",
+        {
+            "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
+            "channel_binding": null,
+            "cbind_data": null
+        }
+    ]
+</pre>
+<p id="rfc.section.14.5.2.5.6.3.p.2">where: </p>
+<p/>
+
+<ol>
+  <li><samp>Signature|string</samp> argument: The base64-encoded <samp>ClientProof</samp>, computed as described in the <a href="#scram-algorithms">Section 14.5.2.5.7</a> section.</li>
+  <li><samp>nonce|string</samp>: The concatenated client-server nonce from the previous <samp>CHALLENGE</samp> message.</li>
+  <li><samp>channel_binding|string</samp>: Optional string containing the channel binding type that was sent in the original <samp>HELLO</samp> message.</li>
+  <li><samp>cbind_data|string</samp>: Optional base64-encoded channel binding data. MUST be present if and only if <samp>channel_binding</samp> is not <samp>null</samp>. The format of the binding data is dependent on the binding type. See <a href="#channel-binding">Section 14.5.2.5.5</a>.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.14.5.2.5.6.3.p.4">Upon receiving the <samp>AUTHENTICATE</samp> message, the server SHALL then check that: </p>
+<p/>
+
+<ul>
+  <li>The <samp>AUTHENTICATE</samp> message was received in due time.</li>
+  <li>The <samp>ClientProof</samp> passed via the <samp>Signature|string</samp> argument is validated against the <samp>StoredKey</samp> and <samp>ServerKey</samp> stored in the authentication database. See <a href="#scram-algorithms">Section 14.5.2.5.7</a>.</li>
+  <li><samp>nonce</samp> matches the one previously sent via <samp>CHALLENGE</samp>.</li>
+  <li>The <samp>channel_binding</samp> matches the one sent in the <samp>HELLO</samp> message.</li>
+  <li>The <samp>cbind_data</samp> sent by the client matches the channel binding data that the server sees on its side of the channel.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.14.5.2.5.6.4"><a href="#rfc.section.14.5.2.5.6.4">14.5.2.5.6.4.</a> <a href="#final-server-authentication-message--success" id="final-server-authentication-message--success">Final Server Authentication Message - Success</a></h1>
+<p id="rfc.section.14.5.2.5.6.4.p.1">If the authentication succeeds, the server SHALL finally respond with a <samp>WELCOME</samp> message: </p>
+<pre>
+    [2, 3251278072152162,
+        {
+            "authid": "user",
+            "authrole": "frontend",
+            "authmethod": "wamp-scram",
+            "authprovider": "static",
+            "roles": ...,
+            "authextra":
+                {
+                    "verifier":
+                      "v=6rriTRBi23WpRR/wtup+mMhUZUn/dB5nLTJRsjl95G4="
+                }
+        }
+    ]
+</pre>
+<p id="rfc.section.14.5.2.5.6.4.p.2">where: </p>
+<p/>
+
+<ol>
+  <li><samp>authid|string</samp>: The authentication ID the client was actually authenticated as.</li>
+  <li><samp>authrole|string</samp>: The authentication role the client was authenticated for.</li>
+  <li><samp>authmethod|string</samp>: The authentication method, here <samp>"wamp-scram"</samp>.</li>
+  <li><samp>authprovider|string</samp>: The actual provider of authentication. For WAMP-SCRAM authentication, this can be freely chosen by the app, e.g. static or dynamic.</li>
+  <li><samp>authextra.verifier|string</samp>: The base64-encoded <samp>ServerSignature</samp>, computed as described in the <a href="#scram-algorithms">Section 14.5.2.5.7</a> section.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.14.5.2.5.6.4.p.4">The client SHOULD check the <samp>verifier</samp> for mutual authentication, terminating the session if invalid.  </p>
+<h1 id="rfc.section.14.5.2.5.6.5"><a href="#rfc.section.14.5.2.5.6.5">14.5.2.5.6.5.</a> <a href="#final-server-authentication-message--failure" id="final-server-authentication-message--failure">Final Server Authentication Message - Failure</a></h1>
+<p id="rfc.section.14.5.2.5.6.5.p.1">If the authentication fails, the server SHALL respond with an <samp>ABORT</samp> message.  </p>
+<p id="rfc.section.14.5.2.5.6.5.p.2">The server MAY include a SCRAM-specific error string in the <samp>ABORT</samp> message as a <samp>Details.scram</samp> attribute. SCRAM error strings are listed in <a href="https://tools.ietf.org/html/rfc5802#section-7">RFC5802, section 7</a>, under <samp>server-error-value</samp>.  </p>
+<h1 id="rfc.section.14.5.2.5.7"><a href="#rfc.section.14.5.2.5.7">14.5.2.5.7.</a> <a href="#scram-algorithms" id="scram-algorithms">SCRAM Algorithms</a></h1>
+<p><em>This section is non-normative</em>.  </p>
+<p><a href="https://tools.ietf.org/html/rfc5802">RFC5802</a> specifies the algorithms used to compute the <samp>ClientProof</samp>, <samp>ServerSignature</samp>, <samp>ServerKey</samp>, and <samp>StoredKey</samp> values referenced by this document. Those algorithms are summarized here in pseudocode for reference.  </p>
+<h1 id="rfc.section.14.5.2.5.7.1"><a href="#rfc.section.14.5.2.5.7.1">14.5.2.5.7.1.</a> <a href="#notation" id="notation">Notation</a></h1>
+<p/>
+
+<ul>
+  <li><samp>"="</samp>: The variable on the left-hand side is the result of the expression on the right-hand side.</li>
+  <li><samp>"+"</samp>: String concatenation.</li>
+  <li><samp>IfNull(attribute, value, else)</samp>: If the given <samp>attribute</samp> is absent or null, evaluates to the given <samp>value</samp>, otherwise evaluates to the given <samp>else</samp> value.</li>
+  <li><samp>Decimal(integer)</samp>: The decimal string representation of the given <samp>integer</samp>.</li>
+  <li><samp>Base64(octets)</samp>: Base64 encoding of the given octet sequence, restricted to canonical form with no whitespace, as defined in <a href="https://tools.ietf.org/html/rfc4648">RFC4648</a>.</li>
+  <li><samp>UnBase64(str)</samp>: Decode the given Base64 string into an octet sequence.</li>
+  <li><samp>Normalize(str)</samp>: Normalize the given string using the SASLprep profile <a href="https://tools.ietf.org/html/rfc4013">RFC4013</a> of the "stringprep" algorithm <a href="https://tools.ietf.org/html/rfc3454">RFC3454</a>.</li>
+  <li><samp>XOR</samp>: The exclusive-or operation applied to each octet of the left and right-hand-side octet sequences.</li>
+  <li><samp>SHA256(str)</samp>: The SHA-256 cryptographic hash function.</li>
+  <li><samp>HMAC(key, str)</samp>: Keyed-hash message authentication code, as defined in <a href="https://www.ietf.org/rfc/rfc2104.txt">RFC2104</a>, with SHA-256 as the underlying hash function.</li>
+  <li><samp>KDF(str, salt, params...)</samp>: One of the supported key derivations function, with the output key length the same as the SHA-256 output length (32 octets). <samp>params...</samp> are the additional parameters that are applicable for the function: <samp>iterations</samp> and <samp>memory</samp>.</li>
+  <li><samp>Escape(str)</samp>: Replace every occurrence of "<samp>,</samp>" and "<samp>=</samp>" in the given string with "<samp>=2C</samp>" and "<samp>=3D</samp>" respectively.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.14.5.2.5.7.2"><a href="#rfc.section.14.5.2.5.7.2">14.5.2.5.7.2.</a> <a href="#data-stored-on-the-server" id="data-stored-on-the-server">Data Stored on the Server</a></h1>
+<p id="rfc.section.14.5.2.5.7.2.p.1">For each user, the server needs to store: </p>
+<p/>
+
+<ol>
+  <li>A random, per-user salt.</li>
+  <li>The type string corresponding to the key derivation function (KDF) used to hash the password (e.g. <samp>"argon2id13"</samp>). This is needed to handle future revisions of the KDF, as well as allowing migration to stronger KDFs that may be added to WAMP-SCRAM in the future. This may also be needed if the KDF used during user registration is configurable or selectable on a per-user basis.</li>
+  <li>Parameters that are applicable to the key derivation function : <samp>iterations</samp> and possibly <samp>memory</samp>.</li>
+  <li>The <samp>StoredKey</samp>.</li>
+  <li>The <samp>ServerKey</samp>.</li>
+</ol>
+
+<p> </p>
+<p id="rfc.section.14.5.2.5.7.2.p.3">where <samp>StoredKey</samp> and <samp>ServerKey</samp> are computed as follows: </p>
+<pre>
+SaltedPassword  = KDF(Normalize(password), salt, params...)
+ClientKey       = HMAC(SaltedPassword, "Client Key")
+StoredKey       = SHA256(ClientKey)
+ServerKey       = HMAC(SaltedPassword, "Server Key")
+</pre>
+<p id="rfc.section.14.5.2.5.7.2.p.4">Note that <samp>"Client Key"</samp> and <samp>"Server Key"</samp> are string literals.  </p>
+<p id="rfc.section.14.5.2.5.7.2.p.5">The manner in which the <samp>StoredKey</samp> and <samp>ServerKey</samp> are shared with the server during user registration is outside the scope of SCRAM and this document.  </p>
+<h1 id="rfc.section.14.5.2.5.7.3"><a href="#rfc.section.14.5.2.5.7.3">14.5.2.5.7.3.</a> <a href="#authmessage" id="authmessage">AuthMessage</a></h1>
+<p id="rfc.section.14.5.2.5.7.3.p.1">In SCRAM, <samp>AuthMessage</samp> is used for computing <samp>ClientProof</samp> and <samp>ServerSignature</samp>. <samp>AuthMessage</samp> is computed using attributes that were sent in the first three messages of the authentication exchange.  </p>
+<pre>
+ClientFirstBare = "n=" + Escape(HELLO.Details.authid) + "," +
+                  "r=" + HELLO.Details.authextra.nonce
+
+ServerFirst = "r=" + CHALLENGE.Details.nonce + "," +
+              "s=" + CHALLENGE.Details.salt + "," +
+              "i=" + Decimal(CHALLENGE.Details.iterations)
+
+CBindName = AUTHENTICATE.Extra.channel_binding
+
+CBindData = AUTHENTICATE.Extra.cbind_data
+
+CBindFlag = IfNull(CBindName, "n", "p=" + CBindName)
+
+CBindInput = CBindFlag + ",," +
+             IfNull(CBindData, "", UnBase64(CBindData))
+
+ClientFinalNoProof = "c=" + Base64(CBindInput) + "," +
+                     "r=" + AUTHENTICATE.Extra.nonce
+
+AuthMessage = ClientFirstBare + "," + ServerFirst + "," +
+              ClientFinalNoProof
+</pre>
+<h1 id="rfc.section.14.5.2.5.7.4"><a href="#rfc.section.14.5.2.5.7.4">14.5.2.5.7.4.</a> <a href="#clientproof" id="clientproof">ClientProof</a></h1>
+<p><samp>ClientProof</samp> is computed by the client during the authentication exchange as follows: </p>
+<pre>
+SaltedPassword  = KDF(Normalize(password), salt, params...)
+ClientKey       = HMAC(SaltedPassword, "Client Key")
+StoredKey       = SHA256(ClientKey)
+ClientSignature = HMAC(StoredKey, AuthMessage)
+ClientProof     = ClientKey XOR ClientSignature
+</pre>
+<p id="rfc.section.14.5.2.5.7.4.p.2">The <samp>ClientProof</samp> is then sent to the server, base64-encoded, via the <samp>AUTHENTICATE.Signature</samp> argument.  </p>
+<p id="rfc.section.14.5.2.5.7.4.p.3">The server verifies the <samp>ClientProof</samp> by computing the <samp>RecoveredStoredKey</samp> and comparing it to the actual <samp>StoredKey</samp>: </p>
+<pre>
+ClientSignature    = HMAC(StoredKey, AuthMessage)
+RecoveredClientKey = ClientSignature XOR ReceivedClientProof
+RecoveredStoredKey = SHA256(RecoveredClientKey)
+</pre>
+<p id="rfc.section.14.5.2.5.7.4.p.4">Note that the client MAY cache the <samp>ClientKey</samp> and <samp>StoredKey</samp> (or just <samp>SaltedPassword</samp>) to avoid having to perform the expensive KDF computation for every authentication exchange. Storing these values securely on the client is outside the scope of this document.  </p>
+<h1 id="rfc.section.14.5.2.5.7.5"><a href="#rfc.section.14.5.2.5.7.5">14.5.2.5.7.5.</a> <a href="#serversignature" id="serversignature">ServerSignature</a></h1>
+<p><samp>ServerSignature</samp> is computed by the server during the authentication exchange as follows: </p>
+<pre>
+ServerSignature = HMAC(ServerKey, AuthMessage)
+</pre>
+<p id="rfc.section.14.5.2.5.7.5.p.2">The <samp>ServerSignature</samp> is then sent to the client, base64-encoded, via the <samp>WELCOME.Details.authextra.verifier</samp> attribute.  </p>
+<p id="rfc.section.14.5.2.5.7.5.p.3">The client verifies the <samp>ServerSignature</samp> by computing it and comparing it with the <samp>ServerSignature</samp> sent by the server: </p>
+<pre>
+ServerKey       = HMAC(SaltedPassword, "Server Key")
+ServerSignature = HMAC(ServerKey, AuthMessage)
+</pre>
+<h1 id="rfc.section.14.5.2.5.8"><a href="#rfc.section.14.5.2.5.8">14.5.2.5.8.</a> <a href="#key-derivation-functions" id="key-derivation-functions">Key Derivation Functions</a></h1>
+<p id="rfc.section.14.5.2.5.8.p.1">SCRAM uses a password-based key derivation function (KDF) to hash user passwords. WAMP-SCRAM supports both <a href="https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/">Argon2</a> and <a href="https://tools.ietf.org/html/rfc2898">PBKDF2</a> as the KDF. Argon2 is recommended because of its memory hardness and resistance against GPU hardware. PBKDF2, which does not feature memory hardness, is also supported for applications that are required to use primitives currently approved by cryptographic standards.  </p>
+<p id="rfc.section.14.5.2.5.8.p.2">The following table maps the <samp>CHALLENGE.Details.kdf</samp> type string to the corresponding KDF.  </p>
+<table cellpadding="3" cellspacing="0" class="tt full center">
+  <thead>
+    <tr>
+      <th class="center">KDF type string</th>
+      <th class="center">Function</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="center">
+        <samp>"argon2id13"</samp>
+      </td>
+      <td class="center">Argon2id variant of Argon2, version 1.3</td>
+    </tr>
+    <tr>
+      <td class="center">
+        <samp>"pbkdf2"</samp>
+      </td>
+      <td class="center">PBKDF2</td>
+    </tr>
+  </tbody>
+</table>
+<p id="rfc.section.14.5.2.5.8.p.3">To promote interoperability, WAMP-SCRAM client/server implementations SHOULD support both of the above KDFs. During authentication, there is no "negotiation" of the KDF, and the client MUST use the same KDF than the one used to create the keys stored in the authentication database.  </p>
+<p id="rfc.section.14.5.2.5.8.p.4">Which KDF is used to hash the password during user registration is up to the application and/or server implementation, and is not covered by this document. Possibilities include: </p>
+<p/>
+
+<ul>
+  <li>making the KDF selectable at runtime during registration,</li>
+  <li>making the KDF statically configurable on the server, or,</li>
+  <li>hard-coding the KDF selection on the server.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.14.5.2.5.8.1"><a href="#rfc.section.14.5.2.5.8.1">14.5.2.5.8.1.</a> <a href="#argon2" id="argon2">Argon2</a></h1>
+<p id="rfc.section.14.5.2.5.8.1.p.1">The Argon2 key derivation function, proposed in <a href="https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/">draft-irtf-cfrg-argon2</a>, is computed using the following parameters: </p>
+<p/>
+
+<ul>
+  <li><samp>CHALLENGE.Details.salt</samp> as the cryptographic salt,</li>
+  <li><samp>CHALLENGE.Details.iterations</samp> as the number of iterations,</li>
+  <li><samp>CHALLENGE.Details.memory</samp> as the memory size (in kibibytes),</li>
+  <li>1 as the parallelism parameter,</li>
+  <li>Argon2id as the algorithm variant, and,</li>
+  <li>32 octets as the output key length.</li>
+</ul>
+
+<p> </p>
+<p id="rfc.section.14.5.2.5.8.1.p.3">For WAMP-SCRAM, the parallelism parameter is fixed to 1 due to the password being hashed on the client side, where it is not generally known how many cores/threads are available on the client's device.  </p>
+<p id="rfc.section.14.5.2.5.8.1.p.4">Section 4 of the Argon2 internet draft recommends the general procedure for selecting parameters, of which the following guidelines are applicable to WAMP-SCRAM: </p>
+<p/>
+
+<ul>
+  <li>A 128-bit salt is recommended, which can be reduced to 64-bit if space is limited.</li>
+  <li>The <samp>memory</samp> parameter is to be configured to the maximum amount of memory usage that can be tolerated on client devices for computing the hash.</li>
+  <li>The <samp>iterations</samp> parameter is to be determined experimentally so that execution time on the client reaches the maximum that can be tolerated by users during authentication. If the execution time is intolerable with <samp>iterations</samp> = 1, then reduce the <samp>memory</samp> parameter as needed.</li>
+</ul>
+
+<p> </p>
+<h1 id="rfc.section.14.5.2.5.8.2"><a href="#rfc.section.14.5.2.5.8.2">14.5.2.5.8.2.</a> <a href="#pbkdf2" id="pbkdf2">PBKDF2</a></h1>
+<p id="rfc.section.14.5.2.5.8.2.p.1">The PBKDF2 key derivation function, defined in <a href="https://tools.ietf.org/html/rfc2898">RFC2898</a>, is used with SHA-256 as the pseudorandom function (PRF).  </p>
+<p id="rfc.section.14.5.2.5.8.2.p.2">The PDBKDF2 hash is computed using the folowing parameters: </p>
+<p/>
+
+<ul>
+  <li><samp>CHALLENGE.Details.salt</samp> as the cryptographic salt,</li>
+  <li><samp>CHALLENGE.Details.iterations</samp> as the iteration count, and,</li>
+  <li>32 octets as the output key length (<samp>dkLen</samp>), which matches the SHA-256 output length.</li>
+</ul>
+
+<p> </p>
+<p><a href="https://tools.ietf.org/html/rfc2898">RFC2898 section 4.1</a> recommends at least 64 bits for the salt.  </p>
+<p id="rfc.section.14.5.2.5.8.2.p.5">The <samp>iterations</samp> parameter SHOULD be determined experimentally so that execution time on the client reaches the maximum that can be tolerated by users during authentication. <a href="https://tools.ietf.org/html/rfc7677#section-4">RFC7677 section 4</a> recommends an iteration count of at least 4096, with a significantly higher value on non-mobile clients.  </p>
 <h1 id="rfc.section.14.5.3"><a href="#rfc.section.14.5.3">14.5.3.</a> <a href="#alternative-transports" id="alternative-transports">Alternative Transports</a></h1>
 <p id="rfc.section.14.5.3.p.1">The only requirements that WAMP expects from a transport are: the transport must be message-based, bidirectional, reliable and ordered. This allows WAMP to run over different transports without any impact at the application layer.  </p>
 <p id="rfc.section.14.5.3.p.2">Besides the WebSocket transport, the following WAMP transports are currently specified: </p>
@@ -6155,7 +6554,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 
     &lt;CODE ENDS&gt;
 </pre>
-<h1 id="rfc.section.16"><a href="#rfc.section.16">16.</a> <a href="#security-considerations" id="security-considerations">Security Considerations</a></h1>
+<h1 id="rfc.section.16"><a href="#rfc.section.16">16.</a> <a href="#security-considerations-1" id="security-considerations-1">Security Considerations</a></h1>
 <p id="rfc.section.16.p.1">-- write me -- </p>
 <h1 id="rfc.section.17"><a href="#rfc.section.17">17.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.17.p.1">TBD </p>

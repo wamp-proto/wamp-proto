@@ -206,18 +206,18 @@ Internet-Draft                    WAMP                        March 2017
      14.5.  Other Advanced Features  . . . . . . . . . . . . . . . . 115
        14.5.1.  Session Meta API . . . . . . . . . . . . . . . . . . 115
        14.5.2.  Authentication . . . . . . . . . . . . . . . . . . . 119
-       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 127
-   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 138
-     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 139
-     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 140
-   16. Security Considerations . . . . . . . . . . . . . . . . . . . 141
-   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 142
-   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 142
-   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 142
-   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 142
-     20.1.  Normative References . . . . . . . . . . . . . . . . . . 142
-     20.2.  Informative References . . . . . . . . . . . . . . . . . 142
-     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 143
+       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 140
+   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 152
+     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 153
+     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 153
+   16. Security Considerations . . . . . . . . . . . . . . . . . . . 154
+   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 155
+   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 155
+   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 155
+   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 155
+     20.1.  Normative References . . . . . . . . . . . . . . . . . . 155
+     20.2.  Informative References . . . . . . . . . . . . . . . . . 155
+     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 156
 
 
 
@@ -226,7 +226,7 @@ Oberstein & Goedde     Expires September 20, 2017               [Page 4]
 Internet-Draft                    WAMP                        March 2017
 
 
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 143
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 157
 
 1.  Introduction
 
@@ -7074,6 +7074,743 @@ Internet-Draft                    WAMP                        March 2017
    information active.  If the authentication fails, the server will
    response with an "ABORT" message.
 
+14.5.2.5.  Salted Challenge Response Authentication Mechanism
+
+   The WAMP Salted Challenge Response Authentication Mechanism ("WAMP-
+   SCRAM"), is a password-based authentication method where the shared
+   secret is neither transmitted nor stored as cleartext.  WAMP-SCRAM is
+   based on RFC5802 [6] (_Salted Challenge Response Authentication
+   Mechanism_) and RFC7677 [7] (_SCRAM-SHA-256 and SCRAM-SHA-256-PLUS_).
+
+   WAMP-SCRAM supports the Argon2 (draft-irtf-cfrg-argon2 [8]) password-
+   based key derivation function, a memory-hard algorithm intended to
+   resist cracking on GPU hardware.  PBKDF2 (RFC2898 [9]) is also
+   supported for applications that are required to use primitives
+   currently approved by cryptographic standards.
+
+14.5.2.5.1.  Security Considerations
+
+   With WAMP-SCRAM, if the authentication database is stolen, an
+   attacker cannot impersonate a user unless they guess the password
+   offline by brute force.
+
+   In the event that the server's authentication database is stolen, and
+   the attacker either eavesdrops on one authentication exchange or
+   impersonates a server, the attacker gains the ability to impersonate
+   that particular user on that server.  If the same salt is used on
+   other servers, the attacker would gain the ability to impersonate
+   that user on all servers using the same salt.  That's why it's
+   important to use a per-user random salt.
+
+   An evesdropper that captures a user anthentication exchange has
+   enough information to mount an offline, brute-force dictionary attack
+   for that particular user.  If passwords are sufficiently strong, the
+   cost/time needed to crack a password becomes prohibitive.
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 127]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   Note that when HTML/Javascript assets are served to a web browser,
+   WAMP-SCRAM does not safeguard against a man-in-the-middle tampering
+   with those assets.  Those assets could be tampered with in a way that
+   captures the user's password and sends it to the attacker.
+
+   In light of the above security concerns, a secure TLS transport is
+   therefore advised to prevent such attacks.  The channel binding
+   feature of SCRAM can be used to ensure that the TLS endpoints are the
+   same between client and router.
+
+14.5.2.5.2.  Deviations from RFC5802
+
+   1.  To simplify parsing, SCRAM attributes in the authentication
+       exchange messages are encoded as members of the
+       "Options"/"Details" objects without escaping the "," and "="
+       characters.  However, the "AuthMessage" used to compute the
+       client and server signatures DOES use the exact syntax specified
+       in RFC5802, section 7 [10].  This makes it possible to use
+       existing test vectors to verify WAMP-SCRAM implementations.
+
+   2.  Hashing based on the weaker SHA-1 specified in RFC5802 [11] is
+       intentionally not supported by WAMP-SCRAM, in favor of the
+       stronger SHA-256 specified in RFC7677 [12].
+
+   3.  The Argon2 [13] key derivation function MAY be used instead of
+       PBKDF2.
+
+   4.  Nonces are required to be base64-encoded, which is stricter than
+       the "printable" syntax specification of RFC5802 [14].
+
+   5.  The ""y"" channel binding flag is not used as there is currently
+       no standard way for WAMP routers to announce channel binding
+       capabilities.
+
+   6.  The use of "authzid" for user impersonation is not supported.
+
+14.5.2.5.3.  authmethod Type String
+
+   ""wamp-scram"" SHALL be used as the "authmethod" type string for
+   WAMP-SCRAM authentication.  Announcement by routers of WAMP-SCRAM
+   support is outside the scope of this document.
+
+14.5.2.5.4.  Conventions
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 128]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+14.5.2.5.4.1.  Base64 encoding
+
+   Base64 encoding of octet strings is restricted to canonical form with
+   no whitespace, as defined in RFC4648 [15] (_The Base16, Base32, and
+   Base64 Data Encodings_).
+
+14.5.2.5.4.2.  Nonces
+
+   In WAMP-SCRAM, a _nonce_ (number used once) is a base64-encoded
+   sequence of random octets.  It SHOULD be of sufficient length to make
+   a replay attack unfeasible.  A length of 16 octets (128 bits) is
+   recommended for each of the client and server-generated nonces.
+
+   See RFC4086 [16] (_Randomness Requirements for Security_) for best
+   practices concerning randomness.
+
+14.5.2.5.4.3.  Salts
+
+   A _salt_ is a base64-encoded sequence of random octets.
+
+   To prevent rainbow table attacks in the event of database theft, the
+   salt MUST be generated randomly by the server *for each user*. The
+   random salt is stored with each user record in the authentication
+   database.
+
+14.5.2.5.4.4.  Username/Password String Normalization
+
+   Username and password strings SHALL be normalized according to the
+   _SASLprep_ profile described in RFC4013 [17], using the _stringprep_
+   algorithm described in RFC3454 [18].
+
+   While SASLprep preserves the case of usernames, the server MAY choose
+   to perform case insensitve comparisons when searching for a username
+   in the authentication database.
+
+14.5.2.5.5.  Channel Binding
+
+   _Channel binding_ is a feature that allows a higher layer to
+   establish that the other end of an underlying secure channel is bound
+   to its higher layer counterpart.  See RFC5056 [19] (_On the Use of
+   Channel Bindings_) for an in-depth discussion.
+
+   RFC5929 [20] defines binding types for use with TLS transports, of
+   which "tls-unique" and "tls-server-end-point" are applicable for
+   WAMP-SCRAM.  For each channel binding type, there is a corresponding
+   definition of the _channel binding data_ that must be sent in
+   response to the authentication challenge.
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 129]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   Negotiation and announcement of channel binding is outside the scope
+   of this document.  RFC5929 section 6 [21] recommends that application
+   protocols use "tls-unique" exclusively, except perhaps where server-
+   side proxies are commonly deployed.
+
+   Note that WAMP-SCRAM channel binding is not generally possible with
+   web browser clients due to the lack of a suitable API for this
+   purpose.
+
+14.5.2.5.5.1.  The tls-unique Channel Binding Type
+
+   The "tls-unique" channel binding type allows the WAMP layer to
+   establish that the other peer is authenticating over the same, unique
+   TLS connection.  The channel binding data for this type corresponds
+   to the bytes of the first TLS Finished message, as described in
+   RFC5929, section 3 [22].  RFC5929 section 10.2 [23] addresses the
+   concern of disclosing this data over the TLS channel (in short, the
+   TLS Finished message would already be visible to evesdroppers).
+
+   To safeguard against the _triple handshake attack_ described in
+   RFC7627 [24], this channel binding type MUST be used over a TLS
+   channel that uses the _extended master secret_ extension, or over a
+   TLS channel where session resumption is not permitted.
+
+14.5.2.5.5.2.  The tls-server-end-point Channel Binding Type
+
+   The "tls-server-end-point" channel binding type allows the WAMP layer
+   to establish that the other peer is authenticating over a TLS
+   connection to a server having been issued a Public Key Infrastructure
+   Certificate.  The channel binding data for this type is a hash of the
+   TLS server's certificate, computed as described in RFC5929, section
+   4.1 [25].  The certificate is hashed to accomodate memory-constrained
+   implementations.
+
+14.5.2.5.6.  Authentication Exchange
+
+   WAMP-SCRAM uses a single round of challenge/response pairs after the
+   client authentication request and before the authentication outcome.
+
+   The mapping of RFC5802 messages to WAMP messages is as follows:
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 130]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+      +--------------------------------------------+----------------+
+      |               SCRAM Message                |  WAMP Message  |
+      +--------------------------------------------+----------------+
+      |           "client-first-message"           |    "HELLO"     |
+      |           "server-first-message"           |  "CHALLENGE"   |
+      |           "client-final-message"           | "AUTHENTICATE" |
+      |   "server-final-message" with "verifier"   |   "WELCOME"    |
+      | "server-final-message" with "server-error" |    "ABORT"     |
+      +--------------------------------------------+----------------+
+
+14.5.2.5.6.1.  Initial Client Authentication Message
+
+   WAMP-SCRAM authentication begins with the client sending a "HELLO"
+   message specifying the "wamp-scram" method as (one of) the
+   authentication methods:
+
+       [1, "realm1",
+           {
+               "roles": ...,
+               "authmethods": ["wamp-scram"],
+               "authid": "user",
+               "authextra":
+                   {
+                       "nonce": "egVDf3DMJh0=",
+                       "channel_binding": null
+                   }
+
+           }
+       ]
+
+   where:
+
+   1.  "authid|string": The identity of the user performing
+       authentication.  This corresponds to the "username" parameter in
+       RFC5802.
+
+   2.  "authextra.nonce|string": A base64-encoded sequence of random
+       octets, generated by the client.  See Section 14.5.2.5.4.2.
+
+   3.  "authextra.channel_binding|string": Optional string containing
+       the desired channel binding type.  See Section 14.5.2.5.5.
+
+   Upon receiving the "HELLO" message, the server MUST terminate the
+   authentication process by sending an "ABORT" message under any of the
+   following circumstances:
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 131]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   o  The server does not support the WAMP-SCRAM "authmethods", and
+      there are no other methods left that the server supports for this
+      "authid".
+
+   o  The the server does not support the requested "channel_binding"
+      type.
+
+   o  (Optional) The server does not recognize the given "authid".  In
+      this case, the server MAY proceed with a mock "CHALLENGE" message
+      to avoid leaking information on the existence of usernames.  This
+      mock "CHALLENGE" SHOULD contain a generated "salt" value that is
+      always the same for a given "authid", otherwise an attacker may
+      discover that the user doesn't actually exist.
+
+14.5.2.5.6.2.  Initial Server Authentication Message
+
+   If none of the above failure conditions apply, and the server is
+   ready to let the client authenticate using WAMP-SCRAM, then it SHALL
+   send a "CHALLENGE" message:
+
+       [4, "wamp-scram",
+           {
+               "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
+               "salt": "aBc+fx0NAVA=",
+               "kdf": "pbkdf2",
+               "iterations": 4096,
+               "memory": null
+           }
+       ]
+
+   where:
+
+   1.  "nonce|string": A server-generatated nonce that is appended to
+       the client-generated nonce sent in the previous "HELLO" message.
+       See Section 14.5.2.5.4.2.
+
+   2.  "salt|string": The base64-encoded salt for this user, to be
+       passed to the key derivation function.  This value is stored with
+       each user record in the authentication database.  See
+       Section 14.5.2.5.4.3.
+
+   3.  "kdf": The key derivation function (KDF) used to hash the
+       password.  This value is stored with each user record in the
+       authentication database.  See Section 14.5.2.5.8.
+
+   4.  "iterations|integer": The execution time cost factor to use for
+       generating the "SaltedPassword" hash.  This value is stored with
+       each user record in the authentication database.
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 132]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   5.  "memory|integer": The memory cost factor to use for generating
+       the "SaltedPassword" hash.  This is only used by the Argon2 key
+       derivation function, where it is stored with each user record in
+       the authentication database.
+
+   The client MUST respond with an ABORT message if
+   "CHALLENGE.Details.nonce" does not begin with the client nonce sent
+   in "HELLO.Details.nonce".
+
+   The client SHOULD respond with an ABORT message if it detects that
+   the cost parameters are unusually low.  Such low-cost parameters
+   could be the result of a rogue server attempting to obtain a weak
+   password hash that can be easily cracked.  What constitutes unusually
+   low parameters is implementation-specific and is not covered by this
+   document.
+
+14.5.2.5.6.3.  Final Client Authentication Message
+
+   Upon receiving a valid "CHALLENGE" message, the client SHALL respond
+   with an "AUTHENTICATE" message:
+
+       [5, "dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ=",
+           {
+               "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
+               "channel_binding": null,
+               "cbind_data": null
+           }
+       ]
+
+   where:
+
+   1.  "Signature|string" argument: The base64-encoded "ClientProof",
+       computed as described in the Section 14.5.2.5.7 section.
+
+   2.  "nonce|string": The concatenated client-server nonce from the
+       previous "CHALLENGE" message.
+
+   3.  "channel_binding|string": Optional string containing the channel
+       binding type that was sent in the original "HELLO" message.
+
+   4.  "cbind_data|string": Optional base64-encoded channel binding
+       data.  MUST be present if and only if "channel_binding" is not
+       "null".  The format of the binding data is dependent on the
+       binding type.  See Section 14.5.2.5.5.
+
+   Upon receiving the "AUTHENTICATE" message, the server SHALL then
+   check that:
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 133]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   o  The "AUTHENTICATE" message was received in due time.
+
+   o  The "ClientProof" passed via the "Signature|string" argument is
+      validated against the "StoredKey" and "ServerKey" stored in the
+      authentication database.  See Section 14.5.2.5.7.
+
+   o  "nonce" matches the one previously sent via "CHALLENGE".
+
+   o  The "channel_binding" matches the one sent in the "HELLO" message.
+
+   o  The "cbind_data" sent by the client matches the channel binding
+      data that the server sees on its side of the channel.
+
+14.5.2.5.6.4.  Final Server Authentication Message - Success
+
+   If the authentication succeeds, the server SHALL finally respond with
+   a "WELCOME" message:
+
+      [2, 3251278072152162,
+          {
+              "authid": "user",
+              "authrole": "frontend",
+              "authmethod": "wamp-scram",
+              "authprovider": "static",
+              "roles": ...,
+              "authextra":
+                  {
+                      "verifier":
+                        "v=6rriTRBi23WpRR/wtup+mMhUZUn/dB5nLTJRsjl95G4="
+                  }
+          }
+      ]
+
+   where:
+
+   1.  "authid|string": The authentication ID the client was actually
+       authenticated as.
+
+   2.  "authrole|string": The authentication role the client was
+       authenticated for.
+
+   3.  "authmethod|string": The authentication method, here ""wamp-
+       scram"".
+
+   4.  "authprovider|string": The actual provider of authentication.
+       For WAMP-SCRAM authentication, this can be freely chosen by the
+       app, e.g. static or dynamic.
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 134]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   5.  "authextra.verifier|string": The base64-encoded
+       "ServerSignature", computed as described in the
+       Section 14.5.2.5.7 section.
+
+   The client SHOULD check the "verifier" for mutual authentication,
+   terminating the session if invalid.
+
+14.5.2.5.6.5.  Final Server Authentication Message - Failure
+
+   If the authentication fails, the server SHALL respond with an "ABORT"
+   message.
+
+   The server MAY include a SCRAM-specific error string in the "ABORT"
+   message as a "Details.scram" attribute.  SCRAM error strings are
+   listed in RFC5802, section 7 [26], under "server-error-value".
+
+14.5.2.5.7.  SCRAM Algorithms
+
+   _This section is non-normative_.
+
+   RFC5802 [27] specifies the algorithms used to compute the
+   "ClientProof", "ServerSignature", "ServerKey", and "StoredKey" values
+   referenced by this document.  Those algorithms are summarized here in
+   pseudocode for reference.
+
+14.5.2.5.7.1.  Notation
+
+   o  ""="": The variable on the left-hand side is the result of the
+      expression on the right-hand side.
+
+   o  ""+"": String concatenation.
+
+   o  "IfNull(attribute, value, else)": If the given "attribute" is
+      absent or null, evaluates to the given "value", otherwise
+      evaluates to the given "else" value.
+
+   o  "Decimal(integer)": The decimal string representation of the given
+      "integer".
+
+   o  "Base64(octets)": Base64 encoding of the given octet sequence,
+      restricted to canonical form with no whitespace, as defined in
+      RFC4648 [28].
+
+   o  "UnBase64(str)": Decode the given Base64 string into an octet
+      sequence.
+
+   o  "Normalize(str)": Normalize the given string using the SASLprep
+      profile RFC4013 [29] of the "stringprep" algorithm RFC3454 [30].
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 135]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   o  "XOR": The exclusive-or operation applied to each octet of the
+      left and right-hand-side octet sequences.
+
+   o  "SHA256(str)": The SHA-256 cryptographic hash function.
+
+   o  "HMAC(key, str)": Keyed-hash message authentication code, as
+      defined in RFC2104 [31], with SHA-256 as the underlying hash
+      function.
+
+   o  "KDF(str, salt, params...)": One of the supported key derivations
+      function, with the output key length the same as the SHA-256
+      output length (32 octets). "params..." are the additional
+      parameters that are applicable for the function: "iterations" and
+      "memory".
+
+   o  "Escape(str)": Replace every occurrence of "","" and ""="" in the
+      given string with ""=2C"" and ""=3D"" respectively.
+
+14.5.2.5.7.2.  Data Stored on the Server
+
+   For each user, the server needs to store:
+
+   1.  A random, per-user salt.
+
+   2.  The type string corresponding to the key derivation function
+       (KDF) used to hash the password (e.g. ""argon2id13"").  This is
+       needed to handle future revisions of the KDF, as well as allowing
+       migration to stronger KDFs that may be added to WAMP-SCRAM in the
+       future.  This may also be needed if the KDF used during user
+       registration is configurable or selectable on a per-user basis.
+
+   3.  Parameters that are applicable to the key derivation function :
+       "iterations" and possibly "memory".
+
+   4.  The "StoredKey".
+
+   5.  The "ServerKey".
+
+   where "StoredKey" and "ServerKey" are computed as follows:
+
+   SaltedPassword  = KDF(Normalize(password), salt, params...)
+   ClientKey       = HMAC(SaltedPassword, "Client Key")
+   StoredKey       = SHA256(ClientKey)
+   ServerKey       = HMAC(SaltedPassword, "Server Key")
+
+   Note that ""Client Key"" and ""Server Key"" are string literals.
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 136]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   The manner in which the "StoredKey" and "ServerKey" are shared with
+   the server during user registration is outside the scope of SCRAM and
+   this document.
+
+14.5.2.5.7.3.  AuthMessage
+
+   In SCRAM, "AuthMessage" is used for computing "ClientProof" and
+   "ServerSignature".  "AuthMessage" is computed using attributes that
+   were sent in the first three messages of the authentication exchange.
+
+   ClientFirstBare = "n=" + Escape(HELLO.Details.authid) + "," +
+                     "r=" + HELLO.Details.authextra.nonce
+
+   ServerFirst = "r=" + CHALLENGE.Details.nonce + "," +
+                 "s=" + CHALLENGE.Details.salt + "," +
+                 "i=" + Decimal(CHALLENGE.Details.iterations)
+
+   CBindName = AUTHENTICATE.Extra.channel_binding
+
+   CBindData = AUTHENTICATE.Extra.cbind_data
+
+   CBindFlag = IfNull(CBindName, "n", "p=" + CBindName)
+
+   CBindInput = CBindFlag + ",," +
+                IfNull(CBindData, "", UnBase64(CBindData))
+
+   ClientFinalNoProof = "c=" + Base64(CBindInput) + "," +
+                        "r=" + AUTHENTICATE.Extra.nonce
+
+   AuthMessage = ClientFirstBare + "," + ServerFirst + "," +
+                 ClientFinalNoProof
+
+14.5.2.5.7.4.  ClientProof
+
+   "ClientProof" is computed by the client during the authentication
+   exchange as follows:
+
+   SaltedPassword  = KDF(Normalize(password), salt, params...)
+   ClientKey       = HMAC(SaltedPassword, "Client Key")
+   StoredKey       = SHA256(ClientKey)
+   ClientSignature = HMAC(StoredKey, AuthMessage)
+   ClientProof     = ClientKey XOR ClientSignature
+
+   The "ClientProof" is then sent to the server, base64-encoded, via the
+   "AUTHENTICATE.Signature" argument.
+
+   The server verifies the "ClientProof" by computing the
+   "RecoveredStoredKey" and comparing it to the actual "StoredKey":
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 137]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   ClientSignature    = HMAC(StoredKey, AuthMessage)
+   RecoveredClientKey = ClientSignature XOR ReceivedClientProof
+   RecoveredStoredKey = SHA256(RecoveredClientKey)
+
+   Note that the client MAY cache the "ClientKey" and "StoredKey" (or
+   just "SaltedPassword") to avoid having to perform the expensive KDF
+   computation for every authentication exchange.  Storing these values
+   securely on the client is outside the scope of this document.
+
+14.5.2.5.7.5.  ServerSignature
+
+   "ServerSignature" is computed by the server during the authentication
+   exchange as follows:
+
+   ServerSignature = HMAC(ServerKey, AuthMessage)
+
+   The "ServerSignature" is then sent to the client, base64-encoded, via
+   the "WELCOME.Details.authextra.verifier" attribute.
+
+   The client verifies the "ServerSignature" by computing it and
+   comparing it with the "ServerSignature" sent by the server:
+
+   ServerKey       = HMAC(SaltedPassword, "Server Key")
+   ServerSignature = HMAC(ServerKey, AuthMessage)
+
+14.5.2.5.8.  Key Derivation Functions
+
+   SCRAM uses a password-based key derivation function (KDF) to hash
+   user passwords.  WAMP-SCRAM supports both Argon2 [32] and PBKDF2 [33]
+   as the KDF.  Argon2 is recommended because of its memory hardness and
+   resistance against GPU hardware.  PBKDF2, which does not feature
+   memory hardness, is also supported for applications that are required
+   to use primitives currently approved by cryptographic standards.
+
+   The following table maps the "CHALLENGE.Details.kdf" type string to
+   the corresponding KDF.
+
+       +-----------------+-----------------------------------------+
+       | KDF type string |                 Function                |
+       +-----------------+-----------------------------------------+
+       |  ""argon2id13"" | Argon2id variant of Argon2, version 1.3 |
+       |    ""pbkdf2""   |                  PBKDF2                 |
+       +-----------------+-----------------------------------------+
+
+   To promote interoperability, WAMP-SCRAM client/server implementations
+   SHOULD support both of the above KDFs.  During authentication, there
+   is no "negotiation" of the KDF, and the client MUST use the same KDF
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 138]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   than the one used to create the keys stored in the authentication
+   database.
+
+   Which KDF is used to hash the password during user registration is up
+   to the application and/or server implementation, and is not covered
+   by this document.  Possibilities include:
+
+   o  making the KDF selectable at runtime during registration,
+
+   o  making the KDF statically configurable on the server, or,
+
+   o  hard-coding the KDF selection on the server.
+
+14.5.2.5.8.1.  Argon2
+
+   The Argon2 key derivation function, proposed in draft-irtf-cfrg-
+   argon2 [34], is computed using the following parameters:
+
+   o  "CHALLENGE.Details.salt" as the cryptographic salt,
+
+   o  "CHALLENGE.Details.iterations" as the number of iterations,
+
+   o  "CHALLENGE.Details.memory" as the memory size (in kibibytes),
+
+   o  1 as the parallelism parameter,
+
+   o  Argon2id as the algorithm variant, and,
+
+   o  32 octets as the output key length.
+
+   For WAMP-SCRAM, the parallelism parameter is fixed to 1 due to the
+   password being hashed on the client side, where it is not generally
+   known how many cores/threads are available on the client's device.
+
+   Section 4 of the Argon2 internet draft recommends the general
+   procedure for selecting parameters, of which the following guidelines
+   are applicable to WAMP-SCRAM:
+
+   o  A 128-bit salt is recommended, which can be reduced to 64-bit if
+      space is limited.
+
+   o  The "memory" parameter is to be configured to the maximum amount
+      of memory usage that can be tolerated on client devices for
+      computing the hash.
+
+   o  The "iterations" parameter is to be determined experimentally so
+      that execution time on the client reaches the maximum that can be
+      tolerated by users during authentication.  If the execution time
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 139]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+      is intolerable with "iterations" = 1, then reduce the "memory"
+      parameter as needed.
+
+14.5.2.5.8.2.  PBKDF2
+
+   The PBKDF2 key derivation function, defined in RFC2898 [35], is used
+   with SHA-256 as the pseudorandom function (PRF).
+
+   The PDBKDF2 hash is computed using the folowing parameters:
+
+   o  "CHALLENGE.Details.salt" as the cryptographic salt,
+
+   o  "CHALLENGE.Details.iterations" as the iteration count, and,
+
+   o  32 octets as the output key length ("dkLen"), which matches the
+      SHA-256 output length.
+
+   RFC2898 section 4.1 [36] recommends at least 64 bits for the salt.
+
+   The "iterations" parameter SHOULD be determined experimentally so
+   that execution time on the client reaches the maximum that can be
+   tolerated by users during authentication.  RFC7677 section 4 [37]
+   recommends an iteration count of at least 4096, with a significantly
+   higher value on non-mobile clients.
+
 14.5.3.  Alternative Transports
 
    The only requirements that WAMP expects from a transport are: the
@@ -7095,6 +7832,16 @@ Internet-Draft                    WAMP                        March 2017
       Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined
       in the future.
 
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 140]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 14.5.3.1.  RawSocket Transport
 
    *WAMP-over-RawSocket* is an (alternative) transport for WAMP that
@@ -7106,13 +7853,6 @@ Internet-Draft                    WAMP                        March 2017
    which has some features that make it non-trivial (like a full HTTP-
    based opening handshake, message fragmentation, masking and variable
    length integers).
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 127]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    WAMP-over-RawSocket has even lower overhead than WebSocket, which can
    be desirable in particular when running on local connections like
@@ -7146,6 +7886,18 @@ Internet-Draft                    WAMP                        March 2017
    Here is how you would convert octets received from the wire into an
    integer in Python:
 
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 141]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        <CODE BEGINS>
        import struct
 
@@ -7163,13 +7915,6 @@ Internet-Draft                    WAMP                        March 2017
 
    The octets to be sent are "b"\x11\x22\x33\x44"".
 
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 128]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.5.3.1.2.  Handshake
 
    *Client-to-Router Request*
@@ -7183,7 +7928,7 @@ Internet-Draft                    WAMP                        March 2017
 
    The _first octet_ is a magic octet with value "0x7F".  This value is
    chosen to avoid any possible collision with the first octet of a
-   valid HTTP request (see here [6] and here [7]).  No valid HTTP
+   valid HTTP request (see here [38] and here [39]).  No valid HTTP
    request can have "0x7F" as its first octet.
 
       By using a magic first octet that cannot appear in a regular HTTP
@@ -7200,6 +7945,15 @@ Internet-Draft                    WAMP                        March 2017
 
    The possible values for "LENGTH" are:
 
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 142]
+
+Internet-Draft                    WAMP                        March 2017
+
+
         0: 2**9 octets
         1: 2**10 octets
        ...
@@ -7214,17 +7968,6 @@ Internet-Draft                    WAMP                        March 2017
    _Client_.
 
    The possible values for "SERIALIZER" are:
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 129]
-
-Internet-Draft                    WAMP                        March 2017
-
 
        0: illegal
        1: JSON
@@ -7258,6 +8001,15 @@ Internet-Draft                    WAMP                        March 2017
    After a _Client_ has connected to a _Router_, the _Router_ will first
    receive the 4 octets handshake request from the _Client_.
 
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 143]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    If the _first octet_ differs from "0x7F", it is not a WAMP-over-
    RawSocket request.  Unless the _Router_ also supports other
    transports on the connecting port (such as WebSocket or LongPoll),
@@ -7265,22 +8017,6 @@ Internet-Draft                    WAMP                        March 2017
 
    Here is an example of how a _Router_ could parse the _second octet_
    in a _Clients_ handshake request:
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 130]
-
-Internet-Draft                    WAMP                        March 2017
-
 
        <CODE BEGINS>
        ## map RawSocket handshake request (2nd octet) to
@@ -7322,6 +8058,14 @@ Internet-Draft                    WAMP                        March 2017
    If a message received during a connection exceeds the limit
    requested, a _Peer_ MUST *fail the connection*.
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 144]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    When the _Router_ is unable to speak the serializer requested by the
    _Client_, or it is denying the _Client_ for other reasons, the
    _Router_ replies with an error:
@@ -7329,14 +8073,6 @@ Internet-Draft                    WAMP                        March 2017
        MSB                                 LSB
        31                                    0
        0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 131]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    An error reply has 4 octets: the _first octet_ is again the magic
    "0x7F", and the _third and forth octet_ are reserved and MUST all be
@@ -7379,20 +8115,15 @@ Internet-Draft                    WAMP                        March 2017
    The _Client_ - after having sent its handshake request - will wait
    for the 4 octets from _Router_ handshake reply.
 
-   Here is an example of how a _Client_ might parse the _second octet_
-   in a _Router_ handshake reply:
 
 
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 132]
+Oberstein & Goedde     Expires September 20, 2017             [Page 145]
 
 Internet-Draft                    WAMP                        March 2017
 
+
+   Here is an example of how a _Client_ might parse the _second octet_
+   in a _Router_ handshake reply:
 
        <CODE BEGINS>
        ## map RawSocket handshake reply (2nd octet)
@@ -7436,19 +8167,21 @@ Internet-Draft                    WAMP                        March 2017
    o  remove the event payload, and send an event with extra information
       ("payload_limit_exceeded = true")
 
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 146]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 14.5.3.1.4.  Framing
 
    The serialized octets for a message to be sent are prefixed with
    exactly 4 octets.
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 133]
-
-Internet-Draft                    WAMP                        March 2017
-
 
        MSB                                 LSB
        31                                    0
@@ -7493,18 +8226,18 @@ Internet-Draft                    WAMP                        March 2017
    according to the serializer agreed in the handshake and the processed
    at the WAMP level.
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 147]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 14.5.3.2.  Batched WebSocket Transport for WAMP
 
    _WAMP-over-Batched-WebSocket_ is a variant of WAMP-over-WebSocket
    where multiple WAMP messages are sent in one WebSocket message.
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 134]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    Using WAMP message batching can increase wire level efficiency
    further.  In particular when using TLS and the WebSocket
@@ -7521,7 +8254,7 @@ Internet-Draft                    WAMP                        March 2017
 
    Batching with JSON works by serializing each WAMP message to JSON as
    normally, appending the single ASCII control character "\30" (record
-   separator [8]) octet "0x1e" to _each_ serialized messages, and
+   separator [40]) octet "0x1e" to _each_ serialized messages, and
    packing a sequence of such serialized messages into a single
    WebSocket message:
 
@@ -7545,6 +8278,18 @@ Internet-Draft                    WAMP                        March 2017
    message) is illegal and a _Peer_ MUST fail the transport upon
    receiving such a transport message.
 
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 148]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 14.5.3.3.  A HTTP Longpoll Transport for WAMP
 
    The _Long-Poll Transport_ is able to transmit a WAMP session over
@@ -7554,13 +8299,6 @@ Internet-Draft                    WAMP                        March 2017
    currently pending to be received.
 
    *Opening a Session*
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 135]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    With the Long-Poll Transport, a Client opens a new WAMP session by
    sending a HTTP/POST request to a well-known URL, e.g.
@@ -7599,6 +8337,15 @@ Internet-Draft                    WAMP                        March 2017
 
       <http://mypp.com/longpoll/open?x=382913>
 
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 149]
+
+Internet-Draft                    WAMP                        March 2017
+
+
       The value is ignored, but may help in certain situations to
       prevent intermediaries from caching the request.
 
@@ -7609,14 +8356,6 @@ Internet-Draft                    WAMP                        March 2017
           "protocol": "wamp.2.json",
           "transport": "kjmd3sBLOUnb3Fyr"
        }
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 136]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    As an implied side-effect, two HTTP endpoints are created
 
@@ -7656,6 +8395,13 @@ Internet-Draft                    WAMP                        March 2017
    For sending WAMP messages, the _Client_ will issue HTTP/POST requests
    to
 
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 150]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/send
 
    with request body being a single WAMP message (unbatched modes) or a
@@ -7666,13 +8412,6 @@ Internet-Draft                    WAMP                        March 2017
 
    The batching uses the same scheme as with "wamp.2.json.batched" and
    "wamp.2.msgpack.batched" transport over WebSocket.
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 137]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    Upon success, the request will return with HTTP status code 202 ("no
    content").  Upon error, the request will return with HTTP status code
@@ -7696,7 +8435,7 @@ Internet-Draft                    WAMP                        March 2017
    over a single underlying transport at the same time.
 
    As an example, the proposed WebSocket extension "permessage-priority"
-   [9] would allow creating multiple logical Transports for WAMP over a
+   [41] would allow creating multiple logical Transports for WAMP over a
    single underlying WebSocket connection.
 
    Sessions running over a multiplexed Transport are completely
@@ -7712,6 +8451,13 @@ Internet-Draft                    WAMP                        March 2017
       However, with RawSocket, we should be able to add multiplexing in
       the the future (with downward compatibility).
 
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 151]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 15.  Binary conversion of JSON Strings
 
    Binary data follows a convention for conversion to JSON strings.
@@ -7721,14 +8467,6 @@ Internet-Draft                    WAMP                        March 2017
    1.  convert the byte array to a Base64 encoded (host language) string
 
    2.  prepend the string with a "\0" character
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 138]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    3.  serialize the string to a JSON string
 
@@ -7765,26 +8503,21 @@ Internet-Draft                    WAMP                        March 2017
    Below are complete Python and JavaScript code examples for conversion
    between byte arrays and JSON strings.
 
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 152]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 15.1.  Python
 
    Here is a complete example in Python showing how byte arrays are
    converted to and from JSON:
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 139]
-
-Internet-Draft                    WAMP                        March 2017
-
 
        <CODE BEGINS>
 
@@ -7832,12 +8565,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 140]
+Oberstein & Goedde     Expires September 20, 2017             [Page 153]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7893,7 +8621,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 141]
+Oberstein & Goedde     Expires September 20, 2017             [Page 154]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7949,7 +8677,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 142]
+Oberstein & Goedde     Expires September 20, 2017             [Page 155]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7966,14 +8694,86 @@ Internet-Draft                    WAMP                        March 2017
 
    [5] http://en.wikipedia.org/wiki/PBKDF2
 
-   [6] http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1
+   [6] https://tools.ietf.org/html/rfc5802
 
-   [7] http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2
+   [7] https://tools.ietf.org/html/rfc7677
 
-   [8] http://en.wikipedia.org/wiki/Record_separator#Field_separators
+   [8] https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/
 
-   [9] https://github.com/oberstet/permessage-priority/blob/master/
-       draft-oberstein-hybi-permessage-priority.txt
+   [9] https://tools.ietf.org/html/rfc2898
+
+   [10] https://tools.ietf.org/html/rfc5802#section-7
+
+   [11] https://tools.ietf.org/html/rfc5802
+
+   [12] https://tools.ietf.org/html/rfc7677
+
+   [13] https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2
+
+   [14] https://tools.ietf.org/html/rfc5802
+
+   [15] https://tools.ietf.org/html/rfc4648
+
+   [16] https://tools.ietf.org/html/rfc4086
+
+   [17] https://tools.ietf.org/html/rfc4013
+
+   [18] https://tools.ietf.org/html/rfc3454
+
+   [19] https://tools.ietf.org/html/rfc5056
+
+   [20] https://tools.ietf.org/html/rfc5929
+
+   [21] https://tools.ietf.org/html/rfc5929#section-6
+
+   [22] https://tools.ietf.org/html/rfc5929#section-3
+
+   [23] https://tools.ietf.org/html/rfc5929#section-10.2
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 156]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+   [24] https://tools.ietf.org/html/rfc7627
+
+   [25] https://tools.ietf.org/html/rfc5929#section-4.1
+
+   [26] https://tools.ietf.org/html/rfc5802#section-7
+
+   [27] https://tools.ietf.org/html/rfc5802
+
+   [28] https://tools.ietf.org/html/rfc4648
+
+   [29] https://tools.ietf.org/html/rfc4013
+
+   [30] https://tools.ietf.org/html/rfc3454
+
+   [31] https://www.ietf.org/rfc/rfc2104.txt
+
+   [32] https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/
+
+   [33] https://tools.ietf.org/html/rfc2898
+
+   [34] https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/
+
+   [35] https://tools.ietf.org/html/rfc2898
+
+   [36] https://tools.ietf.org/html/rfc2898
+
+   [37] https://tools.ietf.org/html/rfc7677#section-4
+
+   [38] http://www.w3.org/Protocols/rfc2616/rfc2616-sec5.html#sec5.1
+
+   [39] http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2
+
+   [40] http://en.wikipedia.org/wiki/Record_separator#Field_separators
+
+   [41] https://github.com/oberstet/permessage-priority/blob/master/
+        draft-oberstein-hybi-permessage-priority.txt
 
 Authors' Addresses
 
@@ -7981,6 +8781,17 @@ Authors' Addresses
    Crossbar.io Technologies GmbH
 
    Email: tobias.oberstein@crossbario.com
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 157]
+
+Internet-Draft                    WAMP                        March 2017
 
 
    Alexander Goedde
@@ -8005,4 +8816,33 @@ Authors' Addresses
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 143]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 158]
