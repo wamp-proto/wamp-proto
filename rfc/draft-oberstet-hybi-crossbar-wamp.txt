@@ -187,37 +187,37 @@ Internet-Draft                    WAMP                        March 2017
        14.3.6.  Call Trust Levels  . . . . . . . . . . . . . . . . .  78
        14.3.7.  Registration Meta API  . . . . . . . . . . . . . . .  78
        14.3.8.  Pattern-based Registrations  . . . . . . . . . . . .  85
-       14.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  88
-       14.3.10. Sharded Registration . . . . . . . . . . . . . . . .  90
-       14.3.11. Registration Revocation  . . . . . . . . . . . . . .  91
-       14.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  91
-     14.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  92
-       14.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  92
-       14.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  97
-       14.4.3.  Publisher Identification . . . . . . . . . . . . . .  98
-       14.4.4.  Publication Trust Levels . . . . . . . . . . . . . .  99
-       14.4.5.  Subscription Meta API  . . . . . . . . . . . . . . .  99
-       14.4.6.  Pattern-based Subscriptions  . . . . . . . . . . . . 105
-       14.4.7.  Sharded Subscriptions  . . . . . . . . . . . . . . . 108
-       14.4.8.  Event History  . . . . . . . . . . . . . . . . . . . 109
-       14.4.9.  Registration Revocation  . . . . . . . . . . . . . . 111
-       14.4.10. Topic Reflection . . . . . . . . . . . . . . . . . . 111
-       14.4.11. Testament  . . . . . . . . . . . . . . . . . . . . . 111
-     14.5.  Other Advanced Features  . . . . . . . . . . . . . . . . 114
-       14.5.1.  Session Meta API . . . . . . . . . . . . . . . . . . 114
-       14.5.2.  Authentication . . . . . . . . . . . . . . . . . . . 117
-       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 126
-   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 137
-     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 138
-     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 139
-   16. Security Considerations . . . . . . . . . . . . . . . . . . . 140
-   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 141
-   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 141
-   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 141
-   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 141
-     20.1.  Normative References . . . . . . . . . . . . . . . . . . 141
-     20.2.  Informative References . . . . . . . . . . . . . . . . . 141
-     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 142
+       14.3.9.  Shared Registration  . . . . . . . . . . . . . . . .  90
+       14.3.10. Sharded Registration . . . . . . . . . . . . . . . .  92
+       14.3.11. Registration Revocation  . . . . . . . . . . . . . .  92
+       14.3.12. Procedure Reflection . . . . . . . . . . . . . . . .  92
+     14.4.  Advanced PubSub Features . . . . . . . . . . . . . . . .  94
+       14.4.1.  Subscriber Black- and Whitelisting . . . . . . . . .  94
+       14.4.2.  Publisher Exclusion  . . . . . . . . . . . . . . . .  98
+       14.4.3.  Publisher Identification . . . . . . . . . . . . . .  99
+       14.4.4.  Publication Trust Levels . . . . . . . . . . . . . . 100
+       14.4.5.  Subscription Meta API  . . . . . . . . . . . . . . . 101
+       14.4.6.  Pattern-based Subscriptions  . . . . . . . . . . . . 106
+       14.4.7.  Sharded Subscriptions  . . . . . . . . . . . . . . . 110
+       14.4.8.  Event History  . . . . . . . . . . . . . . . . . . . 110
+       14.4.9.  Registration Revocation  . . . . . . . . . . . . . . 112
+       14.4.10. Topic Reflection . . . . . . . . . . . . . . . . . . 112
+       14.4.11. Testament  . . . . . . . . . . . . . . . . . . . . . 113
+     14.5.  Other Advanced Features  . . . . . . . . . . . . . . . . 115
+       14.5.1.  Session Meta API . . . . . . . . . . . . . . . . . . 115
+       14.5.2.  Authentication . . . . . . . . . . . . . . . . . . . 119
+       14.5.3.  Alternative Transports . . . . . . . . . . . . . . . 127
+   15. Binary conversion of JSON Strings . . . . . . . . . . . . . . 138
+     15.1.  Python . . . . . . . . . . . . . . . . . . . . . . . . . 139
+     15.2.  JavaScript . . . . . . . . . . . . . . . . . . . . . . . 140
+   16. Security Considerations . . . . . . . . . . . . . . . . . . . 141
+   17. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 142
+   18. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 142
+   19. Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . 142
+   20. References  . . . . . . . . . . . . . . . . . . . . . . . . . 142
+     20.1.  Normative References . . . . . . . . . . . . . . . . . . 142
+     20.2.  Informative References . . . . . . . . . . . . . . . . . 142
+     20.3.  URIs . . . . . . . . . . . . . . . . . . . . . . . . . . 143
 
 
 
@@ -226,7 +226,7 @@ Oberstein & Goedde     Expires September 20, 2017               [Page 4]
 Internet-Draft                    WAMP                        March 2017
 
 
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 142
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . . 143
 
 1.  Introduction
 
@@ -4876,9 +4876,87 @@ Internet-Draft                    WAMP                        March 2017
 
 14.3.8.1.4.2.  Calls matching multiple registrations
 
-   The behavior when a single call matches more than one of a _Callee's_
-   registrations or more than one registration in general is still being
-   discussed.
+   There can be situations, when some call URI matches more then one
+   registration.  In this case a call is routed to one and only one best
+   matched RPC registration, or fails with ERROR
+   "wamp.error.no_such_procedure".
+
+   The following algorithm MUST be applied to find a single RPC
+   registration to which a call is routed:
+
+   1.  Check for exact matching registration.  If this match exists --
+       use it.
+
+   2.  If there are prefix-based registrations, find the registration
+       with the longest prefix match.  Longest means it has more URI
+       components matched, e.g. for call URI "a1.b2.c3.d4" registration
+       "a1.b2.c3" has higher priority than registration "a1.b2".  If
+       this match exists -- use it.
+
+   3.  If there are wildcard-based registrations, find the registration
+       with the longest portion of URI components matched before each
+       wildcard.  E.g. for call URI "a1.b2.c3.d4" registration
+       "a1.b2..d4" has higher priority than registration "a1...d4", see
+       below for more complex examples.  If this match exists -- use it.
+
+   4.  If there is no exact match, no prefix match, and no wildcard
+       match, then _Dealer_ MUST return ERROR
+       "wamp.error.no_such_procedure".
+
+   _Examples_
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 88]
+
+Internet-Draft                    WAMP                        March 2017
+
+
+Registered RPCs:
+    1. 'a1.b2.c3.d4.e55' (exact),
+    2. 'a1.b2.c3' (prefix),
+    3. 'a1.b2.c3.d4' (prefix),
+    4. 'a1.b2..d4.e5',
+    5. 'a1.b2.c3..e5',
+    6. 'a1.b2..d4.e5..g7',
+    7. 'a1.b2..d4..f6.g7'
+
+Call request RPC URI: 'a1.b2.c3.d4.e55' \u002D->
+    exact match. Use RPC 1
+Call request RPC URI: 'a1.b2.c3.d98.e74' \u002D->
+    no exact match, single prefix match. Use RPC 2
+Call request RPC URI: 'a1.b2.c3.d4.e325' \u002D->
+    no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+Call request RPC URI: 'a1.b2.c55.d4.e5' \u002D->
+    no exact match, no prefix match, single wildcard match. Use RPC 4
+Call request RPC URI: 'a1.b2.c3.d4.e5' \u002D->
+    no exact match, no prefix match, 2 wildcard matches (4,5),
+    select longest one. Use RPC 5
+Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' \u002D->
+    no exact match, no prefix match, 2 wildcard matches (6,7),
+    both having equal first portions (a1.b2), but RPC 6 has longer
+    second portion (d4.e5). Use RPC 6
+Call request RPC URI: 'a2.b2.c2.d2.e2' \u002D->
+    no exact match, no prefix match, no wildcard match.
+    Return wamp.error.no_such_procedure
 
 14.3.8.1.4.3.  Concrete procedure called
 
@@ -4891,6 +4969,22 @@ Internet-Draft                    WAMP                        March 2017
    to the _Callee_.
 
    _Example_
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 89]
+
+Internet-Draft                    WAMP                        March 2017
+
 
        [
            68,
@@ -4922,14 +5016,6 @@ Internet-Draft                    WAMP                        March 2017
    There are use cases where more flexibility is required.  As an
    example, for an application component with a high computing load,
    several instances may run, and load balancing of calls across these
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 88]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    may be desired.  As another example, in an application a second or
    third component providing a procedure may run, which are only to be
    called in case the primary component is no longer reachable (hot
@@ -4948,6 +5034,13 @@ Internet-Draft                    WAMP                        March 2017
    where "<invocation_policy>" is one of
 
    o  'single'
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 90]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    o  'roundrobin'
 
@@ -4977,15 +5070,6 @@ Internet-Draft                    WAMP                        March 2017
    picking looping back to the beginning of the list once the end has
    been reached.
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 89]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    For 'random' a callee is picked randomly from the list of
    registrations for each call.
 
@@ -5002,6 +5086,17 @@ Internet-Draft                    WAMP                        March 2017
 
        HELLO.Details.roles.<role>.features.
            shared_registration|bool := true
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 91]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.3.10.  Sharded Registration
 
@@ -5030,18 +5125,6 @@ Internet-Draft                    WAMP                        March 2017
 
    HELLO.Details.roles.<role>.features.sharded_registration|bool := true
 
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 90]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.3.11.  Registration Revocation
 
 14.3.11.1.  Feature Definition
@@ -5062,6 +5145,14 @@ Internet-Draft                    WAMP                        March 2017
    interested in retrieving a machine readable list and description of
    WAMP procedures and topics it is authorized to access or provide in
    the context of a WAMP session with a _Dealer_ or _Broker_.
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 92]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    Reflection may be useful in the following cases:
 
@@ -5090,14 +5181,6 @@ Internet-Draft                    WAMP                        March 2017
    A peer that acts as a _Broker_ SHOULD announce support for the
    reflection API by sending
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 91]
-
-Internet-Draft                    WAMP                        March 2017
-
-
        HELLO.Details.roles.broker.reflection|bool := true
 
    A peer that acts as a _Dealer_ SHOULD announce support for the
@@ -5119,6 +5202,13 @@ Internet-Draft                    WAMP                        March 2017
    A topic or procedure was asked to be described (reflected upon):
 
        wamp.reflect.describe
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 93]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    *Reflection*
 
@@ -5146,14 +5236,6 @@ Internet-Draft                    WAMP                        March 2017
    reduced on a per-publication basis by the _Publisher_ using
    *Subscriber Black- and Whitelisting*.
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 92]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    The _Publisher_ can explicitly *exclude* _Subscribers_ based on WAMP
    "sessionid", "authid" or "authrole".  This is referred to as
    *Blacklisting*.
@@ -5175,6 +5257,15 @@ Internet-Draft                    WAMP                        March 2017
    However, the application might want to exclude the originator of the
    product price update (the *Caller* of the price update procedure)
    from receiving the update event - as the originator naturally already
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 94]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    knows the new price, and might get confused when it receives an
    update the *Caller* has triggered himself.
 
@@ -5203,13 +5294,6 @@ Internet-Draft                    WAMP                        March 2017
    sensitive information.  A user under "authrole" "staff" might only be
    allowed to receive a subset of events.
 
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 93]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    The application can publish *all* customer updates to the *same*
    topic "com.example.myapp.customer.<customer ID>" and use
    "PUBLISH.Options.eligible_authrole|list[string]" to safely restrict
@@ -5229,6 +5313,14 @@ Internet-Draft                    WAMP                        March 2017
       *  "PUBLISH.Options.exclude_authrole|list[string]"
 
    o  Whitelisting Options
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 95]
+
+Internet-Draft                    WAMP                        March 2017
+
 
       *  "PUBLISH.Options.eligible|list[int]"
 
@@ -5259,13 +5351,6 @@ Internet-Draft                    WAMP                        March 2017
    1.  if there is an "eligible" attribute present, the _Subscriber_'s
        "sessionid" is in this list
 
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 94]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    2.  if there is an "eligible_authid" attribute present, the
        _Subscriber_'s "authid" is in this list
 
@@ -5284,6 +5369,15 @@ Internet-Draft                    WAMP                        March 2017
    For example, if both "PUBLISH.Options.exclude" and
    "PUBLISH.Options.eligible" are present, the _Broker_ will dispatch
    events published only to _Subscribers_ that are not explicitly
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 96]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    excluded in "PUBLISH.Options.exclude" *and* which are explicitly
    eligible via "PUBLISH.Options.eligible".
 
@@ -5310,18 +5404,6 @@ Internet-Draft                    WAMP                        March 2017
 
    _Example_
 
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 95]
-
-Internet-Draft                    WAMP                        March 2017
-
-
        [
           16,
           239714735,
@@ -5342,6 +5424,15 @@ Internet-Draft                    WAMP                        March 2017
    subscribed to the topic "com.myapp.mytopic1".
 
    _Example_
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 97]
+
+Internet-Draft                    WAMP                        March 2017
+
 
        [
           16,
@@ -5365,18 +5456,6 @@ Internet-Draft                    WAMP                        March 2017
    The above event will get dispatched to WAMP sessions with IDs
    "1245751" or "9912315" only, since "7891255" is excluded - but only
    if those are actually subscribed to the topic "com.myapp.mytopic1".
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 96]
-
-Internet-Draft                    WAMP                        March 2017
-
 
 14.4.1.4.  Feature Announcement
 
@@ -5404,6 +5483,13 @@ Internet-Draft                    WAMP                        March 2017
    _Publisher_ of the event will receive that event, if it is subscribed
    to the "Topic" published to.
 
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 98]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    _Example_
 
        [
@@ -5426,13 +5512,6 @@ Internet-Draft                    WAMP                        March 2017
 
        HELLO.Details.roles.<role>.features.
            publisher_exclusion|bool := true
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 97]
-
-Internet-Draft                    WAMP                        March 2017
-
 
 14.4.3.  Publisher Identification
 
@@ -5458,6 +5537,15 @@ Internet-Draft                    WAMP                        March 2017
        [36, 5512315355, 4429313566, {"publisher": 3335656},
            ["Hello, world!"]]
 
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017              [Page 99]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    Note that a _Broker_ may deny a _Publisher's_ request to disclose its
    identity:
 
@@ -5478,17 +5566,6 @@ Internet-Draft                    WAMP                        March 2017
 
        HELLO.Details.roles.<role>.features.
            publisher_identification|bool := true
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 98]
-
-Internet-Draft                    WAMP                        March 2017
-
 
 14.4.4.  Publication Trust Levels
 
@@ -5515,6 +5592,16 @@ Internet-Draft                    WAMP                        March 2017
    In above event, the _Broker_ has (by configuration and/or other
    information) deemed the event publication to be of trustlevel "2".
 
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 100]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 14.4.4.2.  Feature Announcement
 
    Support for this feature MUST be announced by _Subscribers_ ("role :=
@@ -5538,13 +5625,6 @@ Internet-Draft                    WAMP                        March 2017
    subscription _meta-procedures_.
 
    Support for this feature MUST be announced by Brokers via
-
-
-
-Oberstein & Goedde     Expires September 20, 2017              [Page 99]
-
-Internet-Draft                    WAMP                        March 2017
-
 
        HELLO.Details.roles.broker.features.subscription_meta_api|
            bool := true
@@ -5571,6 +5651,13 @@ Internet-Draft                    WAMP                        March 2017
    o  "wamp.subscription.on_delete": Fired when a subscription is
       deleted after the last session attached to it has been removed.
 
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 101]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    A "wamp.subscription.on_subscribe" event MUST always be fired
    subsequent to a "wamp.subscription.on_create" event, since the first
    subscribe results in both the creation of the subscription and the
@@ -5595,13 +5682,6 @@ Internet-Draft                    WAMP                        March 2017
    o  "SubscriptionDetails|dict": Information on the created
       subscription.
 
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 100]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    *Object Schemas*
 
          SubscriptionDetails :=
@@ -5623,6 +5703,16 @@ Internet-Draft                    WAMP                        March 2017
 
    o  "subscription|id": ID of the subscription to which the session is
       being added.
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 102]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.4.5.1.1.3.  wamp.subscription.on_unsubscribe
 
@@ -5650,14 +5740,6 @@ Internet-Draft                    WAMP                        March 2017
    A client can actively retrieve information about subscriptions via
    the following meta-procedures:
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 101]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    o  "wamp.subscription.list": Retrieves subscription IDs listed
       according to match policies.
 
@@ -5675,6 +5757,18 @@ Internet-Draft                    WAMP                        March 2017
 
    o  "wamp.subscription.count_subscribers": Obtains the number of
       sessions currently attached to the subscription.
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 103]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.4.5.2.1.  Meta-Procedure Specifications
 
@@ -5704,16 +5798,6 @@ Internet-Draft                    WAMP                        March 2017
 
    See Section 14.4.6 for information on match policies.
 
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 102]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.4.5.2.1.2.  wamp.subscription.lookup
 
    Obtains the subscription (if any) managing a topic, according to some
@@ -5732,6 +5816,15 @@ Internet-Draft                    WAMP                        March 2017
 
    o  (Nullable) "subscription|id": The ID of the subscription managing
       the topic, if found, or null.
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 104]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.4.5.2.1.3.  wamp.subscription.match
 
@@ -5763,13 +5856,6 @@ Internet-Draft                    WAMP                        March 2017
 
    o  "SubscriptionDetails|dict": Details on the subscription.
 
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 103]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    *Error URIs*
 
    o  "wamp.error.no_such_subscription": No subscription with the given
@@ -5786,6 +5872,15 @@ Internet-Draft                    WAMP                        March 2017
          }
 
    See Section 14.4.6 for information on match policies.
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 105]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.4.5.2.1.5.  wamp.subscription.list_subscribers
 
@@ -5818,14 +5913,6 @@ Internet-Draft                    WAMP                        March 2017
    o  "subscription|id": The ID of the subscription to get the number of
       subscribers for.
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 104]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    *Results*
 
    The result consists of one positional argument:
@@ -5839,6 +5926,17 @@ Internet-Draft                    WAMP                        March 2017
       ID exists on the router.
 
 14.4.6.  Pattern-based Subscriptions
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 106]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.4.6.1.  Introdution
 
@@ -5869,19 +5967,6 @@ Internet-Draft                    WAMP                        March 2017
 
    _Example_
 
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 105]
-
-Internet-Draft                    WAMP                        March 2017
-
-
        [
            32,
            912873614,
@@ -5900,6 +5985,14 @@ Internet-Draft                    WAMP                        March 2017
    o  "com.myapp.topic.emergency.11"
 
    o  "com.myapp.topic.emergency-low"
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 107]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    o  "com.myapp.topic.emergency.category.severe"
 
@@ -5929,15 +6022,6 @@ Internet-Draft                    WAMP                        March 2017
            "com.myapp..userevent"
        ]
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 106]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    In above subscription request, the 3rd URI component is empty, which
    signals a wildcard in that URI component position.  In this example,
    events with "PUBLISH.Topic"
@@ -5957,6 +6041,14 @@ Internet-Draft                    WAMP                        March 2017
    o  "com.myapp2.foo.userevent"
 
    will not apply for dispatching.
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 108]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.4.6.4.  General
 
@@ -5986,14 +6078,6 @@ Internet-Draft                    WAMP                        March 2017
 
        EVENT.Details.topic|uri
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 107]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    to the _Subscribers_.
 
    _Example_
@@ -6012,6 +6096,15 @@ Internet-Draft                    WAMP                        March 2017
 
    Support for this feature MUST be announced by _Subscribers_ ("role :=
    "subscriber"") and _Brokers_ ("role := "broker"") via
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 109]
+
+Internet-Draft                    WAMP                        March 2017
+
 
        HELLO.Details.roles.<role>.features.
            pattern_based_subscription|bool := true
@@ -6041,15 +6134,6 @@ Internet-Draft                    WAMP                        March 2017
    Node keys: "SUBSCRIBE.Options.nkey|string" is a stable, technical
    *node key*.
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 108]
-
-Internet-Draft                    WAMP                        March 2017
-
-
       E.g. if your backend process runs on a dedicated host, you can use
       its hostname.
 
@@ -6068,6 +6152,15 @@ Internet-Draft                    WAMP                        March 2017
    restarts.
 
    The _Broker_ may allow for configuration on a per-topic basis.
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 110]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    The event history may be transient or persistent message history
    (surviving _Broker_ restarts).
@@ -6099,13 +6192,6 @@ Internet-Draft                    WAMP                        March 2017
       events in the ISO-8601 format "yyyy-MM-ddThh:mm:ss:SSSZ" (e.g.
       ""2013-12-21T13:43:11:000Z"")
 
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 109]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    or by calling
 
        wamp.topic.history.after
@@ -6123,6 +6209,15 @@ Internet-Draft                    WAMP                        March 2017
 
        *  Since we need to be able to get history for pattern-based
           subscriptions as well, a subscription|id makes more sense:
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 111]
+
+Internet-Draft                    WAMP                        March 2017
+
+
           create pattern-based subscription, then get the event history
           for this.
 
@@ -6154,14 +6249,6 @@ Internet-Draft                    WAMP                        March 2017
 
        HELLO.Details.roles.<role>.features.event_history|bool := true
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 110]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.4.9.  Registration Revocation
 
 14.4.9.1.  Feature Definition
@@ -6174,6 +6261,18 @@ Internet-Draft                    WAMP                        March 2017
 14.4.10.  Topic Reflection
 
    o  see *Procedure Reflection* for now
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 112]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.4.11.  Testament
 
@@ -6206,18 +6305,6 @@ Internet-Draft                    WAMP                        March 2017
    o  "wamp.session.flush_testaments" to remove the Testaments for that
       Session, either for when it is detatched or destroyed.
 
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 111]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.4.11.2.1.  wamp.session.add_testament
 
    Adds a new testament:
@@ -6234,6 +6321,15 @@ Internet-Draft                    WAMP                        March 2017
 
    1.  "publish_options|dict" - options for the event when it is
        published -- see "Publish.Options".  Not all options may be
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 113]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        honoured (for example, "acknowledge").  By default, there are no
        options.
 
@@ -6265,15 +6361,6 @@ Internet-Draft                    WAMP                        March 2017
    it.  For example, a client may call "add_testament" (this example
    uses the implicit "scope" option of "destroyed"):
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 112]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    yield self.call('wamp.session.add_testament',
                    'com.myapp.mytopic', ['Seeya!'], {'my_name': 'app1'})
 
@@ -6291,6 +6378,13 @@ Internet-Draft                    WAMP                        March 2017
    specified arguments, keyword arguments, and publish options.  The
    _Router_ MAY ignore publish options that do not make sense for a
    Testament (for example, acknowledged publishes).
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 114]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    When a _Session_ is going to be _destroyed_, the _Router_ will
    inspect it for any Testaments in the "destroyed" scope, and publish
@@ -6318,18 +6412,6 @@ Internet-Draft                    WAMP                        March 2017
        HELLO.Details.roles.dealer.features.
            testament_meta_api|bool := true
 
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 113]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.5.  Other Advanced Features
 
 14.5.1.  Session Meta API
@@ -6349,6 +6431,16 @@ Internet-Draft                    WAMP                        March 2017
       _Dealer_ role, not both at the same time, essentially cannot offer
       the *Session Meta API*, as it requires both roles to support this
       feature.
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 115]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.5.1.2.  Session Meta Events
 
@@ -6379,13 +6471,6 @@ Internet-Draft                    WAMP                        March 2017
    o  "authmethod|string" - The authentication method that was used for
       authentication the session that joined
 
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 114]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    o  "authprovider|string"- The provider that performed the
       authentication of the session that joined
 
@@ -6400,6 +6485,18 @@ Internet-Draft                    WAMP                        March 2017
    Fired when a session leaves a realm on the router or is disconnected.
    The event payload consists of a single positional argument
    "session|id" with the session ID of the session that left.
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 116]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.5.1.3.  Session Meta Procedures
 
@@ -6431,17 +6528,6 @@ Internet-Draft                    WAMP                        March 2017
    1.  "count|int" - The number of sessions currently attached to the
        realm.
 
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 115]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.5.1.3.2.  wamp.session.list
 
    Retrieves a list of the session IDs for all sessions currently
@@ -6455,6 +6541,18 @@ Internet-Draft                    WAMP                        March 2017
    *Positional results*
 
    1.  "session_ids|list" - List of WAMP session IDs (order undefined).
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 117]
+
+Internet-Draft                    WAMP                        March 2017
+
 
 14.5.1.3.3.  wamp.session.get
 
@@ -6490,14 +6588,6 @@ Internet-Draft                    WAMP                        March 2017
       See *Authentication* for a description of the "authid",
       "authrole", "authmethod" and "authprovider" properties.
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 116]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    *Errors*
 
    o  "wamp.error.no_such_session" - No session with the given ID exists
@@ -6512,6 +6602,13 @@ Internet-Draft                    WAMP                        March 2017
            session_meta_api|bool := true
 
    *Example*
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 118]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    Here is a "WELCOME" message from a _Router_ with support for both the
    _Broker_ and _Dealer_ role, and with support for *Session Meta API*:
@@ -6545,15 +6642,6 @@ Internet-Draft                    WAMP                        March 2017
 
    Authentication is a complex area.
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 117]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    Some applications might want to leverage authentication information
    coming from the transport underlying WAMP, e.g.  HTTP cookies or TLS
    certificates.
@@ -6569,6 +6657,14 @@ Internet-Draft                    WAMP                        March 2017
    Some applications might want to perform their own authentication
    schemes by using basic WAMP mechanisms, e.g. by using application-
    defined remote procedure calls.
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 119]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    And some applications might want to use a transport independent
    scheme, nevertheless predefined by WAMP.
@@ -6601,15 +6697,6 @@ Internet-Draft                    WAMP                        March 2017
         |Client|          |Router|
         `------'          `------'
 
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 118]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    Concrete use of "CHALLENGE" and "AUTHENTICATE" messages depends on
    the specific authentication method.
 
@@ -6627,6 +6714,13 @@ Internet-Draft                    WAMP                        March 2017
 
    To request authentication, the Router MUST send a "CHALLENGE" message
    to the _Endpoint_.
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 120]
+
+Internet-Draft                    WAMP                        March 2017
+
 
        [CHALLENGE, AuthMethod|string, Extra|dict]
 
@@ -6654,18 +6748,6 @@ Internet-Draft                    WAMP                        March 2017
    WAMP level within "HELLO.Details.transport.auth|any" in the client-
    to-server direction.
 
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 119]
-
-Internet-Draft                    WAMP                        March 2017
-
-
 14.5.2.2.2.  TLS Certificate Authentication
 
    When running WAMP over a TLS (either secure WebSocket or raw TCP)
@@ -6686,6 +6768,15 @@ Internet-Draft                    WAMP                        March 2017
    hence WAMP-CRA can be used via non-TLS connections.  The actual pre-
    sharing of the secret is outside the scope of the authentication
    mechanism.
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 121]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    A typical authentication begins with the client sending a "HELLO"
    message specifying the "wampcra" method as (one of) the
@@ -6712,16 +6803,6 @@ Internet-Draft                    WAMP                        March 2017
    authentication methods (if the client announced any) or send an
    "ABORT" message.
 
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 120]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    If the server is willing to let the client authenticate using WAMP-
    CRA, and the server recognizes the provided "authid", it MUST send a
    "CHALLENGE" message:
@@ -6745,6 +6826,13 @@ Internet-Draft                    WAMP                        March 2017
 
    2.  "authrole|string": The authentication role the client will be
        authenticated as when the authentication succeeds.
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 122]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    3.  "authmethod|string": The authentication methods, here ""wampcra""
 
@@ -6770,14 +6858,6 @@ Internet-Draft                    WAMP                        March 2017
    After computing the signature, the client will send an "AUTHENTICATE"
    message containing the signature, as a base64-encoded string:
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 121]
-
-Internet-Draft                    WAMP                        March 2017
-
-
        [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
 
    The server will then check if
@@ -6801,6 +6881,14 @@ Internet-Draft                    WAMP                        March 2017
 
    The "WELCOME.Details" again contain the actual authentication
    information active.
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 123]
+
+Internet-Draft                    WAMP                        March 2017
+
 
    If the authentication fails, the server will response with an "ABORT"
    message.
@@ -6826,14 +6914,6 @@ Internet-Draft                    WAMP                        March 2017
    The signing of the challenge sent by the server usually is done
    directly on the client.  However, this is no strict requirement.
 
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 122]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    E.g. a client might forward the challenge to another party (hence the
    "three-legged") for creating the signature.  This can be used when
    the client was previously already authenticated to that third party,
@@ -6858,6 +6938,14 @@ Internet-Draft                    WAMP                        March 2017
    secret on the client and the server - and storing a password verbatim
    (unencrypted) is not recommended in general.
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 124]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    WAMP-CRA allows the use of salted passwords following the PBKDF2 [5]
    key derivation scheme.  With salted passwords, the password itself is
    never stored, but only a key derived from the password and a password
@@ -6879,16 +6967,6 @@ Internet-Draft                    WAMP                        March 2017
                "iterations": 1000
            }
        ]
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 123]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    The "CHALLENGE.Details.salt|string" is the password salt in use.  The
    "CHALLENGE.Details.keylen|int" and "CHALLENGE.Details.iterations|int"
@@ -6916,6 +6994,14 @@ Internet-Draft                    WAMP                        March 2017
    message specifying the "ticket" method as (one of) the authentication
    methods:
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 125]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        [1, "realm1",
          {
            "roles": ...,
@@ -6935,16 +7021,6 @@ Internet-Draft                    WAMP                        March 2017
    If the server is unwilling or unable to perform Ticket-based
    authentication, it'll either skip forward trying other authentication
    methods (if the client announced any) or send an "ABORT" message.
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 124]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    If the server is willing to let the client authenticate using a
    ticket and the server recognizes the provided "authid", it'll send a
@@ -6974,6 +7050,14 @@ Internet-Draft                    WAMP                        March 2017
 
    where
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 126]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    1.  "authid|string": The authentication ID the client was (actually)
        authenticated as.
 
@@ -6989,18 +7073,6 @@ Internet-Draft                    WAMP                        March 2017
    The "WELCOME.Details" again contain the actual authentication
    information active.  If the authentication fails, the server will
    response with an "ABORT" message.
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 125]
-
-Internet-Draft                    WAMP                        March 2017
-
 
 14.5.3.  Alternative Transports
 
@@ -7035,6 +7107,13 @@ Internet-Draft                    WAMP                        March 2017
    based opening handshake, message fragmentation, masking and variable
    length integers).
 
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 127]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    WAMP-over-RawSocket has even lower overhead than WebSocket, which can
    be desirable in particular when running on local connections like
    loopback TCP or Unix domain sockets.  It is also expected to allow
@@ -7050,14 +7129,6 @@ Internet-Draft                    WAMP                        March 2017
    However, WAMP-over-RawSocket cannot be used with Web browser clients,
    since browsers do not allow raw TCP connections.  Browser extensions
    would do, but those need to be installed in a browser.  WAMP-over-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 126]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    RawSocket also (currently) does not support transport-level
    compression as WebSocket does provide ("permessage-deflate" WebSocket
    extension).
@@ -7092,6 +7163,13 @@ Internet-Draft                    WAMP                        March 2017
 
    The octets to be sent are "b"\x11\x22\x33\x44"".
 
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 128]
+
+Internet-Draft                    WAMP                        March 2017
+
+
 14.5.3.1.2.  Handshake
 
    *Client-to-Router Request*
@@ -7105,15 +7183,6 @@ Internet-Draft                    WAMP                        March 2017
 
    The _first octet_ is a magic octet with value "0x7F".  This value is
    chosen to avoid any possible collision with the first octet of a
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 127]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    valid HTTP request (see here [6] and here [7]).  No valid HTTP
    request can have "0x7F" as its first octet.
 
@@ -7146,6 +7215,17 @@ Internet-Draft                    WAMP                        March 2017
 
    The possible values for "SERIALIZER" are:
 
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 129]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        0: illegal
        1: JSON
        2: MessagePack
@@ -7153,22 +7233,6 @@ Internet-Draft                    WAMP                        March 2017
 
    Here is a Python program that prints all (currently) permissible
    values for the _second octet_:
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 128]
-
-Internet-Draft                    WAMP                        March 2017
-
 
         <CODE BEGINS>
         SERMAP = {
@@ -7202,6 +7266,22 @@ Internet-Draft                    WAMP                        March 2017
    Here is an example of how a _Router_ could parse the _second octet_
    in a _Clients_ handshake request:
 
+
+
+
+
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 130]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        <CODE BEGINS>
        ## map RawSocket handshake request (2nd octet) to
        ## serializer / max. msg length
@@ -7216,15 +7296,6 @@ Internet-Draft                    WAMP                        March 2017
           else:
              print("fail the connection: illegal serializer value")
        <CODE ENDS>
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 129]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    When the _Router_ is willing to speak the serializer requested by the
    _Client_, it will answer with a 4 octets response of identical
@@ -7259,6 +7330,14 @@ Internet-Draft                    WAMP                        March 2017
        31                                    0
        0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 131]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    An error reply has 4 octets: the _first octet_ is again the magic
    "0x7F", and the _third and forth octet_ are reserved and MUST all be
    zeros for now.
@@ -7273,14 +7352,6 @@ Internet-Draft                    WAMP                        March 2017
        3: use of reserved bits (unsupported feature)
        4: maximum connection count reached
        5 - 15: reserved for future errors
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 130]
-
-Internet-Draft                    WAMP                        March 2017
-
 
       Note that the error code "0" MUST NOT be used.  This is to allow
       storage of error state in a host language variable, while allowing
@@ -7311,6 +7382,18 @@ Internet-Draft                    WAMP                        March 2017
    Here is an example of how a _Client_ might parse the _second octet_
    in a _Router_ handshake reply:
 
+
+
+
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 132]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        <CODE BEGINS>
        ## map RawSocket handshake reply (2nd octet)
        ##
@@ -7328,15 +7411,6 @@ Internet-Draft                    WAMP                        March 2017
              print("error: {}".format(ERRMAP.get(err,
                  'currently undefined')))
        <CODE ENDS>
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 131]
-
-Internet-Draft                    WAMP                        March 2017
-
 
 14.5.3.1.3.  Serialization
 
@@ -7367,6 +7441,15 @@ Internet-Draft                    WAMP                        March 2017
    The serialized octets for a message to be sent are prefixed with
    exactly 4 octets.
 
+
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 133]
+
+Internet-Draft                    WAMP                        March 2017
+
+
        MSB                                 LSB
        31                                    0
        RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
@@ -7386,13 +7469,6 @@ Internet-Draft                    WAMP                        March 2017
        1: PING
        2: PONG
        3-7: reserved
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 132]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    The _three remaining octets_ constitute an unsigned 24 bit integer
    that provides the length of transport message payload following,
@@ -7422,6 +7498,14 @@ Internet-Draft                    WAMP                        March 2017
    _WAMP-over-Batched-WebSocket_ is a variant of WAMP-over-WebSocket
    where multiple WAMP messages are sent in one WebSocket message.
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 134]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    Using WAMP message batching can increase wire level efficiency
    further.  In particular when using TLS and the WebSocket
    implementation is forcing every WebSocket message into a new TLS
@@ -7440,15 +7524,6 @@ Internet-Draft                    WAMP                        March 2017
    separator [8]) octet "0x1e" to _each_ serialized messages, and
    packing a sequence of such serialized messages into a single
    WebSocket message:
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 133]
-
-Internet-Draft                    WAMP                        March 2017
-
 
        Serialized JSON WAMP Msg 1 | 0x1e |
            Serialized JSON WAMP Msg 2 | 0x1e | ...
@@ -7480,6 +7555,13 @@ Internet-Draft                    WAMP                        March 2017
 
    *Opening a Session*
 
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 135]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    With the Long-Poll Transport, a Client opens a new WAMP session by
    sending a HTTP/POST request to a well-known URL, e.g.
 
@@ -7498,14 +7580,6 @@ Internet-Draft                    WAMP                        March 2017
 
    The (mandatory) "protocols" attribute specifies the protocols the
    client is willing to speak.  The server will chose one from this list
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 134]
-
-Internet-Draft                    WAMP                        March 2017
-
-
    when establishing the session or fail the request when no protocol
    overlap was found.
 
@@ -7536,6 +7610,14 @@ Internet-Draft                    WAMP                        March 2017
           "transport": "kjmd3sBLOUnb3Fyr"
        }
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 136]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    As an implied side-effect, two HTTP endpoints are created
 
        http://mypp.com/longpoll/<transport_id>/receive
@@ -7552,15 +7634,6 @@ Internet-Draft                    WAMP                        March 2017
    body) to
 
        http://mypp.com/longpoll/kjmd3sBLOUnb3Fyr/receive
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 135]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    When there are WAMP messages pending downstream, a request will
    return with a single WAMP message (unbatched modes) or a batch of
@@ -7594,6 +7667,13 @@ Internet-Draft                    WAMP                        March 2017
    The batching uses the same scheme as with "wamp.2.json.batched" and
    "wamp.2.msgpack.batched" transport over WebSocket.
 
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 137]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    Upon success, the request will return with HTTP status code 202 ("no
    content").  Upon error, the request will return with HTTP status code
    400 ("bad request").
@@ -7606,17 +7686,6 @@ Internet-Draft                    WAMP                        March 2017
 
    with an empty request body.  Upon success, the request will return
    with HTTP status code 202 ("no content").
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 136]
-
-Internet-Draft                    WAMP                        March 2017
-
 
 14.5.3.4.  Multiplexed Transport
 
@@ -7653,6 +7722,14 @@ Internet-Draft                    WAMP                        March 2017
 
    2.  prepend the string with a "\0" character
 
+
+
+
+Oberstein & Goedde     Expires September 20, 2017             [Page 138]
+
+Internet-Draft                    WAMP                        March 2017
+
+
    3.  serialize the string to a JSON string
 
    where Base64 encoding follows Section 4 of [RFC4648].
@@ -7666,13 +7743,6 @@ Internet-Draft                    WAMP                        March 2017
    This will get converted to Base64
 
        EOP/kFMHXFJvX8BtT+N82w==
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 137]
-
-Internet-Draft                    WAMP                        March 2017
-
 
    prepended with "\0"
 
@@ -7711,21 +7781,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein & Goedde     Expires September 20, 2017             [Page 138]
+Oberstein & Goedde     Expires September 20, 2017             [Page 139]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7781,7 +7837,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 139]
+Oberstein & Goedde     Expires September 20, 2017             [Page 140]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7837,7 +7893,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 140]
+Oberstein & Goedde     Expires September 20, 2017             [Page 141]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7893,7 +7949,7 @@ Internet-Draft                    WAMP                        March 2017
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 141]
+Oberstein & Goedde     Expires September 20, 2017             [Page 142]
 
 Internet-Draft                    WAMP                        March 2017
 
@@ -7949,4 +8005,4 @@ Authors' Addresses
 
 
 
-Oberstein & Goedde     Expires September 20, 2017             [Page 142]
+Oberstein & Goedde     Expires September 20, 2017             [Page 143]

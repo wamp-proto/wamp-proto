@@ -3767,8 +3767,50 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </section>
 
 <section anchor="calls-matching-multiple-registrations" title="Calls matching multiple registrations">
-<t>The behavior when a single call matches more than one of a <spanx style="emph">Callee's</spanx> registrations or more than one registration in general is still being discussed.
+<t>There can be situations, when some call URI matches more then one registration. In this case a call is routed to one and only one best matched RPC registration, or fails with ERROR <spanx style="verb">wamp.error.no_such_procedure</spanx>.
 </t>
+<t>The following algorithm MUST be applied to find a single RPC registration to which a call is routed:
+</t>
+<t>
+<list style="numbers">
+<t>Check for exact matching registration. If this match exists — use it.</t>
+<t>If there are prefix-based registrations, find the registration with the longest prefix match. Longest means it has more URI components matched, e.g. for call URI <spanx style="verb">a1.b2.c3.d4</spanx> registration <spanx style="verb">a1.b2.c3</spanx> has higher priority than registration <spanx style="verb">a1.b2</spanx>. If this match exists — use it.</t>
+<t>If there are wildcard-based registrations, find the registration with the longest portion of URI components matched before each wildcard. E.g. for call URI <spanx style="verb">a1.b2.c3.d4</spanx> registration <spanx style="verb">a1.b2..d4</spanx> has higher priority than registration <spanx style="verb">a1...d4</spanx>, see below for more complex examples. If this match exists — use it.</t>
+<t>If there is no exact match, no prefix match, and no wildcard match, then <spanx style="emph">Dealer</spanx> MUST return ERROR <spanx style="verb">wamp.error.no_such_procedure</spanx>.</t>
+</list>
+</t>
+<t><spanx style="emph">Examples</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+Registered RPCs:
+    1. 'a1.b2.c3.d4.e55' (exact),
+    2. 'a1.b2.c3' (prefix),
+    3. 'a1.b2.c3.d4' (prefix),
+    4. 'a1.b2..d4.e5',
+    5. 'a1.b2.c3..e5',
+    6. 'a1.b2..d4.e5..g7',
+    7. 'a1.b2..d4..f6.g7'
+
+Call request RPC URI: 'a1.b2.c3.d4.e55' → 
+    exact match. Use RPC 1
+Call request RPC URI: 'a1.b2.c3.d98.e74' → 
+    no exact match, single prefix match. Use RPC 2
+Call request RPC URI: 'a1.b2.c3.d4.e325' → 
+    no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+Call request RPC URI: 'a1.b2.c55.d4.e5' → 
+    no exact match, no prefix match, single wildcard match. Use RPC 4
+Call request RPC URI: 'a1.b2.c3.d4.e5' → 
+    no exact match, no prefix match, 2 wildcard matches (4,5), 
+    select longest one. Use RPC 5
+Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' → 
+    no exact match, no prefix match, 2 wildcard matches (6,7), 
+    both having equal first portions (a1.b2), but RPC 6 has longer 
+    second portion (d4.e5). Use RPC 6
+Call request RPC URI: 'a2.b2.c2.d2.e2' → 
+    no exact match, no prefix match, no wildcard match. 
+    Return wamp.error.no_such_procedure
+</artwork></figure>
 </section>
 
 <section anchor="concrete-procedure-called" title="Concrete procedure called">

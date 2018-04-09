@@ -4369,7 +4369,48 @@
 <p id="rfc.section.14.3.8.1.4.1.p.1">Since each <em>Callee</em>'s' registrations "stands on its own", there is no <em>set semantics</em> implied by pattern-based registrations.  </p>
 <p id="rfc.section.14.3.8.1.4.1.p.2">E.g. a <em>Callee</em> cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.  </p>
 <h1 id="rfc.section.14.3.8.1.4.2"><a href="#rfc.section.14.3.8.1.4.2">14.3.8.1.4.2.</a> <a href="#calls-matching-multiple-registrations" id="calls-matching-multiple-registrations">Calls matching multiple registrations</a></h1>
-<p id="rfc.section.14.3.8.1.4.2.p.1">The behavior when a single call matches more than one of a <em>Callee's</em> registrations or more than one registration in general is still being discussed.  </p>
+<p id="rfc.section.14.3.8.1.4.2.p.1">There can be situations, when&#160;some call URI matches more then one registration. In&#160;this case a call is routed to one and&#160;only one best matched RPC registration, or&#160;fails with ERROR <samp>wamp.error.no_such_procedure</samp>.  </p>
+<p id="rfc.section.14.3.8.1.4.2.p.2">The following algorithm MUST be applied to&#160;find a single RPC registration to&#160;which a call is routed: </p>
+<p/>
+
+<ol>
+  <li>Check for&#160;exact matching registration. If this match exists&#160;&#8212; use it.</li>
+  <li>If there are prefix-based registrations,&#160;find the registration with the longest prefix match. Longest means it has more URI components matched, e.g. for&#160;call URI <samp>a1.b2.c3.d4</samp> registration <samp>a1.b2.c3</samp> has higher priority than registration <samp>a1.b2</samp>. If this match exists&#160;&#8212; use it.</li>
+  <li>If there are wildcard-based registrations, find the registration with the longest portion of&#160;URI components matched before each wildcard. E.g. for&#160;call URI <samp>a1.b2.c3.d4</samp> registration <samp>a1.b2..d4</samp> has higher priority than registration <samp>a1...d4</samp>, see below for more complex examples. If this match exists&#160;&#8212; use it.</li>
+  <li>If there is no exact match, no prefix match, and no wildcard match, then <em>Dealer</em> MUST return ERROR <samp>wamp.error.no_such_procedure</samp>.</li>
+</ol>
+
+<p> </p>
+<p><em>Examples</em> </p>
+<pre>
+Registered RPCs:
+    1. 'a1.b2.c3.d4.e55' (exact),
+    2. 'a1.b2.c3' (prefix),
+    3. 'a1.b2.c3.d4' (prefix),
+    4. 'a1.b2..d4.e5',
+    5. 'a1.b2.c3..e5',
+    6. 'a1.b2..d4.e5..g7',
+    7. 'a1.b2..d4..f6.g7'
+
+Call request RPC URI: 'a1.b2.c3.d4.e55' &#8594; 
+    exact match. Use RPC 1
+Call request RPC URI: 'a1.b2.c3.d98.e74' &#8594; 
+    no exact match, single prefix match. Use RPC 2
+Call request RPC URI: 'a1.b2.c3.d4.e325' &#8594; 
+    no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+Call request RPC URI: 'a1.b2.c55.d4.e5' &#8594; 
+    no exact match, no prefix match, single wildcard match. Use RPC 4
+Call request RPC URI: 'a1.b2.c3.d4.e5' &#8594; 
+    no exact match, no prefix match, 2 wildcard matches (4,5), 
+    select longest one. Use RPC 5
+Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' &#8594; 
+    no exact match, no prefix match, 2 wildcard matches (6,7), 
+    both having equal first portions (a1.b2), but&#160;RPC 6 has longer 
+    second portion (d4.e5). Use RPC 6
+Call request RPC URI: 'a2.b2.c2.d2.e2' &#8594; 
+    no exact match, no prefix match, no wildcard match. 
+    Return wamp.error.no_such_procedure
+</pre>
 <h1 id="rfc.section.14.3.8.1.4.3"><a href="#rfc.section.14.3.8.1.4.3">14.3.8.1.4.3.</a> <a href="#concrete-procedure-called" id="concrete-procedure-called">Concrete procedure called</a></h1>
 <p id="rfc.section.14.3.8.1.4.3.p.1">If an endpoint was registered with a pattern-based matching policy, a <em>Dealer</em> MUST supply the original <samp>CALL.Procedure</samp> as provided by the <em>Caller</em> in </p>
 <pre>
