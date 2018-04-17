@@ -15,3 +15,7 @@ deploy: rfc
 generate:
 	flatc --python -o ./build/ ./rfc/wamp.fbs
 	flatc --python -o ./build/ ./rfc/example.fbs
+	find ./build
+
+clean:
+	-rm -rf ./build

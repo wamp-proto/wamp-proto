@@ -22,12 +22,15 @@ attribute "uri";
 // declare a custom attribute to define UUIDs on elements
 attribute "uuid";
 
-
 /// Void type (table based) for use with services.
 table Void
 {
     // nothing here!
 }
+
+
+// the schema objects will live here
+namespace wamp.proto;
 
 
 /// Application payload type.
