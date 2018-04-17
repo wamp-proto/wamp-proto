@@ -1,0 +1,71 @@
+
+
+enum Serializer: uint8
+{
+    JSON = 1,
+    MSGPACK = 2,
+    CBOR = 3,
+    UBJSON = 4,
+    FLATBUFFERS = 5
+}
+
+
+enum Payload: uint8
+{
+    PLAIN = 1,
+    CRYPTOBOX = 2
+}
+
+
+// CALL (MESSAGE_TYPE = 48)
+//
+// [CALL, Request|id, Options|dict, Procedure|uri]
+// [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+// [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
+// [CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]
+//
+table Call
+{
+    // Request|id
+    request: uint64 (required);
+
+    // Procedure|uri
+    procedure: string (required);
+
+    // Options|dict
+    timeout: uint32;
+    receive_progress: bool;
+
+    // Payload transparency mode
+    enc_algo: Payload;
+    enc_serializer: Serializer;
+    enc_key: [uint8];
+
+    // Payload|binary
+    payload: [uint8];
+}
+
+
+// RESULT (MESSAGE_TYPE = 50)
+//
+// [RESULT, CALL.Request|id, Details|dict]
+// [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
+// [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
+// [RESULT, CALL.Request|id, Details|dict, Payload|binary]
+//
+table CallResult
+{
+}
+
+
+union Messages =
+{
+    Call,
+    CallResult
+}
+
+
+table Message
+{
+    cmd: Messages;
+}
