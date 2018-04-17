@@ -16,8 +16,11 @@
 //
 
 
-// define custom attribute to define WAMP URIs of interfaces
+// declare a custom attribute to define WAMP URIs on elements
 attribute "uri";
+
+// declare a custom attribute to define UUIDs on elements
+attribute "uuid";
 
 
 /// Void type (table based) for use with services.

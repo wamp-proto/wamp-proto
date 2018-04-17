@@ -11,3 +11,7 @@ requirements:
 deploy: rfc
 	cp rfc/draft-oberstet-hybi-crossbar-wamp.txt ../wamp-web/website/wampws/static/rfc/
 	cp rfc/draft-oberstet-hybi-crossbar-wamp.html ../wamp-web/website/wampws/static/rfc/
+
+generate:
+	flatc --python -o ./build/ ./rfc/wamp.fbs
+	flatc --python -o ./build/ ./rfc/example.fbs

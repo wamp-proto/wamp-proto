@@ -44,7 +44,7 @@ table TimeRange
 
 
 /// Define an interface for accelerometer storage services.
-rpc_service AccelStorage
+rpc_service AccelStorage (uuid: "4b740947-31d5-4a10-b7ce-4149bbc9ee1e")
 {
     /// Store a sample batch. The time range of samples stored is returned.
     store (AccelSamples): TimeRange;
