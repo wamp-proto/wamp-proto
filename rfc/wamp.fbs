@@ -2,27 +2,39 @@
 // Flatbuffers schema for WAMP messages
 //
 
-enum Payload: uint8
-{
-    PLAIN = 1,
-    CRYPTOBOX = 2
-}
 
-
-enum Serializer: uint8
-{
-    JSON = 1,
-    MSGPACK = 2,
-    CBOR = 3,
-    UBJSON = 4,
-    FLATBUFFERS = 5
-}
-
-
+// a custom attribute we define to add docstrings to elements
 attribute "doc";
 // the following seems to be upcoming (typed custom attributes), but does
 // not yet work for me (flatc version 1.9.0 (Apr 17 2018 18:13:32))
 // attribute doc:string = "A developer focused help text.";
+
+
+enum Payload: uint8 (doc: "Application payload type.")
+{
+    // plain app payload
+    PLAIN = 1,
+
+    // encrypted app payload (Curve25519 / Cryptobox)
+    CRYPTOBOX = 2
+}
+
+
+enum Serializer: uint8 (doc: "Application payload serializer types.")
+{
+    // use same serializer as on the transport. this will be
+    // one of JSON, MSGPACK, CBOR or UBJSON
+    TRANSPORT = 1,
+    
+    // explicit use of serializer for dynamically typed app payload
+    JSON = 2,
+    MSGPACK = 3,
+    CBOR = 4,
+    UBJSON = 5,
+
+    // explicit use of Flatbuffers for statically typed payload
+    FLATBUFFERS = 6
+}
 
 
 // CALL (MESSAGE_TYPE = 48)
@@ -42,25 +54,25 @@ table Call (doc: "CALL message (message_type = 48)")
     procedure: string
         (required, doc: "The WAMP or application URI of the procedure which should be called.");
 
+    // Payload|binary
+    payload: [uint8]
+        (doc: "Raw application payload: call arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.");
+
     // Options|dict
-    timeout: uint32 = 0
-        (doc: "If present, cancel the call after this duration in ms.");
-
-    receive_progress: bool = false
-        (doc: "When set, indicates that the caller wants to receive progressive call results.");
-
     enc_algo: Payload = PLAIN
         (doc: "The encoding algorithm that was used to encode the payload.");
 
-    enc_serializer: Serializer = JSON
+    enc_serializer: Serializer = TRANSPORT
         (doc: "The payload object serializer that was used encoding the payload.");
 
     enc_key: [uint8]
         (doc: "When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.");
 
-    // Payload|binary
-    payload: [uint8]
-        (doc: "");
+    timeout: uint32 = 0
+        (doc: "If present, cancel the call after this duration in ms.");
+
+    receive_progress: bool = false
+        (doc: "When set, indicates that the caller wants to receive progressive call results.");
 }
 
 
@@ -71,31 +83,32 @@ table Call (doc: "CALL message (message_type = 48)")
 // [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
 // [RESULT, CALL.Request|id, Details|dict, Payload|binary]
 //
-table CallResult
+table CallResult (doc: "RESULT message (message_type = 50)")
 {
     // CALL.Request|id
     request: uint64
         (doc: "The request ID of the original CALL request.");
 
-    // Details|dict
-    progress: bool = false
-        (doc: " If true, this result is a progressive call result, and subsequent results (or a final error) will follow.");
+    // Payload|binary
+    payload: [uint8]
+        (doc: "Raw application payload: call result. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.");
 
+    // Details|dict
     enc_algo: Payload = PLAIN
         (doc: "The encoding algorithm that was used to encode the payload.");
 
-    enc_serializer: Serializer = JSON
+    enc_serializer: Serializer = TRANSPORT
         (doc: "The payload object serializer that was used encoding the payload.");
 
     enc_key: [uint8]
         (doc: "When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.");
 
-    // Payload|binary
-    payload: [uint8]
-        (doc: "");
+    progress: bool = false
+        (doc: " If true, this result is a progressive call result, and subsequent results (or a final error) will follow.");
 }
 
 
+// a WAMP message is of exactly one of the following concrete message types
 union Messages
 {
     Call,
@@ -103,19 +116,13 @@ union Messages
 }
 
 
-table Message
+// the following will add a type field ("msg") that discriminates the union
+// over all concrete WAMP message types
+table Message (doc: "A WAMP message.")
 {
     msg: Messages;
 }
 
 
+// the Flatbuffers root type is our WAMP message type
 root_type Message;
-
-
-table Table1 {
-    // data fields here
-}
-
-table Table2 {
-    nested: [uint8] (nested_flatbuffer: "Table1");
-}
