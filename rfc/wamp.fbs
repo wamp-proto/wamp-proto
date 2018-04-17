@@ -1,110 +1,116 @@
 //
 // Flatbuffers schema for WAMP messages
 //
+// To generate code: flatc --python -o ./test/ rfc/wamp.fbs
+//
+// Use one of:
+//
+//  --cpp        -c    Generate C++ headers for tables/structs.
+//  --go         -g    Generate Go files for tables/structs.
+//  --java       -j    Generate Java classes for tables/structs.
+//  --js         -s    Generate JavaScript code for tables/structs.
+//  --ts         -T    Generate TypeScript code for tables/structs.
+//  --csharp     -n    Generate C# classes for tables/structs.
+//  --python     -p    Generate Python files for tables/structs.
+//  --php              Generate PHP files for tables/structs.
+//
 
 
-// a custom attribute we define to add docstrings to elements
-attribute "doc";
-// the following seems to be upcoming (typed custom attributes), but does
-// not yet work for me (flatc version 1.9.0 (Apr 17 2018 18:13:32))
-// attribute doc:string = "A developer focused help text.";
+// define custom attribute to define WAMP URIs of interfaces
+attribute "uri";
 
 
-enum Payload: uint8 (doc: "Application payload type.")
+/// Void type (table based) for use with services.
+table Void
 {
-    // plain app payload
+    // nothing here!
+}
+
+
+/// Application payload type.
+enum Payload: uint8
+{
+    /// Plain app payload.
     PLAIN = 1,
 
-    // encrypted app payload (Curve25519 / Cryptobox)
+    /// Encrypted app payload (Curve25519 / Cryptobox).
     CRYPTOBOX = 2
 }
 
 
-enum Serializer: uint8 (doc: "Application payload serializer types.")
+/// Application payload serializer types.
+enum Serializer: uint8
 {
-    // use same serializer as on the transport. this will be
-    // one of JSON, MSGPACK, CBOR or UBJSON
+    /// Use same serializer for the app payload as on the transport.
+    /// This will be one of JSON, MSGPACK, CBOR or UBJSON.
     TRANSPORT = 1,
     
-    // explicit use of serializer for dynamically typed app payload
+    /// Use JSON serializer (for dynamically typed app payload).
     JSON = 2,
+
+    /// Use JSON serializer (for dynamically typed app payload).
     MSGPACK = 3,
+
+    /// Use JSON serializer (for dynamically typed app payload).
     CBOR = 4,
+
+    /// Use JSON serializer (for dynamically typed app payload).
     UBJSON = 5,
 
-    // explicit use of Flatbuffers for statically typed payload
+    /// Explicit use of Flatbuffers for statically typed payload.
     FLATBUFFERS = 6
 }
 
 
-// CALL (MESSAGE_TYPE = 48)
-//
-// [CALL, Request|id, Options|dict, Procedure|uri]
-// [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
-// [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
-// [CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]
-//
-table Call (doc: "CALL message (message_type = 48)")
+/// CALL message (message_type = 48): [CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]
+table Call
 {
-    // Request|id
-    request: uint64
-        (doc: "The WAMP request ID of this request.");
+    /// The WAMP request ID of this request.
+    request: uint64;
 
-    // Procedure|uri
-    procedure: string
-        (required, doc: "The WAMP or application URI of the procedure which should be called.");
+    /// The WAMP or application URI of the procedure which should be called.
+    procedure: string;
 
-    // Payload|binary
-    payload: [uint8]
-        (doc: "Raw application payload: call arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.");
+    /// Raw application payload: call arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
+    payload: [uint8];
 
-    // Options|dict
-    enc_algo: Payload = PLAIN
-        (doc: "The encoding algorithm that was used to encode the payload.");
+    /// The encoding algorithm that was used to encode the payload.
+    enc_algo: Payload = PLAIN;
 
-    enc_serializer: Serializer = TRANSPORT
-        (doc: "The payload object serializer that was used encoding the payload.");
+    /// The payload object serializer that was used encoding the payload.
+    enc_serializer: Serializer = TRANSPORT;
 
-    enc_key: [uint8]
-        (doc: "When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.");
+    /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
+    enc_key: [uint8];
 
-    timeout: uint32 = 0
-        (doc: "If present, cancel the call after this duration in ms.");
+    /// If present, cancel the call after this duration in ms.
+    timeout: uint32 = 0;
 
-    receive_progress: bool = false
-        (doc: "When set, indicates that the caller wants to receive progressive call results.");
+    /// When set, indicates that the caller wants to receive progressive call results.
+    receive_progress: bool = false;
 }
 
 
-// RESULT (MESSAGE_TYPE = 50)
-//
-// [RESULT, CALL.Request|id, Details|dict]
-// [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list]
-// [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list, YIELD.ArgumentsKw|dict]
-// [RESULT, CALL.Request|id, Details|dict, Payload|binary]
-//
-table CallResult (doc: "RESULT message (message_type = 50)")
+/// RESULT message (message_type = 50): [RESULT, CALL.Request|id, Details|dict, Payload|binary]
+table CallResult
 {
-    // CALL.Request|id
-    request: uint64
-        (doc: "The request ID of the original CALL request.");
+    /// The request ID of the original CALL request..
+    request: uint64;
 
-    // Payload|binary
-    payload: [uint8]
-        (doc: "Raw application payload: call result. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.");
+    /// Raw application payload: call result. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
+    payload: [uint8];
 
-    // Details|dict
-    enc_algo: Payload = PLAIN
-        (doc: "The encoding algorithm that was used to encode the payload.");
+    /// The encoding algorithm that was used to encode the payload.
+    enc_algo: Payload = PLAIN;
 
-    enc_serializer: Serializer = TRANSPORT
-        (doc: "The payload object serializer that was used encoding the payload.");
+    /// The payload object serializer that was used encoding the payload.
+    enc_serializer: Serializer = TRANSPORT;
 
-    enc_key: [uint8]
-        (doc: "When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.");
+    /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
+    enc_key: [uint8];
 
-    progress: bool = false
-        (doc: " If true, this result is a progressive call result, and subsequent results (or a final error) will follow.");
+    /// If true, this result is a progressive call result, and subsequent results (or a final error) will follow.
+    progress: bool = false;
 }
 
 
@@ -113,16 +119,19 @@ union Messages
 {
     Call,
     CallResult
+
+    // FIXME: add all other message types;)
 }
 
 
-// the following will add a type field ("msg") that discriminates the union
-// over all concrete WAMP message types
-table Message (doc: "A WAMP message.")
+/// A WAMP message.
+table Message
 {
+    // the following will add a type field ("msg") that discriminates the union
+    // over all concrete WAMP message types
     msg: Messages;
 }
 
 
-// the Flatbuffers root type is our WAMP message type
+/// The Flatbuffers root type is our WAMP message type.
 root_type Message;
