@@ -1,3 +1,12 @@
+//
+// Flatbuffers schema for WAMP messages
+//
+
+enum Payload: uint8
+{
+    PLAIN = 1,
+    CRYPTOBOX = 2
+}
 
 
 enum Serializer: uint8
@@ -10,11 +19,10 @@ enum Serializer: uint8
 }
 
 
-enum Payload: uint8
-{
-    PLAIN = 1,
-    CRYPTOBOX = 2
-}
+attribute "doc";
+// the following seems to be upcoming (typed custom attributes), but does
+// not yet work for me (flatc version 1.9.0 (Apr 17 2018 18:13:32))
+// attribute doc:string = "A developer focused help text.";
 
 
 // CALL (MESSAGE_TYPE = 48)
@@ -24,25 +32,35 @@ enum Payload: uint8
 // [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
 // [CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]
 //
-table Call
+table Call (doc: "CALL message (message_type = 48)")
 {
     // Request|id
-    request: uint64 (required);
+    request: uint64
+        (doc: "The WAMP request ID of this request.");
 
     // Procedure|uri
-    procedure: string (required);
+    procedure: string
+        (required, doc: "The WAMP or application URI of the procedure which should be called.");
 
     // Options|dict
-    timeout: uint32;
-    receive_progress: bool;
+    timeout: uint32 = 0
+        (doc: "If present, cancel the call after this duration in ms.");
 
-    // Payload transparency mode
-    enc_algo: Payload;
-    enc_serializer: Serializer;
-    enc_key: [uint8];
+    receive_progress: bool = false
+        (doc: "When set, indicates that the caller wants to receive progressive call results.");
+
+    enc_algo: Payload = PLAIN
+        (doc: "The encoding algorithm that was used to encode the payload.");
+
+    enc_serializer: Serializer = JSON
+        (doc: "The payload object serializer that was used encoding the payload.");
+
+    enc_key: [uint8]
+        (doc: "When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.");
 
     // Payload|binary
-    payload: [uint8];
+    payload: [uint8]
+        (doc: "");
 }
 
 
@@ -55,10 +73,30 @@ table Call
 //
 table CallResult
 {
+    // CALL.Request|id
+    request: uint64
+        (doc: "The request ID of the original CALL request.");
+
+    // Details|dict
+    progress: bool = false
+        (doc: " If true, this result is a progressive call result, and subsequent results (or a final error) will follow.");
+
+    enc_algo: Payload = PLAIN
+        (doc: "The encoding algorithm that was used to encode the payload.");
+
+    enc_serializer: Serializer = JSON
+        (doc: "The payload object serializer that was used encoding the payload.");
+
+    enc_key: [uint8]
+        (doc: "When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.");
+
+    // Payload|binary
+    payload: [uint8]
+        (doc: "");
 }
 
 
-union Messages =
+union Messages
 {
     Call,
     CallResult
@@ -67,5 +105,17 @@ union Messages =
 
 table Message
 {
-    cmd: Messages;
+    msg: Messages;
+}
+
+
+root_type Message;
+
+
+table Table1 {
+    // data fields here
+}
+
+table Table2 {
+    nested: [uint8] (nested_flatbuffer: "Table1");
 }
