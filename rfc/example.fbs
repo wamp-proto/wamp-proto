@@ -35,10 +35,10 @@ table AccelSamples
 /// A time range.
 table TimeRange
 {
-    /// Unix epoch start time.
+    /// Unix epoch start time or 0 for infinity into the past.
     start: uint64;
 
-    /// Unix epoch end time.
+    /// Unix epoch end time or 0 for infinity into the future.
     endof: uint64;
 }
 
@@ -49,7 +49,7 @@ rpc_service AccelStorage (uuid: "4b740947-31d5-4a10-b7ce-4149bbc9ee1e")
     /// Store a sample batch. The time range of samples stored is returned.
     store (AccelSamples): TimeRange;
 
-    /// Return last batch of samples stored.
+    /// Return last batch of samples stored within the given time range.
     get_last (TimeRange): AccelSamples;
 
     /// Event fired when a sample batch was stored. The time range of the stored samples is provided as event payload.
@@ -59,7 +59,7 @@ rpc_service AccelStorage (uuid: "4b740947-31d5-4a10-b7ce-4149bbc9ee1e")
     retrieve (TimeRange): AccelSamples (streaming: "result");
 
     // NOTE: Further, the following 2 messaging patterns have been discussed,
-    // but are currently not in the spec
+    // but are currently not in the  WAMP spec
 
     /// Bulk upload a series of sample batches.
     upload (AccelSamples): TimeRange (streaming: "call");
