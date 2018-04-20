@@ -53,7 +53,7 @@ rpc_service AccelStorage (uuid: "4b740947-31d5-4a10-b7ce-4149bbc9ee1e")
     get_last (TimeRange): AccelSamples;
 
     /// Event fired when a sample batch was stored. The time range of the stored samples is provided as event payload.
-    on_store (Void): TimeRange (streaming: "event");
+    on_store (wamp.Void): TimeRange (streaming: "event");
 
     /// Retrieve all sample batches within the given time range. Sample batches are returned as streaming, "progressive results".
     retrieve (TimeRange): AccelSamples (streaming: "result");

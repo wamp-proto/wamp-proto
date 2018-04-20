@@ -22,6 +22,10 @@ attribute "uri";
 // declare a custom attribute to define UUIDs on elements
 attribute "uuid";
 
+// the schema objects will live here
+namespace wamp;
+
+
 /// Void type (table based) for use with services.
 table Void
 {
