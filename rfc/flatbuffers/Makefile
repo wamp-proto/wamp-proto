@@ -36,7 +36,7 @@ test: bfbs python
 
 # generate schema type library (.bfbs binary)
 bfbs:
-	$(FLATC) -o ./_build/schema/ --binary --schema --bfbs-comments $(FILES)
+	$(FLATC) -o ./_build/schema/ --binary --schema --bfbs-comments --bfbs-builtin-attrs $(FILES)
 
 
 # generate schema language bindings
