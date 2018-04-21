@@ -6,8 +6,8 @@
 FILES=schema/wamp.fbs schema/example.fbs schema/reflection.fbs
 
 # flatc compiler to use
-#FLATC=${HOME}/scm/xbr/flatbuffers/flatc
-FLATC=flatc
+FLATC=${HOME}/scm/xbr/flatbuffers/flatc
+#FLATC=flatc
 
 
 default:
@@ -30,13 +30,13 @@ cloc:
 	cloc --read-lang-def=cloc.def --exclude-dir=_build .
 	cloc ./_build
 
-test: schema
+test: bfbs python
 	PYTHONPATH=./_build/python python test.py
 
 
 # generate schema type library (.bfbs binary)
 bfbs:
-	$(FLATC) -o ./_build/schema/ --binary --schema $(FILES)
+	$(FLATC) -o ./_build/schema/ --binary --schema --bfbs-comments $(FILES)
 
 
 # generate schema language bindings

@@ -58,13 +58,13 @@ enum Serializer: uint8
     /// Use JSON serializer (for dynamically typed app payload).
     JSON = 2,
 
-    /// Use JSON serializer (for dynamically typed app payload).
+    /// Use MsgPack serializer (for dynamically typed app payload).
     MSGPACK = 3,
 
-    /// Use JSON serializer (for dynamically typed app payload).
+    /// Use CBOR serializer (for dynamically typed app payload).
     CBOR = 4,
 
-    /// Use JSON serializer (for dynamically typed app payload).
+    /// Use UBJSON serializer (for dynamically typed app payload).
     UBJSON = 5,
 
     /// Explicit use of Flatbuffers for statically typed payload.

@@ -6,7 +6,7 @@
 include "wamp.fbs";
 
 
-namespace com.example.accelstorage;
+namespace com.example.accelstorage1;
 
 
 /// One sample from accelerometer sensor.
@@ -42,28 +42,45 @@ table TimeRange
     endof: uint64;
 }
 
+namespace com.example.accelstorage2;
+
+/// Player weapon status.
+enum WeaponStatus: uint8
+{
+    /// Ready for action.
+    OPERATIONAL = 1,
+
+    /// Ammo empty.
+    EMPTY = 2,
+
+    /// Maintenance required.
+    MAINTENANCE = 3,
+
+    /// Finally broken. Throw away.
+    BROKEN = 4
+}
 
 /// Define an interface for accelerometer storage services.
 rpc_service AccelStorage (uuid: "4b740947-31d5-4a10-b7ce-4149bbc9ee1e")
 {
     /// Store a sample batch. The time range of samples stored is returned.
-    store (AccelSamples): TimeRange;
+    store (com.example.accelstorage1.AccelSamples): com.example.accelstorage1.TimeRange;
 
     /// Return last batch of samples stored within the given time range.
-    get_last (TimeRange): AccelSamples;
+    get_last (com.example.accelstorage1.TimeRange): com.example.accelstorage1.AccelSamples;
 
     /// Event fired when a sample batch was stored. The time range of the stored samples is provided as event payload.
-    on_store (wamp.Void): TimeRange (streaming: "event");
+    on_store (wamp.Void): com.example.accelstorage1.TimeRange (streaming: "event");
 
     /// Retrieve all sample batches within the given time range. Sample batches are returned as streaming, "progressive results".
-    retrieve (TimeRange): AccelSamples (streaming: "result");
+    retrieve (com.example.accelstorage1.TimeRange): com.example.accelstorage1.AccelSamples (streaming: "result");
 
     // NOTE: Further, the following 2 messaging patterns have been discussed,
     // but are currently not in the  WAMP spec
 
     /// Bulk upload a series of sample batches.
-    upload (AccelSamples): TimeRange (streaming: "call");
+    upload (com.example.accelstorage1.AccelSamples): com.example.accelstorage1.TimeRange (streaming: "call");
 
     /// Compute running average of samples over time window, a full duplex stream or transformation.
-    average (AccelSamples): AccelSamples (streaming: "transform");
+    average (com.example.accelstorage1.AccelSamples): com.example.accelstorage1.AccelSamples (streaming: "transform");
 }
