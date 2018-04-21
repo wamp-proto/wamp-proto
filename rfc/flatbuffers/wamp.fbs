@@ -31,6 +31,11 @@ attribute "uuid";
 namespace wamp;
 
 
+table KeyValue {
+    key: string (required, key);
+    value: string;
+}
+
 /// Void type (table based) for use with services.
 table Void
 {
@@ -77,32 +82,143 @@ enum Serializer: uint8
 }
 
 
+/// HELLO message (message_type = ): [HELLO, Realm|uri, Details|dict]
 table Hello
 {
+    /// The URI of the WAMP realm to join.
+    realm: string (required);
+
+    /// The WAMP session roles and features to announce.
+    roles: [string];
+
+    /// The authentication ID to announce.
+    authid: string;
+
+    /// The authentication role to announce.
+    authrole: string;
+
+    /// Application-specific "extra data" to be forwarded to the client.
+    authextra: KeyValue;
+
+    /// Whether the client wants this to be a session that can be later resumed.
+    resumable: bool;
+
+    /// The session the client would like to resume.
+    resume_session: uint64;
+
+    /// The secure authorisation token to resume the session.
+    resume_token: string;
 }
 
+
+/// WELCOME message (message_type = ): [WELCOME, Session|id, Details|dict]
 table Welcome
 {
+    /// The WAMP session ID the other peer is assigned.
+    session: uint64;
+
+    /// The WAMP roles to announce.
+    roles: [string];
+
+    /// The effective realm the session is joined on.
+    realm: string;
+
+    /// The authentication ID assigned.
+    authid: string;
+
+    /// The authentication method in use.
+    authrole: string;
+
+    /// The authentication method in use.
+    authmethod: string;
+
+    /// The authentication provided in use.
+    authprovider: string;
+
+    /// Application-specific "extra data" to be forwarded to the client.
+    authextra: KeyValue;
+
+    /// Whether the session is a resumed one.
+    resumed: bool;
+
+    /// Whether this session can be resumed later.
+    resumable: bool;
+
+    /// The secure authorisation token to resume the session.
+    resume_token: string;
 }
 
+
+/// ABORT message (message_type = ): [ABORT, Details|dict, Reason|uri]
 table Abort
 {
+    /// WAMP or application error URI for aborting reason.
+    reason: string;
+
+    /// Optional human-readable closing message, e.g. for logging purposes.
+    message: string;
 }
 
+
+/// CHALLENGE message (message_type = ): [CHALLENGE, Method|string, Extra|dict]
 table Challenge
 {
+    /// The challenge method.
+    method: string;
+
+    /// Chellenge method specific information.
+    extra: KeyValue;
 }
 
+
+/// AUTHENTICATE message (message_type = ): [AUTHENTICATE, Signature|string, Extra|dict]
 table Authenticate
 {
+    /// The signature for the authentication challenge.
+    signature: string;
+
+    /// Authentication method specific information.
+    extra: KeyValue;
 }
 
+
+/// GOODBYE message (message_type = ): [GOODBYE, Details|dict, Reason|uri]
 table Goodbye
 {
+    /// Optional WAMP or application error URI for closing reason.
+    reason: string;
+
+    /// Optional human-readable closing message, e.g. for logging purposes.
+    message: string;
+
+    /// From the server: Whether the session is able to be resumed (true) or destroyed (false). From the client: Whether it should be resumable (true) or destroyed (false).
+    resumable: bool;
 }
 
+
+/// ERROR message (message_type = ): [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Payload|binary]
 table Error
 {
+    ///
+    request_type: int;
+
+    /// 
+    request: uint64 (key);
+
+    /// 
+    error: string (required);
+
+    /// Raw application payload: error arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
+    payload: [uint8];
+
+    /// The encoding algorithm that was used to encode the payload.
+    enc_algo: Payload = PLAIN;
+
+    /// The payload object serializer that was used encoding the payload.
+    enc_serializer: Serializer = TRANSPORT;
+
+    /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
+    enc_key: [uint8];
 }
 
 table Publish
