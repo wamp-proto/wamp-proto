@@ -1,0 +1,152 @@
+
+///////////////////////////////////////////////////////////////////////////////
+//
+//   FlatBuffers schema for WAMP v2 messages
+//   Copyright (c) Crossbar.io Technologies GmbH and contributors
+//   Licensed under the Apache 2.0 license
+//
+///////////////////////////////////////////////////////////////////////////////
+
+// Usage: To generate code, enter flatc --python -o generated wamp.fbs
+//
+// Use one of:
+//
+//  --cpp        -c    Generate C++ headers for tables/structs.
+//  --go         -g    Generate Go files for tables/structs.
+//  --java       -j    Generate Java classes for tables/structs.
+//  --js         -s    Generate JavaScript code for tables/structs.
+//  --ts         -T    Generate TypeScript code for tables/structs.
+//  --csharp     -n    Generate C# classes for tables/structs.
+//  --python     -p    Generate Python files for tables/structs.
+//  --php              Generate PHP files for tables/structs.
+
+
+// declare a custom attribute to define WAMP URIs on elements
+attribute "uri";
+
+// declare a custom attribute to define UUIDs on elements
+attribute "uuid";
+
+// the schema objects will live here
+namespace wamp;
+
+
+/// Void type (table based) for use with services.
+table Void
+{
+    // nothing here!
+}
+
+
+// the schema objects will live here
+namespace wamp.proto;
+
+
+/// Application payload type.
+enum Payload: uint8
+{
+    /// Plain app payload.
+    PLAIN = 1,
+
+    /// Encrypted app payload (Curve25519 / Cryptobox).
+    CRYPTOBOX = 2
+}
+
+
+/// Application payload serializer types.
+enum Serializer: uint8
+{
+    /// Use same serializer for the app payload as on the transport.
+    /// This will be one of JSON, MSGPACK, CBOR or UBJSON.
+    TRANSPORT = 1,
+    
+    /// Use JSON serializer (for dynamically typed app payload).
+    JSON = 2,
+
+    /// Use MsgPack serializer (for dynamically typed app payload).
+    MSGPACK = 3,
+
+    /// Use CBOR serializer (for dynamically typed app payload).
+    CBOR = 4,
+
+    /// Use UBJSON serializer (for dynamically typed app payload).
+    UBJSON = 5,
+
+    /// Explicit use of Flatbuffers for statically typed payload.
+    FLATBUFFERS = 6
+}
+
+
+/// CALL message (message_type = 48): [CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]
+table Call
+{
+    /// The WAMP request ID of this request.
+    request: uint64;
+
+    /// The WAMP or application URI of the procedure which should be called.
+    procedure: string;
+
+    /// Raw application payload: call arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
+    payload: [uint8];
+
+    /// The encoding algorithm that was used to encode the payload.
+    enc_algo: Payload = PLAIN;
+
+    /// The payload object serializer that was used encoding the payload.
+    enc_serializer: Serializer = TRANSPORT;
+
+    /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
+    enc_key: [uint8];
+
+    /// If present, cancel the call after this duration in ms.
+    timeout: uint32 = 0;
+
+    /// When set, indicates that the caller wants to receive progressive call results.
+    receive_progress: bool = false;
+}
+
+
+/// RESULT message (message_type = 50): [RESULT, CALL.Request|id, Details|dict, Payload|binary]
+table CallResult
+{
+    /// The request ID of the original CALL request..
+    request: uint64;
+
+    /// Raw application payload: call result. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
+    payload: [uint8];
+
+    /// The encoding algorithm that was used to encode the payload.
+    enc_algo: Payload = PLAIN;
+
+    /// The payload object serializer that was used encoding the payload.
+    enc_serializer: Serializer = TRANSPORT;
+
+    /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
+    enc_key: [uint8];
+
+    /// If true, this result is a progressive call result, and subsequent results (or a final error) will follow.
+    progress: bool = false;
+}
+
+
+// a WAMP message is of exactly one of the following concrete message types
+union Messages
+{
+    Call,
+    CallResult
+
+    // FIXME: add all other message types;)
+}
+
+
+/// A WAMP message.
+table Message
+{
+    // the following will add a type field ("msg") that discriminates the union
+    // over all concrete WAMP message types
+    msg: Messages;
+}
+
+
+/// The Flatbuffers root type is our WAMP message type.
+root_type Message;
