@@ -77,14 +77,70 @@ enum Serializer: uint8
 }
 
 
+table Hello
+{
+}
+
+table Welcome
+{
+}
+
+table Abort
+{
+}
+
+table Challenge
+{
+}
+
+table Authenticate
+{
+}
+
+table Goodbye
+{
+}
+
+table Error
+{
+}
+
+table Publish
+{
+}
+
+table Published
+{
+}
+
+table Subscribe
+{
+}
+
+table Subscribed
+{
+}
+
+table Unsubscribe
+{
+}
+
+table Unsubscribed
+{
+}
+
+table Event
+{
+}
+
 /// CALL message (message_type = 48): [CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]
 table Call
 {
     /// The WAMP request ID of this request.
-    request: uint64;
+    request: uint64 (key);
 
     /// The WAMP or application URI of the procedure which should be called.
-    procedure: string;
+    procedure: string (required);
 
     /// Raw application payload: call arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
     payload: [uint8];
@@ -105,12 +161,15 @@ table Call
     receive_progress: bool = false;
 }
 
+table Cancel
+{
+}
 
 /// RESULT message (message_type = 50): [RESULT, CALL.Request|id, Details|dict, Payload|binary]
-table CallResult
+table Result
 {
     /// The request ID of the original CALL request..
-    request: uint64;
+    request: uint64 (key);
 
     /// Raw application payload: call result. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
     payload: [uint8];
@@ -128,14 +187,62 @@ table CallResult
     progress: bool = false;
 }
 
+table Register
+{
+}
 
-// a WAMP message is of exactly one of the following concrete message types
+table Registered
+{
+}
+
+table Unregister
+{
+}
+
+table Unregistered
+{
+}
+
+table Invocation
+{
+}
+
+table Interrupt
+{
+}
+
+table Yield
+{
+}
+
+
+// a WAMP message is of exactly one of the following 24 concrete message types
 union Messages
 {
+    Hello,
+    Welcome,
+    Abort,
+    Challenge,
+    Authenticate,
+    Goodbye,
+    Error,
+    Publish,
+    Published,
+    Subscribe,
+    Subscribed,
+    Unsubscribe,
+    Unsubscribed,
+    Event,
     Call,
-    CallResult
-
-    // FIXME: add all other message types;)
+    Cancel,
+    Result,
+    Register,
+    Registered,
+    Unregister,
+    Unregistered,
+    Invocation,
+    Interrupt,
+    Yield
 }
 
 
