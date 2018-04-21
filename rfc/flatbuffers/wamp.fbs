@@ -279,7 +279,7 @@ table Publish
     acknowledge: bool;
 
     /// If true, exclude the publisher from receiving the event, even if he is subscribed (and eligible).
-    exclude_me: bool;
+    exclude_me: bool = true;
 
     /// List of WAMP session IDs to exclude from receiving this event.
     exclude: [uint64];
@@ -430,20 +430,37 @@ table Call
     enc_key: [uint8];
 
     /// If present, cancel the call after this duration in ms.
-    timeout: uint32 = 0;
+    timeout: uint32;
 
     /// When set, indicates that the caller wants to receive progressive call results.
-    receive_progress: bool = false;
+    receive_progress: bool;
 }
 
+
+/// Call cancel mode.
+enum CancelMode: uint8
+{
+    SKIP = 1,
+    ABORT = 2,
+    KILL = 3
+}
+
+
+/// CANCEL message (message_type = ): [CANCEL, CALL.Request|id, Options|dict]
 table Cancel
 {
+    /// The request ID of the original CALL request.
+    request: uint64 (key);
+
+    /// Specifies how to cancel the call.
+    mode: CancelMode = SKIP;
 }
+
 
 /// RESULT message (message_type = 50): [RESULT, CALL.Request|id, Details|dict, Payload|binary]
 table Result
 {
-    /// The request ID of the original CALL request..
+    /// The request ID of the original CALL request.
     request: uint64 (key);
 
     /// Raw application payload: call result. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
@@ -459,32 +476,57 @@ table Result
     enc_key: [uint8];
 
     /// If true, this result is a progressive call result, and subsequent results (or a final error) will follow.
-    progress: bool = false;
+    progress: bool;
 }
 
+
+/// REGISTER message (message_type = ): [REGISTER, Request|id, Options|dict, Procedure|uri]
 table Register
 {
+    ///
+    request: uint64 (key);
+
+    ///
+    procedure: string (required);
+
+    ///
+    match: Match = EXACT;
+
+    ///
+    //invoke: InvocationPolicy;
+
+    ///
+    concurrency: uint16;
+
+    ///
+    force_reregister: bool;
 }
+
 
 table Registered
 {
 }
 
+
 table Unregister
 {
 }
+
 
 table Unregistered
 {
 }
 
+
 table Invocation
 {
 }
 
+
 table Interrupt
 {
 }
+
 
 table Yield
 {
