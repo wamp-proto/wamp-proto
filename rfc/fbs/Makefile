@@ -1,5 +1,9 @@
+#
+# USAGE: clear && time make clean build test cloc
+#
+
 # input .fbs files for schema
-FILES=wamp.fbs example.fbs reflection.fbs
+FILES=schema/wamp.fbs schema/example.fbs schema/reflection.fbs
 
 # flatc compiler to use
 #FLATC=${HOME}/scm/xbr/flatbuffers/flatc
@@ -15,20 +19,23 @@ clean:
 version:
 	$(FLATC) --version
 
-build: schema cpp csharp go java js php python ts
-	cloc ./_build
+build: bfbs cpp csharp go java js php python ts
 
 check_py_modified:
 	flake8 void.py
 	pycodestyle void.py
 	pylint void.py
 
+cloc:
+	cloc --read-lang-def=cloc.def --exclude-dir=_build .
+	cloc ./_build
+
 test: schema
 	PYTHONPATH=./_build/python python test.py
 
 
 # generate schema type library (.bfbs binary)
-schema:
+bfbs:
 	$(FLATC) -o ./_build/schema/ --binary --schema $(FILES)
 
 
