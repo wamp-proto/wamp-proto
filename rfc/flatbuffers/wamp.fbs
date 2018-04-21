@@ -47,6 +47,38 @@ table Void
 namespace wamp.proto;
 
 
+/// WAMP message type IDs.
+enum MessageType: uint16
+{
+    NULL = 0,
+    HELLO = 1,
+    WELCOME = 2,
+    ABORT = 3,
+    CHALLENGE = 4,
+    AUTHENTICATE = 5,
+    GOODBYE = 6,
+    ERROR = 8,
+    PUBLISH = 16,
+    PUBLISHED = 17,
+    SUBSCRIBE = 32,
+    SUBSCRIBED = 33,
+    UNSUBSCRIBE = 34,
+    UNSUBSCRIBED = 35,
+    EVENT = 36,
+    EVENTRECEIVED = 37,     // 377 as custom message type
+    CALL = 48,
+    CANCEL = 49,
+    RESULT = 50,
+    REGISTER = 64,
+    REGISTERED = 65,
+    UNREGISTER = 66,
+    UNREGISTERED = 67,
+    INVOCATION = 68,
+    INTERRUPT = 69,
+    YIELD = 70
+}
+
+
 /// Application payload type.
 enum Payload: uint8
 {
@@ -200,7 +232,7 @@ table Goodbye
 table Error
 {
     ///
-    request_type: int;
+    request_type: MessageType;
 
     /// 
     request: uint64 (key);
@@ -221,33 +253,160 @@ table Error
     enc_key: [uint8];
 }
 
+
+/// PUBLISH message (message_type = ): [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|binary]
 table Publish
 {
+    /// The WAMP request ID of this request.
+    request: uint64 (key);
+
+    /// The WAMP or application URI of the PubSub topic the event should be published to.
+    topic: string (required);
+
+    /// Raw application payload: error arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
+    payload: [uint8];
+
+    /// The encoding algorithm that was used to encode the payload.
+    enc_algo: Payload = PLAIN;
+
+    /// The payload object serializer that was used encoding the payload.
+    enc_serializer: Serializer = TRANSPORT;
+
+    /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
+    enc_key: [uint8];
+
+    /// If true, acknowledge the publication with a success or error response.
+    acknowledge: bool;
+
+    /// If true, exclude the publisher from receiving the event, even if he is subscribed (and eligible).
+    exclude_me: bool;
+
+    /// List of WAMP session IDs to exclude from receiving this event.
+    exclude: [uint64];
+
+    /// List of WAMP authids to exclude from receiving this event.
+    exclude_authid: [string];
+
+    /// List of WAMP authroles to exclude from receiving this event.
+    exclude_authrole: [string];
+
+    /// List of WAMP session IDs eligible to receive this event.
+    eligible: [uint64];
+
+    /// List of WAMP authids eligible to receive this event.
+    eligible_authid: [string];
+
+    /// List of WAMP authroles eligible to receive this event.
+    eligible_authrole: [string];
+
+    /// If true, request the broker retain this event.
+    retain: bool;
 }
 
+
+/// PUBLISHED message (message_type = ): [PUBLISHED, PUBLISH.Request|id, Publication|id]
 table Published
 {
+    /// The request ID of the original PUBLISH request.
+    request: uint64 (key);
+
+    /// The publication ID for the published event.
+    publication: uint64;
 }
 
+
+/// Subscription topic matching method.
+enum Match: uint8
+{
+    /// Match URI exact.
+    EXACT = 1,
+
+    /// Match URI by prefix.
+    PREFIX = 2,
+
+    /// Match URI by wildcard.
+    WILDCARD = 3,
+}
+
+
+/// SUBSCRIBE message (message_type = ): [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 table Subscribe
 {
+    /// The WAMP request ID of this request.
+    request: uint64 (key);
+
+    /// The WAMP or application URI of the PubSub topic the event should be published to.
+    topic: string (required);
+
+    /// The topic matching method to be used for the subscription.
+    match: Match = EXACT;
+
+    /// Whether the client wants the retained message we may have along with the subscription.
+    get_retained: bool;
 }
 
+
+/// SUBSCRIBED message (message_type = ): [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 table Subscribed
 {
+    /// The request ID of the original SUBSCRIBE request.
+    request: uint64 (key);
+
+    /// The subscription ID for the subscribed topic (or topic pattern).
+    subscription: uint64;
 }
 
+
+/// UNSUBSCRIBE message (message_type = ): [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 table Unsubscribe
 {
+    /// The WAMP request ID of this request.
+    request: uint64 (key);
+
+    /// The subscription ID for the subscription to unsubscribe from.
+    subscription: uint64;
 }
 
+
+/// UNSUBSCRIBED message (message_type = ): [UNSUBSCRIBED, UNSUBSCRIBE.Request|id, Details|dict]
 table Unsubscribed
 {
+    /// The request ID of the original UNSUBSCRIBE request or 0 if the router triggered the unsubscribe ("router subscription revocation signaling").
+    request: uint64 (key);
+
+    /// If unsubscribe was actively triggered by router, the ID of the subscription revoked.
+    subscription: uint64;
+
+    /// The reason (an URI) for an active (router initiated) revocation.
+    reason: string;
 }
 
+
+/// EVENT message (message_type = 36): [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict, PUBLISH.Payload|binary]
 table Event
 {
 }
+
+
+/// EVENT message (message_type = 37): [EVENT_RECEIVED, EVENT.Publication|id, Details|dict]
+table EventReceived
+{
+    /// The publication ID of the event that was received, and that is acknowledged.
+    publication: uint64;
+
+    /// Raw application payload: error arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
+    payload: [uint8];
+
+    /// The encoding algorithm that was used to encode the payload.
+    enc_algo: Payload = PLAIN;
+
+    /// The payload object serializer that was used encoding the payload.
+    enc_serializer: Serializer = TRANSPORT;
+
+    /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
+    enc_key: [uint8];
+}
+
 
 /// CALL message (message_type = 48): [CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]
 table Call
