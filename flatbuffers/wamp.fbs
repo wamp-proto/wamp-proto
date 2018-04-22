@@ -1,0 +1,105 @@
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//   FlatBuffers schema for WAMP v2 messages
+//   Copyright (c) Crossbar.io Technologies GmbH and contributors
+//   Licensed under the Apache 2.0 license
+//
+//////////////////////////////////////////////////////////////////////////////
+
+/* WAMP at the application level exposes 4 roles:
+
+- Caller and Callee
+- Publisher and Subscriber
+
+To decouple each pair of roles (or actors), WAMP uses an intermediary
+that may implement two additional roles:
+
+- Dealer, to forward calls from Callers to Callees
+- Broker, to dispatch events from Publishers to Subscribers
+
+WAMP is then defined in terms of message flow between those 6 roles.
+There 26 WAMP messages at the wire level, and these are defined
+(structurally) using FlatBuffers IDL in below.
+
+Note: This FlatBuffers based specification of WAMP can be mapped
+directly to the existing, dynamically typed WAMP serializations.
+
+To generate code, enter
+
+    flatc --python -o _build wamp.fbs
+
+using one of:
+
+* --cpp        -c    Generate C++ headers for tables/structs.
+* --go         -g    Generate Go files for tables/structs.
+* --java       -j    Generate Java classes for tables/structs.
+* --js         -s    Generate JavaScript code for tables/structs.
+* --ts         -T    Generate TypeScript code for tables/structs.
+* --csharp     -n    Generate C# classes for tables/structs.
+* --python     -p    Generate Python files for tables/structs.
+* --php              Generate PHP files for tables/structs.
+
+This will generated bindings to access FlatBuffers data in the schema below
+from the selected host language.
+*/
+
+include "types.fbs";
+include "roles.fbs";
+include "auth.fbs";
+include "session.fbs";
+include "pubsub.fbs";
+include "rpc.fbs";
+
+namespace wamp.proto;
+
+
+// A WAMP message is of exactly one of the following 26 concrete message types.
+union AnyMessage
+{
+    // Session
+    Hello,
+    Welcome,
+    Abort,
+    Challenge,
+    Authenticate,
+    Goodbye,
+
+    // Common
+    Error,
+
+    // PubSub
+    Publish,
+    Published,
+    SubscriberReceived,     // NEW
+    Subscribe,
+    Subscribed,
+    Unsubscribe,
+    Unsubscribed,
+    Event,
+    EventReceived,          // NEW
+
+    // RPC
+    Call,
+    Cancel,
+    Result,
+    Register,
+    Registered,
+    Unregister,
+    Unregistered,
+    Invocation,
+    Interrupt,
+    Yield
+}
+
+
+// A WAMP message container.
+table Message
+{
+    // The WAMP message, one of the 26 different message types.
+    msg: AnyMessage (required);
+}
+
+
+// The FlatBuffers root type is our WAMP message container type.
+root_type Message;
