@@ -7,10 +7,12 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
-// Define custom attributes globally.
+// Define custom attributes to hint a string subtypes:
 attribute "uri";
 attribute "uri_pattern";
 attribute "principal";
+attribute "hex";
+attribute "base64";
 
 
 // Namespace for WAMP.
@@ -120,32 +122,6 @@ enum Serializer: uint8
 
     // Explicit use of FlatBuffers also for (statically typed) payload.
     FLATBUFFERS = 6
-}
-
-
-// WAMP authentication method.
-enum AuthMethod: uint8
-{
-    // Pseudo anonymous authentication.
-    ANONYMOUS = 0,
-
-    // Trnasport level authentication based on HTTP header cookie set.
-    COOKIE = 1,
-
-    // Transport level authentication based on TLS client certificate presented.
-    TLS = 2,
-
-    // Authentication using WAMP-Ticket, a flexible one time token/password scheme..
-    TICKET = 3,
-
-    // Authentication using WAMP-CRA, a simple challenge-response scheme.
-    CRA = 4,
-
-    // Authentication using WAMP-SCRAM, a sophisticated challenge-response scheme.
-    SCRAM = 5,
-
-    // Authentication using WAMP-Cryptosign, a highly secure public-private-key scheme.
-    CRYPTOSIGN = 6
 }
 
 

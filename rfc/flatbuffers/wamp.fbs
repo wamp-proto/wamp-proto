@@ -45,15 +45,17 @@ from the selected host language.
 */
 
 include "types.fbs";
-include "features.fbs";
+include "roles.fbs";
+include "auth.fbs";
 include "session.fbs";
 include "pubsub.fbs";
 include "rpc.fbs";
 
 namespace wamp.proto;
 
-// a WAMP message is of exactly one of the following 26 concrete message types
-union Messages
+
+// A WAMP message is of exactly one of the following 26 concrete message types.
+union AnyMessage
 {
     // Session
     Hello,
@@ -91,14 +93,13 @@ union Messages
 }
 
 
-// A WAMP message.
+// A WAMP message container.
 table Message
 {
-    // the following will add a type field ("msg") that discriminates the union
-    // over all concrete WAMP message types
-    msg: Messages;
+    // The WAMP message, one of the 26 different message types.
+    msg: AnyMessage (required);
 }
 
 
-// The FlatBuffers root type is our WAMP message type.
+// The FlatBuffers root type is our WAMP message container type.
 root_type Message;

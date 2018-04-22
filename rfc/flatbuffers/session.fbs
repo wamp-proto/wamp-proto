@@ -8,7 +8,8 @@
 //////////////////////////////////////////////////////////////////////////////
 
 include "types.fbs";
-include "features.fbs";
+include "roles.fbs";
+include "auth.fbs";
 
 namespace wamp.proto;
 
