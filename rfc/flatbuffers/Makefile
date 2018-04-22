@@ -3,7 +3,7 @@
 #
 
 # input .fbs files for schema
-FILES=wamp.fbs
+FILES=*.fbs
 
 # flatc compiler to use
 FLATC=${HOME}/scm/xbr/flatbuffers/flatc

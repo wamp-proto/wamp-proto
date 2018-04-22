@@ -1,0 +1,46 @@
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//   FlatBuffers schema for WAMP v2 messages
+//   Copyright (c) Crossbar.io Technologies GmbH and contributors
+//   Licensed under the Apache 2.0 license
+//
+//////////////////////////////////////////////////////////////////////////////
+
+namespace wamp.proto;
+
+
+table AuthAnonymous_Hello
+{
+}
+
+
+table AuthCookie_Hello
+{
+}
+
+
+table AuthTls_Hello
+{
+}
+
+
+table AuthTicket_Hello
+{
+}
+
+
+table AuthCra_Hello
+{
+}
+
+
+table AuthScram_Hello
+{
+    nonce: string (required);
+}
+
+
+table AuthCryptosign_Hello
+{
+}
