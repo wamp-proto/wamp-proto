@@ -1,13 +1,13 @@
 % Title = "The Web Application Messaging Protocol"
 % abbrev = "WAMP"
 % category = "std"
-% docName = "draft-oberstet-hybi-crossbar-wamp-01"
+% docName = "draft-oberstet-hybi-crossbar-wamp-02"
 % ipr= "trust200902"
 % area = "Applications and Real-Time (art)"
 % workgroup = "BiDirectional or Server-Initiated HTTP"
 % keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 %
-% date = 2017-03-19T00:00:00Z
+% date = 2018-04-18T00:00:00Z
 %
 % [pi]
 % toc = "yes"
@@ -255,11 +255,26 @@ TBD
 
 # Contributors
 
-# Acknowledgements
-
 WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned:
 
-* Konstantin Burkalev
+* Alexander Goedde
+* Amber Brown
+* Andrew Gillis
+* David Chappelle
+* Elvis Stansvik
 * Emile Cormier
+* Felipe Gasper
+* Johan 't Hart
+* Josh Soref
+* Konstantin Burkalev
+* Pahaz Blinov
+* Paolo Angioletti
+* Roberto Requena
+* Roger Erens
+* Christoph Herzog
+* Tobias Oberstein
+* Zhigang Wang
+
+# Acknowledgements
 
 {backmatter}

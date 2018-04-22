@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE rfc SYSTEM 'rfc2629.dtd' []>
-<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-crossbar-wamp-01">
+<rfc ipr="trust200902" category="std" docName="draft-oberstet-hybi-crossbar-wamp-02">
 <?rfc toc="yes"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
@@ -42,7 +42,7 @@
 <uri></uri>
 </address>
 </author>
-<date year="2017" month="March" day="19"/>
+<date year="2018" month="April" day="18"/>
 
 <area>Applications and Real-Time (art)</area>
 <workgroup>BiDirectional or Server-Initiated HTTP</workgroup>
@@ -1227,7 +1227,8 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </t>
 
 <figure align="left"><artwork align="left">
-    [3, {"message": "Received HELLO message after session was established."},
+    [3, {"message":
+            "Received HELLO message after session was established."},
         "wamp.error.protocol_violation"]
 </artwork></figure>
 <t>
@@ -1237,7 +1238,8 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </t>
 
 <figure align="left"><artwork align="left">
-    [3, {"message": "Received WELCOME message after session was established."},
+    [3, {"message":
+            "Received WELCOME message after session was established."},
         "wamp.error.protocol_violation"]
 </artwork></figure>
 </section>
@@ -3797,9 +3799,11 @@ Call request RPC URI: 'a1.b2.c3.d4.e55' →
 Call request RPC URI: 'a1.b2.c3.d98.e74' → 
     no exact match, single prefix match. Use RPC 2
 Call request RPC URI: 'a1.b2.c3.d4.e325' → 
-    no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+    no exact match, 2 prefix matches (2,3), select longest one.
+    Use RPC 3
 Call request RPC URI: 'a1.b2.c55.d4.e5' → 
-    no exact match, no prefix match, single wildcard match. Use RPC 4
+    no exact match, no prefix match, single wildcard match.
+    Use RPC 4
 Call request RPC URI: 'a1.b2.c3.d4.e5' → 
     no exact match, no prefix match, 2 wildcard matches (4,5), 
     select longest one. Use RPC 5
@@ -6551,17 +6555,32 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 </section>
 
 <section anchor="contributors" title="Contributors">
-</section>
-
-<section anchor="acknowledgements" title="Acknowledgements">
 <t>WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned:
 </t>
 <t>
 <list style="symbols">
-<t>Konstantin Burkalev</t>
+<t>Alexander Goedde</t>
+<t>Amber Brown</t>
+<t>Andrew Gillis</t>
+<t>David Chappelle</t>
+<t>Elvis Stansvik</t>
 <t>Emile Cormier</t>
+<t>Felipe Gasper</t>
+<t>Johan 't Hart</t>
+<t>Josh Soref</t>
+<t>Konstantin Burkalev</t>
+<t>Pahaz Blinov</t>
+<t>Paolo Angioletti</t>
+<t>Roberto Requena</t>
+<t>Roger Erens</t>
+<t>Christoph Herzog</t>
+<t>Tobias Oberstein</t>
+<t>Zhigang Wang</t>
 </list>
 </t>
+</section>
+
+<section anchor="acknowledgements" title="Acknowledgements">
 </section>
 
 </middle>

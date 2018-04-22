@@ -127,9 +127,11 @@ Call request RPC URI: 'a1.b2.c3.d4.e55' →
 Call request RPC URI: 'a1.b2.c3.d98.e74' → 
     no exact match, single prefix match. Use RPC 2
 Call request RPC URI: 'a1.b2.c3.d4.e325' → 
-    no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+    no exact match, 2 prefix matches (2,3), select longest one.
+    Use RPC 3
 Call request RPC URI: 'a1.b2.c55.d4.e5' → 
-    no exact match, no prefix match, single wildcard match. Use RPC 4
+    no exact match, no prefix match, single wildcard match.
+    Use RPC 4
 Call request RPC URI: 'a1.b2.c3.d4.e5' → 
     no exact match, no prefix match, 2 wildcard matches (4,5), 
     select longest one. Use RPC 5

@@ -5,6 +5,9 @@ rfc:
 	xml2rfc --text rfc/draft-oberstet-hybi-crossbar-wamp.xml
 	xml2rfc --html rfc/draft-oberstet-hybi-crossbar-wamp.xml
 
+authors:
+	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
+
 requirements:
 	sudo apt install -y mmark xml2rfc
 

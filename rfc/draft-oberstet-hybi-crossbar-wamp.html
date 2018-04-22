@@ -519,8 +519,8 @@
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
   <meta name="dct.creator" content="Oberstein, T. and A. Goedde" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-oberstet-hybi-crossbar-wamp-01" />
-  <meta name="dct.issued" scheme="ISO8601" content="2017-3-19" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-oberstet-hybi-crossbar-wamp-02" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-4-18" />
   <meta name="dct.abstract" content="This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.  " />
   <meta name="description" content="This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish &amp; Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.  " />
 
@@ -544,8 +544,8 @@
   <td class="right">Crossbar.io Technologies GmbH</td>
 </tr>
 <tr>
-  <td class="left">Expires: September 20, 2017</td>
-  <td class="right">March 19, 2017</td>
+  <td class="left">Expires: October 20, 2018</td>
+  <td class="right">April 18, 2018</td>
 </tr>
 
     	
@@ -553,7 +553,7 @@
   </table>
 
   <p class="title">The Web Application Messaging Protocol<br />
-  <span class="filename">draft-oberstet-hybi-crossbar-wamp-01</span></p>
+  <span class="filename">draft-oberstet-hybi-crossbar-wamp-02</span></p>
   
   <h1 id="rfc.abstract">
   <a href="#rfc.abstract">Abstract</a>
@@ -565,11 +565,11 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 20, 2017.</p>
+<p>This Internet-Draft will expire on October 20, 2018.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
-<p>Copyright (c) 2017 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
 
   
@@ -1974,7 +1974,8 @@
 
 <p> </p>
 <pre>
-    [3, {"message": "Received HELLO message after session was established."},
+    [3, {"message":
+            "Received HELLO message after session was established."},
         "wamp.error.protocol_violation"]
 </pre>
 <p/>
@@ -1985,7 +1986,8 @@
 
 <p> </p>
 <pre>
-    [3, {"message": "Received WELCOME message after session was established."},
+    [3, {"message":
+            "Received WELCOME message after session was established."},
         "wamp.error.protocol_violation"]
 </pre>
 <h1 id="rfc.section.7.2"><a href="#rfc.section.7.2">7.2.</a> <a href="#session-closing" id="session-closing">Session Closing</a></h1>
@@ -4397,9 +4399,11 @@ Call request RPC URI: 'a1.b2.c3.d4.e55' &#8594;
 Call request RPC URI: 'a1.b2.c3.d98.e74' &#8594; 
     no exact match, single prefix match. Use RPC 2
 Call request RPC URI: 'a1.b2.c3.d4.e325' &#8594; 
-    no exact match, 2 prefix matches (2,3), select longest one. Use RPC 3
+    no exact match, 2 prefix matches (2,3), select longest one.
+    Use RPC 3
 Call request RPC URI: 'a1.b2.c55.d4.e5' &#8594; 
-    no exact match, no prefix match, single wildcard match. Use RPC 4
+    no exact match, no prefix match, single wildcard match.
+    Use RPC 4
 Call request RPC URI: 'a1.b2.c3.d4.e5' &#8594; 
     no exact match, no prefix match, 2 wildcard matches (4,5), 
     select longest one. Use RPC 5
@@ -6559,16 +6563,31 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <h1 id="rfc.section.17"><a href="#rfc.section.17">17.</a> <a href="#iana-considerations" id="iana-considerations">IANA Considerations</a></h1>
 <p id="rfc.section.17.p.1">TBD </p>
 <h1 id="rfc.section.18"><a href="#rfc.section.18">18.</a> <a href="#contributors" id="contributors">Contributors</a></h1>
-<h1 id="rfc.section.19"><a href="#rfc.section.19">19.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
-<p id="rfc.section.19.p.1">WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned: </p>
+<p id="rfc.section.18.p.1">WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned: </p>
 <p/>
 
 <ul>
-  <li>Konstantin Burkalev</li>
+  <li>Alexander Goedde</li>
+  <li>Amber Brown</li>
+  <li>Andrew Gillis</li>
+  <li>David Chappelle</li>
+  <li>Elvis Stansvik</li>
   <li>Emile Cormier</li>
+  <li>Felipe Gasper</li>
+  <li>Johan 't Hart</li>
+  <li>Josh Soref</li>
+  <li>Konstantin Burkalev</li>
+  <li>Pahaz Blinov</li>
+  <li>Paolo Angioletti</li>
+  <li>Roberto Requena</li>
+  <li>Roger Erens</li>
+  <li>Christoph Herzog</li>
+  <li>Tobias Oberstein</li>
+  <li>Zhigang Wang</li>
 </ul>
 
 <p> </p>
+<h1 id="rfc.section.19"><a href="#rfc.section.19">19.</a> <a href="#acknowledgements" id="acknowledgements">Acknowledgements</a></h1>
 <h1 id="rfc.references"><a href="#rfc.references">20.</a> References</h1>
 <h1 id="rfc.references.1"><a href="#rfc.references.1">20.1.</a> Normative References</h1>
 <table>
