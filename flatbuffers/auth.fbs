@@ -58,30 +58,19 @@ enum Kdf: uint8
 
 
 
-table Monster
-{
-}
-
-table XxxMonster
-{
-    base: Monster;
-}
-
-table YyyMonster
-{
-    base: Monster;
-}
-
-union AnyMonster
-{
-    XxxMonster,
-    YyyMonster
-}
-
-
-
+//
+// WAMP-Ticket Authentication
+//
 
 table AuthTicketRequest
+{
+}
+
+table AuthTicketChallenge
+{
+}
+
+table AuthTicketWelcome
 {
 }
 
@@ -97,6 +86,9 @@ table AuthCraRequest
 
 table AuthCraChallenge
 {
+    // The challenge sent by the router.
+    challenge: string (required);
+
     // If using PBKDF2 password salting with WAMP-CRA, the user salt.
     salt: string;
 
@@ -182,19 +174,34 @@ table AuthCryptosignChallenge
     channel_binding: ChannelBinding;
 }
 
+table AuthCryptosignWelcome
+{
+}
 
+
+// Any authentication factor usable in HELLO.
 union AuthFactor
 {
+    AuthTicketRequest,
     AuthCraRequest,
     AuthScramRequest,
     AuthCryptosignRequest
 }
 
 
-
+// When more than one authentication factor slot in the HELLO message
+// is filled, determines how the factor are to be combined. With FIRST,
+// the client hints the router to choose the first authentication factor
+// from the list that is acceptable. With MULTIFACTOR, the router will
+// challenge the client for _all_ authentication factors filled.
 enum AuthMode: uint8
 {
+    // Let router choose first (filled) acceptable authentication factor.
     FIRST = 0,
+
+    // Router will challenge for multi-factor authentication for all
+    // factors, and sequentially using multiple CHALLENGE and AUTHENTICATE
+    // message roundtrips.
     MULTIFACTOR = 1,
 }
 

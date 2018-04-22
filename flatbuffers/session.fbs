@@ -102,7 +102,7 @@ table Challenge
     // The challenge method.
     method: AuthMethod;
 
-    // Chellenge method specific information.
+    // Challenge method specific information.
     extra: Map;
 }
 
