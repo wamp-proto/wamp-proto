@@ -129,6 +129,32 @@ enum Serializer: uint8
 }
 
 
+// WAMP authentication method.
+enum AuthMethod: uint8
+{
+    // Pseudo anonymous authentication.
+    ANONYMOUS = 0,
+
+    // Trnasport level authentication based on HTTP header cookie set.
+    COOKIE = 1,
+
+    // Transport level authentication based on TLS client certificate presented.
+    TLS = 2,
+
+    // Authentication using WAMP-Ticket, a flexible one time token/password scheme..
+    TICKET = 3,
+
+    // Authentication using WAMP-CRA, a simple challenge-response scheme.
+    WAMPCRA = 4,
+
+    // Authentication using WAMP-SCRAM, a sophisticated challenge-response scheme.
+    SCRAM = 5,
+
+    // Authentication using WAMP-Cryptosign, a highly secure public-private-key scheme.
+    CRYPTOSIGN = 6
+}
+
+
 // Subscription topic matching method.
 enum Match: uint8
 {
@@ -139,7 +165,7 @@ enum Match: uint8
     PREFIX = 1,
 
     // Match URI by wildcard.
-    WILDCARD = 2,
+    WILDCARD = 2
 }
 
 
@@ -187,31 +213,151 @@ enum CancelMode: uint8
 }
 
 
+// Features from the WAMP advanced profile a **Broker** might support.
+table BrokerFeatures
+{
+    publisher_identification: bool;
+    publisher_exclusion: bool;
+    subscriber_blackwhite_listing: bool;
+    pattern_based_subscription: bool;
+    publication_trustlevels: bool;
+    subscription_revocation: bool;
+    session_meta_api: bool;
+    subscription_meta_api: bool;
+    event_retention: bool;
+    event_history: bool;
+    acknowledge_event_received: bool;
+    acknowledge_subscriber_received: bool;
+    payload_transparency: bool;
+    payload_encryption_cryptobox: bool;
+}
+
+
+// Features from the WAMP advanced profile a **Publisher** might support.
+// Note: this is a subset of the feature brokers can support.
+table PublisherFeatures
+{
+    publisher_identification: bool;
+    publisher_exclusion: bool;
+    subscriber_blackwhite_listing: bool;
+    acknowledge_event_received: bool;
+    payload_transparency: bool;
+    payload_encryption_cryptobox: bool;
+}
+
+
+// Features from the WAMP advanced profile a **Subscriber** might support.
+// Note: this is a subset of the feature brokers can support.
+table SubscriberFeatures
+{
+    publisher_identification: bool;
+    pattern_based_subscription: bool;
+    publication_trustlevels: bool;
+    subscription_revocation: bool;
+    event_history: bool;
+    acknowledge_subscriber_received: bool;
+    payload_transparency: bool;
+    payload_encryption_cryptobox: bool;
+}
+
+
+// Features from the WAMP advanced profile a **Dealer** might support.
+table DealerFeatures
+{
+    caller_identification: bool;
+    call_trustlevels: bool;
+    call_timeout: bool;
+    call_canceling: bool;
+    progressive_call_results: bool;
+    registration_revocation: bool;
+    pattern_based_registration: bool;
+    shared_registration: bool;
+    session_meta_api: bool;
+    registration_meta_api: bool;
+    testament_meta_api: bool;
+    payload_transparency: bool;
+    payload_encryption_cryptobox: bool;
+}
+
+
+// Features from the WAMP advanced profile a **Caller** might support.
+// Note: this is a subset of the feature dealers can support.
+table CallerFeatures
+{
+    caller_identification: bool;
+    call_timeout: bool;
+    call_canceling: bool;
+    progressive_call_results: bool;
+    payload_transparency: bool;
+    payload_encryption_cryptobox : bool;
+}
+
+
+// Features from the WAMP advanced profile a **Callee** might support.
+// Note: this is a subset of the feature dealers can support.
+table CalleeFeatures
+{
+    caller_identification: bool;
+    call_trustlevels: bool;
+    call_timeout: bool;
+    call_canceling: bool;
+    progressive_call_results: bool;
+    registration_revocation: bool;
+    pattern_based_registration: bool;
+    shared_registration: bool;
+    payload_transparency: bool;
+    payload_encryption_cryptobox: bool;
+}
+
+
+// WAMP roles a **Client** might support (it must support at least one).
+table ClientRoles
+{
+    publisher: PublisherFeatures;
+    subscriber: SubscriberFeatures;
+    caller: CallerFeatures;
+    callee: CalleeFeatures;
+}
+
+
+// WAMP roles a **Router** might support (it must support at least one).
+table RouterRoles
+{
+    broker: BrokerFeatures;
+    dealer: DealerFeatures;
+}
+
+
+
 // HELLO message (message_type = 1): [HELLO, Realm|uri, Details|dict]
 table Hello
 {
-    // The URI of the WAMP realm to join.
+    // The WAMP session roles and client library features to announce.
+    roles: ClientRoles;
+
+    // The URI of the WAMP realm the client wants to join.
     realm: string (required);
 
-    // The WAMP session roles and features to announce.
-    roles: [string];
+    // The authentication methods to announce.
+    authmethods: [AuthMethod];
 
-    // The authentication ID to announce.
+    // The (client) authentication ID to announce.
     authid: string;
 
-    // The authentication role to announce.
+    // The (client) authentication role to announce.
     authrole: string;
 
     // Application-specific "extra data" to be forwarded to the client.
     authextra: Map;
 
-    // Whether the client wants this to be a session that can be later resumed.
+    // Whether the client wants this to be a session that can be
+    // later resumed (HELLO.Details.resumable).
     resumable: bool;
 
-    // The session the client would like to resume.
+    // The session the client would like to resume (HELLO.Details.resume_session).
     resume_session: uint64;
 
-    // The secure authorisation token to resume the session.
+    // The secure authorisation token to resume the session (HELLO.Details.resume_token).
     resume_token: string;
 }
 
@@ -223,10 +369,10 @@ table Welcome
     session: uint64;
 
     // The WAMP roles to announce.
-    roles: [string];
+    roles: RouterRoles;
 
     // The effective realm the session is joined on.
-    realm: string;
+    realm: string (required);
 
     // The authentication ID assigned.
     authid: string;
@@ -235,7 +381,7 @@ table Welcome
     authrole: string;
 
     // The authentication method in use.
-    authmethod: string;
+    authmethod: AuthMethod;
 
     // The authentication provided in use.
     authprovider: string;
@@ -258,7 +404,7 @@ table Welcome
 table Abort
 {
     // WAMP or application error URI for aborting reason.
-    reason: string;
+    reason: string (required);
 
     // Optional human-readable closing message, e.g. for logging purposes.
     message: string;
@@ -269,7 +415,7 @@ table Abort
 table Challenge
 {
     // The challenge method.
-    method: string;
+    method: AuthMethod;
 
     // Chellenge method specific information.
     extra: Map;
@@ -280,7 +426,7 @@ table Challenge
 table Authenticate
 {
     // The signature for the authentication challenge.
-    signature: string;
+    signature: string (required);
 
     // Authentication method specific information.
     extra: Map;
@@ -291,7 +437,7 @@ table Authenticate
 table Goodbye
 {
     // Optional WAMP or application error URI for closing reason.
-    reason: string;
+    reason: string (required);
 
     // Optional human-readable closing message, e.g. for logging purposes.
     message: string;
