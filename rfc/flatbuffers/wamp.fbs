@@ -7,19 +7,46 @@
 //
 //////////////////////////////////////////////////////////////////////////////
 
+/* WAMP at the application level exposes 4 roles:
 
-// Usage: To generate code, enter flatc --python -o _build wamp.fbs
-//
-// Use one of:
-//
-//  --cpp        -c    Generate C++ headers for tables/structs.
-//  --go         -g    Generate Go files for tables/structs.
-//  --java       -j    Generate Java classes for tables/structs.
-//  --js         -s    Generate JavaScript code for tables/structs.
-//  --ts         -T    Generate TypeScript code for tables/structs.
-//  --csharp     -n    Generate C# classes for tables/structs.
-//  --python     -p    Generate Python files for tables/structs.
-//  --php              Generate PHP files for tables/structs.
+- Caller and Callee
+- Publisher and Subscriber
+
+To decouple each pair of roles (or actors), WAMP uses an intermediary
+that may implement two additional roles:
+
+- Dealer, to forward calls from Callers to Callees
+- Broker, to dispatch events from Publishers to Subscribers
+
+WAMP is then defined in terms of message flow between those 6 roles.
+There 26 WAMP messages at the wire level, and these are defined
+(structurally) using FlatBuffers IDL in below.
+
+Note: This FlatBuffers based specification of WAMP can be mapped
+directly to the existing, dynamically typed WAMP serializations.
+
+To generate code, enter
+
+    flatc --python -o _build wamp.fbs
+
+using one of:
+
+* --cpp        -c    Generate C++ headers for tables/structs.
+* --go         -g    Generate Go files for tables/structs.
+* --java       -j    Generate Java classes for tables/structs.
+* --js         -s    Generate JavaScript code for tables/structs.
+* --ts         -T    Generate TypeScript code for tables/structs.
+* --csharp     -n    Generate C# classes for tables/structs.
+* --python     -p    Generate Python files for tables/structs.
+* --php              Generate PHP files for tables/structs.
+
+This will generated bindings to access FlatBuffers data in the schema below
+from the selected host language.
+*/
+
+attribute "uri";
+attribute "uri_pattern";
+attribute "principal";
 
 
 // Namespace for WAMP.
@@ -333,19 +360,19 @@ table RouterRoles
 table Hello
 {
     // The WAMP session roles and client library features to announce.
-    roles: ClientRoles;
+    roles: ClientRoles (required);
 
     // The URI of the WAMP realm the client wants to join.
-    realm: string (required);
+    realm: string (uri);
 
     // The authentication methods to announce.
     authmethods: [AuthMethod];
 
     // The (client) authentication ID to announce.
-    authid: string;
+    authid: string (principal);
 
     // The (client) authentication role to announce.
-    authrole: string;
+    authrole: string (principal);
 
     // Application-specific "extra data" to be forwarded to the client.
     authextra: Map;
@@ -365,20 +392,20 @@ table Hello
 // WELCOME message (message_type = 2): [WELCOME, Session|id, Details|dict]
 table Welcome
 {
+    // The WAMP roles to announce.
+    roles: RouterRoles (required);
+
     // The WAMP session ID the other peer is assigned.
     session: uint64;
 
-    // The WAMP roles to announce.
-    roles: RouterRoles;
-
     // The effective realm the session is joined on.
-    realm: string (required);
+    realm: string (required, uri);
 
     // The authentication ID assigned.
-    authid: string;
+    authid: string (required, principal);
 
     // The authentication method in use.
-    authrole: string;
+    authrole: string (required, principal);
 
     // The authentication method in use.
     authmethod: AuthMethod;
@@ -404,7 +431,7 @@ table Welcome
 table Abort
 {
     // WAMP or application error URI for aborting reason.
-    reason: string (required);
+    reason: string (required, uri);
 
     // Optional human-readable closing message, e.g. for logging purposes.
     message: string;
@@ -437,7 +464,7 @@ table Authenticate
 table Goodbye
 {
     // Optional WAMP or application error URI for closing reason.
-    reason: string (required);
+    reason: string (required, uri);
 
     // Optional human-readable closing message, e.g. for logging purposes.
     message: string;
@@ -457,7 +484,7 @@ table Error
     request: uint64 (key);
 
     // The WAMP or application error URI for the error that occurred.
-    error: string (required);
+    error: string (required, uri);
 
     // Raw application payload: error arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
     payload: [uint8];
@@ -480,7 +507,7 @@ table Subscribe
     request: uint64 (key);
 
     // The WAMP or application URI of the PubSub topic the event should be published to.
-    topic: string (required);
+    topic: string (required, uri_pattern);
 
     // The topic matching method to be used for the subscription.
     match: Match = EXACT;
@@ -522,7 +549,7 @@ table Unsubscribed
     subscription: uint64;
 
     // The reason (an URI) for an active (router initiated) revocation.
-    reason: string;
+    reason: string (uri);
 }
 
 
@@ -533,7 +560,7 @@ table Publish
     request: uint64 (key);
 
     // The WAMP or application URI of the PubSub topic the event should be published to.
-    topic: string (required);
+    topic: string (required, uri);
 
     // Raw application payload: error arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
     payload: [uint8];
@@ -557,19 +584,19 @@ table Publish
     exclude: [uint64];
 
     // List of WAMP authids to exclude from receiving this event.
-    exclude_authid: [string];
+    exclude_authid: [string] (principal);
 
     // List of WAMP authroles to exclude from receiving this event.
-    exclude_authrole: [string];
+    exclude_authrole: [string] (principal);
 
     // List of WAMP session IDs eligible to receive this event.
     eligible: [uint64];
 
     // List of WAMP authids eligible to receive this event.
-    eligible_authid: [string];
+    eligible_authid: [string] (principal);
 
     // List of WAMP authroles eligible to receive this event.
-    eligible_authrole: [string];
+    eligible_authrole: [string] (principal);
 
     // If true, request the broker retain this event.
     retain: bool;
@@ -612,13 +639,13 @@ table Event
     publisher: uint64;
 
     // The WAMP authrole of the publisher. Only filled when publisher is disclosed.
-    publisher_authid: string;
+    publisher_authid: string (principal);
 
     // The WAMP authrole of the publisher. Only filled when publisher is disclosed.
-    publisher_authrole: string;
+    publisher_authrole: string (principal);
 
     // For pattern-based subscriptions, the event MUST contain the actual topic published to.
-    topic: string;
+    topic: string (uri);
 
     // Whether the message was retained by the broker on the topic, rather than just published.
     retained: bool;
@@ -654,6 +681,15 @@ table SubscriberReceived
     // The publication ID of the event that was received, and that is acknowledged.
     publication: uint64;
 
+    // The WAMP session ID of the subscriber. Only filled when the subscriber is disclosed.
+    subscriber: uint64;
+
+    // The WAMP authrole of the subscriber. Only filled when subscriber is disclosed.
+    subscriber_authid: string (principal);
+
+    // The WAMP authrole of the subscriber. Only filled when subscriber is disclosed.
+    subscriber_authrole: string (principal);
+
     // Raw application payload: error arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
     payload: [uint8];
 
@@ -675,7 +711,7 @@ table Call
     request: uint64 (key);
 
     // The WAMP or application URI of the procedure which should be called.
-    procedure: string (required);
+    procedure: string (required, uri);
 
     // Raw application payload: call arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
     payload: [uint8];
@@ -738,7 +774,7 @@ table Register
     request: uint64 (key);
 
     // The WAMP or application URI of the RPC endpoint provided.
-    procedure: string (required);
+    procedure: string (required, uri_pattern);
 
     // The procedure matching policy to be used for the registration.
     match: Match = EXACT;
@@ -786,7 +822,7 @@ table Unregistered
     registration: uint64;
 
     // The reason (an URI) for revocation.
-    reason: string;
+    reason: string (uri);
 }
 
 
@@ -812,7 +848,7 @@ table Invocation
     enc_key: [uint8];
 
     // For pattern-based registrations (not for exact matching registrations, the invocation MUST include the actual procedure being called.
-    procedure: string;
+    procedure: string (uri);
 
     // If present, let the callee automatically cancels the invocation after this ms.
     timeout: uint32;
@@ -824,10 +860,10 @@ table Invocation
     caller: uint64;
 
     // The WAMP authid of the caller. Only filled if caller is disclosed.
-    caller_authid: string;
+    caller_authid: string (principal);
 
     // The WAMP authrole of the caller. Only filled if caller is disclosed.
-    caller_authrole: string;
+    caller_authrole: string (principal);
 }
 
 
