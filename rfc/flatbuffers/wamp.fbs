@@ -7,7 +7,7 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-// Usage: To generate code, enter flatc --python -o generated wamp.fbs
+// Usage: To generate code, enter flatc --python -o _build wamp.fbs
 //
 // Use one of:
 //
@@ -19,13 +19,6 @@
 //  --csharp     -n    Generate C# classes for tables/structs.
 //  --python     -p    Generate Python files for tables/structs.
 //  --php              Generate PHP files for tables/structs.
-
-
-// declare a custom attribute to define WAMP URIs on elements
-attribute "uri";
-
-// declare a custom attribute to define UUIDs on elements
-attribute "uuid";
 
 
 // Namespace for WAMP.
@@ -101,13 +94,13 @@ enum MessageType: uint16
 enum Payload: uint8
 {
     /// Plain app payload.
-    PLAIN = 1,
+    PLAIN = 0,
 
     /// Encrypted app payload using WAMP-cryptobox (Curve25519 / Cryptobox).
-    CRYPTOBOX = 2,
+    CRYPTOBOX = 1,
 
     /// Raw MQTT app payload.
-    MQTT = 3
+    MQTT = 2
 }
 
 
@@ -116,26 +109,84 @@ enum Serializer: uint8
 {
     /// Use same serializer for the app payload as on the transport.
     /// This will be one of JSON, MSGPACK, CBOR or UBJSON.
-    TRANSPORT = 1,
+    TRANSPORT = 0,
     
     /// Use JSON serializer (for dynamically typed app payload).
-    JSON = 2,
+    JSON = 1,
 
     /// Use MsgPack serializer (for dynamically typed app payload).
-    MSGPACK = 3,
+    MSGPACK = 2,
 
     /// Use CBOR serializer (for dynamically typed app payload).
-    CBOR = 4,
+    CBOR = 3,
 
     /// Use UBJSON serializer (for dynamically typed app payload).
-    UBJSON = 5,
+    UBJSON = 4,
 
-    /// Explicit use of Flatbuffers for statically typed payload.
-    FLATBUFFERS = 6
+    /// Explicit use of FlatBuffers for statically typed payload.
+    FLATBUFFERS = 5
 }
 
 
-/// HELLO message (message_type = ): [HELLO, Realm|uri, Details|dict]
+/// Subscription topic matching method.
+enum Match: uint8
+{
+    /// Match URI exact.
+    EXACT = 0,
+
+    /// Match URI by prefix.
+    PREFIX = 1,
+
+    /// Match URI by wildcard.
+    WILDCARD = 2,
+}
+
+
+/// Remote procedure invocation policy, for use with shared registrations.
+enum InvocationPolicy: uint8
+{
+    // Standard invocation policy: a procedure may only be registered by at most
+    // one callee at a time. This is the default.
+    SINGLE = 0,
+
+    // First callee invocation policy: all calls to a procedure are forwarded to
+    // the callee that first registered. Should that callee unregister, calls
+    // are forwarded to the callee that registered next after the former.
+    FIRST = 1,
+
+    // Last callee invocation policy: all calls to a procedure are forwwrded to
+    // the callee that last registered. Should that callee unregister, calls
+    // are forwarded to the callee that registered next before the former.
+    LAST = 2,
+
+    // Round-robin invocation policy: calls are forward to all registered callees
+    // in a round-robin fashion. Callees that unregister are removed from the
+    // round-robin list, and new callees registering will get calls immediately
+    // in the next dispatching round.
+    ROUNDROBIN = 3,
+
+    // Random invocation policy: calls are forwarded to all registered callees
+    // in a random fashion. Callees that unregister are removed from the set
+    // of callees randomly drawn from to dispatch incoming calls.
+    RANDOM = 4
+}
+
+
+/// Call cancel mode.
+enum CancelMode: uint8
+{
+    // Skip running invocation call.
+    SKIP = 0,
+
+    // Abort running invocation and call.
+    ABORT = 1,
+
+    // Kill running invocation and call.
+    KILL = 2
+}
+
+
+/// HELLO message (message_type = 1): [HELLO, Realm|uri, Details|dict]
 table Hello
 {
     /// The URI of the WAMP realm to join.
@@ -164,7 +215,7 @@ table Hello
 }
 
 
-/// WELCOME message (message_type = ): [WELCOME, Session|id, Details|dict]
+/// WELCOME message (message_type = 2): [WELCOME, Session|id, Details|dict]
 table Welcome
 {
     /// The WAMP session ID the other peer is assigned.
@@ -202,7 +253,7 @@ table Welcome
 }
 
 
-/// ABORT message (message_type = ): [ABORT, Details|dict, Reason|uri]
+/// ABORT message (message_type = 3): [ABORT, Details|dict, Reason|uri]
 table Abort
 {
     /// WAMP or application error URI for aborting reason.
@@ -213,7 +264,7 @@ table Abort
 }
 
 
-/// CHALLENGE message (message_type = ): [CHALLENGE, Method|string, Extra|dict]
+/// CHALLENGE message (message_type = 4): [CHALLENGE, Method|string, Extra|dict]
 table Challenge
 {
     /// The challenge method.
@@ -224,7 +275,7 @@ table Challenge
 }
 
 
-/// AUTHENTICATE message (message_type = ): [AUTHENTICATE, Signature|string, Extra|dict]
+/// AUTHENTICATE message (message_type = 5): [AUTHENTICATE, Signature|string, Extra|dict]
 table Authenticate
 {
     /// The signature for the authentication challenge.
@@ -235,7 +286,7 @@ table Authenticate
 }
 
 
-/// GOODBYE message (message_type = ): [GOODBYE, Details|dict, Reason|uri]
+/// GOODBYE message (message_type = 6): [GOODBYE, Details|dict, Reason|uri]
 table Goodbye
 {
     /// Optional WAMP or application error URI for closing reason.
@@ -249,47 +300,33 @@ table Goodbye
 }
 
 
-/// ERROR message (message_type = ): [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Payload|binary]
+/// ERROR message (message_type = 8): [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, Payload|binary]
 table Error
 {
-    ///
+    /// The WAMP message type code for the original request.
     request_type: MessageType;
 
-    /// 
+    /// The WAMP request ID of the original request (CALL, SUBSCRIBE, ...) this error occurred for.
     request: uint64 (key);
 
-    /// 
+    /// The WAMP or application error URI for the error that occurred.
     error: string (required);
 
     /// Raw application payload: error arguments. This might be encrypted (with Payload==Payload.CRYPTOBOX), and is serialized according to enc_serializer.
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
 }
 
 
-/// Subscription topic matching method.
-enum Match: uint8
-{
-    /// Match URI exact.
-    EXACT = 1,
-
-    /// Match URI by prefix.
-    PREFIX = 2,
-
-    /// Match URI by wildcard.
-    WILDCARD = 3,
-}
-
-
-/// SUBSCRIBE message (message_type = ): [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
+/// SUBSCRIBE message (message_type = 32): [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 table Subscribe
 {
     /// The WAMP request ID of this request.
@@ -306,7 +343,7 @@ table Subscribe
 }
 
 
-/// SUBSCRIBED message (message_type = ): [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
+/// SUBSCRIBED message (message_type = 33): [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 table Subscribed
 {
     /// The request ID of the original SUBSCRIBE request.
@@ -317,7 +354,7 @@ table Subscribed
 }
 
 
-/// UNSUBSCRIBE message (message_type = ): [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
+/// UNSUBSCRIBE message (message_type = 34): [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 table Unsubscribe
 {
     /// The WAMP request ID of this request.
@@ -328,7 +365,7 @@ table Unsubscribe
 }
 
 
-/// UNSUBSCRIBED message (message_type = ): [UNSUBSCRIBED, UNSUBSCRIBE.Request|id, Details|dict]
+/// UNSUBSCRIBED message (message_type = 35): [UNSUBSCRIBED, UNSUBSCRIBE.Request|id, Details|dict]
 table Unsubscribed
 {
     /// The request ID of the original UNSUBSCRIBE request or 0 if the router triggered the unsubscribe ("router subscription revocation signaling").
@@ -342,7 +379,7 @@ table Unsubscribed
 }
 
 
-/// PUBLISH message (message_type = ): [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|binary]
+/// PUBLISH message (message_type = 16): [PUBLISH, Request|id, Options|dict, Topic|uri, Payload|binary]
 table Publish
 {
     /// The WAMP request ID of this request.
@@ -355,10 +392,10 @@ table Publish
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
@@ -392,7 +429,7 @@ table Publish
 }
 
 
-/// PUBLISHED message (message_type = ): [PUBLISHED, PUBLISH.Request|id, Publication|id]
+/// PUBLISHED message (message_type = 17): [PUBLISHED, PUBLISH.Request|id, Publication|id]
 table Published
 {
     /// The request ID of the original PUBLISH request.
@@ -416,10 +453,10 @@ table Event
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
@@ -454,10 +491,10 @@ table EventReceived
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
@@ -465,7 +502,7 @@ table EventReceived
 
 
 /// SUBSCRIBER_RECEIVED message (message_type = 38): [SUBSCRIBER_RECEIVED, EVENT_RECEIVED.Publication|id, Details|dict, EVENT_RECEIVED.Payload|binary]
-table PublicationReceived
+table SubscriberReceived
 {
     /// The publication ID of the event that was received, and that is acknowledged.
     publication: uint64;
@@ -474,10 +511,10 @@ table PublicationReceived
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
@@ -497,10 +534,10 @@ table Call
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
@@ -513,16 +550,7 @@ table Call
 }
 
 
-/// Call cancel mode.
-enum CancelMode: uint8
-{
-    SKIP = 1,
-    ABORT = 2,
-    KILL = 3
-}
-
-
-/// CANCEL message (message_type = ): [CANCEL, CALL.Request|id, Options|dict]
+/// CANCEL message (message_type = 49): [CANCEL, CALL.Request|id, Options|dict]
 table Cancel
 {
     /// The request ID of the original CALL request.
@@ -543,10 +571,10 @@ table Result
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
@@ -556,37 +584,7 @@ table Result
 }
 
 
-/// Remote procedure invocation policy, for use with shared registrations.
-enum InvocationPolicy: uint8
-{
-    // Standard invocation policy: a procedure may only be registered by at most
-    // one callee at a time. This is the default.
-    SINGLE = 0,
-
-    // First callee invocation policy: all calls to a procedure are forwarded to
-    // the callee that first registered. Should that callee unregister, calls
-    // are forwarded to the callee that registered next after the former.
-    FIRST = 1,
-
-    // Last callee invocation policy: all calls to a procedure are forwwrded to
-    // the callee that last registered. Should that callee unregister, calls
-    // are forwarded to the callee that registered next before the former.
-    LAST = 2,
-
-    // Round-robin invocation policy: calls are forward to all registered callees
-    // in a round-robin fashion. Callees that unregister are removed from the
-    // round-robin list, and new callees registering will get calls immediately
-    // in the next dispatching round.
-    ROUNDROBIN = 3,
-
-    // Random invocation policy: calls are forwarded to all registered callees
-    // in a random fashion. Callees that unregister are removed from the set
-    // of callees randomly drawn from to dispatch incoming calls.
-    RANDOM = 4
-}
-
-
-/// REGISTER message (message_type = ): [REGISTER, Request|id, Options|dict, Procedure|uri]
+/// REGISTER message (message_type = 64): [REGISTER, Request|id, Options|dict, Procedure|uri]
 table Register
 {
     /// The WAMP request ID of this request.
@@ -609,7 +607,7 @@ table Register
 }
 
 
-/// REGISTERED message (message_type = ): [REGISTERED, REGISTER.Request|id, Registration|id]
+/// REGISTERED message (message_type = 65): [REGISTERED, REGISTER.Request|id, Registration|id]
 table Registered
 {
     /// The request ID of the original ``REGISTER`` request.
@@ -620,7 +618,7 @@ table Registered
 }
 
 
-/// UNREGISTER message (message_type = ): [UNREGISTER, Request|id, REGISTERED.Registration|id]
+/// UNREGISTER message (message_type = 66): [UNREGISTER, Request|id, REGISTERED.Registration|id]
 table Unregister
 {
     /// The request ID of the original ``REGISTER`` request.
@@ -658,10 +656,10 @@ table Invocation
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
@@ -686,7 +684,7 @@ table Invocation
 }
 
 
-/// INTERRUPT message (message_type = ): [INTERRUPT, INVOCATION.Request|id, Options|dict]
+/// INTERRUPT message (message_type = 69): [INTERRUPT, INVOCATION.Request|id, Options|dict]
 table Interrupt
 {
     /// The WAMP request ID of this request.
@@ -697,7 +695,7 @@ table Interrupt
 }
 
 
-/// YIELD message (message_type = ): [YIELD, INVOCATION.Request|id, Options|dict, Payload|binary]
+/// YIELD message (message_type = 70): [YIELD, INVOCATION.Request|id, Options|dict, Payload|binary]
 table Yield
 {
     /// The WAMP request ID of this request.
@@ -707,33 +705,42 @@ table Yield
     payload: [uint8];
 
     /// The encoding algorithm that was used to encode the payload.
-    enc_algo: Payload = PLAIN;
+    enc_algo: Payload;
 
     /// The payload object serializer that was used encoding the payload.
-    enc_serializer: Serializer = TRANSPORT;
+    enc_serializer: Serializer;
 
     /// When using Payload.CRYPTOBOX, the public Cryptobox key of the key pair used for encrypting the payload.
     enc_key: [uint8];
 }
 
 
-// a WAMP message is of exactly one of the following 24 concrete message types
+// a WAMP message is of exactly one of the following 26 concrete message types
 union Messages
 {
+    // Session
     Hello,
     Welcome,
     Abort,
     Challenge,
     Authenticate,
     Goodbye,
+
+    // Common
     Error,
+
+    // PubSub
     Publish,
     Published,
+    SubscriberReceived,     // NEW
     Subscribe,
     Subscribed,
     Unsubscribe,
     Unsubscribed,
     Event,
+    EventReceived,          // NEW
+
+    // RPC
     Call,
     Cancel,
     Result,
@@ -756,5 +763,5 @@ table Message
 }
 
 
-/// The Flatbuffers root type is our WAMP message type.
+/// The FlatBuffers root type is our WAMP message type.
 root_type Message;
