@@ -4,6 +4,15 @@
 
 ### Motivation
 
+**tldr:**
+
+* performance (passthrough of app payloads, general zero copy)
+* support end-to-end encryption
+* carrying proprietory binary payloads (MQTT)
+* strict static typing of interfaces
+
+---
+
 WAMP supports both positional and keyword based request arguments and returns.
 
 For example, the WAMP `CALL` message allows for the following three alternative forms:
@@ -18,7 +27,7 @@ The actual application payload hence can take **three variants of app payload (X
 2. `Arguments|list`
 3. `Arguments|list, ArgumentsKw|dict`
 
-This pattern repeats across **all** WAMP messages that can carry application payload, namely:
+This pattern repeats across **all** WAMP messages that can carry application payload, namely the following 7 WAMP messages:
 
 * `PUBLISH`
 * `EVENT`
@@ -51,13 +60,64 @@ The latter does not mean an "either or" question. You can have important base AP
 
 ### Payload Transparency Mode
 
-**Payload Transparancy Mode** adds a 4th application payload variant to above **XX**
+**Payload Transparancy Mode (PTM)** adds a 4th application payload variant to above **XX**
 
 4. `[CALL, Request|id, Options|dict, Procedure|uri, Payload|binary]`
 
 where the actual application payload takes this form:
 
 4. `Payload|binary`
+
+**PTM** can be used on a *per message basis*.
+
+If PTM is used, then the following two attributes MUST be present in the `Details|dict` or `Options|dict` of the respective WAMP message:
+
+* `payload|string`: Application payload type:
+    * `"plain"`: Plain WAMP application payload.
+    * `"cryptobox"`: Encrypted WAMP application payload. This is using WAMP-cryptobox (Curve25519 / Cryptobox).
+    * `"opaque"`: Raw pass-through of app payload, uninterpreted in any way.
+* `serializer|string`: Application payload serializer type.
+    * `"transport"`: Use same (dynamic) serializer for the app payload as on the transport. This will be one of JSON, MSGPACK, CBOR or UBJSON.
+    * `"json"`: Use JSON serializer (for dynamically typed app payload).
+    * `"msgpack"`: Use MsgPack serializer (for dynamically typed app payload).
+    * `"cbor"`: Use CBOR serializer (for dynamically typed app payload).
+    * `"ubjson"`: Use UBJSON serializer (for dynamically typed app payload).
+    * `"opaque"`: Raw pass-through of app payload, uninterpreted in any way.
+    * `"flatbuffers"`: Explicit use of FlatBuffers also for (statically typed) payload.
+* `key|string`: When using end-to-end encryption (WAMP-cryptobox), the public key to which the payload is encrypted
+---
+
+#### Payload PLAIN
+
+When PTM is in use, and `Details.payload=="plain"`, the original application payload, one of
+
+* `-`
+* `Arguments|list`
+* `Arguments|list, ArgumentsKw|dict`
+
+is serialized according to the (dynamically typed) serializer specified in `serializer`, one of
+
+* `"transport"`
+* `"msgpack"`
+* `"json"`
+* `"cbor"`
+* `"ubjson"`
+
+> Note that serializers `"opaque"` and `"flatbuffers"` are illegal for payload `"plain"`.
+
+---
+
+#### Payload CRYPTOBOX
+
+Write me.
+
+---
+
+#### Payload OPAQUE
+
+Write me.
+
+---
 
 
 ## FlatBuffers
@@ -103,7 +163,7 @@ make -j4
 
 ### flatc patches
 
-The following patches are required currently for flatc: [this PR](https://github.com/google/flatbuffers/pull/4711) adds [pieces missing for reflection](https://github.com/google/flatbuffers/pull/4711/files#diff-db35d829e5e236af29f9a061c8352dcb) in the flatc compiler.
+The following patches are required currently for flatc: [this PR](https://github.com/google/flatbuffers/pull/4713) adds pieces missing for reflection in the flatc compiler.
 
 ---
 
