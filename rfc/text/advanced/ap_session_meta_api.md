@@ -39,17 +39,21 @@ Fired when a session leaves a realm on the router or is disconnected. The event 
 
 #### Session Meta Procedures
 
-A client can actively retrieve information about sessions via the following meta-procedures:
+A client can actively retrieve information about sessions, or forcefully close sessions, via the following meta-procedures:
 
 * `wamp.session.count`: Obtains the number of sessions currently attached to the realm.
 * `wamp.session.list`: Retrieves a list of the session IDs for all sessions currently attached to the realm.
 * `wamp.session.get`: Retrieves information on a specific session.
+* `wamp.session.kill`: Kill a single session identified by session ID.
+* `wamp.session.kill_by_authid`: Kill all currently connected sessions that have the specified authid.
+* `wamp.session.kill_by_authrole`: Kill all currently connected sessions that have the specified authrole.
+* `wamp.session.kill_all`: Kill all currently connected sessions in the caller's realm.
 
 Session meta procedures MUST be registered by the *Router* on the same realm as the WAMP session about which information is retrieved.
 
 ##### wamp.session.count
 
-Obtains the number of sessions currently attached to the realm:
+Obtains the number of sessions currently attached to the realm.
 
 **Positional arguments**
 
@@ -96,6 +100,102 @@ Retrieves information on a specific session.
 **Errors**
 
 * `wamp.error.no_such_session` - No session with the given ID exists on the router.
+
+
+##### wamp.session.kill
+
+Kill a single session identified by session ID.
+
+The caller of this meta procedure may only specify session IDs other than its own session.  Specifying the caller's own session will result in a `wamp.error.no_such_session` since no _other_ session with that ID exists.
+
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+
+**Positional arguments**
+
+1. `session|id` - The session ID of the session to close.
+
+**Keyword arguments**
+
+1. `reason|uri` - reason for closing session, sent to client in `GOODBYE.Reason`.
+2. `message|string` - additional information sent to client in `GOODBYE.Details` under the key "message".
+
+**Errors**
+
+* `wamp.error.no_such_session` - No session with the given ID exists on the router.
+* `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
+
+##### wamp.session.kill_by_authid
+
+Kill all currently connected sessions that have the specified `authid`.
+
+If the caller's own session has the specified `authid`, the caller's session is excluded from the closed sessions.
+
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+
+**Positional arguments**
+
+1. `authid|string` - The authentication ID identifying sessions to close.
+
+**Keyword arguments**
+
+1. `reason|uri` - reason for closing sessions, sent to clients in `GOODBYE.Reason`
+2. `message|string` - additional information sent to clients in `GOODBYE.Details` under the key "message".
+
+**Positional results**
+
+1. `count|int` - The number of sessions closed by this meta procedure.
+
+**Errors**
+
+* `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
+
+
+##### wamp.session.kill_by_authrole
+
+Kill all currently connected sessions that have the specified `authrole`.
+
+If the caller's own session has the specified `authrole`, the caller's session is excluded from the closed sessions.
+
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+
+**Positional arguments**
+
+1. `authrole|string` - The authentication role identifying sessions to close.
+
+**Keyword arguments**
+
+1. `reason|uri` - reason for closing sessions, sent to clients in `GOODBYE.Reason`
+2. `message|string` - additional information sent to clients in `GOODBYE.Details` under the key "message".
+
+**Positional results**
+
+1. `count|int` - The number of sessions closed by this meta procedure.
+
+**Errors**
+
+* `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
+
+
+##### wamp.session.kill_all
+
+Kill all currently connected sessions in the caller's realm.
+
+The caller's own session is excluded from the closed sessions.  Closing all sessions in the realm will not generate session meta events or testament events, since no subscribers would remain to receive these events.
+
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+
+**Keyword arguments**
+
+1. `reason|uri` - reason for closing sessions, sent to clients in `GOODBYE.Reason`
+2. `message|string` - additional information sent to clients in `GOODBYE.Details` under the key "message".
+
+**Positional results**
+
+1. `count|int` - The number of sessions closed by this meta procedure.
+
+**Errors**
+
+* `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
 
 
 #### Feature Announcement
