@@ -59,7 +59,7 @@ A topic or procedure has been defined for reflection:
 {align="left"}    
         wamp.reflect.on_define
 
-A topic or procedure has been unfined from reflection:
+A topic or procedure has been undefined from reflection:
 
 {align="left"}
         wamp.reflect.on_undefine

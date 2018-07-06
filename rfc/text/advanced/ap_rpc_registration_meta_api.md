@@ -182,7 +182,7 @@ Retrieves a list of session IDs for sessions currently attached to the registrat
 
 **Arguments**
 
-* `registration|id`: The ID of the registration to get calles for.
+* `registration|id`: The ID of the registration to get callees for.
 
 **Results**
 

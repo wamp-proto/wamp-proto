@@ -10,9 +10,9 @@ With WAMP-SCRAM, if the authentication database is stolen, an attacker cannot im
 
 In the event that the server's authentication database is stolen, and the attacker either eavesdrops on one authentication exchange or impersonates a server, the attacker gains the ability to impersonate that particular user on that server. If the same salt is used on other servers, the attacker would gain the ability to impersonate that user on all servers using the same salt. That's why it's important to use a per-user random salt.
 
-An evesdropper that captures a user anthentication exchange has enough information to mount an offline, brute-force dictionary attack for that particular user. If passwords are sufficiently strong, the cost/time needed to crack a password becomes prohibitive.
+An eavesdropper that captures a user authentication exchange has enough information to mount an offline, brute-force dictionary attack for that particular user. If passwords are sufficiently strong, the cost/time needed to crack a password becomes prohibitive.
 
-Note that when HTML/Javascript assets are served to a web browser, WAMP-SCRAM does not safeguard against a man-in-the-middle tampering with those assets. Those assets could be tampered with in a way that captures the user's password and sends it to the attacker.
+Note that when HTML/JavaScript assets are served to a web browser, WAMP-SCRAM does not safeguard against a man-in-the-middle tampering with those assets. Those assets could be tampered with in a way that captures the user's password and sends it to the attacker.
 
 In light of the above security concerns, a secure TLS transport is therefore advised to prevent such attacks. The channel binding feature of SCRAM can be used to ensure that the TLS endpoints are the same between client and router.
 
@@ -57,7 +57,7 @@ To prevent rainbow table attacks in the event of database theft, the salt MUST b
 
 Username and password strings SHALL be normalized according to the _SASLprep_ profile described in [RFC4013](https://tools.ietf.org/html/rfc4013), using the _stringprep_ algorithm described in [RFC3454](https://tools.ietf.org/html/rfc3454).
 
-While SASLprep preserves the case of usernames, the server MAY choose to perform case insensitve comparisons when searching for a username in the authentication database.
+While SASLprep preserves the case of usernames, the server MAY choose to perform case insensitive comparisons when searching for a username in the authentication database.
 
 
 ##### Channel Binding
@@ -72,13 +72,13 @@ Note that WAMP-SCRAM channel binding is not generally possible with web browser 
 
 ###### The tls-unique Channel Binding Type
 
-The `tls-unique` channel binding type allows the WAMP layer to establish that the other peer is authenticating over the same, unique TLS connection. The channel binding data for this type corresponds to the bytes of the first TLS Finished message, as described in [RFC5929, section 3](https://tools.ietf.org/html/rfc5929#section-3). [RFC5929 section 10.2](https://tools.ietf.org/html/rfc5929#section-10.2) addresses the concern of disclosing this data over the TLS channel (in short, the TLS Finished message would already be visible to evesdroppers).
+The `tls-unique` channel binding type allows the WAMP layer to establish that the other peer is authenticating over the same, unique TLS connection. The channel binding data for this type corresponds to the bytes of the first TLS Finished message, as described in [RFC5929, section 3](https://tools.ietf.org/html/rfc5929#section-3). [RFC5929 section 10.2](https://tools.ietf.org/html/rfc5929#section-10.2) addresses the concern of disclosing this data over the TLS channel (in short, the TLS Finished message would already be visible to eavesdroppers).
 
 To safeguard against the _triple handshake attack_ described in [RFC7627](https://tools.ietf.org/html/rfc7627), this channel binding type MUST be used over a TLS channel that uses the _extended master secret_ extension, or over a TLS channel where session resumption is not permitted.
 
 ###### The tls-server-end-point Channel Binding Type
 
-The `tls-server-end-point` channel binding type allows the WAMP layer to establish that the other peer is authenticating over a TLS connection to a server having been issued a Public Key Infrastructure Certificate. The channel binding data for this type is a hash of the TLS server's certificate, computed as described in [RFC5929, section 4.1](https://tools.ietf.org/html/rfc5929#section-4.1). The certificate is hashed to accomodate memory-constrained implementations.
+The `tls-server-end-point` channel binding type allows the WAMP layer to establish that the other peer is authenticating over a TLS connection to a server having been issued a Public Key Infrastructure Certificate. The channel binding data for this type is a hash of the TLS server's certificate, computed as described in [RFC5929, section 4.1](https://tools.ietf.org/html/rfc5929#section-4.1). The certificate is hashed to accommodate memory-constrained implementations.
 
 ##### Authentication Exchange
 
@@ -146,7 +146,7 @@ If none of the above failure conditions apply, and the server is ready to let th
 
 where:
 
-1. `nonce|string`: A server-generatated nonce that is appended to the client-generated nonce sent in the previous `HELLO` message. See [Nonces](#nonces).
+1. `nonce|string`: A server-generated nonce that is appended to the client-generated nonce sent in the previous `HELLO` message. See [Nonces](#nonces).
 2. `salt|string`: The base64-encoded salt for this user, to be passed to the key derivation function. This value is stored with each user record in the authentication database. See [Salts](#salts).
 3. `kdf`: The key derivation function (KDF) used to hash the password. This value is stored with each user record in the authentication database. See [Key Derivation Functions](#key-derivation-functions).
 4. `iterations|integer`: The execution time cost factor to use for generating the `SaltedPassword` hash. This value is stored with each user record in the authentication database.
@@ -389,7 +389,7 @@ Section 4 of the Argon2 internet draft recommends the general procedure for sele
 
 The PBKDF2 key derivation function, defined in [RFC2898](https://tools.ietf.org/html/rfc2898), is used with SHA-256 as the pseudorandom function (PRF).
 
-The PDBKDF2 hash is computed using the folowing parameters:
+The PDBKDF2 hash is computed using the following parameters:
 
 * `CHALLENGE.Details.salt` as the cryptographic salt,
 * `CHALLENGE.Details.iterations` as the iteration count, and,
