@@ -13,8 +13,8 @@ This allows clients that otherwise would not be able to know when other clients 
 
 A *Client* can call the following procedures to set/flush Testaments:
 
-* `wamp.session.add_testament` to add a Testament which will be published on a particular topic when the Session is detatched or destroyed.
-* `wamp.session.flush_testaments` to remove the Testaments for that Session, either for when it is detatched or destroyed.
+* `wamp.session.add_testament` to add a Testament which will be published on a particular topic when the Session is detached or destroyed.
+* `wamp.session.flush_testaments` to remove the Testaments for that Session, either for when it is detached or destroyed.
 
 ##### wamp.session.add_testament
 
@@ -29,7 +29,7 @@ Adds a new testament:
 **Keyword arguments**
 
 1. `publish_options|dict` - options for the event when it is published -- see `Publish.Options`. Not all options may be honoured (for example, `acknowledge`). By default, there are no options.
-2. `scope|string` - When the testament should be published. Valid values are `detatched` (when the WAMP session is detatched, for example, when using Event Retention) or `destroyed` (when the WAMP session is finalised and destroyed on the Broker). Default MUST be `destroyed`.
+2. `scope|string` - When the testament should be published. Valid values are `detached` (when the WAMP session is detached, for example, when using Event Retention) or `destroyed` (when the WAMP session is finalized and destroyed on the Broker). Default MUST be `destroyed`.
 
 `wamp.session.add_testament` does not return a value.
 
@@ -53,22 +53,22 @@ yield self.call('wamp.session.add_testament',
                 'com.myapp.mytopic', ['Seeya!'], {'my_name': 'app1'})
 ```
 
-The *Router* will then store this information on the WAMP Session, either in a `detatched` or `destroyed` bucket, in the order they were added.
+The *Router* will then store this information on the WAMP Session, either in a `detached` or `destroyed` bucket, in the order they were added.
 A client MUST be able to set multiple testaments per-scope.
 If the *Router* does not support Session Resumption (therefore removing the distinction between a detached and destroyed session), it MUST still use these two separate buckets to allow `wamp.session.flush_testaments` to work.
 
-When a *Session* is *detatched*, the *Router* will inspect it for any Testaments in the `detached` scope, and publish them in the order that the Router recieved them, on the specified topic, with the specified arguments, keyword arguments, and publish options.
+When a *Session* is *detached*, the *Router* will inspect it for any Testaments in the `detached` scope, and publish them in the order that the Router received them, on the specified topic, with the specified arguments, keyword arguments, and publish options.
 The *Router* MAY ignore publish options that do not make sense for a Testament (for example, acknowledged publishes).
 
-When a *Session* is going to be *destroyed*, the *Router* will inspect it for any Testaments in the `destroyed` scope, and publish them in the same way as it would for the `detached` scope, in the order that they were recieved.
+When a *Session* is going to be *destroyed*, the *Router* will inspect it for any Testaments in the `destroyed` scope, and publish them in the same way as it would for the `detached` scope, in the order that they were received.
 
-A *Router* that does not allow Session Resumption MUST send `detatched`-scope Testaments before `destroyed`-scope Testaments.
+A *Router* that does not allow Session Resumption MUST send `detached`-scope Testaments before `destroyed`-scope Testaments.
 
 A *Client* can also clear testaments if the information is no longer relevant (for example, it is shutting down completely cleanly).
 For example, a client may call `wamp.session.flush_testaments`:
 
 ```python
-yield self.call('wamp.session.flush_testaments', scope='detatched')
+yield self.call('wamp.session.flush_testaments', scope='detached')
 yield self.call('wamp.session.flush_testaments', scope='destroyed')
 ```
 
