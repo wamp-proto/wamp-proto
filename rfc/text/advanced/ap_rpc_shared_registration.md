@@ -27,7 +27,7 @@ If the option is not set, 'single' is applied as a default.
 
 With 'single', the **Dealer** MUST fail all subsequent attempts to register a procedure for the URI while the registration remains in existence.
 
-With the other values, the **Dealer** MUST fail all subsequent attempst to register a procedure for the URI where the value for this option does not match that of the initial registration.
+With the other values, the **Dealer** MUST fail all subsequent attempts to register a procedure for the URI where the value for this option does not match that of the initial registration.
 
 ##### Load Balancing
 

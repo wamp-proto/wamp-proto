@@ -50,7 +50,7 @@ A *Publisher* may restrict the actual receivers of an event from the set of *Sub
 
 `PUBLISH.Options.exclude` is a list of integers with WAMP `sessionids` providing an explicit list of (potential) *Subscribers* that won't receive a published event, even though they may be subscribed. In other words, `PUBLISH.Options.exclude` is a **blacklist** of (potential) *Subscribers*.
 
-`PUBLISH.Options.eligible` is a list of integeres with WAMP WAMP `sessionids` providing an explicit list of (potential) *Subscribers* that are allowed to receive a published event. In other words, `PUBLISH.Options.eligible` is a **whitelist** of (potential) *Subscribers*.
+`PUBLISH.Options.eligible` is a list of integers with WAMP WAMP `sessionids` providing an explicit list of (potential) *Subscribers* that are allowed to receive a published event. In other words, `PUBLISH.Options.eligible` is a **whitelist** of (potential) *Subscribers*.
 
 The `exclude_authid`, `exclude_authrole`, `eligible_authid` and `eligible_authrole` options work similar, but not on the basis of WAMP `sessionid`, but `authid` and `authrole`.
 
