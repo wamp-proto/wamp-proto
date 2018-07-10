@@ -33,9 +33,11 @@ Fired when a session joins a realm on the router. The event payload consists of 
 
 ##### wamp.session.on_leave
 
-Fired when a session leaves a realm on the router or is disconnected. The event payload consists of a single positional argument `session|id` with the session ID of the session that left.
+Fired when a session leaves a realm on the router or is disconnected. The event payload consists of three positional arguments:
 
-
+* `session|id` - The session ID of the session that left
+* `authid`|string` - The authentication ID of the session that left
+* `authrole|string` - The authentication role of the session that left
 
 #### Session Meta Procedures
 
