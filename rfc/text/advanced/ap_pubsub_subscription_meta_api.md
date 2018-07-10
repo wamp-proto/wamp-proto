@@ -70,11 +70,11 @@ Fired when a session is removed from a subscription. The event payload consists 
 
 ###### wamp.subscription.on_delete
 
-Fired when a subscription is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
+Fired when a subscription is deleted after the last session attached to it has been removed. The event payload consists of three positional arguments:
 
 * `session|id`: ID of the last session being removed from a subscription.
 * `subscription|id`: ID of the subscription being deleted.
-
+* `topic|uri`: The URI of the topic.
 
 
 #### Subscription Meta-Procedures
