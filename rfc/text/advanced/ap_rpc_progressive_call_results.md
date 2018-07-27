@@ -288,7 +288,7 @@ INTERRUPT.Options.mode|string == "killnowait"
 
 Progressive call result cancellation closes an important safety gap: In cases where progressive results are used to stream data to callers, and network connectivity is unreliable, callers my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up callees streaming results to dead callers. This can overload the router and further degrade network connectivity.
 
-The message flow for progressive results involves:
+The message flow for progressive results cancellation involves:
 
      ,------.           ,------.          ,------.
      |Caller|           |Dealer|          |Callee|
@@ -322,7 +322,7 @@ Note: Any `ERROR` returned by the Callee, in response to the `INTERRUPT`, is ign
 
 A Callee that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
 
-A Callee that supports progressive results, but does not support call canceling will be considered by the router to not support progressive results.
+A Callee that supports progressive results, but does not support call canceling is considered by the router to not support progressive results.
 
 #### Feature Announcement
 
