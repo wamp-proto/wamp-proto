@@ -94,9 +94,6 @@ Message flow during call canceling when *Callee* supports this feature and mod
            |                 |    INTERRUPT    |    
            |                 | ---------------->    
            |                 |                 |    
-           |                 |      ERROR      |    
-           |                 | <----------------    
-           |                 |                 |    
         ,--+---.          ,--+---.          ,--+---.
         |Caller|          |Dealer|          |Callee|
         `------'          `------'          `------'
@@ -117,6 +114,7 @@ Options:
 {align="left"}
         CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
 
+Note: After the router sends an `INTERRUPT` when mode="killnowait", any responses from the Callee are ignored.  This means that it is not necessary for the Callee to respond with an `ERROR` message, when mode="killnowait", since the router ignores it.
 
 #### Feature Announcement
 
