@@ -277,7 +277,7 @@ Even if a *Caller* has indicated its expectation to receive progressive results 
 
 #### Progressive Call Result Cancellation
 
-Upon receiving a `YIELD` message from a _Callee_ with `YIELD.Options.progress == true` (for a call that is still ongoing), if the original _Caller_ is no longer available (has left the realm), then the _Dealer_ will send an `INTERRUPT` to the _Callee_.  The `INTERRUPT` will have `Options.mode` set to `"killnowait"` to indicate to the client that no response should be sent to the `INTERRUPT`. This `INTERRUPT` in only sent in response to a progressive `YIELD` (`Details.progress == true`), and is not sent in response to a normal or final `YIELD`.
+Upon receiving a `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), if the original *Caller* is no longer available (has left the realm), then the *Dealer* will send an `INTERRUPT` to the *Callee*.  The `INTERRUPT` will have `Options.mode` set to `"killnowait"` to indicate to the client that no response should be sent to the `INTERRUPT`. This `INTERRUPT` in only sent in response to a progressive `YIELD` (`Details.progress == true`), and is not sent in response to a normal or final `YIELD`.
 ```
 [INTERRUPT, INVOCATION.Request|id, Options|dict]
 ```
@@ -286,7 +286,7 @@ Options:
 INTERRUPT.Options.mode|string == "killnowait"
 ```
 
-Progressive call result cancellation closes an important safety gap: In cases where progressive results are used to stream data to callers, and network connectivity is unreliable, callers my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up callees streaming results to dead callers. This can overload the router and further degrade network connectivity.
+Progressive call result cancellation closes an important safety gap: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up *Callees* streaming results to dead *Callers*. This can overload the router and further degrade network connectivity.
 
 The message flow for progressive results cancellation involves:
 
@@ -316,13 +316,13 @@ The message flow for progressive results cancellation involves:
                         |Dealer|          |Callee|
                         `------'          `------'
 
-Note: Any `ERROR` returned by the Callee, in response to the `INTERRUPT`, is ignored (same as in call canceling when mode="killnowait"). So, it is not necessary for the Callee to send an `ERROR` message.
+Note: Any `ERROR` returned by the *Callee*, in response to the `INTERRUPT`, is ignored (same as in call canceling when mode="killnowait"). So, it is not necessary for the *Callee* to send an `ERROR` message.
 
 #### Callee
 
-A Callee that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
+A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
 
-A Callee that supports progressive results, but does not support call canceling is considered by the router to not support progressive results.
+A *Callee* that supports progressive results, but does not support call canceling is considered by the *Dealer* to not support progressive results.
 
 #### Feature Announcement
 
@@ -332,4 +332,4 @@ Support for this advanced feature MUST be announced by *Callers* (`role := "call
         HELLO.Details.roles.<role>.features.
              progressive_call_results|bool := true
 
-Additionally, _Callees_ and _Dealers_ MUST support Call Canceling, which is required for canceling progressive results if the original _Caller_ leaves the realm. If a _Callee_ supports Progressive Call Results, but not Call Canceling, then the _Dealer_ disregards the _Callees_ Progressive Call Results feature.
+Additionally, *Callees* and *Dealers* MUST support Call Canceling, which is required for canceling progressive results if the original *Caller* leaves the realm. If a *Callee* supports Progressive Call Results, but not Call Canceling, then the *Dealer* disregards the *Callees* Progressive Call Results feature.
