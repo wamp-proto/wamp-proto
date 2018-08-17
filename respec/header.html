@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>The Web Application Messaging Protocol</title>
+    <script
+            src='https://www.w3.org/Tools/respec/respec-w3c-common'
+            class='remove'></script>
+    <script class='remove'>
+        var respecConfig = {
+            specStatus       : "unofficial",
+            previousPublishDate: "2018-04-18",
+            previousMaturity: "LC",
+            alternateFormats : [{
+                label: "RFC (TXT format)",
+                uri  : "https://wamp-proto.org/static/rfc/draft-oberstet-hybi-crossbar-wamp.txt",
+            }, {
+                label: "RFC (HTML format)",
+                uri  : "https://wamp-proto.org/static/rfc/draft-oberstet-hybi-crossbar-wamp.html",
+            }],
+            edDraftURI       : "https://github.com/wamp-proto/wamp-proto", //TODO Change to GH-pages URI
+            editors          : [
+                { name: "Alexander Goedde" },
+                { name: "Amber Brown" },
+                { name: "Andrew Gillis" },
+                { name: "David Chappelle" },
+                { name: "Elvis Stansvik" },
+                { name: "Emile Cormier" },
+                { name: "Felipe Gasper" },
+                { name: "Johan 't Hart" },
+                { name: "Josh Soref" },
+                { name: "Konstantin Burkalev" },
+                { name: "Pahaz Blinov" },
+                { name: "Paolo Angioletti" },
+                { name: "Roberto Requena" },
+                { name: "Roger Erens" },
+                { name: "Christoph Herzog" },
+                { name: "Tobias Oberstein" },
+                { name: "Zhigang Wang" }
+            ],
+            format           : "markdown",
+            includePermalinks: true,
+            permalinkHide    : true,
+            permalinkSymbol  : "🔗",
+            lint             : false,
+            logos            : [{
+                src   : 'wamp_logo.svg',
+                href  : "/",
+                alt   : "WAMP Logo",
+                width : 150,
+                height: 150,
+                id    : 'wamp-logo',
+            }],
+            maxTocLevel: 3,
+            noLegacyStyle    : true,
+            noRecTrack       : true,
+            otherLinks       : [{
+                key : 'Repository',
+                data: [{
+                    value: 'Github Repository',
+                    href : 'https://github.com/wamp-proto/wamp-proto'
+                }, {
+                    value: 'File a bug',
+                    href : 'https://github.com/wamp-proto/wamp-proto/issues'
+                }, {
+                    value: 'Commit history',
+                    href : 'https://github.com/wamp-proto/wamp-proto/commits/master'
+                }, {
+                    value: 'Mailing list',
+                    href : 'https://groups.google.com/forum/#!forum/wampws'
+                }]
+            }, {
+                key : "Official sites",
+                data: [
+                    {
+                        value: 'Official site',
+                        href : 'https://wamp-proto.org/'
+                    },
+                    {
+                        value: 'Implementations list',
+                        href : 'https://wamp-proto.org/implementations/index.html'
+                    },
+                ]
+            }],
+            overrideCopyright: 'Copyright © 2018 IETF Trust and the persons identified as the document authors. All rights reserved.',
+            processVersion   : 2018,
+            shortName        : "wamp"
+        };
+
+    </script>
+    <style>
+        /* Original backgroup image is too intrusive */
+        html {
+            background: linear-gradient(to bottom, rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.5) 100%), url(https://www.w3.org/StyleSheets/TR/2016/logos/UD-watermark) !important;
+        }
+    </style>
+</head>
+<body>
+<section id='abstract'>
+    <p>
+        This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two
+        messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application
+        components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via
+        any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.
+    </p>
+</section>
+<section id='sotd'>
+    <p>
+        This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.
+    </p>
+    <p>
+        Internet-Drafts are working documents of the Internet Engineering Task Force (IETF). Note that other groups may
+        also distribute working documents as Internet-Drafts. The list of current Internet-Drafts is at
+        http://datatracker.ietf.org/drafts/current/.
+    </p>
+    <p>
+        Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted
+        by other documents at any time. It is inappropriate to use Internet-Drafts as reference material or to cite them
+        other than as "work in progress."
+    </p>
+    <p>
+        This Internet-Draft will expire on October 20, 2018.
+    </p>
+</section>
