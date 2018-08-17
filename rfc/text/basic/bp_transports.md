@@ -39,9 +39,7 @@ The diagram below illustrates the full transport connection and session lifecycl
 {align="left"}
         ,------.                                    ,------.
         | Peer |                                    | Peer |
-        `--+---'                                    `--+---'
-
-                          TCP established
+        `--+---'          TCP established           `--+---'
            |<----------------------------------------->|
            |                                           |
            |               TLS established             |
@@ -73,7 +71,6 @@ The diagram below illustrates the full transport connection and session lifecycl
            |                                           |
            |               TCP closed                  |
            |<----------------------------------------->|
-
         ,--+---.                                    ,--+---.
         | Peer |                                    | Peer |
         `------'                                    `------'

@@ -23,6 +23,7 @@ The message flow between Publishers, a Broker and Subscribers for publishing to 
         |Publisher|          |Broker|          |Subscriber|
         `---------'          `------'          `----------'
 
+
 ### PUBLISH
 
 When a Publisher requests to publish an event to some topic, it sends a `PUBLISH` message to a Broker:
@@ -156,3 +157,5 @@ where
 {align="left"}
         [36, 5512315355, 4429313566, {}, [], {"color": "orange",
             "sizes": [23, 42, 7]}]
+
+

@@ -38,11 +38,13 @@ The `INTERRUPT` message is used with the Call Canceling advanced feature. Upon r
 
 The following table list the message type code for **the OPTIONAL messages** defined in this part of the document and their direction between peer roles.
 
+{align="left"}
 | Cod | Message        |  Pub |  Brk | Subs |  Calr |  Dealr | Callee|
 |-----|----------------|------|------|------|-------|--------|-------|
 |  4  | `CHALLENGE`    | Rx   | Tx   | Rx   | Rx    | Tx     | Rx    |
 |  5  | `AUTHENTICATE` | Tx   | Rx   | Tx   | Tx    | Rx     | Tx    |
 | 49  | `CANCEL`       |      |      |      | Tx    | Rx     |       |
 | 69  | `INTERRUPT`    |      |      |      |       | Tx     | Rx    |
+
 
 > "Tx" ("Rx") means the message is sent (received) by a peer of the respective role.
