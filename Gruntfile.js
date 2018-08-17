@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg           : grunt.file.readJSON('package.json'),
         clean         : {
-            all: ['build/*', 'respec/index.html']
+            all: ['build/*', 'docs/index.html']
         },
         replace       : {
             spec: {
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     ]
                 },
                 files  : [
-                    { src: 'respec/footer.html', dest: 'build/footer.html' }
+                    { src: 'docs/footer.html', dest: 'build/footer.html' }
                 ]
             }
         },
@@ -99,24 +99,24 @@ module.exports = function (grunt) {
         concat        : {
             concatProd: {
                 src : [
-                    'respec/header.html',
+                    'docs/header.html',
                     'build/spec.md',
                     'build/footer.html'
                 ],
-                dest: 'respec/index.html'
+                dest: 'docs/index.html'
             },
             concatDev : {
                 src : [
-                    'respec/header.html',
+                    'docs/header.html',
                     'build/spec.md',
-                    'respec/footer.html'
+                    'docs/footer.html'
                 ],
-                dest: 'respec/index.html'
+                dest: 'docs/index.html'
             }
         },
         watch         : {
             sources: {
-                files  : ['Gruntfile.js', 'respec/header.html', 'respec/footer.html', 'rfc/**/*.md'],
+                files  : ['Gruntfile.js', 'docs/header.html', 'docs/footer.html', 'rfc/**/*.md'],
                 tasks  : ['clean', 'replace:spec', 'includereplace', 'copy', 'concat:concatDev'],
                 options: {
                     reload    : true,
