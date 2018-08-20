@@ -1,14 +1,14 @@
 {
-  "name": "wamp-proto-fork",
-  "version": "0.0.1",
+  "name": "wamp-proto",
+  "version": "1.0.0",
   "description": "The Web Application Messaging Protocol",
   "main": "Gruntfile.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node ./node_modules/.bin/grunt"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KSDaemon/WAMP.git"
+    "url": "git://github.com/wamp-proto/wamp-proto.git"
   },
   "keywords": [
     "wamp",
@@ -19,9 +19,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/KSDaemon/WAMP/issues"
+    "url": "https://github.com/wamp-proto/wamp-proto/issues"
   },
-  "homepage": "https://github.com/KSDaemon/WAMP#readme",
+  "homepage": "https://github.com/wamp-proto/wamp-proto",
   "devDependencies": {
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^1.1.0",
