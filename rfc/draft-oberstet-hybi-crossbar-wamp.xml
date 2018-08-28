@@ -561,9 +561,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <figure align="left"><artwork align="left">
     ,------.                                    ,------.
     | Peer |                                    | Peer |
-    `--+---'                                    `--+---'
-
-                      TCP established
+    `--+---'          TCP established           `--+---'
        |&lt;-----------------------------------------&gt;|
        |                                           |
        |               TLS established             |
@@ -595,7 +593,6 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
        |                                           |
        |               TCP closed                  |
        |&lt;-----------------------------------------&gt;|
-
     ,--+---.                                    ,--+---.
     | Peer |                                    | Peer |
     `------'                                    `------'
@@ -945,7 +942,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t>&quot;Tx&quot; indicates the message is sent by the respective role, and &quot;Rx&quot; indicates the message is received by the respective role.
 </t>
 </list></t>
-<texttable>
+<texttable align="left">
 <ttcol align="center">Cod</ttcol>
 <ttcol align="center">Message</ttcol>
 <ttcol align="center">Pub</ttcol>
@@ -1366,7 +1363,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 |   |               |(14) |              |                          
 |   +-------^-------+  |  +--------------+                          
 |           |----------+           |                                
-+----------------------------------+     
++----------------------------------+
 </artwork></figure>
 <texttable>
 <ttcol align="center">#</ttcol>
@@ -2664,7 +2661,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <section anchor="message-codes-and-direction-1" title="Message Codes and Direction">
 <t>The following table list the message type code for <spanx style="strong">the OPTIONAL messages</spanx> defined in this part of the document and their direction between peer roles.
 </t>
-<texttable>
+<texttable align="left">
 <ttcol align="center">Cod</ttcol>
 <ttcol align="center">Message</ttcol>
 <ttcol align="center">Pub</ttcol>
@@ -2696,7 +2693,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <c>sketch</c><c>There is a rough description of an itch to scratch, but the feature use case isn't clear, and there is no protocol proposal at all.</c>
 <c>alpha</c><c>The feature use case is still fuzzy and/or the feature definition is unclear, but there is at least a protocol level proposal.</c>
 <c>beta</c><c>The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete and change.</c>
-<c>stable</c><c>The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperatble implementations.</c>
+<c>stable</c><c>The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperable implementations.</c>
 </texttable>
 
 <section anchor="rpc-features" title="RPC Features">
@@ -2774,7 +2771,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t>The message flow for progressive results involves:
 </t>
 
-<figure align="center"><artwork align="center">
+<figure align="left"><artwork align="left">
  ,------.           ,------.          ,------.
  |Caller|           |Dealer|          |Callee|
  `--+---'           `--+---'          `--+---'
@@ -2908,7 +2905,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
         ["Y2011", 205]
     ]
 </artwork></figure>
-<t>...
+<t>and so on...
 </t>
 <t>An invocation MUST <spanx style="emph">always</spanx> end in either a <spanx style="emph">normal</spanx> <spanx style="verb">RESULT</spanx> or <spanx style="verb">ERROR</spanx> message being sent by the <spanx style="emph">Callee</spanx> and received by the <spanx style="emph">Dealer</spanx>.
 </t>
@@ -3034,8 +3031,59 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </t>
 </section>
 
+<section anchor="progressive-call-result-cancellation" title="Progressive Call Result Cancellation">
+<t>Upon receiving a <spanx style="verb">YIELD</spanx> message from a <spanx style="emph">Callee</spanx> with <spanx style="verb">YIELD.Options.progress == true</spanx> (for a call that is still ongoing), if the original <spanx style="emph">Caller</spanx> is no longer available (has left the realm), then the <spanx style="emph">Dealer</spanx> will send an <spanx style="verb">INTERRUPT</spanx> to the <spanx style="emph">Callee</spanx>.  The <spanx style="verb">INTERRUPT</spanx> will have <spanx style="verb">Options.mode</spanx> set to <spanx style="verb">"killnowait"</spanx> to indicate to the client that no response should be sent to the <spanx style="verb">INTERRUPT</spanx>. This <spanx style="verb">INTERRUPT</spanx> in only sent in response to a progressive <spanx style="verb">YIELD</spanx> (<spanx style="verb">Details.progress == true</spanx>), and is not sent in response to a normal or final <spanx style="verb">YIELD</spanx>.
+</t>
+
+<figure align="center"><artwork align="center">
+[INTERRUPT, INVOCATION.Request|id, Options|dict]
+</artwork></figure>
+<t>Options:
+</t>
+
+<figure align="center"><artwork align="center">
+INTERRUPT.Options.mode|string == "killnowait"
+</artwork></figure>
+<t>Progressive call result cancellation closes an important safety gap: In cases where progressive results are used to stream data to <spanx style="emph">Callers</spanx>, and network connectivity is unreliable, <spanx style="emph">Callers</spanx> my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up <spanx style="emph">Callees</spanx> streaming results to dead <spanx style="emph">Callers</spanx>. This can overload the router and further degrade network connectivity.
+</t>
+<t>The message flow for progressive results cancellation involves:
+</t>
+
+<figure align="left"><artwork align="left">
+ ,------.           ,------.          ,------.
+ |Caller|           |Dealer|          |Callee|
+ `--+---'           `--+---'          `--+---'
+    |       CALL       |                 |
+    | -----------------&gt;                 |
+    |                  |                 |
+    |                  |    INVOCATION   |
+    |                  | ----------------&gt;
+    |                  |                 |
+    |                  | YIELD (progress)|
+    |                  | &lt;----------------
+    |                  |                 |
+    | RESULT (progress)|                 |
+    | &lt;-----------------                 |
+ ,--+---.              |                 |
+ |Caller|              |                 |
+ `------'              | YIELD (progress)|
+  (gone)               | &lt;----------------
+                       |                 |
+                       |    INTERRUPT    |    
+                       | ----------------&gt;    
+                       |                 |    
+                    ,--+---.          ,--+---.
+                    |Dealer|          |Callee|
+                    `------'          `------'
+</artwork></figure>
+<t>Note: Any <spanx style="verb">ERROR</spanx> returned by the <spanx style="emph">Callee</spanx>, in response to the <spanx style="verb">INTERRUPT</spanx>, is ignored (same as in call canceling when mode=&quot;killnowait&quot;). So, it is not necessary for the <spanx style="emph">Callee</spanx> to send an <spanx style="verb">ERROR</spanx> message.
+</t>
+</section>
+
 <section anchor="callee" title="Callee">
-<t>A Callee that does not support progressive results SHOULD ignore any <spanx style="verb">INVOCATION.Details.receive_progress</spanx> flag.
+<t>A <spanx style="emph">Callee</spanx> that does not support progressive results SHOULD ignore any <spanx style="verb">INVOCATION.Details.receive_progress</spanx> flag.
+</t>
+<t>A <spanx style="emph">Callee</spanx> that supports progressive results, but does not support call canceling is considered by the <spanx style="emph">Dealer</spanx> to not support progressive results.
 </t>
 </section>
 
@@ -3047,6 +3095,8 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
     HELLO.Details.roles.&lt;role&gt;.features.
          progressive_call_results|bool := true
 </artwork></figure>
+<t>Additionally, <spanx style="emph">Callees</spanx> and <spanx style="emph">Dealers</spanx> MUST support Call Canceling, which is required for canceling progressive results if the original <spanx style="emph">Caller</spanx> leaves the realm. If a <spanx style="emph">Callee</spanx> supports Progressive Call Results, but not Call Canceling, then the <spanx style="emph">Dealer</spanx> disregards the <spanx style="emph">Callees</spanx> Progressive Call Results feature.
+</t>
 </section>
 </section>
 
@@ -3112,13 +3162,13 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="verb">ERROR</spanx></t>
 </list>
 </t>
-<t>A call may be canceled at the <spanx style="emph">Callee</spanx> or at the <spanx style="emph">Dealer</spanx> side. Cancelation behaves differently depending on the mode:
+<t>A call may be canceled at the <spanx style="emph">Callee</spanx> or at the <spanx style="emph">Dealer</spanx> side. Cancellation behaves differently depending on the mode:
 </t>
 <t>
 <list style="symbols">
 <t><spanx style="strong">skip</spanx>: The pending call is canceled and <spanx style="verb">ERROR</spanx> is sent immediately back to the caller. No <spanx style="verb">INTERRUPT</spanx> is sent to the callee and the result is discarded when received.</t>
 <t><spanx style="strong">kill</spanx>: <spanx style="verb">INTERRUPT</spanx> is sent to the callee, but <spanx style="verb">ERROR</spanx> is not returned to the caller until after the callee has responded to the canceled call. In this case the caller may receive <spanx style="verb">RESULT</spanx> or <spanx style="verb">ERROR</spanx> depending whether the callee finishes processing the invocation or the interrupt first.</t>
-<t><spanx style="strong">killnowait</spanx>: The pending call is canceled and <spanx style="verb">ERROR</spanx> is send immediately back to the caller. <spanx style="verb">INTERRUPT</spanx> is sent to the callee and any response to the invocation or interrupt from the callee is discarded when received.</t>
+<t><spanx style="strong">killnowait</spanx>: The pending call is canceled and <spanx style="verb">ERROR</spanx> is sent immediately back to the caller. <spanx style="verb">INTERRUPT</spanx> is sent to the callee and any response to the invocation or interrupt from the callee is discarded when received.</t>
 </list>
 </t>
 <t>If the callee does not support call canceling, then behavior is <spanx style="strong">skip</spanx>.
@@ -3200,9 +3250,6 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
        |                 |    INTERRUPT    |    
        |                 | ----------------&gt;    
        |                 |                 |    
-       |                 |      ERROR      |    
-       |                 | &lt;----------------    
-       |                 |                 |    
     ,--+---.          ,--+---.          ,--+---.
     |Caller|          |Dealer|          |Callee|
     `------'          `------'          `------'
@@ -3225,6 +3272,8 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <figure align="left"><artwork align="left">
     CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
 </artwork></figure>
+<t>Note: After the <spanx style="emph">Dealer</spanx> sends an <spanx style="verb">INTERRUPT</spanx> when mode=&quot;killnowait&quot;, any responses from the <spanx style="emph">Callee</spanx> are ignored.  This means that it is not necessary for the <spanx style="emph">Callee</spanx> to respond with an <spanx style="verb">ERROR</spanx> message, when mode=&quot;killnowait&quot;, since the <spanx style="emph">Dealer</spanx> ignores it.
+</t>
 </section>
 
 <section anchor="feature-announcement-2" title="Feature Announcement">
@@ -3301,7 +3350,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 
 <section anchor="call-trust-levels" title="Call Trust Levels">
 
-<section anchor="feature-defintion" title="Feature Defintion">
+<section anchor="feature-definition-5" title="Feature Definition">
 <t>A <spanx style="emph">Dealer</spanx> may be configured to automatically assign <spanx style="emph">trust levels</spanx> to calls issued by <spanx style="emph">Callers</spanx> according to the <spanx style="emph">Dealer</spanx> configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) <spanx style="emph">Caller</spanx>.
 </t>
 <t>A <spanx style="emph">Dealer</spanx> supporting trust level will provide
@@ -3334,7 +3383,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 
 <section anchor="registration-meta-api" title="Registration Meta API">
 
-<section anchor="feature-definition-5" title="Feature Definition">
+<section anchor="feature-definition-6" title="Feature Definition">
 
 <section anchor="introduction-1" title="Introduction">
 <t><spanx style="strong">Registration Meta Events</spanx> are fired when registrations are first created, when <spanx style="emph">Callees</spanx> are attached (removed) to (from) a registration, and when registrations are finally destroyed.
@@ -3566,7 +3615,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </t>
 <t>
 <list style="symbols">
-<t><spanx style="verb">registration|id</spanx>: The ID of the registration to get calles for.</t>
+<t><spanx style="verb">registration|id</spanx>: The ID of the registration to get callees for.</t>
 </list>
 </t>
 <t><spanx style="strong">Results</spanx>
@@ -3653,7 +3702,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 
 <section anchor="patternbased-registrations" title="Pattern-based Registrations">
 
-<section anchor="feature-definition-6" title="Feature Definition">
+<section anchor="feature-definition-7" title="Feature Definition">
 
 <section anchor="introduction-2" title="Introduction">
 <t>By default, <spanx style="emph">Callees</spanx> register procedures with <spanx style="strong">exact matching policy</spanx>. That is a call will only be routed to a <spanx style="emph">Callee</spanx> by the <spanx style="emph">Dealer</spanx> if the procedure called (<spanx style="verb">CALL.Procedure</spanx>) <spanx style="emph">exactly</spanx> matches the endpoint registered (<spanx style="verb">REGISTER.Procedure</spanx>).
@@ -3859,7 +3908,7 @@ Call request RPC URI: 'a2.b2.c2.d2.e2' →
 <t>Feature status: <spanx style="strong">alpha</spanx>
 </t>
 
-<section anchor="feature-definition-7" title="Feature Definition">
+<section anchor="feature-definition-8" title="Feature Definition">
 <t>As a default, only a single <spanx style="strong">Callee</spanx> may register a procedure for an URI.
 </t>
 <t>There are use cases where more flexibility is required. As an example, for an application component with a high computing load, several instances may run, and load balancing of calls across these may be desired. As another example, in an application a second or third component providing a procedure may run, which are only to be called in case the primary component is no longer reachable (hot standby).
@@ -3887,7 +3936,7 @@ Call request RPC URI: 'a2.b2.c2.d2.e2' →
 </t>
 <t>With 'single', the <spanx style="strong">Dealer</spanx> MUST fail all subsequent attempts to register a procedure for the URI while the registration remains in existence.
 </t>
-<t>With the other values, the <spanx style="strong">Dealer</spanx> MUST fail all subsequent attempst to register a procedure for the URI where the value for this option does not match that of the initial registration.
+<t>With the other values, the <spanx style="strong">Dealer</spanx> MUST fail all subsequent attempts to register a procedure for the URI where the value for this option does not match that of the initial registration.
 </t>
 
 <section anchor="load-balancing" title="Load Balancing">
@@ -3920,7 +3969,7 @@ Call request RPC URI: 'a2.b2.c2.d2.e2' →
 <t>Feature status: <spanx style="strong">sketch</spanx>
 </t>
 
-<section anchor="feature-definition-8" title="Feature Definition">
+<section anchor="feature-definition-9" title="Feature Definition">
 <t><spanx style="strong">Sharded Registrations</spanx> are intended to allow calling a procedure which is offered by a sharded database, by routing the call to a single shard.
 </t>
 </section>
@@ -3946,7 +3995,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="registration-revocation" title="Registration Revocation">
 
-<section anchor="feature-definition-9" title="Feature Definition">
+<section anchor="feature-definition-10" title="Feature Definition">
 <t>Actively and forcefully revoke a previously granted registration from a session.
 </t>
 </section>
@@ -4027,7 +4076,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <figure align="left"><artwork align="left">
     wamp.reflect.on_define
 </artwork></figure>
-<t>A topic or procedure has been unfined from reflection:
+<t>A topic or procedure has been undefined from reflection:
 </t>
 
 <figure align="left"><artwork align="left">
@@ -4082,7 +4131,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 </section>
 
-<section anchor="feature-definition-10" title="Feature Definition">
+<section anchor="feature-definition-11" title="Feature Definition">
 <t>A <spanx style="emph">Publisher</spanx> may restrict the actual receivers of an event from the set of <spanx style="emph">Subscribers</spanx> through the use of
 </t>
 <t>
@@ -4103,7 +4152,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </t>
 <t><spanx style="verb">PUBLISH.Options.exclude</spanx> is a list of integers with WAMP <spanx style="verb">sessionids</spanx> providing an explicit list of (potential) <spanx style="emph">Subscribers</spanx> that won't receive a published event, even though they may be subscribed. In other words, <spanx style="verb">PUBLISH.Options.exclude</spanx> is a <spanx style="strong">blacklist</spanx> of (potential) <spanx style="emph">Subscribers</spanx>.
 </t>
-<t><spanx style="verb">PUBLISH.Options.eligible</spanx> is a list of integeres with WAMP WAMP <spanx style="verb">sessionids</spanx> providing an explicit list of (potential) <spanx style="emph">Subscribers</spanx> that are allowed to receive a published event. In other words, <spanx style="verb">PUBLISH.Options.eligible</spanx> is a <spanx style="strong">whitelist</spanx> of (potential) <spanx style="emph">Subscribers</spanx>.
+<t><spanx style="verb">PUBLISH.Options.eligible</spanx> is a list of integers with WAMP WAMP <spanx style="verb">sessionids</spanx> providing an explicit list of (potential) <spanx style="emph">Subscribers</spanx> that are allowed to receive a published event. In other words, <spanx style="verb">PUBLISH.Options.eligible</spanx> is a <spanx style="strong">whitelist</spanx> of (potential) <spanx style="emph">Subscribers</spanx>.
 </t>
 <t>The <spanx style="verb">exclude_authid</spanx>, <spanx style="verb">exclude_authrole</spanx>, <spanx style="verb">eligible_authid</spanx> and <spanx style="verb">eligible_authrole</spanx> options work similar, but not on the basis of WAMP <spanx style="verb">sessionid</spanx>, but <spanx style="verb">authid</spanx> and <spanx style="verb">authrole</spanx>.
 </t>
@@ -4203,7 +4252,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="publisher-exclusion" title="Publisher Exclusion">
 
-<section anchor="feature-definition-11" title="Feature Definition">
+<section anchor="feature-definition-12" title="Feature Definition">
 <t>By default, a <spanx style="emph">Publisher</spanx> of an event will <spanx style="strong">not</spanx> itself receive an event published, even when subscribed to the <spanx style="verb">Topic</spanx> the <spanx style="emph">Publisher</spanx> is publishing to. This behavior can be overridden using this feature.
 </t>
 <t>To override the exclusion of a publisher from its own publication, the <spanx style="verb">PUBLISH</spanx> message must include the following option:
@@ -4245,7 +4294,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="publisher-identification" title="Publisher Identification">
 
-<section anchor="feature-definition-12" title="Feature Definition">
+<section anchor="feature-definition-13" title="Feature Definition">
 <t>A <spanx style="emph">Publisher</spanx> may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting
 </t>
 
@@ -4293,7 +4342,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="publication-trust-levels" title="Publication Trust Levels">
 
-<section anchor="feature-definition-13" title="Feature Definition">
+<section anchor="feature-definition-14" title="Feature Definition">
 <t>A <spanx style="emph">Broker</spanx> may be configured to automatically assign <spanx style="emph">trust levels</spanx> to events published by <spanx style="emph">Publishers</spanx> according to the <spanx style="emph">Broker</spanx> configuration on a per-topic basis and/or depending on the application defined role of the (authenticated) <spanx style="emph">Publisher</spanx>.
 </t>
 <t>A <spanx style="emph">Broker</spanx> supporting trust level will provide
@@ -4615,7 +4664,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="pattern-based-subscriptions" title="Pattern-based Subscriptions">
 
-<section anchor="introdution" title="Introdution">
+<section anchor="introduction-4" title="Introduction">
 <t>By default, <spanx style="emph">Subscribers</spanx> subscribe to topics with <spanx style="strong">exact matching policy</spanx>. That is an event will only be dispatched to a <spanx style="emph">Subscriber</spanx> by the <spanx style="emph">Broker</spanx> if the topic published to (<spanx style="verb">PUBLISH.Topic</spanx>) <spanx style="emph">exactly</spanx> matches the topic subscribed to (<spanx style="verb">SUBSCRIBE.Topic</spanx>).
 </t>
 <t>A <spanx style="emph">Subscriber</spanx> might want to subscribe to topics based on a <spanx style="emph">pattern</spanx>. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the <spanx style="emph">Subscriber</spanx> is not aware of at the time of subscription, or which do not yet exist at this time.
@@ -4803,7 +4852,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="event-history" title="Event History">
 
-<section anchor="feature-definition-14" title="Feature Definition">
+<section anchor="feature-definition-15" title="Feature Definition">
 <t>Instead of complex QoS for message delivery, a <spanx style="emph">Broker</spanx> may provide <spanx style="emph">message history</spanx>. A <spanx style="emph">Subscriber</spanx> is responsible to handle overlaps (duplicates) when it wants &quot;exactly-once&quot; message processing across restarts.
 </t>
 <t>The <spanx style="emph">Broker</spanx> may allow for configuration on a per-topic basis.
@@ -4883,7 +4932,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="registration-revocation-1" title="Registration Revocation">
 
-<section anchor="feature-definition-15" title="Feature Definition">
+<section anchor="feature-definition-16" title="Feature Definition">
 <t>Actively and forcefully revoke a previously granted subscription from a session.
 </t>
 </section>
@@ -4902,7 +4951,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 
 <section anchor="testament" title="Testament">
 
-<section anchor="feature-definition-16" title="Feature Definition">
+<section anchor="feature-definition-17" title="Feature Definition">
 <t>When a WAMP client disconnects, or the WAMP session is destroyed, it may want to notify other subscribers or publish some fixed data.
 Since a client may disconnect uncleanly, this can't be done reliably by them.
 A <spanx style="emph">Testament</spanx>, however, set on the server, can be reliably sent by the <spanx style="emph">Broker</spanx> once either the WAMP session has detached or the client connection has been lost, and allows this functionality.
@@ -4917,8 +4966,8 @@ It can be triggered when a Session is either detached (the client has disconnect
 </t>
 <t>
 <list style="symbols">
-<t><spanx style="verb">wamp.session.add_testament</spanx> to add a Testament which will be published on a particular topic when the Session is detatched or destroyed.</t>
-<t><spanx style="verb">wamp.session.flush_testaments</spanx> to remove the Testaments for that Session, either for when it is detatched or destroyed.</t>
+<t><spanx style="verb">wamp.session.add_testament</spanx> to add a Testament which will be published on a particular topic when the Session is detached or destroyed.</t>
+<t><spanx style="verb">wamp.session.flush_testaments</spanx> to remove the Testaments for that Session, either for when it is detached or destroyed.</t>
 </list>
 </t>
 
@@ -4939,7 +4988,7 @@ It can be triggered when a Session is either detached (the client has disconnect
 <t>
 <list style="numbers">
 <t><spanx style="verb">publish_options|dict</spanx> - options for the event when it is published -- see <spanx style="verb">Publish.Options</spanx>. Not all options may be honoured (for example, <spanx style="verb">acknowledge</spanx>). By default, there are no options.</t>
-<t><spanx style="verb">scope|string</spanx> - When the testament should be published. Valid values are <spanx style="verb">detatched</spanx> (when the WAMP session is detatched, for example, when using Event Retention) or <spanx style="verb">destroyed</spanx> (when the WAMP session is finalised and destroyed on the Broker). Default MUST be <spanx style="verb">destroyed</spanx>.</t>
+<t><spanx style="verb">scope|string</spanx> - When the testament should be published. Valid values are <spanx style="verb">detached</spanx> (when the WAMP session is detached, for example, when using Event Retention) or <spanx style="verb">destroyed</spanx> (when the WAMP session is finalized and destroyed on the Broker). Default MUST be <spanx style="verb">destroyed</spanx>.</t>
 </list>
 </t>
 <t><spanx style="verb">wamp.session.add_testament</spanx> does not return a value.
@@ -4970,23 +5019,23 @@ For example, a client may call <spanx style="verb">add_testament</spanx> (this e
 yield self.call('wamp.session.add_testament',
                 'com.myapp.mytopic', ['Seeya!'], {'my_name': 'app1'})
 </artwork></figure>
-<t>The <spanx style="emph">Router</spanx> will then store this information on the WAMP Session, either in a <spanx style="verb">detatched</spanx> or <spanx style="verb">destroyed</spanx> bucket, in the order they were added.
+<t>The <spanx style="emph">Router</spanx> will then store this information on the WAMP Session, either in a <spanx style="verb">detached</spanx> or <spanx style="verb">destroyed</spanx> bucket, in the order they were added.
 A client MUST be able to set multiple testaments per-scope.
 If the <spanx style="emph">Router</spanx> does not support Session Resumption (therefore removing the distinction between a detached and destroyed session), it MUST still use these two separate buckets to allow <spanx style="verb">wamp.session.flush_testaments</spanx> to work.
 </t>
-<t>When a <spanx style="emph">Session</spanx> is <spanx style="emph">detatched</spanx>, the <spanx style="emph">Router</spanx> will inspect it for any Testaments in the <spanx style="verb">detached</spanx> scope, and publish them in the order that the Router recieved them, on the specified topic, with the specified arguments, keyword arguments, and publish options.
+<t>When a <spanx style="emph">Session</spanx> is <spanx style="emph">detached</spanx>, the <spanx style="emph">Router</spanx> will inspect it for any Testaments in the <spanx style="verb">detached</spanx> scope, and publish them in the order that the Router received them, on the specified topic, with the specified arguments, keyword arguments, and publish options.
 The <spanx style="emph">Router</spanx> MAY ignore publish options that do not make sense for a Testament (for example, acknowledged publishes).
 </t>
-<t>When a <spanx style="emph">Session</spanx> is going to be <spanx style="emph">destroyed</spanx>, the <spanx style="emph">Router</spanx> will inspect it for any Testaments in the <spanx style="verb">destroyed</spanx> scope, and publish them in the same way as it would for the <spanx style="verb">detached</spanx> scope, in the order that they were recieved.
+<t>When a <spanx style="emph">Session</spanx> is going to be <spanx style="emph">destroyed</spanx>, the <spanx style="emph">Router</spanx> will inspect it for any Testaments in the <spanx style="verb">destroyed</spanx> scope, and publish them in the same way as it would for the <spanx style="verb">detached</spanx> scope, in the order that they were received.
 </t>
-<t>A <spanx style="emph">Router</spanx> that does not allow Session Resumption MUST send <spanx style="verb">detatched</spanx>-scope Testaments before <spanx style="verb">destroyed</spanx>-scope Testaments.
+<t>A <spanx style="emph">Router</spanx> that does not allow Session Resumption MUST send <spanx style="verb">detached</spanx>-scope Testaments before <spanx style="verb">destroyed</spanx>-scope Testaments.
 </t>
 <t>A <spanx style="emph">Client</spanx> can also clear testaments if the information is no longer relevant (for example, it is shutting down completely cleanly).
 For example, a client may call <spanx style="verb">wamp.session.flush_testaments</spanx>:
 </t>
 
 <figure align="center"><artwork align="center">
-yield self.call('wamp.session.flush_testaments', scope='detatched')
+yield self.call('wamp.session.flush_testaments', scope='detached')
 yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </artwork></figure>
 <t>The <spanx style="emph">Router</spanx> will then flush all Testaments stored for the given scope.
@@ -5009,7 +5058,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 
 <section anchor="session-meta-api" title="Session Meta API">
 
-<section anchor="introduction-4" title="Introduction">
+<section anchor="introduction-5" title="Introduction">
 <t>WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via <spanx style="strong">Session Meta Events</spanx>. It also allows retrieving information about currently connected sessions via <spanx style="strong">Session Meta Procedures</spanx>.
 </t>
 <t>Meta events are created by the router itself. This means that the events, as well as the data received when calling a meta procedure, can be accorded the same trust level as the router.
@@ -5052,26 +5101,37 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </section>
 
 <section anchor="wampsessiononleave" title="wamp.session.on_leave">
-<t>Fired when a session leaves a realm on the router or is disconnected. The event payload consists of a single positional argument <spanx style="verb">session|id</spanx> with the session ID of the session that left.
+<t>Fired when a session leaves a realm on the router or is disconnected. The event payload consists of three positional arguments:
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">session|id</spanx> - The session ID of the session that left</t>
+<t><spanx style="verb">authid</spanx>|string` - The authentication ID of the session that left</t>
+<t><spanx style="verb">authrole|string</spanx> - The authentication role of the session that left</t>
+</list>
 </t>
 </section>
 </section>
 
 <section anchor="session-meta-procedures" title="Session Meta Procedures">
-<t>A client can actively retrieve information about sessions via the following meta-procedures:
+<t>A client can actively retrieve information about sessions, or forcefully close sessions, via the following meta-procedures:
 </t>
 <t>
 <list style="symbols">
 <t><spanx style="verb">wamp.session.count</spanx>: Obtains the number of sessions currently attached to the realm.</t>
 <t><spanx style="verb">wamp.session.list</spanx>: Retrieves a list of the session IDs for all sessions currently attached to the realm.</t>
 <t><spanx style="verb">wamp.session.get</spanx>: Retrieves information on a specific session.</t>
+<t><spanx style="verb">wamp.session.kill</spanx>: Kill a single session identified by session ID.</t>
+<t><spanx style="verb">wamp.session.kill_by_authid</spanx>: Kill all currently connected sessions that have the specified authid.</t>
+<t><spanx style="verb">wamp.session.kill_by_authrole</spanx>: Kill all currently connected sessions that have the specified authrole.</t>
+<t><spanx style="verb">wamp.session.kill_all</spanx>: Kill all currently connected sessions in the caller's realm.</t>
 </list>
 </t>
 <t>Session meta procedures MUST be registered by the <spanx style="emph">Router</spanx> on the same realm as the WAMP session about which information is retrieved.
 </t>
 
 <section anchor="wampsessioncount" title="wamp.session.count">
-<t>Obtains the number of sessions currently attached to the realm:
+<t>Obtains the number of sessions currently attached to the realm.
 </t>
 <t><spanx style="strong">Positional arguments</spanx>
 </t>
@@ -5142,6 +5202,145 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>
 <list style="symbols">
 <t><spanx style="verb">wamp.error.no_such_session</spanx> - No session with the given ID exists on the router.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsessionkill" title="wamp.session.kill">
+<t>Kill a single session identified by session ID.
+</t>
+<t>The caller of this meta procedure may only specify session IDs other than its own session.  Specifying the caller's own session will result in a <spanx style="verb">wamp.error.no_such_session</spanx> since no <spanx style="emph">other</spanx> session with that ID exists.
+</t>
+<t>The keyword arguments are optional, and if not provided the reason defaults to <spanx style="verb">wamp.close.normal</spanx> and the message is omitted from the <spanx style="verb">GOODBYE</spanx> sent to the closed session.
+</t>
+<t><spanx style="strong">Positional arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">session|id</spanx> - The session ID of the session to close.</t>
+</list>
+</t>
+<t><spanx style="strong">Keyword arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">reason|uri</spanx> - reason for closing session, sent to client in <spanx style="verb">GOODBYE.Reason</spanx>.</t>
+<t><spanx style="verb">message|string</spanx> - additional information sent to client in <spanx style="verb">GOODBYE.Details</spanx> under the key &quot;message&quot;.</t>
+</list>
+</t>
+<t><spanx style="strong">Errors</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.no_such_session</spanx> - No session with the given ID exists on the router.</t>
+<t><spanx style="verb">wamp.error.invalid_uri</spanx> - A <spanx style="verb">reason</spanx> keyword argument has a value that is not a valid non-empty URI.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsessionkillbyauthid" title="wamp.session.kill_by_authid">
+<t>Kill all currently connected sessions that have the specified <spanx style="verb">authid</spanx>.
+</t>
+<t>If the caller's own session has the specified <spanx style="verb">authid</spanx>, the caller's session is excluded from the closed sessions.
+</t>
+<t>The keyword arguments are optional, and if not provided the reason defaults to <spanx style="verb">wamp.close.normal</spanx> and the message is omitted from the <spanx style="verb">GOODBYE</spanx> sent to the closed session.
+</t>
+<t><spanx style="strong">Positional arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">authid|string</spanx> - The authentication ID identifying sessions to close.</t>
+</list>
+</t>
+<t><spanx style="strong">Keyword arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">reason|uri</spanx> - reason for closing sessions, sent to clients in <spanx style="verb">GOODBYE.Reason</spanx></t>
+<t><spanx style="verb">message|string</spanx> - additional information sent to clients in <spanx style="verb">GOODBYE.Details</spanx> under the key &quot;message&quot;.</t>
+</list>
+</t>
+<t><spanx style="strong">Positional results</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">count|int</spanx> - The number of sessions closed by this meta procedure.</t>
+</list>
+</t>
+<t><spanx style="strong">Errors</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.invalid_uri</spanx> - A <spanx style="verb">reason</spanx> keyword argument has a value that is not a valid non-empty URI.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsessionkillbyauthrole" title="wamp.session.kill_by_authrole">
+<t>Kill all currently connected sessions that have the specified <spanx style="verb">authrole</spanx>.
+</t>
+<t>If the caller's own session has the specified <spanx style="verb">authrole</spanx>, the caller's session is excluded from the closed sessions.
+</t>
+<t>The keyword arguments are optional, and if not provided the reason defaults to <spanx style="verb">wamp.close.normal</spanx> and the message is omitted from the <spanx style="verb">GOODBYE</spanx> sent to the closed session.
+</t>
+<t><spanx style="strong">Positional arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">authrole|string</spanx> - The authentication role identifying sessions to close.</t>
+</list>
+</t>
+<t><spanx style="strong">Keyword arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">reason|uri</spanx> - reason for closing sessions, sent to clients in <spanx style="verb">GOODBYE.Reason</spanx></t>
+<t><spanx style="verb">message|string</spanx> - additional information sent to clients in <spanx style="verb">GOODBYE.Details</spanx> under the key &quot;message&quot;.</t>
+</list>
+</t>
+<t><spanx style="strong">Positional results</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">count|int</spanx> - The number of sessions closed by this meta procedure.</t>
+</list>
+</t>
+<t><spanx style="strong">Errors</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.invalid_uri</spanx> - A <spanx style="verb">reason</spanx> keyword argument has a value that is not a valid non-empty URI.</t>
+</list>
+</t>
+</section>
+
+<section anchor="wampsessionkillall" title="wamp.session.kill_all">
+<t>Kill all currently connected sessions in the caller's realm.
+</t>
+<t>The caller's own session is excluded from the closed sessions.  Closing all sessions in the realm will not generate session meta events or testament events, since no subscribers would remain to receive these events.
+</t>
+<t>The keyword arguments are optional, and if not provided the reason defaults to <spanx style="verb">wamp.close.normal</spanx> and the message is omitted from the <spanx style="verb">GOODBYE</spanx> sent to the closed session.
+</t>
+<t><spanx style="strong">Keyword arguments</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">reason|uri</spanx> - reason for closing sessions, sent to clients in <spanx style="verb">GOODBYE.Reason</spanx></t>
+<t><spanx style="verb">message|string</spanx> - additional information sent to clients in <spanx style="verb">GOODBYE.Details</spanx> under the key &quot;message&quot;.</t>
+</list>
+</t>
+<t><spanx style="strong">Positional results</spanx>
+</t>
+<t>
+<list style="numbers">
+<t><spanx style="verb">count|int</spanx> - The number of sessions closed by this meta procedure.</t>
+</list>
+</t>
+<t><spanx style="strong">Errors</spanx>
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">wamp.error.invalid_uri</spanx> - A <spanx style="verb">reason</spanx> keyword argument has a value that is not a valid non-empty URI.</t>
 </list>
 </t>
 </section>
@@ -5391,7 +5590,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </t>
 <t>In this case, the secret is actually shared between the WAMP server who wants to authenticate clients using WAMP-CRA and the third party server, who shares a secret with the WAMP server.
 </t>
-<t>This scenario is also the reason the challenge sent with WAMP-CRA is not simply a random value, but a JSON serialized object containing sufficient authentication information for the thrid party to check.
+<t>This scenario is also the reason the challenge sent with WAMP-CRA is not simply a random value, but a JSON serialized object containing sufficient authentication information for the third party to check.
 </t>
 </section>
 
@@ -5502,9 +5701,9 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </t>
 <t>In the event that the server's authentication database is stolen, and the attacker either eavesdrops on one authentication exchange or impersonates a server, the attacker gains the ability to impersonate that particular user on that server. If the same salt is used on other servers, the attacker would gain the ability to impersonate that user on all servers using the same salt. That's why it's important to use a per-user random salt.
 </t>
-<t>An evesdropper that captures a user anthentication exchange has enough information to mount an offline, brute-force dictionary attack for that particular user. If passwords are sufficiently strong, the cost/time needed to crack a password becomes prohibitive.
+<t>An eavesdropper that captures a user authentication exchange has enough information to mount an offline, brute-force dictionary attack for that particular user. If passwords are sufficiently strong, the cost/time needed to crack a password becomes prohibitive.
 </t>
-<t>Note that when HTML/Javascript assets are served to a web browser, WAMP-SCRAM does not safeguard against a man-in-the-middle tampering with those assets. Those assets could be tampered with in a way that captures the user's password and sends it to the attacker.
+<t>Note that when HTML/JavaScript assets are served to a web browser, WAMP-SCRAM does not safeguard against a man-in-the-middle tampering with those assets. Those assets could be tampered with in a way that captures the user's password and sends it to the attacker.
 </t>
 <t>In light of the above security concerns, a secure TLS transport is therefore advised to prevent such attacks. The channel binding feature of SCRAM can be used to ensure that the TLS endpoints are the same between client and router.
 </t>
@@ -5552,7 +5751,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <section anchor="usernamepassword-string-normalization" title="Username/Password String Normalization">
 <t>Username and password strings SHALL be normalized according to the <spanx style="emph">SASLprep</spanx> profile described in <eref target="https://tools.ietf.org/html/rfc4013">RFC4013</eref>, using the <spanx style="emph">stringprep</spanx> algorithm described in <eref target="https://tools.ietf.org/html/rfc3454">RFC3454</eref>.
 </t>
-<t>While SASLprep preserves the case of usernames, the server MAY choose to perform case insensitve comparisons when searching for a username in the authentication database.
+<t>While SASLprep preserves the case of usernames, the server MAY choose to perform case insensitive comparisons when searching for a username in the authentication database.
 </t>
 </section>
 </section>
@@ -5568,14 +5767,14 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </t>
 
 <section anchor="the-tlsunique-channel-binding-type" title="The tls-unique Channel Binding Type">
-<t>The <spanx style="verb">tls-unique</spanx> channel binding type allows the WAMP layer to establish that the other peer is authenticating over the same, unique TLS connection. The channel binding data for this type corresponds to the bytes of the first TLS Finished message, as described in <eref target="https://tools.ietf.org/html/rfc5929#section-3">RFC5929, section 3</eref>. <eref target="https://tools.ietf.org/html/rfc5929#section-10.2">RFC5929 section 10.2</eref> addresses the concern of disclosing this data over the TLS channel (in short, the TLS Finished message would already be visible to evesdroppers).
+<t>The <spanx style="verb">tls-unique</spanx> channel binding type allows the WAMP layer to establish that the other peer is authenticating over the same, unique TLS connection. The channel binding data for this type corresponds to the bytes of the first TLS Finished message, as described in <eref target="https://tools.ietf.org/html/rfc5929#section-3">RFC5929, section 3</eref>. <eref target="https://tools.ietf.org/html/rfc5929#section-10.2">RFC5929 section 10.2</eref> addresses the concern of disclosing this data over the TLS channel (in short, the TLS Finished message would already be visible to eavesdroppers).
 </t>
 <t>To safeguard against the <spanx style="emph">triple handshake attack</spanx> described in <eref target="https://tools.ietf.org/html/rfc7627">RFC7627</eref>, this channel binding type MUST be used over a TLS channel that uses the <spanx style="emph">extended master secret</spanx> extension, or over a TLS channel where session resumption is not permitted.
 </t>
 </section>
 
 <section anchor="the-tlsserverendpoint-channel-binding-type" title="The tls-server-end-point Channel Binding Type">
-<t>The <spanx style="verb">tls-server-end-point</spanx> channel binding type allows the WAMP layer to establish that the other peer is authenticating over a TLS connection to a server having been issued a Public Key Infrastructure Certificate. The channel binding data for this type is a hash of the TLS server's certificate, computed as described in <eref target="https://tools.ietf.org/html/rfc5929#section-4.1">RFC5929, section 4.1</eref>. The certificate is hashed to accomodate memory-constrained implementations.
+<t>The <spanx style="verb">tls-server-end-point</spanx> channel binding type allows the WAMP layer to establish that the other peer is authenticating over a TLS connection to a server having been issued a Public Key Infrastructure Certificate. The channel binding data for this type is a hash of the TLS server's certificate, computed as described in <eref target="https://tools.ietf.org/html/rfc5929#section-4.1">RFC5929, section 4.1</eref>. The certificate is hashed to accommodate memory-constrained implementations.
 </t>
 </section>
 </section>
@@ -5585,7 +5784,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </t>
 <t>The mapping of RFC5802 messages to WAMP messages is as follows:
 </t>
-<texttable>
+<texttable align="left">
 <ttcol align="center">SCRAM Message</ttcol>
 <ttcol align="center">WAMP Message</ttcol>
 
@@ -5654,7 +5853,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </t>
 <t>
 <list style="numbers">
-<t><spanx style="verb">nonce|string</spanx>: A server-generatated nonce that is appended to the client-generated nonce sent in the previous <spanx style="verb">HELLO</spanx> message. See <xref target="nonces"/>.</t>
+<t><spanx style="verb">nonce|string</spanx>: A server-generated nonce that is appended to the client-generated nonce sent in the previous <spanx style="verb">HELLO</spanx> message. See <xref target="nonces"/>.</t>
 <t><spanx style="verb">salt|string</spanx>: The base64-encoded salt for this user, to be passed to the key derivation function. This value is stored with each user record in the authentication database. See <xref target="salts"/>.</t>
 <t><spanx style="verb">kdf</spanx>: The key derivation function (KDF) used to hash the password. This value is stored with each user record in the authentication database. See <xref target="key-derivation-functions"/>.</t>
 <t><spanx style="verb">iterations|integer</spanx>: The execution time cost factor to use for generating the <spanx style="verb">SaltedPassword</spanx> hash. This value is stored with each user record in the authentication database.</t>
@@ -5924,7 +6123,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <section anchor="pbkdf2" title="PBKDF2">
 <t>The PBKDF2 key derivation function, defined in <eref target="https://tools.ietf.org/html/rfc2898">RFC2898</eref>, is used with SHA-256 as the pseudorandom function (PRF).
 </t>
-<t>The PDBKDF2 hash is computed using the folowing parameters:
+<t>The PDBKDF2 hash is computed using the following parameters:
 </t>
 <t>
 <list style="symbols">
@@ -6461,7 +6660,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is a complete example in Python showing how byte arrays are converted to and from JSON:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="center"><artwork align="center">
     &lt;CODE BEGINS&gt;
 
     import os, base64, json, sys, binascii
@@ -6498,9 +6697,8 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="center"><artwork align="center">
     &lt;CODE BEGINS&gt;
-
     var data_in = new Uint8Array(new ArrayBuffer(16));
 
     // initialize test data
@@ -6538,7 +6736,6 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
     }
 
     console.log(data_out);
-
     &lt;CODE ENDS&gt;
 </artwork></figure>
 </section>
