@@ -255,6 +255,7 @@ Reserved codes may be used to identify additional message types in future standa
 
 > "Tx" indicates the message is sent by the respective role, and "Rx" indicates the message is received by the respective role.
 
+{align="left"}
 | Cod | Message        |  Pub |  Brk | Subs |  Calr | Dealr | Callee|
 |-----|----------------|------|------|------|-------|-------|-------|
 |  1  | `HELLO`        | Tx   | Rx   | Tx   | Tx    | Rx    | Tx    |
@@ -320,3 +321,4 @@ where `ArgumentsKw == {}` SHOULD be avoided, and instead
             Arguments|list]
 
 SHOULD be sent when `Arguments` is non-empty.
+

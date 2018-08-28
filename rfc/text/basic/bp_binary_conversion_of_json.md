@@ -44,7 +44,6 @@ Below are complete Python and JavaScript code examples for conversion between by
 
 Here is a complete example in Python showing how byte arrays are converted to and from JSON:
 
-{align="left"}
 ```python
     <CODE BEGINS>
 
@@ -81,10 +80,8 @@ Here is a complete example in Python showing how byte arrays are converted to an
 
 Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:
 
-{align="left"}
 ```javascript
     <CODE BEGINS>
-
     var data_in = new Uint8Array(new ArrayBuffer(16));
 
     // initialize test data
@@ -122,6 +119,5 @@ Here is a complete example in JavaScript showing how byte arrays are converted t
     }
 
     console.log(data_out);
-
     <CODE ENDS>
 ```

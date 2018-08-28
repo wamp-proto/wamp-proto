@@ -218,7 +218,6 @@ Here is an example of how a *Client* might parse the *second octet* in a *Router
     <CODE ENDS>
 ```
 
-
 ##### Serialization
 
 To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MessagePack).

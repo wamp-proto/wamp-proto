@@ -6,6 +6,7 @@ A procedure implemented by a *Callee* and registered at a *Dealer* may produce p
 
 The message flow for progressive results involves:
 
+{align="left"}
      ,------.           ,------.          ,------.
      |Caller|           |Dealer|          |Callee|
      `--+---'           `--+---'          `--+---'
@@ -65,6 +66,7 @@ If the *Callee* supports progressive calls, the *Dealer* will forward the *Calle
 {align="left"}
         INVOCATION.Details.receive_progress|bool := true
 
+
 *Example.* Dealer-to-Callee `INVOCATION`
 
 {align="left"}
@@ -84,6 +86,7 @@ An endpoint implementing the procedure produces progressive results by sending `
 
 {align="left"}
         YIELD.Options.progress|bool := true
+
 
 *Example.* Callee-to-Dealer progressive `YIELDs`
 
@@ -110,7 +113,6 @@ An endpoint implementing the procedure produces progressive results by sending `
         ["Y2011", 205]
     ]
 ```
-
 
 Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), the *Dealer* will **immediately** send a `RESULT` message to the original *Caller* with
 
@@ -142,8 +144,8 @@ Upon receiving an `YIELD` message from a *Callee* with `YIELD.Options.progress =
         ["Y2011", 205]
     ]
 ```
-...
 
+and so on...
 
 An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message being sent by the *Callee* and received by the *Dealer*.
 
@@ -290,6 +292,7 @@ Progressive call result cancellation closes an important safety gap: In cases wh
 
 The message flow for progressive results cancellation involves:
 
+{align="left"}
      ,------.           ,------.          ,------.
      |Caller|           |Dealer|          |Callee|
      `--+---'           `--+---'          `--+---'
@@ -316,6 +319,7 @@ The message flow for progressive results cancellation involves:
                         |Dealer|          |Callee|
                         `------'          `------'
 
+
 Note: Any `ERROR` returned by the *Callee*, in response to the `INTERRUPT`, is ignored (same as in call canceling when mode="killnowait"). So, it is not necessary for the *Callee* to send an `ERROR` message.
 
 #### Callee
@@ -333,3 +337,4 @@ Support for this advanced feature MUST be announced by *Callers* (`role := "call
              progressive_call_results|bool := true
 
 Additionally, *Callees* and *Dealers* MUST support Call Canceling, which is required for canceling progressive results if the original *Caller* leaves the realm. If a *Callee* supports Progressive Call Results, but not Call Canceling, then the *Dealer* disregards the *Callees* Progressive Call Results feature.
+

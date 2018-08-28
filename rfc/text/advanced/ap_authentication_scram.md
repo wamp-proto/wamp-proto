@@ -86,6 +86,7 @@ WAMP-SCRAM uses a single round of challenge/response pairs after the client auth
 
 The mapping of RFC5802 messages to WAMP messages is as follows:
 
+{align="left"}
 SCRAM Message                              | WAMP Message
 ----------------------                     | ------------
 `client-first-message`                     | `HELLO`

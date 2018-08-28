@@ -143,6 +143,7 @@ There are few scenarios, when `ABORT` is used:
         |Client|          |Router|
         `------'          `------'
 
+
 *Example*
 
 {align="left"}
@@ -205,6 +206,7 @@ where
         ,--+---.          ,--+---.
         |Client|          |Router|
         `------'          `------'
+
 
 *Example*. One Peer initiates closing
 
@@ -278,7 +280,7 @@ The following state chart gives the states that a WAMP peer can be in during the
     |   |               |(14) |              |                          
     |   +-------^-------+  |  +--------------+                          
     |           |----------+           |                                
-    +----------------------------------+     
+    +----------------------------------+
 
 
 | #  |  State                                                        |
@@ -336,3 +338,5 @@ and
               "broker": {}
             }
         }]
+
+
