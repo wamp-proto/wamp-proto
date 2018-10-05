@@ -50,7 +50,7 @@ where
 * `Arguments` is a list of application-level event payload elements. The list may be of zero length.
 * `ArgumentsKw` is an optional dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
 
-If the Broker is able to fulfill and allowing the publication, the Broker will send the event to all current Subscribers of the topic of the published event.
+If the Broker allows and is able to fulfill the publication, the Broker will send the event to all current Subscribers of the topic of the published event.
 
 By default, publications are unacknowledged, and the Broker will not respond, whether the publication was successful indeed or not. This behavior can be changed with the option `PUBLISH.Options.acknowledge|bool` (see below).
 
