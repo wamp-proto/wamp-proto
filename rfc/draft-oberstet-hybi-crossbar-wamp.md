@@ -115,7 +115,7 @@ For each building block, WAMP only assumes a defined set of requirements, which 
 
 # Publish and Subscribe
 
-All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Dealer*.
+All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Broker*.
 
 
 {{rfc/text/basic/bp_pubsub_subscribing_and_unsubscribing.md}}
