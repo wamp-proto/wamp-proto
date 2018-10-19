@@ -2,6 +2,14 @@ language: node_js
 node_js:
     - "node"
 
+script:
+    - npm run build
+
+before_deploy:
+    - find . -not -path "./docs" -not -path "./docs/*" -delete
+    - mv ./docs/* .
+    - rm -rf ./docs
+
 deploy:
     provider: pages
     skip-cleanup: true
