@@ -30,6 +30,19 @@ Note that a *Broker* may deny a *Publisher's* request to disclose its identity:
 
 A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is set up to do so.
 
+A *Subscriber* MAY **request** the disclosure of publisher identity via
+
+{align="left"}
+        SUBSCRIBE.Options.disclose_publisher|bool := true
+
+*Example*
+
+{align="left"}
+        [32, 713845233, {"disclose_publisher":true}, "com.myapp.mytopic1"]
+
+With the above subscription, the registered subscriber receives the publication
+with the publisher's sessionID as part of the publication details object.
+
 #### Feature Announcement
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Brokers* (`role := "broker"`) and *Subscribers* (`role := "subscriber"`) via
