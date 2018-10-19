@@ -2,9 +2,9 @@
 
 #### Feature Definition
 
-A *Caller* might want to issue a call providing a *timeout* for the call to finish.
+A *Caller* might want to issue a call and provide a *timeout* after which the call will finish.
 
-A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
+A *timeout* allows for **automatic** cancellation of a call after a specified time either at the *Callee* or at the *Dealer*.
 
 A *Caller* specifies a timeout by providing
 
