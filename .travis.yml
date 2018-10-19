@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+    - "node"
+
+deploy:
+    provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    keep-history: true
+    on:
+        branch: master
+    target-branch: gh-pages
+
+notifications:
+    email:
+        recipients:
+        - KSDaemon@ya.ru
+        on_success: change
+        on_failure: always
