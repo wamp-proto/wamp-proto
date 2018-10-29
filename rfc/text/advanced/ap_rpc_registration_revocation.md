@@ -2,6 +2,19 @@
 
 Feature status: **alpha**
 
+#### Feature Announcement
+
+Support for this feature MUST be announced by *Callees* (role := "callee") and *Dealers* (role := "dealer") via
+
+{align="left"}
+        HELLO.Details.roles.<role>.features.
+             registration_revocation|bool := true
+
+If the *Callee* does not support registration_revocation, the *Dealer* may still revoke a registration to
+support administrative functionality. In this case the *Dealer* MUST NOT send a **UNREGISTERED**
+message to the *Callee*. The *Callee* MAY use the registration meta event `wamp.registration.on_unregister`
+to determine that a session is removed from a registration.
+
 #### Feature Definition
 
 This feature allows a dealer to actively revoke a previously granted registration.

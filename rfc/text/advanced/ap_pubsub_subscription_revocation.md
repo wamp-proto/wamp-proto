@@ -2,6 +2,19 @@
 
 Feature status: **alpha**
 
+#### Feature Announcement
+
+Support for this feature MUST be announced by *Subscribers* (role := "subscriber") and *Brokers* (role := "broker") via
+
+{align="left"}
+        HELLO.Details.roles.<role>.features.
+             subscription_revocation|bool := true
+
+If the *Subscriber* does not support subscription_revocation, the *Broker* MAY still revoke a subscription to
+support administrative functionality. In this case the *Broker* MUST NOT send a **UNSUBSCRIBED**
+message to the *Subscriber*. The *Subscriber* MAY use the subscription meta event `wamp.subscription.on_unsubscribe`
+to determine that a session is removed from a subscription.
+
 #### Feature Definition
 
 This feature allows a broker to actively revoke a previously granted subscription.
