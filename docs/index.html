@@ -1362,7 +1362,7 @@ and
 
 # Publish and Subscribe
 
-All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Dealer*.
+All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Broker*.
 
 
 ## Subscribing and Unsubscribing
@@ -1591,7 +1591,7 @@ where
 * `Arguments` is a list of application-level event payload elements. The list may be of zero length.
 * `ArgumentsKw` is an optional dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.
 
-If the Broker is able to fulfill and allowing the publication, the Broker will send the event to all current Subscribers of the topic of the published event.
+If the Broker allows and is able to fulfill the publication, the Broker will send the event to all current Subscribers of the topic of the published event.
 
 By default, publications are unacknowledged, and the Broker will not respond, whether the publication was successful indeed or not. This behavior can be changed with the option `PUBLISH.Options.acknowledge|bool` (see below).
 
@@ -2916,9 +2916,9 @@ See this GitHub issue for more discussion: https://github.com/wamp-proto/wamp-pr
 
 #### Feature Definition
 
-A *Caller* might want to issue a call providing a *timeout* for the call to finish.
+A *Caller* might want to issue a call and provide a *timeout* after which the call will finish.
 
-A *timeout* allows to **automatically** cancel a call after a specified time either at the *Callee* or at the *Dealer*.
+A *timeout* allows for **automatic** cancellation of a call after a specified time either at the *Callee* or at the *Dealer*.
 
 A *Caller* specifies a timeout by providing
 
