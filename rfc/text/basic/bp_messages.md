@@ -87,14 +87,13 @@ Sent by a Peer to close a previously opened WAMP session. Must be echo'ed by the
 Error reply sent by a Peer as an error response to different kinds of requests.
 
 {align="left"}
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
-            Error|uri]
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri]
 
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
-            Error|uri, Arguments|list]
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, 
+            Arguments|list]
 
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
-            Error|uri, Arguments|list, ArgumentsKw|dict]
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, 
+            Arguments|list, ArgumentsKw|dict]
 
 
 ### Publish & Subscribe
@@ -106,11 +105,10 @@ Sent by a Publisher to a Broker to publish an event.
 {align="left"}
         [PUBLISH, Request|id, Options|dict, Topic|uri]
 
-        [PUBLISH, Request|id, Options|dict, Topic|uri,
-            Arguments|list]
+        [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
 
-        [PUBLISH, Request|id, Options|dict, Topic|uri,
-            Arguments|list, ArgumentsKw|dict]
+        [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, 
+           ArgumentsKw|dict]
 
 #### PUBLISHED
 
