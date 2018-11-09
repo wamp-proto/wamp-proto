@@ -8,11 +8,21 @@ The Web Application Messaging Protocol
 
 Welcome to Web Application Messaging Protocol's documentation!
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+Get in touch on:
 
-   spec
+- `WAMP Google group <https://groups.google.com/group/wampws>`_
+- `WAMP Gitter chat <https://gitter.im/wamp-proto/wamp-proto>`_
+- `WAMP GitHub issue tracker <https://github.com/wamp-proto/wamp-proto/issues>`_
+
+.. toctree::
+    :maxdepth: 2
+    :caption: Contents:
+
+    why_wamp
+    implementations
+    users
+    faq
+    spec
 
 
 Indices and tables

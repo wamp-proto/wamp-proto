@@ -1,0 +1,17 @@
+/* custom CSS to include in generated pages */
+
+.wy-nav-content {
+    max-width: 1200px;
+}
+
+.wy-nav-side {
+    position: fixed;
+}
+
+.wy-side-nav-search {
+    background-color: #9e9e84;
+}
+
+.wy-side-nav-search>a img.logo {
+    width: 160px;
+}

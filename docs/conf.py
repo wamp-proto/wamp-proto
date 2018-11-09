@@ -111,7 +111,7 @@ if RTD_BUILD:
         'css_files': [
             'https://media.readthedocs.org/css/sphinx_rtd_theme.css',
             'https://media.readthedocs.org/css/readthedocs-doc-embed.css',
-            '_static/custom.css'
+            '_static/css/custom.css'
         ]
     }
 else:
@@ -120,8 +120,10 @@ else:
         html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
         # add custom CSS on top of Sphinx RTD standard CSS
+        # https://docs.readthedocs.io/en/latest/guides/adding-custom-css.html
         def setup(app):
-            app.add_stylesheet('custom.css')
+            app.add_stylesheet('css/custom.css')
+            app.add_javascript('js/custom.js')
     else:
         html_theme = 'default'
 
@@ -156,5 +158,9 @@ html_static_path = ['_static']
 #pygments_style = 'native'
 #pygments_style = 'pastie'
 pygments_style = 'friendly'
+
+# http://www.sphinx-doc.org/en/master/theming.html
+html_theme_options = {
+}
 
 # -- Extension configuration -------------------------------------------------
