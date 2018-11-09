@@ -1,13 +1,13 @@
 % Title = "The Web Application Messaging Protocol"
 % abbrev = "WAMP"
 % category = "std"
-% docName = "draft-oberstet-hybi-crossbar-wamp-02"
+% docName = "draft-oberstet-hybi-crossbar-wamp-03"
 % ipr= "trust200902"
 % area = "Applications and Real-Time (art)"
 % workgroup = "BiDirectional or Server-Initiated HTTP"
 % keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 %
-% date = 2018-04-18T00:00:00Z
+% date = 2018-11-09T00:00:00Z
 %
 % [pi]
 % toc = "yes"
@@ -15,7 +15,7 @@
 % [[author]]
 % initials="T.O."
 % surname="Oberstein"
-% fullname="Tobias G. Oberstein"
+% fullname="Tobias Oberstein"
 % organization = "Crossbar.io Technologies GmbH"
 %   [author.address]
 %   email = "tobias.oberstein@crossbario.com"

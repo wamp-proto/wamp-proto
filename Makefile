@@ -3,10 +3,11 @@
 requirements:
 	sudo apt install -y mmark xml2rfc
 	sudo npm install -g grunt-cli
+	npm install
 
 clean:
-	-rm -rf ./.build
-	-rm -rf ./dos/_build
+	-rm -rf ./.build/*
+	-rm -rf ./docs/_build/*
 
 authors:
 	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
@@ -18,13 +19,10 @@ build_w3c:
 	grunt
 
 build_rfc:
-	mmark -xml2 -page rfc/draft-oberstet-hybi-crossbar-wamp.md > rfc/draft-oberstet-hybi-crossbar-wamp.xml
-	xml2rfc --text rfc/draft-oberstet-hybi-crossbar-wamp.xml
-	xml2rfc --html rfc/draft-oberstet-hybi-crossbar-wamp.xml
-
-deploy_rfc: build_rfc
-	cp rfc/draft-oberstet-hybi-crossbar-wamp.txt ../wamp-web/website/wampws/static/rfc/
-	cp rfc/draft-oberstet-hybi-crossbar-wamp.html ../wamp-web/website/wampws/static/rfc/
+	-mkdir ./.build 
+	mmark -xml2 -page rfc/wamp.md > .build/wamp.xml
+	xml2rfc --text .build/wamp.xml -o docs/_static/wamp_latest_ietf.txt
+	xml2rfc --html .build/wamp.xml -o docs/_static/wamp_latest_ietf.html
 
 
 docs:

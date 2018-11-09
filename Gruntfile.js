@@ -72,7 +72,7 @@ module.exports = function (grunt) {
                     {
                         expand : true,
                         flatten: true,
-                        src    : ['.build/rfc/draft-oberstet-hybi-crossbar-wamp.md'],
+                        src    : ['.build/rfc/wamp.md'],
                         dest   : '.build/'
                     }
                 ]
@@ -92,7 +92,7 @@ module.exports = function (grunt) {
                     }
                 },
                 files  : [
-                    { src: '.build/draft-oberstet-hybi-crossbar-wamp.md', dest: '.build/spec.md' }
+                    { src: '.build/wamp.md', dest: '.build/wamp-processed.md' }
                 ]
             }
         },
@@ -100,18 +100,18 @@ module.exports = function (grunt) {
             concatProd: {
                 src : [
                     'rfc/aux/header.html',
-                    '.build/spec.md',
+                    '.build/wamp-processed.md',
                     '.build/footer.html'
                 ],
-                dest: 'docs/_static/spec.html'
+                dest: 'docs/_static/wamp_latest.html'
             },
             concatDev : {
                 src : [
                     'rfc/aux/header.html',
-                    '.build/spec.md',
+                    '.build/wamp-processed.md',
                     'rfc/aux/footer.html'
                 ],
-                dest: 'docs/_static/spec.html'
+                dest: 'docs/_static/wamp_latest.html'
             }
         },
         watch         : {
