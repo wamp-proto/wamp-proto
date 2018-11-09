@@ -54,6 +54,7 @@
 </t>
 </abstract>
 
+
 </front>
 
 <middle>
@@ -329,7 +330,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>As an example, the following regular expression could be used in Python to check URIs according to the above rules:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
         ## loose URI check disallowing empty URI components
         pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
@@ -338,7 +339,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>When empty URI components are allowed (which is the case for specific messages that are part of the Advanced Profile), this following regular expression can be used (shown used in Python):
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
         ## loose URI check allowing empty URI components
         pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
@@ -352,7 +353,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>As an example, the following regular expression could be used in Python to check URIs according to the above rules:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
         ## strict URI check disallowing empty URI components
         pattern = re.compile(r"^([0-9a-z_]+\.)*([0-9a-z_]+)$")
@@ -361,7 +362,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <t>When empty URI components are allowed (which is the case for specific messages that are part of the Advanced Profile), the following regular expression can be used (shown in Python):
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
         ## strict URI check allowing empty URI components
         pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
@@ -739,14 +740,13 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </t>
 
 <figure align="left"><artwork align="left">
-    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
-        Error|uri]
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri]
 
-    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
-        Error|uri, Arguments|list]
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, 
+        Arguments|list]
 
-    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict,
-        Error|uri, Arguments|list, ArgumentsKw|dict]
+    [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, 
+        Arguments|list, ArgumentsKw|dict]
 </artwork></figure>
 </section>
 </section>
@@ -760,11 +760,10 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <figure align="left"><artwork align="left">
     [PUBLISH, Request|id, Options|dict, Topic|uri]
 
-    [PUBLISH, Request|id, Options|dict, Topic|uri,
-        Arguments|list]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
 
-    [PUBLISH, Request|id, Options|dict, Topic|uri,
-        Arguments|list, ArgumentsKw|dict]
+    [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, 
+       ArgumentsKw|dict]
 </artwork></figure>
 </section>
 
@@ -1429,7 +1428,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </section>
 
 <section anchor="publish-and-subscribe" title="Publish and Subscribe">
-<t>All of the following features for Publish &amp; Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. <spanx style="emph">Publisher</spanx>, <spanx style="emph">Subscriber</spanx> and <spanx style="emph">Dealer</spanx>.
+<t>All of the following features for Publish &amp; Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. <spanx style="emph">Publisher</spanx>, <spanx style="emph">Subscriber</spanx> and <spanx style="emph">Broker</spanx>.
 </t>
 
 <section anchor="subscribing-and-unsubscribing" title="Subscribing and Unsubscribing">
@@ -1689,7 +1688,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="verb">ArgumentsKw</spanx> is an optional dictionary containing application-level event payload, provided as keyword arguments. The dictionary may be empty.</t>
 </list>
 </t>
-<t>If the Broker is able to fulfill and allowing the publication, the Broker will send the event to all current Subscribers of the topic of the published event.
+<t>If the Broker allows and is able to fulfill the publication, the Broker will send the event to all current Subscribers of the topic of the published event.
 </t>
 <t>By default, publications are unacknowledged, and the Broker will not respond, whether the publication was successful indeed or not. This behavior can be changed with the option <spanx style="verb">PUBLISH.Options.acknowledge|bool</spanx> (see below).
 </t>
@@ -2814,7 +2813,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Caller-to-Dealer <spanx style="verb">CALL</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         48,
         77133,
@@ -2834,7 +2833,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Dealer-to-Callee <spanx style="verb">INVOCATION</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         68,
         87683,
@@ -2854,7 +2853,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Callee-to-Dealer progressive <spanx style="verb">YIELDs</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         70,
         87683,
@@ -2865,7 +2864,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
     ]
 </artwork></figure>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         70,
         87683,
@@ -2884,7 +2883,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Dealer-to-Caller progressive <spanx style="verb">RESULTs</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         50,
         77133,
@@ -2895,7 +2894,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
     ]
 </artwork></figure>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         50,
         77133,
@@ -2912,7 +2911,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Callee-to-Dealer final <spanx style="verb">YIELD</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         70,
         87683,
@@ -2923,7 +2922,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Callee-to-Dealer final <spanx style="verb">ERROR</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         4,
         87683,
@@ -2937,7 +2936,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Dealer-to-Caller final <spanx style="verb">RESULT</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         50,
         77133,
@@ -2948,7 +2947,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <t><spanx style="emph">Example.</spanx> Dealer-to-Caller final <spanx style="verb">ERROR</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         4,
         77133,
@@ -3113,9 +3112,9 @@ INTERRUPT.Options.mode|string == "killnowait"
 <section anchor="call-timeouts" title="Call Timeouts">
 
 <section anchor="feature-definition-2" title="Feature Definition">
-<t>A <spanx style="emph">Caller</spanx> might want to issue a call providing a <spanx style="emph">timeout</spanx> for the call to finish.
+<t>A <spanx style="emph">Caller</spanx> might want to issue a call and provide a <spanx style="emph">timeout</spanx> after which the call will finish.
 </t>
-<t>A <spanx style="emph">timeout</spanx> allows to <spanx style="strong">automatically</spanx> cancel a call after a specified time either at the <spanx style="emph">Callee</spanx> or at the <spanx style="emph">Dealer</spanx>.
+<t>A <spanx style="emph">timeout</spanx> allows for <spanx style="strong">automatic</spanx> cancellation of a call after a specified time either at the <spanx style="emph">Callee</spanx> or at the <spanx style="emph">Dealer</spanx>.
 </t>
 <t>A <spanx style="emph">Caller</spanx> specifies a timeout by providing
 </t>
@@ -3428,7 +3427,7 @@ INTERRUPT.Options.mode|string == "killnowait"
 <t><spanx style="strong">Object Schemas</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     RegistrationDetails :=
     {
         "id": registration|id,
@@ -3514,7 +3513,7 @@ INTERRUPT.Options.mode|string == "killnowait"
 <t><spanx style="strong">Object Schemas</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     RegistrationLists :=
     {
         "exact": registration_ids|list,
@@ -3592,7 +3591,7 @@ INTERRUPT.Options.mode|string == "killnowait"
 <t><spanx style="strong">Object Schemas</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     RegistrationDetails :=
     {
         "id": registration|id,
@@ -3675,7 +3674,7 @@ INTERRUPT.Options.mode|string == "killnowait"
 <t>Here is a <spanx style="verb">WELCOME</spanx> message from a <spanx style="emph">Router</spanx> with support for both the <spanx style="emph">Broker</spanx> and <spanx style="emph">Dealer</spanx> role, and with support for <spanx style="strong">Registration Meta API</spanx>:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         2,
         4580268554656113,
@@ -3729,7 +3728,7 @@ INTERRUPT.Options.mode|string == "killnowait"
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         64,
         612352435,
@@ -3775,7 +3774,7 @@ INTERRUPT.Options.mode|string == "killnowait"
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         64,
         612352435,
@@ -3878,7 +3877,7 @@ Call request RPC URI: 'a2.b2.c2.d2.e2' →
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         68,
         6131533,
@@ -3994,13 +3993,52 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 
 <section anchor="registration-revocation" title="Registration Revocation">
+<t>Feature status: <spanx style="strong">alpha</spanx>
+</t>
 
-<section anchor="feature-definition-10" title="Feature Definition">
-<t>Actively and forcefully revoke a previously granted registration from a session.
+<section anchor="feature-announcement-9" title="Feature Announcement">
+<t>Support for this feature MUST be announced by <spanx style="emph">Callees</spanx> (role := &quot;callee&quot;) and <spanx style="emph">Dealers</spanx> (role := &quot;dealer&quot;) via
+</t>
+
+<figure align="left"><artwork align="left">
+    HELLO.Details.roles.&lt;role&gt;.features.
+         registration_revocation|bool := true
+</artwork></figure>
+<t>If the <spanx style="emph">Callee</spanx> does not support registration_revocation, the <spanx style="emph">Dealer</spanx> may still revoke a registration to
+support administrative functionality. In this case, the <spanx style="emph">Dealer</spanx> MUST NOT send an <spanx style="strong">UNREGISTERED</spanx>
+message to the <spanx style="emph">Callee</spanx>. The <spanx style="emph">Callee</spanx> MAY use the registration meta event <spanx style="verb">wamp.registration.on_unregister</spanx>
+to determine whether a session is removed from a registration.
 </t>
 </section>
 
-<section anchor="feature-announcement-9" title="Feature Announcement">
+<section anchor="feature-definition-10" title="Feature Definition">
+<t>This feature allows a <spanx style="emph">Dealer</spanx> to actively revoke a previously granted registration.
+To achieve this, the existing UNREGISTERED message is extended as described below.
+</t>
+</section>
+
+<section anchor="extending-unregistered" title="Extending UNREGISTERED">
+<t>When revoking a registration, the router has no request ID to reply to. So it's set to zero and another argument is
+appended to indicate which registration to revoke. Optionally, a reason why the registration was revoked is also appended.
+</t>
+
+<figure align="left"><artwork align="left">
+    [UNREGISTERED, 0, Details|dict]
+</artwork></figure>
+<t>where
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">Details.registration|bool</spanx> MUST be a previously issued registration ID.</t>
+<t><spanx style="verb">Details.reason|string</spanx> MAY provide a reason as to why the registration was revoked.</t>
+</list>
+</t>
+<t><spanx style="emph">Example</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+    [67, 0, {"registration": 1293722, "reason": "moving endpoint to other callee"}]
+</artwork></figure>
 </section>
 </section>
 
@@ -4173,7 +4211,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
        16,
        239714735,
@@ -4194,7 +4232,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
        16,
        239714735,
@@ -4215,7 +4253,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
        16,
        239714735,
@@ -4266,7 +4304,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         16,
         239714735,
@@ -4420,7 +4458,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="strong">Object Schemas</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
       SubscriptionDetails :=
       {
           "id": subscription|id,
@@ -4488,11 +4526,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t>Retrieves subscription IDs listed according to match policies.
 </t>
 <t><spanx style="strong">Arguments</spanx>
-</t>
-<t>
-<list style="symbols">
-<t>None</t>
-</list>
+- None
 </t>
 <t><spanx style="strong">Results</spanx>
 </t>
@@ -4506,7 +4540,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="strong">Object Schemas</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
       SubscriptionLists :=
       {
           "exact": subscription_ids|list,
@@ -4590,7 +4624,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="strong">Object Schemas</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
       SubscriptionDetails :=
       {
           "id": subscription|id,
@@ -4607,11 +4641,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t>Retrieves a list of session IDs for sessions currently attached to the subscription.
 </t>
 <t><spanx style="strong">Arguments</spanx>
-</t>
-<t>
-<list style="symbols">
-<t><spanx style="verb">subscription|id</spanx>: The ID of the subscription to get subscribers for.</t>
-</list>
+- <spanx style="verb">subscription|id</spanx>: The ID of the subscription to get subscribers for.
 </t>
 <t><spanx style="strong">Results</spanx>
 </t>
@@ -4689,7 +4719,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         32,
         912873614,
@@ -4727,7 +4757,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         32,
         912873614,
@@ -4787,7 +4817,7 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 <t><spanx style="emph">Example</spanx>
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         36,
         5512315355,
@@ -4930,14 +4960,53 @@ HELLO.Details.roles.&lt;role&gt;.features.sharded_registration|bool := true
 </section>
 </section>
 
-<section anchor="registration-revocation-1" title="Registration Revocation">
+<section anchor="subscription-revocation" title="Subscription Revocation">
+<t>Feature status: <spanx style="strong">alpha</spanx>
+</t>
 
-<section anchor="feature-definition-16" title="Feature Definition">
-<t>Actively and forcefully revoke a previously granted subscription from a session.
+<section anchor="feature-announcement-16" title="Feature Announcement">
+<t>Support for this feature MUST be announced by <spanx style="emph">Subscribers</spanx> (role := &quot;subscriber&quot;) and <spanx style="emph">Brokers</spanx> (role := &quot;broker&quot;) via
+</t>
+
+<figure align="left"><artwork align="left">
+    HELLO.Details.roles.&lt;role&gt;.features.
+         subscription_revocation|bool := true
+</artwork></figure>
+<t>If the <spanx style="emph">Subscriber</spanx> does not support subscription_revocation, the <spanx style="emph">Broker</spanx> MAY still revoke a subscription to
+support administrative functionality. In this case, the <spanx style="emph">Broker</spanx> MUST NOT send an <spanx style="strong">UNSUBSCRIBED</spanx>
+message to the <spanx style="emph">Subscriber</spanx>. The <spanx style="emph">Subscriber</spanx> MAY use the subscription meta event <spanx style="verb">wamp.subscription.on_unsubscribe</spanx>
+to determine whether a session is removed from a subscription.
 </t>
 </section>
 
-<section anchor="feature-announcement-16" title="Feature Announcement">
+<section anchor="feature-definition-16" title="Feature Definition">
+<t>This feature allows a <spanx style="emph">Broker</spanx> to actively revoke a previously granted subscription.
+To achieve this, the existing UNSUBSCRIBED message is extended as described below.
+</t>
+</section>
+
+<section anchor="extending-unsubscribed" title="Extending UNSUBSCRIBED">
+<t>When revoking a subscription, the router has no request ID to reply to. So it's set to zero and another argument is
+appended to indicate which subscription to revoke. Optionally, a reason why the subscription was revoked is also appended.
+</t>
+
+<figure align="left"><artwork align="left">
+    [UNSUBSCRIBED, 0, Details|dict]
+</artwork></figure>
+<t>where
+</t>
+<t>
+<list style="symbols">
+<t><spanx style="verb">Details.subscription|bool</spanx> MUST be a previously issued subscription ID.</t>
+<t><spanx style="verb">Details.reason|string</spanx> MAY provide a reason as to why the subscription was revoked.</t>
+</list>
+</t>
+<t><spanx style="emph">Example</spanx>
+</t>
+
+<figure align="left"><artwork align="left">
+    [35, 0, {"subscription": 1293722, "reason": "no longer authorized"}]
+</artwork></figure>
 </section>
 </section>
 
@@ -5015,7 +5084,7 @@ It can be triggered when a Session is either detached (the client has disconnect
 For example, a client may call <spanx style="verb">add_testament</spanx> (this example uses the implicit <spanx style="verb">scope</spanx> option of <spanx style="verb">destroyed</spanx>):
 </t>
 
-<figure align="center"><artwork align="center">
+<figure align="center"><artwork align="center" type="python">
 yield self.call('wamp.session.add_testament',
                 'com.myapp.mytopic', ['Seeya!'], {'my_name': 'app1'})
 </artwork></figure>
@@ -5034,7 +5103,7 @@ The <spanx style="emph">Router</spanx> MAY ignore publish options that do not ma
 For example, a client may call <spanx style="verb">wamp.session.flush_testaments</spanx>:
 </t>
 
-<figure align="center"><artwork align="center">
+<figure align="center"><artwork align="center" type="python">
 yield self.call('wamp.session.flush_testaments', scope='detached')
 yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </artwork></figure>
@@ -5359,7 +5428,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>Here is a <spanx style="verb">WELCOME</spanx> message from a <spanx style="emph">Router</spanx> with support for both the <spanx style="emph">Broker</spanx> and <spanx style="emph">Dealer</spanx> role, and with support for <spanx style="strong">Session Meta API</spanx>:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="json">
     [
         2,
         4580268554656113,
@@ -5485,7 +5554,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">wampcra</spanx> method as (one of) the authentication methods:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [1, "realm1",
         {
             "roles": ...,
@@ -5503,7 +5572,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>If the server is willing to let the client authenticate using WAMP-CRA, and the server recognizes the provided <spanx style="verb">authid</spanx>, it MUST send a <spanx style="verb">CHALLENGE</spanx> message:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [4, "wampcra",
         {
             "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
@@ -5538,7 +5607,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>After computing the signature, the client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing the signature, as a base64-encoded string:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
 </artwork></figure>
 <t>The server will then check if
@@ -5552,7 +5621,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [2, 3251278072152162,
         {
             "authid": "peter",
@@ -5602,7 +5671,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>When the password is salted, the server will during WAMP-CRA send a <spanx style="verb">CHALLENGE</spanx> message containing additional information:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [4, "wampcra",
         {
             "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\", 
@@ -5633,7 +5702,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>A typical authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">ticket</spanx> method as (one of) the authentication methods:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [1, "realm1",
       {
         "roles": ...,
@@ -5651,13 +5720,13 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <spanx style="verb">authid</spanx>, it'll send a <spanx style="verb">CHALLENGE</spanx> message:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [4, "ticket", {}]
 </artwork></figure>
 <t>The client will send an <spanx style="verb">AUTHENTICATE</spanx> message containing a ticket:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [5, "secret!!!", {}]
 </artwork></figure>
 <t>The server will then check if the ticket provided is permissible (for the <spanx style="verb">authid</spanx> given).
@@ -5665,7 +5734,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>If the authentication succeeds, the server will finally respond with a <spanx style="verb">WELCOME</spanx> message:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [2, 3251278072152162,
       {
         "authid": "joe",
@@ -5799,7 +5868,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>WAMP-SCRAM authentication begins with the client sending a <spanx style="verb">HELLO</spanx> message specifying the <spanx style="verb">wamp-scram</spanx> method as (one of) the authentication methods:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [1, "realm1",
         {
             "roles": ...,
@@ -5838,7 +5907,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>If none of the above failure conditions apply, and the server is ready to let the client authenticate using WAMP-SCRAM, then it SHALL send a <spanx style="verb">CHALLENGE</spanx> message:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [4, "wamp-scram",
         {
             "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
@@ -5870,7 +5939,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>Upon receiving a valid <spanx style="verb">CHALLENGE</spanx> message, the client SHALL respond with an <spanx style="verb">AUTHENTICATE</spanx> message:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [5, "dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ=",
         {
             "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
@@ -5906,7 +5975,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>If the authentication succeeds, the server SHALL finally respond with a <spanx style="verb">WELCOME</spanx> message:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     [2, 3251278072152162,
         {
             "authid": "user",
@@ -5985,7 +6054,7 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <t>where <spanx style="verb">StoredKey</spanx> and <spanx style="verb">ServerKey</spanx> are computed as follows:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
 SaltedPassword  = KDF(Normalize(password), salt, params...)
 ClientKey       = HMAC(SaltedPassword, "Client Key")
 StoredKey       = SHA256(ClientKey)
@@ -6001,7 +6070,7 @@ ServerKey       = HMAC(SaltedPassword, "Server Key")
 <t>In SCRAM, <spanx style="verb">AuthMessage</spanx> is used for computing <spanx style="verb">ClientProof</spanx> and <spanx style="verb">ServerSignature</spanx>. <spanx style="verb">AuthMessage</spanx> is computed using attributes that were sent in the first three messages of the authentication exchange.
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
 ClientFirstBare = "n=" + Escape(HELLO.Details.authid) + "," +
                   "r=" + HELLO.Details.authextra.nonce
 
@@ -6030,7 +6099,7 @@ AuthMessage = ClientFirstBare + "," + ServerFirst + "," +
 <t><spanx style="verb">ClientProof</spanx> is computed by the client during the authentication exchange as follows:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
 SaltedPassword  = KDF(Normalize(password), salt, params...)
 ClientKey       = HMAC(SaltedPassword, "Client Key")
 StoredKey       = SHA256(ClientKey)
@@ -6042,7 +6111,7 @@ ClientProof     = ClientKey XOR ClientSignature
 <t>The server verifies the <spanx style="verb">ClientProof</spanx> by computing the <spanx style="verb">RecoveredStoredKey</spanx> and comparing it to the actual <spanx style="verb">StoredKey</spanx>:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
 ClientSignature    = HMAC(StoredKey, AuthMessage)
 RecoveredClientKey = ClientSignature XOR ReceivedClientProof
 RecoveredStoredKey = SHA256(RecoveredClientKey)
@@ -6055,7 +6124,7 @@ RecoveredStoredKey = SHA256(RecoveredClientKey)
 <t><spanx style="verb">ServerSignature</spanx> is computed by the server during the authentication exchange as follows:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
 ServerSignature = HMAC(ServerKey, AuthMessage)
 </artwork></figure>
 <t>The <spanx style="verb">ServerSignature</spanx> is then sent to the client, base64-encoded, via the <spanx style="verb">WELCOME.Details.authextra.verifier</spanx> attribute.
@@ -6063,7 +6132,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>The client verifies the <spanx style="verb">ServerSignature</spanx> by computing it and comparing it with the <spanx style="verb">ServerSignature</spanx> sent by the server:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
 ServerKey       = HMAC(SaltedPassword, "Server Key")
 ServerSignature = HMAC(ServerKey, AuthMessage)
 </artwork></figure>
@@ -6183,7 +6252,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is how you would convert octets received from the wire into an integer in Python:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
     import struct
     
@@ -6196,7 +6265,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>And here is how you would send out an integer to the wire in Python:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
     octets_to_be_send = struct.pack("&gt;L", i)
     &lt;CODE ENDS&gt;
@@ -6251,7 +6320,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is a Python program that prints all (currently) permissible values for the <spanx style="emph">second octet</spanx>:
 </t>
 
-<figure align="center"><artwork align="center">
+<figure align="center"><artwork align="center" type="python">
     &lt;CODE BEGINS&gt;
     SERMAP = {
        1: 'json',
@@ -6279,7 +6348,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is an example of how a <spanx style="emph">Router</spanx> could parse the <spanx style="emph">second octet</spanx> in a <spanx style="emph">Clients</spanx> handshake request:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
     ## map RawSocket handshake request (2nd octet) to 
     ## serializer / max. msg length
@@ -6341,7 +6410,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is an example of how a <spanx style="emph">Router</spanx> might create the <spanx style="emph">second octet</spanx> in an error response:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
     ERRMAP = {
        0: "illegal (must not be used)",
@@ -6363,7 +6432,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is an example of how a <spanx style="emph">Client</spanx> might parse the <spanx style="emph">second octet</spanx> in a <spanx style="emph">Router</spanx> handshake reply:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="python">
     &lt;CODE BEGINS&gt;
     ## map RawSocket handshake reply (2nd octet)
     ##
@@ -6490,7 +6559,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>The HTTP/POST request SHOULD have a <spanx style="verb">Content-Type</spanx> header set to <spanx style="verb">application/json</spanx> and MUST have a request body with a JSON document that is a dictionary:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     {
        "protocols": ["wamp.2.json"]
     }
@@ -6518,7 +6587,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Returned is a JSON document containing a transport ID and the protocol to speak:
 </t>
 
-<figure align="left"><artwork align="left">
+<figure align="left"><artwork align="left" type="javascript">
     {
        "protocol": "wamp.2.json",
        "transport": "kjmd3sBLOUnb3Fyr"
@@ -6660,7 +6729,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is a complete example in Python showing how byte arrays are converted to and from JSON:
 </t>
 
-<figure align="center"><artwork align="center">
+<figure align="center"><artwork align="center" type="python">
     &lt;CODE BEGINS&gt;
 
     import os, base64, json, sys, binascii
@@ -6697,7 +6766,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <t>Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:
 </t>
 
-<figure align="center"><artwork align="center">
+<figure align="center"><artwork align="center" type="javascript">
     &lt;CODE BEGINS&gt;
     var data_in = new Uint8Array(new ArrayBuffer(16));
 
@@ -6783,13 +6852,13 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 </middle>
 <back>
 <references title="Normative References">
-<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3629.xml"?>
-<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"?>
-<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4648.xml"?>
-<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6455.xml"?>
+<?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.3629.xml"?>
+<?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.3986.xml"?>
+<?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.4648.xml"?>
+<?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.6455.xml"?>
 </references>
 <references title="Informative References">
-<?rfc include="http://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
+<?rfc include="https://xml2rfc.tools.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"?>
 </references>
 
 </back>
