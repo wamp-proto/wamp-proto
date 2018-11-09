@@ -33,3 +33,28 @@ To participate in the process, please take a look at
 join the [mailing list](https://groups.google.com/forum/#!forum/wampws) and our [chat room](https://gitter.im/crossbar/WAMP).
 
 The current state of both the RFC and the protocol definition is summarized in [rfc/STATUS.md](rfc/STATUS.md) which also links to the individual parts of the spec.
+
+
+## Building
+
+To build the specification RFC and Web site HTML files from the source spec files,
+you will need the following tools:
+
+* [NodeJS](https://nodejs.org/)
+* [Grunt](https://gruntjs.com/)
+* [Mmark](https://github.com/mmarkdown/mmark)
+* [xml2rfc](https://xml2rfc.tools.ietf.org/)
+
+To install the required tools:
+
+```console
+sudo apt install -y nodejs mmark xml2rfc
+npm install -g grunt-cli
+```
+
+To install the project dependencies:
+
+```console
+npm install
+```
+

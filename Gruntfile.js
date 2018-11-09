@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg           : grunt.file.readJSON('package.json'),
         clean         : {
-            all: ['build/*', 'docs/index.html']
+            all: ['.build/*']
         },
         replace       : {
             spec: {
@@ -43,7 +43,7 @@ module.exports = function (grunt) {
                     ]
                 },
                 files  : [
-                    { expand: true, flatten: false, src: ['rfc/**/*.md'], dest: 'build/' }
+                    { expand: true, flatten: false, src: ['rfc/**/*.md'], dest: '.build/' }
                 ]
             },
             dev : {
@@ -57,7 +57,7 @@ module.exports = function (grunt) {
                     ]
                 },
                 files  : [
-                    { src: 'docs/footer.html', dest: 'build/footer.html' }
+                    { src: 'rfc/aux/footer.html', dest: '.build/footer.html' }
                 ]
             }
         },
@@ -66,14 +66,14 @@ module.exports = function (grunt) {
                 options: {
                     prefix     : '{{@@',
                     suffix     : '}}',
-                    includesDir: 'build/'
+                    includesDir: '.build/'
                 },
                 files  : [
                     {
                         expand : true,
                         flatten: true,
-                        src    : ['build/rfc/draft-oberstet-hybi-crossbar-wamp.md'],
-                        dest   : 'build/'
+                        src    : ['.build/rfc/draft-oberstet-hybi-crossbar-wamp.md'],
+                        dest   : '.build/'
                     }
                 ]
             }
@@ -92,31 +92,31 @@ module.exports = function (grunt) {
                     }
                 },
                 files  : [
-                    { src: 'build/draft-oberstet-hybi-crossbar-wamp.md', dest: 'build/spec.md' }
+                    { src: '.build/draft-oberstet-hybi-crossbar-wamp.md', dest: '.build/spec.md' }
                 ]
             }
         },
         concat        : {
             concatProd: {
                 src : [
-                    'docs/header.html',
-                    'build/spec.md',
-                    'build/footer.html'
+                    'rfc/aux/header.html',
+                    '.build/spec.md',
+                    '.build/footer.html'
                 ],
-                dest: 'docs/index.html'
+                dest: 'docs/_static/spec.html'
             },
             concatDev : {
                 src : [
-                    'docs/header.html',
-                    'build/spec.md',
-                    'docs/footer.html'
+                    'rfc/aux/header.html',
+                    '.build/spec.md',
+                    'rfc/aux/footer.html'
                 ],
-                dest: 'docs/index.html'
+                dest: 'docs/_static/spec.html'
             }
         },
         watch         : {
             sources: {
-                files  : ['Gruntfile.js', 'docs/header.html', 'docs/footer.html', 'rfc/**/*.md'],
+                files  : ['Gruntfile.js', 'rfc/aux/header.html', 'rfc/aux/footer.html', 'rfc/**/*.md'],
                 tasks  : ['clean', 'replace:spec', 'includereplace', 'copy', 'concat:concatDev'],
                 options: {
                     reload    : true,
