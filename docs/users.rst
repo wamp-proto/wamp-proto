@@ -1,5 +1,5 @@
-Users
-=====
+WAMP Users
+==========
 
 Open-source projects
 --------------------

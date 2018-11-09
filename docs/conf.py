@@ -8,6 +8,7 @@
 
 import os
 import json
+import time
 from sphinx.highlighting import lexers
 
 try:
@@ -37,13 +38,17 @@ RTD_BUILD = os.environ.get('READTHEDOCS', None) == 'True'
 # -- Project information -----------------------------------------------------
 
 project = 'Web Application Messaging Protocol'
-copyright = '2018, Crossbar.io Technologies GmbH and contributors'
-author = 'Crossbar.io Technologies GmbH and contributors'
+author = 'Crossbar.io Technologies GmbH'
+this_year = u'{0}'.format(time.strftime('%Y'))
+if this_year != u'2012':
+    copyright = u'2012-{0}, Crossbar.io Technologies GmbH'.format(this_year)
+else:
+    copyright = u'2012, Crossbar.io Technologies GmbH'
 
 # The short X.Y version
-version = ''
+version = '0.9.0'
 # The full version, including alpha/beta/rc tags
-release = '0.9.0'
+release = version
 
 
 # -- General configuration ---------------------------------------------------

@@ -1,5 +1,5 @@
-WAMP Specification
-==================
+Protocol Specification
+======================
 
 The WAMP specification is authored in Markdown and final specification documents
 are generated from the source files in different target formats:

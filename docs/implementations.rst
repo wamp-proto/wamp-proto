@@ -1,5 +1,5 @@
-Implementations
-===============
+WAMP Implementations
+====================
 
 Get started with WAMP by choosing **client libraries** and a **router**:
 
@@ -17,16 +17,10 @@ and select the best or most fitting for each. That's one promise of WAMP, one fr
       or `Gitter chat <https://gitter.im/wamp-proto/wamp-proto>`_ and introduce your project.
 
 
-Client libraries
-----------------
+Libraries
+---------
 
-The following table lists **WAMP compliant client library implementations**.
-
-.. note::
-
-    For each implementation, an "x" marks a WAMP role supported by
-    the implementation. The last column marks principle support
-    for features from *WAMP Advanced Profile*.
+The following table lists WAMP compliant **client library implementations**.
 
 ==================  ==================================  =====================
 Name                Language/Run-time                   Description
@@ -67,6 +61,29 @@ wampyjs_            JavaScript                          WAMP Client library for 
 Routers
 -------
 
+The following table lists WAMP compliant **router implementations**.
+
+==================  ==================================  =====================
+Name                Language/Run-time                   Description
+==================  ==================================  =====================
+akka-wamp_          Scala, Java 8 and Akka              A Scala implementation of a basic WAMP router.
+Bonefish_           C++, Boost/ASIO                     WAMP router based on C++11 and Boost.Asio. Also usable as a library, Apache 2.0 licensed.
+connectanum_        Java, Netty                         A Java WAMP implementation based on Netty. Both Client and Router roles.
+Crossbar_           Python (PyPy), Twisted              Crossbar.io WAMP router and microservice middleware. By the creators of WAMP and Autobahn.
+CrossbarFX_         Python (PyPy), Twisted              CrossbarFX enterprise WAMP router with central management, edge device platform and clustering.
+Cargotube_          Erlang                              A software router in Erlang implementing the wamp.ws protcol (successor of Erwa).
+Erwa_               Erlang                              Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.
+jawampa_            Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
+Nexus_              Go                                  Router implementation for Go. (also includes a client implementation)
+NighlifeRabbit_     JavaScript, NodeJS                  Router implementation for `NodeJS <http://nodejs.org/>`_, MIT licensed.
+Thruway_            PHP                                 Thruway is a WAMP library built in PHP that provides both Client and Router roles.
+Turnpike_           Go                                  turnpike is a WAMP v2 router implemented in Go.
+wamp2spring_        Java, Spring                        A Java implementation built on top of the Spring 5 WebSocket support.
+wampcc_             C++                                 A C++ WAMP library that aims to depend only on C libraries, making it easier to work and build on a range of platforms.
+wamprt_             JavaScript, NodeJS                  <td class="notes">Router only implementation for `NodeJS <http://nodejs.org/>`_ created by `Orange <http://opensource.orange.com/home>`_.
+WampSharp_          C#                                  C# router implementation of WAMP v2, both JSON and `MessagePack <http://msgpack.org/>`_ support.
+Wiola_              LUA                                 Router implementation in `LUA <http://www.lua.org/>`_, using the power of Lua/Nginx, WebSocket and `Readis <http://redis.io/>`_ as cache store.
+==================  ==================================  =====================
 
 
 .. _akka-wamp: https://github.com/angiolep/akka-wamp
@@ -77,14 +94,20 @@ Routers
 .. _AutobahnPython: https://github.com/crossbario/autobahn-python
 .. _awre: https://github.com/bwegh/awre
 .. _Backbone: https://github.com/darrrk/backbone.wamp
+.. _Bonefish: https://github.com/tplgy/bonefish
+.. _Cargotube: https://github.com/CargoTube/cargotube
 .. _connectanum: http://www.connectanum.com/
 .. _CppWAMP: https://github.com/ecorm/cppwamp
+.. _Crossbar: https://crossbar.io
+.. _CrossbarFX: https://crossbario.com
+.. _Erwa: https://github.com/bwegh/erwa
 .. _haskell-wamp: https://github.com/mulderr/haskell-wamp
 .. _jawampa: https://github.com/Matthias247/jawampa
 .. _kraftfahrstrasse: https://github.com/Verkehrsministerium/kraftfahrstrasse
 .. _Loowy: https://github.com/KSDaemon/Loowy
 .. _MDWamp: https://github.com/mogui/MDWamp
 .. _Minion: https://github.com/Vinelab/minion
+.. _NighlifeRabbit: https://github.com/christian-raedel/nightlife-rabbit
 .. _Nexus: https://github.com/gammazero/nexus
 .. _p5-Net-WAMP: https://github.com/FGasper/p5-Net-WAMP
 .. _ruby_wamp_client: https://github.com/ericchapman/ruby_wamp_client
@@ -93,9 +116,12 @@ Routers
 .. _Turnpike: https://github.com/jcelliott/turnpike
 .. _Spell: https://github.com/MyMedsAndMe/spell
 .. _Swamp: https://github.com/iscriptology/swamp
+.. _wamp2spring: https://github.com/ralscha/wamp2spring
 .. _wampcc: https://github.com/darrenjs/wampcc
 .. _WAMP_POCO: https://github.com/rafzi/WAMP_POCO
 .. _wamped: https://github.com/alvistar/wamped
+.. _wamprt: https://github.com/Orange-OpenSource/wamp.rt
 .. _WampSharp: https://github.com/Code-Sharp/WampSharp
 .. _wampy: https://github.com/noisyboiler/wampy
 .. _wampyjs: https://github.com/KSDaemon/wampy.js
+.. _Wiola: http://ksdaemon.github.io/wiola/
