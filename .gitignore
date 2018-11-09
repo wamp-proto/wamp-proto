@@ -2,3 +2,4 @@ build
 twistd.pid
 .build
 docs/_build
+node_modules
