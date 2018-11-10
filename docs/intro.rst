@@ -35,6 +35,7 @@ and bi-directional.
     * `WebSocket - Why, what, and - can I use it? <https://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/>`_
     * `Dissecting WebSocket's Overhead <https://crossbario.com/blog/Dissecting-Websocket-Overhead/>`_
 
+
 WAMP
 ----
 
@@ -91,3 +92,52 @@ Combining the Publish & Subscribe and routed Remote Procedure Calls in one Web n
 transport protocol (WebSocket) allows WAMP to be used for the entire messaging requirements of
 component and microservice based applications, reducing technology stack complexity and overhead,
 providing a capable and secure fundament for applications to rely on.
+
+
+What can I do with this?
+------------------------
+
+Using WAMP you can build distributed systems out of application components which are
+loosely coupled and communicate in (soft) real-time:
+
+.. raw:: html
+
+    <div id="frontdemo">
+
+        <div class="boxes row fullWidth cursorBoxContainer">
+
+        <div class="col s12 l4">
+            <div id="box1" class="cursorBox">
+                <div id="box1cursor" class="cursor">
+                    <img src="/_static/img/wamp_logo.svg" alt="WAMP icon">
+                </div>
+            </div>
+        </div>
+
+        <div class="col s12 l4 connector">
+            <div class="connectorLine"></div>
+            <div class="connectorInstance">
+                <img src="/_static/gen/crossbar_icon.svg" alt="Crossbar.io icon">
+                <p>
+                    <!-- Not connected -->
+                </p>
+            </div>
+
+        </div>
+
+        <div class="col s12 l4">
+            <div id="box2" class="cursorBox">
+                <div id="box2cursor" class="cursor">
+                    <img src="/_static/img/wamp_logo.svg" alt="WAMP icon">
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <div class="center-align" id="statusline">
+        Status: not connected.
+        </div>
+
+    </div>
+

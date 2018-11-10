@@ -26,25 +26,29 @@ it makes sense to enter the RFC draft process, with the final goal of getting WA
 released as an IETF RFC with a proper RFC number.
 
 
-New advanced Features
+New advanced features
 ---------------------
 
+The following are some areas where we want are exploring
 
-BP: feature complete => polish
-AP: fill in gaps
-IETF RFC
-Marketing
-New Features
-
-progressive call arguments and streams
-sharded registrations
-e2e payload encryption
+* progressive call arguments and streams
+* sharded registrations
+* Flatbuffers strongly typed application payload
+* end-to-end payload encryption
 
 
-The next Level
+The next level
 --------------
 
-xbr open data markets
+With the feature areas listed above, where we want to close the final gaps
+in the WAMP protocol to fullfil its promise and mission, our (now Crossbar.io
+specifically as original creators of WAMP) focus will increasingly be on
+what be believe is the next frontier
 
-https://xbr.network/
-https://xbr.network/docs/index.html
+Now that we have WAMP, we want to use it to actually build a wider ecosystem of
+**open data markets**, where WAMP components and microservices can trade their data
+driven services, allowing consumers to buy service from providers.
+
+This new project is called **XBR**, and you can find out more on the 
+`XBR Network <https://xbr.network/>`_ homepage and the
+`XBR Protocol <https://xbr.network/docs/index.html>`_ documentation.

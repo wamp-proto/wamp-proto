@@ -64,8 +64,10 @@ clean_images:
 #
 docs:
 	tox -e sphinx
+
+docs_only:
 	#cd docs && sphinx-build -nWT -b dummy . _build
-	#cd docs && sphinx-build -b html . _build
+	cd docs && sphinx-build -b html . _build
 
 clean_docs:
 	-rm -rf docs/_build
