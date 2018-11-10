@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1044.7646"
+   height="798.03375"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="appcode.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="651.88654"
+     inkscape:cy="388.33791"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="10"
+     fit-margin-left="10"
+     fit-margin-bottom="10"
+     fit-margin-right="10"
+     inkscape:window-width="1440"
+     inkscape:window-height="838"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(368.10106,-239.05732)">
+    <g
+       id="g3049"
+       transform="translate(-356.39071,246.38794)">
+      <path
+         id="path3051"
+         d="m 935.15625,779.29688 c 13.04687,0 23.67187,-10.625 23.67187,-23.67188 l 0,0 0,-297.57812 c 0,-13.04688 -10.625,-23.67188 -23.67187,-23.67188 l 0,0 -909.453125,0 c -13.046875,0 -23.59375,10.625 -23.59375,23.67188 l 0,0 0,297.57812 c 0,13.04688 10.546875,23.67188 23.59375,23.67188 l 0,0 909.453125,0 z"
+         style="fill:#d9d9d9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3053"
+         d="m 935.15625,779.29688 c 13.04687,0 23.67187,-10.625 23.67187,-23.67188 l 0,0 0,-297.57812 c 0,-13.04688 -10.625,-23.67188 -23.67187,-23.67188 l 0,0 -909.453125,0 c -13.046875,0 -23.59375,10.625 -23.59375,23.67188 l 0,0 0,297.57812 c 0,13.04688 10.546875,23.67188 23.59375,23.67188 l 0,0 909.453125,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3055"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="761.25"
+         x="463.75"
+         xml:space="preserve">Host</text>
+      <path
+         id="path3057"
+         d="m 935.15625,410.78125 c 13.04687,0 23.67187,-10.54687 23.67187,-23.59375 l 0,0 0,-290.625 c 0,-13.046875 -10.625,-23.59375 -23.67187,-23.59375 l -907.03125,0 c -13.046875,0 -23.671875,10.546875 -23.671875,23.59375 l 0,0 0,290.625 c 0,13.04688 10.625,23.59375 23.671875,23.59375 l 0,0 907.03125,0 z"
+         style="fill:#d9d9d9;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3059"
+         d="m 935.15625,410.78125 c 13.04687,0 23.67187,-10.54687 23.67187,-23.59375 l 0,0 0,-290.625 c 0,-13.046875 -10.625,-23.59375 -23.67187,-23.59375 l -907.03125,0 c -13.046875,0 -23.671875,10.546875 -23.671875,23.59375 l 0,0 0,290.625 c 0,13.04688 10.625,23.59375 23.671875,23.59375 l 0,0 907.03125,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3061"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="392.5"
+         x="465"
+         xml:space="preserve">Host</text>
+      <path
+         id="path3063"
+         d="m 840.70312,339.92188 c 13.04688,0 23.59376,-10.625 23.59376,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54688,-23.67187 -23.59376,-23.67187 l 0,0 -434.6875,0 c -13.04687,0 -23.59374,10.625 -23.59374,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.54687,23.67188 23.59374,23.67188 l 434.6875,0 z"
+         style="fill:#a6a6a6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3065"
+         d="m 840.70312,339.92188 c 13.04688,0 23.59376,-10.625 23.59376,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54688,-23.67187 -23.59376,-23.67187 l 0,0 -434.6875,0 c -13.04687,0 -23.59374,10.625 -23.59374,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.54687,23.67188 23.59374,23.67188 l 434.6875,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3067"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="321.25"
+         x="566.25"
+         xml:space="preserve">Server Process</text>
+      <path
+         id="path3069"
+         d="m 595,724.92188 c 13.04688,0 23.67188,-10.54688 23.67188,-23.59376 l 0,0 0,-188.98437 C 618.67188,499.29688 608.04688,488.75 595,488.75 l -188.98438,0 c -13.04687,0 -23.59374,10.54688 -23.59374,23.59375 l 0,188.98437 c 0,13.04688 10.54687,23.59376 23.59374,23.59376 l 0,0 188.98438,0 z"
+         style="fill:#a6a6a6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3071"
+         d="m 595,724.92188 c 13.04688,0 23.67188,-10.54688 23.67188,-23.59376 l 0,0 0,-188.98437 C 618.67188,499.29688 608.04688,488.75 595,488.75 l -188.98438,0 c -13.04687,0 -23.59374,10.54688 -23.59374,23.59375 l 0,188.98437 c 0,13.04688 10.54687,23.59376 23.59374,23.59376 l 0,0 188.98438,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3073"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="706.25"
+         x="446.25"
+         xml:space="preserve">Client Process</text>
+      <path
+         id="path3075"
+         d="m 406.01562,127.34375 0,141.71875 188.98438,0 0,-141.71875 -188.98438,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3077"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="203.75"
+         x="470"
+         xml:space="preserve">Router</text>
+      <path
+         id="path3079"
+         d="m 406.01562,512.34375 0,141.71875 188.98438,0 0,-141.71875 -188.98438,0 z"
+         style="fill:#595959;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3081"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="543.75"
+         x="475"
+         xml:space="preserve">Client</text>
+      <path
+         id="path3083"
+         d="m 429.6875,592.65625 0,61.40625 141.71875,0 0,-61.40625 -141.71875,0 z"
+         style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3085"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="628.75"
+         x="453.75"
+         xml:space="preserve">App Code</text>
+      <path
+         id="path3087"
+         d="m 651.71875,127.34375 0,141.71875 188.98437,0 0,-141.71875 -188.98437,0 z"
+         style="fill:#595959;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3089"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="158.75"
+         x="720"
+         xml:space="preserve">Client</text>
+      <path
+         id="path3091"
+         d="m 675.3125,207.65625 0,61.40625 141.79688,0 0,-61.40625 -141.79688,0 z"
+         style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3093"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="243.75"
+         x="698.75"
+         xml:space="preserve">App Code</text>
+      <path
+         id="path3095"
+         d="m 500.54688,269.0625 0,243.28125"
+         style="fill:none;stroke:#fa72c6;stroke-width:6.796875px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3097"
+         d="m 595,198.20312 56.71875,0"
+         style="fill:none;stroke:#fa72c6;stroke-width:6.796875px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3099"
+         d="M 250.15625,479.29688 500.54688,465.07812"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3101"
+         d="m 145,455.625 0,47.26562 210.23438,0 0,-47.26562 -210.23438,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3103"
+         d="m 145,502.89062 210.23438,0 0,-47.26562 -210.23438,0 0,47.26562 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3105"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="473.75"
+         x="183.75"
+         xml:space="preserve">Session runs over</text>
+      <text
+         id="text3107"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="155"
+         xml:space="preserve">WAMP</text>
+      <text
+         id="text3109"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="207.5"
+         xml:space="preserve">-</text>
+      <text
+         id="text3111"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="212.5"
+         xml:space="preserve">WebSocket </text>
+      <text
+         id="text3113"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="302.5"
+         xml:space="preserve">/ </text>
+      <text
+         id="text3115"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="496.25"
+         x="311.25"
+         xml:space="preserve">TCP</text>
+      <path
+         id="path3117"
+         d="M 669.45312,25.703125 623.35938,198.20312"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3119"
+         d="m 521.17188,2.109375 0,47.265625 296.48437,0 0,-47.265625 -296.48437,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3121"
+         d="m 521.17188,49.375 296.48437,0 0,-47.265625 -296.48437,0 0,47.265625 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3123"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="20"
+         x="602.5"
+         xml:space="preserve">Session runs over</text>
+      <text
+         id="text3125"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="548.75"
+         xml:space="preserve">WAMP direct calls and callbacks</text>
+      <path
+         id="path3127"
+         d="m 297.42188,339.92188 c 13.04687,0 23.59374,-10.625 23.59374,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54687,-23.67187 -23.59374,-23.67187 l -188.98438,0 c -13.046875,0 -23.671875,10.625 -23.671875,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.625,23.67188 23.671875,23.67188 l 0,0 188.98438,0 z"
+         style="fill:#a6a6a6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3129"
+         d="m 297.42188,339.92188 c 13.04687,0 23.59374,-10.625 23.59374,-23.67188 l 0,0 0,-188.90625 c 0,-13.04687 -10.54687,-23.67187 -23.59374,-23.67187 l -188.98438,0 c -13.046875,0 -23.671875,10.625 -23.671875,23.67187 l 0,0 0,188.90625 c 0,13.04688 10.625,23.67188 23.671875,23.67188 l 0,0 188.98438,0 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3131"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="321.25"
+         x="148.75"
+         xml:space="preserve">Client Process</text>
+      <path
+         id="path3133"
+         d="m 108.4375,127.34375 0,141.71875 188.98438,0 0,-141.71875 -188.98438,0 z"
+         style="fill:#595959;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3135"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#ffffff;font-family:Arial"
+         y="158.75"
+         x="177.5"
+         xml:space="preserve">Client</text>
+      <path
+         id="path3137"
+         d="m 132.03125,207.65625 0,61.40625 141.71875,0 0,-61.40625 -141.71875,0 z"
+         style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3139"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="243.75"
+         x="156.25"
+         xml:space="preserve">App Code</text>
+      <path
+         id="path3141"
+         d="m 406.01562,198.20312 -108.59374,0"
+         style="fill:none;stroke:#fa72c6;stroke-width:6.796875px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3143"
+         d="M 315.07812,25.703125 344.60938,198.20312"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3145"
+         d="m 143.28125,2.109375 0,47.265625 343.67187,0 0,-47.265625 -343.67187,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3147"
+         d="m 143.28125,49.375 343.67187,0 0,-47.265625 -343.67187,0 0,47.265625 z"
+         style="fill:none;stroke:#000000;stroke-width:0.390625px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3149"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="20"
+         x="248.75"
+         xml:space="preserve">Session runs over</text>
+      <text
+         id="text3151"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="157.5"
+         xml:space="preserve">WAMP</text>
+      <text
+         id="text3153"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="208.75"
+         xml:space="preserve">-</text>
+      <text
+         id="text3155"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="215"
+         xml:space="preserve">WebSocket </text>
+      <text
+         id="text3157"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="305"
+         xml:space="preserve">/ </text>
+      <text
+         id="text3159"
+         style="font-size:16.25px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="43.75"
+         x="313.75"
+         xml:space="preserve">Unix Domain Sockets</text>
+      <path
+         id="path3161"
+         d="m 719.0625,394.21875 0,146.48437 307.0313,0 0,-146.48437 -307.0313,0 z"
+         style="fill:#c0c0c0;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3163"
+         d="m 704.84375,380.07812 0,146.40626 307.10935,0 0,-146.40626 -307.10935,0 z"
+         style="fill:#bdf808;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3165"
+         style="font-size:20px;font-style:normal;font-weight:bold;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="435"
+         x="745"
+         xml:space="preserve">Application code</text>
+      <text
+         id="text3167"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="435"
+         x="911.25"
+         xml:space="preserve">can be </text>
+      <text
+         id="text3169"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="458.75"
+         x="716.25"
+         xml:space="preserve">deployed and distributed flexibly </text>
+      <text
+         id="text3171"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="483.75"
+         x="755"
+         xml:space="preserve">-</text>
+      <text
+         id="text3173"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#262626;font-family:Arial"
+         y="483.75"
+         x="767.5"
+         xml:space="preserve">without code changes</text>
+    </g>
+  </g>
+</svg>

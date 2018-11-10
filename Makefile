@@ -47,16 +47,12 @@ publish_docs:
 	aws s3 cp --recursive --acl public-read docs/_build s3://xbr.foundation/docs
 
 
-
-
-SVGS := $(shell find $(IMAGES) -name '*.svg')
-
-
-
+# build "docs/_static/gen/*.svg" optimized SVGs from "docs/_graphics/*.svg" using Scour
+# note: this currently does not recurse into subdirs! place all SVGs flat into source folder
 SCOUR = scour 
 SCOUR_FLAGS = --remove-descriptive-elements --enable-comment-stripping --enable-viewboxing --indent=none --no-line-breaks --shorten-ids
 
-SOURCEDIR = docs/_design
+SOURCEDIR = docs/_graphics
 BUILDDIR = docs/_static/gen
 
 SOURCES = $(wildcard $(SOURCEDIR)/*.svg)
@@ -66,4 +62,3 @@ scour: $(BUILDDIR)/$(OBJECTS)
 
 $(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
 	$(SCOUR) $(SCOUR_FLAGS) $< $@
-    #$(SCOUR) $(SCOUR_FLAGS) $< $@

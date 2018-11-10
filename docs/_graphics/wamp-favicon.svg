@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="330"
+   height="330"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.5 r10040"
+   sodipodi:docname="wamp-favicon.svg"
+   inkscape:export-filename="C:\Users\Alex\scm\wamp\wamp-web\visuals\redesign\icon.png"
+   inkscape:export-xdpi="8.7299995"
+   inkscape:export-ydpi="8.7299995">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4392">
+      <stop
+         style="stop-color:#424751;stop-opacity:1;"
+         offset="0"
+         id="stop4394" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4396" />
+    </linearGradient>
+    <filter
+       id="filter3304"
+       inkscape:label="Filter1"
+       color-interpolation-filters="sRGB" />
+    <filter
+       id="filter3412"
+       inkscape:label="Filter2"
+       color-interpolation-filters="sRGB">
+      <feBlend
+         blend="normal"
+         id="feBlend3414"
+         in2="SourceGraphic"
+         mode="normal" />
+    </filter>
+    <filter
+       id="filter3416"
+       inkscape:label="Filter3"
+       color-interpolation-filters="sRGB" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4384-8"
+       id="linearGradient4390-4"
+       x1="-5"
+       y1="597.64496"
+       x2="672"
+       y2="597.64496"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(119,1357.7172)" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4384-8">
+      <stop
+         style="stop-color:#424751;stop-opacity:1;"
+         offset="0"
+         id="stop4386-6" />
+      <stop
+         style="stop-color:#424751;stop-opacity:0"
+         offset="1"
+         id="stop4388-5" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4392-9"
+       id="linearGradient4398-0"
+       x1="-7"
+       y1="597.64496"
+       x2="676"
+       y2="597.64496"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(119,1357.7172)" />
+    <linearGradient
+       id="linearGradient4392-9">
+      <stop
+         style="stop-color:#424751;stop-opacity:1;"
+         offset="0"
+         id="stop4394-0" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop4396-0" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="618.77616"
+     inkscape:cy="-216.07595"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1618"
+     inkscape:window-height="1028"
+     inkscape:window-x="1042"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(703.65625,-1637.9063)">
+    <rect
+       style="fill:#ffffff;stroke:none"
+       id="rect3007-7-6-1-0"
+       width="398.23801"
+       height="398.23801"
+       x="-1230.932"
+       y="1550.8059"
+       rx="25.706053"
+       ry="0.019805528" />
+    <g
+       id="g3424"
+       transform="translate(-17.79899,32.426407)">
+      <path
+         inkscape:connector-curvature="0"
+         id="path3913-8-7-7-5-4-4-5-8-8-2-51-9-5-5-0"
+         d="m -490.25485,1636.006 c -60.2321,0 -110.88383,42.1357 -125.67499,99.3456 l 73.41727,0 c 10.74375,-16.8921 29.30201,-28.0522 50.37419,-28.0522 30.08501,0 55.00802,22.7574 59.43112,52.4578 l 71.45363,0 0.72135,0 c -5.03669,-69.2193 -61.20238,-123.7512 -129.72257,-123.7512 z m 57.30716,144.0694 c -4.98958,29.007 -29.58369,51.0554 -59.19069,51.0554 -20.48229,0 -38.58881,-10.5469 -49.45245,-26.65 l -74.33901,0 c 14.8036,57.1999 65.45599,99.3461 125.67499,99.3461 68.50705,0 124.6672,-54.548 129.72257,-123.7515 -0.39073,0 -0.32131,0 -0.72135,0 l -71.69406,0 z"
+         style="fill:#1a1a1a;fill-opacity:1;stroke:none" />
+      <g
+         transform="matrix(1.1294178,0,0,1.1294178,396.38242,-765.37556)"
+         id="g3153-6-6-9-1-6">
+        <path
+           inkscape:connector-curvature="0"
+           id="path3058-8-6-9-3-7-6"
+           style="font-size:66.5318222px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:TeX Gyre Heros;-inkscape-font-specification:TeX Gyre Heros"
+           d="m -907.98669,2226.7943 -5.30518,0 -6.8355,30.1987 -8.46788,-30.1987 -5.10112,0 -8.26383,30.1987 -6.98854,-30.1987 -5.30517,0 9.53911,37.1873 5.20315,0 8.31483,-30.5558 8.56989,30.5558 5.20315,0 9.43709,-37.1873" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3060-0-4-1-7-4-0"
+           style="font-size:66.5318222px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:TeX Gyre Heros;-inkscape-font-specification:TeX Gyre Heros"
+           d="m -877.00082,2263.9816 -13.05889,-37.1873 -6.12135,0 -13.26293,37.1873 5.05012,0 3.92787,-11.1715 14.33416,0 3.82585,11.1715 5.30517,0 m -10.45731,-15.1504 -11.83462,0 6.12136,-16.9357 5.71326,16.9357" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3062-6-8-0-6-8-4"
+           style="font-size:66.5318222px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:TeX Gyre Heros;-inkscape-font-specification:TeX Gyre Heros"
+           d="m -835.88423,2263.9816 0,-37.1873 -6.58045,0 -10.81439,32.3922 -11.01844,-32.3922 -6.58045,0 0,37.1873 4.48899,0 0,-31.1679 10.55933,31.1679 4.99911,0 10.45731,-31.1679 0,31.1679 4.48899,0" />
+        <path
+           inkscape:connector-curvature="0"
+           id="path3064-5-8-8-3-0-5"
+           style="font-size:66.5318222px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:TeX Gyre Heros;-inkscape-font-specification:TeX Gyre Heros"
+           d="m -799.15381,2237.7107 c 0,-6.9885 -4.13192,-10.9164 -11.47754,-10.9164 l -15.35439,0 0,37.1873 4.74405,0 0,-15.7625 11.68158,0 c 6.12134,0 10.4063,-4.336 10.4063,-10.5084 m -4.94809,-0.204 c 0,4.0809 -2.70361,6.5295 -7.2436,6.5295 l -9.89619,0 0,-13.0589 9.89619,0 c 4.53999,0 7.2436,2.4485 7.2436,6.5294" />
+      </g>
+    </g>
+  </g>
+</svg>
