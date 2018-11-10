@@ -41,10 +41,10 @@ spellcheck_docs:
 	sphinx-build -b spelling -d docs/_build/doctrees docs docs/_build/spelling
 
 # build and deploy latest docs:
-#   => https://s3.eu-central-1.amazonaws.com/xbr.foundation/docs/index.html
-#   => https://xbr.network/docs/index.html
+#   => https://s3.eu-central-1.amazonaws.com/wamp-proto.org/new/index.html
+#   => https://wamp-proto.org/new/index.html
 publish_docs:
-	aws s3 cp --recursive --acl public-read docs/_build s3://xbr.foundation/docs
+	aws s3 cp --recursive --acl public-read docs/_build s3://wamp-proto.org/new
 
 
 # build "docs/_static/gen/*.svg" optimized SVGs from "docs/_graphics/*.svg" using Scour
@@ -58,7 +58,7 @@ BUILDDIR = docs/_static/gen
 SOURCES = $(wildcard $(SOURCEDIR)/*.svg)
 OBJECTS = $(patsubst $(SOURCEDIR)/%.svg, $(BUILDDIR)/%.svg, $(SOURCES))
 
-scour: $(BUILDDIR)/$(OBJECTS)
+scour_images: $(BUILDDIR)/$(OBJECTS)
 
 $(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
 	$(SCOUR) $(SCOUR_FLAGS) $< $@
