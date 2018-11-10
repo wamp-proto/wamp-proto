@@ -1,3 +1,5 @@
+:github_url: https://github.com/wamp-proto/wamp-proto/edit/master/docs/index.rst
+
 The Web Application Messaging Protocol
 ======================================
 
@@ -47,10 +49,13 @@ Get in touch with us on our mailing list, chat room or on GitHub, search for ans
 
 
 .. |Travis| image:: https://travis-ci.org/wamp-proto/wamp-proto.svg?branch=master
-   :target: https://travis-ci.org/wamp-proto/wamp-proto
+    :target: https://travis-ci.org/wamp-proto/wamp-proto
 
 .. |Docs-S3| image:: https://img.shields.io/badge/docs-s3-brightgreen.svg?style=flat
-   :target: https://s3.eu-central-1.amazonaws.com/wamp-proto.org/index.html
+    :target: https://s3.eu-central-1.amazonaws.com/wamp-proto.org/index.html
 
 .. |Docs-CDN| image:: https://img.shields.io/badge/docs-cdn-brightgreen.svg?style=flat
-   :target: https://wamp-proto.org/index.html
+    :target: https://wamp-proto.org/index.html
+
+.. |Gitter| image:: https://gitter.im/crossbar/WAMP](https://badges.gitter.im/Join%20Chat.svg
+    :target: https://gitter.im/crossbar/WAMP?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge

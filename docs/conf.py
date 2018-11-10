@@ -7,6 +7,7 @@
 # http://www.sphinx-doc.org/en/master/config
 
 import os
+import sys
 import json
 import time
 from sphinx.highlighting import lexers
@@ -30,9 +31,7 @@ RTD_BUILD = os.environ.get('READTHEDOCS', None) == 'True'
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '_ext'))
 
 
 # -- Project information -----------------------------------------------------
@@ -165,7 +164,10 @@ html_static_path = ['_static']
 pygments_style = 'friendly'
 
 # http://www.sphinx-doc.org/en/master/theming.html
+# https://sphinx-rtd-theme.readthedocs.io/en/latest/configuring.html#html-theme-options
 html_theme_options = {
+    'canonical_url': 'https://wamp-proto.org/',
+    'display_version': False,
 }
 
 # -- Extension configuration -------------------------------------------------

@@ -51,6 +51,9 @@ build_images: $(BUILDDIR)/$(OBJECTS)
 $(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
 	$(SCOUR) $(SCOUR_FLAGS) $< $@
 
+clean_images:
+	-rm -rf docs/_static/gen
+	mkdir docs/_static/gen
 
 #
 # build the docs (https://wamp-proto.org website) from ReST sources
@@ -62,8 +65,6 @@ docs:
 
 clean_docs:
 	-rm -rf docs/_build
-	-rm -rf docs/_static/gen
-	mkdir docs/_static/gen
 
 run_docs: docs
 	twistd --nodaemon web --path=docs/_build --listen=tcp:8010
