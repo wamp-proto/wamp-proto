@@ -14,7 +14,7 @@ authors:
 	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
 
 
-build: build_images build_spec build_docs
+build: build_images build_spec docs
 
 
 #
@@ -55,7 +55,7 @@ $(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
 #
 # build the docs (https://wamp-proto.org website) from ReST sources
 #
-build_docs:
+docs:
 	tox -e sphinx
 	#cd docs && sphinx-build -nWT -b dummy . _build
 	#cd docs && sphinx-build -b html . _build
@@ -79,5 +79,4 @@ spellcheck_docs:
 #   * https://wamp-proto.org/
 #
 publish_docs:
-	aws s3 cp --recursive --acl public-read docs/_build s3://wamp-proto.org/new
-	#aws s3 cp --recursive --acl public-read docs/_build s3://wamp-proto.org/
+	aws s3 cp --recursive --acl public-read docs/_build s3://wamp-proto.org/

@@ -4,7 +4,7 @@
 
 export AWS_DEFAULT_REGION=eu-central-1
 export AWS_S3_BUCKET_NAME=wamp-proto.org
-export AWS_S3_BUCKET_PATH=new
+export AWS_S3_BUCKET_PATH=
 # AWS_ACCESS_KEY_ID         : must be set in Travis CI build context
 # AWS_SECRET_ACCESS_KEY     : must be set in Travis CI build context
 
