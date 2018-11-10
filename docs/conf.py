@@ -131,7 +131,7 @@ else:
     else:
         html_theme = 'default'
 
-html_logo = '_static/wamp_logo_white.png'
+html_logo = '_static/img/wamp_logo_white.png'
 full_logo = True
 
 # Theme options are theme-specific and customize the look and feel of a theme

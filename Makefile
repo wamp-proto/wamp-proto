@@ -21,13 +21,15 @@ build: build_images build_spec docs
 #
 # build the spec target files from sources
 #
+BUILDDIR = docs/_static/gen
+
 build_spec: build_spec_rfc build_spec_w3c
 
 build_spec_rfc:
 	-mkdir ./.build 
 	mmark -xml2 -page rfc/wamp.md > .build/wamp.xml
-	xml2rfc --text .build/wamp.xml -o docs/_static/wamp_latest_ietf.txt
-	xml2rfc --html .build/wamp.xml -o docs/_static/wamp_latest_ietf.html
+	xml2rfc --text .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.txt
+	xml2rfc --html .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.html
 
 build_spec_w3c:
 	grunt
@@ -42,7 +44,6 @@ SCOUR_FLAGS = --remove-descriptive-elements --enable-comment-stripping --enable-
 # build "docs/_static/gen/*.svg" optimized SVGs from "docs/_graphics/*.svg" using Scour
 # note: this currently does not recurse into subdirs! place all SVGs flat into source folder
 SOURCEDIR = docs/_graphics
-BUILDDIR = docs/_static/gen
 
 SOURCES = $(wildcard $(SOURCEDIR)/*.svg)
 OBJECTS = $(patsubst $(SOURCEDIR)/%.svg, $(BUILDDIR)/%.svg, $(SOURCES))
