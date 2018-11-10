@@ -9,6 +9,7 @@ requirements:
 clean:
 	-rm -rf ./.build/*
 	-rm -rf ./docs/_build/*
+	-rm -rf ./docs/_static/gen/*
 
 authors:
 	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
@@ -46,14 +47,16 @@ BUILDDIR = docs/_static/gen
 SOURCES = $(wildcard $(SOURCEDIR)/*.svg)
 OBJECTS = $(patsubst $(SOURCEDIR)/%.svg, $(BUILDDIR)/%.svg, $(SOURCES))
 
-build_images: $(BUILDDIR)/$(OBJECTS)
+$(BUILDDIR)_exists:
+	mkdir -p $(BUILDDIR)
+
+build_images: $(BUILDDIR)_exists $(BUILDDIR)/$(OBJECTS)
 
 $(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
 	$(SCOUR) $(SCOUR_FLAGS) $< $@
 
 clean_images:
 	-rm -rf docs/_static/gen
-	mkdir docs/_static/gen
 
 #
 # build the docs (https://wamp-proto.org website) from ReST sources
