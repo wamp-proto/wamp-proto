@@ -58,4 +58,4 @@ Get in touch with us on our mailing list, chat room or on GitHub, search for ans
     :target: https://wamp-proto.org/index.html
 
 .. |Gitter| image:: https://gitter.im/crossbar/WAMP](https://badges.gitter.im/Join%20Chat.svg
-    :target: https://gitter.im/crossbar/WAMP?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge
+    :target: https://gitter.im/wamp-proto/wamp-proto
