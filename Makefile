@@ -31,6 +31,8 @@ docs:
 
 clean_docs:
 	-rm -rf docs/_build
+	-rm -rf docs/_static/gen
+	mkdir docs/_static/gen
 
 run_docs: docs
 	twistd --nodaemon web --path=docs/_build --listen=tcp:8010
@@ -43,3 +45,25 @@ spellcheck_docs:
 #   => https://xbr.network/docs/index.html
 publish_docs:
 	aws s3 cp --recursive --acl public-read docs/_build s3://xbr.foundation/docs
+
+
+
+
+SVGS := $(shell find $(IMAGES) -name '*.svg')
+
+
+
+SCOUR = scour 
+SCOUR_FLAGS = --remove-descriptive-elements --enable-comment-stripping --enable-viewboxing --indent=none --no-line-breaks --shorten-ids
+
+SOURCEDIR = docs/_design
+BUILDDIR = docs/_static/gen
+
+SOURCES = $(wildcard $(SOURCEDIR)/*.svg)
+OBJECTS = $(patsubst $(SOURCEDIR)/%.svg, $(BUILDDIR)/%.svg, $(SOURCES))
+
+scour: $(BUILDDIR)/$(OBJECTS)
+
+$(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
+	$(SCOUR) $(SCOUR_FLAGS) $< $@
+    #$(SCOUR) $(SCOUR_FLAGS) $< $@

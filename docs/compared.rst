@@ -1,3 +1,0 @@
-WAMP features compared
-======================
-

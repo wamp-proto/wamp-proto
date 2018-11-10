@@ -1,5 +1,5 @@
-WAMP Implementations
-====================
+Implementations
+===============
 
 Get started with WAMP by choosing **client libraries** and a **router**:
 

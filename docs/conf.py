@@ -46,7 +46,7 @@ else:
     copyright = u'2012, Crossbar.io Technologies GmbH'
 
 # The short X.Y version
-version = '0.9.0'
+version = 'version 2'
 # The full version, including alpha/beta/rc tags
 release = version
 
@@ -99,7 +99,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '_work']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '_work', '_design']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = None
