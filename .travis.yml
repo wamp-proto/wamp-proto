@@ -12,6 +12,9 @@ addons:
     packages:
       # needed for pyenchant, needed for sphinx-spellcheck
       - libenchant-dev
+      # these two are needed to process .md files into IETF format spec
+      - mmark
+      - xml2rfc
 
 before_install:
   - export PATH=$PATH:$HOME/.local/bin
