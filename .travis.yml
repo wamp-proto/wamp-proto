@@ -20,7 +20,7 @@ before_install:
   # build ID (eg, "20180513-28114a1")
   - export WAMP_BUILD_ID="$(date --utc "+%Y%m%d")-$(git rev-parse --short ${TRAVIS_COMMIT})"
 
-  install:
+install:
   - pip install -r requirements.txt
 
 script:
@@ -36,12 +36,12 @@ matrix:
   fast_finish: true
 
   include:
-    - python: 3
+    - python: "3"
       env: TOX_ENV=sphinx
 
     # https://docs.travis-ci.com/user/build-stages/matrix-expansion/
     - stage: deploy
-      python: 3
+      python: "3"
       if: repo = wamp-proto/wamp-proto AND branch = master AND type != pull_request
       #on:
       #  repo: crossbario/crossbar
