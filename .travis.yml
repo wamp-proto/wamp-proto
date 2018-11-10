@@ -6,6 +6,13 @@ cache:
   directories:
     - $HOME/.cache/pip
 
+addons:
+  apt:
+    update: true
+    packages:
+      # needed for pyenchant, needed for sphinx-spellcheck
+      - libenchant-dev
+
 before_install:
   - export PATH=$PATH:$HOME/.local/bin
 
