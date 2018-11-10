@@ -1,9 +1,10 @@
-.PHONY: docs rfc deploy
+.PHONY: docs rfc
 
 requirements:
 	sudo apt install -y mmark xml2rfc
 	sudo npm install -g grunt-cli
 	npm install
+	pip install -r requirements.txt
 
 clean:
 	-rm -rf ./.build/*
@@ -13,21 +14,51 @@ authors:
 	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
 
 
-build: build_rfc build_w3c
+build: build_images build_spec build_docs
 
-build_w3c:
-	grunt
 
-build_rfc:
+#
+# build the spec target files from sources
+#
+build_spec: build_spec_rfc build_spec_w3c
+
+build_spec_rfc:
 	-mkdir ./.build 
 	mmark -xml2 -page rfc/wamp.md > .build/wamp.xml
 	xml2rfc --text .build/wamp.xml -o docs/_static/wamp_latest_ietf.txt
 	xml2rfc --html .build/wamp.xml -o docs/_static/wamp_latest_ietf.html
 
+build_spec_w3c:
+	grunt
 
-docs:
-	# cd docs && sphinx-build -nWT -b dummy . _build
-	cd docs && sphinx-build -b html . _build
+
+#
+# build optimized SVG files from source SVGs
+#
+SCOUR = scour 
+SCOUR_FLAGS = --remove-descriptive-elements --enable-comment-stripping --enable-viewboxing --indent=none --no-line-breaks --shorten-ids
+
+# build "docs/_static/gen/*.svg" optimized SVGs from "docs/_graphics/*.svg" using Scour
+# note: this currently does not recurse into subdirs! place all SVGs flat into source folder
+SOURCEDIR = docs/_graphics
+BUILDDIR = docs/_static/gen
+
+SOURCES = $(wildcard $(SOURCEDIR)/*.svg)
+OBJECTS = $(patsubst $(SOURCEDIR)/%.svg, $(BUILDDIR)/%.svg, $(SOURCES))
+
+build_images: $(BUILDDIR)/$(OBJECTS)
+
+$(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
+	$(SCOUR) $(SCOUR_FLAGS) $< $@
+
+
+#
+# build the docs (https://wamp-proto.org website) from ReST sources
+#
+build_docs:
+	tox -e sphinx
+	#cd docs && sphinx-build -nWT -b dummy . _build
+	#cd docs && sphinx-build -b html . _build
 
 clean_docs:
 	-rm -rf docs/_build
@@ -40,25 +71,13 @@ run_docs: docs
 spellcheck_docs:
 	sphinx-build -b spelling -d docs/_build/doctrees docs docs/_build/spelling
 
-# build and deploy latest docs:
-#   => https://s3.eu-central-1.amazonaws.com/wamp-proto.org/new/index.html
-#   => https://wamp-proto.org/new/index.html
+
+#
+# build and deploy to:
+#
+#   * https://s3.eu-central-1.amazonaws.com/wamp-proto.org/
+#   * https://wamp-proto.org/
+#
 publish_docs:
 	aws s3 cp --recursive --acl public-read docs/_build s3://wamp-proto.org/new
-
-
-# build "docs/_static/gen/*.svg" optimized SVGs from "docs/_graphics/*.svg" using Scour
-# note: this currently does not recurse into subdirs! place all SVGs flat into source folder
-SCOUR = scour 
-SCOUR_FLAGS = --remove-descriptive-elements --enable-comment-stripping --enable-viewboxing --indent=none --no-line-breaks --shorten-ids
-
-SOURCEDIR = docs/_graphics
-BUILDDIR = docs/_static/gen
-
-SOURCES = $(wildcard $(SOURCEDIR)/*.svg)
-OBJECTS = $(patsubst $(SOURCEDIR)/%.svg, $(BUILDDIR)/%.svg, $(SOURCES))
-
-scour_images: $(BUILDDIR)/$(OBJECTS)
-
-$(BUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
-	$(SCOUR) $(SCOUR_FLAGS) $< $@
+	#aws s3 cp --recursive --acl public-read docs/_build s3://wamp-proto.org/

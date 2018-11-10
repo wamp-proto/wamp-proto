@@ -1,0 +1,8 @@
+tox
+scour
+sphinx
+sphinx_rtd_theme
+sphinxcontrib_spelling
+sphinxcontrib_images
+pygments
+pyenchant
