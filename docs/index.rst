@@ -3,7 +3,7 @@
 The Web Application Messaging Protocol
 ======================================
 
-| |Travis| |Docs-S3| |Docs-CDN|
+| |Travis| |Docs-S3| |Docs-CDN| |Gitter|
 
 Welcome to the Web Application Messaging Protocol (WAMP).
 

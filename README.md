@@ -1,60 +1,14 @@
 # The Web Application Messaging Protocol
 
-**Quick Links:** [Project homepage](http://wamp-proto.org) | [Latest Internet Draft (ID)](http://wamp-proto.org/static/rfc/draft-oberstet-hybi-crossbar-wamp.html) | [Project mailing list](https://groups.google.com/forum/#!forum/wampws) | [IETF mailing list](https://www.ietf.org/mailman/listinfo/hybi)
+[![](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/crossbar/WAMP?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[![Chat about WAMP at https://gitter.im/crossbar/WAMP](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/crossbar/WAMP?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Travis](https://travis-ci.org/wamp-proto/wamp-proto.svg?branch=master)](https://travis-ci.org/wamp-proto/wamp-proto)
 
----
+[![Docs-S3](https://img.shields.io/badge/docs-s3-brightgreen.svg?style=flat)](https://s3.eu-central-1.amazonaws.com/wamp-proto.org/index.html)
 
-[WAMP](http://wamp-proto.org) is an open standard WebSocket subprotocol that provides two application messaging patterns in one unified protocol:
+[![Docs-CDN](https://img.shields.io/badge/docs-cdn-brightgreen.svg?style=flat)](https://wamp-proto.org/index.html)
 
-* Remote Procedure Calls and
-* Publish & Subscribe
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/crossbar/WAMP?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Using WAMP you can build distributed systems out of application components which are loosely coupled and communicate in (soft) real-time.
-
-The [WAMP spec](https://github.com/wamp-proto/wamp-proto/blob/master/rfc/draft-oberstet-hybi-crossbar-wamp.txt) is a community effort and the spec is made available for free under an [open license](LEGAL.md) for everyone to use or implement.
-
-[WAMP implementations](http://wamp-proto.org/implementations/) are available for many different languages and run-time environments.
-
-Find out more on the [Web site](http://wamp-proto.org) or get in touch on the [mailing list](https://groups.google.com/group/wampws).
-
-## Standardization of WAMP as an IETF standard
-
-We're currently working on getting WAMP onto a the IETF standards track.
-
-Your participation here is highly welcome!
-
-To participate in the process, please take a look at
-
-* [Contributing](CONTRIBUTING.md)
-* [Authoring](AUTHORING.md)
-
-join the [mailing list](https://groups.google.com/forum/#!forum/wampws) and our [chat room](https://gitter.im/crossbar/WAMP).
-
-The current state of both the RFC and the protocol definition is summarized in [rfc/STATUS.md](rfc/STATUS.md) which also links to the individual parts of the spec.
-
-
-## Building
-
-To build the specification RFC and Web site HTML files from the source spec files,
-you will need the following tools:
-
-* [NodeJS](https://nodejs.org/)
-* [Grunt](https://gruntjs.com/)
-* [Mmark](https://github.com/mmarkdown/mmark)
-* [xml2rfc](https://xml2rfc.tools.ietf.org/)
-
-To install the required tools:
-
-```console
-sudo apt install -y nodejs mmark xml2rfc
-npm install -g grunt-cli
-```
-
-To install the project dependencies:
-
-```console
-npm install
-```
-
+Welcome to the Web Application Messaging Protocol (WAMP) GitHub repository.
+If you are new to WAMP, please find out more at our homepage [here](https://wamp-proto.org).
