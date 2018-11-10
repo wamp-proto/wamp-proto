@@ -12,22 +12,22 @@ set -ev
 
 # TRAVIS_BRANCH, TRAVIS_PULL_REQUEST, TRAVIS_TAG
 
-# PR
+# PR => don't deploy and exit
 if [ "$TRAVIS_PULL_REQUEST" = "true" ]; then
     echo '[1] deploy script called for PR - exiting ..';
     exit 0;
 
-# direct push to master
+# direct push to master => deploy
 elif [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
     echo '[2] deploy script called for direct push to master: continuing to deploy!';
 
-# tagged release
+# tagged release => deploy
 elif [ -n "$TRAVIS_TAG" ]; then
     echo '[3] deploy script called for tagged release: continuing to deploy!';
 
+# outside travis? => deploy
 else
-    echo '[?] deploy script called for unhandled case (FIXME) - exiting ..';
-    exit 0;
+    echo '[?] deploy script called outside Travis? continuing to deploy!';
 
 fi
 
