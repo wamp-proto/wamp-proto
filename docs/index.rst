@@ -1,5 +1,7 @@
 :github_url: https://github.com/wamp-proto/wamp-proto/edit/master/docs/index.rst
 
+.. _Home:
+
 The Web Application Messaging Protocol
 ======================================
 
@@ -22,10 +24,11 @@ loosely coupled and communicate in (soft) real-time.
 
     intro
     routing
-    comparison
     spec
+    comparison
     users
     implementations
+    roadmap
     faq
     impressum
 
@@ -33,19 +36,27 @@ loosely coupled and communicate in (soft) real-time.
 Community
 ---------
 
-Get in touch with us on our mailing list, chat room or on GitHub, search for answers on StackOverflow:
+The WAMP protocol is a community effort and the specification is made available for
+free under an open license for everyone to use or implement. The original design
+and proposal was created by `Crossbar.io <https://crossbar.io>`_ developers in 2012 and
+WAMP is sponsored since then by `Crossbar.io (the company) <https://crossbario.com>`_.
+
+Get in touch with us on our mailing list, chat room or search for answers on StackOverflow:
 
 - `WAMP Google group <https://groups.google.com/group/wampws>`_
 - `WAMP Gitter chat <https://gitter.im/wamp-proto/wamp-proto>`_
 - `WAMP StackOverflow Q&A <http://fix.me>`_
+
+The WAMP protocol is also looking for contributors that help polishing up the spec,
+filling in gaps. A good starting point in going our open issues tracker on GitHub:
+
 - `WAMP GitHub issue tracker <https://github.com/wamp-proto/wamp-proto/issues>`_
 
-.. note::
 
-    The WAMP protocol is now a community effort and the specification is made available for
-    free under an open license for everyone to use or implement. The original design
-    and proposal was created by `Crossbar.io <https://crossbar.io>`_ developers in 2012 and
-    is sponsored since then by `Crossbar.io (the company) <https://crossbario.com>`_.
+What's coming up?
+-----------------
+
+Check out our :ref:`Roadmap`!
 
 
 .. |Travis| image:: https://travis-ci.org/wamp-proto/wamp-proto.svg?branch=master
@@ -57,5 +68,5 @@ Get in touch with us on our mailing list, chat room or on GitHub, search for ans
 .. |Docs-CDN| image:: https://img.shields.io/badge/docs-cdn-brightgreen.svg?style=flat
     :target: https://wamp-proto.org/index.html
 
-.. |Gitter| image:: https://gitter.im/crossbar/WAMP](https://badges.gitter.im/Join%20Chat.svg
+.. |Gitter| image:: https://badges.gitter.im/Join%20Chat.svg
     :target: https://gitter.im/wamp-proto/wamp-proto

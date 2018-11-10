@@ -1,7 +1,9 @@
 :github_url: https://github.com/wamp-proto/wamp-proto/edit/master/docs/routing.rst
 
-Application Message Routing
-===========================
+.. _Routing:
+
+Message Routing in WAMP
+=======================
 
 .. contents:: :local:
 
