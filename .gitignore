@@ -3,6 +3,5 @@ twistd.pid
 .build
 docs/_build
 node_modules
-docs/_static/gen
 .idea
 .tox
