@@ -76,6 +76,7 @@ connectanum_        Java, Netty                         A Java WAMP implementati
 Crossbar_           Python (PyPy), Twisted              Crossbar.io WAMP router and microservice middleware. By the creators of WAMP and Autobahn.
 CrossbarFX_         Python (PyPy), Twisted              CrossbarFX enterprise WAMP router with central management, edge device platform and clustering.
 Cargotube_          Erlang                              A software router in Erlang implementing the wamp.ws protcol (successor of Erwa).
+Bondy_              Erlang                              Leapsight Bondy is an open source distributed API Gateway, WAMP Router and networking platform for microservices and IoT applications written in Erlang. It provides scaleable clustering capabilities via TCP/IP using Partisan, Plumtree Epidemic Broadcast Trees and an eventually consistent data store.
 Erwa_               Erlang                              Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.
 jawampa_            Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
 Nexus_              Go                                  Router implementation for Go. (also includes a client implementation)
@@ -98,6 +99,7 @@ Wiola_              LUA                                 Router implementation in
 .. _AutobahnPython: https://github.com/crossbario/autobahn-python
 .. _awre: https://github.com/bwegh/awre
 .. _Backbone: https://github.com/darrrk/backbone.wamp
+.. _Bondy: https://gitlab.com/leapsight/bondy
 .. _Bonefish: https://github.com/tplgy/bonefish
 .. _Cargotube: https://github.com/CargoTube/cargotube
 .. _connectanum: http://www.connectanum.com/
