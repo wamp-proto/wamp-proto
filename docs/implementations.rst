@@ -58,7 +58,7 @@ WAMP_POCO_          C++                                 A fork of AutobahnCpp th
 wamped_             C++                                 Intended for running on `ARM mbed OS <https://www.mbed.com/en/>`_. Experimental.
 WampSharp_          C#                                  C# implementation of WAMP: both client and router roles, both JSON and `MessagePack <http://msgpack.org/>`_ support.
 wampy_              Python                              Python implementation for classic blocking Python applications.
-wampyjs_            JavaScript                          WAMP Client library for browsers using callbacks. See `here <https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs>`_ for comparison to AutobahnJS.
+wampy.js_           JavaScript                          WAMP JavaScript client for browsers and node.js using callbacks. See `here <https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs>`_ for comparison to AutobahnJS.
 ==================  ==================================  =====================
 
 
@@ -87,7 +87,7 @@ wamp2spring_        Java, Spring                        A Java implementation bu
 wampcc_             C++                                 A C++ WAMP library that aims to depend only on C libraries, making it easier to work and build on a range of platforms.
 wamprt_             JavaScript, NodeJS                  <td class="notes">Router only implementation for `NodeJS <http://nodejs.org/>`_ created by `Orange <http://opensource.orange.com/home>`_.
 WampSharp_          C#                                  C# router implementation of WAMP v2, both JSON and `MessagePack <http://msgpack.org/>`_ support.
-Wiola_              LUA                                 Router implementation in `LUA <http://www.lua.org/>`_, using the power of Lua/Nginx, WebSocket and `Readis <http://redis.io/>`_ as cache store.
+Wiola_              Lua                                 Router implementation in `Lua <http://www.lua.org/>`_, using the power of Lua/Nginx, WebSocket and `Redis <http://redis.io/>`_ as cache store.
 ==================  ==================================  =====================
 
 
@@ -129,5 +129,5 @@ Wiola_              LUA                                 Router implementation in
 .. _wamprt: https://github.com/Orange-OpenSource/wamp.rt
 .. _WampSharp: https://github.com/Code-Sharp/WampSharp
 .. _wampy: https://github.com/noisyboiler/wampy
-.. _wampyjs: https://github.com/KSDaemon/wampy.js
+.. _wampy.js: https://github.com/KSDaemon/wampy.js
 .. _Wiola: http://ksdaemon.github.io/wiola/
