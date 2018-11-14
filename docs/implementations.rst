@@ -42,7 +42,7 @@ CppWAMP_            C++ 11                              CppWAMP is a WAMP V2 imp
 haskell-wamp_       Haskell                             An experimental Haskell implementation of WAMP Basic Profile.
 kraftfahrstrasse_   TypeScript                          Modern WAMP Client library for browsers and node utilizing native ES6+.
 jawampa_            Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
-Loowy_              LUA, lib-ev                         LUA WAMP client implementation on top of lua-websockets and lib-ev.
+Loowy_              Lua, lib-ev                         Lua WAMP client implementation on top of lua-websockets and lib-ev.
 MDWamp_             Objective-C                         Client library for iOS apps built on `SocketRocket <https://github.com/square/SocketRocket>`_ for WebSocket.
 Minion_             PHP                                 Client library and command line tool with `Laravel <http://laravel.com/>`_ support. Based on `Thruway <https://github.com/voryx/Thruway>`_.
 Nexus_              Go                                  A full-feature WAMP client written in Go (also a Router).
