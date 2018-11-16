@@ -21,13 +21,11 @@ Using WAMP you can build distributed systems out of application components which
 At its core, WAMP offers two communication patterns for application components to talk
 to each other:
 
-<center>
-<a href="{{ url_for('page_faq')}}#pubsub">Publish &amp; Subscribe</a> (PubSub) and
-<a href="{{ url_for('page_faq')}}#rpc">Remote Procedure Calls</a> (RPC)
-</center>
+- **`Publish & Subscribe`_ (PubSub)**
+- **`Remote Procedure Calls`_ (RPC)**
 
-We think applications often
-have a natural <a href="{{ url_for('page_faq')}}#why_rpc_and_pubsub">need for both forms of communication</a>
+
+We think applications often have a natural `need for both forms of communication`_ 
 and shouldn't be required to use different protocols/means for those. Which is why WAMP provides both.
 
 
@@ -172,13 +170,13 @@ are naturally transmitted to the backend component (and possibly others) via pub
 Real-time
 ---------
 
-<a href="http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/">WebSocket</a> is a new
+`WebSocket <http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/>`_ is a new
 Web protocol that overcomes limitations of HTTP when bidirectional, real-time communication
 is required.
 
 
-WebSocket is specified as an <a href="http://tools.ietf.org/html/rfc6455">IETF standard</a>
-and built into <a href="http://crossbar.io/docs/Browser-Support/">modern browsers</a>.
+WebSocket is specified as an `IETF standard <http://tools.ietf.org/html/rfc6455>`_
+and built into `modern browsers <https://caniuse.com/#search=websocket>`_.
 
 
 When designing WAMP, we recognized early on that WebSocket would be the ideal basis for WAMP as it
@@ -191,12 +189,12 @@ This is where WAMP enters. WAMP adds the higher level messaging patterns of RPC 
 to WebSocket.
 
 
-Technically, WAMP is an <a href="http://www.iana.org/assignments/websocket/websocket.xml#subprotocol-name">officially registered</a> <strong>WebSocket subprotocol</strong> (runs on top of WebSocket)
-that uses <strong><a href="http://www.json.org/">JSON</a></strong> as message serialization format.
+Technically, WAMP is an `officially registered <http://www.iana.org/assignments/websocket/websocket.xml#subprotocol-name>`_ **WebSocket subprotocol** (runs on top of WebSocket)
+that uses **`JSON <http://www.json.org/>`_** as message serialization format.
 
 
 While WAMP-over-WebSocket with JSON serialization is the preferred transport for WAMP, the
-protocol can also run with <a href="http://msgpack.org/">MsgPack</a> as serialization, run over raw-TCP
+protocol can also run with `MsgPack <http://msgpack.org/>`_ as serialization, run over raw-TCP
 or generally any message based, bidirectional, reliable transport.
 
 
@@ -207,19 +205,19 @@ or generally any message based, bidirectional, reliable transport.
 Language independent
 --------------------
 
-WAMP was designed with first-class support for <a href="{{ url_for('page_implementations') }}">different languages</a>
-in mind (*).
+WAMP was designed with first-class support for `different languages`_ in mind (*).
 Nothing in WAMP is specific to a single programming language. As soon as a programming language
 has a WAMP implementation, it can talk to application components written *in any other language*
 with WAMP support. Transparently.
 
-<p style="font-size: 80%; width: 90%; margin: auto;">
-*: WAMP has facilities for first-class support of many common and less common language features.
-E.g. WAMP can transmit both positional and keyword based call arguments, so that languages which
-natively support keyword arguments in functions (e.g. Python) can be naturally mapped. WAMP even
-supports multi-positional and keywords based *return* values for calls. E.g. the PostgreSQL
-pgPL/SQL or Oracle PL/SQL languages support this. Means that most PL/SQL functions can be naturally
-exposed via WAMP.
+.. note::
+
+    WAMP has facilities for first-class support of many common and less common language features.
+    E.g. WAMP can transmit both positional and keyword based call arguments, so that languages which
+    natively support keyword arguments in functions (e.g. Python) can be naturally mapped. WAMP even
+    supports multi-positional and keywords based **return** values for calls. E.g. the PostgreSQL
+    pgPL/SQL or Oracle PL/SQL languages support this. Means that most PL/SQL functions can be naturally
+    exposed via WAMP.
 
 
 The ability to create a system from application components written in different languages is a big
@@ -243,3 +241,8 @@ Network spanning
 ----------------
 
 Write me.
+
+.. _different languages: /implementations.html
+.. _need for both forms of communication: /faq.html#why_rpc_and_pubsub
+.. _Publish & Subscribe: /faq.html#pubsub
+.. _Remote Procedure Calls: /faq.html#rpc
