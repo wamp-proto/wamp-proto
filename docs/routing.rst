@@ -21,8 +21,8 @@ Using WAMP you can build distributed systems out of application components which
 At its core, WAMP offers two communication patterns for application components to talk
 to each other:
 
-- **`Publish & Subscribe`_ (PubSub)**
-- **`Remote Procedure Calls`_ (RPC)**
+- `Publish & Subscribe`_ (PubSub)
+- `Remote Procedure Calls`_ (RPC)
 
 
 We think applications often have a natural `need for both forms of communication`_ 
@@ -190,7 +190,7 @@ to WebSocket.
 
 
 Technically, WAMP is an `officially registered <http://www.iana.org/assignments/websocket/websocket.xml#subprotocol-name>`_ **WebSocket subprotocol** (runs on top of WebSocket)
-that uses **`JSON <http://www.json.org/>`_** as message serialization format.
+that uses `JSON <http://www.json.org/>`_ as message serialization format.
 
 
 While WAMP-over-WebSocket with JSON serialization is the preferred transport for WAMP, the
