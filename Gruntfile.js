@@ -48,6 +48,14 @@ module.exports = function(grunt) {
                             replacement: ''
                         },
                         {
+                            match: ' {#ids}',
+                            replacement: ''
+                        },
+                        {
+                            match: ' {#messages}',
+                            replacement: ''
+                        },
+                        {
                             match: ' {#protocol_errors}',
                             replacement: ''
                         }
