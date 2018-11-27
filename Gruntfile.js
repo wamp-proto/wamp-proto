@@ -110,7 +110,7 @@ module.exports = function(grunt) {
                     '.build/wamp-processed.md',
                     '.build/footer.html'
                 ],
-                dest: 'docs/_static/gen/wamp_latest.html'
+                dest: 'docs/_static/wamp_latest.html'
             },
             concatDev: {
                 src: [
@@ -118,7 +118,7 @@ module.exports = function(grunt) {
                     '.build/wamp-processed.md',
                     'rfc/aux/footer.html'
                 ],
-                dest: 'docs/_static/gen/wamp_latest.html'
+                dest: 'docs/_static/wamp_latest.html'
             }
         },
         watch: {
