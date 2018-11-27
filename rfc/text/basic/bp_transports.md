@@ -76,7 +76,7 @@ The diagram below illustrates the full transport connection and session lifecycl
         `------'                                    `------'
 
 
-### Protocol errors
+### Protocol errors {#protocol_errors}
 
 WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
 

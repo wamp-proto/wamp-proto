@@ -1,6 +1,6 @@
 ## Identifiers
 
-### URIs
+### URIs {#uris}
 
 WAMP needs to identify the following persistent resources:
 
@@ -87,7 +87,7 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 * `wamp.error.procedure_already_exists`
 
 
-### IDs
+### IDs {#ids}
 
 WAMP needs to identify the following ephemeral entities each in the scope noted:
 

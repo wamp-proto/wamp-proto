@@ -1,4 +1,4 @@
-### Pattern-based Subscriptions
+### Pattern-based Subscriptions {#pattern-based-subscriptions}
 
 #### Introduction
 
