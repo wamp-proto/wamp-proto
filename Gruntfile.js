@@ -1,62 +1,71 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 
     require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
-        pkg           : grunt.file.readJSON('package.json'),
-        clean         : {
+        pkg: grunt.file.readJSON('package.json'),
+        clean: {
             all: ['.build/*']
         },
-        replace       : {
+        replace: {
             spec: {
                 options: {
                     usePrefix: false,
-                    patterns : [
-                        {
-                            match      : /%\s*(.*)/g,
+                    patterns: [{
+                            match: /%\s*(.*)/g,
                             replacement: ''
                         },
                         {
-                            match      : /{{(.*)}}/g,
+                            match: /{{(.*)}}/g,
                             replacement: '{{@@include(\'$1\')}}'
                         },
                         {
-                            match      : '<CODE BEGINS>',
+                            match: '<CODE BEGINS>',
                             replacement: ''
                         },
                         {
-                            match      : '<CODE ENDS>',
+                            match: '<CODE ENDS>',
                             replacement: ''
                         },
                         {
-                            match      : '{mainmatter}',
+                            match: '{mainmatter}',
                             replacement: ''
                         },
                         {
-                            match      : '{backmatter}',
+                            match: '{backmatter}',
                             replacement: ''
                         },
                         {
-                            match      : '.# Abstract',
+                            match: '.# Abstract',
+                            replacement: ''
+                        },
+                        {
+                            match: ' {#pattern-based-subscriptions}',
+                            replacement: ''
+                        },
+                        {
+                            match: ' {#uris}',
+                            replacement: ''
+                        },
+                        {
+                            match: ' {#protocol_errors}',
                             replacement: ''
                         }
                     ]
                 },
-                files  : [
+                files: [
                     { expand: true, flatten: false, src: ['rfc/**/*.md'], dest: '.build/' }
                 ]
             },
-            dev : {
+            dev: {
                 options: {
                     usePrefix: false,
-                    patterns : [
-                        {
-                            match      : '<script src="//localhost:35729/livereload.js"></script>',
-                            replacement: ''
-                        }
-                    ]
+                    patterns: [{
+                        match: '<script src="//localhost:35729/livereload.js"></script>',
+                        replacement: ''
+                    }]
                 },
-                files  : [
+                files: [
                     { src: 'rfc/aux/footer.html', dest: '.build/footer.html' }
                 ]
             }
@@ -64,21 +73,19 @@ module.exports = function (grunt) {
         includereplace: {
             spec: {
                 options: {
-                    prefix     : '{{@@',
-                    suffix     : '}}',
+                    prefix: '{{@@',
+                    suffix: '}}',
                     includesDir: '.build/'
                 },
-                files  : [
-                    {
-                        expand : true,
-                        flatten: true,
-                        src    : ['.build/rfc/wamp.md'],
-                        dest   : '.build/'
-                    }
-                ]
+                files: [{
+                    expand: true,
+                    flatten: true,
+                    src: ['.build/rfc/wamp.md'],
+                    dest: '.build/'
+                }]
             }
         },
-        copy          : {
+        copy: {
             spec: {
                 options: {
                     process: (content, srcpath) => {
@@ -91,22 +98,22 @@ module.exports = function (grunt) {
                             .replace(/\n\n\n\n/gm, '\n\n');
                     }
                 },
-                files  : [
+                files: [
                     { src: '.build/wamp.md', dest: '.build/wamp-processed.md' }
                 ]
             }
         },
-        concat        : {
+        concat: {
             concatProd: {
-                src : [
+                src: [
                     'rfc/aux/header.html',
                     '.build/wamp-processed.md',
                     '.build/footer.html'
                 ],
                 dest: 'docs/_static/gen/wamp_latest.html'
             },
-            concatDev : {
-                src : [
+            concatDev: {
+                src: [
                     'rfc/aux/header.html',
                     '.build/wamp-processed.md',
                     'rfc/aux/footer.html'
@@ -114,12 +121,12 @@ module.exports = function (grunt) {
                 dest: 'docs/_static/gen/wamp_latest.html'
             }
         },
-        watch         : {
+        watch: {
             sources: {
-                files  : ['Gruntfile.js', 'rfc/aux/header.html', 'rfc/aux/footer.html', 'rfc/**/*.md'],
-                tasks  : ['clean', 'replace:spec', 'includereplace', 'copy', 'concat:concatDev'],
+                files: ['Gruntfile.js', 'rfc/aux/header.html', 'rfc/aux/footer.html', 'rfc/**/*.md'],
+                tasks: ['clean', 'replace:spec', 'includereplace', 'copy', 'concat:concatDev'],
                 options: {
-                    reload    : true,
+                    reload: true,
                     livereload: true
                 }
             }
