@@ -41,6 +41,7 @@ connectanum_        Java, Netty                         A Java WAMP implementati
 CppWAMP_            C++ 11                              CppWAMP is a WAMP V2 implementation in C++11.
 haskell-wamp_       Haskell                             An experimental Haskell implementation of WAMP Basic Profile.
 kraftfahrstrasse_   TypeScript                          Modern WAMP Client library for browsers and node utilizing native ES6+.
+KWAMP_              Kotlin                              A Kotlin WAMP client (aims for basic profile).
 jawampa_            Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
 Loowy_              Lua, lib-ev                         Lua WAMP client implementation on top of lua-websockets and lib-ev.
 MDWamp_             Objective-C                         Client library for iOS apps built on `SocketRocket <https://github.com/square/SocketRocket>`_ for WebSocket.
@@ -79,6 +80,7 @@ Cargotube_          Erlang                              A software router in Erl
 Bondy_              Erlang                              Leapsight Bondy is an open source distributed API Gateway, WAMP Router and networking platform for microservices and IoT applications written in Erlang. It provides scaleable clustering capabilities via TCP/IP using Partisan, Plumtree Epidemic Broadcast Trees and an eventually consistent data store.
 Erwa_               Erlang                              Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.
 jawampa_            Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
+KWAMP_              Kotlin                              A Kotlin WAMP router (aims for basic profile).
 Nexus_              Go                                  Router implementation for Go. (also includes a client implementation)
 NighlifeRabbit_     JavaScript, NodeJS                  Router implementation for `NodeJS <http://nodejs.org/>`_, MIT licensed.
 Thruway_            PHP                                 Thruway is a WAMP library built in PHP that provides both Client and Router roles.
@@ -109,6 +111,7 @@ Wiola_              Lua                                 Router implementation in
 .. _Erwa: https://github.com/bwegh/erwa
 .. _haskell-wamp: https://github.com/mulderr/haskell-wamp
 .. _jawampa: https://github.com/Matthias247/jawampa
+.. _KWAMP: https://github.com/LaurenceGA/kwamp
 .. _kraftfahrstrasse: https://github.com/Verkehrsministerium/kraftfahrstrasse
 .. _Loowy: https://github.com/KSDaemon/Loowy
 .. _MDWamp: https://github.com/mogui/MDWamp

@@ -5,7 +5,7 @@
 The Web Application Messaging Protocol
 ======================================
 
-| |Travis| |Docs-S3| |Docs-CDN| |Gitter|
+| |Spec| |Travis| |Docs-S3| |Docs-CDN| |Gitter|
 
 .. |Travis| image:: https://travis-ci.org/wamp-proto/wamp-proto.svg?branch=master
     :target: https://travis-ci.org/wamp-proto/wamp-proto
@@ -19,10 +19,15 @@ The Web Application Messaging Protocol
 .. |Gitter| image:: https://badges.gitter.im/Join%20Chat.svg
     :target: https://gitter.im/wamp-proto/wamp-proto
 
+.. |Spec| image:: https://img.shields.io/badge/spec-latest-ff69b4.svg
+    :target: /_static/gen/wamp_latest.html
+
+-------
+
 Welcome to the Web Application Messaging Protocol (WAMP)!
 
 WAMP is an open standard `WebSocket <https://tools.ietf.org/html/rfc6455>`_
-`subprotocol <https://www.iana.org/assignments/websocket/websocket.xml>`_ that provides two 
+`subprotocol <https://www.iana.org/assignments/websocket/websocket.xml>`_ that provides two
 application messaging patterns in one unified protocol:
 
 * routed **Remote Procedure Calls** and
