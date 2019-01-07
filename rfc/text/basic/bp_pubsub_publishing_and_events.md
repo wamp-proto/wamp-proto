@@ -44,7 +44,7 @@ or
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the Publisher and used to correlate the Broker's response with the request.
+* `Request` is a sequential ID in the _session scope_, incremented by the Publisher and used to correlate the Broker's response with the request.
 * `Options` is a dictionary that allows to provide additional publication request details in an extensible way. This is described further below.
 * `Topic` is the topic published to.
 * `Arguments` is a list of application-level event payload elements. The list may be of zero length.

@@ -43,7 +43,7 @@ A Callee announces the availability of an endpoint implementing a procedure with
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the Callee and used to correlate the Dealer's response with the request.
+* `Request` is a sequential ID in the _session scope_, incremented by the Callee and used to correlate the Dealer's response with the request.
 * `Options` is a dictionary that allows to provide additional registration request details in a extensible way. This is described further below.
 * `Procedure`is the procedure the Callee wants to register
 
@@ -95,7 +95,7 @@ When a Callee is no longer willing to provide an implementation of the registere
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the Callee and used to correlate the Dealer's response with the request.
+* `Request` is a sequential ID in the _session scope_, incremented by the Callee and used to correlate the Dealer's response with the request.
 * `REGISTERED.Registration` is the ID for the registration to revoke, originally handed out by the Dealer to the Callee.
 
 *Example*
