@@ -50,7 +50,7 @@ or
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the Caller and used to correlate the Dealer's response with the request.
+* `Request` is a sequential ID in the _session scope_, incremented by the Caller and used to correlate the Dealer's response with the request.
 * `Options` is a dictionary that allows to provide additional call request details in an extensible way. This is described further below.
 * `Procedure` is the URI of the procedure to be called.
 * `Arguments` is a list of positional call arguments (each of arbitrary type). The list may be of zero length.
@@ -100,7 +100,7 @@ or
 
 where
 
-* `Request` is a random, ephemeral ID chosen by the Dealer and used to correlate the *Callee's* response with the request.
+* `Request` is a sequential ID in the _session scope_, incremented by the Dealer and used to correlate the *Callee's* response with the request.
 * `REGISTERED.Registration` is the registration ID under which the procedure was registered at the Dealer.
 * `Details` is a dictionary that allows to provide additional invocation request details in an extensible way. This is described further below.
 * `CALL.Arguments` is the original list of positional call arguments as provided by the Caller.
