@@ -43,7 +43,7 @@ WAMP is a routed protocol, with all components connecting to a WAMP Router, wher
 WAMP Router performs message routing between the components, and provides two messaging
 patterns in one Web native protocol:
 
-* **Publish & Subscribe (PubSub)** and 
+* **Publish & Subscribe (PubSub)** and
 * routed **Remote Procedure Calls (rRPC)**
 
 Publish & Subscribe (PubSub) is an established messaging pattern where a component,
@@ -104,40 +104,32 @@ loosely coupled and communicate in (soft) real-time:
 
     <div id="frontdemo">
 
-        <div class="boxes row fullWidth cursorBoxContainer">
+        <div class="boxes cursorBoxContainer">
 
-        <div class="col s12 l4">
             <div id="box1" class="cursorBox">
-                <div id="box1cursor" class="cursor">
-                    <img src="/_static/img/wamp_logo.svg" alt="WAMP icon">
+                <img src="/_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box1cursor" class="cursor">
+            </div>
+
+            <div class="connector">
+                <div class="connectorLine"></div>
+                <div class="connectorInstance">
+                    <img src="/_static/img/crossbar_icon.svg" alt="Crossbar.io icon">
+                    <p>
+                        <!-- Not connected -->
+                    </p>
                 </div>
             </div>
-        </div>
 
-        <div class="col s12 l4 connector">
-            <div class="connectorLine"></div>
-            <div class="connectorInstance">
-                <img src="/_static/gen/crossbar_icon.svg" alt="Crossbar.io icon">
-                <p>
-                    <!-- Not connected -->
-                </p>
-            </div>
-
-        </div>
-
-        <div class="col s12 l4">
             <div id="box2" class="cursorBox">
-                <div id="box2cursor" class="cursor">
-                    <img src="/_static/img/wamp_logo.svg" alt="WAMP icon">
-                </div>
+                <img src="/_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box2cursor" class="cursor">
             </div>
-        </div>
 
         </div>
 
-        <div class="center-align" id="statusline">
+        <div class="statusline" id="statusline">
         Status: not connected.
         </div>
 
     </div>
-
+    <script src="/_static/js/autobahn.min.js"></script>
+    <script src="/_static/js/cursorbox.js"></script>

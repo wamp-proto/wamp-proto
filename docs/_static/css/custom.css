@@ -21,81 +21,53 @@
 /* cursorsync formatting */
 
 #frontdemo {
-    width: 80%;
-    max-width: 480px;
-    margin: auto;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.boxes {
-    display: inline-block;
- }
- 
-.fullWidth {
-    width: 100%;
+.cursorBoxContainer {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    grid-gap: 0;
 }
- 
-.cursorBoxContainer > div {
-    height: 200px;
-}
- 
+
 .cursorBox {
-    height: 100%;
-    /* width: 350px; */
+    height: 200px;
     border: 2px solid #949494;
     border-radius: 3px;
-    /* float: left; */
     position: relative;
-    /* margin-right: 9px; */
 }
- 
-.cursor > img {
+
+.cursor {
     position: absolute;
-    height: 80px;
-    width: 80px;
-    /* border: 1px solid #5D5D5D; */
-    /* border-radius: 1px; */
-    /* background-color: #ffff00; */
+    height: 60px;
+    width: 60px;
     top: 0;
     left: 0;
- }
- 
+}
+
 .connector {
     text-align: center;
     position: relative;
 }
- 
+
 .connectorLine {
     height: 50%;
-    width: 110%;
-    position: relative;
-    left: -5%;
     border-bottom: 3px solid #949494;
 }
- 
+
 .connectorInstance {
+    width: 50px;
     position: relative;
     display: inline-block;
     top: -50px;
 }
- 
-@media (max-width: 993px) {
-    .connectorLine {
-       height: 100%;
-       width: 50%;
-       position: relative;
-       left: 0;
-       border-bottom: none;
-       border-right: 3px solid #949494;
-    }
- 
-    .connectorInstance {
-       top: -151px;
-    }
- 
-    .connectorInstance p {margin-top: 0;background-color: #333;}
+
+.statusline {
+    margin: 1em 0 2em;
 }
- 
+
 .connector img {
-    /* width: 100px; */
+    width: 100px;
     height: 100px;
 }
