@@ -1,3 +1,3 @@
 // custom JS to include in generated pages
 
-console.log("hello world!");
+// console.log("hello world!");

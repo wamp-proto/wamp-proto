@@ -98,7 +98,9 @@ What can I do with this?
 ------------------------
 
 Using WAMP you can build distributed systems out of application components which are
-loosely coupled and communicate in (soft) real-time:
+loosely coupled and communicate in (soft) real-time.
+
+In the demo below, cursor position data from one box is sent via a WAMP router (Crossbar.io) instance hosted in AWS.
 
 .. raw:: html
 
