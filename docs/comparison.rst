@@ -34,7 +34,7 @@ SOAP, STOMP and MBWS for IoT applications.
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | Technology                      | PubSub   | RPC     | Routed RPC   | Web native   | Cross Language   | Open Standard   |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `WAMP </>`__                    | ✔        | ✔       | ✔            | ✔            | ✔                | ✔               |
+| WAMP                            | ✔        | ✔       | ✔            | ✔            | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `AJAX <#ajax>`__                | **-**    | ✔       | **-**        | ✔            | ✔                | **-**           |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
@@ -42,13 +42,13 @@ SOAP, STOMP and MBWS for IoT applications.
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `Apache Thrift <#thrift>`__     | **-**    | ✔       | **-**        | **-**        | ✔                | **-**           |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `Capn'n'Proto <#capnproto>`__   | **-**    | ✔       | **-**        | **-**        | ✔                | **-**           |
+| `Capn'n'Proto <#capnnproto>`__  | **-**    | ✔       | **-**        | **-**        | ✔                | **-**           |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `Comet <#comet>`__              | **-**    | **-**   | **-**        | ✔            | ✔                | **-**           |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `OMG DDS <#dds>`__              | ✔        | **-**   | **-**        | **-**        | ✔                | ✔               |
+| `OMG DDS <#omg-dds>`__          | ✔        | **-**   | **-**        | **-**        | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `D-Bus <#dbus>`__               | **-**    | **-**   | **-**        | **-**        | ✔                | **-**           |
+| `D-Bus <#d-bus>`__              | **-**    | **-**   | **-**        | **-**        | ✔                | **-**           |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `CORBA <#corba>`__              | ✔        | ✔       | **-**        | **-**        | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
@@ -56,11 +56,13 @@ SOAP, STOMP and MBWS for IoT applications.
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `Java JMS <#jms>`__             | ✔        | **-**   | **-**        | **-**        | **-**            | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `Java RMI <#rmi>`__             | **-**    | ✔       | **-**        | **-**        | **-**            | ✔               |
+| `Java RMI <#java-rmi>`__        | **-**    | ✔       | **-**        | **-**        | **-**            | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `JSON-RPC <#jsonrpc>`__         | **-**    | ✔       | **-**        | ✔            | ✔                | ✔               |
+| `JSON-RPC <#json-rpc>`__        | **-**    | ✔       | **-**        | ✔            | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `MQTT <#mqtt>`__                | ✔        | **-**   | **-**        | **-**        | ✔                | ✔               |
++---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
+| `OPC-UA <#opc-ua>`__            | (✔)        | ✔     | **-**        | (✔)          | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `REST <#rest>`__                | **-**    | ✔       | **-**        | ✔            | ✔                | **-**           |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
@@ -72,9 +74,7 @@ SOAP, STOMP and MBWS for IoT applications.
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `STOMP <#stomp>`__              | ✔        | **-**   | **-**        | ✔            | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `OPC-UA <#opcua>`__             | ✔        | (✔)     | **-**        | (✔)          | ✔                | ✔               |
-+---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `XML-RPC <#xmlrpc>`__           | **-**    | ✔       | **-**        | ✔            | ✔                | ✔               |
+| `XML-RPC <#xml-rpc>`__          | **-**    | ✔       | **-**        | ✔            | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `XMPP <#xmpp>`__                | ✔        | **-**   | **-**        | ✔            | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
@@ -91,7 +91,7 @@ between frontends (browsers) and backends.
 
 AJAX being a programming practice, isn't a complete RPC system either.
 You need to agree upon how calls, results and errors are formatted and
-serialized. See `JSON-RPC <#jsonrpc>`__ and `XML-RPC <#xmlrpc>`__.
+serialized. See `JSON-RPC <#json-rpc>`__ and `XML-RPC <#xml-rpc>`__.
 
 Even when you bake some RPC mechanism using AJAX techniques, this is
 point-to-point RPC: calls aren't routed between different servers or
@@ -116,7 +116,7 @@ is a ...
 
 
 .. rubric:: Apache Thrift
-   :name: apache-thrift
+   :name: thrift
 
 `Apache Thrift <https://thrift.apache.org/>`__ is a cross-language RPC
 system. It uses a statically typed approach where procedures first need
@@ -188,13 +188,13 @@ Event Service
 
 
 .. rubric:: Java Message Service (JMS)
-   :name: java-message-service-jms
+   :name: jms
 
 `Java Message Service
 (JMS) <http://en.wikipedia.org/wiki/Java_Message_Service>`__ is a Java
 **API** specification for an (abstract) PubSub service. Programs are
 written in Java against the JMS API. JMS does not provide RPC (but see
-`Java RMI <#rmi>`__).
+`Java RMI <#java-rmi>`__).
 
 JMS does not guarantee interoperability between implementations, and the
 JMS-compliant messaging system in use may need to be deployed on both
@@ -219,6 +219,11 @@ RMI <http://en.wikipedia.org/wiki/Java_remote_method_invocation>`__ is a
 
 `JSON-RPC <http://json-rpc.org/>`__ is a ...
 
+
+.. rubric:: MQTT
+   :name: mqtt
+
+`MQTT <http://en.wikipedia.org/wiki/Mqtt>`__ is a ...
 
 .. rubric:: OPC-UA
    :name: opc-ua
@@ -258,11 +263,7 @@ application code and infrastructure/deployment artifacts (the hostnames
 
 OPC-UA servers can provide Notification services that are roughly
 modeled after a Publish & Subscribe model. However, OPC-UA clients have
-to
-
-poll
-
-for notifications and cannot receive events asynchronously and in
+to **poll** for notifications and cannot receive events asynchronously and in
 real-time. Increasing the polling frequency reduces the latency between
 the occurence of an event in the machine (a change of a value in the
 node tree of an OPA-UA server) and the actual reception of the event in
@@ -270,10 +271,7 @@ an OPC-UA client (via a response to a polling request on a
 subscription), but the tradeoff is an increase in the wire traffic as
 well (polling when no change occured).
 
-.. rubric:: MQTT
-   :name: mqtt
 
-`MQTT <http://en.wikipedia.org/wiki/Mqtt>`__ is a ...
 
 
 .. rubric:: REST
@@ -357,7 +355,7 @@ independent addressing and routing right into the protocol.
 
 
 .. rubric:: socket.io
-   :name: socket.io
+   :name: socketio
 
 `socket.io <http://socket.io/>`__ is a client-server PubSub service
 implementation written in JavaScript. It uses node.js on server side,
@@ -439,4 +437,4 @@ sockets"), it does not support RPC out of the box. There exist libraries
 `ThriftZMQ <https://github.com/thriftzmq/thriftzmq-java>`__) that layer
 on top of ZMQ to provide applications with first-class RPC services.
 
-`Top <#top>`__
+`to Top <#top>`__

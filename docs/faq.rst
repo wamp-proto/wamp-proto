@@ -8,29 +8,26 @@ Frequently Asked Questions
 .. rubric:: Frequently Asked Questions
    :name: frequently-asked-questions
 
--  General
+- General
 
-   -  `What is RPC? <#rpc>`__
-   -  `What is PubSub? <#pubsub>`__
-   -  `Why RPC and PubSub in one protocol? <#why_rpc_and_pubsub>`__
-   -  `Why is it called WAMP and how do I use it? <#naming>`__
-   -  `What is Websocket? <#what_is_websocket>`__
-   -  `Is WebSocket necessary for
-      WAMP? <#is_websocket_necessary_for_wamp>`__
+   -  `What is RPC? <#what-is-rpc>`__
+   -  `What is PubSub? <#what-is-pubsub>`__
+   -  `Why RPC and PubSub in one protocol? <#why-rpc-and-pubsub-in-one-protocol>`__
+   -  `Why is it called WAMP and how do I use it? <#why-is-it-called-wamp-and-how-do-i-use-it>`__
+   -  `What is Websocket? <#what-is-websocket>`__
+   -  `Is WebSocket necessary for WAMP? <#is-websocket-necessary-for-wamp>`__
 
 -  Legal
 
-   -  `What is the legal status of WAMP? <#legal_status>`__
-   -  `Are there any requirements if I use WAMP for my
-      project? <#requirements_for_use>`__
-   -  `Why is WAMP trademarked? <#why_trademarking>`__
-   -  `Who can use the WAMP word mark or the WAMP design
-      mark? <#wamp_trademark_use>`__
-   -  `What does the CC copyright on this website
-      mean? <#website_copyright>`__
+   -  `What is the legal status of WAMP? <#what-is-the-legal-status-of-wamp>`__
+   -  `Are there any requirements if I use WAMP for my project? <#are-there-any-requirements-if-i-use-wamp-for-my-project>`__
+   -  `Why is WAMP trademarked? <#why-is-wamp-trademarked>`__
+   -  `Who can use the WAMP word mark or the WAMP design mark? <#who-can-use-the-wamp-word-mark-or-the-wamp-design-mark>`__
+   -  `What does the CC copyright on this website mean? <#what-does-the-cc-copyright-on-this-website-mean>`__
 
-.. rubric:: General
-   :name: general
+
+General
+-------
 
 .. rubric:: What is RPC?
    :name: what-is-rpc
@@ -55,6 +52,8 @@ and route call results back from *Callees* to *Callers*.
 The *Caller* and *Callee* will usually run application code, while the
 *Dealer* works as a generic router for remote procedure calls decoupling
 *Callers* and *Callees*.
+
+`to top <#frequently-asked-questions>`__
 
 
 .. rubric:: What is PubSub?
@@ -84,6 +83,8 @@ Read more: `Publish / Subscribe Systems: Design and
 Principles <http://books.google.de/books?id=RxsyCBr9eLMC>`__, by Sasu
 Tarkoma.
 
+`to top <#frequently-asked-questions>`__
+
 
 .. rubric:: Why RPC and PubSub in one protocol?
    :name: why-rpc-and-pubsub-in-one-protocol
@@ -111,7 +112,9 @@ exactly with above in mind, so it provides you with a unified protocol
 for both RPC and PubSub.
 
 For more about the reasoning behind WAMP, see `this
-explanation <%7B%7B%20url_for('page_why')%20%7D%7D>`__.
+explanation <routing.html>`__.
+
+`to top <#frequently-asked-questions>`__
 
 
 .. rubric:: Why is it called WAMP and how do I use it?
@@ -147,6 +150,8 @@ And here is what we recommend for **users**:
    `Twitter <https://twitter.com>`__ or
    `StackOverflow <http://stackoverflow.com/>`__
 
+`to top <#frequently-asked-questions>`__
+
 
 .. rubric:: What is WebSocket?
    :name: what-is-websocket
@@ -160,6 +165,7 @@ browser, with implementations available for all major programming
 languages. For more details see this `introductory blog
 post <http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/>`__.
 
+`to top <#frequently-asked-questions>`__
 
 .. rubric:: Is WebSocket necessary for WAMP?
    :name: is-websocket-necessary-for-wamp
@@ -173,9 +179,10 @@ post <http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/>`__.
   top of other transports which lack some of the requirements, e.g.
   using longpoll bi-directionality can be built on top of HTTP.
 
+`to top <#frequently-asked-questions>`__
 
-.. rubric:: Legal
-   :name: legal
+Legal
+-----
 
 .. rubric:: What is the legal status of WAMP?
    :name: what-is-the-legal-status-of-wamp
@@ -189,6 +196,7 @@ post <http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/>`__.
 | Whatever you do with WAMP - an announcement on the mailing list is
   always welcome.
 
+`to top <#frequently-asked-questions>`__
 
 .. rubric:: Are there any requirements if I use WAMP for my project?
    :name: are-there-any-requirements-if-i-use-wamp-for-my-project
@@ -200,6 +208,8 @@ post <http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/>`__.
   somewhere in your project, and an announcement on the mailing list
   would be welcome.
 
+`to top <#frequently-asked-questions>`__
+
 .. rubric:: Why is WAMP trademarked?
    :name: why-is-wamp-trademarked
 
@@ -209,6 +219,7 @@ to assurances regarding compatibility. A trademark policy detailing
 correct use is in the works. For now, and for a quick overview of the
 base principles of the trademark policy, see the following question.
 
+`to top <#frequently-asked-questions>`__
 
 .. rubric:: Who can use the WAMP word mark or the WAMP design mark?
    :name: who-can-use-the-wamp-word-mark-or-the-wamp-design-mark
@@ -226,6 +237,7 @@ base principles of the trademark policy, see the following question.
   license if this should be necessary. (And a license does not need to
   be a big deal.)
 
+`to top <#frequently-asked-questions>`__
 
 .. rubric:: What does the CC copyright on this website mean?
    :name: what-does-the-cc-copyright-on-this-website-mean
@@ -241,3 +253,5 @@ base principles of the trademark policy, see the following question.
 | The only requirement is that you attribute this use. In an internet
   context, this is most easily done by providing something like 'some
   materials copied/adapted from' + a link to the WAMP website.
+
+`to top <#frequently-asked-questions>`__
