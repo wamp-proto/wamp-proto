@@ -48,7 +48,7 @@ SOAP, STOMP and MBWS for IoT applications.
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `OMG DDS <#omg-dds>`__          | ✔        | **-**   | **-**        | **-**        | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
-| `D-Bus <#d-bus>`__              | **-**    | **-**   | **-**        | **-**        | ✔                | **-**           |
+| `D-Bus <#d-bus>`__              | ✔        | ✔       | ✔            | **-**        | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
 | `CORBA <#corba>`__              | ✔        | ✔       | **-**        | **-**        | ✔                | ✔               |
 +---------------------------------+----------+---------+--------------+--------------+------------------+-----------------+
@@ -169,7 +169,7 @@ Service <http://en.wikipedia.org/wiki/Data_Distribution_Service>`__ is a
 .. rubric:: D-Bus
    :name: d-bus
 
-`D-Bus <http://en.wikipedia.org/wiki/D-Bus>`__ is a ...
+`D-Bus <http://en.wikipedia.org/wiki/D-Bus>`__ is a platform-neutral messaging service that runs by default in most Linux distributions. It offers the same two basic workflows as WAMP, but whereas WAMP is designed for use over a network, D-Bus is designed for inter-process communication (IPC) on a single host.
 
 
 .. rubric:: CORBA
