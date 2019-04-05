@@ -70,11 +70,11 @@ If the authentication succeeds, the Router MUST send a `WELCOME` message, else i
 
 When running WAMP over WebSocket, the transport provides HTTP client cookies during the WebSocket opening handshake. The cookies can be used to authenticate one peer (the client) against the other (the server). The other authentication direction cannot be supported by cookies.
 
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Details.transport.auth|any` in the client-to-server direction.
+This transport-level authentication information may be forwarded to the WAMP level within `HELLO.Details.transport.auth|any` in the client-to-server direction.
 
 
 ##### TLS Certificate Authentication
 
 When running WAMP over a TLS (either secure WebSocket or raw TCP) transport, a peer may authenticate to the other via the TLS certificate mechanism. A server might authenticate to the client, and a client may authenticate to the server (TLS client-certificate based authentication).
 
-This transport-level authentication information may be forward to the WAMP level within `HELLO.Details.transport.auth|any` in both directions (if available).
+This transport-level authentication information may be forwarded to the WAMP level within `HELLO.Details.transport.auth|any` in both directions (if available).
