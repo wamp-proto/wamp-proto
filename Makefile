@@ -7,7 +7,8 @@ requirements:
 	pip install -r requirements.txt
 
 clean:
-	-rm -rf ./.build/*
+	-rm -rf ./.tox
+	-rm -rf ./.build
 	-rm -rf ./docs/_build/*
 	-rm -rf ./docs/_static/gen/*
 
