@@ -118,7 +118,7 @@ Registered RPCs:
     2. 'a1.b2.c3' (prefix),
     3. 'a1.b2.c3.d4' (prefix),
     4. 'a1.b2..d4.e5',
-    5. 'a1.b2.c3..e5',
+    5. 'a1.b2.c33..e5',
     6. 'a1.b2..d4.e5..g7',
     7. 'a1.b2..d4..f6.g7'
 
@@ -132,7 +132,7 @@ Call request RPC URI: 'a1.b2.c3.d4.e325' →
 Call request RPC URI: 'a1.b2.c55.d4.e5' → 
     no exact match, no prefix match, single wildcard match.
     Use RPC 4
-Call request RPC URI: 'a1.b2.c3.d4.e5' → 
+Call request RPC URI: 'a1.b2.c33.d4.e5' → 
     no exact match, no prefix match, 2 wildcard matches (4,5), 
     select longest one. Use RPC 5
 Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' → 
