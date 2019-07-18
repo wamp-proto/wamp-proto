@@ -57,6 +57,7 @@ Swamp_              Swift                               WAMP client library in p
 wampcc_             C++                                 A C++ WAMP library that aims to depend only on C libraries. Includes a basic router.
 WAMP_POCO_          C++                                 A fork of AutobahnCpp that is using `POCO <http://pocoproject.org/>`_ instead of Boost.
 wamped_             C++                                 Intended for running on `ARM mbed OS <https://www.mbed.com/en/>`_. Experimental.
+wamprx.js_          TypeScript                          Simple WAMP TypeScript client-side implementation (of course also usable in JavaScript). It heavily relies on RxJS.
 WampSharp_          C#                                  C# implementation of WAMP: both client and router roles, both JSON and `MessagePack <http://msgpack.org/>`_ support.
 wampy_              Python                              Python implementation for classic blocking Python applications.
 wampy.js_           JavaScript                          WAMP JavaScript client for browsers and node.js using callbacks. See `here <https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs>`_ for comparison to AutobahnJS.
@@ -130,6 +131,7 @@ Wiola_              Lua                                 Router implementation in
 .. _WAMP_POCO: https://github.com/rafzi/WAMP_POCO
 .. _wamped: https://github.com/alvistar/wamped
 .. _wamprt: https://github.com/Orange-OpenSource/wamp.rt
+.. _wamprx.js: https://github.com/Jopie64/wamprx.js
 .. _WampSharp: https://github.com/Code-Sharp/WampSharp
 .. _wampy: https://github.com/noisyboiler/wampy
 .. _wampy.js: https://github.com/KSDaemon/wampy.js
