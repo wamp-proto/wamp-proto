@@ -247,7 +247,7 @@ Actual yield from an endpoint sent by a Callee to Dealer.
 
 ## Message Codes and Direction
 
-The following table lists the message type code for all 20 messages defined in the WAMP basic profile and their direction between peer roles.
+The following table lists the message type code for all messages defined in the WAMP basic profile and their direction between peer roles.
 
 Reserved codes may be used to identify additional message types in future standards documents.
 
