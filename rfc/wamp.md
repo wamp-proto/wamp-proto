@@ -7,7 +7,7 @@
 % workgroup = "BiDirectional or Server-Initiated HTTP"
 % keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 %
-% date = 2018-11-09T00:00:00Z
+% date = 2019-08-17T00:00:00Z
 %
 % [pi]
 % toc = "yes"
