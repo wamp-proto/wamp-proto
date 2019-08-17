@@ -20,7 +20,7 @@ The Web Application Messaging Protocol
     :target: https://gitter.im/wamp-proto/wamp-proto
 
 .. |Spec| image:: https://img.shields.io/badge/spec-latest-ff69b4.svg
-    :target: /_static/gen/wamp_latest.html
+    :target: _static/gen/wamp_latest.html
 
 -------
 
