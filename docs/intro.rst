@@ -67,7 +67,7 @@ have knowledge of the Callee; it merely needs to know the identifier of the proc
 wants to call. There no longer is a need for a direct network connection or path between the
 caller and the callee, since all messages are routed at the WAMP level.
 
-This approach enables a whole range os possibilities:
+This approach enables a whole range of possibilities:
 
 * calling into procedures in components which are not reachable from outside at the network
   level (e.g. on a NATted connection), but which can establish an outgoing network connection
