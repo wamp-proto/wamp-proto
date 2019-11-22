@@ -67,7 +67,7 @@ have knowledge of the Callee; it merely needs to know the identifier of the proc
 wants to call. There no longer is a need for a direct network connection or path between the
 caller and the callee, since all messages are routed at the WAMP level.
 
-This approach enables a whole range os possibilities:
+This approach enables a whole range of possibilities:
 
 * calling into procedures in components which are not reachable from outside at the network
   level (e.g. on a NATted connection), but which can establish an outgoing network connection
@@ -109,13 +109,13 @@ In the demo below, cursor position data from one box is sent via a WAMP router (
         <div class="boxes cursorBoxContainer">
 
             <div id="box1" class="cursorBox">
-                <img src="/_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box1cursor" class="cursor">
+                <img src="_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box1cursor" class="cursor">
             </div>
 
             <div class="connector">
                 <div class="connectorLine"></div>
                 <div class="connectorInstance">
-                    <img src="/_static/img/crossbar_icon.svg" alt="Crossbar.io icon">
+                    <img src="_static/img/crossbar_icon.svg" alt="Crossbar.io icon">
                     <p>
                         <!-- Not connected -->
                     </p>
@@ -123,7 +123,7 @@ In the demo below, cursor position data from one box is sent via a WAMP router (
             </div>
 
             <div id="box2" class="cursorBox">
-                <img src="/_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box2cursor" class="cursor">
+                <img src="_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box2cursor" class="cursor">
             </div>
 
         </div>
@@ -133,5 +133,5 @@ In the demo below, cursor position data from one box is sent via a WAMP router (
         </div>
 
     </div>
-    <script src="/_static/js/autobahn.min.js"></script>
-    <script src="/_static/js/cursorbox.js"></script>
+    <script src="_static/js/autobahn.min.js"></script>
+    <script src="_static/js/cursorbox.js"></script>
