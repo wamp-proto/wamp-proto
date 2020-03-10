@@ -1,6 +1,6 @@
 tox
 scour
-sphinx<2
+sphinx
 sphinx_rtd_theme
 sphinxcontrib_spelling
 sphinxcontrib_images

@@ -1,8 +1,9 @@
 .PHONY: docs rfc
 
 requirements:
+	sudo apt update
 	sudo apt install -y mmark xml2rfc
-	sudo npm install -g grunt-cli
+	npm install -g grunt-cli
 	npm install
 	pip install -r requirements.txt
 
