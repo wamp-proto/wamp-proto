@@ -38,6 +38,7 @@ AutobahnPython_     Python 2/3, Twisted and asyncio     WAMP client library + We
 awre_               Erlang                              awre is a WAMP V2 implementation in `Erlang <http://www.erlang.org/>`_ with client roles.
 Backbone_           JavaScript                          Allows two-way synchronisation of Backbone models & collections between frontends and backends.
 connectanum_        Java, Netty                         A Java WAMP implementation based on Netty. Both Client and Router roles.
+connectanum-dart_   Dart, Flutter                       A WAMP client implementation for the `dart language <https://dart.dev/>`_ and `flutter <https://flutter.dev/>`_ projects.
 CppWAMP_            C++ 11                              CppWAMP is a WAMP V2 implementation in C++11.
 haskell-wamp_       Haskell                             An experimental Haskell implementation of WAMP Basic Profile.
 kraftfahrstrasse_   TypeScript                          Modern WAMP Client library for browsers and node utilizing native ES6+.
@@ -108,6 +109,7 @@ Wiola_              Lua                                 Router implementation in
 .. _Bonefish: https://github.com/tplgy/bonefish
 .. _Cargotube: https://github.com/CargoTube/cargotube
 .. _connectanum: http://www.connectanum.com/
+.. _connectanum-dart: https://pub.dev/packages/connectanum/
 .. _CppWAMP: https://github.com/ecorm/cppwamp
 .. _Crossbar: https://crossbar.io
 .. _CrossbarFX: https://crossbario.com
