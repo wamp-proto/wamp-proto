@@ -108,7 +108,7 @@ Wiola_              Lua                                 Router implementation in
 .. _Bondy: https://gitlab.com/leapsight/bondy
 .. _Bonefish: https://github.com/tplgy/bonefish
 .. _Cargotube: https://github.com/CargoTube/cargotube
-.. _connectanum: http://www.connectanum.com/
+.. _connectanum: https://www.connectanum.com/
 .. _connectanum-dart: https://pub.dev/packages/connectanum/
 .. _CppWAMP: https://github.com/ecorm/cppwamp
 .. _Crossbar: https://crossbar.io
