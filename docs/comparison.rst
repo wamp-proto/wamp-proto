@@ -27,7 +27,7 @@ to **six criteria**:
    vendors?
 
 See also: `Web Technologies for the Internet of
-Things <https://into.aalto.fi/download/attachments/12324178/Huang_Fuguo_thesis_2.pdf>`__
+Things <http://iotiran.com/media/k2/attachments/web-technologies.pdf>`__
 - A master thesis which contains a comparison of WAMP, MQTT, CoAP, REST,
 SOAP, STOMP and MBWS for IoT applications.
 
