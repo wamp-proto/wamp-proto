@@ -97,6 +97,18 @@ Wiola_              Lua                                 Router implementation in
 ==================  ==================================  =====================
 
 
+Utilities
+---------
+
+The following table lists WAMP compliant utilities.
+
+==================  ==================================  =====================
+Name                Language/Run-time                   Description
+==================  ==================================  =====================
+wamp-cli_           JavaScript, NodeJS                  A CLI tool to help building applications with WAMP
+==================  ==================================  =====================
+
+
 .. _akka-wamp: https://github.com/angiolep/akka-wamp
 .. _AngularWAMP: https://github.com/voryx/angular-wamp
 .. _AutobahnCpp: https://github.com/crossbario/autobahn-cpp
@@ -142,3 +154,4 @@ Wiola_              Lua                                 Router implementation in
 .. _wampy: https://github.com/noisyboiler/wampy
 .. _wampy.js: https://github.com/KSDaemon/wampy.js
 .. _Wiola: http://ksdaemon.github.io/wiola/
+.. _wamp-cli: https://github.com/johngeorgewright/wamp-cli
