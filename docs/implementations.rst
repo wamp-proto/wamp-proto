@@ -64,6 +64,7 @@ wamprx.js_          TypeScript                          Simple WAMP TypeScript c
 WampSharp_          C#                                  C# implementation of WAMP: both client and router roles, both JSON and `MessagePack <http://msgpack.org/>`_ support.
 wampy_              Python                              Python implementation for classic blocking Python applications.
 wampy.js_           JavaScript                          WAMP JavaScript client for browsers and node.js using callbacks. See `here <https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs>`_ for comparison to AutobahnJS.
+wamp_async_         Rust                                Rust client library. It features ergonomic async API
 ==================  ==================================  =====================
 
 
@@ -155,3 +156,4 @@ wamp-cli_           JavaScript, NodeJS                  A CLI tool to help build
 .. _wampy.js: https://github.com/KSDaemon/wampy.js
 .. _Wiola: http://ksdaemon.github.io/wiola/
 .. _wamp-cli: https://github.com/johngeorgewright/wamp-cli
+.. _wamp_async: https://github.com/elast0ny/wamp_async
