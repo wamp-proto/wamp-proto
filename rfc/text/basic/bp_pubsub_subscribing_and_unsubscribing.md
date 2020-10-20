@@ -53,7 +53,7 @@ where
 
  * `Request` MUST be a random, ephemeral ID chosen by the Subscriber and used to correlate the Broker's response with the request.
  * `Options` MUST be a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
- * `Topic` is the topic the Subscriber wants to subscribe to and MUST be an URI.
+ * `Topic` is the topic the Subscriber wants to subscribe to and MUST be a URI.
 
 *Example*
 
@@ -94,7 +94,7 @@ When the request for subscription cannot be fulfilled by the Broker, the Broker 
 where
 
  * `SUBSCRIBE.Request` MUST be the ID from the original request.
- * `Error` MUST be an URI that gives the error of why the request could not be fulfilled.
+ * `Error` MUST be a URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
@@ -147,7 +147,7 @@ When the request fails, the Broker sends an `ERROR`
 where
 
  * `UNSUBSCRIBE.Request` MUST be the ID from the original request.
- * `Error` MUST be an URI that gives the error of why the request could not be fulfilled.
+ * `Error` MUST be a URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
