@@ -121,7 +121,7 @@ Both the Router and the Client may abort a WAMP session by sending an `ABORT` me
 
 where
 
-* `Reason` MUST be an URI.
+* `Reason` MUST be a URI.
 * `Details` MUST be a dictionary that allows to provide additional, optional closing information (see below).
 
 No response to an `ABORT` message is expected.
@@ -177,7 +177,7 @@ A WAMP session starts its lifetime with the Router sending a `WELCOME` message t
 
 where
 
-* `Reason` MUST be an URI.
+* `Reason` MUST be a URI.
 * `Details` MUST be a dictionary that allows to provide additional, optional closing information (see below).
 
 {align="left"}
