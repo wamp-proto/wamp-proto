@@ -4,7 +4,7 @@ Feature status: **alpha**
 
 #### Feature Definition
 
-As a default, only a single **Callee** may register a procedure for an URI.
+As a default, only a single **Callee** may register a procedure for a URI.
 
 There are use cases where more flexibility is required. As an example, for an application component with a high computing load, several instances may run, and load balancing of calls across these may be desired. As another example, in an application a second or third component providing a procedure may run, which are only to be called in case the primary component is no longer reachable (hot standby).
 

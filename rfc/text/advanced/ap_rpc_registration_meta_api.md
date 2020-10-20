@@ -17,7 +17,7 @@ Meta-events are created by the router itself. This means that the events as well
 
 A client can subscribe to the following registration meta-events, which cover the lifecycle of a registration:
 
-* `wamp.registration.on_create`: Fired when a registration is created through a registration request for an URI which was previously without a registration.
+* `wamp.registration.on_create`: Fired when a registration is created through a registration request for a URI which was previously without a registration.
 * `wamp.registration.on_register`: Fired when a *Callee* session is added to a registration.
 * `wamp.registration.on_unregister`: Fired when a *Callee* session is removed from a registration.
 * `wamp.registration.on_delete`: Fired when a registration is deleted after the last *Callee* session attached to it has been removed.
@@ -31,7 +31,7 @@ Similarly, the `wamp.registration.on_delete` event MUST be preceded by a `wamp.r
 
 ###### wamp.registration.on_create
 
-Fired when a registration is created through a registration request for an URI which was previously without a registration. The event payload consists of positional arguments:
+Fired when a registration is created through a registration request for a URI which was previously without a registration. The event payload consists of positional arguments:
 
 - `session|id`: The session ID performing the registration request.
 - `RegistrationDetails|dict`: Information on the created registration.

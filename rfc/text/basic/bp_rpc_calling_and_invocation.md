@@ -246,7 +246,7 @@ where
 
 * `INVOCATION.Request` is the ID from the original `INVOCATION` request previously sent by the Dealer to the Callee.
 * `Details` is a dictionary with additional error details.
-* `Error` is an URI that identifies the error of why the request could not be fulfilled.
+* `Error` is a URI that identifies the error of why the request could not be fulfilled.
 * `Arguments` is a list containing arbitrary, application defined, positional error information. This will be forwarded by the Dealer to the Caller that initiated the call.
 * `ArgumentsKw` is a dictionary containing arbitrary, application defined, keyword-based error information. This will be forwarded by the Dealer to the Caller that initiated the call.
 
@@ -280,7 +280,7 @@ where
 
 * `CALL.Request` is the ID from the original `CALL` request sent by the Caller to the Dealer.
 * `Details` is a dictionary with additional error details.
-* `Error` is an URI identifying the type of error as returned by the Callee to the Dealer.
+* `Error` is a URI identifying the type of error as returned by the Callee to the Dealer.
 * `Arguments` is a list containing the original error payload list as returned by the Callee to the Dealer.
 * `ArgumentsKw` is a dictionary containing the original error payload dictionary as returned by the Callee to the Dealer
 
