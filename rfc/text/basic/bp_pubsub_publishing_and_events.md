@@ -99,7 +99,7 @@ When the request for publication cannot be fulfilled by the Broker, and `PUBLISH
 where
 
  * `PUBLISH.Request` is the ID from the original publication request.
- * `Error` is an URI that gives the error of why the request could not be fulfilled.
+ * `Error` is a URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
