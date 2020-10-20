@@ -79,7 +79,7 @@ When the request for registration cannot be fulfilled by the Dealer, the Dealer 
 where
 
 * `REGISTER.Request` is the ID from the original request.
-* `Error` is an URI that gives the error of why the request could not be fulfilled.
+* `Error` is a URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
@@ -130,7 +130,7 @@ When the unregistration request fails, the Dealer sends an `ERROR` message:
 where
 
 * `UNREGISTER.Request` is the ID from the original request.
-* `Error` is an URI that gives the error of why the request could not be fulfilled.
+* `Error` is a URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
