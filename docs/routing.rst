@@ -117,7 +117,7 @@ peer resides and how to reach it. This knowledge is encapsulated in
 the *Dealer*
 
 With WAMP, a *Callee* registers a procedure at a *Dealer* under an abstract
-name: an URI identifying the procedure. When a *Caller* wants to call a remote
+name: a URI identifying the procedure. When a *Caller* wants to call a remote
 procedure, it talks to the *Dealer* and only provides the URI of the
 procedure to be called plus any call arguments. The *Dealer* will
 look up the procedure to be invoked in his book of registered procedures.
