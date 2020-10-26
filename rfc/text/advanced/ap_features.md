@@ -57,4 +57,5 @@ stable | The feature definition in the spec is complete and stable and the featu
 | batched WS transport                  | sketch |
 | longpoll transport                    | beta   |
 | session meta api                      | beta   |
+| call rerouting                        | sketch |
 

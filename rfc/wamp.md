@@ -175,6 +175,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{rfc/text/advanced/ap_rpc_call_canceling.md}}
 
+{{rfc/text/advanced/ap_rpc_call_rerouting.md}}
+
 {{rfc/text/advanced/ap_rpc_caller_identification.md}}
 
 {{rfc/text/advanced/ap_rpc_call_trustlevels.md}}
