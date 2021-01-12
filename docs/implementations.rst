@@ -84,6 +84,7 @@ CrossbarFX_         Python (PyPy), Twisted              CrossbarFX enterprise WA
 Cargotube_          Erlang                              A software router in Erlang implementing the wamp.ws protcol (successor of Erwa).
 Bondy_              Erlang                              Leapsight Bondy is an open source distributed API Gateway, WAMP Router and networking platform for microservices and IoT applications written in Erlang. It provides scaleable clustering capabilities via TCP/IP using Partisan, Plumtree Epidemic Broadcast Trees and an eventually consistent data store.
 Erwa_               Erlang                              Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.
+fox-wamp_           JavaScript, NodeJS                  Customizable WAMP Router.
 jawampa_            Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
 KWAMP_              Kotlin                              A Kotlin WAMP router (aims for basic profile).
 Nexus_              Go                                  Router implementation for Go. (also includes a client implementation)
@@ -127,6 +128,7 @@ wamp-cli_           JavaScript, NodeJS                  A CLI tool to help build
 .. _Crossbar: https://crossbar.io
 .. _CrossbarFX: https://crossbario.com
 .. _Erwa: https://github.com/bwegh/erwa
+.. _fox-wamp: https://github.com/kalmyk/fox-wamp
 .. _haskell-wamp: https://github.com/mulderr/haskell-wamp
 .. _jawampa: https://github.com/Matthias247/jawampa
 .. _KWAMP: https://github.com/LaurenceGA/kwamp
