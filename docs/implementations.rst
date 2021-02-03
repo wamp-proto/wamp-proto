@@ -93,7 +93,7 @@ Thruway_            PHP                                 Thruway is a WAMP librar
 Turnpike_           Go                                  turnpike is a WAMP v2 router implemented in Go.
 wamp2spring_        Java, Spring                        A Java implementation built on top of the Spring 5 WebSocket support.
 wampcc_             C++                                 A C++ WAMP library that aims to depend only on C libraries, making it easier to work and build on a range of platforms.
-wamprt_             JavaScript, NodeJS                  <td class="notes">Router only implementation for `NodeJS <http://nodejs.org/>`_ created by `Orange <http://opensource.orange.com/home>`_.
+wamprt_             JavaScript, NodeJS                  Router only implementation for `NodeJS <http://nodejs.org/>`_ created by `Orange <http://opensource.orange.com/home>`_.
 WampSharp_          C#                                  C# router implementation of WAMP v2, both JSON and `MessagePack <http://msgpack.org/>`_ support.
 Wiola_              Lua                                 Router implementation in `Lua <http://www.lua.org/>`_, using the power of Lua/Nginx, WebSocket and `Redis <http://redis.io/>`_ as cache store.
 ==================  ==================================  =====================
