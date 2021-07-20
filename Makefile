@@ -1,10 +1,18 @@
 .PHONY: docs rfc
 
+# https://github.com/mmarkdown/mmark
+# sudo apt install -y mmark
+requirements_mmark:
+	wget https://github.com/mmarkdown/mmark/releases/download/v2.2.10/mmark_2.2.10_linux_amd64.tgz
+	tar xvzf mmark_2.2.10_linux_amd64.tgz
+	sudo cp ./mmark /usr/local/bin
+	rm -f ./mmark
+	rm -f ./mmark*.tgz
+
 requirements:
 	sudo apt update
-	sudo apt install -y mmark xml2rfc
+	sudo apt install -y xml2rfc
 	npm install -g grunt-cli
-	npm install
 	pip install -r requirements.txt
 
 clean:
@@ -28,8 +36,8 @@ BUILDDIR = docs/_static/gen
 build_spec: build_spec_rfc build_spec_w3c
 
 build_spec_rfc:
-	-mkdir ./.build 
-	mmark -xml2 -page rfc/wamp.md > .build/wamp.xml
+	-mkdir ./.build
+	mmark rfc/wamp.md > .build/wamp.xml
 	xml2rfc --text .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.txt
 	xml2rfc --html .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.html
 
@@ -40,7 +48,7 @@ build_spec_w3c:
 #
 # build optimized SVG files from source SVGs
 #
-SCOUR = scour 
+SCOUR = scour
 SCOUR_FLAGS = --remove-descriptive-elements --enable-comment-stripping --enable-viewboxing --indent=none --no-line-breaks --shorten-ids
 
 # build "docs/_static/gen/*.svg" optimized SVGs from "docs/_graphics/*.svg" using Scour
