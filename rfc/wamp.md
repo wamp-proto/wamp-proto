@@ -1,35 +1,35 @@
-% Title = "The Web Application Messaging Protocol"
-% abbrev = "WAMP"
-% category = "std"
-% docName = "draft-oberstet-hybi-crossbar-wamp-03"
-% ipr= "trust200902"
-% area = "Applications and Real-Time (art)"
-% workgroup = "BiDirectional or Server-Initiated HTTP"
-% keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
-%
-% date = 2019-08-17T00:00:00Z
-%
-% [pi]
-% toc = "yes"
-%
-% [[author]]
-% initials="T.O."
-% surname="Oberstein"
-% fullname="Tobias Oberstein"
-% organization = "Crossbar.io Technologies GmbH"
-%   [author.address]
-%   email = "tobias.oberstein@crossbario.com"
-%
-% [[author]]
-% initials="A.G."
-% surname="Goedde"
-% fullname="Alexander Goedde"
-% organization = "Crossbar.io Technologies GmbH"
-%   [author.address]
-%   email = "alexander.goedde@crossbario.com"
-%
+%%%
+Title = "The Web Application Messaging Protocol"
+abbrev = "WAMP"
+category = "std"
+docName = "draft-oberstet-hybi-crossbar-wamp-03"
+ipr= "trust200902"
+area = "Applications and Real-Time (art)"
+workgroup = "BiDirectional or Server-Initiated HTTP"
+keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
+date = 2019-08-17T00:00:00Z
 
-.# Abstract
+[pi]
+toc = "yes"
+
+[[author]]
+initials="T.O."
+surname="Oberstein"
+fullname="Tobias Oberstein"
+organization = "Crossbar.io Technologies GmbH"
+  [author.address]
+  email = "tobias.oberstein@crossbario.com"
+
+[[author]]
+initials="A.G."
+surname="Goedde"
+fullname="Alexander Goedde"
+organization = "Crossbar.io Technologies GmbH"
+  [author.address]
+  email = "alexander.goedde@crossbario.com"
+%%%
+
+# Abstract
 
 This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.
 
@@ -37,11 +37,11 @@ This document defines the Web Application Messaging Protocol (WAMP). WAMP is a r
 
 # Introduction
 
-{{rfc/text/basic/bp_intro_background.md}}
+{{text/basic/bp_intro_background.md}}
 
-{{rfc/text/basic/bp_intro_protocol_overview.md}}
+{{text/basic/bp_intro_protocol_overview.md}}
 
-{{rfc/text/basic/bp_intro_design_philosophy.md}}
+{{text/basic/bp_intro_design_philosophy.md}}
 
 
 ## Relationship to WebSocket
@@ -82,7 +82,7 @@ The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [offic
 
 <!-- peers and roles -->
 
-{{rfc/text/basic/bp_peers_and_roles.md}}
+{{text/basic/bp_peers_and_roles.md}}
 
 
 
@@ -97,20 +97,20 @@ WAMP is defined with respect to the following building blocks
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
 
 
-{{rfc/text/basic/bp_identifiers.md}}
+{{text/basic/bp_identifiers.md}}
 
-{{rfc/text/basic/bp_serializations.md}}
+{{text/basic/bp_serializations.md}}
 
-{{rfc/text/basic/bp_transports.md}}
+{{text/basic/bp_transports.md}}
 
 
 <!-- messages -->
 
-{{rfc/text/basic/bp_messages.md}}
+{{text/basic/bp_messages.md}}
 
 <!-- sessions -->
 
-{{rfc/text/basic/bp_sessions.md}}
+{{text/basic/bp_sessions.md}}
 
 
 # Publish and Subscribe
@@ -118,9 +118,9 @@ For each building block, WAMP only assumes a defined set of requirements, which 
 All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Broker*.
 
 
-{{rfc/text/basic/bp_pubsub_subscribing_and_unsubscribing.md}}
+{{text/basic/bp_pubsub_subscribing_and_unsubscribing.md}}
 
-{{rfc/text/basic/bp_pubsub_publishing_and_events.md}}
+{{text/basic/bp_pubsub_publishing_and_events.md}}
 
 
 # Remote Procedure Calls
@@ -128,9 +128,9 @@ All of the following features for Publish & Subscribe are mandatory for WAMP Bas
 All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles.
 
 
-{{rfc/text/basic/bp_rpc_registering_and_unregistering.md}}
+{{text/basic/bp_rpc_registering_and_unregistering.md}}
 
-{{rfc/text/basic/bp_rpc_calling_and_invocation.md}}
+{{text/basic/bp_rpc_calling_and_invocation.md}}
 
 
 
@@ -138,18 +138,18 @@ All of the following features for Remote Procedure Calls are mandatory for WAMP 
 
 WAMP pre-defines the following error URIs for the basic and for the advanced profile. WAMP peers MUST use only the defined error messages.
 
-{{rfc/text/basic/bp_uris.md}}
+{{text/basic/bp_uris.md}}
 
-{{rfc/text/advanced/ap_uris.md}}
+{{text/advanced/ap_uris.md}}
 
 
 <!-- ordering guarantees -->
 
-{{rfc/text/basic/bp_ordering_guarantees.md}}
+{{text/basic/bp_ordering_guarantees.md}}
 
 <!-- security model -->
 
-{{rfc/text/basic/bp_security_model.md}}
+{{text/basic/bp_security_model.md}}
 
 
 
@@ -160,91 +160,91 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 > Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.
 
-{{rfc/text/advanced/ap_messages.md}}
+{{text/advanced/ap_messages.md}}
 
-{{rfc/text/advanced/ap_features.md}}
+{{text/advanced/ap_features.md}}
 
 
 ## Advanced RPC Features
 
-{{rfc/text/advanced/ap_rpc_progressive_call_results.md}}
+{{text/advanced/ap_rpc_progressive_call_results.md}}
 
-{{rfc/text/advanced/ap_rpc_progressive_calls.md}}
+{{text/advanced/ap_rpc_progressive_calls.md}}
 
-{{rfc/text/advanced/ap_rpc_call_timeout.md}}
+{{text/advanced/ap_rpc_call_timeout.md}}
 
-{{rfc/text/advanced/ap_rpc_call_canceling.md}}
+{{text/advanced/ap_rpc_call_canceling.md}}
 
-{{rfc/text/advanced/ap_rpc_call_rerouting.md}}
+{{text/advanced/ap_rpc_call_rerouting.md}}
 
-{{rfc/text/advanced/ap_rpc_caller_identification.md}}
+{{text/advanced/ap_rpc_caller_identification.md}}
 
-{{rfc/text/advanced/ap_rpc_call_trustlevels.md}}
+{{text/advanced/ap_rpc_call_trustlevels.md}}
 
-{{rfc/text/advanced/ap_rpc_registration_meta_api.md}}
+{{text/advanced/ap_rpc_registration_meta_api.md}}
 
-{{rfc/text/advanced/ap_rpc_pattern_based_registration.md}}
+{{text/advanced/ap_rpc_pattern_based_registration.md}}
 
-{{rfc/text/advanced/ap_rpc_shared_registration.md}}
+{{text/advanced/ap_rpc_shared_registration.md}}
 
-{{rfc/text/advanced/ap_rpc_sharded_registration.md}}
+{{text/advanced/ap_rpc_sharded_registration.md}}
 
-{{rfc/text/advanced/ap_rpc_registration_revocation.md}}
+{{text/advanced/ap_rpc_registration_revocation.md}}
 
-{{rfc/text/advanced/ap_rpc_procedure_reflection.md}}
+{{text/advanced/ap_rpc_procedure_reflection.md}}
 
 
 ## Advanced PubSub Features
 
-{{rfc/text/advanced/ap_pubsub_subscriber_blackwhite_listing.md}}
+{{text/advanced/ap_pubsub_subscriber_blackwhite_listing.md}}
 
-{{rfc/text/advanced/ap_pubsub_publisher_exclusion.md}}
+{{text/advanced/ap_pubsub_publisher_exclusion.md}}
 
-{{rfc/text/advanced/ap_pubsub_publisher_identification.md}}
+{{text/advanced/ap_pubsub_publisher_identification.md}}
 
-{{rfc/text/advanced/ap_pubsub_publication_trustlevels.md}}
+{{text/advanced/ap_pubsub_publication_trustlevels.md}}
 
-{{rfc/text/advanced/ap_pubsub_subscription_meta_api.md}}
+{{text/advanced/ap_pubsub_subscription_meta_api.md}}
 
-{{rfc/text/advanced/ap_pubsub_pattern_based_subscription.md}}
+{{text/advanced/ap_pubsub_pattern_based_subscription.md}}
 
-{{rfc/text/advanced/ap_pubsub_sharded_subscription.md}}
+{{text/advanced/ap_pubsub_sharded_subscription.md}}
 
-{{rfc/text/advanced/ap_pubsub_event_history.md}}
+{{text/advanced/ap_pubsub_event_history.md}}
 
-{{rfc/text/advanced/ap_pubsub_subscription_revocation.md}}
+{{text/advanced/ap_pubsub_subscription_revocation.md}}
 
-{{rfc/text/advanced/ap_pubsub_topic_reflection.md}}
+{{text/advanced/ap_pubsub_topic_reflection.md}}
 
-{{rfc/text/advanced/ap_pubsub_testament.md}}
+{{text/advanced/ap_pubsub_testament.md}}
 
 
 ## Other Advanced Features
 
 
-{{rfc/text/advanced/ap_session_meta_api.md}}
+{{text/advanced/ap_session_meta_api.md}}
 
 
-{{rfc/text/advanced/ap_authentication.md}}
+{{text/advanced/ap_authentication.md}}
 
-{{rfc/text/advanced/ap_authentication_cra.md}}
+{{text/advanced/ap_authentication_cra.md}}
 
-{{rfc/text/advanced/ap_authentication_ticket.md}}
+{{text/advanced/ap_authentication_ticket.md}}
 
-{{rfc/text/advanced/ap_authentication_scram.md}}
+{{text/advanced/ap_authentication_scram.md}}
 
 
-{{rfc/text/advanced/ap_transports.md}}
+{{text/advanced/ap_transports.md}}
 
-{{rfc/text/advanced/ap_transport_rawsocket.md}}
+{{text/advanced/ap_transport_rawsocket.md}}
 
-{{rfc/text/advanced/ap_transport_batched_websocket.md}}
+{{text/advanced/ap_transport_batched_websocket.md}}
 
-{{rfc/text/advanced/ap_transport_http_longpoll.md}}
+{{text/advanced/ap_transport_http_longpoll.md}}
 
-{{rfc/text/advanced/ap_transport_multiplexed.md}}
+{{text/advanced/ap_transport_multiplexed.md}}
 
-{{rfc/text/basic/bp_binary_conversion_of_json.md}}
+{{text/basic/bp_binary_conversion_of_json.md}}
 
 
 # Security Considerations
