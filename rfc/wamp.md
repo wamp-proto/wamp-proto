@@ -150,8 +150,6 @@ WAMP pre-defines the following error URIs for the basic and for the advanced pro
 {{text/basic/bp_security_model.md}}
 
 
-
-
 # Advanced Profile
 
 While implementations MUST implement the subset of the Basic Profile necessary for the particular set of WAMP roles they provide, they MAY implement any subset of features from the Advanced Profile. Implementers SHOULD implement the maximum of features possible considering the aims of an implementation.
@@ -242,7 +240,13 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{text/advanced/ap_transport_multiplexed.md}}
 
-{{text/basic/bp_binary_conversion_of_json.md}}
+
+{{text/advanced/ap_serialization.md}}
+
+{{text/advanced/ap_serialization_binary_json.md}}
+
+
+{{text/advanced/ap_r2r.md}}
 
 
 # Security Considerations

@@ -18,9 +18,10 @@ requirements:
 
 clean:
 	-rm -rf ./.tox
-	-rm -rf ./.build
 	-rm -rf ./docs/_build/*
 	-rm -rf ./docs/_static/gen/*
+	-rm -rf ./.build
+	-mkdir ./.build
 
 authors:
 	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
@@ -38,7 +39,6 @@ build_spec: build_spec_rfc build_spec_w3c
 
 # https://mmark.miek.nl/post/syntax/
 build_spec_rfc:
-	-mkdir ./.build
 	mmark ./rfc/wamp.md > .build/wamp.xml
 	sed -i'' 's/<sourcecode align="left"/<sourcecode/g' .build/wamp.xml
 	sed -i'' 's/<t align="left"/<t/g' .build/wamp.xml
