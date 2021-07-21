@@ -12,8 +12,9 @@ requirements_mmark:
 requirements:
 	sudo apt update
 	sudo apt install -y xml2rfc libxml2-utils
-	npm install -g grunt-cli
 	pip install -r requirements.txt
+	npm install -g grunt-cli
+	npm install
 
 clean:
 	-rm -rf ./.tox
@@ -35,26 +36,19 @@ BUILDDIR = docs/_static/gen
 
 build_spec: build_spec_rfc build_spec_w3c
 
+# https://mmark.miek.nl/post/syntax/
 build_spec_rfc:
 	-mkdir ./.build
 	mmark ./rfc/wamp.md > .build/wamp.xml
-	xml2rfc --text .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.txt
-#xml2rfc --html .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.html
+	sed -i'' 's/<sourcecode align="left"/<sourcecode/g' .build/wamp.xml
+	sed -i'' 's/<t align="left"/<t/g' .build/wamp.xml
+	xmllint --noout .build/wamp.xml
+	xml2rfc --v3 --text .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.txt
+	xml2rfc --v3 --html .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.html
 
 build_spec_w3c:
 	grunt
 
-build_spec_rfc_test:
-	mmark ./rfc/test.md > .build/test.xml
-	xml2rfc --v3 --text .build/test.xml .build/test.txt
-
-build_spec_rfc_test2:
-	mmark ./rfc/wamp.md > .build/wamp.xml
-	xmllint --noout .build/wamp.xml
-	xml2rfc --v3 --text .build/wamp.xml > .build/wamp.txt
-
-# xml2rfc --v3
-# https://trac.ietf.org/trac/xml2rfc/ticket/321
 
 #
 # build optimized SVG files from source SVGs

@@ -6,3 +6,4 @@ sphinxcontrib_spelling
 sphinxcontrib_images
 pygments
 pyenchant
+xml2rfc>=3.9.1

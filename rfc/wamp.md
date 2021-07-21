@@ -1,13 +1,19 @@
 %%%
-Title = "The Web Application Messaging Protocol"
+title = "The Web Application Messaging Protocol"
 abbrev = "WAMP"
-category = "std"
-docName = "draft-oberstet-hybi-crossbar-wamp-03"
-ipr= "trust200902"
+ipr = "trust200902"
 area = "Applications and Real-Time (art)"
 workgroup = "BiDirectional or Server-Initiated HTTP"
+submissiontype = "IETF"
 keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
-date = 2019-08-17T00:00:00Z
+docName = "draft-oberstet-hybi-crossbar-wamp-04"
+date = 2021-07-21T00:00:00Z
+
+[seriesInfo]
+name = "Internet-Draft"
+value = "WAMP"
+stream = "IETF"
+status = "experimental"
 
 [pi]
 toc = "yes"
@@ -19,21 +25,13 @@ fullname="Tobias Oberstein"
 organization = "Crossbar.io Technologies GmbH"
   [author.address]
   email = "tobias.oberstein@crossbario.com"
-
-[[author]]
-initials="A.G."
-surname="Goedde"
-fullname="Alexander Goedde"
-organization = "Crossbar.io Technologies GmbH"
-  [author.address]
-  email = "alexander.goedde@crossbario.com"
 %%%
+
+{mainmatter}
 
 # Abstract
 
 This document defines the Web Application Messaging Protocol (WAMP). WAMP is a routed protocol that provides two messaging patterns: Publish & Subscribe and routed Remote Procedure Calls. It is intended to connect application components in distributed applications. WAMP uses WebSocket as its default transport, but can be transmitted via any other protocol that allows for ordered, reliable, bi-directional, and message-oriented communications.
-
-{mainmatter}
 
 # Introduction
 
