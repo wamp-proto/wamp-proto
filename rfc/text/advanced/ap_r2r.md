@@ -1,3 +1,5 @@
+### Router-to-Router Links
+
 1. Resolve global realm name R_name via ENS to the on-chain address R_adr of the realm.
 2. Retrieve list of Domains R_DR routing realm R_adr.
 3. Retrieve the node's N1 own domain D_N1 given the node's address N1_adr.
