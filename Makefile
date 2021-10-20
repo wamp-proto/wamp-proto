@@ -50,6 +50,13 @@ build_spec_w3c:
 	grunt
 
 
+grep_options:
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`PUBLISH\.Options\.[a-z_]*|.*\`" {} \;
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`EVENT\.Options\.[a-z_]*|.*\`" {} \;
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`CALL\.Options\.[a-z_]*|.*\`" {} \;
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`INVOCATION\.Options\.[a-z_]*|.*\`" {} \;
+
+
 #
 # build optimized SVG files from source SVGs
 #
