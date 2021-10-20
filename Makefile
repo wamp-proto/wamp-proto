@@ -94,7 +94,7 @@ docs_only:
 clean_docs:
 	-rm -rf docs/_build
 
-run_docs: docs
+run_docs:
 	twistd --nodaemon web --path=docs/_build --listen=tcp:8010
 
 spellcheck_docs:
