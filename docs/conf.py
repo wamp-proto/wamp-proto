@@ -126,8 +126,9 @@ else:
         # add custom CSS on top of Sphinx RTD standard CSS
         # https://docs.readthedocs.io/en/latest/guides/adding-custom-css.html
         def setup(app):
-            app.add_stylesheet('css/custom.css')
-            app.add_javascript('js/custom.js')
+            # deprecated at 1.8.0. Please use app.add_css_file() instead.
+            app.add_css_file('css/custom.css')
+            app.add_js_file('js/custom.js')
     else:
         html_theme = 'default'
 

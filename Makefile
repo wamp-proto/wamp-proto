@@ -1,17 +1,27 @@
 .PHONY: docs rfc
 
+# https://github.com/mmarkdown/mmark
+# sudo apt install -y mmark
+requirements_mmark:
+	wget https://github.com/mmarkdown/mmark/releases/download/v2.2.10/mmark_2.2.10_linux_amd64.tgz
+	tar xvzf mmark_2.2.10_linux_amd64.tgz
+	sudo cp ./mmark /usr/local/bin
+	rm -f ./mmark
+	rm -f ./mmark*.tgz
+
 requirements:
 	sudo apt update
-	sudo apt install -y mmark xml2rfc
+	sudo apt install -y xml2rfc libxml2-utils
+	pip install -r requirements.txt
 	npm install -g grunt-cli
 	npm install
-	pip install -r requirements.txt
 
 clean:
 	-rm -rf ./.tox
-	-rm -rf ./.build
 	-rm -rf ./docs/_build/*
 	-rm -rf ./docs/_static/gen/*
+	-rm -rf ./.build
+	-mkdir ./.build
 
 authors:
 	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
@@ -27,20 +37,30 @@ BUILDDIR = docs/_static/gen
 
 build_spec: build_spec_rfc build_spec_w3c
 
+# https://mmark.miek.nl/post/syntax/
 build_spec_rfc:
-	-mkdir ./.build 
-	mmark -xml2 -page rfc/wamp.md > .build/wamp.xml
-	xml2rfc --text .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.txt
-	xml2rfc --html .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.html
+	mmark ./rfc/wamp.md > .build/wamp.xml
+	sed -i'' 's/<sourcecode align="left"/<sourcecode/g' .build/wamp.xml
+	sed -i'' 's/<t align="left"/<t/g' .build/wamp.xml
+	xmllint --noout .build/wamp.xml
+	xml2rfc --v3 --text .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.txt
+	xml2rfc --v3 --html .build/wamp.xml -o $(BUILDDIR)/wamp_latest_ietf.html
 
 build_spec_w3c:
 	grunt
 
 
+grep_options:
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`PUBLISH\.Options\.[a-z_]*|.*\`" {} \;
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`EVENT\.Options\.[a-z_]*|.*\`" {} \;
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`CALL\.Options\.[a-z_]*|.*\`" {} \;
+	@find rfc/ -name "*.md" -type f -exec grep -o "\`INVOCATION\.Options\.[a-z_]*|.*\`" {} \;
+
+
 #
 # build optimized SVG files from source SVGs
 #
-SCOUR = scour 
+SCOUR = scour
 SCOUR_FLAGS = --remove-descriptive-elements --enable-comment-stripping --enable-viewboxing --indent=none --no-line-breaks --shorten-ids
 
 # build "docs/_static/gen/*.svg" optimized SVGs from "docs/_graphics/*.svg" using Scour
@@ -74,7 +94,7 @@ docs_only:
 clean_docs:
 	-rm -rf docs/_build
 
-run_docs: docs
+run_docs:
 	twistd --nodaemon web --path=docs/_build --listen=tcp:8010
 
 spellcheck_docs:
