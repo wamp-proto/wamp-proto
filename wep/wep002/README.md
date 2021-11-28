@@ -1,3 +1,3 @@
-# IETF RFC for WAMP
+# WEP002 - IETF RFC for WAMP
 
-gather and organize IETF WG
+- gather and organize IETF WG

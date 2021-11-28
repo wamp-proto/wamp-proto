@@ -1,1 +1,1 @@
-# Incorporation of the WAMP DAO
+# WEP001 - Administration of the WAMP DAO

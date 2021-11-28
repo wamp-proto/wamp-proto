@@ -1,4 +1,4 @@
-# WAMP Router-to-Router Links
+# WEP004 - WAMP Router-to-Router Links
 
 1. single operator
 2. decentralized, single impl
