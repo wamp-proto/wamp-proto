@@ -48,6 +48,7 @@ aws s3 ls ${AWS_S3_BUCKET_NAME}
 # build and deploy latest docs/website:
 #   => https://s3.eu-central-1.amazonaws.com/wamp-proto.org/index.html
 tox -c tox.ini -e sphinx
+npm run build
 aws s3 cp --recursive --acl public-read ${HOME}/wamp-docs s3://${AWS_S3_BUCKET_NAME}/${AWS_S3_BUCKET_PATH}
 
 # invalidate cloudfront distribution:
