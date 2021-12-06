@@ -39,6 +39,14 @@ Issues:
 
 ### WEP004 - WAMP Router-to-Router Links
 
+Router-to-router links allow to connect WAMP router nodes to support transparent routing services on shared realms for clients connected to any of the nodes.
+
+Router-to-router links are a low-level facility that allows to configure and setup networks of nodes in different scenarios:
+
+1. scaling and high-availability (both single node scale-up, and multi-node cluster scale-out)
+2. edge/cloud topologies with edge routers connecting (tree-like) to cloud hosted nodes
+3. federation/decentralization, with nodes operated by different operators connecting
+
 * [WEP004](wep004): WAMP Router-to-Router Links
 * [WAMP R2R Overview](wep004/wamp_ap_r2r.pdf)
 
@@ -94,3 +102,7 @@ Issues:
 * [autobahn-js](https://github.com/crossbario/autobahn-js/issues)
 * [autobahn-java](https://github.com/crossbario/autobahn-java/issues)
 * [autobahn-cpp](https://github.com/crossbario/autobahn-cpp/issues)
+
+### WEP010 - Hardware security module support for WAMP-cryptosign
+
+### WEP011 - WAMP Client and Router Implementations Automated Testing
