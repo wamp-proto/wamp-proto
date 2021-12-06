@@ -9,6 +9,19 @@ Write me.
 
 ## WEP List
 
+* [ ] WEP001 - Administration of the WAMP DAO
+* [ ] WEP002 - IETF RFC for WAMP
+* [ ] WEP003 - WAMP Parallel Messaging Patterns
+* [ ] WEP004 - WAMP Router-to-Router Links
+* [ ] WEP005 - Payload End-to-End Encryption and Key Management
+* [ ] WEP006 - Zero-copy WAMP Serialization with Flatbuffers
+* [ ] WEP007 - WAMP API Schema Definition with Flatbuffers
+* [ ] WEP008 - Multiplexed WAMP Transport with QUIC
+* [ ] WEP009 - Crossbar.io Maintenance
+* [ ] WEP010 - Autobahn Maintenance
+* [ ] WEP011 - Hardware security module support for WAMP-cryptosign
+* [ ] WEP012 - WAMP Implementations Automated Testing
+
 ### WEP001 - Administration of the WAMP DAO
 
 * [WEP001](wep001): Administration of the WAMP DAO
@@ -54,9 +67,9 @@ Issues:
 
 * [xbr-protocol](https://github.com/crossbario/xbr-protocol/issues)
 
-### WEP005 - Application Payload End-to-End Encryption and Key Management
+### WEP005 - Payload End-to-End Encryption and Key Management
 
-* [WEP005](wep005): Application Payload End-to-End Encryption and Key Management
+* [WEP005](wep005): Payload End-to-End Encryption and Key Management
 
 Issues:
 
@@ -105,4 +118,4 @@ Issues:
 
 ### WEP010 - Hardware security module support for WAMP-cryptosign
 
-### WEP011 - WAMP Client and Router Implementations Automated Testing
+### WEP011 - WAMP Implementations Automated Testing

@@ -1,1 +1,1 @@
-# WEP006 - Zero-copy WAMP Serialization and WAMP API Schema Definition with Flatbuffers
+# WEP006 - Zero-copy WAMP Serialization with Flatbuffers

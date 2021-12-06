@@ -1,7 +1,1 @@
-# WEP008 - Crossbar.io Maintenance
-
-- Continuous Integration
-- Test Automation & Benchmarking
-- Bug Fixing
-- Documentation
-- Stable Binaries
+# WEP008 - Multiplexed WAMP Transport with QUIC

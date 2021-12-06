@@ -1,1 +1,7 @@
-# WEP009 - Autobahn Maintenance
+# WEP009 - Crossbar.io Maintenance
+
+- Continuous Integration
+- Test Automation & Benchmarking
+- Bug Fixing
+- Documentation
+- Stable Binaries

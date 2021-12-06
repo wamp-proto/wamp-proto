@@ -1,1 +1,1 @@
-# WEP007 - Multiplexed WAMP Transport with QUIC
+# WEP007 - WAMP API Schema Definition with Flatbuffers
