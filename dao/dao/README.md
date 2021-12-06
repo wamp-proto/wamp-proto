@@ -2,6 +2,22 @@
 
 ## Metamask
 
+The following describes an easy and still reasonably secure way to interact with Ethereum from nothing more than a browser.
+
+Of course there are multiple ways to increase the level of security further, but since we use a system that requires N out of M signatures by members, having the wallet of a single member stolen or lost is not a fatal error.
+
+So as a browser, best use Firefox or Chrome or a variant of these browsers, and the go an add the [Metamask](https://metamask.io/) browser extension.
+
+Once you start the extension the first time, it will give you the option to generate a new 12-(or more)-word **Secret Recovery Phrase** ("create a wallet"), which is crucial:
+
+
+Secure your wallet
+Before getting started, watch this short video to learn about your Secret Recovery Phrase and how to keep your wallet safe.
+
+
+* if you loose your seed
+
+
 ## DAO Multisigs
 
 Until the DAO is fully decentralized, and all on-chain transactions are executed directly from within a DAO proposal accepted on-chain, such execution of DAO actions are performed from multisig accounts controlled by founding DAO members.
@@ -40,10 +56,11 @@ One can easily [send digital assets to a Safe](https://help.gnosis-safe.io/en/ar
 
 **References**
 
-* [Gnosis Safe Spending Limits](https://blog.gnosis.pm/gnosis-safe-spending-limits-f05b775d06b3)
-* [Set up and use Spending Limits](https://help.gnosis-safe.io/en/articles/4667979-set-up-and-use-spending-limits)
+* [Gnosis Safe - Make dealing with crypto a less scary thing](https://www.youtube.com/watch?v=9gyZRq162A8)
 * [What are Safe Apps?](https://help.gnosis-safe.io/en/articles/4022022-what-are-safe-apps)
 * [Introducing Gnosis Safe Apps](https://blog.gnosis.pm/introducing-gnosis-safe-apps-faef908f69c6)
+* [Gnosis Safe Spending Limits](https://blog.gnosis.pm/gnosis-safe-spending-limits-f05b775d06b3)
+* [Set up and use Spending Limits](https://help.gnosis-safe.io/en/articles/4667979-set-up-and-use-spending-limits)
 * [CSV Airdrop as Gnosis Safe App](https://github.com/bh2smith/safe-airdrop)
 
 ### Admin Multisig
