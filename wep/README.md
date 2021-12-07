@@ -98,14 +98,6 @@ Issues:
 
 * [WEP008](wep008): Crossbar.io Maintenance
 
-Issues:
-
-* [crossbar](https://github.com/crossbario/crossbar/issues)
-* [autobahn-python](https://github.com/crossbario/autobahn-python/issues)
-* [txaio](https://github.com/crossbario/txaio/issues)
-* [zlmdb](https://github.com/crossbario/zlmdb/issues)
-* [cfxdb](https://github.com/crossbario/cfxdb/issues)
-
 ### WEP009 - Autobahn Maintenance
 
 * [WEP009](wep009): Autobahn Maintenance
