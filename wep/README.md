@@ -9,22 +9,24 @@ Write me.
 
 ## WEP List
 
-* [ ] WEP001 - Administration of the WAMP DAO
-* [ ] WEP002 - IETF RFC for WAMP
-* [ ] WEP003 - WAMP Parallel Messaging Patterns
-* [ ] WEP004 - WAMP Router-to-Router Links
-* [ ] WEP005 - Payload End-to-End Encryption and Key Management
-* [ ] WEP006 - Zero-copy WAMP Serialization with Flatbuffers
-* [ ] WEP007 - WAMP API Schema Definition with Flatbuffers
-* [ ] WEP008 - Multiplexed WAMP Transport with QUIC
-* [ ] WEP009 - Crossbar.io Maintenance
-* [ ] WEP010 - Autobahn Maintenance
-* [ ] WEP011 - Hardware security module support for WAMP-cryptosign
-* [ ] WEP012 - WAMP Implementations Automated Testing
+* [ ] [WEP001](wep001/README.md) - Administration of the WAMP DAO
+* [ ] [WEP002](wep002/README.md) - IETF RFC for WAMP
+* [ ] [WEP003](wep003/README.md) - WAMP Parallel Messaging Patterns
+* [ ] [WEP004](wep004/README.md) - WAMP Router-to-Router Links
+* [ ] [WEP005](wep005/README.md) - Payload End-to-End Encryption and Key Management
+* [ ] [WEP006](wep006/README.md) - Zero-copy WAMP Serialization with Flatbuffers
+* [ ] [WEP007](wep007/README.md) - WAMP API Schema Definition with Flatbuffers
+* [ ] [WEP008](wep008/README.md) - Multiplexed WAMP Transport with QUIC
+* [ ] [WEP009](wep009/README.md) - Crossbar.io Maintenance
+* [ ] [WEP010](wep010/README.md) - Autobahn Maintenance
+* [ ] [WEP011](wep011/README.md) - Hardware security module support for WAMP-cryptosign
+* [ ] [WEP012](wep012/README.md) - WAMP Implementations Automated Testing
+
+---------
 
 ### WEP001 - Administration of the WAMP DAO
 
-* [WEP001](wep001): Administration of the WAMP DAO
+* [WEP001](wep001/README.md): Administration of the WAMP DAO
 
 Issues:
 
@@ -33,7 +35,7 @@ Issues:
 
 ### WEP002 - IETF RFC for WAMP
 
-* [WEP002](wep002): IETF RFC for WAMP
+* [WEP002](wep002/README.md): IETF RFC for WAMP
 
 Issues:
 
@@ -42,7 +44,7 @@ Issues:
 
 ### WEP003 - WAMP Parallel Messaging Patterns
 
-* [WEP003](wep003): WAMP Parallel Messaging Patterns
+* [WEP003](wep003/README.md): WAMP Parallel Messaging Patterns
 
 Issues:
 
@@ -52,24 +54,17 @@ Issues:
 
 ### WEP004 - WAMP Router-to-Router Links
 
-Router-to-router links allow to connect WAMP router nodes to support transparent routing services on shared realms for clients connected to any of the nodes.
-
-Router-to-router links are a low-level facility that allows to configure and setup networks of nodes in different scenarios:
-
-1. scaling and high-availability (both single node scale-up, and multi-node cluster scale-out)
-2. edge/cloud topologies with edge routers connecting (tree-like) to cloud hosted nodes
-3. federation/decentralization, with nodes operated by different operators connecting
-
-* [WEP004](wep004): WAMP Router-to-Router Links
+* [WEP004](wep004/README.md): WAMP Router-to-Router Links
 * [WAMP R2R Overview](wep004/wamp_ap_r2r.pdf)
 
 Issues:
 
+* [crossbar](https://github.com/crossbario/crossbar/issues)
 * [xbr-protocol](https://github.com/crossbario/xbr-protocol/issues)
 
 ### WEP005 - Payload End-to-End Encryption and Key Management
 
-* [WEP005](wep005): Payload End-to-End Encryption and Key Management
+* [WEP005](wep005/README.md): Payload End-to-End Encryption and Key Management
 
 Issues:
 
@@ -78,29 +73,45 @@ Issues:
 * #229
 * #356
 
-### WEP006 - Zero-copy WAMP Serialization and WAMP API Schema Definition with Flatbuffers
+### WEP006 - Zero-copy WAMP Serialization with Flatbuffers
 
-* [WEP006](wep006): Zero-copy WAMP Serialization and WAMP API Schema Definition with Flatbuffers
+* [WEP006](wep006/README.md): Zero-copy WAMP Serialization with Flatbuffers
 
 Issues:
 
 * #72
 
-### WEP007 - Multiplexed WAMP Transport with QUIC
+### WEP007 - WAMP API Schema Definition with Flatbuffers
 
-* [WEP007](wep007): Multiplexed WAMP Transport with QUIC
+* [WEP007](wep007/README.md): WAMP API Schema Definition with Flatbuffers
+
+Issues:
+
+* #72
+
+### WEP008 - Multiplexed WAMP Transport with QUIC
+
+* [WEP008](wep008/README.md): Multiplexed WAMP Transport with QUIC
 
 Issues:
 
 * #363
 
-### WEP008 - Crossbar.io Maintenance
+### WEP009 - Crossbar.io Maintenance
 
-* [WEP008](wep008): Crossbar.io Maintenance
+* [WEP009](wep009/README.md): Crossbar.io Maintenance
 
-### WEP009 - Autobahn Maintenance
+Issues:
 
-* [WEP009](wep009): Autobahn Maintenance
+* [crossbar](https://github.com/crossbario/crossbar/issues)
+* [autobahn-python](https://github.com/crossbario/autobahn-python/issues)
+* [txaio](https://github.com/crossbario/txaio/issues)
+* [zlmdb](https://github.com/crossbario/zlmdb/issues)
+* [cfxdb](https://github.com/crossbario/cfxdb/issues)
+
+### WEP010 - Autobahn Maintenance
+
+* [WEP010](wep010/README.md): Autobahn Maintenance
 
 Issues:
 
@@ -108,6 +119,11 @@ Issues:
 * [autobahn-java](https://github.com/crossbario/autobahn-java/issues)
 * [autobahn-cpp](https://github.com/crossbario/autobahn-cpp/issues)
 
-### WEP010 - Hardware security module support for WAMP-cryptosign
+### WEP011 - Hardware security module support for WAMP-cryptosign
 
-### WEP011 - WAMP Implementations Automated Testing
+* [WEP011](wep011/README.md): Hardware security module support for WAMP-cryptosign
+
+### WEP012 - WAMP Implementations Automated Testing
+
+* [WEP012](wep012/README.md): WAMP Implementations Automated Testing
+s
