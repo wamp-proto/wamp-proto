@@ -60,6 +60,14 @@ for wep_name, repo_names in REPOS.items():
                 print(c)
                 contributors_count += 1
 
+        # https://pygithub.readthedocs.io/en/latest/github_objects/StatsContributor.html
+        stats = repo.get_stats_contributors()
+        res = []
+        for s in stats:
+            res.append((s.total, s.author.login))
+        res = list(reversed(sorted(res)))
+        pprint(res)
+
         if False:
             pprint([#repo.name,
                     repo.full_name,
