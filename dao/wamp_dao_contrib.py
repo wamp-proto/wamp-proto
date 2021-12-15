@@ -8,6 +8,8 @@ from github import Github
 import txaio
 txaio.use_twisted()
 
+from autobahn.util import utcnow
+
 
 def sum_contributor_stats(s):
     additions = 0
@@ -39,7 +41,10 @@ if __name__ == '__main__':
     else:
         txaio.start_logging(level='info')
 
-    RESULT = {}
+    RESULT = {
+        'created': utcnow(),
+        'wep': {}
+    }
 
     REPOS = {
         'WEP002': ['wamp-proto/wamp-proto'],
@@ -80,6 +85,13 @@ if __name__ == '__main__':
             # https://docs.github.com/en/rest/reference/repos#list-repository-contributors
             # https://pygithub.readthedocs.io/en/latest/github_objects/StatsContributor.html
 
+            contributors = []
+            for c in repo.get_contributors(anon=False):
+                if str(c) not in ['NamedUser(login="dependabot[bot]")', 'NamedUser(login=None)']:
+                    login = str(c.login)
+                    contributors.append(login)
+            contributors_all.update(contributors)
+
             stats = repo.get_stats_contributors()
             for s in stats:
                 if s.author.login not in contributor_stats_all:
@@ -93,13 +105,11 @@ if __name__ == '__main__':
                 contributor_stats_all[s.author.login]['d'] += st['d']
                 contributor_stats_all[s.author.login]['c'] += st['c']
 
-        for s in ['NamedUser(login="dependabot[bot]")', 'NamedUser(login=None)']:
-            contributors_all.discard(s)
-
         contributors_count = len(contributors_all)
         print('{}: {} repos with {} stars, {} forks, {} contributors and {} open issues'.format(wep_name, repos_count, stargazers_count, forks_count, contributors_count, open_issues_count))
 
-        RESULT[wep_name] = {
+        RESULT['wep'][wep_name] = {
+            'repo_names': repo_names,
             'repos_count': repos_count,
             'stargazers_count': stargazers_count,
             'forks_count': forks_count,
