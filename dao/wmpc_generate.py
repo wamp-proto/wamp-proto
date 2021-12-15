@@ -3,11 +3,15 @@ from pprint import pprint
 from github import Github
 
 REPOS = {
-    'WEP009': ['crossbario/crossbar',
+    'WEP002': ['wamp-proto/wamp-proto'],
+    'WEP010': ['crossbario/crossbar',
                'crossbario/txaio',
                'crossbario/autobahn-python',
                'crossbario/zlmdb',
-               'crossbario/cfxdb']
+               'crossbario/cfxdb'],
+    'WEP011': ['crossbario/autobahn-js',
+               'crossbario/autobahn-java',
+               'crossbario/autobahn-cpp',],
 }
 
 g = Github(os.environ['GITHUB_TOKEN'])
@@ -33,7 +37,7 @@ for wep_name, repo_names in REPOS.items():
         stargazers_count += repo.stargazers_count
         forks_count += repo.forks_count
         open_issues_count += repo.open_issues_count
-        print('{}@{}'.format(repo.full_name, repo.default_branch))
+        print('   {} @ {} ..'.format(repo.default_branch, repo.full_name))
 
         # repo contributors
         # https://stackoverflow.com/questions/36410357/github-v3-api-list-contributors
@@ -76,4 +80,5 @@ for wep_name, repo_names in REPOS.items():
     contributors_count = len(contributors_all)
     print('{}: {} repos with {} stars, {} forks, {} contributors and {} open issues'.format(wep_name, repos_count, stargazers_count, forks_count, contributors_count, open_issues_count))
 
-    pprint(contributors_all)
+    # pprint(contributors_all)
+    print()
