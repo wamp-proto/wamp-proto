@@ -2,6 +2,27 @@ import os
 from pprint import pprint
 from github import Github
 
+
+def sum_contributor_stats(s):
+    weeks = 0
+    additions = 0
+    deletions = 0
+    changes = 0
+    for w in s.weeks:
+        weeks += 1
+        additions += w.a
+        deletions += w.d
+        changes += w.c
+    obj = {
+        'contributor': s.author.login,
+        'weeks': weeks,
+        'additions': additions,
+        'deletions': deletions,
+        'changes': changes,
+    }
+    return obj
+
+
 REPOS = {
     'WEP002': ['wamp-proto/wamp-proto'],
     'WEP010': ['crossbario/crossbar',
@@ -64,7 +85,7 @@ for wep_name, repo_names in REPOS.items():
         stats = repo.get_stats_contributors()
         res = []
         for s in stats:
-            res.append((s.total, s.author.login))
+            res.append((s.total, s.author.login, sum_contributor_stats(s)))
         res = list(reversed(sorted(res)))
         pprint(res)
 
