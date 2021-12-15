@@ -1,1 +1,1 @@
-# WEP008 - Multiplexed WAMP Transport with QUIC
+# WEP008 - Decentralized WAMP Service Mesh

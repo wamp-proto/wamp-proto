@@ -5,7 +5,15 @@ for governance voting
 
 ## WEP Template
 
-Write me.
+Proposals should contain:
+
+* Summary
+* Abstract
+* Motivation
+* Specification
+* Benefits
+* Drawbacks
+* Vote
 
 ## WEP List
 
@@ -16,11 +24,12 @@ Write me.
 * [ ] [WEP005](wep005/README.md) - Payload End-to-End Encryption and Key Management
 * [ ] [WEP006](wep006/README.md) - Zero-copy WAMP Serialization with Flatbuffers
 * [ ] [WEP007](wep007/README.md) - WAMP API Schema Definition with Flatbuffers
-* [ ] [WEP008](wep008/README.md) - Multiplexed WAMP Transport with QUIC
-* [ ] [WEP009](wep009/README.md) - Crossbar.io Maintenance
-* [ ] [WEP010](wep010/README.md) - Autobahn Maintenance
-* [ ] [WEP011](wep011/README.md) - Hardware security module support for WAMP-cryptosign
-* [ ] [WEP012](wep012/README.md) - WAMP Implementations Automated Testing
+* [ ] [WEP008](wep008/README.md) - Decentralized WAMP Service Mesh
+* [ ] [WEP009](wep009/README.md) - Multiplexed WAMP Transport with QUIC
+* [ ] [WEP010](wep010/README.md) - Crossbar.io Maintenance
+* [ ] [WEP011](wep011/README.md) - Autobahn Maintenance
+* [ ] [WEP012](wep012/README.md) - Hardware security module support for WAMP-cryptosign
+* [ ] [WEP013](wep013/README.md) - WAMP Implementations Automated Testing
 
 ---------
 
@@ -89,17 +98,21 @@ Issues:
 
 * #72
 
-### WEP008 - Multiplexed WAMP Transport with QUIC
+### WEP008 - Decentralized WAMP Service Mesh
 
-* [WEP008](wep008/README.md): Multiplexed WAMP Transport with QUIC
+* [WEP008](wep008/README.md): Decentralized WAMP Service Mesh
+
+### WEP009 - Multiplexed WAMP Transport with QUIC
+
+* [WEP009](wep009/README.md): Multiplexed WAMP Transport with QUIC
 
 Issues:
 
 * #363
 
-### WEP009 - Crossbar.io Maintenance
+### WEP010 - Crossbar.io Maintenance
 
-* [WEP009](wep009/README.md): Crossbar.io Maintenance
+* [WEP010](wep010/README.md): Crossbar.io Maintenance
 
 Issues:
 
@@ -109,9 +122,9 @@ Issues:
 * [zlmdb](https://github.com/crossbario/zlmdb/issues)
 * [cfxdb](https://github.com/crossbario/cfxdb/issues)
 
-### WEP010 - Autobahn Maintenance
+### WEP011 - Autobahn Maintenance
 
-* [WEP010](wep010/README.md): Autobahn Maintenance
+* [WEP011](wep011/README.md): Autobahn Maintenance
 
 Issues:
 
@@ -119,11 +132,11 @@ Issues:
 * [autobahn-java](https://github.com/crossbario/autobahn-java/issues)
 * [autobahn-cpp](https://github.com/crossbario/autobahn-cpp/issues)
 
-### WEP011 - Hardware security module support for WAMP-cryptosign
+### WEP012 - Hardware security module support for WAMP-cryptosign
 
-* [WEP011](wep011/README.md): Hardware security module support for WAMP-cryptosign
+* [WEP012](wep012/README.md): Hardware security module support for WAMP-cryptosign
 
-### WEP012 - WAMP Implementations Automated Testing
+### WEP013 - WAMP Implementations Automated Testing
 
-* [WEP012](wep012/README.md): WAMP Implementations Automated Testing
+* [WEP013](wep013/README.md): WAMP Implementations Automated Testing
 s

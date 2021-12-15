@@ -71,7 +71,7 @@ Admin Multisig (3 of 5) draft list:
 2. [ ] meejah (ca)
 3. [ ] om26er (pk)
 4. [ ] KSDaemon (ru)
-5. [ ] gammazero (uk)
+5. [ ] ?
 
 ### Treasury Multisig
 
@@ -85,10 +85,37 @@ Treasury Multisig (4 of 7) draft list:
 6. [ ] ?
 7. [ ] ?
 
+* gammazero (uk)
 * estan	(se)
+
 * konsultaner (de)
 * ecorm	(ca)
-* ?
+* darkl (il/us)
+* jopie64 (nl)
+
+* ping
+* soldano
+
+
+realm owner
+node operator
+service provider
+user
+
+
+purpose: node federation, data markets
+
+realm owner / data & data services market: neutral intermediary
+
+https://www.linkedin.com/posts/oberstet_dga-eu-datasovereignty-activity-6874403681966587904-pCvA
+
+The Data Governance Act establishes new rules for data marketplaces ("data broker services"). Among other things, these rules stipulate that data marketplaces should only act as neutral intermediaries. In practice, this means that a platform that, for example, organizes the trade in sensor data from agricultural equipment such as tractors, sprayers or harvesting machines is not allowed to use this data for its own purposes, such as the development of in-house algorithms for the agricultural sector. This ensures, among other things, that both buyers and sellers of data can trust that data sharing will not result in a competitive disadvantage due to the use of their data by third parties.
+
+
+
+dao neutrality: apps => tools !!
+
+dao compliance: tech allows solutions compliant with GDPR and DGA
 
 ## Radicle
 
