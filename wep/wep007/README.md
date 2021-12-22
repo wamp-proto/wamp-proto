@@ -1,0 +1,1 @@
+# WEP007 - WAMP API Schema Definition with Flatbuffers
