@@ -1,3 +1,4 @@
+from autobahn.util import utcnow
 import os
 import json
 import argparse
@@ -7,8 +8,6 @@ from github import Github
 
 import txaio
 txaio.use_twisted()
-
-from autobahn.util import utcnow
 
 
 def sum_contributor_stats(s):
@@ -26,6 +25,7 @@ def sum_contributor_stats(s):
         'c': changes,
     }
     return obj
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -46,22 +46,76 @@ if __name__ == '__main__':
         'wep': {}
     }
 
+    # FIXME: handle non-GitHub repos:
+    #
+    # https://gitlab.com/entropealabs/wampex_client
+    # https://gitlab.com/leapsight/bondy
+
     REPOS = {
+        'WAMP': [
+            'alvistar/wamped',
+            'angiolep/akka-wamp',
+            'bwegh/awre',
+            'bwegh/erwa',
+            'CargoTube/cargotube',
+            'christian-raedel/nightlife-rabbit',
+            'Code-Sharp/WampSharp',
+            'crossbario/autobahn-cpp',
+            'crossbario/autobahn-java',
+            'crossbario/autobahn-js',
+            'crossbario/autobahn-python',
+            'crossbario/crossbar',
+            'darrenjs/wampcc',
+            'darrrk/backbone.wamp',
+            'ecorm/cppwamp',
+            'elast0ny/wamp_async',
+            'ericchapman/ruby_wamp_client',
+            'FGasper/p5-Net-WAMP',
+            'gammazero/nexus',
+            'iscriptology/swamp',
+            'jcelliott/turnpike',
+            'johngeorgewright/wamp-cli',
+            'Jopie64/wamprx.js',
+            'jszczypk/WampSyncClient',
+            'kalmyk/fox-wamp',
+            'konsultaner/connectanum-dart',
+            'KSDaemon/Loowy',
+            'KSDaemon/wampy.js',
+            'KSDaemon/wiola',
+            'LaurenceGA/kwamp',
+            'Matthias247/jawampa',
+            'mogui/MDWamp',
+            'mulderr/haskell-wamp',
+            'MyMedsAndMe/spell',
+            'noisyboiler/wampy',
+            'Orange-OpenSource/wamp.rt',
+            'paulpdaniels/rx.wamp',
+            'rafzi/WAMP_POCO',
+            'ralscha/wamp2spring',
+            'tplgy/bonefish',
+            'Verkehrsministerium/kraftfahrstrasse',
+            'Vinelab/minion',
+            'voryx/angular-wamp',
+            'voryx/Thruway',
+        ],
         'WEP002': ['wamp-proto/wamp-proto'],
         'WEP010': ['crossbario/crossbar',
-                'crossbario/txaio',
-                'crossbario/autobahn-python',
-                'crossbario/zlmdb',
-                'crossbario/cfxdb'],
+                   'crossbario/txaio',
+                   'crossbario/autobahn-python',
+                   'crossbario/zlmdb',
+                   'crossbario/cfxdb'],
         'WEP011': ['crossbario/autobahn-js',
-                'crossbario/autobahn-java',
-                'crossbario/autobahn-cpp',],
+                   'crossbario/autobahn-java',
+                   'crossbario/autobahn-cpp', ],
     }
 
     g = Github(os.environ['GITHUB_TOKEN'])
 
     # https://pygithub.readthedocs.io/en/latest/github_objects/Repository.html
     for wep_name, repo_names in REPOS.items():
+        if wep_name in ['WAMP']:
+            pass
+
         contributors_all = set()
         contributor_stats_all = {}
         stargazers_count = 0
@@ -106,7 +160,8 @@ if __name__ == '__main__':
                 contributor_stats_all[s.author.login]['c'] += st['c']
 
         contributors_count = len(contributors_all)
-        print('{}: {} repos with {} stars, {} forks, {} contributors and {} open issues'.format(wep_name, repos_count, stargazers_count, forks_count, contributors_count, open_issues_count))
+        print('{}: {} repos with {} stars, {} forks, {} contributors and {} open issues'.format(
+            wep_name, repos_count, stargazers_count, forks_count, contributors_count, open_issues_count))
 
         RESULT['wep'][wep_name] = {
             'repo_names': repo_names,
@@ -121,6 +176,8 @@ if __name__ == '__main__':
     if options.output:
         print()
         with open(options.output, 'wb') as f:
-            data = json.dumps(RESULT, ensure_ascii=False, sort_keys=True).encode()
+            data = json.dumps(RESULT, ensure_ascii=False,
+                              sort_keys=True).encode()
             f.write(data)
-        print('Written {} bytes to output file {}'.format(len(data), options.output))
+        print('Written {} bytes to output file {}'.format(
+            len(data), options.output))

@@ -37,28 +37,24 @@ with tasks depending on each other as in this *CI-Release Pipeline*:
 ```
 Source Code
     |
-    +-- Software Packages (wheel)
+    +-- Software Packages (wheel *)
              |
-             +-- Software Binaries (Docker, snap, EXE)
+             +-- Software Binaries (Docker, snap, EXE **)
                       |
-                      +--[Docker]-- Machine Images (AMI, VirtualBox)
+                      +--[Docker]-- Machine Images (AMI, VirtualBox ***)
                       |
                       +--[snap]-- Device Images (Yocto)
 ```
 
+> *: created with [setuptools](https://github.com/pypa/setuptools), [pip](https://pip.pypa.io/), [wheel](https://github.com/pypa/wheel)
+> **: created with [Docker](https://www.docker.com/), [Snapcraft](https://snapcraft.io/), [PyInstaller](https://www.pyinstaller.org/)
+> ***: created with [Packer](https://www.packer.io/), [Vagrant](https://www.vagrantup.com/), [VirtualBox](https://www.virtualbox.org/)
+
 and more tasks:
 
-* [ ] Crossbar.io Documentation
-* [ ] Crossbar.io Workbench
-
-
-## Crossbar.io Documentation
-
-Consolidate, polish and close gaps in Crossbar.io documentation:
-
-* [docs](https://github.com/crossbario/crossbar/tree/master/docs)
-* [docs-old](https://github.com/crossbario/crossbar/tree/master/docs-old)
-* [docs-cfx](https://github.com/crossbario/crossbar/tree/master/docs-cfx)
+* Crossbar.io **Documentation**
+* Crossbar.io **Workbench**
+* Crossbar.io **Samples and Demos**
 
 
 ## Crossbar.io Software Packages
@@ -120,3 +116,36 @@ oberstet@intel-nuci7:~/scm/wamp-proto/wamp-proto$ wc -l ~/scm/crossbario/crossba
 
 1. Docker image (x86-64)
 2. [VirtualBox VM image](https://www.packer.io/docs/builders/virtualbox) (x86-64)
+
+
+## Crossbar.io Documentation
+
+Consolidate, polish and close gaps in Crossbar.io documentation:
+
+* [docs](https://github.com/crossbario/crossbar/tree/master/docs)
+* [docs-old](https://github.com/crossbario/crossbar/tree/master/docs-old)
+* [docs-cfx](https://github.com/crossbario/crossbar/tree/master/docs-cfx)
+
+and
+
+* [Cookiecutter Autobahn C++](https://api.github.com/repos/crossbario/cookiecutter-autobahn-cpp)
+* [Cookiecutter Autobahn Java](https://api.github.com/repos/crossbario/cookiecutter-autobahn-java)
+* [Cookiecutter Autobahn JS](https://api.github.com/repos/crossbario/cookiecutter-autobahn-js)
+* [Cookiecutter Autobahn Pyython](https://api.github.com/repos/crossbario/cookiecutter-autobahn-python)
+* [Cookiecutter Crossbar.io](https://api.github.com/repos/crossbario/cookiecutter-crossbar)
+* [Cookiecutter CrossbarFX](https://api.github.com/repos/crossbario/cookiecutter-crossbarfx)
+* [Cookiecutter CrossbarFX Cloud](https://api.github.com/repos/crossbario/cookiecutter-crossbarfx-cloud)
+* [Cookiecutter Nexus Go](https://api.github.com/repos/crossbario/cookiecutter-nexus-go)
+* [Cookiecutter Thruway](https://api.github.com/repos/crossbario/cookiecutter-thruway)
+* [Cookiecutter WAMPSharp](https://api.github.com/repos/crossbario/cookiecutter-wampsharp)
+* [Cookiecutter XBR JS](https://api.github.com/repos/crossbario/cookiecutter-xbr-javascript)
+* [Cookiecutter XBR Python](https://api.github.com/repos/crossbario/cookiecutter-xbr-python)
+
+
+## Samples and Demos
+
+* [Crossbar.io Examples](https://github.com/crossbario/crossbar-examples)
+* [Crossbar.io IoT Cookbook](https://github.com/crossbario/iotcookbook)
+* [Data Square Platform: Code examples, notebooks and tutorials](https://github.com/crossbario/dsq-examples)
+* [IDMA Examples](https://api.github.com/repos/crossbario/idma-examples)
+* [Katakoda Example](https://api.github.com/repos/crossbario/katacoda-demos)
