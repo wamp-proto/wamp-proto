@@ -108,6 +108,7 @@ The following table lists WAMP compliant utilities.
 Name                Language/Run-time                   Description
 ==================  ==================================  =====================
 wamp-cli_           JavaScript, NodeJS                  A CLI tool to help building applications with WAMP
+wick_               Go                                  CLI tool to make WAMP RPCs and PubSub. Useful for developing WAMP Components and their testing.
 ==================  ==================================  =====================
 
 
@@ -159,3 +160,4 @@ wamp-cli_           JavaScript, NodeJS                  A CLI tool to help build
 .. _Wiola: http://ksdaemon.github.io/wiola/
 .. _wamp-cli: https://github.com/johngeorgewright/wamp-cli
 .. _wamp_async: https://github.com/elast0ny/wamp_async
+.. _wick: https://github.com/codebasepk/wick
