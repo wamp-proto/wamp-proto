@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap &mdash; Web Application Messaging Protocol version 2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
+    <link rel="canonical" href="https://wamp-proto.org/roadmap.html"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/js/custom.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Frequently Asked Questions" href="faq.html" />
+    <link rel="prev" title="Implementations" href="implementations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
+            <img src="_static/wamp_logo_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">Message Routing in WAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementations.html">Implementations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Roadmap</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ietf-rfc">IETF RFC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#new-advanced-features">New advanced features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-next-level">The next level</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Web Application Messaging Protocol</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Roadmap</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/roadmap.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="roadmap">
+<span id="id1"></span><h1>Roadmap<a class="headerlink" href="#roadmap" title="Permalink to this heading">¶</a></h1>
+<section id="ietf-rfc">
+<h2>IETF RFC<a class="headerlink" href="#ietf-rfc" title="Permalink to this heading">¶</a></h2>
+<p>WAMP has come a long way since its inception and first incarnation back in 2012.</p>
+<p>The jump in expressivness and power with WAMP v2 was big, and some other changes
+allowed WAMP v2 to ingest a lot of user requirements and wishes without breaking
+a basically very simple and coherent design.</p>
+<p>And even better: we believe we can really complete the original vision of WAMP
+under WAMP v2, and just fill in the remaining gaps:</p>
+<ul class="simple">
+<li><p>The WAMP Basic Profile is feature complete. The job is to polish and improve the spec text.</p></li>
+<li><p>The WAMP Advanced Profile: here we have a couple of gaps to fill for already defined features.
+The job is to come up with proposals for spec text, discuss, process feedback, ..</p></li>
+</ul>
+<p>Finally, given we continue to work on above, the WAMP IETF RFC is in a stage where
+it makes sense to enter the RFC draft process, with the final goal of getting WAMP
+released as an IETF RFC with a proper RFC number.</p>
+</section>
+<section id="new-advanced-features">
+<h2>New advanced features<a class="headerlink" href="#new-advanced-features" title="Permalink to this heading">¶</a></h2>
+<p>The following are some areas where we want are exploring</p>
+<ul class="simple">
+<li><p>progressive call arguments and streams</p></li>
+<li><p>sharded registrations</p></li>
+<li><p>Flatbuffers strongly typed application payload</p></li>
+<li><p>end-to-end payload encryption</p></li>
+</ul>
+</section>
+<section id="the-next-level">
+<h2>The next level<a class="headerlink" href="#the-next-level" title="Permalink to this heading">¶</a></h2>
+<p>With the feature areas listed above, where we want to close the final gaps
+in the WAMP protocol to fullfil its promise and mission, our (now Crossbar.io
+specifically as original creators of WAMP) focus will increasingly be on
+what be believe is the next frontier</p>
+<p>Now that we have WAMP, we want to use it to actually build a wider ecosystem of
+<strong>open data markets</strong>, where WAMP components and microservices can trade their data
+driven services, allowing consumers to buy service from providers.</p>
+<p>This new project is called <strong>XBR</strong>, and you can find out more on the
+<a class="reference external" href="https://xbr.network/">XBR Network</a> homepage and the
+<a class="reference external" href="https://xbr.network/docs/index.html">XBR Protocol</a> documentation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="implementations.html" class="btn btn-neutral float-left" title="Implementations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="faq.html" class="btn btn-neutral float-right" title="Frequently Asked Questions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2022, Crossbar.io Technologies GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

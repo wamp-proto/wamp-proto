@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frequently Asked Questions &mdash; Web Application Messaging Protocol version 2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
+    <link rel="canonical" href="https://wamp-proto.org/faq.html"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/js/custom.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Impressum" href="impressum.html" />
+    <link rel="prev" title="Roadmap" href="roadmap.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
+            <img src="_static/wamp_logo_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">Message Routing in WAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementations.html">Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#general">General</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#legal">Legal</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Web Application Messaging Protocol</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Frequently Asked Questions</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/faq.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="frequently-asked-questions">
+<span id="faq"></span><h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this heading">¶</a></h1>
+<p class="rubric" id="id1">Frequently Asked Questions</p>
+<ul>
+<li><p>General</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="#what-is-rpc">What is RPC?</a></p></li>
+<li><p><a class="reference external" href="#what-is-pubsub">What is PubSub?</a></p></li>
+<li><p><a class="reference external" href="#why-rpc-and-pubsub-in-one-protocol">Why RPC and PubSub in one protocol?</a></p></li>
+<li><p><a class="reference external" href="#why-is-it-called-wamp-and-how-do-i-use-it">Why is it called WAMP and how do I use it?</a></p></li>
+<li><p><a class="reference external" href="#what-is-websocket">What is Websocket?</a></p></li>
+<li><p><a class="reference external" href="#is-websocket-necessary-for-wamp">Is WebSocket necessary for WAMP?</a></p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Legal</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#what-is-the-legal-status-of-wamp">What is the legal status of WAMP?</a></p></li>
+<li><p><a class="reference external" href="#are-there-any-requirements-if-i-use-wamp-for-my-project">Are there any requirements if I use WAMP for my project?</a></p></li>
+<li><p><a class="reference external" href="#why-is-wamp-trademarked">Why is WAMP trademarked?</a></p></li>
+<li><p><a class="reference external" href="#who-can-use-the-wamp-word-mark-or-the-wamp-design-mark">Who can use the WAMP word mark or the WAMP design mark?</a></p></li>
+<li><p><a class="reference external" href="#what-does-the-cc-copyright-on-this-website-mean">What does the CC copyright on this website mean?</a></p></li>
+</ul>
+</li>
+</ul>
+<section id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this heading">¶</a></h2>
+<p class="rubric" id="what-is-rpc">What is RPC?</p>
+<p><strong>Remote Procedure Call (RPC)</strong> is a messaging pattern involving peers
+of three roles:</p>
+<ol class="arabic simple">
+<li><p><em>Caller</em></p></li>
+<li><p><em>Callee</em></p></li>
+<li><p><em>Dealer</em></p></li>
+</ol>
+<p>A <em>Caller</em> issues calls to remote procedures by providing the procedure
+URI and any arguments for the call. The <em>Callee</em> will execute the
+procedure using the supplied arguments to the call and return the result
+of the call to the <em>Caller</em>.</p>
+<p><em>Callees</em> register procedures they provide with <em>Dealers</em>. <em>Callers</em>
+initiate procedure calls first to <em>Dealers</em>. <em>Dealers</em> route calls
+incoming from <em>Callers</em> to <em>Callees</em> implementing the procedure called,
+and route call results back from <em>Callees</em> to <em>Callers</em>.</p>
+<p>The <em>Caller</em> and <em>Callee</em> will usually run application code, while the
+<em>Dealer</em> works as a generic router for remote procedure calls decoupling
+<em>Callers</em> and <em>Callees</em>.</p>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="what-is-pubsub">What is PubSub?</p>
+<p>Publish &amp; Subscribe (PubSub) is a messaging pattern involving peers of
+three roles:</p>
+<ol class="arabic simple">
+<li><p><em>Publisher</em></p></li>
+<li><p><em>Subscriber</em></p></li>
+<li><p><em>Broker</em></p></li>
+</ol>
+<p>A <em>Publishers</em> publishes events to topics by providing the topic URI and
+any payload for the event. <em>Subscribers</em> of the topic will receive the
+event together with the event payload.</p>
+<p><em>Subscribers</em> subscribe to topics they are interested in with <em>Brokers</em>.
+<em>Publishers</em> initiate publication first at <em>Brokers</em>. <em>Brokers</em> route
+events incoming from <em>Publishers</em> to <em>Subscribers</em> that are subscribed
+to respective topics.</p>
+<p>The <em>Publisher</em> and <em>Subscriber</em> will usually run application code,
+while the <em>Broker</em> works as a generic router for events decoupling
+<em>Publishers</em> from <em>Subscribers</em>.</p>
+<p>Read more: <a class="reference external" href="http://books.google.de/books?id=RxsyCBr9eLMC">Publish / Subscribe Systems: Design and
+Principles</a>, by Sasu
+Tarkoma.</p>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="why-rpc-and-pubsub-in-one-protocol">Why RPC and PubSub in one protocol?</p>
+<div class="line-block">
+<div class="line">Imagine the following situation: an application frontend wants to
+perform some action on an application backend. The frontend also wants
+to get notified when another frontend performs the respective action
+on the backend.</div>
+<div class="line">For example, in a Web application for managing service tickets, a
+frontend might perform the action “create new ticket”, and get
+notified via events of “new ticket created”.</div>
+</div>
+<div class="line-block">
+<div class="line">A natural approach to realize above would use RPC for performing
+actions, and PubSub for notifications.</div>
+<div class="line">With the service ticket Web app, the frontend would subscribe to the
+topic “OnTicketCreated”, and perform it’s actions by calling
+“createTicket”. The backends implementation of “createTicket” would
+not only perform the action of creating a new ticket, but also publish
+a event on the topic “OnTicketCreated” with the details of the new
+ticket.</div>
+</div>
+<p>Now, a protocol suitable for realizing above will naturally need to
+provide both RPC and PubSub messaging patterns. WAMP was designed
+exactly with above in mind, so it provides you with a unified protocol
+for both RPC and PubSub.</p>
+<p>For more about the reasoning behind WAMP, see <a class="reference external" href="routing.html">this
+explanation</a>.</p>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="why-is-it-called-wamp-and-how-do-i-use-it">Why is it called WAMP and how do I use it?</p>
+<p>WAMP is an acronym, and the term “Web Application Messaging Protocol” is
+a quite precise description of what the protocol provides.</p>
+<p>WAMP is pronounced /wa:mp/, as in
+<a class="reference external" href="http://dictionary.cambridge.org/pronunciation/british/swamp_1#">swamp</a>
+or
+<a class="reference external" href="http://dictionary.cambridge.org/dictionary/british/chomp?q=chomp#">chomp</a>.</p>
+<p>Note that there is another technology also abbreviated WAMP: the Web
+technology stack “Windows + Apache + MySQL + PHP”. I.e. Wikipedia has a
+corresponding <a class="reference external" href="http://en.wikipedia.org/wiki/WAMP_%28disambiguation%29">disambiguation
+page</a>.</p>
+<p>Because of this potential ambiguity, here is what we recommend for
+<strong>authors/implementors</strong>:</p>
+<ol class="arabic simple">
+<li><p>Use <strong>“WAMP”</strong> in text and speech</p></li>
+<li><p>The first occurrence in text should read: <strong>“WAMP (Web Application
+Messaging Protocol)”</strong></p></li>
+<li><p>Add the hashtag/keyword <strong>“wampws”</strong> to the contents metadata</p></li>
+</ol>
+<p>And here is what we recommend for <strong>users</strong>:</p>
+<ol class="arabic simple">
+<li><p>Use the terms <strong>“wamp”</strong> and <strong>“protocol”</strong> <em>combined</em> when using Web
+search engines</p></li>
+<li><p>Use the hashtag/keyword <strong>“wampws”</strong> when search on Web platform like
+<a class="reference external" href="https://twitter.com">Twitter</a> or
+<a class="reference external" href="http://stackoverflow.com/">StackOverflow</a></p></li>
+</ol>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="what-is-websocket">What is WebSocket?</p>
+<p>WebSocket is a protocol providing full-dupley communcations channels
+over a single TCP connection. It started out in the Web world, where it
+was created to replace things like Comet, and to allow true
+bi-directional, low-latency connections between browser and server. It’s
+standardized by the IETF and the W3C. Usage is not limited to the
+browser, with implementations available for all major programming
+languages. For more details see this <a class="reference external" href="http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/">introductory blog
+post</a>.</p>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="is-websocket-necessary-for-wamp">Is WebSocket necessary for WAMP?</p>
+<div class="line-block">
+<div class="line">WAMP started out as the WebSocket Application Messaging Protocol.
+WebSocket is still the preferred transport in many cases, but the
+transport layer is fully decoupled. Any bi-directional, reliable,
+message-based and ordered transport works. Transports like Unix Domain
+Sockets or Unix Pipes are being used in implementations.</div>
+<div class="line">Additionally, a transport for WAMP transports can be implemented on
+top of other transports which lack some of the requirements, e.g.
+using longpoll bi-directionality can be built on top of HTTP.</div>
+</div>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+</section>
+<section id="legal">
+<h2>Legal<a class="headerlink" href="#legal" title="Permalink to this heading">¶</a></h2>
+<p class="rubric" id="what-is-the-legal-status-of-wamp">What is the legal status of WAMP?</p>
+<div class="line-block">
+<div class="line">WAMP is free - both as in beer and as in speech. Do with it what you
+like. If WAMP fills your needs as it is, then the easiest thing is to
+just use it without any changes. The more compatible implementations,
+the better for interoperability. If your needs require modifications,
+or you want to start your own development based on WAMP, then you are
+also free to do so.</div>
+<div class="line">Whatever you do with WAMP - an announcement on the mailing list is
+always welcome.</div>
+</div>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="are-there-any-requirements-if-i-use-wamp-for-my-project">Are there any requirements if I use WAMP for my project?</p>
+<div class="line-block">
+<div class="line">WAMP is free to use for anybody, be it as part of an open source or a
+commercial project. There are no strings attached here, no licenses to
+pay, and no known other intellectual property (such as patents).</div>
+<div class="line">If you do use WAMP for your project, then both a mention of this
+somewhere in your project, and an announcement on the mailing list
+would be welcome.</div>
+</div>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="why-is-wamp-trademarked">Why is WAMP trademarked?</p>
+<p>The WAMP word- and design mark are trademarked as a way to ensure that
+only proper use is made of them. This is especially the case in regard
+to assurances regarding compatibility. A trademark policy detailing
+correct use is in the works. For now, and for a quick overview of the
+base principles of the trademark policy, see the following question.</p>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="who-can-use-the-wamp-word-mark-or-the-wamp-design-mark">Who can use the WAMP word mark or the WAMP design mark?</p>
+<div class="line-block">
+<div class="line">The fact that WAMP is a word mark does not prevent factual use. If you
+e.g. announced that you were working on a WAMP implementation, or
+discussed details of your implementation work, or recommended this
+website, these are all, naturally, entirely unproblematic uses.</div>
+<div class="line">For any use of the word mark which could imply a direct endorsement,
+or other official connection with the WAMP project, or when in doubt,
+please get in contact with Crossbar.io GmbH. The same goes for any use
+of the design mark (i.e. the WAMP logo at the top of the project
+page).</div>
+<div class="line">We will take a look as quickly as possible, and try to arrange a
+license if this should be necessary. (And a license does not need to
+be a big deal.)</div>
+</div>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+<p class="rubric" id="what-does-the-cc-copyright-on-this-website-mean">What does the CC copyright on this website mean?</p>
+<div class="line-block">
+<div class="line">The threshold for using WAMP should be as low as possible. This
+includes the documentation for what you are doing. The CC BY license
+simply means that you are free to use any materials on this website
+(with the exception of the WAMP word mark or WAMP design mark) for
+your project. You can copy &amp; paste or edit anything you think useful
+to for e.g. your own project website or your documentation. This
+applies irrespective of whether your project is commercial or
+non-commercial.</div>
+<div class="line">The only requirement is that you attribute this use. In an internet
+context, this is most easily done by providing something like ‘some
+materials copied/adapted from’ + a link to the WAMP website.</div>
+</div>
+<p><a class="reference external" href="#frequently-asked-questions">to top</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="roadmap.html" class="btn btn-neutral float-left" title="Roadmap" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="impressum.html" class="btn btn-neutral float-right" title="Impressum" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2022, Crossbar.io Technologies GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

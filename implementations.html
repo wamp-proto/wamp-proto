@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Implementations &mdash; Web Application Messaging Protocol version 2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
+    <link rel="canonical" href="https://wamp-proto.org/implementations.html"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/js/custom.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Roadmap" href="roadmap.html" />
+    <link rel="prev" title="Users and Resources" href="users.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
+            <img src="_static/wamp_logo_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">Message Routing in WAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Implementations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#libraries">Libraries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#routers">Routers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Web Application Messaging Protocol</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Implementations</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/implementations.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="implementations">
+<span id="id1"></span><h1>Implementations<a class="headerlink" href="#implementations" title="Permalink to this heading">¶</a></h1>
+<p>Get started with WAMP by choosing <strong>client libraries</strong> and a <strong>router</strong>:</p>
+<ul class="simple">
+<li><p>To <em>write application components</em> in your favorite language, you will need a <strong>WAMP client library</strong></p></li>
+<li><p>To actually <em>run your application</em> consisting of components, you will need a <strong>WAMP router</strong></p></li>
+</ul>
+<p>In theory, you should be able to use any combination and mix of WAMP client libraries with routers
+and select the best or most fitting for each. That’s one promise of WAMP, one freedom of choice.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>You can choose your WAMP router independently of the programming language you want to write your
+components in since routers do not run application code directly.</p></li>
+<li><p>Want your WAMP implementation listed here? Please join the <a class="reference external" href="https://groups.google.com/group/wampws">mailing list</a>
+or <a class="reference external" href="https://gitter.im/wamp-proto/wamp-proto">Gitter chat</a> and introduce your project.</p></li>
+</ul>
+</div>
+<section id="libraries">
+<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this heading">¶</a></h2>
+<p>The following table lists WAMP compliant <strong>client library implementations</strong>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 15%" />
+<col style="width: 77%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Language/Run-time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/angiolep/akka-wamp">akka-wamp</a></p></td>
+<td><p>Scala, Java 8 and Akka</p></td>
+<td><p>WAMP implementation written in Scala with Akka HTTP, usable from Java 8.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/voryx/angular-wamp">AngularWAMP</a></p></td>
+<td><p>JavaScript</p></td>
+<td><p>AngularWAMP is wrapper for AutobahnJS that provides deeper integration for AngularJS apps.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/crossbario/autobahn-cpp">AutobahnCpp</a></p></td>
+<td><p>C++ 11 and Boost/ASIO</p></td>
+<td><p>C++ 11 implementation using Futures, Continuations and Lambdas. Runs on top of <a class="reference external" href="http://www.boost.org">Boost</a> and <a class="reference external" href="http://think-async.com/">ASIO</a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/crossbario/autobahn-java">AutobahnJava</a></p></td>
+<td><p>Java 8, Android or Netty</p></td>
+<td><p>WAMP client library for Java and Android applications based on Java 8 <code class="docutils literal notranslate"><span class="pre">CompletableFuture</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/crossbario/autobahn-js">AutobahnJS</a></p></td>
+<td><p>Javascript, HTML5 and NodeJS</p></td>
+<td><p>WAMP client library for both browsers (HTML5) and <a class="reference external" href="http://nodejs.org/">NodeJS</a> using Promises.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/crossbario/autobahn-python">AutobahnPython</a></p></td>
+<td><p>Python 2/3, Twisted and asyncio</p></td>
+<td><p>WAMP client library + WebSocket client/server impl. for Python 2 and 3, on <a class="reference external" href="https://twistedmatrix.com">Twisted</a> and <a class="reference external" href="https://docs.python.org/3/library/asyncio.html">asyncio</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/bwegh/awre">awre</a></p></td>
+<td><p>Erlang</p></td>
+<td><p>awre is a WAMP V2 implementation in <a class="reference external" href="http://www.erlang.org/">Erlang</a> with client roles.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/darrrk/backbone.wamp">Backbone</a></p></td>
+<td><p>JavaScript</p></td>
+<td><p>Allows two-way synchronisation of Backbone models &amp; collections between frontends and backends.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.connectanum.com/">connectanum</a></p></td>
+<td><p>Java, Netty</p></td>
+<td><p>A Java WAMP implementation based on Netty. Both Client and Router roles.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://pub.dev/packages/connectanum/">connectanum-dart</a></p></td>
+<td><p>Dart, Flutter</p></td>
+<td><p>A WAMP client implementation for the <a class="reference external" href="https://dart.dev/">dart language</a> and <a class="reference external" href="https://flutter.dev/">flutter</a> projects.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/ecorm/cppwamp">CppWAMP</a></p></td>
+<td><p>C++ 11</p></td>
+<td><p>CppWAMP is a WAMP V2 implementation in C++11.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/mulderr/haskell-wamp">haskell-wamp</a></p></td>
+<td><p>Haskell</p></td>
+<td><p>An experimental Haskell implementation of WAMP Basic Profile.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Verkehrsministerium/kraftfahrstrasse">kraftfahrstrasse</a></p></td>
+<td><p>TypeScript</p></td>
+<td><p>Modern WAMP Client library for browsers and node utilizing native ES6+.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/LaurenceGA/kwamp">KWAMP</a></p></td>
+<td><p>Kotlin</p></td>
+<td><p>A Kotlin WAMP client (aims for basic profile).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Matthias247/jawampa">jawampa</a></p></td>
+<td><p>Java + RxJava, Netty</p></td>
+<td><p>A Java WAMP implementation based on <a class="reference external" href="http://netty.io/">Netty</a> and <a class="reference external" href="https://github.com/ReactiveX/RxJava">RxJava</a>. Both Client and Router roles.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/KSDaemon/Loowy">Loowy</a></p></td>
+<td><p>Lua, lib-ev</p></td>
+<td><p>Lua WAMP client implementation on top of lua-websockets and lib-ev.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/mogui/MDWamp">MDWamp</a></p></td>
+<td><p>Objective-C</p></td>
+<td><p>Client library for iOS apps built on <a class="reference external" href="https://github.com/square/SocketRocket">SocketRocket</a> for WebSocket.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Vinelab/minion">Minion</a></p></td>
+<td><p>PHP</p></td>
+<td><p>Client library and command line tool with <a class="reference external" href="http://laravel.com/">Laravel</a> support. Based on <a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/gammazero/nexus">Nexus</a></p></td>
+<td><p>Go</p></td>
+<td><p>A full-feature WAMP client written in Go (also a Router).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/FGasper/p5-Net-WAMP">p5-Net-WAMP</a></p></td>
+<td><p>Perl 5</p></td>
+<td><p>A WAMP implementation in Perl. See the <a class="reference external" href="https://metacpan.org/pod/Net::WAMP">docs</a> for details.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/ericchapman/ruby_wamp_client">ruby_wamp_client</a></p></td>
+<td><p>Ruby</p></td>
+<td><p>A WAMP client for Ruby</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/paulpdaniels/rx.wamp">rx-wamp</a></p></td>
+<td><p>JavaScript</p></td>
+<td><p>A <a class="reference external" href="https://github.com/Reactive-Extensions/RxJS">RxJS</a> wrapper library for WAMP. Built on AutobahnJS, running in the browser and NodeJS.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a></p></td>
+<td><p>PHP</p></td>
+<td><p>Thruway is a WAMP library built in PHP that provides both Client and Router roles.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/jcelliott/turnpike">Turnpike</a></p></td>
+<td><p>Go</p></td>
+<td><p>A Go implementation of WAMP V2</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/MyMedsAndMe/spell">Spell</a></p></td>
+<td><p>Elixir/Erlang</p></td>
+<td><p>Spell is a WAMP library built using Elixir, running on the Erlang VM.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/iscriptology/swamp">Swamp</a></p></td>
+<td><p>Swift</p></td>
+<td><p>WAMP client library in pure Swift using Starscream and SwiftyJSON.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/darrenjs/wampcc">wampcc</a></p></td>
+<td><p>C++</p></td>
+<td><p>A C++ WAMP library that aims to depend only on C libraries. Includes a basic router.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/rafzi/WAMP_POCO">WAMP_POCO</a></p></td>
+<td><p>C++</p></td>
+<td><p>A fork of AutobahnCpp that is using <a class="reference external" href="http://pocoproject.org/">POCO</a> instead of Boost.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/alvistar/wamped">wamped</a></p></td>
+<td><p>C++</p></td>
+<td><p>Intended for running on <a class="reference external" href="https://www.mbed.com/en/">ARM mbed OS</a>. Experimental.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://gitlab.com/entropealabs/wampex_client">WAMPexClient</a></p></td>
+<td><p>Elixir</p></td>
+<td><p>Elixir client library that implements the complete client Basic Profile and much of the Advanced Profile.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/jszczypk/WampSyncClient">WampSyncClient</a></p></td>
+<td><p>PHP</p></td>
+<td><p>Synchronous (blocking) PHP client implementing Caller and Publisher roles</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Jopie64/wamprx.js">wamprx.js</a></p></td>
+<td><p>TypeScript</p></td>
+<td><p>Simple WAMP TypeScript client-side implementation (of course also usable in JavaScript). It heavily relies on RxJS.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Code-Sharp/WampSharp">WampSharp</a></p></td>
+<td><p>C#</p></td>
+<td><p>C# implementation of WAMP: both client and router roles, both JSON and <a class="reference external" href="http://msgpack.org/">MessagePack</a> support.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/noisyboiler/wampy">wampy</a></p></td>
+<td><p>Python</p></td>
+<td><p>Python implementation for classic blocking Python applications.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/KSDaemon/wampy.js">wampy.js</a></p></td>
+<td><p>JavaScript</p></td>
+<td><p>WAMP JavaScript client for browsers and node.js using callbacks. See <a class="reference external" href="https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs">here</a> for comparison to AutobahnJS.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/elast0ny/wamp_async">wamp_async</a></p></td>
+<td><p>Rust</p></td>
+<td><p>Rust client library. It features ergonomic async API</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="routers">
+<h2>Routers<a class="headerlink" href="#routers" title="Permalink to this heading">¶</a></h2>
+<p>The following table lists WAMP compliant <strong>router implementations</strong>.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 10%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Language/Run-time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/angiolep/akka-wamp">akka-wamp</a></p></td>
+<td><p>Scala, Java 8 and Akka</p></td>
+<td><p>A Scala implementation of a basic WAMP router.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/tplgy/bonefish">Bonefish</a></p></td>
+<td><p>C++, Boost/ASIO</p></td>
+<td><p>WAMP router based on C++11 and Boost.Asio. Also usable as a library, Apache 2.0 licensed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://www.connectanum.com/">connectanum</a></p></td>
+<td><p>Java, Netty</p></td>
+<td><p>A Java WAMP implementation based on Netty. Both Client and Router roles.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://crossbar.io">Crossbar</a></p></td>
+<td><p>Python (PyPy), Twisted</p></td>
+<td><p>Crossbar.io WAMP router and microservice middleware. By the creators of WAMP and Autobahn.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://crossbario.com">CrossbarFX</a></p></td>
+<td><p>Python (PyPy), Twisted</p></td>
+<td><p>CrossbarFX enterprise WAMP router with central management, edge device platform and clustering.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/CargoTube/cargotube">Cargotube</a></p></td>
+<td><p>Erlang</p></td>
+<td><p>A software router in Erlang implementing the wamp.ws protcol (successor of Erwa).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://gitlab.com/leapsight/bondy">Bondy</a></p></td>
+<td><p>Erlang</p></td>
+<td><p>Leapsight Bondy is an open source distributed API Gateway, WAMP Router and networking platform for microservices and IoT applications written in Erlang. It provides scaleable clustering capabilities via TCP/IP using Partisan, Plumtree Epidemic Broadcast Trees and an eventually consistent data store.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/bwegh/erwa">Erwa</a></p></td>
+<td><p>Erlang</p></td>
+<td><p>Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/kalmyk/fox-wamp">fox-wamp</a></p></td>
+<td><p>JavaScript, NodeJS</p></td>
+<td><p>Customizable WAMP Router.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Matthias247/jawampa">jawampa</a></p></td>
+<td><p>Java + RxJava, Netty</p></td>
+<td><p>A Java WAMP implementation based on <a class="reference external" href="http://netty.io/">Netty</a> and <a class="reference external" href="https://github.com/ReactiveX/RxJava">RxJava</a>. Both Client and Router roles.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/LaurenceGA/kwamp">KWAMP</a></p></td>
+<td><p>Kotlin</p></td>
+<td><p>A Kotlin WAMP router (aims for basic profile).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/gammazero/nexus">Nexus</a></p></td>
+<td><p>Go</p></td>
+<td><p>Router implementation for Go. (also includes a client implementation)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/christian-raedel/nightlife-rabbit">NighlifeRabbit</a></p></td>
+<td><p>JavaScript, NodeJS</p></td>
+<td><p>Router implementation for <a class="reference external" href="http://nodejs.org/">NodeJS</a>, MIT licensed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a></p></td>
+<td><p>PHP</p></td>
+<td><p>Thruway is a WAMP library built in PHP that provides both Client and Router roles.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/jcelliott/turnpike">Turnpike</a></p></td>
+<td><p>Go</p></td>
+<td><p>turnpike is a WAMP v2 router implemented in Go.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/ralscha/wamp2spring">wamp2spring</a></p></td>
+<td><p>Java, Spring</p></td>
+<td><p>A Java implementation built on top of the Spring 5 WebSocket support.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/darrenjs/wampcc">wampcc</a></p></td>
+<td><p>C++</p></td>
+<td><p>A C++ WAMP library that aims to depend only on C libraries, making it easier to work and build on a range of platforms.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Orange-OpenSource/wamp.rt">wamprt</a></p></td>
+<td><p>JavaScript, NodeJS</p></td>
+<td><p>Router only implementation for <a class="reference external" href="http://nodejs.org/">NodeJS</a> created by <a class="reference external" href="http://opensource.orange.com/home">Orange</a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Code-Sharp/WampSharp">WampSharp</a></p></td>
+<td><p>C#</p></td>
+<td><p>C# router implementation of WAMP v2, both JSON and <a class="reference external" href="http://msgpack.org/">MessagePack</a> support.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="http://ksdaemon.github.io/wiola/">Wiola</a></p></td>
+<td><p>Lua</p></td>
+<td><p>Router implementation in <a class="reference external" href="http://www.lua.org/">Lua</a>, using the power of Lua/Nginx, WebSocket and <a class="reference external" href="http://redis.io/">Redis</a> as cache store.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this heading">¶</a></h2>
+<p>The following table lists WAMP compliant utilities.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12%" />
+<col style="width: 23%" />
+<col style="width: 65%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Language/Run-time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/johngeorgewright/wamp-cli">wamp-cli</a></p></td>
+<td><p>JavaScript, NodeJS</p></td>
+<td><p>A CLI tool to help building applications with WAMP</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/codebasepk/wick">wick</a></p></td>
+<td><p>Go</p></td>
+<td><p>CLI tool to make WAMP RPCs and PubSub. Useful for developing WAMP Components and their testing.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="users.html" class="btn btn-neutral float-left" title="Users and Resources" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="roadmap.html" class="btn btn-neutral float-right" title="Roadmap" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2022, Crossbar.io Technologies GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

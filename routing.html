@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Message Routing in WAMP &mdash; Web Application Messaging Protocol version 2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
+    <link rel="canonical" href="https://wamp-proto.org/routing.html"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/js/custom.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Protocol Specification" href="spec.html" />
+    <link rel="prev" title="Introduction" href="intro.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
+            <img src="_static/wamp_logo_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Message Routing in WAMP</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#loosely-coupled">Loosely coupled</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#component-based">Component based</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#real-time">Real-time</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#language-independent">Language independent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#network-spanning">Network spanning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementations.html">Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Web Application Messaging Protocol</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Message Routing in WAMP</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/routing.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="message-routing-in-wamp">
+<span id="routing"></span><h1>Message Routing in WAMP<a class="headerlink" href="#message-routing-in-wamp" title="Permalink to this heading">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><p><a class="reference internal" href="#loosely-coupled" id="id6">Loosely coupled</a></p></li>
+<li><p><a class="reference internal" href="#component-based" id="id7">Component based</a></p></li>
+<li><p><a class="reference internal" href="#real-time" id="id8">Real-time</a></p></li>
+<li><p><a class="reference internal" href="#language-independent" id="id9">Language independent</a></p></li>
+<li><p><a class="reference internal" href="#network-spanning" id="id10">Network spanning</a></p></li>
+</ul>
+</div>
+<hr class="docutils" />
+<p>WAMP provides <a class="reference internal" href="#unified-application-routing">Unified Application Routing</a> in an open <a class="reference internal" href="#websocket-protocol">WebSocket protocol</a>
+that works with <a class="reference internal" href="#different">different</a> languages.</p>
+<p>Using WAMP you can build distributed systems out of application components
+which are <strong>loosely coupled</strong> and communicate in (soft) <strong>real-time</strong>.</p>
+<p>At its core, WAMP offers two communication patterns for application components
+to talk to each other:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="/faq.html#pubsub">Publish &amp; Subscribe</a> (PubSub)</p></li>
+<li><p><a class="reference external" href="/faq.html#rpc">Remote Procedure Calls</a> (RPC)</p></li>
+</ul>
+<p>We think applications often have a natural <a class="reference external" href="/faq.html#why_rpc_and_pubsub">need for both forms of
+communication</a> and shouldn’t be required to use different protocols/means
+for those. Which is why WAMP provides both.</p>
+<p>WAMP is easy to use, simple to implement and based on modern Web standards:
+WebSocket, JSON and URIs.</p>
+<p>While WAMP isn’t exactly rocket science, we believe it’s good engineering and
+a major step forward in practice that allows developers to create more powerful
+applications with less complexity and in less time.</p>
+<section id="loosely-coupled">
+<span id="unified-application-routing"></span><h2><a class="toc-backref" href="#id6">Loosely coupled</a><a class="headerlink" href="#loosely-coupled" title="Permalink to this heading">¶</a></h2>
+<p>WAMP provides what we call <strong>unified Application Routing</strong> for application
+communication:</p>
+<ul class="simple">
+<li><p>routing of events in the Publish &amp; Subscriber pattern and</p></li>
+<li><p>routing of calls  in the Remote Procedure Call pattern</p></li>
+</ul>
+<p>between applications components in <em>one</em> protocol.</p>
+<p>Unified routing is probably best explained by contrasting it with legacy
+approaches.</p>
+<p>Lets take the old “client-server” world. In the client-server model, a
+remote procedure call goes directly from the <em>Caller</em> to the <em>Callee</em>:</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="_images/unified_routing_rpc_client_server.svg"><img alt="Remote procedure calls in the **Client-Server** model" src="_images/unified_routing_rpc_client_server.svg" width="50%" /></a>
+<figcaption>
+<p><span class="caption-text">Remote procedure calls in the <strong>Client-Server</strong> model</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>In the client-server model, a <em>Caller</em> needs to have knowledge about where
+the <em>Callee</em> resides and how to reach it. This introduces a strong coupling
+between <em>Caller</em> and <em>Callee</em>. Which is bad, because applications can quickly
+become complex and unmaintainable. We explain how WAMP fixes that in a minute.</p>
+<p>The problems coming from strong coupling between application components were
+long recognized and this (besides other requirements) lead to the
+publish-subscribe model.</p>
+<p>In the publish-subscribe model a <em>Publisher</em> submits information to an
+abstract “topic”, and <em>Subscribers</em> only receive information indirectly
+by announcing their interest on a respective “topic”.
+Both do not know about each other. They are decoupled via the “topic” and
+via an intermediary usually called <em>Broker</em>:</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="_images/unified_routing_pubsub_broker.svg"><img alt="A Broker decouples *Publishers* and *Subscribers*" src="_images/unified_routing_pubsub_broker.svg" width="50%" /></a>
+<figcaption>
+<p><span class="caption-text">A Broker decouples <em>Publishers</em> and <em>Subscribers</em></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>A <em>Broker</em> keeps a book of subscriptions: who is currently subscribed on
+which topic. When a <em>Publisher</em> publishes some information (“event”) to
+a topic, the <em>Broker</em> will look up who is currently subscribed on
+that topic: determine the set of <em>Subscribers</em> on the topic published
+to. And then forward the information (“event”) to all those <em>Subscribers</em>.</p>
+<p>The act of determining receivers of information (independently of the
+information submitted) and forwarding the information to receivers is
+called <em>routing</em>.</p>
+<p>Now, WAMP translates the benefits of loose coupling to RPC. Different from
+the client-server model, WAMP also decouples <em>Callers</em> and <em>Callees</em> by
+introducing an intermediary - the <em>Dealer</em>:</p>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="_images/unified_routing_rpc_dealer.svg"><img alt="Remote procedure calls in the **Dealer** model" src="_images/unified_routing_rpc_dealer.svg" width="50%" /></a>
+<figcaption>
+<p><span class="caption-text">Remote procedure calls in the <strong>Dealer</strong> model</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Similar to a <em>Broker’s</em> role with PubSub, the <em>Dealer</em> is responsible for
+routing a call originating from the <em>Caller</em> to the <em>Callee</em> and route back
+results or errors vice-versa. Both do not know about each other: where the
+peer resides and how to reach it. This knowledge is encapsulated in
+the <em>Dealer</em></p>
+<p>With WAMP, a <em>Callee</em> registers a procedure at a <em>Dealer</em> under an abstract
+name: a URI identifying the procedure. When a <em>Caller</em> wants to call a remote
+procedure, it talks to the <em>Dealer</em> and only provides the URI of the
+procedure to be called plus any call arguments. The <em>Dealer</em> will
+look up the procedure to be invoked in his book of registered procedures.
+The information from the book includes <em>where</em> the <em>Callee</em> implementing
+the procedure resides, and how to reach it.</p>
+<p>In effect, <em>Callers</em> and <em>Callees</em> are decoupled, and applications can use
+RPC and still benefit from loose coupling.</p>
+</section>
+<section id="component-based">
+<h2><a class="toc-backref" href="#id7">Component based</a><a class="headerlink" href="#component-based" title="Permalink to this heading">¶</a></h2>
+<p><strong>Brokers, Dealers and Routers</strong></p>
+<p>What if you combine a Broker (for Publish &amp; Subscribe) and a Dealer (for
+routed Remote Procedure Calls)?</p>
+<p>When you combine a <em>Broker</em> and a <em>Dealer</em> you get what WAMP calls a <em>Router</em>:</p>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="_images/unified_routing_broker_dealer.svg"><img alt="A **Router** combines a Broker and a Dealer" src="_images/unified_routing_broker_dealer.svg" width="70%" /></a>
+<figcaption>
+<p><span class="caption-text">A <strong>Router</strong> combines a Broker and a Dealer</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>A <em>Router</em> is capable of routing both calls and events, and hence can support
+flexible, decoupled architectures that use both RPC and PubSub. We think this
+is new. And a good thing.</p>
+<p>Here is an example. Imagine you have a small embedded device like an Arduino
+Yun with sensors (like a temperature sensor) and actuators (like a light or
+motor) connected. And you want to integrate the device into an overall
+system with user facing frontend to control the actuators, and continuously
+process sensor values in a backend component.</p>
+<p>Using WAMP, you can have a browser-based UI, the embedded device and your
+backend talk to each other in real-time:</p>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/unified_routing_wamp_iot.svg"><img alt="WAMP in an IoT application" src="_images/unified_routing_wamp_iot.svg" width="80%" /></a>
+<figcaption>
+<p><span class="caption-text">WAMP in an IoT application</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Switching on a light on the device from the browser-based UI is naturally done
+by calling a remote procedure on the device (1). And the sensor values
+generated by the device continuously are naturally transmitted to the backend
+component (and possibly others) via publish &amp; subscribe (2).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>“Moving onto the part of Internet of Things, we integrated a sensor (light sensor) and
+an actuator (light switch/dimmer) into a web application. The major feature of the
+sensor (sending data) and that of the actuator (commanding and configuration) perfectly
+match the messaging patterns, Pub/Sub and RPC, which WAMP provides.”</p>
+<p>From <a class="reference external" href="https://into.aalto.fi/download/attachments/12324178/Huang_Fuguo_thesis_2.pdf">Web Technologies for the Internet of Things</a>, Master thesis, July 2013, Huang F.</p>
+</div>
+<p><strong>So here you have it: one protocol fulfilling “all” application
+communication needs.</strong></p>
+</section>
+<section id="real-time">
+<span id="websocket-protocol"></span><h2><a class="toc-backref" href="#id8">Real-time</a><a class="headerlink" href="#real-time" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference external" href="http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/">WebSocket</a> is a
+new Web protocol that overcomes limitations of HTTP when bidirectional,
+real-time communication is required.</p>
+<p>WebSocket is specified as an <a class="reference external" href="http://tools.ietf.org/html/rfc6455">IETF standard</a>
+and built into <a class="reference external" href="https://caniuse.com/#search=websocket">modern browsers</a>.</p>
+<p>When designing WAMP, we recognized early on that WebSocket would be the ideal
+basis for WAMP as it provides bidirectional real-time messaging that is
+compatible with the Web and browsers. Not only that - we can run WebSocket
+with non-browser environments as well.</p>
+<p>However, as such, WebSocket it is quite low-level and only provides raw
+messaging. This is where WAMP enters. WAMP adds the higher level messaging
+patterns of RPC and PubSub to WebSocket.</p>
+<p>Technically, WAMP is an <a class="reference external" href="http://www.iana.org/assignments/websocket/websocket.xml#subprotocol-name">officially registered</a> <strong>WebSocket subprotocol</strong> (runs on top of WebSocket)
+that uses <a class="reference external" href="http://www.json.org/">JSON</a> as message serialization format.</p>
+<p>While WAMP-over-WebSocket with JSON serialization is the preferred transport
+for WAMP, the protocol can also run with <a class="reference external" href="http://msgpack.org/">MsgPack</a> as
+serialization, run over raw-TCP or generally any message based, bidirectional,
+reliable transport.</p>
+<p><strong>Hence: WAMP runs on the Web and anywhere else.</strong></p>
+</section>
+<section id="language-independent">
+<span id="different"></span><h2><a class="toc-backref" href="#id9">Language independent</a><a class="headerlink" href="#language-independent" title="Permalink to this heading">¶</a></h2>
+<p>WAMP was designed with first-class support for <a class="reference external" href="/implementations.html">different languages</a> in
+mind (*). Nothing in WAMP is specific to a single programming language. As
+soon as a programming language has a WAMP implementation, it can talk to
+application components written <em>in any other language</em> with WAMP support.
+Transparently.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>WAMP has facilities for first-class support of many common and less common
+language features. E.g. WAMP can transmit both positional and keyword based
+call arguments, so that languages which natively support keyword arguments
+in functions (e.g. Python) can be naturally mapped. WAMP even supports
+multi-positional and keywords based <strong>return</strong> values for calls. E.g. the
+PostgreSQL pgPL/SQL or Oracle PL/SQL languages support this. Means that
+most PL/SQL functions can be naturally exposed via WAMP.</p>
+</div>
+<p>The ability to create a system from application components written in different
+languages is a big advantage. You can write your frontend in JavaScript to run
+in the browser, but still write backend components in Python or Java. If you
+recognize a performance bottleneck in a component, you can rewrite that
+component in a faster language - without changing a single line of code in
+other components.</p>
+<p>All developers in your team can become productive, since they are not tied to
+a “least common denominator”, but can write components in the language they
+prefer, or which is ideal for the specific components at hand. Need some
+fancy numerical code which is only available in C++ and needs to run with
+maximum performance? No problem. Have the functionality isolated in an
+application component written in C++, and integrate this with components
+written in your “standard” language.</p>
+<p><strong>What this means is: plug-and-play your app components - no matter what
+language.</strong></p>
+</section>
+<section id="network-spanning">
+<h2><a class="toc-backref" href="#id10">Network spanning</a><a class="headerlink" href="#network-spanning" title="Permalink to this heading">¶</a></h2>
+<p>Write me.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="spec.html" class="btn btn-neutral float-right" title="Protocol Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2022, Crossbar.io Technologies GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Introduction &mdash; Web Application Messaging Protocol version 2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
+    <link rel="canonical" href="https://wamp-proto.org/intro.html"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/js/custom.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Message Routing in WAMP" href="routing.html" />
+    <link rel="prev" title="The Web Application Messaging Protocol" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
+            <img src="_static/wamp_logo_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#websocket">WebSocket</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wamp">WAMP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-can-i-do-with-this">What can I do with this?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">Message Routing in WAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementations.html">Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Web Application Messaging Protocol</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/intro.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="introduction">
+<span id="intro"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
+<section id="websocket">
+<h2>WebSocket<a class="headerlink" href="#websocket" title="Permalink to this heading">¶</a></h2>
+<p>The WebSocket protocol brings bi-directional (soft) real-time and wire traffic efficient
+connections to the browser. Today (2018) WebSocket is universally supported in browsers,
+network equipment, servers and client languages.</p>
+<p>Despite having opened completely new possibilities on the Web, WebSocket defines an API for
+application developers at the <em>message</em> level, and <em>point-to-point</em>, requiring users who want
+to use WebSocket connections in their applications to define their own semantics on top of it.</p>
+<p>The Web Application Messaging Protocol (WAMP) aims to provide application developers
+with the right level of semantics, with what they need to handle messaging and communication
+between components in distributed applications at a convenient and abstracted way.</p>
+<p>WAMP was initially defined as a WebSocket sub-protocol, which provided
+<strong>Publish &amp; Subscribe (PubSub)</strong> functionality as well as <strong>routed Remote Procedure Calls (rRPC)</strong>
+for procedures implemented in a WAMP router. Feedback from implementers and users of this was
+included in a second version of the protocol which this document defines. Among the changes
+was that WAMP can now run over any transport which is message-oriented, ordered, reliable,
+and bi-directional.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you want to read more about WebSocket, we recommend two blog posts of the creators
+of WAMP;)</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/">WebSocket - Why, what, and - can I use it?</a></p></li>
+<li><p><a class="reference external" href="https://crossbario.com/blog/Dissecting-Websocket-Overhead/">Dissecting WebSocket’s Overhead</a></p></li>
+</ul>
+</div>
+</section>
+<section id="wamp">
+<h2>WAMP<a class="headerlink" href="#wamp" title="Permalink to this heading">¶</a></h2>
+<p>WAMP is a routed protocol, with all components connecting to a WAMP Router, where the
+WAMP Router performs message routing between the components, and provides two messaging
+patterns in one Web native protocol:</p>
+<ul class="simple">
+<li><p><strong>Publish &amp; Subscribe (PubSub)</strong> and</p></li>
+<li><p>routed <strong>Remote Procedure Calls (rRPC)</strong></p></li>
+</ul>
+<p>Publish &amp; Subscribe (PubSub) is an established messaging pattern where a component,
+the Subscriber, informs the router that it wants to receive information on a topic
+(i.e., it subscribes to a topic). Another component, a Publisher, can then publish
+to this topic, and the router distributes events to all Subscribers.</p>
+<p>Routed Remote Procedure Calls (rRPCs) rely on the same sort of decoupling that is used by
+the Publish &amp; Subscribe pattern. A component, the Callee, announces to the router that
+it provides a certain procedure, identified by a procedure name. Other components,
+Callers, can then call the procedure, with the router invoking the procedure on the
+Callee, receiving the procedure’s result, and then forwarding this result back to the Caller.
+Routed RPCs differ from traditional client-server RPCs in that the router serves as an
+intermediary between the Caller and the Callee.</p>
+<p><strong>Advantages of decoupling and routed RPCs</strong></p>
+<p>The decoupling in routed RPCs arises from the fact that the Caller is no longer required to
+have knowledge of the Callee; it merely needs to know the identifier of the procedure it
+wants to call. There no longer is a need for a direct network connection or path between the
+caller and the callee, since all messages are routed at the WAMP level.</p>
+<p>This approach enables a whole range of possibilities:</p>
+<ul class="simple">
+<li><p>calling into procedures in components which are not reachable from outside at the network
+level (e.g. on a NATted connection), but which can establish an outgoing network connection
+to the WAMP router.</p></li>
+<li><p>This decoupling of transport and application layer traffic allows a “reversal of command”
+where a cloud-based system can securely control remote devices</p></li>
+<li><p>It also allows to treat frontend and backend components (microservices) the same, and it
+even allows to develop backend code in the browser
+(<a class="reference external" href="https://crossbario.com/blog/Free-Your-Code-Backends-in-the-Browser/">Free Your Code - Backends in the Browser</a>).</p></li>
+<li><p>Since no ports on edge devices need to be opened for WAMP to work (in both directions), the
+remote attack surface of these (potentially many) devices is completely closed
+(<a class="reference external" href="https://crossbario.com/static/presentations/iot-security/index.html">Security in the IoT</a>).</p></li>
+<li><p>Finally, since the Caller is not aware where, or even who is processing the call (and it should
+not care!), it is easily possible to make application components highly-available (using hot standby
+components) or scale-out application components
+(<a class="reference external" href="https://crossbario.com/static/presentations/microservices/index.html">Scaling microservices with Crossbar.io</a>).</p></li>
+</ul>
+<p><strong>Summary</strong></p>
+<p>Combining the Publish &amp; Subscribe and routed Remote Procedure Calls in one Web native, real-time
+transport protocol (WebSocket) allows WAMP to be used for the entire messaging requirements of
+component and microservice based applications, reducing technology stack complexity and overhead,
+providing a capable and secure fundament for applications to rely on.</p>
+</section>
+<section id="what-can-i-do-with-this">
+<h2>What can I do with this?<a class="headerlink" href="#what-can-i-do-with-this" title="Permalink to this heading">¶</a></h2>
+<p>Using WAMP you can build distributed systems out of application components which are
+loosely coupled and communicate in (soft) real-time.</p>
+<p>In the demo below, cursor position data from one box is sent via a WAMP router (Crossbar.io) instance hosted in AWS.</p>
+<div id="frontdemo">
+
+    <div class="boxes cursorBoxContainer">
+
+        <div id="box1" class="cursorBox">
+            <img src="_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box1cursor" class="cursor">
+        </div>
+
+        <div class="connector">
+            <div class="connectorLine"></div>
+            <div class="connectorInstance">
+                <img src="_static/img/crossbar_icon.svg" alt="Crossbar.io icon">
+                <p>
+                    <!-- Not connected -->
+                </p>
+            </div>
+        </div>
+
+        <div id="box2" class="cursorBox">
+            <img src="_static/img/wamp_logo_cursor.svg" alt="WAMP icon" id="box2cursor" class="cursor">
+        </div>
+
+    </div>
+
+    <div class="statusline" id="statusline">
+    Status: not connected.
+    </div>
+
+</div>
+<script src="_static/js/autobahn.min.js"></script>
+<script src="_static/js/cursorbox.js"></script></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="The Web Application Messaging Protocol" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="routing.html" class="btn btn-neutral float-right" title="Message Routing in WAMP" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2022, Crossbar.io Technologies GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

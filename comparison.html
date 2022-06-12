@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAMP compared &mdash; Web Application Messaging Protocol version 2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
+    <link rel="canonical" href="https://wamp-proto.org/comparison.html"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/js/custom.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Users and Resources" href="users.html" />
+    <link rel="prev" title="Protocol Specification" href="spec.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
+            <img src="_static/wamp_logo_white.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="routing.html">Message Routing in WAMP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">WAMP compared</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementations.html">Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Web Application Messaging Protocol</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>WAMP compared</li>
+      <li class="wy-breadcrumbs-aside">
+              <!-- User defined GitHub URL -->
+              <a href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/comparison.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="wamp-compared">
+<h1>WAMP compared<a class="headerlink" href="#wamp-compared" title="Permalink to this heading">¶</a></h1>
+<div class="line-block">
+<div class="line">Alright. So how does WAMP stack up versus other technologies?</div>
+<div class="line">Do we really need another wheel? Yes. Please read below to find out
+why we think so.</div>
+</div>
+<p>Below you’ll find a table comparing WAMP to other technologies according
+to <strong>six criteria</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>PubSub</strong>
+Does it support Publish &amp; Subscribe out of the box?</p></li>
+<li><p><strong>RPC</strong>
+Does it support Remote Procedure Calls out of the box?</p></li>
+<li><p><strong>Routed RPC</strong>
+Does it support <a class="reference external" href="/why/#unified_routing">routed</a> (not only
+point-to-point) Remote Procedure Calls?</p></li>
+<li><p><strong>Web native</strong>
+Does it run <em>natively</em> on the Web (without tunneling or bridging)?</p></li>
+<li><p><strong>Cross Language</strong>
+Does it work from different programming languages and run-times?</p></li>
+<li><p><strong>Open Standard</strong>
+Is there an open, official specification implemented by different
+vendors?</p></li>
+</ol>
+<p>See also: <a class="reference external" href="http://iotiran.com/media/k2/attachments/web-technologies.pdf">Web Technologies for the Internet of
+Things</a>
+- A master thesis which contains a comparison of WAMP, MQTT, CoAP, REST,
+SOAP, STOMP and MBWS for IoT applications.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 29%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 16%" />
+<col style="width: 15%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Technology</p></td>
+<td><p>PubSub</p></td>
+<td><p>RPC</p></td>
+<td><p>Routed RPC</p></td>
+<td><p>Web native</p></td>
+<td><p>Cross Language</p></td>
+<td><p>Open Standard</p></td>
+</tr>
+<tr class="row-even"><td><p>WAMP</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#ajax">AJAX</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#amqp">AMQP</a></p></td>
+<td><p>✔</p></td>
+<td><p>(✔)</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#thrift">Apache Thrift</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#capnnproto">Capn’n’Proto</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#comet">Comet</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#omg-dds">OMG DDS</a></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#d-bus">D-Bus</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#corba">CORBA</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#dcom">DCOM</a></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#jms">Java JMS</a></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#java-rmi">Java RMI</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#json-rpc">JSON-RPC</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#mqtt">MQTT</a></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#opc-ua">OPC-UA</a></p></td>
+<td colspan="2"><p>(✔)        | ✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>(✔)</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#rest">REST</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#soap">SOAP</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#socketio">socket.io</a></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#sockjs">SockJS</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#stomp">STOMP</a></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#xml-rpc">XML-RPC</a></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="#xmpp">XMPP</a></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+<td><p>✔</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="#zmq">ZMQ</a></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p><strong>-</strong></p></td>
+<td><p>✔</p></td>
+<td><p><strong>-</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric" id="ajax">AJAX</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Ajax_(programming)">AJAX</a> is neither a
+protocol nor an API, but a programming pattern for JavaScript in
+browsers that uses HTTP requests to realize RPC-like communication
+between frontends (browsers) and backends.</p>
+<p>AJAX being a programming practice, isn’t a complete RPC system either.
+You need to agree upon how calls, results and errors are formatted and
+serialized. See <a class="reference external" href="#json-rpc">JSON-RPC</a> and <a class="reference external" href="#xml-rpc">XML-RPC</a>.</p>
+<p>Even when you bake some RPC mechanism using AJAX techniques, this is
+point-to-point RPC: calls aren’t routed between different servers or
+application components, but strictly travel from point (browser) to
+point (server the browser is connected to).</p>
+<p>Further, AJAX does not provide PubSub - in fact, it doesn’t address how
+to actively push any kind of information from server to client (however,
+see <a class="reference external" href="#comet">Comet</a>).</p>
+<p>Since AJAX uses plain HTTP for wrapping any kind of RPC-like messages,
+it suffers from the overhead and limitations intrinsic to HTTP. E.g. you
+cannot have more than 6-8 concurrent RPCs, as browsers will limit the
+number of HTTP connections to a single destination.</p>
+<p class="rubric" id="amqp">AMQP</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Advanced_Message_Queuing_Protocol">AMQP</a>
+is a …</p>
+<p class="rubric" id="thrift">Apache Thrift</p>
+<p><a class="reference external" href="https://thrift.apache.org/">Apache Thrift</a> is a cross-language RPC
+system. It uses a statically typed approach where procedures first need
+to be described using an <a class="reference external" href="http://en.wikipedia.org/wiki/Interface_definition_language">Interface Definition
+Language</a>,
+and then code for language specific bindings needs to be generated.</p>
+<p>Compared to WAMP, Apache Thrift only provides RPC as an application
+messaging pattern, not PubSub.</p>
+<p>While Thrift uses a statically typed approach involving IDLs and code
+generation, WAMP follows a dynamic typing approach. There is no IDL and
+no code generation. Instead, WAMP will provide run-time reflection
+capabilities instead.</p>
+<p>Different from WAMP, Thrift also (only) runs over raw TCP and cannot
+(natively) run over the Web, right into the browser. It is designed for
+communication within the data-center, between backend components.</p>
+<p>Similar to WAMP, Apache Thrift features different serialization formats,
+and also is able to compress a transport (using zlib). WAMP currently
+offers two serializations (JSON and MsgPack) and can run over standard,
+compressed WebSocket (“permessage-deflate”) to further reduce wire
+traffic.</p>
+<p>Apache Thrift currently has a lot more language bindings than WAMP and
+is used/pushed by Facebook.</p>
+<p class="rubric" id="capnnproto">Capn’n’Proto</p>
+<p><a class="reference external" href="http://kentonv.github.io/capnproto/">Capn’n’Proto</a> is a …</p>
+<p class="rubric" id="comet">Comet</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Comet_(programming)">Comet</a> is a …</p>
+<p class="rubric" id="omg-dds">OMG DDS</p>
+<p>OMG’s <a class="reference external" href="http://en.wikipedia.org/wiki/Data_Distribution_Service">Data Distribution
+Service</a> is a
+…</p>
+<p class="rubric" id="d-bus">D-Bus</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/D-Bus">D-Bus</a> is a platform-neutral messaging service that runs by default in most Linux distributions. It offers the same two basic workflows as WAMP, but whereas WAMP is designed for use over a network, D-Bus is designed for inter-process communication (IPC) on a single host.</p>
+<p class="rubric" id="corba">CORBA</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Corba">CORBA</a> is a … CORBA
+Notification Services</p>
+<p class="rubric" id="dcom">DCOM</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Dcom">DCOM</a> is a …
+<a class="reference external" href="http://msdn.microsoft.com/library/cc201989.aspx">specification</a> COM+
+Event Service</p>
+<p class="rubric" id="jms">Java Message Service (JMS)</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Java_Message_Service">Java Message Service
+(JMS)</a> is a Java
+<strong>API</strong> specification for an (abstract) PubSub service. Programs are
+written in Java against the JMS API. JMS does not provide RPC (but see
+<a class="reference external" href="#java-rmi">Java RMI</a>).</p>
+<p>JMS does not guarantee interoperability between implementations, and the
+JMS-compliant messaging system in use may need to be deployed on both
+client and server.</p>
+<p>In contrast, WAMP is a wire-level protocol specification. Conforming
+WAMP implementations will be able to talk transparently to each other,
+and different implementations can be mixed and matched in one larger
+system.</p>
+<p class="rubric" id="java-rmi">Java RMI</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Java_remote_method_invocation">Java
+RMI</a> is a
+…</p>
+<p class="rubric" id="json-rpc">JSON-RPC</p>
+<p><a class="reference external" href="http://json-rpc.org/">JSON-RPC</a> is a …</p>
+<p class="rubric" id="mqtt">MQTT</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Mqtt">MQTT</a> is a …</p>
+<p class="rubric" id="opc-ua">OPC-UA</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/OPC_Unified_Architecture">OPC-UA</a> is
+protocol and communication stack with roots in industrial automation.
+It’s an open standard with a complex and abstract set of specifications
+that have different conrete mappings or bindings, eg for the transport
+layer: there are two transport layer bindings defined.</p>
+<p>OPC-UA / UA-TCP runs over port 4840 and carries payload in a binary
+encoded format. The binary format is proprietory to OPC-UA - it is not
+used anywhere else. When using OPC-UA with UA-TCP as a transport, the
+resulting protocol cannot traverse the Web and can’t be implemented eg
+in browsers. UA-TCP is a bandwidth efficient transport, and can
+transport binary payload natively without escaping.</p>
+<p>OPC-UA / UA-SOAP is based on HTTP/SOAP, runs over ports 80/443 and
+carries XML enoded payload. When using OPC-UA with UA-SOAP as a
+transport, the resulting protocol can traverse the Web and can be
+implemented in browsers. UA-SOAP suffers from excessive verbosity and
+inefficient use of wire bandwidth. Binary payloads can only be
+transmitted in reencoded (escaped) form.</p>
+<p>OPC-UA, both when using UA-TCP and UA-SOAP transports, suffer from open
+ports requirement: each and every device/machine, running an OPC-UA
+server, has to open a listening port for incoming OPC-UA client
+connections. This is a <strong>security issue</strong>, since the attack surface now
+is the whole collection of all devices and machines. It is also a
+<strong>networking issue</strong>, since OPC-UA servers need to be directly reachable
+from OPC-UA clients, and firewalls, NATs and proxies will hide OPC-UA
+servers. And finally, it’s a <strong>coupling issue</strong>, since the host names /
+IP addresses of all OPC-UA servers (machines/devices) need to be known
+to or discovered by OPC-UA clients, which introduces a coupling between
+application code and infrastructure/deployment artifacts (the hostnames
+/ IP addresses).</p>
+<p>OPC-UA servers can provide Notification services that are roughly
+modeled after a Publish &amp; Subscribe model. However, OPC-UA clients have
+to <strong>poll</strong> for notifications and cannot receive events asynchronously and in
+real-time. Increasing the polling frequency reduces the latency between
+the occurence of an event in the machine (a change of a value in the
+node tree of an OPA-UA server) and the actual reception of the event in
+an OPC-UA client (via a response to a polling request on a
+subscription), but the tradeoff is an increase in the wire traffic as
+well (polling when no change occured).</p>
+<p class="rubric" id="rest">REST</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Representational_State_Transfer">REST</a>
+is neither a library, nor protocol or framework. It’s a software
+architecture style. REST stands for “Representational State Transfer”
+and assumes that data should be transfered over network in one
+of the standard formats like HTML, XML or JSON and follows an
+architecture based on 6 limitations:</p>
+<ul class="simple">
+<li><p>Uniform Interface</p></li>
+<li><p>Stateless</p></li>
+<li><p>Cacheable</p></li>
+<li><p>Client-Server</p></li>
+<li><p>Layered System</p></li>
+<li><p>Code on Demand (optional)</p></li>
+</ul>
+<p>In a World Wide Web, RESTful systems use URL for an information unit
+address, and http status codes
+for corresponding <a class="reference external" href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD</a>
+operations.</p>
+<p>It is difficult to compare the WAMP protocol and a software architecture
+paradigm. They both are multilayered and can use different data
+presentation format. But one of the clearest difference is that WAMP is
+bidirectional, while REST pattern is not. In RESTful applications only
+client acts as initiator for data manipulations, and there is no options
+about how server can send data to client. In contrast to this, WAMP
+workflow allows data to be transfered to and form server.</p>
+<p>Another difference is that REST deliberately uses URLs from the HTTP
+scheme which serve a dual function of <strong>identifying</strong> and <strong>addressing</strong>
+resources. With WAMP, URIs are formed <strong>com.example.myprocedure</strong> and
+only <strong>identify</strong>, but NOT address the procedure to be called. This
+means, the implementation of the procedure can reside anywhere - it’s
+location is only known to the WAMP router. This provides location
+transparency for WAMP application components.</p>
+<p>There is no problem to use WAMP and REST together. For example, you can
+make basic CRUD-operations over HTTP using GET/POST/PUT/DELETE methods,
+and in parallel, use WAMP PubSub service for notifications about
+changes, and WAMP RPC’s for making some explicit business logic
+operations (like sending SMS, or batch picture resizing and so on).</p>
+<p class="rubric" id="soap">SOAP</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/SOAP">SOAP</a> is a …</p>
+<p>Being based on <a class="reference external" href="http://en.wikipedia.org/wiki/XML_Information_Set">XML Information
+Set</a> and XML for
+serialization, SOAP is <em>extremely</em> verbose and inefficient on the wire.
+Any kind of binary application payload first needs to be encoded.
+Further, parsing and serialization with XML can produce significant CPU
+loads. For these reasons alone, SOAP is considered unsuitable for
+applications where wire level and battery efficiency come into play: IoT
+and mobile.</p>
+<p>SOAP usually runs over HTTP (or SMTP) as a transport. Recently,
+Microsoft published a specification for running <a class="reference external" href="http://msdn.microsoft.com/en-us/library/hh536812.aspx">SOAP over
+WebSocket</a>.
+This reduces the overhead induces by the HTTP protocol, allows for real
+bidirectional messaging but retains the vast inefficiency that comes
+from XML.</p>
+<div class="line-block">
+<div class="line">“When relying on HTTP as a transport protocol and not using
+<a class="reference external" href="http://en.wikipedia.org/wiki/WS-Addressing">WS-Addressing</a> or an
+<a class="reference external" href="http://en.wikipedia.org/wiki/Enterprise_service_bus">ESB</a>, the
+roles of the interacting parties are fixed. Only one party (the
+client) can use the services of the other. Developers must use polling
+instead of notification in these common cases.”</div>
+<div class="line">From: <a class="reference external" href="http://en.wikipedia.org/wiki/SOAP">Wikipedia on SOAP</a></div>
+</div>
+<p>In contrast, WAMP provides all roles to any client. A WAMP client can
+act as a Caller, Callee, Publisher and Subscriber, all at the same time.
+This works with all WAMP transports. WAMP has built transport
+independent addressing and routing right into the protocol.</p>
+<p class="rubric" id="socketio">socket.io</p>
+<p><a class="reference external" href="http://socket.io/">socket.io</a> is a client-server PubSub service
+implementation written in JavaScript. It uses node.js on server side,
+browser counter part and own communication protocol. Socket.IO uses
+WebSocket under the hood, when it’s possible, but also has a polyfill as
+fallback.</p>
+<p>Comparing to WAMP, library allows you to subscribe to different topics,
+has a broadcast messages and message namespaces, which works like
+a realms in WAMP. Binary data transfer is possible, but that needs
+additional modules on both sides
+(<a class="reference external" href="https://github.com/nkzawa/socket.io-stream">socket.io-stream</a>)
+and additional amount of work for developers. They need to program
+that explicitly.</p>
+<p>Socket.IO does not provide remote procedure calls.</p>
+<p class="rubric" id="sockjs">SockJS</p>
+<p><a class="reference external" href="https://github.com/sockjs">SockJS</a> is a WebSocket emulation/polyfill
+library and provides a transport for raw, bidirectional, message-based
+communication between two directly connected peers (a browser and a
+server).</p>
+<p>The <a class="reference external" href="https://github.com/sockjs/sockjs-client">SockJS JavaScript
+client</a> adds a
+WebSocket-like API for JavaScript in browsers lacking native WebSocket
+support. The bidirectional communication capabilities of WebSocket are
+emulated using various mechanism under the hood, including HTTP
+long-poll. The <a class="reference external" href="http://sockjs.github.io/sockjs-protocol/sockjs-protocol-dev.html">“emulation”
+protocol(s)</a>
+must be implemented on the server-side (available server implementations
+include NodeJS, Ruby and Erlang).</p>
+<p>Compared to WAMP, SockJS is lower level in that it is only concerned
+about the <em>transport layer</em>. It does not provide <em>application messaging
+patterns</em> like RPC or PubSub.</p>
+<p>WAMP also provides a <strong>HTTP Long-poll transport</strong> as a fallback for
+browsers lacking native WebSocket support. There are fewer fallback
+variants for WAMP than SockJS currently specified (only “long-poll”),
+but this transport also supports binary messages and all WAMP
+serialization formats (JSON and MsgPack currently). I am
+<a class="reference external" href="https://github.com/sockjs/sockjs-protocol/issues/74">unsure</a> if
+SockJS supports binary messages at all.</p>
+<p class="rubric" id="stomp">STOMP</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Streaming_Text_Oriented_Messaging_Protocol">STOMP</a>
+is a …</p>
+<p class="rubric" id="xml-rpc">XML-RPC</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/XML-RPC">XML-RPC</a> is a …</p>
+<p class="rubric" id="xmpp">XMPP</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/XMPP">XMPP</a> is a …</p>
+<p class="rubric" id="zmq">ZMQ</p>
+<p><a class="reference external" href="http://en.wikipedia.org/wiki/Zero_MQ">ZMQ</a> is a light-weight,
+high-performance library for messaging between application components.
+It works without a server. <a class="reference external" href="http://zeromq.org/whitepapers:brokerless">http://zeromq.org/whitepapers:brokerless</a></p>
+<p>While ZMQ has a request-response message exchange pattern (“REQ-REP
+sockets”), it does not support RPC out of the box. There exist libraries
+(e.g. <a class="reference external" href="http://zerorpc.dotcloud.com/">ZeroRPC</a> by Docker or
+<a class="reference external" href="https://github.com/thriftzmq/thriftzmq-java">ThriftZMQ</a>) that layer
+on top of ZMQ to provide applications with first-class RPC services.</p>
+<p><a class="reference external" href="#top">to Top</a></p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="spec.html" class="btn btn-neutral float-left" title="Protocol Specification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="users.html" class="btn btn-neutral float-right" title="Users and Resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2012-2022, Crossbar.io Technologies GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
