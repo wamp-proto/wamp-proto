@@ -41,7 +41,7 @@ clean:
 	if [ -d $(TMPBUILDDIR) ]; then rm -rf $(TMPBUILDDIR); fi
 	if [ -d $(SITEBUILDDIR) ]; then rm -rf $(SITEBUILDDIR); fi
 	if [ -f ./rfc/aux/authors.json ]; then rm ./rfc/aux/authors.json; fi
-	rm mmark
+	if [ -f mmark ]; then rm mmark; fi
 	mkdir -p $(OUTPUTDIR)
 	mkdir -p $(TMPBUILDDIR)
 	mkdir -p $(SITEBUILDDIR)
