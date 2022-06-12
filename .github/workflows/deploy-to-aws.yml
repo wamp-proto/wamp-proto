@@ -27,13 +27,14 @@ jobs:
 #          architecture: 'x64'
           cache: 'pip'
       - run: export PATH=$PATH:$HOME/.local/bin
-      - run: export WAMP_BUILD_ID="$(date --utc "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})"
+      - run: export WAMP_BUILD_ID="$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})"
+      - run: apt update
+      - run: apt install -y xml2rfc libxml2-utils libenchant
       - run: pip install -r requirements.txt
       - run: pip install awscli
       - run: npm install -g grunt-cli
       - run: npm install
-      - run: tox -c tox.ini -e sphinx
-#      - run: npm run build # Seems to be fired from tox runner
-      - run: aws s3 cp --recursive --acl public-read ./wamp-docs s3://${AWS_S3_BUCKET_NAME}/${AWS_S3_BUCKET_PATH}
+      - run: make build
+      - run: aws s3 cp --recursive --acl public-read ./dist s3://${AWS_S3_BUCKET_NAME}/${AWS_S3_BUCKET_PATH}
       - name: Invalidate cloudfront distribution
         run: aws cloudfront create-invalidation --distribution-id ${AWS_DISTRIBUTION_ID} --paths "/*"
