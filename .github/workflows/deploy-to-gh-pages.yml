@@ -1,0 +1,40 @@
+name: Deploy spec site to AWS
+on: [push]
+#  push:
+#    branches:
+#    - master
+
+#env:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-to-gh-pages:
+    name: Deploy spec site to github pages
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: 'npm'
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.6'
+#          architecture: 'x64'
+          cache: 'pip'
+      - run: export PATH=$PATH:$HOME/.local/bin
+      - run: export WAMP_BUILD_ID="$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})"
+      - run: apt update
+      - run: apt install -y xml2rfc libxml2-utils libenchant
+      - run: pip install -r requirements.txt
+      - run: npm install -g grunt-cli
+      - run: npm install
+      - run: make build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: dist # The folder the action should deploy.
