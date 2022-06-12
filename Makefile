@@ -112,3 +112,5 @@ sphinx-build-docs:
 	sphinx-build -b html ./docs $(TMPBUILDDIR)/site_build
 
 	cp -R $(TMPBUILDDIR)/site_build/* $(OUTPUTDIR)
+	cp -R docs/_static $(OUTPUTDIR)
+	cp -R docs/_graphics $(OUTPUTDIR)
