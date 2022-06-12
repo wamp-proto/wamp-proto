@@ -5,10 +5,7 @@
 The Web Application Messaging Protocol
 ======================================
 
-| |Spec| |Travis| |Docs-S3| |Docs-CDN| |Gitter|
-
-.. |Travis| image:: https://travis-ci.org/wamp-proto/wamp-proto.svg?branch=master
-    :target: https://travis-ci.org/wamp-proto/wamp-proto
+| |Spec| |Docs-S3| |Docs-CDN|
 
 .. |Docs-S3| image:: https://img.shields.io/badge/docs-s3-brightgreen.svg?style=flat
     :target: https://s3.eu-central-1.amazonaws.com/wamp-proto.org/index.html
@@ -16,11 +13,8 @@ The Web Application Messaging Protocol
 .. |Docs-CDN| image:: https://img.shields.io/badge/docs-cdn-brightgreen.svg?style=flat
     :target: https://wamp-proto.org/index.html
 
-.. |Gitter| image:: https://badges.gitter.im/Join%20Chat.svg
-    :target: https://gitter.im/wamp-proto/wamp-proto
-
 .. |Spec| image:: https://img.shields.io/badge/spec-latest-ff69b4.svg
-    :target: _static/gen/wamp_latest.html
+    :target: wamp_latest.html
 
 -------
 
