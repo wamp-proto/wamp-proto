@@ -1,4 +1,4 @@
-name: Deploy spec site to github pages
+name: Deploy to github pages
 on: [push]
 #  push:
 #    branches:

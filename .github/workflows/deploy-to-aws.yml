@@ -1,4 +1,4 @@
-name: Deploy spec site to AWS
+name: Deploy to AWS
 on:
   push:
     branches:
