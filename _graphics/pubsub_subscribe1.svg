@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1027.1874"
+   height="515.08789"
+   id="svg3310"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="pubsub_subscribe1.svg">
+  <defs
+     id="defs3312" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="469.28049"
+     inkscape:cy="295.22114"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="10"
+     fit-margin-left="10"
+     fit-margin-right="10"
+     fit-margin-bottom="10"
+     inkscape:window-width="1680"
+     inkscape:window-height="988"
+     inkscape:window-x="-8"
+     inkscape:window-y="320"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata3315">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(1045.4755,-36.508736)">
+    <g
+       id="g3013"
+       transform="translate(-1041.0292,33.565373)">
+      <path
+         id="path3015"
+         d="m 931.93014,128.82242 -420.15807,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3017"
+         d="m 513.41362,135.38861 -13.21055,-6.56619 13.21055,-6.64436 0,13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3019"
+         d="m 667.87545,99.89991 0,20.01125 96.38231,0 0,-20.01125 -96.38231,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3021"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="115.06468"
+         x="667.87543"
+         xml:space="preserve">SUBSCRIBE</text>
+      <path
+         id="path3023"
+         d="m 485.19463,76.449227 0,430.554543 14.14858,0 0,-430.554543 -14.14858,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3025"
+         d="m 57.376005,76.449227 0,430.554543 14.226747,0 0,-430.554543 -14.226747,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3027"
+         d="m 931.93014,76.449227 0,430.554543 14.14858,0 0,-430.554543 -14.14858,0 z"
+         style="fill:#fa72c6;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3029"
+         d="m 931.93014,388.81233 -420.15807,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3031"
+         d="m 513.41362,395.37852 -13.21055,-6.56619 13.21055,-6.64437 0,13.21056 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3033"
+         d="m 655.83744,359.88982 0,20.01125 120.45834,0 0,-20.01125 -120.45834,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3035"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="375.21094"
+         x="655.36841"
+         xml:space="preserve">UNSUBSCRIBE</text>
+      <text
+         id="text3037"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="2.5014062"
+         xml:space="preserve">Publisher</text>
+      <text
+         id="text3039"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="867.98798"
+         xml:space="preserve">Subscriber</text>
+      <text
+         id="text3041"
+         style="font-size:30.01687431px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="33.768986"
+         x="447.75171"
+         xml:space="preserve">Broker</text>
+      <path
+         id="path3043"
+         d="m 500.20307,199.72165 420.15807,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3045"
+         d="m 918.71959,193.07729 13.21055,6.64436 -13.21055,6.56619 0,-13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3047"
+         d="m 619.72338,170.79914 0,20.01125 192.68645,0 0,-20.01125 -192.68645,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3049"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="186.35477"
+         x="619.09802"
+         xml:space="preserve">SUBSCRIBED or ERROR</text>
+      <path
+         id="path3051"
+         d="m 500.20307,459.71156 420.15807,0"
+         style="fill:none;stroke:#000000;stroke-width:3.59577131px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1;stroke-dasharray:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3053"
+         d="m 918.71959,453.0672 13.21055,6.64436 -13.21055,6.56619 0,-13.21055 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <path
+         id="path3055"
+         d="m 607.68537,430.78905 0,20.01125 216.76248,0 0,-20.01125 -216.76248,0 z"
+         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none"
+         inkscape:connector-curvature="0" />
+      <text
+         id="text3057"
+         style="font-size:16.25914001px;font-style:normal;font-weight:normal;text-align:start;text-anchor:start;fill:#000000;font-family:Arial"
+         y="445.25031"
+         x="607.84167"
+         xml:space="preserve">UNSUBSCRIBED or ERROR</text>
+    </g>
+  </g>
+</svg>
