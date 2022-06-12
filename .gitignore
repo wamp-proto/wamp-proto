@@ -1,10 +1,7 @@
-build
 twistd.pid
 .build
-docs/_build
 node_modules
 .idea
-.tox
 docs/_static/gen
 dist
 mmark
