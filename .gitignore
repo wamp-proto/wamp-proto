@@ -6,7 +6,6 @@ node_modules
 .idea
 .tox
 docs/_static/gen
-package-lock.json
 dist
 mmark
 rfc/aux/authors.json
