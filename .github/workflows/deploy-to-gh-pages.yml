@@ -33,6 +33,15 @@ jobs:
       - run: npm install -g grunt-cli
       - run: npm install
       - run: make build
+      - run: mv dist/_graphics dist/graphics
+      - run: mv dist/_images dist/images
+      - run: mv dist/_sources dist/sources
+      - run: mv dist/_static dist/static
+      - name: Rename underscore urls in dist
+        run: find dist -type f \( -name "*.html" -or -name "*.txt" \) -print -exec sed -i '' 's/_graphics\//graphics\//g' {} \;
+      - run: find dist -type f \( -name "*.html" -or -name "*.txt" \) -print -exec sed -i '' 's/_images\//images\//g' {} \;
+      - run: find dist -type f \( -name "*.html" -or -name "*.txt" \) -print -exec sed -i '' 's/_sources\//sources\//g' {} \;
+      - run: find dist -type f \( -name "*.html" -or -name "*.txt" \) -print -exec sed -i '' 's/_static\//static\//g' {} \;
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
