@@ -48,7 +48,6 @@ WAMP development is sponsored since then by `Crossbar.io (the company) <https://
 **Get in touch** with us on our mailing list, chat room or search for answers on StackOverflow:
 
 - `WAMP Google group <https://groups.google.com/group/wampws>`_
-- `WAMP Gitter chat <https://gitter.im/wamp-proto/wamp-proto>`_
 - `WAMP StackOverflow Q&A <http://fix.me>`_
 
 The WAMP protocol is also looking for contributors that help polishing up the spec,
