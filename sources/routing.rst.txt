@@ -57,7 +57,7 @@ approaches.
 Lets take the old "client-server" world. In the client-server model, a
 remote procedure call goes directly from the *Caller* to the *Callee*:
 
-.. figure:: static/gen/unified_routing_rpc_client_server.svg
+.. figure:: _static/gen/unified_routing_rpc_client_server.svg
     :align: center
     :width: 50%
     :alt: Remote procedure calls in the **Client-Server** model
@@ -80,7 +80,7 @@ by announcing their interest on a respective "topic".
 Both do not know about each other. They are decoupled via the "topic" and
 via an intermediary usually called *Broker*:
 
-.. figure:: static/gen/unified_routing_pubsub_broker.svg
+.. figure:: _static/gen/unified_routing_pubsub_broker.svg
     :align: center
     :width: 50%
     :alt: A Broker decouples *Publishers* and *Subscribers*
@@ -102,7 +102,7 @@ Now, WAMP translates the benefits of loose coupling to RPC. Different from
 the client-server model, WAMP also decouples *Callers* and *Callees* by
 introducing an intermediary - the *Dealer*:
 
-.. figure:: static/gen/unified_routing_rpc_dealer.svg
+.. figure:: _static/gen/unified_routing_rpc_dealer.svg
     :align: center
     :width: 50%
     :alt: Remote procedure calls in the **Dealer** model
@@ -138,7 +138,7 @@ routed Remote Procedure Calls)?
 
 When you combine a *Broker* and a *Dealer* you get what WAMP calls a *Router*:
 
-.. figure:: static/gen/unified_routing_broker_dealer.svg
+.. figure:: _static/gen/unified_routing_broker_dealer.svg
     :align: center
     :width: 70%
     :alt: A **Router** combines a Broker and a Dealer
@@ -159,7 +159,7 @@ process sensor values in a backend component.
 Using WAMP, you can have a browser-based UI, the embedded device and your
 backend talk to each other in real-time:
 
-.. figure:: static/gen/unified_routing_wamp_iot.svg
+.. figure:: _static/gen/unified_routing_wamp_iot.svg
     :align: center
     :width: 80%
     :alt: WAMP in an IoT application
