@@ -5,24 +5,24 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Message Routing in WAMP &mdash; Web Application Messaging Protocol version 2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
-      <link rel="stylesheet" href="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
+      <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="static/css/custom.css" type="text/css" />
+      <link rel="stylesheet" href="static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.css" type="text/css" />
     <link rel="canonical" href="https://wamp-proto.org/routing.html"/>
   <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
+    <script src="static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/js/custom.js"></script>
-        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
-        <script src="_static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
-    <script src="_static/js/theme.js"></script>
+        <script data-url_root="./" id="documentation_options" src="static/documentation_options.js"></script>
+        <script src="static/jquery.js"></script>
+        <script src="static/underscore.js"></script>
+        <script src="static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="static/doctools.js"></script>
+        <script src="static/js/custom.js"></script>
+        <script src="static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+        <script src="static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+    <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Protocol Specification" href="spec.html" />
@@ -35,7 +35,7 @@
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
             <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
-            <img src="_static/wamp_logo_white.png" class="logo" alt="Logo"/>
+            <img src="static/wamp_logo_white.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -133,7 +133,7 @@ approaches.</p>
 <p>Lets take the old “client-server” world. In the client-server model, a
 remote procedure call goes directly from the <em>Caller</em> to the <em>Callee</em>:</p>
 <figure class="align-center" id="id1">
-<a class="reference internal image-reference" href="_images/unified_routing_rpc_client_server.svg"><img alt="Remote procedure calls in the **Client-Server** model" src="_images/unified_routing_rpc_client_server.svg" width="50%" /></a>
+<a class="reference internal image-reference" href="images/unified_routing_rpc_client_server.svg"><img alt="Remote procedure calls in the **Client-Server** model" src="images/unified_routing_rpc_client_server.svg" width="50%" /></a>
 <figcaption>
 <p><span class="caption-text">Remote procedure calls in the <strong>Client-Server</strong> model</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -151,7 +151,7 @@ by announcing their interest on a respective “topic”.
 Both do not know about each other. They are decoupled via the “topic” and
 via an intermediary usually called <em>Broker</em>:</p>
 <figure class="align-center" id="id2">
-<a class="reference internal image-reference" href="_images/unified_routing_pubsub_broker.svg"><img alt="A Broker decouples *Publishers* and *Subscribers*" src="_images/unified_routing_pubsub_broker.svg" width="50%" /></a>
+<a class="reference internal image-reference" href="images/unified_routing_pubsub_broker.svg"><img alt="A Broker decouples *Publishers* and *Subscribers*" src="images/unified_routing_pubsub_broker.svg" width="50%" /></a>
 <figcaption>
 <p><span class="caption-text">A Broker decouples <em>Publishers</em> and <em>Subscribers</em></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -168,7 +168,7 @@ called <em>routing</em>.</p>
 the client-server model, WAMP also decouples <em>Callers</em> and <em>Callees</em> by
 introducing an intermediary - the <em>Dealer</em>:</p>
 <figure class="align-center" id="id3">
-<a class="reference internal image-reference" href="_images/unified_routing_rpc_dealer.svg"><img alt="Remote procedure calls in the **Dealer** model" src="_images/unified_routing_rpc_dealer.svg" width="50%" /></a>
+<a class="reference internal image-reference" href="images/unified_routing_rpc_dealer.svg"><img alt="Remote procedure calls in the **Dealer** model" src="images/unified_routing_rpc_dealer.svg" width="50%" /></a>
 <figcaption>
 <p><span class="caption-text">Remote procedure calls in the <strong>Dealer</strong> model</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -195,7 +195,7 @@ RPC and still benefit from loose coupling.</p>
 routed Remote Procedure Calls)?</p>
 <p>When you combine a <em>Broker</em> and a <em>Dealer</em> you get what WAMP calls a <em>Router</em>:</p>
 <figure class="align-center" id="id4">
-<a class="reference internal image-reference" href="_images/unified_routing_broker_dealer.svg"><img alt="A **Router** combines a Broker and a Dealer" src="_images/unified_routing_broker_dealer.svg" width="70%" /></a>
+<a class="reference internal image-reference" href="images/unified_routing_broker_dealer.svg"><img alt="A **Router** combines a Broker and a Dealer" src="images/unified_routing_broker_dealer.svg" width="70%" /></a>
 <figcaption>
 <p><span class="caption-text">A <strong>Router</strong> combines a Broker and a Dealer</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
 </figcaption>
@@ -211,7 +211,7 @@ process sensor values in a backend component.</p>
 <p>Using WAMP, you can have a browser-based UI, the embedded device and your
 backend talk to each other in real-time:</p>
 <figure class="align-center" id="id5">
-<a class="reference internal image-reference" href="_images/unified_routing_wamp_iot.svg"><img alt="WAMP in an IoT application" src="_images/unified_routing_wamp_iot.svg" width="80%" /></a>
+<a class="reference internal image-reference" href="images/unified_routing_wamp_iot.svg"><img alt="WAMP in an IoT application" src="images/unified_routing_wamp_iot.svg" width="80%" /></a>
 <figcaption>
 <p><span class="caption-text">WAMP in an IoT application</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
 </figcaption>
