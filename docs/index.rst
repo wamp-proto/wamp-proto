@@ -52,7 +52,7 @@ WAMP development is sponsored since then by `Crossbar.io (the company) <https://
 
 - `WAMP Google group <https://groups.google.com/group/wampws>`_
 - `WAMP Protocol GitHub Repository <https://github.com/wamp-proto/wamp-proto>`_
-- `WAMP StackOverflow Q&A <https://stackoverflow.com/search?q=wamp+proto>`_
+- `WAMP StackOverflow Q&A <https://stackoverflow.com/questions/tagged/wamp-protocol>`_
 
 The WAMP protocol is also looking for contributors that help polishing up the spec,
 filling in gaps. A good starting point are our open issues on our
