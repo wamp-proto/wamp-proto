@@ -7,7 +7,7 @@ workgroup = "BiDirectional or Server-Initiated HTTP"
 submissiontype = "IETF"
 keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 docName = "draft-oberstet-hybi-crossbar-wamp-04"
-date = 2022-06-21T13:19:11+00:00
+date = 2022-06-21T15:45:37+00:00
 
 [seriesInfo]
 name = "Internet-Draft"
@@ -247,6 +247,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 
 {{text/advanced/ap_interface_definition.md}}
+
+{{text/advanced/ap_node_control_api.md}}
 
 {{text/advanced/ap_r2r.md}}
 
