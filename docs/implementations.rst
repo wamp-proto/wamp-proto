@@ -17,8 +17,9 @@ and select the best or most fitting for each. That's one promise of WAMP, one fr
 
     - You can choose your WAMP router independently of the programming language you want to write your
       components in since routers do not run application code directly.
-    - Want your WAMP implementation listed here? Please join the `mailing list <https://groups.google.com/group/wampws>`_
-      or `Gitter chat <https://gitter.im/wamp-proto/wamp-proto>`_ and introduce your project.
+    - Want your WAMP implementation listed here? Please open `issue <https://github.com/wamp-proto/wamp-proto/issues/new>`_
+      on github and introduce your project or even create a pull request with addition to this
+      `file <https://github.com/wamp-proto/wamp-proto/edit/master/docs/implementations.rst>`_.
 
 
 Libraries
