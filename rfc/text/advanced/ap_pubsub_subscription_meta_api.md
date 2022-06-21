@@ -12,6 +12,16 @@ Support for this feature MUST be announced by Brokers via
 
 Meta-events are created by the router itself. This means that the events as well as the data received when calling a meta-procedure can be accorded the same trust level as the router.
 
+The following sections contain an informal, easy to digest description of the WAMP procedures and topics
+available in (this part of) the WAMP Meta API.
+A formal definition of the WAMP Meta API in terms of available WAMP procedures and topics including
+precise and complete type definitions of the application payloads, that is procedure arguments and
+results or event payloads is contained in
+
+* Compiled Binary Schema: `<WAMP API Catalog>/schema/wamp-meta.bfbs`
+* FlatBuffers Schema Source: `<WAMP API Catalog>/src/wamp-meta.fbs`
+
+which uses FlatBuffers IDL to describe the API. The method of using FlatBuffers IDL and type definitions to formally define WAMP procedures and topics is detailed in section [WAMP IDL](#wamp-idl).
 
 #### Subscription Meta-Events
 

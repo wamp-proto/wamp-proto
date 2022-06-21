@@ -8,16 +8,16 @@ Meta events are created by the router itself. This means that the events, as wel
 
 > Note that an implementation that only supports a *Broker* or *Dealer* role, not both at the same time, essentially cannot offer the **Session Meta API**, as it requires both roles to support this feature.
 
-#### Interface Definition
-
 The following sections contain an informal, easy to digest description of the WAMP procedures and topics
-available in the WAMP Meta API.
-
+available in (this part of) the WAMP Meta API.
 A formal definition of the WAMP Meta API in terms of available WAMP procedures and topics including
 precise and complete type definitions of the application payloads, that is procedure arguments and
-results or event payloads is contained in `<<FILE wamp-meta.fbs >>`, which uses FlatBuffers IDL to
-describe the API. The method of using FlatBuffers IDL and type definitions to formally define WAMP
-procedures and topics can be found in `<<CHAPTER ap_interface_definition.md>>`
+results or event payloads is contained in
+
+* Compiled Binary Schema: `<WAMP API Catalog>/schema/wamp-meta.bfbs`
+* FlatBuffers Schema Source: `<WAMP API Catalog>/src/wamp-meta.fbs`
+
+which uses FlatBuffers IDL to describe the API. The method of using FlatBuffers IDL and type definitions to formally define WAMP procedures and topics is detailed in section [WAMP IDL](#wamp-idl).
 
 #### Session Meta Events
 
