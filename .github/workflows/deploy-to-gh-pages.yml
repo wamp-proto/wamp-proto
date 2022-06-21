@@ -1,10 +1,8 @@
 name: Deploy to github pages
-on: [push]
-#  push:
-#    branches:
-#    - master
-
-#env:
+on:
+  push:
+    branches:
+    - master
 
 permissions:
   contents: write
@@ -23,7 +21,6 @@ jobs:
       - uses: actions/setup-python@v3
         with:
           python-version: '3.6'
-#          architecture: 'x64'
           cache: 'pip'
       - run: export PATH=$PATH:$HOME/.local/bin
       - run: export WAMP_BUILD_ID="$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})"
