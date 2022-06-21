@@ -27,7 +27,6 @@ usage:
 	@echo "make grep_options - show places where *.Options are used"
 	@echo "make clean - clean all generated data"
 	@echo "make authors - show authors based on git log data"
-	@echo "make publish_aws - publish generated spec to aws"
 	@echo "make run_docs - run http server on 8010 port to serve docs"
 	@echo "make spellcheck_docs - spell check the docs via sphinx-build"
 
@@ -48,15 +47,6 @@ clean:
 
 authors:
 	git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
-
-#
-# build and deploy to:
-#
-# * https://s3.eu-central-1.amazonaws.com/wamp-proto.org/
-# * https://wamp-proto.org/
-#
-publish_aws:
-	aws s3 cp --recursive --acl public-read docs/_build s3://wamp-proto.org/
 
 run_docs:
 	cd dist && python -m http.server 8010
