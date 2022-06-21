@@ -86,6 +86,7 @@ requirements_mmark:
 # https://mmark.miek.nl/post/syntax/
 build_spec_rfc: requirements_mmark build_spec_rfc_mmark
 
+# firefox dist/wamp_latest_ietf.html
 build_spec_rfc_mmark:
 	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp.md
 	./mmark ./rfc/wamp.md > $(TMPBUILDDIR)/wamp.xml
@@ -95,6 +96,7 @@ build_spec_rfc_mmark:
 	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.txt
 	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.html
 
+# firefox dist/wamp_latest.html
 build_spec_w3c:
 	git log --pretty=format:"{ name: \"%an\" }," rfc | \
 		grep -v -e "ecorm" -e "Andrew J. Gillis" | \
