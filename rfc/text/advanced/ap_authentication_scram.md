@@ -1,10 +1,10 @@
-#### Salted Challenge Response Authentication Mechanism {#wamp-scram}
+### Salted Challenge Response Authentication {#wamp-scram}
 
 The WAMP Salted Challenge Response Authentication Mechanism ("WAMP-SCRAM"), is a password-based authentication method where the shared secret is neither transmitted nor stored as cleartext. WAMP-SCRAM is based on [RFC5802](https://tools.ietf.org/html/rfc5802) (_Salted Challenge Response Authentication Mechanism_) and [RFC7677](https://tools.ietf.org/html/rfc7677) (_SCRAM-SHA-256 and SCRAM-SHA-256-PLUS_).
 
 WAMP-SCRAM supports the Argon2 ([draft-irtf-cfrg-argon2](https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/)) password-based key derivation function, a memory-hard algorithm intended to resist cracking on GPU hardware. PBKDF2 ([RFC2898](https://tools.ietf.org/html/rfc2898)) is also supported for applications that are required to use primitives currently approved by cryptographic standards.
 
-##### Security Considerations
+#### Security Considerations
 
 With WAMP-SCRAM, if the authentication database is stolen, an attacker cannot impersonate a user unless they guess the password offline by brute force.
 
@@ -17,7 +17,7 @@ Note that when HTML/JavaScript assets are served to a web browser, WAMP-SCRAM do
 In light of the above security concerns, a secure TLS transport is therefore advised to prevent such attacks. The channel binding feature of SCRAM can be used to ensure that the TLS endpoints are the same between client and router.
 
 
-##### Deviations from RFC5802
+#### Deviations from RFC5802
 
 1. To simplify parsing, SCRAM attributes in the authentication exchange messages are encoded as members of the `Options`/`Details` objects without escaping the `,` and `=` characters. However, the `AuthMessage` used to compute the client and server signatures DOES use the exact syntax specified in [RFC5802, section 7](https://tools.ietf.org/html/rfc5802#section-7). This makes it possible to use existing test vectors to verify WAMP-SCRAM implementations.
 
@@ -31,36 +31,36 @@ In light of the above security concerns, a secure TLS transport is therefore adv
 
 6. The use of `authzid` for user impersonation is not supported.
 
-##### authmethod Type String
+#### authmethod Type String
 
 `"wamp-scram"` SHALL be used as the `authmethod` type string for WAMP-SCRAM authentication. Announcement by routers of WAMP-SCRAM support is outside the scope of this document.
 
-##### Conventions
+#### Conventions
 
-###### Base64 encoding
+##### Base64 encoding
 
 Base64 encoding of octet strings is restricted to canonical form with no whitespace, as defined in [RFC4648](https://tools.ietf.org/html/rfc4648) (_The Base16, Base32, and Base64 Data Encodings_).
 
-###### Nonces
+##### Nonces
 
 In WAMP-SCRAM, a _nonce_ (number used once) is a base64-encoded sequence of random octets. It SHOULD be of sufficient length to make a replay attack unfeasible. A length of 16 octets (128 bits) is recommended for each of the client and server-generated nonces.
 
 See [RFC4086](https://tools.ietf.org/html/rfc4086) (_Randomness Requirements for Security_) for best practices concerning randomness.
 
-###### Salts
+##### Salts
 
 A _salt_ is a base64-encoded sequence of random octets.
 
 To prevent rainbow table attacks in the event of database theft, the salt MUST be generated randomly by the server **for each user**. The random salt is stored with each user record in the authentication database.
 
-###### Username/Password String Normalization
+##### Username/Password String Normalization
 
 Username and password strings SHALL be normalized according to the _SASLprep_ profile described in [RFC4013](https://tools.ietf.org/html/rfc4013), using the _stringprep_ algorithm described in [RFC3454](https://tools.ietf.org/html/rfc3454).
 
 While SASLprep preserves the case of usernames, the server MAY choose to perform case insensitive comparisons when searching for a username in the authentication database.
 
 
-##### Channel Binding
+#### Channel Binding
 
 _Channel binding_ is a feature that allows a higher layer to establish that the other end of an underlying secure channel is bound to its higher layer counterpart. See [RFC5056](https://tools.ietf.org/html/rfc5056) (_On the Use of Channel Bindings_) for an in-depth discussion.
 
@@ -70,17 +70,17 @@ Negotiation and announcement of channel binding is outside the scope of this doc
 
 Note that WAMP-SCRAM channel binding is not generally possible with web browser clients due to the lack of a suitable API for this purpose.
 
-###### The tls-unique Channel Binding Type
+##### The tls-unique Channel Binding Type
 
 The `tls-unique` channel binding type allows the WAMP layer to establish that the other peer is authenticating over the same, unique TLS connection. The channel binding data for this type corresponds to the bytes of the first TLS Finished message, as described in [RFC5929, section 3](https://tools.ietf.org/html/rfc5929#section-3). [RFC5929 section 10.2](https://tools.ietf.org/html/rfc5929#section-10.2) addresses the concern of disclosing this data over the TLS channel (in short, the TLS Finished message would already be visible to eavesdroppers).
 
 To safeguard against the _triple handshake attack_ described in [RFC7627](https://tools.ietf.org/html/rfc7627), this channel binding type MUST be used over a TLS channel that uses the _extended master secret_ extension, or over a TLS channel where session resumption is not permitted.
 
-###### The tls-server-end-point Channel Binding Type
+##### The tls-server-end-point Channel Binding Type
 
 The `tls-server-end-point` channel binding type allows the WAMP layer to establish that the other peer is authenticating over a TLS connection to a server having been issued a Public Key Infrastructure Certificate. The channel binding data for this type is a hash of the TLS server's certificate, computed as described in [RFC5929, section 4.1](https://tools.ietf.org/html/rfc5929#section-4.1). The certificate is hashed to accommodate memory-constrained implementations.
 
-##### Authentication Exchange
+#### Authentication Exchange
 
 WAMP-SCRAM uses a single round of challenge/response pairs after the client authentication request and before the authentication outcome.
 
@@ -96,7 +96,7 @@ SCRAM Message                              | WAMP Message
 `server-final-message` with `server-error` | `ABORT`
 
 
-###### Initial Client Authentication Message
+##### Initial Client Authentication Message
 
 WAMP-SCRAM authentication begins with the client sending a `HELLO` message specifying the `wamp-scram` method as (one of) the authentication methods:
 
@@ -128,7 +128,7 @@ Upon receiving the `HELLO` message, the server MUST terminate the authentication
 * The the server does not support the requested `channel_binding` type.
 * (Optional) The server does not recognize the given `authid`. In this case, the server MAY proceed with a mock `CHALLENGE` message to avoid leaking information on the existence of usernames. This mock `CHALLENGE` SHOULD contain a generated `salt` value that is always the same for a given `authid`, otherwise an attacker may discover that the user doesn't actually exist.
 
-###### Initial Server Authentication Message
+##### Initial Server Authentication Message
 
 If none of the above failure conditions apply, and the server is ready to let the client authenticate using WAMP-SCRAM, then it SHALL send a `CHALLENGE` message:
 
@@ -158,7 +158,7 @@ The client MUST respond with an ABORT message if `CHALLENGE.Details.nonce` does 
 The client SHOULD respond with an ABORT message if it detects that the cost parameters are unusually low. Such low-cost parameters could be the result of a rogue server attempting to obtain a weak password hash that can be easily cracked. What constitutes unusually low parameters is implementation-specific and is not covered by this document.
 
 
-###### Final Client Authentication Message
+##### Final Client Authentication Message
 
 Upon receiving a valid `CHALLENGE` message, the client SHALL respond with an `AUTHENTICATE` message:
 
@@ -188,7 +188,7 @@ Upon receiving the `AUTHENTICATE` message, the server SHALL then check that:
 * The `cbind_data` sent by the client matches the channel binding data that the server sees on its side of the channel.
 
 
-###### Final Server Authentication Message - Success
+##### Final Server Authentication Message - Success
 
 If the authentication succeeds, the server SHALL finally respond with a `WELCOME` message:
 
@@ -220,20 +220,20 @@ where:
 
 The client SHOULD check the `verifier` for mutual authentication, terminating the session if invalid.
 
-###### Final Server Authentication Message - Failure
+##### Final Server Authentication Message - Failure
 
 If the authentication fails, the server SHALL respond with an `ABORT` message.
 
 The server MAY include a SCRAM-specific error string in the `ABORT` message as a `Details.scram` attribute. SCRAM error strings are listed in [RFC5802, section 7](https://tools.ietf.org/html/rfc5802#section-7), under `server-error-value`.
 
 
-##### SCRAM Algorithms
+#### SCRAM Algorithms
 
 _This section is non-normative_.
 
 [RFC5802](https://tools.ietf.org/html/rfc5802) specifies the algorithms used to compute the `ClientProof`, `ServerSignature`, `ServerKey`, and `StoredKey` values referenced by this document. Those algorithms are summarized here in pseudocode for reference.
 
-###### Notation
+##### Notation
 
 * `"="`: The variable on the left-hand side is the result of the expression on the right-hand side.
 * `"+"`: String concatenation.
@@ -249,7 +249,7 @@ _This section is non-normative_.
 * `Escape(str)`: Replace every occurrence of "`,`" and "`=`" in the given string with "`=2C`" and "`=3D`" respectively.
 
 
-###### Data Stored on the Server
+##### Data Stored on the Server
 
 For each user, the server needs to store:
 
@@ -274,7 +274,7 @@ Note that `"Client Key"` and `"Server Key"` are string literals.
 The manner in which the `StoredKey` and `ServerKey` are shared with the server during user registration is outside the scope of SCRAM and this document.
 
 
-###### AuthMessage
+##### AuthMessage
 
 In SCRAM, `AuthMessage` is used for computing `ClientProof` and `ServerSignature`. `AuthMessage` is computed using attributes that were sent in the first three messages of the authentication exchange.
 
@@ -303,7 +303,7 @@ AuthMessage = ClientFirstBare + "," + ServerFirst + "," +
               ClientFinalNoProof
 ```
 
-###### ClientProof
+##### ClientProof
 
 `ClientProof` is computed by the client during the authentication exchange as follows:
 
@@ -329,7 +329,7 @@ RecoveredStoredKey = SHA256(RecoveredClientKey)
 
 Note that the client MAY cache the `ClientKey` and `StoredKey` (or just `SaltedPassword`) to avoid having to perform the expensive KDF computation for every authentication exchange. Storing these values securely on the client is outside the scope of this document.
 
-###### ServerSignature
+##### ServerSignature
 
 `ServerSignature` is computed by the server during the authentication exchange as follows:
 
@@ -348,7 +348,7 @@ ServerKey       = HMAC(SaltedPassword, "Server Key")
 ServerSignature = HMAC(ServerKey, AuthMessage)
 ```
 
-##### Key Derivation Functions
+#### Key Derivation Functions
 
 SCRAM uses a password-based key derivation function (KDF) to hash user passwords. WAMP-SCRAM supports both [Argon2](https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/) and [PBKDF2](https://tools.ietf.org/html/rfc2898) as the KDF. Argon2 is recommended because of its memory hardness and resistance against GPU hardware. PBKDF2, which does not feature memory hardness, is also supported for applications that are required to use primitives currently approved by cryptographic standards.
 
@@ -367,7 +367,7 @@ Which KDF is used to hash the password during user registration is up to the app
 * making the KDF statically configurable on the server, or,
 * hard-coding the KDF selection on the server.
 
-###### Argon2
+##### Argon2
 
 The Argon2 key derivation function, proposed in [draft-irtf-cfrg-argon2](https://datatracker.ietf.org/doc/draft-irtf-cfrg-argon2/), is computed using the following parameters:
 
@@ -386,7 +386,7 @@ Section 4 of the Argon2 internet draft recommends the general procedure for sele
 * The `memory` parameter is to be configured to the maximum amount of memory usage that can be tolerated on client devices for computing the hash.
 * The `iterations` parameter is to be determined experimentally so that execution time on the client reaches the maximum that can be tolerated by users during authentication. If the execution time is intolerable with `iterations` = 1, then reduce the `memory` parameter as needed.
 
-###### PBKDF2
+##### PBKDF2
 
 The PBKDF2 key derivation function, defined in [RFC2898](https://tools.ietf.org/html/rfc2898), is used with SHA-256 as the pseudorandom function (PRF).
 

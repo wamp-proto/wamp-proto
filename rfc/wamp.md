@@ -7,7 +7,7 @@ workgroup = "BiDirectional or Server-Initiated HTTP"
 submissiontype = "IETF"
 keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 docName = "draft-oberstet-hybi-crossbar-wamp-04"
-date = 2022-06-21T15:45:37+00:00
+date = 2022-06-22T21:11:02+00:00
 
 [seriesInfo]
 name = "Internet-Draft"
@@ -19,12 +19,12 @@ status = "experimental"
 toc = "yes"
 
 [[author]]
-initials="T.O."
+initials="T."
 surname="Oberstein"
 fullname="Tobias Oberstein"
-organization = "Crossbar.io Technologies GmbH"
+organization = "typedef int GmbH"
   [author.address]
-  email = "tobias.oberstein@crossbario.com"
+  email = "tobias.oberstein@typedefint.eu"
 %%%
 
 {mainmatter}
@@ -161,6 +161,15 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 {{text/advanced/ap_features.md}}
 
 
+## WAMP Meta API
+
+{{text/advanced/ap_session_meta_api.md}}
+
+{{text/advanced/ap_rpc_registration_meta_api.md}}
+
+{{text/advanced/ap_pubsub_subscription_meta_api.md}}
+
+
 ## Advanced RPC Features
 
 {{text/advanced/ap_rpc_progressive_call_results.md}}
@@ -177,8 +186,6 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{text/advanced/ap_rpc_call_trustlevels.md}}
 
-{{text/advanced/ap_rpc_registration_meta_api.md}}
-
 {{text/advanced/ap_rpc_pattern_based_registration.md}}
 
 {{text/advanced/ap_rpc_shared_registration.md}}
@@ -186,8 +193,6 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 {{text/advanced/ap_rpc_sharded_registration.md}}
 
 {{text/advanced/ap_rpc_registration_revocation.md}}
-
-{{text/advanced/ap_rpc_procedure_reflection.md}}
 
 
 ## Advanced PubSub Features
@@ -200,8 +205,6 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{text/advanced/ap_pubsub_publication_trustlevels.md}}
 
-{{text/advanced/ap_pubsub_subscription_meta_api.md}}
-
 {{text/advanced/ap_pubsub_pattern_based_subscription.md}}
 
 {{text/advanced/ap_pubsub_sharded_subscription.md}}
@@ -210,16 +213,10 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{text/advanced/ap_pubsub_subscription_revocation.md}}
 
-{{text/advanced/ap_pubsub_topic_reflection.md}}
-
 {{text/advanced/ap_pubsub_testament.md}}
 
 
-## Other Advanced Features
-
-
-{{text/advanced/ap_session_meta_api.md}}
-
+## Authentication Methods
 
 {{text/advanced/ap_authentication.md}}
 
@@ -229,6 +226,8 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{text/advanced/ap_authentication_scram.md}}
 
+
+## Transports and Serialization Features
 
 {{text/advanced/ap_transports.md}}
 
@@ -240,17 +239,22 @@ While implementations MUST implement the subset of the Basic Profile necessary f
 
 {{text/advanced/ap_transport_multiplexed.md}}
 
-
-{{text/advanced/ap_serialization.md}}
-
 {{text/advanced/ap_serialization_binary_json.md}}
 
 
+## WAMP Interfaces
+
 {{text/advanced/ap_interface_definition.md}}
+
+{{text/advanced/ap_interface_reflection.md}}
 
 {{text/advanced/ap_node_control_api.md}}
 
+
+## Router-to-Router Links
+
 {{text/advanced/ap_r2r.md}}
+
 
 
 # Security Considerations

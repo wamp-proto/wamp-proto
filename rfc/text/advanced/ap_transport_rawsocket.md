@@ -1,4 +1,4 @@
-#### RawSocket Transport {#rawsocket}
+### RawSocket Transport {#rawsocket}
 
 **WAMP-over-RawSocket** is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.
 
@@ -11,7 +11,7 @@ WAMP-over-RawSocket can run over TCP, TLS, Unix domain sockets or any reliable s
 However, WAMP-over-RawSocket cannot be used with Web browser clients, since browsers do not allow raw TCP connections. Browser extensions would do, but those need to be installed in a browser. WAMP-over-RawSocket also (currently) does not support transport-level compression as WebSocket does provide (`permessage-deflate` WebSocket extension).
 
 
-##### Endianess
+#### Endianess
 
 WAMP-over-RawSocket uses *network byte order* ("big-endian"). That means, given a unsigned 32 bit integer
 
@@ -26,7 +26,7 @@ Here is how you would convert octets received from the wire into an integer in P
 ```python
     <CODE BEGINS>
     import struct
-    
+
     octets_received = b"\x11\x22\x33\x44"
     i = struct.unpack(">L", octets_received)[0]
     <CODE ENDS>
@@ -46,7 +46,7 @@ And here is how you would send out an integer to the wire in Python:
 The octets to be sent are `b"\x11\x22\x33\x44"`.
 
 
-##### Handshake
+#### Handshake
 
 **Client-to-Router Request**
 
@@ -79,7 +79,7 @@ The `SERIALIZER` value is used by the *Client* to request a specific serializer 
 
 The possible values for `SERIALIZER` are:
 
-{align="left"}    
+{align="left"}
         0: illegal
         1: JSON
         2: MessagePack
@@ -94,13 +94,13 @@ Here is a Python program that prints all (currently) permissible values for the 
        2: 'messagepack'
     }
 
-    ## map serializer / max. msg length to RawSocket handshake  
+    ## map serializer / max. msg length to RawSocket handshake
     ## request or success reply (2nd octet)
     ##
     for ser in SERMAP:
        for l in range(16):
           octet_2 = (l << 4) | ser
-          print("serializer: {}, maxlen: {} => 
+          print("serializer: {}, maxlen: {} =>
               0x{:02x}".format(SERMAP[ser], 2 ** (l + 9), octet_2))
     <CODE ENDS>
 ```
@@ -119,7 +119,7 @@ Here is an example of how a *Router* could parse the *second octet* in a *Client
 {align="left"}
 ```python
     <CODE BEGINS>
-    ## map RawSocket handshake request (2nd octet) to 
+    ## map RawSocket handshake request (2nd octet) to
     ## serializer / max. msg length
     ##
     for i in range(256):
@@ -205,7 +205,7 @@ Here is an example of how a *Client* might parse the *second octet* in a *Router
     for i in range(256):
        ser_id = i & 0x0f
        if ser_id:
-          ## verify the serializer is the one we requested! 
+          ## verify the serializer is the one we requested!
           ## if not, fail the connection!
           ser = SERMAP.get(ser_id, 'currently undefined')
           maxlen = 2 ** ((i >> 4) + 9)
@@ -213,12 +213,12 @@ Here is an example of how a *Client* might parse the *second octet* in a *Router
               format(i, ser, maxlen))
        else:
           err = i >> 4
-          print("error: {}".format(ERRMAP.get(err, 
+          print("error: {}".format(ERRMAP.get(err,
               'currently undefined')))
     <CODE ENDS>
 ```
 
-##### Serialization
+#### Serialization
 
 To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MessagePack).
 
@@ -233,7 +233,7 @@ E.g. a *Router* that is to forward a WAMP `EVENT` to a *Client* which exceeds th
 * remove the event payload, and send an event with extra information (`payload_limit_exceeded = true`)
 
 
-##### Framing
+#### Framing
 
 The serialized octets for a message to be sent are prefixed with exactly 4 octets.
 

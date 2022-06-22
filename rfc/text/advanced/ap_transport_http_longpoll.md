@@ -1,4 +1,4 @@
-#### A HTTP Longpoll Transport for WAMP {#longpoll}
+### HTTP Longpoll Transport {#longpoll}
 
 The *Long-Poll Transport* is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the Client issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
 

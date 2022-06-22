@@ -1,4 +1,4 @@
-### Procedure Reflection
+### Interface Reflection
 
 Feature status: **sketch**
 
@@ -56,7 +56,7 @@ A topic or procedure was asked to be described (reflected upon):
 
 A topic or procedure has been defined for reflection:
 
-{align="left"}    
+{align="left"}
         wamp.reflect.on_define
 
 A topic or procedure has been undefined from reflection:

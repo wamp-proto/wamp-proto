@@ -1,4 +1,4 @@
-#### Multiplexed Transport {#multiplexed}
+### Multiplexed Transport {#multiplexed}
 
 A Transport may support the multiplexing of multiple logical transports over a single "physical" transport.
 

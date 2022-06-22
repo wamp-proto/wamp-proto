@@ -1,4 +1,4 @@
-#### Binary conversion of JSON Strings
+### Binary support in JSON
 
 Binary data follows a convention for conversion to JSON strings.
 
@@ -40,7 +40,7 @@ A JSON string is unserialized to either a string or a byte array using the follo
 
 Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.
 
-##### Python
+#### Python
 
 Here is a complete example in Python showing how byte arrays are converted to and from JSON:
 
@@ -76,7 +76,7 @@ Here is a complete example in Python showing how byte arrays are converted to an
     <CODE ENDS>
 ```
 
-##### JavaScript
+#### JavaScript
 
 Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:
 
