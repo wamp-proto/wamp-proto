@@ -43,7 +43,7 @@ A WAMP session starts its lifetime when the Router has sent a `WELCOME` message 
 
 It is a [protocol error](#protocol_errors) to receive a second `HELLO` message during the lifetime of the session and the Peer MUST close the session if that happens.
 
-#### Client: Role and Feature Announcement
+**Client: Role and Feature Announcement**
 
 WAMP uses *Role & Feature announcement* instead of *protocol versioning* to allow
 
@@ -90,7 +90,7 @@ In the WAMP Basic Profile without session authentication, a `WELCOME` message MU
 > Note. The behavior if a requested `Realm` does not presently exist is router-specific. A router may e.g. automatically create the realm, or deny the establishment of the session with a `ABORT` reply message.
 >
 
-#### Router: Role and Feature Announcement
+**Router: Role and Feature Announcement**
 
 Similar to a Client announcing Roles and Features supported in the ``HELLO` message, a Router announces its supported Roles and Features in the `WELCOME` message.
 
@@ -128,7 +128,7 @@ No response to an `ABORT` message is expected.
 
 There are few scenarios, when `ABORT` is used:
 
-* During session opening, if peer decided to abort connect. 
+* During session opening, if peer decided to abort connect.
 
 {align="left"}
         ,------.          ,------.
@@ -169,6 +169,8 @@ There are few scenarios, when `ABORT` is used:
             "wamp.error.protocol_violation"]
 
 ## Session Closing
+
+### GOODBYE
 
 A WAMP session starts its lifetime with the Router sending a `WELCOME` message to the Client and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a `GOODBYE` message sent by one Peer and a `GOODBYE` message sent from the other Peer in response.
 
@@ -230,14 +232,13 @@ and the other peer replies
 {align="left"}
         [6, {}, "wamp.close.goodbye_and_out"]
 
-
-### Difference between ABORT and GOODBYE
+**Difference between ABORT and GOODBYE**
 
 The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
 
-### Session Statechart
+## Session Statechart
 
 The following state chart gives the states that a WAMP peer can be in during the session lifetime cycle.
 
@@ -300,10 +301,7 @@ The following state chart gives the states that a WAMP peer can be in during the
 | 13 | Received other                                                |
 | 14 | Received other / ignore                                       |
 
-
-
-
-# Agent Identification
+## Agent Identification
 
 When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
 
@@ -338,5 +336,3 @@ and
               "broker": {}
             }
         }]
-
-

@@ -7,7 +7,7 @@ workgroup = "BiDirectional or Server-Initiated HTTP"
 submissiontype = "IETF"
 keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 docName = "draft-oberstet-hybi-crossbar-wamp-04"
-date = 2022-06-23T00:54:08+00:00
+date = 2022-06-23T02:28:25+00:00
 
 [seriesInfo]
 name = "Internet-Draft"
@@ -118,6 +118,16 @@ All of the following features for Remote Procedure Calls are mandatory for WAMP 
 {{text/basic/bp_rpc_calling_and_invocation.md}}
 
 
+# Ordering Guarantees
+
+{{text/basic/bp_ordering_guarantees.md}}
+
+
+# Security Model
+
+{{text/basic/bp_security_model.md}}
+
+
 # Predefined URIs
 
 WAMP pre-defines the following error URIs for the basic and for the advanced profile. WAMP peers MUST use only the defined error messages.
@@ -125,15 +135,6 @@ WAMP pre-defines the following error URIs for the basic and for the advanced pro
 {{text/basic/bp_uris.md}}
 
 {{text/advanced/ap_uris.md}}
-
-{{text/basic/bp_ordering_guarantees.md}}
-
-{{text/basic/bp_security_model.md}}
-
-
-# Security Considerations
-
--- write me --
 
 
 # IANA Considerations

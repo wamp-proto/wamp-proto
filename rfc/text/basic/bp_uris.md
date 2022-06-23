@@ -1,6 +1,6 @@
 ## Basic Profile
 
-### Incorrect URIs
+**Incorrect URIs**
 
 When a Peer provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other Peer MUST respond with an `ERROR` message and give the following *Error URI*:
 
@@ -8,7 +8,7 @@ When a Peer provides an incorrect URI for any URI-based attribute of a WAMP mess
         wamp.error.invalid_uri
 
 
-### Interaction
+**Interaction**
 
 Peer provided an incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
 
@@ -40,7 +40,7 @@ A call failed since the given argument types or values are not acceptable to the
 {align="left"}
         wamp.error.invalid_argument
 
-### Session Close
+**Session Close**
 
 The Peer is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
 
@@ -62,7 +62,7 @@ A Peer received invalid WAMP protocol message (e.g. `HELLO` message after sessio
 {align="left"}
         wamp.error.protocol_violation
 
-### Authorization
+**Authorization**
 
 A join, call, register, publish or subscribe failed, since the Peer is not authorized to perform the operation.
 

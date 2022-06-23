@@ -1,5 +1,3 @@
-# Ordering Guarantees
-
 All WAMP implementations, in particular Routers MUST support the following ordering guarantees.
 
 > A WAMP Advanced Profile may provide applications options to relax ordering guarantees, in particular with distributed calls.

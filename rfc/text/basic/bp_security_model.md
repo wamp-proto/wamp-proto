@@ -1,5 +1,3 @@
-# Security Model
-
 The following discusses the security model for the Basic Profile. Any changes or extensions to this for the Advanced Profile are discussed further on as part of the Advanced Profile definition.
 
 ## Transport Encryption and Integrity
@@ -32,7 +30,7 @@ Authentication of a Client to a Router at the WAMP level is not part of the basi
 
 When running over TLS, a Router MAY authenticate a Client at the transport level by doing a *client certificate based authentication*.
 
-### Routers are trusted
+## Routers are trusted
 
 Routers are *trusted* by Clients.
 
