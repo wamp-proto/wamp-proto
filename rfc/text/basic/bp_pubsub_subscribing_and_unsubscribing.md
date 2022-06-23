@@ -88,8 +88,7 @@ where
 When the request for subscription cannot be fulfilled by the Broker, the Broker sends back an `ERROR` message to the Subscriber
 
 {align="left"}
-        [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict,
-            Error|uri]
+        [ERROR, SUBSCRIBE, SUBSCRIBE.Request|id, Details|dict, Error|uri]
 
 where
 
@@ -141,8 +140,7 @@ where
 When the request fails, the Broker sends an `ERROR`
 
 {align="left"}
-        [ERROR, UNSUBSCRIBE, UNSUBSCRIBE.Request|id, Details|dict,
-            Error|uri]
+        [ERROR, UNSUBSCRIBE, UNSUBSCRIBE.Request|id, Details|dict, Error|uri]
 
 where
 
@@ -153,5 +151,3 @@ where
 
 {align="left"}
         [8, 34, 85346237, {}, "wamp.error.no_such_subscription"]
-
-

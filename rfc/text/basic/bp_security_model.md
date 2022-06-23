@@ -32,9 +32,7 @@ When running over TLS, a Router MAY authenticate a Client at the transport level
 
 ## Routers are trusted
 
-Routers are *trusted* by Clients.
-
-In particular, Routers can read (and modify) any application payload transmitted in events, calls, call results and call errors (the `Arguments` or `ArgumentsKw` message fields).
+Routers are *trusted* by Clients. In particular, Routers can read (and modify) any application payload transmitted in events, calls, call results and call errors (the `Arguments` or `ArgumentsKw` message fields).
 
 Hence, Routers do not provide confidentiality with respect to application payload, and also do not provide authenticity or integrity of application payloads that could be verified by a receiving Client.
 

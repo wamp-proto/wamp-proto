@@ -83,20 +83,19 @@ where
 If the Dealer is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective Callee implementing the procedure:
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id,
-            Details|dict]
+        [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
 
 or
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id,
-            Details|dict, CALL.Arguments|list]
+        [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+            CALL.Arguments|list]
 
 or
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id,
-            Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+        [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+            CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 where
 
@@ -124,8 +123,7 @@ where
 *Example*
 
 {align="left"}
-        [68, 6131533, 9823529, {}, ["johnny"], {"firstname": "John",
-            "surname": "Doe"}]
+        [68, 6131533, 9823529, {}, ["johnny"], {"firstname": "John", "surname": "Doe"}]
 
 
 ### YIELD
@@ -143,8 +141,7 @@ or
 or
 
 {align="left"}
-        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
-            ArgumentsKw|dict]
+        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
 
 where
 
@@ -227,20 +224,18 @@ where
 If the Callee is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the Callee sends an `ERROR` message to the Dealer:
 
 {align="left"}
-        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
-            Error|uri]
+        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, Error|uri]
 
 or
 
 {align="left"}
-        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
-        Error|uri, Arguments|list]
+        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
 {align="left"}
-        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict,
-            Error|uri, Arguments|list, ArgumentsKw|dict]
+        [ERROR, INVOCATION, INVOCATION.Request|id, Details|dict, Error|uri, Arguments|list,
+            ArgumentsKw|dict]
 
 where
 
@@ -267,14 +262,13 @@ The Dealer will then send a `ERROR` message to the original Caller:
 or
 
 {align="left"}
-        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
-            Arguments|list]
+        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri, Arguments|list]
 
 or
 
 {align="left"}
-        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri,
-            Arguments|list, ArgumentsKw|dict]
+        [ERROR, CALL, CALL.Request|id, Details|dict, Error|uri, Arguments|list,
+            ArgumentsKw|dict]
 
 where
 

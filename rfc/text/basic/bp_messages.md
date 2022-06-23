@@ -89,10 +89,10 @@ Error reply sent by a Peer as an error response to different kinds of requests.
 {align="left"}
         [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri]
 
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, 
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri,
             Arguments|list]
 
-        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri, 
+        [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri,
             Arguments|list, ArgumentsKw|dict]
 
 
@@ -107,8 +107,8 @@ Sent by a Publisher to a Broker to publish an event.
 
         [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list]
 
-        [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list, 
-           ArgumentsKw|dict]
+        [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list,
+            ArgumentsKw|dict]
 
 #### PUBLISHED
 
@@ -150,15 +150,13 @@ Acknowledge sent by a Broker to a Subscriber to acknowledge unsubscription.
 Event dispatched by Broker to Subscribers for subscriptions the event was matching.
 
 {align="left"}
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
-            Details|dict]
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
 
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
-            Details|dict, PUBLISH.Arguments|list]
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+            PUBLISH.Arguments|list]
 
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
-            Details|dict, PUBLISH.Arguments|list,
-            PUBLISH.ArgumentsKw|dict]
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+            PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 
 > An event is dispatched to a Subscriber for a given `Subscription|id` only once. On the other hand, a Subscriber that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
 >
@@ -222,14 +220,13 @@ Acknowledge sent by a Dealer to a Callee for successful unregistration.
 Actual invocation of an endpoint sent by Dealer to a Callee.
 
 {align="left"}
-        [INVOCATION, Request|id, REGISTERED.Registration|id,
-            Details|dict]
+        [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict]
 
-        [INVOCATION, Request|id, REGISTERED.Registration|id,
-            Details|dict, C* Arguments|list]
+        [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+            CALL.Arguments|list]
 
-        [INVOCATION, Request|id, REGISTERED.Registration|id,
-            Details|dict, CALL.Arguments|list, CALL.ArgumentsKw|dict]
+        [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
+            CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
 #### YIELD
 
@@ -240,8 +237,7 @@ Actual yield from an endpoint sent by a Callee to Dealer.
 
         [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list]
 
-        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list,
-            ArgumentsKw|dict]
+        [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
 
 
 
@@ -251,7 +247,7 @@ The following table lists the message type code for all messages defined in the 
 
 Reserved codes may be used to identify additional message types in future standards documents.
 
-> "Tx" indicates the message is sent by the respective role, and "Rx" indicates the message is received by the respective role.
+"Tx" indicates the message is sent by the respective role, and "Rx" indicates the message is received by the respective role.
 
 {align="left"}
 | Cod | Message        |  Pub |  Brk | Subs |  Calr | Dealr | Callee|
@@ -294,8 +290,7 @@ Implementations SHOULD avoid sending empty `Arguments` lists.
 E.g. a `CALL` message
 
 {align="left"}
-        [CALL, Request|id, Options|dict, Procedure|uri,
-            Arguments|list]
+        [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
 
 where `Arguments == []` SHOULD be avoided, and instead
 
@@ -309,14 +304,12 @@ Implementations SHOULD avoid sending empty `ArgumentsKw` dictionaries.
 E.g. a `CALL` message
 
 {align="left"}
-        [CALL, Request|id, Options|dict, Procedure|uri,
-            Arguments|list, ArgumentsKw|dict]
+        [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list, ArgumentsKw|dict]
 
 where `ArgumentsKw == {}` SHOULD be avoided, and instead
 
 {align="left"}
-        [CALL, Request|id, Options|dict, Procedure|uri,
-            Arguments|list]
+        [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
 
 SHOULD be sent when `Arguments` is non-empty.
 

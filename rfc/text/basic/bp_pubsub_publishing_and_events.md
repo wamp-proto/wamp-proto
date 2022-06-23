@@ -119,20 +119,19 @@ Note that the Publisher of an event will never receive the published event even 
 When a Subscriber is deemed to be a receiver, the Broker sends the Subscriber an `EVENT` message:
 
 {align="left"}
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
-            Details|dict]
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict]
 
 or
 
 {align="left"}
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
-            Details|dict, PUBLISH.Arguments|list]
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+            PUBLISH.Arguments|list]
 
 or
 
 {align="left"}
-        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id,
-        Details|dict, PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
+        [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
+            PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
 
 where
 
@@ -155,7 +154,4 @@ where
 *Example*
 
 {align="left"}
-        [36, 5512315355, 4429313566, {}, [], {"color": "orange",
-            "sizes": [23, 42, 7]}]
-
-
+        [36, 5512315355, 4429313566, {}, [], {"color": "orange", "sizes": [23, 42, 7]}]

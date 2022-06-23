@@ -124,8 +124,7 @@ where
 When the unregistration request fails, the Dealer sends an `ERROR` message:
 
 {align="left"}
-        [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict,
-            Error|uri]
+        [ERROR, UNREGISTER, UNREGISTER.Request|id, Details|dict, Error|uri]
 
 where
 
