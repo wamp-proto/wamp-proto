@@ -70,7 +70,7 @@ start_build:
 $(SITEBUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
 	$(SCOUR) $(SCOUR_FLAGS) $< $@
 
-build: clean start_build build_images build_spec sphinx-build-docs
+build: clean start_build build_images build_spec build_docs
 
 build_images: $(SITEBUILDDIR)/$(OBJECTS)
 
@@ -84,7 +84,7 @@ requirements_mmark:
 	rm -f ./mmark*.tgz
 
 # https://mmark.miek.nl/post/syntax/
-build_spec_rfc: requirements_mmark build_spec_rfc_mmark
+build_spec_rfc: requirements_mmark build_spec_rfc_mmark build_spec_ap_rfc_mmark
 
 # firefox dist/wamp_latest_ietf.html
 build_spec_rfc_mmark:
@@ -96,6 +96,16 @@ build_spec_rfc_mmark:
 	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.txt
 	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.html
 
+# firefox dist/wamp_ap_latest_ietf.html
+build_spec_ap_rfc_mmark:
+	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp-ap.md
+	./mmark ./rfc/wamp-ap.md > $(TMPBUILDDIR)/wamp-ap.xml
+	sed $(sed_args) 's/<sourcecode align="left"/<sourcecode/g' $(TMPBUILDDIR)/wamp-ap.xml
+	sed $(sed_args) 's/<t align="left"/<t/g' $(TMPBUILDDIR)/wamp-ap.xml
+	xmllint --noout $(TMPBUILDDIR)/wamp-ap.xml
+	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.txt
+	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.html
+
 # firefox dist/wamp_latest.html
 build_spec_w3c:
 	git log --pretty=format:"{ name: \"%an\" }," rfc | \
@@ -103,7 +113,7 @@ build_spec_w3c:
 		sort | uniq > ./rfc/aux/authors.json
 	grunt
 
-sphinx-build-docs:
+build_docs:
 	# first test with all warnings fatal
 	sphinx-build -nWT -b dummy ./docs $(TMPBUILDDIR)/docs
 

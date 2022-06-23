@@ -7,7 +7,7 @@ workgroup = "BiDirectional or Server-Initiated HTTP"
 submissiontype = "IETF"
 keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 docName = "draft-oberstet-hybi-crossbar-wamp-04"
-date = 2022-06-22T21:11:02+00:00
+date = 2022-06-23T00:54:08+00:00
 
 [seriesInfo]
 name = "Internet-Draft"
@@ -76,12 +76,7 @@ WAMP can run over any Transport which is message-based, bidirectional,  reliable
 
 The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol.
 
-
-
-<!-- peers and roles -->
-
 {{text/basic/bp_peers_and_roles.md}}
-
 
 
 # Building Blocks
@@ -94,19 +89,13 @@ WAMP is defined with respect to the following building blocks
 
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
 
-
 {{text/basic/bp_identifiers.md}}
 
 {{text/basic/bp_serializations.md}}
 
 {{text/basic/bp_transports.md}}
 
-
-<!-- messages -->
-
 {{text/basic/bp_messages.md}}
-
-<!-- sessions -->
 
 {{text/basic/bp_sessions.md}}
 
@@ -114,7 +103,6 @@ For each building block, WAMP only assumes a defined set of requirements, which 
 # Publish and Subscribe
 
 All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Broker*.
-
 
 {{text/basic/bp_pubsub_subscribing_and_unsubscribing.md}}
 
@@ -125,11 +113,9 @@ All of the following features for Publish & Subscribe are mandatory for WAMP Bas
 
 All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles.
 
-
 {{text/basic/bp_rpc_registering_and_unregistering.md}}
 
 {{text/basic/bp_rpc_calling_and_invocation.md}}
-
 
 
 # Predefined URIs
@@ -140,130 +126,20 @@ WAMP pre-defines the following error URIs for the basic and for the advanced pro
 
 {{text/advanced/ap_uris.md}}
 
-
-<!-- ordering guarantees -->
-
 {{text/basic/bp_ordering_guarantees.md}}
 
-<!-- security model -->
-
 {{text/basic/bp_security_model.md}}
-
-
-# Advanced Profile
-
-While implementations MUST implement the subset of the Basic Profile necessary for the particular set of WAMP roles they provide, they MAY implement any subset of features from the Advanced Profile. Implementers SHOULD implement the maximum of features possible considering the aims of an implementation.
-
-> Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.
-
-{{text/advanced/ap_messages.md}}
-
-{{text/advanced/ap_features.md}}
-
-
-## WAMP Meta API
-
-{{text/advanced/ap_session_meta_api.md}}
-
-{{text/advanced/ap_rpc_registration_meta_api.md}}
-
-{{text/advanced/ap_pubsub_subscription_meta_api.md}}
-
-
-## Advanced RPC Features
-
-{{text/advanced/ap_rpc_progressive_call_results.md}}
-
-{{text/advanced/ap_rpc_progressive_calls.md}}
-
-{{text/advanced/ap_rpc_call_timeout.md}}
-
-{{text/advanced/ap_rpc_call_canceling.md}}
-
-{{text/advanced/ap_rpc_call_rerouting.md}}
-
-{{text/advanced/ap_rpc_caller_identification.md}}
-
-{{text/advanced/ap_rpc_call_trustlevels.md}}
-
-{{text/advanced/ap_rpc_pattern_based_registration.md}}
-
-{{text/advanced/ap_rpc_shared_registration.md}}
-
-{{text/advanced/ap_rpc_sharded_registration.md}}
-
-{{text/advanced/ap_rpc_registration_revocation.md}}
-
-
-## Advanced PubSub Features
-
-{{text/advanced/ap_pubsub_subscriber_blackwhite_listing.md}}
-
-{{text/advanced/ap_pubsub_publisher_exclusion.md}}
-
-{{text/advanced/ap_pubsub_publisher_identification.md}}
-
-{{text/advanced/ap_pubsub_publication_trustlevels.md}}
-
-{{text/advanced/ap_pubsub_pattern_based_subscription.md}}
-
-{{text/advanced/ap_pubsub_sharded_subscription.md}}
-
-{{text/advanced/ap_pubsub_event_history.md}}
-
-{{text/advanced/ap_pubsub_subscription_revocation.md}}
-
-{{text/advanced/ap_pubsub_testament.md}}
-
-
-## Authentication Methods
-
-{{text/advanced/ap_authentication.md}}
-
-{{text/advanced/ap_authentication_cra.md}}
-
-{{text/advanced/ap_authentication_ticket.md}}
-
-{{text/advanced/ap_authentication_scram.md}}
-
-
-## Transports and Serialization Features
-
-{{text/advanced/ap_transports.md}}
-
-{{text/advanced/ap_transport_rawsocket.md}}
-
-{{text/advanced/ap_transport_batched_websocket.md}}
-
-{{text/advanced/ap_transport_http_longpoll.md}}
-
-{{text/advanced/ap_transport_multiplexed.md}}
-
-{{text/advanced/ap_serialization_binary_json.md}}
-
-
-## WAMP Interfaces
-
-{{text/advanced/ap_interface_definition.md}}
-
-{{text/advanced/ap_interface_reflection.md}}
-
-{{text/advanced/ap_node_control_api.md}}
-
-
-## Router-to-Router Links
-
-{{text/advanced/ap_r2r.md}}
-
 
 
 # Security Considerations
 
 -- write me --
 
+
 # IANA Considerations
 
 TBD
+
 
 # Contributors
 
@@ -286,6 +162,7 @@ WAMP was developed in an open process from the beginning, and a lot of people ha
 * Christoph Herzog
 * Tobias Oberstein
 * Zhigang Wang
+
 
 # Acknowledgements
 
