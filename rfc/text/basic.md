@@ -18,64 +18,20 @@ Conformance requirements phrased as algorithms or specific steps MAY  be impleme
 
 Key terms such as named algorithms or definitions are indicated like _this_ when they first occur, and are capitalized throughout the text.
 
-# Introduction
 
-{{basic/bp_intro_background.md}}
+{{basic/bp_01_introduction.md}}
 
-{{basic/bp_intro_protocol_overview.md}}
+{{basic/bp_02_building_blocks.md}}
 
-{{basic/bp_peers_and_roles.md}}
+{{basic/bp_03_messages.md}}
 
-{{basic/bp_intro_design_aspects.md}}
+{{basic/bp_04_sessions.md}}
 
+{{basic/bp_05_publish_subscribe.md}}
 
-# Building Blocks
+{{basic/bp_06_remote_procedure_call.md}}
 
-WAMP is defined with respect to the following building blocks
-
-1.  Identifiers
-2.  Serializations
-3.  Transports
-
-For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
-
-{{basic/bp_identifiers.md}}
-
-{{basic/bp_serializations.md}}
-
-{{basic/bp_transports.md}}
-
-{{basic/bp_messages.md}}
-
-{{basic/bp_sessions.md}}
-
-
-# Publish and Subscribe
-
-All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Broker*.
-
-{{basic/bp_pubsub_subscribing_and_unsubscribing.md}}
-
-{{basic/bp_pubsub_publishing_and_events.md}}
-
-
-# Remote Procedure Calls
-
-All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles.
-
-{{basic/bp_rpc_registering_and_unregistering.md}}
-
-{{basic/bp_rpc_calling_and_invocation.md}}
-
-
-# Ordering Guarantees
-
-{{basic/bp_ordering_guarantees.md}}
-
-
-# Security Model
-
-{{basic/bp_security_model.md}}
+{{basic/bp_07_security_model.md}}
 
 
 # Predefined URIs
