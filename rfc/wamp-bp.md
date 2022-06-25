@@ -1,6 +1,6 @@
 %%%
-title = "The Web Application Messaging Protocol"
-abbrev = "WAMP"
+title = "WAMP Basic Profile"
+abbrev = "WAMP-BP"
 ipr = "trust200902"
 area = "Applications and Real-Time (art)"
 workgroup = "BiDirectional or Server-Initiated HTTP"
@@ -30,8 +30,6 @@ organization = "typedef int GmbH"
 {mainmatter}
 
 {{text/basic.md}}
-
-{{text/advanced.md}}
 
 # Contributors
 

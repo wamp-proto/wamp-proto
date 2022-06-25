@@ -2,6 +2,22 @@
 
 _This section is non-normative._
 
+
+### Realms, Sessions and Transports
+
+A Realm is a WAMP routing and administrative domain, optionally protected by authentication and authorization. WAMP messages are only routed within a Realm.
+
+A Session is a transient conversation between two Peers attached to a Realm and running over a Transport.
+
+A Transport connects two WAMP Peers and provides a channel over which WAMP messages for a WAMP Session can flow in both directions.
+
+WAMP can run over any Transport which is message-based, bidirectional,  reliable and ordered.
+
+The default transport for WAMP is WebSocket [@!RFC6455], where WAMP is an [officially registered](http://www.iana.org/assignments/websocket/websocket.xml) subprotocol.
+
+
+### Publish & Subscribe and Remote Procedure Calls
+
 The PubSub messaging pattern defines three roles: _Subscribers_ and _Publishers_, which communicate via a _Broker_.
 
 The routed RPC messaging pattern also defines three roles: _Callers_ and _Callees_, which communicate via a _Dealer_.

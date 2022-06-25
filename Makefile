@@ -82,24 +82,35 @@ requirements_mmark:
 	wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
 	tar xvzf mmark_2.2.25_linux_amd64.tgz
 	rm -f ./mmark*.tgz
+	sudo cp ./mmark /usr/local/bin/
 
 # https://mmark.miek.nl/post/syntax/
-build_spec_rfc: requirements_mmark build_spec_rfc_mmark build_spec_ap_rfc_mmark
+build_spec_rfc: build_spec_rfc_mmark build_spec_bp_rfc_mmark build_spec_ap_rfc_mmark
 
 # firefox dist/wamp_latest_ietf.html
 build_spec_rfc_mmark:
 	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp.md
-	./mmark ./rfc/wamp.md > $(TMPBUILDDIR)/wamp.xml
+	mmark ./rfc/wamp.md > $(TMPBUILDDIR)/wamp.xml
 	sed $(sed_args) 's/<sourcecode align="left"/<sourcecode/g' $(TMPBUILDDIR)/wamp.xml
 	sed $(sed_args) 's/<t align="left"/<t/g' $(TMPBUILDDIR)/wamp.xml
 	xmllint --noout $(TMPBUILDDIR)/wamp.xml
 	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.txt
 	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.html
 
+# firefox dist/wamp_bp_latest_ietf.html
+build_spec_bp_rfc_mmark:
+	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp-bp.md
+	mmark ./rfc/wamp-bp.md > $(TMPBUILDDIR)/wamp-bp.xml
+	sed $(sed_args) 's/<sourcecode align="left"/<sourcecode/g' $(TMPBUILDDIR)/wamp-bp.xml
+	sed $(sed_args) 's/<t align="left"/<t/g' $(TMPBUILDDIR)/wamp-bp.xml
+	xmllint --noout $(TMPBUILDDIR)/wamp-bp.xml
+	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp-bp.xml -o $(OUTPUTDIR)/wamp_bp_latest_ietf.txt
+	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp-bp.xml -o $(OUTPUTDIR)/wamp_bp_latest_ietf.html
+
 # firefox dist/wamp_ap_latest_ietf.html
 build_spec_ap_rfc_mmark:
 	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp-ap.md
-	./mmark ./rfc/wamp-ap.md > $(TMPBUILDDIR)/wamp-ap.xml
+	mmark ./rfc/wamp-ap.md > $(TMPBUILDDIR)/wamp-ap.xml
 	sed $(sed_args) 's/<sourcecode align="left"/<sourcecode/g' $(TMPBUILDDIR)/wamp-ap.xml
 	sed $(sed_args) 's/<t align="left"/<t/g' $(TMPBUILDDIR)/wamp-ap.xml
 	xmllint --noout $(TMPBUILDDIR)/wamp-ap.xml

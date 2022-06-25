@@ -1,4 +1,4 @@
-# Peers and Roles
+## Peers and Roles
 
 A WAMP Session connects two Peers, a Client and a Router. Each WAMP Peer MUST implement one role, and MAY implement more roles.
 
@@ -18,14 +18,14 @@ and a Router MAY implement either or both of the Roles:
 >
 
 
-## Symmetric Messaging
+### Symmetric Messaging
 
 It is important to note that though the establishment of a Transport might have a inherent asymmetry (like a TCP client establishing a WebSocket connection to a server), and Clients establish WAMP sessions by attaching to Realms on Routers, WAMP itself is designed to be fully symmetric for application components.
 
 After the transport and a session have been established, any application component may act as Caller, Callee, Publisher and Subscriber at the same time. And Routers provide the fabric on top of which WAMP runs a symmetric application messaging service.
 
 
-## Remote Procedure Call Roles
+### Remote Procedure Call Roles
 
 The Remote Procedure Call messaging pattern involves peers of three different roles:
 
@@ -41,7 +41,7 @@ Callees register procedures they provide with Dealers. Callers initiate procedur
 The Caller and Callee will usually run application code, while the Dealer works as a generic router for remote procedure calls decoupling Callers and Callees.
 
 
-## Publish & Subscribe Roles
+### Publish & Subscribe Roles
 
 The Publish & Subscribe messaging pattern involves peers of three different roles:
 
@@ -56,6 +56,6 @@ Subscribers subscribe to topics they are interested in with Brokers. Publishers 
 The Publisher and Subscriber will usually run application code, while the Broker works as a generic router for events decoupling Publishers from Subscribers.
 
 
-## Peers with multiple Roles
+### Peers with multiple Roles
 
 Note that Peers might implement more than one role: e.g. a Peer might act as Caller, Publisher and Subscriber at the same time. Another Peer might act as both a Broker and a Dealer.

@@ -1,4 +1,4 @@
-## Design Philosophy
+## Design Aspects
 
 _This section is non-normative._
 
@@ -9,6 +9,11 @@ An initial version of the protocol was publicly released in March 2012. The inte
 The second version of the protocol, which this RFC covers, integrates this feedback. Routed Remote Procedure Calls are one outcome of this, where the initial version of the protocol only allowed the calling of procedures provided by the router. Another, related outcome was the strict separation of routing and application logic.
 
 While WAMP was originally developed to use WebSocket as a transport, with JSON for serialization, experience in the field revealed that other transports and serialization formats were better suited to some use cases. For instance, with the use of WAMP in the Internet of Things sphere, resource constraints play a much larger role than in the browser, so any reduction of resource usage in WAMP implementations counts. This lead to the decoupling of WAMP from any particular transport or serialization, with the establishment of minimum requirements for both.
+
+
+### Relationship to WebSocket
+
+WAMP uses WebSocket as its default transport binding, and is a registered WebSocket subprotocol.
 
 
 ### Basic and Advanced Profiles
