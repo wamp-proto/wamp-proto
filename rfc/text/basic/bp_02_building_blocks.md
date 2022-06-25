@@ -143,7 +143,7 @@ The following is a complete list of usage of IDs in the three categories for all
 * `YIELD.Request`
 
 
-## Serializations
+## Serializers
 
 WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
 
@@ -160,24 +160,29 @@ A message serialization format is assumed that (at least) provides the following
 
 There is no required serialization or set of serializations for WAMP implementations (but each implementation MUST, of course, implement at least one serialization format). Routers SHOULD implement more than one serialization format, enabling components using different kinds of serializations to connect to each other.
 
-WAMP defines two bindings for message serialization:
+The WAMP Basic Profile defines the following bindings for message serialization:
 
 1. JSON
 2. MessagePack
+3. CBOR
 
-Other bindings for serialization may be defined in future WAMP versions.
+Other bindings for serialization may be defined in the WAMP Advanced Profile.
 
 ### JSON
 
-With JSON serialization, each WAMP message is serialized according to the JSON specification as described in RFC4627.
+With JSON serialization, each WAMP message is serialized according to the JSON specification as described in [@!RFC7159].
 
 Further, binary data follows a convention for conversion to JSON strings. For details see the Appendix.
 
 ### MessagePack
 
-With MessagePack serialization, each WAMP message is serialized according to the MessagePack specification.
+With [MessagePack](https://msgpack.org/) serialization, each WAMP message is serialized according to the [MessagePack specification](https://github.com/msgpack/msgpack/blob/master/spec.md).
 
-> Version 5 or later of MessagePack MUST BE used, since this version is able to differentiate between strings and binary values.
+Version 5 or later of MessagePack MUST BE used, since this version is able to differentiate between strings and binary values.
+
+### CBOR
+
+With CBOR serialization, each WAMP message is serialized according to the CBOR specification as described in [@!RFC8949].
 
 
 ## Transports
@@ -200,14 +205,17 @@ In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each 
 
 The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism ([@!RFC6455] section 4).
 
-WAMP uses the following WebSocket subprotocol identifiers for unbatched modes:
+WAMP uses the following WebSocket subprotocol identifiers (for unbatched modes):
 
 * `wamp.2.json`
 * `wamp.2.msgpack`
+* `wamp.2.cbor`
 
 With `wamp.2.json`, *all* WebSocket messages MUST BE of type **text** (UTF8 encoded payload) and use the JSON message serialization.
 
 With `wamp.2.msgpack`, *all* WebSocket messages MUST BE of type **binary** and use the MessagePack message serialization.
+
+With `wamp.2.cbor`, *all* WebSocket messages MUST BE of type **binary** and use the CBOR message serialization.
 
 > To avoid incompatibilities merely due to naming conflicts with WebSocket subprotocol identifiers, implementers SHOULD register identifiers for additional serialization formats with the official WebSocket subprotocol registry.
 

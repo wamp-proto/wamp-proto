@@ -7,6 +7,69 @@ The message flow between Clients and Routers for opening and closing WAMP sessio
 3. `ABORT`
 4. `GOODBYE`
 
+The following state chart gives the states that a WAMP peer can be in during the session lifetime cycle.
+
+{align="left"}
+                             +--------------+                           
+    +--------(6)------------->              |                           
+    |                        | CLOSED       <--------------------------+
+    | +------(4)------------->              <---+                      |
+    | |                      +--------------+   |                      |
+    | |                               |         |                      |
+    | |                              (1)       (7)                     |
+    | |                               |         |                      |
+    | |                      +--------v-----+   |                   (11)
+    | |                      |              +---+                      |
+    | |         +------------+ ESTABLISHING +----------------+         |
+    | |         |            |              |                |         |
+    | |         |            +--------------+                |         |
+    | |         |                     |                     (10)       |
+    | |         |                    (9)                     |         |
+    | |         |                     |                      |         |
+    | |        (2)           +--------v-----+       +--------v-------+ |
+    | |         |            |              |       |                | |
+    | |         |     +------> FAILED       <--(13)-+ CHALLENGING /  +-+
+    | |         |     |      |              |       | AUTHENTICATING |  
+    | |         |     |      +--------------+       +----------------+  
+    | |         |    (8)                                     |          
+    | |         |     |                                      |          
+    | |         |     |                                      |          
+    | | +-------v-------+                                    |          
+    | | |               <-------------------(12)-------------+          
+    | | | ESTABLISHED   |                                               
+    | | |               +--------------+                                
+    | | +---------------+              |                                
+    | |         |                      |                                
+    | |        (3)                    (5)                               
+    | |         |                      |                                
+    | | +-------v-------+     +--------v-----+                          
+    | | |               +--+  |              |                          
+    | +-+ SHUTTING DOWN |  |  | CLOSING      |                          
+    |   |               |(14) |              |                          
+    |   +-------^-------+  |  +--------------+                          
+    |           |----------+           |                                
+    +----------------------------------+
+
+The state transitions are listed in this table:
+
+| #  |  State                                                        |
+|----|---------------------------------------------------------------|
+| 1  | Sent HELLO                                                    |
+| 2  | Received WELCOME                                              |
+| 3  | Sent GOODBYE                                                  |
+| 4  | Received GOODBYE                                              |
+| 5  | Received GOODBYE                                              |
+| 6  | Sent GOODBYE                                                  |
+| 7  | Received invalid HELLO / Send ABORT                           |
+| 8  | Received HELLO or AUTHENTICATE                                |
+| 9  | Received other                                                |
+| 10 | Received valid HELLO [needs authentication] / Send CHALLENGE  |
+| 11 | Received invalid AUTHENTICATE / Send ABORT                    |
+| 12 | Received valid AUTHENTICATE / Send WELCOME                    |
+| 13 | Received other                                                |
+| 14 | Received other / ignore                                       |
+
+
 ## Session Establishment
 
 ### HELLO
@@ -71,6 +134,42 @@ This MUST be empty for WAMP Basic Profile implementations, and MUST be used by i
               "publisher": {},
               "subscriber": {}
           }
+        }]
+
+**Client: Agent Identification**
+
+When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
+
+Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
+
+{align="left"}
+        HELLO.Details.agent|string
+
+and
+
+{align="left"}
+        WELCOME.Details.agent|string
+
+*Example: A Client "HELLO" message.*
+
+{align="left"}
+        [1, "somerealm", {
+             "agent": "AutobahnJS-0.9.14",
+             "roles": {
+                "subscriber": {},
+                "publisher": {}
+             }
+        }]
+
+
+*Example: A Router "WELCOME" message.*
+
+{align="left"}
+        [2, 9129137332, {
+            "agent": "Crossbar.io-0.10.11",
+            "roles": {
+              "broker": {}
+            }
         }]
 
 ### WELCOME
@@ -237,102 +336,3 @@ and the other peer replies
 The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
-
-## Session Statechart
-
-The following state chart gives the states that a WAMP peer can be in during the session lifetime cycle.
-
-{align="left"}
-                             +--------------+                           
-    +--------(6)------------->              |                           
-    |                        | CLOSED       <--------------------------+
-    | +------(4)------------->              <---+                      |
-    | |                      +--------------+   |                      |
-    | |                               |         |                      |
-    | |                              (1)       (7)                     |
-    | |                               |         |                      |
-    | |                      +--------v-----+   |                   (11)
-    | |                      |              +---+                      |
-    | |         +------------+ ESTABLISHING +----------------+         |
-    | |         |            |              |                |         |
-    | |         |            +--------------+                |         |
-    | |         |                     |                     (10)       |
-    | |         |                    (9)                     |         |
-    | |         |                     |                      |         |
-    | |        (2)           +--------v-----+       +--------v-------+ |
-    | |         |            |              |       |                | |
-    | |         |     +------> FAILED       <--(13)-+ CHALLENGING /  +-+
-    | |         |     |      |              |       | AUTHENTICATING |  
-    | |         |     |      +--------------+       +----------------+  
-    | |         |    (8)                                     |          
-    | |         |     |                                      |          
-    | |         |     |                                      |          
-    | | +-------v-------+                                    |          
-    | | |               <-------------------(12)-------------+          
-    | | | ESTABLISHED   |                                               
-    | | |               +--------------+                                
-    | | +---------------+              |                                
-    | |         |                      |                                
-    | |        (3)                    (5)                               
-    | |         |                      |                                
-    | | +-------v-------+     +--------v-----+                          
-    | | |               +--+  |              |                          
-    | +-+ SHUTTING DOWN |  |  | CLOSING      |                          
-    |   |               |(14) |              |                          
-    |   +-------^-------+  |  +--------------+                          
-    |           |----------+           |                                
-    +----------------------------------+
-
-
-| #  |  State                                                        |
-|----|---------------------------------------------------------------|
-| 1  | Sent HELLO                                                    |
-| 2  | Received WELCOME                                              |
-| 3  | Sent GOODBYE                                                  |
-| 4  | Received GOODBYE                                              |
-| 5  | Received GOODBYE                                              |
-| 6  | Sent GOODBYE                                                  |
-| 7  | Received invalid HELLO / Send ABORT                           |
-| 8  | Received HELLO or AUTHENTICATE                                |
-| 9  | Received other                                                |
-| 10 | Received valid HELLO [needs authentication] / Send CHALLENGE  |
-| 11 | Received invalid AUTHENTICATE / Send ABORT                    |
-| 12 | Received valid AUTHENTICATE / Send WELCOME                    |
-| 13 | Received other                                                |
-| 14 | Received other / ignore                                       |
-
-## Agent Identification
-
-When a software agent operates in a network protocol, it often identifies itself, its application type, operating system, software vendor, or software revision, by submitting a characteristic identification string to its operating peer.
-
-Similar to what browsers do with the `User-Agent` HTTP header, both the `HELLO` and the `WELCOME` message MAY disclose the WAMP implementation in use to its peer:
-
-{align="left"}
-        HELLO.Details.agent|string
-
-and
-
-{align="left"}
-        WELCOME.Details.agent|string
-
-*Example: A Client "HELLO" message.*
-
-{align="left"}
-        [1, "somerealm", {
-             "agent": "AutobahnJS-0.9.14",
-             "roles": {
-                "subscriber": {},
-                "publisher": {}
-             }
-        }]
-
-
-*Example: A Router "WELCOME" message.*
-
-{align="left"}
-        [2, 9129137332, {
-            "agent": "Crossbar.io-0.10.11",
-            "roles": {
-              "broker": {}
-            }
-        }]

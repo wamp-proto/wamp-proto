@@ -102,3 +102,6 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 ## Router-to-Router Links
 
 {{advanced/ap_r2r.md}}
+
+
+{{advanced/ap_uris.md}}
