@@ -68,13 +68,18 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 
 {{advanced/ap_authentication.md}}
 
-{{advanced/ap_authentication_cra.md}}
-
 {{advanced/ap_authentication_ticket.md}}
+
+{{advanced/ap_authentication_cra.md}}
 
 {{advanced/ap_authentication_scram.md}}
 
 {{advanced/ap_authentication_cryptosign.md}}
+
+
+# Dynamic Authentication
+
+{{advanced/ap_authentication_dynamic.md}}
 
 
 # Advanced Transports and Serializers

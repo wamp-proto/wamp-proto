@@ -7,7 +7,7 @@ workgroup = "BiDirectional or Server-Initiated HTTP"
 submissiontype = "IETF"
 keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 docName = "draft-oberstet-hybi-crossbar-wamp-04"
-date = 2022-06-26T19:06:12+00:00
+date = 2022-06-26T23:17:22+00:00
 
 [seriesInfo]
 name = "Internet-Draft"

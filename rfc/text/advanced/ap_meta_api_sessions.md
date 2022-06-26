@@ -174,7 +174,7 @@ The keyword arguments are optional, and if not provided the reason defaults to `
 * `wamp.error.no_such_session` - No session with the given ID exists on the router.
 * `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
 
-##### wamp.session.kill_by_authid
+#### wamp.session.kill_by_authid
 
 Kill all currently connected sessions that have the specified `authid`.
 

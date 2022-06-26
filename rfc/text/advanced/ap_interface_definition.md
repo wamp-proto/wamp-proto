@@ -116,6 +116,8 @@ The *Attributes* used in WAMP IDL are defined in `<WAMP API Catalog>/src/wamp.fb
 * `wampid`
 * `wampname`, `wampname_s`
 * `wampuri`, `wampuri_s`, `wampuri_p`, `wampuri_sp`, `wampuri_pp`, `wampuri_spp`
+* `uuid`
+* `ethadr`
 * `type`
 
 **WAMP Positional and Keyword-based Payloads**
@@ -151,19 +153,92 @@ Strings which contain WAMP URIs or URI patterns use *Attribute*
 8. `wampuri_pp`: WAMP URI or URI prefix pattern, loose rules (minimum required to combine to dotted URIs), must match regular expression `^([^\s\.#]+\.)*([^\s\.#]*)$`.
 9. `wampuri_spp`: WAMP URI or URI prefix pattern, strict rules (can be used as identifier in most languages), must match regular expression `^([\da-z_]+\.)*([\da-z_]*)$`.
 
-**WAMP Actions**
+**Type/Object UUIDs**
 
-The type of WAMP action **procedure** or **topic** is designated using the *Attribute*
+Types and generally any objects can be globally identified using UUIDs [@!RFC4122]. UUIDs can be used in WAMP IDL using the `uuid` *Attribute*.
 
-1. `type`: one of `"procedure"` or `"topic"`
+```flatbuffers
+/// UUID (canonical textual representation).
+my_field1: string (uuid);
+
+/// UUID (128 bit binary).
+my_field2: uint128_t (uuid);
+```
+
+The `uint128_t` is a struct type defined as
+
+```flatbuffers
+/// An unsigned integer with 128 bits.
+struct uint128_t {
+    /// Least significand 32 bits.
+    w0: uint32;
+
+    /// 2nd significand 32 bits.
+    w1: uint32;
+
+    /// 3rd significand 32 bits.
+    w2: uint32;
+
+    /// Most significand 32 bits.
+    w3: uint32;
+}
+```
+
+**Ethereum Addresses**
+
+Ethereum addresses can be used to globally identify types or generally any object where
+the global ID also needs to be conflict free, consensually shared and owned by a respective
+Ethereum network user. Ethereum addresses can be used in WAMP IDL using the `ethadr` *Attribute*:
+
+```flatbuffers
+/// Ethereum address (checksummed HEX encoded address).
+my_field1: string (ethadr);
+
+/// Ethereum address (160 bit binary).
+my_field2: uint160_t (ethadr);
+```
+
+The `uint160_t` is a struct type defined as
+
+```flatbuffers
+/// An unsigned integer with 160 bits.
+struct uint160_t {
+    /// Least significand 32 bits.
+    w0: uint32;
+
+    /// 2nd significand 32 bits.
+    w1: uint32;
+
+    /// 3rd significand 32 bits.
+    w2: uint32;
+
+    /// 4th significand 32 bits.
+    w3: uint32;
+
+    /// Most significand 32 bits.
+    w4: uint32;
+}
+```
+
+**WAMP Actions or Service Elements**
+
+The type of WAMP service element **procedure**, **topic** or **interface** is designated
+using the *Attribute*
+
+1. `type`: one of `"procedure"`, `"topic"` or `"interface"`
 
 The `type` *Attribute* can be used to denote WAMP service interfaces, e.g. continuing with above WAMP Meta API procedure example, the `wamp.session.kill_by_authid` procedure can be declared like this:
 
 ```flatbuffers
-session_kill_by_authid (SessionKillByAuthid): WampIds (
-    type: "procedure",
-    wampuri: "wamp.session.kill_by_authid"
-);
+rpc_service IWampMeta(type: "interface",
+                      uuid: "88711231-3d95-44bc-9464-58d871dd7fd7",
+                      wampuri: "wamp")
+{
+    session_kill_by_authid (SessionKillByAuthid): WampIds (
+        type: "procedure",
+        wampuri: "wamp.session.kill_by_authid"
+    );
+}
 ```
 
 The value of attribute `type` specifies a WAMP *Procedure*, and the call arguments and result types of the procedure are given by:
@@ -172,3 +247,40 @@ The value of attribute `type` specifies a WAMP *Procedure*, and the call argumen
 * `WampIds`: procedure call results `args` (positional results) and `kwargs` (keyword results)
 
 The procedure will be registered under the WAMP URI `wamp.session.kill_by_authid` on the respective realm.
+
+
+### WAMP Service Declaration
+
+WAMP services include
+
+* *Procedures* registered by *Callees*, available for calling from *Callers*
+* *Topics* published to by *Publishers*, available for subscribing by *Subscribers*
+
+We map the two WAMP service types to FlatBuffers IDL using the *Attribute* `type == "procedure" | "topic"` as in this example:
+
+```flatbuffers
+rpc_service IWampMeta(type: "interface",
+                      uuid: "88711231-3d95-44bc-9464-58d871dd7fd7",
+                      wampuri: "wamp")
+{
+    session_kill_by_authid (SessionKillByAuthid): WampIds (
+        type: "procedure",
+        wampuri: "wamp.session.kill_by_authid"
+    );
+
+    session_on_leave (SessionInfo): Void (
+        type: "topic",
+        wampuri: "wamp.session.on_leave"
+    );
+}
+```
+
+When the procedure `wamp.session.kill_by_authid` is called to kill all sessions
+with a given `authid`, the procedure will return a list of WAMP session IDs of
+the killed sessions via `WampIds`.
+Independently, meta events on topic `wamp.session.on_leave` are published with
+detailed `SessionInfo` of the sessions left as event payload.
+This follows a common "do-something-and-notify-observers" pattern for a pair of
+a procedure and topic working together.
+The *Interface* then collects a number of *Procedures* and *Topics* under one
+named unit of `type == "interface"` which includes a UUID in an `uuid` *Attribute*.
