@@ -193,7 +193,7 @@ The keyword arguments are optional, and if not provided the reason defaults to `
 
 **Positional results**
 
-1. `count|int` - The number of sessions closed by this meta procedure.
+1. `sessions|list` - The list of WAMP session IDs of session that were killed.
 
 **Errors**
 
