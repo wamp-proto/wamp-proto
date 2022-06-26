@@ -1,4 +1,4 @@
-## Event History
+## Event History {#pubsub-event-history}
 
 Instead of complex QoS for message delivery, a *Broker* may provide *message history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 

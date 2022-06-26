@@ -1,4 +1,4 @@
-## Pattern-based Registrations
+## Pattern-based Registrations {#rpc-pattern-reg}
 
 By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) *exactly* matches the endpoint registered (`REGISTER.Procedure`).
 

@@ -12,7 +12,6 @@ These advantages in flexibility of course come at a price, as nothing is free, a
 * problematic coordination of *Interfaces* within larger developer teams or between different parties
 * no easy way to stabilize, freeze, document or share *Interfaces*
 * no way to programmatically describe *Interfaces* ("interface reflection") at run-time
-* ...
 
 Problems such above could be avoided when WAMP supported an _option_ to formally define WAMP-based *Interfaces*. This needs to answer the following questions:
 
@@ -32,7 +31,54 @@ Using WAMP Interfaces finally allows to support the following application develo
 
 **Application Payload Typing**
 
-Write me.
+User defined WAMP application payloads are transmitted in `Arguments|list` and `ArgumentsKw|dict` elements of the following WAMP messages:
+
+* `PUBLISH`
+* `EVENT`
+* `CALL`
+* `INVOCATION`
+* `YIELD`
+* `RESULT`
+* `ERROR`
+
+A *Publisher* uses the
+
+* `PUBLISH.Arguments|list`, `PUBLISH.ArgumentsKw|dict`
+
+message to send the event payload to be published to the *Broker*. When the event is accepted by the *Broker*, it will dispatch
+
+* `EVENT.Arguments|list`, `EVENT.ArgumentsKw|dict`
+
+messages to all (eligible, and not excluded) *Subscribers.
+
+A *Caller* uses the
+
+* `CALL.Arguments|list`, `CALL.ArgumentsKw|dict`
+
+message to send the call arguments to be used to the *Dealer*. When the call is accepted by the *Dealer*, it will forward
+
+* `INVOCATION.Arguments|list`, `INVOCATION.ArgumentsKw|dict`
+
+to the (or one of) *Callee*, and receive a
+
+* `YIELD.Arguments|list`, `YIELD.ArgumentsKw|dict`
+
+message, which it will return to the original *Caller*
+
+* `RESULT.Arguments|list`, `RESULT.ArgumentsKw|dict`
+
+In the error case, a *Callee* MAY return an
+
+* `ERROR.Arguments|list`, `ERROR.ArgumentsKw|dict`
+
+which again is returned to the original *Caller*.
+
+It is important to note that the above messages and message elements are the only ones free for use with application and user defined payloads. In particular, even though the following WAMP messages and message element carry payloads defined by the specific WAMP authentication method used, they do *not* carry arbitrary application payloads:
+
+* `HELLO.Details["authextra"]|dict`
+* `WELCOME.Details["authextra"]|dict`
+* `CHALLENGE.Extra|dict`
+* `AUTHENTICATE.Extra|dict`
 
 **Typing Procedures, Topics and Interfaces**
 

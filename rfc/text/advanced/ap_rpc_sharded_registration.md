@@ -1,4 +1,4 @@
-## Sharded Registration
+## Sharded Registration {#rpc-sharded-registration}
 
 Feature status: **sketch**
 

@@ -1,4 +1,4 @@
-## Call Timeouts
+## Call Timeouts {#rpc-call-timeout}
 
 A *Caller* might want to issue a call and provide a *timeout* after which the call will finish.
 

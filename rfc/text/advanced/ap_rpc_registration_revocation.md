@@ -1,4 +1,4 @@
-## Registration Revocation
+## Registration Revocation {#rpc-registration-revocation}
 
 Feature status: **alpha**
 

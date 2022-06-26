@@ -1,4 +1,4 @@
-## Shared Registration
+## Shared Registration {#rpc-shared-registration}
 
 Feature status: **alpha**
 

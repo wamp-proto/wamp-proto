@@ -1,4 +1,4 @@
-## Pattern-based Subscriptions {#pattern-based-subscriptions}
+## Pattern-based Subscription {#pattern-based-subscription}
 
 By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) *exactly* matches the topic subscribed to (`SUBSCRIBE.Topic`).
 

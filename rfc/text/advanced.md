@@ -4,9 +4,9 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 
 > Note: Features listed here may be experimental or underspecced and yet unimplemented in any implementation. This part of the specification is very much a work in progress. An approximate status of each feature is given at the beginning of the feature section.
 
-{{advanced/ap_messages.md}}
-
 {{advanced/ap_features.md}}
+
+{{advanced/ap_messages.md}}
 
 
 # Meta API

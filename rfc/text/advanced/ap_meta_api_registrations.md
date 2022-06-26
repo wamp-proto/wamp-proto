@@ -1,4 +1,4 @@
-## Registration Meta API
+## Registration Meta API {#rpc-reg-metapi}
 
 **Registration Meta Events** are fired when registrations are first created, when *Callees* are attached (removed) to (from) a registration, and when registrations are finally destroyed.
 
