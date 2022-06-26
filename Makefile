@@ -76,6 +76,11 @@ build_images: $(SITEBUILDDIR)/$(OBJECTS)
 
 build_spec: build_spec_rfc build_spec_w3c
 
+# PS and RTF support are provided using a combination of wkhtmltopdf, pdf2ps and/or GNU enscript.
+requirements_xml2rfc:
+	sudo apt install xml2rfc enscript
+	pip install 'pycairo>=1.18' 'weasyprint<=0.42.3'
+
 # https://github.com/mmarkdown/mmark
 # sudo apt install -y mmark
 requirements_mmark:
@@ -96,6 +101,7 @@ build_spec_rfc_mmark:
 	xmllint --noout $(TMPBUILDDIR)/wamp.xml
 	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.txt
 	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.html
+	xml2rfc --v3 --pdf $(TMPBUILDDIR)/wamp.xml -o $(OUTPUTDIR)/wamp_latest_ietf.pdf
 
 # firefox dist/wamp_bp_latest_ietf.html
 build_spec_bp_rfc_mmark:
@@ -106,6 +112,7 @@ build_spec_bp_rfc_mmark:
 	xmllint --noout $(TMPBUILDDIR)/wamp-bp.xml
 	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp-bp.xml -o $(OUTPUTDIR)/wamp_bp_latest_ietf.txt
 	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp-bp.xml -o $(OUTPUTDIR)/wamp_bp_latest_ietf.html
+	xml2rfc --v3 --pdf $(TMPBUILDDIR)/wamp-bp.xml -o $(OUTPUTDIR)/wamp_bp_latest_ietf.pdf
 
 # firefox dist/wamp_ap_latest_ietf.html
 build_spec_ap_rfc_mmark:
@@ -116,6 +123,7 @@ build_spec_ap_rfc_mmark:
 	xmllint --noout $(TMPBUILDDIR)/wamp-ap.xml
 	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.txt
 	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.html
+	xml2rfc --v3 --pdf $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.pdf
 
 # firefox dist/wamp_latest.html
 build_spec_w3c:
