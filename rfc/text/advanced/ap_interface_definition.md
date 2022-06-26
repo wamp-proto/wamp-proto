@@ -1,4 +1,4 @@
-### Interface Definition Language {#wamp-idl}
+## Interface Definition Language {#wamp-idl}
 
 WAMP was designed with the goals of being easy to approach and use for application developers. Creating a procedure to expose some custom functionality should be possible in any supported programming language using that language's native elements, with the least amount of additional effort.
 
@@ -30,14 +30,14 @@ Using WAMP Interfaces finally allows to support the following application develo
 4. client binding code generation from WAMP Interfaces
 5. run-time WAMP type reflection as part of the WAMP meta API
 
-#### Application Payload Typing
+### Application Payload Typing
 
 Write me.
 
-#### Typing Procedures, Topics and Interfaces
+### Typing Procedures, Topics and Interfaces
 
 Write me.
 
-#### Interface Catalogs
+### Interface Catalogs
 
 Write me.

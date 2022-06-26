@@ -1,4 +1,4 @@
-### Call Re-Routing
+## Call Re-Routing
 
 A _CALLEE_ might not be able to attend to a call. This may be due to a multitude of reasons including, but not limited to:
 
@@ -15,7 +15,14 @@ wamp.error.unavailable
 
 When the _Dealer_ receives the `wamp.error.unavailable` message in response to an `INVOCATION`, it will reroute the `CALL` to another _registration_ according to the rerouting rules of the `invocation_policy` of the `procedure`, as given below.
 
-#### Rerouting Rules
+**Feature Announcement**
+
+Support for this feature MUST be announced by _Callees_ (`role := "callee"`) and _Dealers_ (`role := "dealer"`) via
+
+{align="left"}
+HELLO.Details.roles.<role>.features.call_reroute|bool := true
+
+**Rerouting Rules**
 
 The _Dealer_ MUST adhere to the `invocation policy` of the `procedure` when rerouting the `CALL`, while assuming that the `unavailable` registration virtually does not exist.
 
@@ -29,13 +36,6 @@ For different `invocation policy` the _Dealer_ MUST follow:
 | `first`           | Picks the `registration` which was registered after the _called_ registration was registered                                        |
 | `last`            | Picks the `registration` which was registered right before the _called_ registration was registered                                 |
 
-#### Failure Scenario
+**Failure Scenario**
 
 In case all available registrations of a _Procedure_ responds with a `wamp.error.unavailable` for a _CALL_, the _Dealer_ MUST respond with a `wamp.error.no_available_callee` to the _CALLER_
-
-#### Feature Announcement
-
-Support for this feature MUST be announced by _Callees_ (`role := "callee"`) and _Dealers_ (`role := "dealer"`) via
-
-{align="left"}
-HELLO.Details.roles.<role>.features.call_reroute|bool := true

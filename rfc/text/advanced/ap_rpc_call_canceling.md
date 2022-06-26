@@ -1,8 +1,15 @@
-### Call Canceling
-
-#### Feature Definition
+## Call Canceling
 
 A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
+
+**Feature Announcement**
+
+Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+{align="left"}
+        HELLO.Details.roles.<role>.features.call_canceling|bool := true
+
+**Message Flow**
 
 The message flow between *Callers*, a *Dealer* and *Callees* for canceling remote procedure calls involves the following messages:
 
@@ -24,23 +31,23 @@ Message flow during call canceling when *Callee* supports this feature and mod
         ,------.          ,------.          ,------.
         |Caller|          |Dealer|          |Callee|
         `--+---'          `--+---'          `--+---'
-           |       CALL      |                 |    
-           | ---------------->                 |    
-           |                 |                 |    
-           |                 |    INVOCATION   |    
-           |                 | ---------------->    
-           |                 |                 |    
-           |      CANCEL     |                 |    
-           | ---------------->                 |    
-           |                 |                 |    
-           |                 |    INTERRUPT    |    
-           |                 | ---------------->    
-           |                 |                 |    
-           |                 |      ERROR      |    
-           |                 | <----------------    
-           |                 |                 |    
-           |      ERROR      |                 |    
-           | <----------------                 |    
+           |       CALL      |                 |
+           | ---------------->                 |
+           |                 |                 |
+           |                 |    INVOCATION   |
+           |                 | ---------------->
+           |                 |                 |
+           |      CANCEL     |                 |
+           | ---------------->                 |
+           |                 |                 |
+           |                 |    INTERRUPT    |
+           |                 | ---------------->
+           |                 |                 |
+           |                 |      ERROR      |
+           |                 | <----------------
+           |                 |                 |
+           |      ERROR      |                 |
+           | <----------------                 |
         ,--+---.          ,--+---.          ,--+---.
         |Caller|          |Dealer|          |Callee|
         `------'          `------'          `------'
@@ -52,23 +59,23 @@ Message flow during call canceling when *Callee* does not support this feature 
         ,------.          ,------.            ,------.
         |Caller|          |Dealer|            |Callee|
         `--+---'          `--+---'            `--+---'
-           |       CALL      |                   |    
-           | ---------------->                   |    
-           |                 |                   |    
-           |                 |    INVOCATION     |    
-           |                 | ----------------> |   
-           |                 |                   |    
-           |      CANCEL     |                   |    
-           | ---------------->                   |    
-           |                 |                   |    
-           |      ERROR      |                   |    
-           | <----------------                   |    
-           |                 |                   |    
-           |                 | RESULT (skipped)  |    
-           |                 | <---------------- |    
-           |                 |                   |    
-           |                 | or ERROR (skipped)|    
-           |                 | <-----------------    
+           |       CALL      |                   |
+           | ---------------->                   |
+           |                 |                   |
+           |                 |    INVOCATION     |
+           |                 | ----------------> |
+           |                 |                   |
+           |      CANCEL     |                   |
+           | ---------------->                   |
+           |                 |                   |
+           |      ERROR      |                   |
+           | <----------------                   |
+           |                 |                   |
+           |                 | RESULT (skipped)  |
+           |                 | <---------------- |
+           |                 |                   |
+           |                 | or ERROR (skipped)|
+           |                 | <-----------------
         ,--+---.          ,--+---.            ,--+---.
         |Caller|          |Dealer|            |Callee|
         `------'          `------'            `------'
@@ -80,20 +87,20 @@ Message flow during call canceling when *Callee* supports this feature and mod
         ,------.          ,------.          ,------.
         |Caller|          |Dealer|          |Callee|
         `--+---'          `--+---'          `--+---'
-           |       CALL      |                 |    
-           | ---------------->                 |    
-           |                 |                 |    
-           |                 |    INVOCATION   |    
-           |                 | ---------------->    
-           |                 |                 |    
-           |      CANCEL     |                 |    
-           | ---------------->                 |    
-           |                 |                 |    
-           |      ERROR      |                 |    
-           | <----------------                 |    
-           |                 |    INTERRUPT    |    
-           |                 | ---------------->    
-           |                 |                 |    
+           |       CALL      |                 |
+           | ---------------->                 |
+           |                 |                 |
+           |                 |    INVOCATION   |
+           |                 | ---------------->
+           |                 |                 |
+           |      CANCEL     |                 |
+           | ---------------->                 |
+           |                 |                 |
+           |      ERROR      |                 |
+           | <----------------                 |
+           |                 |    INTERRUPT    |
+           |                 | ---------------->
+           |                 |                 |
         ,--+---.          ,--+---.          ,--+---.
         |Caller|          |Dealer|          |Callee|
         `------'          `------'          `------'
@@ -114,12 +121,6 @@ Options:
 {align="left"}
         CANCEL.Options.mode|string == "skip" | "kill" | "killnowait"
 
-Note: After the *Dealer* sends an `INTERRUPT` when mode="killnowait", any responses from the *Callee* are ignored.  This means that it is not necessary for the *Callee* to respond with an `ERROR` message, when mode="killnowait", since the *Dealer* ignores it.
+**Ignoring Results after Cancel**
 
-#### Feature Announcement
-
-Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
-
-{align="left"}
-        HELLO.Details.roles.<role>.features.call_canceling|bool := true
-
+After the *Dealer* sends an `INTERRUPT` when mode="killnowait", any responses from the *Callee* are ignored.  This means that it is not necessary for the *Callee* to respond with an `ERROR` message, when mode="killnowait", since the *Dealer* ignores it.

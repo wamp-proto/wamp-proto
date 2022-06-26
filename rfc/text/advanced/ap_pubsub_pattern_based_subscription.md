@@ -1,6 +1,4 @@
-### Pattern-based Subscriptions {#pattern-based-subscriptions}
-
-#### Introduction
+## Pattern-based Subscriptions {#pattern-based-subscriptions}
 
 By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) *exactly* matches the topic subscribed to (`SUBSCRIBE.Topic`).
 
@@ -11,8 +9,16 @@ If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, th
 * prefix-matching policy
 * wildcard-matching policy
 
+**Feature Announcement**
 
-#### Prefix Matching
+Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
+
+{align="left"}
+        HELLO.Details.roles.<role>.features.
+            pattern_based_subscription|bool := true
+
+
+### Prefix Matching
 
 A *Subscriber* requests **prefix-matching policy** with a subscription request by setting
 
@@ -45,7 +51,7 @@ In the above example, events with `PUBLISH.Topic`
 will all apply for dispatching. An event with `PUBLISH.Topic` e.g. `com.myapp.topic.emerge` will not apply.
 
 
-#### Wildcard Matching
+### Wildcard Matching
 
 A *Subscriber* requests **wildcard-matching policy** with a subscription request by setting
 
@@ -82,21 +88,21 @@ will all apply for dispatching. Events with `PUBLISH.Topic`
 
 will not apply for dispatching.
 
-#### General
+### Design Aspects
 
-##### No set semantics
+**No set semantics**
 
 Since each *Subscriber's* subscription "stands on its own", there is no *set semantics* implied by pattern-based subscriptions.
 
 E.g. a *Subscriber* cannot subscribe to a broad pattern, and then unsubscribe from a subset of that broad pattern to form a more complex subscription. Each subscription is separate.
 
-##### Events matching multiple subscriptions
+**Events matching multiple subscriptions**
 
 When a single event matches more than one of a *Subscriber's* subscriptions, the event will be delivered for each subscription.
 
 The *Subscriber* can detect the delivery of that same event on multiple subscriptions via `EVENT.PUBLISHED.Publication`, which will be identical.
 
-##### Concrete topic published to
+**Concrete topic published to**
 
 If a subscription was established with a pattern-based matching policy, a *Broker* MUST supply the original `PUBLISH.Topic` as provided by the *Publisher* in
 
@@ -119,11 +125,3 @@ to the *Subscribers*.
         ["Hello, world!"]
     ]
 ```
-
-#### Feature Announcement
-
-Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
-
-{align="left"}
-        HELLO.Details.roles.<role>.features.
-            pattern_based_subscription|bool := true

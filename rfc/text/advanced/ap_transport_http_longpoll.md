@@ -1,4 +1,4 @@
-### HTTP Longpoll Transport {#longpoll}
+## HTTP Longpoll Transport {#longpoll}
 
 The *Long-Poll Transport* is able to transmit a WAMP session over plain old HTTP 1.0/1.1. This is realized by the Client issuing HTTP/POSTs requests, one for sending, and one for receiving. Those latter requests are kept open at the server when there are no messages currently pending to be received.
 
@@ -28,6 +28,8 @@ The valid protocols are:
  * `wamp.2.json`
  * `wamp.2.msgpack.batched`
  * `wamp.2.msgpack`
+ * `wamp.2.cbor.batched`
+ * `wamp.2.cbor`
 
 > The request path with this and subsequently described HTTP/POST requests MAY contain a query parameter `x` with some random or sequentially incremented value:
 >

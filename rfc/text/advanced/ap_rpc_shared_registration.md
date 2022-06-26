@@ -1,8 +1,6 @@
-### Shared Registration
+## Shared Registration
 
 Feature status: **alpha**
-
-#### Feature Definition
 
 As a default, only a single **Callee** may register a procedure for a URI.
 
@@ -29,7 +27,15 @@ With 'single', the **Dealer** MUST fail all subsequent attempts to register a pr
 
 With the other values, the **Dealer** MUST fail all subsequent attempts to register a procedure for the URI where the value for this option does not match that of the initial registration.
 
-##### Load Balancing
+**Feature Announcement**
+
+Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+
+{align="left"}
+        HELLO.Details.roles.<role>.features.
+            shared_registration|bool := true
+
+### Load Balancing
 
 For sets of registrations registered using either 'roundrobin' or 'random', load balancing is performed across calls to the URI.
 
@@ -37,14 +43,6 @@ For 'roundrobin', callees are picked subsequently from the list of registrations
 
 For 'random' a callee is picked randomly from the list of registrations for each call.
 
-##### Hot Stand-By
+### Hot Stand-By
 
 For sets of registrations registered using either 'first' or 'last', the first respectively last callee on the current list of registrations (ordered by the order of registration) is called.
-
-#### Feature Announcement
-
-Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
-
-{align="left"}
-        HELLO.Details.roles.<role>.features.
-            shared_registration|bool := true

@@ -7,7 +7,7 @@ workgroup = "BiDirectional or Server-Initiated HTTP"
 submissiontype = "IETF"
 keyword = ["WebSocket, WAMP, real-time, RPC, PubSub"]
 docName = "draft-oberstet-hybi-crossbar-wamp-04"
-date = 2022-06-25T23:35:13+00:00
+date = 2022-06-26T03:12:20+00:00
 
 [seriesInfo]
 name = "Internet-Draft"
@@ -31,28 +31,6 @@ organization = "typedef int GmbH"
 
 {{text/basic.md}}
 
-# Contributors
-
-WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned:
-
-* Alexander Goedde
-* Amber Brown
-* Andrew Gillis
-* David Chappelle
-* Elvis Stansvik
-* Emile Cormier
-* Felipe Gasper
-* Johan 't Hart
-* Josh Soref
-* Konstantin Burkalev
-* Pahaz Blinov
-* Paolo Angioletti
-* Roberto Requena
-* Roger Erens
-* Christoph Herzog
-* Tobias Oberstein
-* Zhigang Wang
-
-# Acknowledgements
+{{text/backmatter.md}}
 
 {backmatter}

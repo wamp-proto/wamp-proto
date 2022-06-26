@@ -1,4 +1,4 @@
-### Binary support in JSON
+## Binary support in JSON
 
 Binary data follows a convention for conversion to JSON strings.
 
@@ -40,84 +40,75 @@ A JSON string is unserialized to either a string or a byte array using the follo
 
 Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.
 
-#### Python
+**Python**
 
 Here is a complete example in Python showing how byte arrays are converted to and from JSON:
 
 ```python
-    <CODE BEGINS>
+import os, base64, json, sys, binascii
 
-    import os, base64, json, sys, binascii
-    PY3 = sys.version_info >= (3,)
-    if PY3:
-       unicode = str
+data_in = os.urandom(16)
+print("In:   {}".format(binascii.hexlify(data_in)))
 
-    data_in = os.urandom(16)
-    print("In:   {}".format(binascii.hexlify(data_in)))
+# encoding
+encoded = json.dumps('\0' + base64.b64encode(data_in).
+                                    decode('ascii'))
 
-    ## encoding
-    encoded = json.dumps('\0' + base64.b64encode(data_in).
-                                          decode('ascii'))
+print("JSON: {}".format(encoded))
 
-    print("JSON: {}".format(encoded))
+# decoding
+decoded = json.loads(encoded)
+if type(decoded) == unicode:
+   if decoded[0] == '\0':
+      data_out = base64.b64decode(decoded[1:])
+   else:
+      data_out = decoded
 
-    ## decoding
-    decoded = json.loads(encoded)
-    if type(decoded) == unicode:
-       if decoded[0] == '\0':
-          data_out = base64.b64decode(decoded[1:])
-       else:
-          data_out = decoded
+print("Out:  {}".format(binascii.hexlify(data_out)))
 
-    print("Out:  {}".format(binascii.hexlify(data_out)))
-
-    assert(data_out == data_in)
-
-    <CODE ENDS>
+assert(data_out == data_in)
 ```
 
-#### JavaScript
+**JavaScript**
 
 Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:
 
 ```javascript
-    <CODE BEGINS>
-    var data_in = new Uint8Array(new ArrayBuffer(16));
+var data_in = new Uint8Array(new ArrayBuffer(16));
 
-    // initialize test data
-    for (var i = 0; i < data_in.length; ++i) {
-       data_in[i] = i;
-    }
-    console.log(data_in);
+// initialize test data
+for (var i = 0; i < data_in.length; ++i) {
+   data_in[i] = i;
+}
+console.log(data_in);
 
-    // convert byte array to raw string
-    var raw_out = '';
-    for (var i = 0; i < data_in.length; ++i) {
-       raw_out += String.fromCharCode(data_in[i]);
-    }
+// convert byte array to raw string
+var raw_out = '';
+for (var i = 0; i < data_in.length; ++i) {
+   raw_out += String.fromCharCode(data_in[i]);
+}
 
-    // base64 encode raw string, prepend with \0
-    // and serialize to JSON
-    var encoded = JSON.stringify("\0" + window.btoa(raw_out));
-    console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="
+// base64 encode raw string, prepend with \0
+// and serialize to JSON
+var encoded = JSON.stringify("\0" + window.btoa(raw_out));
+console.log(encoded); // "\u0000AAECAwQFBgcICQoLDA0ODw=="
 
-    // unserialize from JSON
-    var decoded = JSON.parse(encoded);
+// unserialize from JSON
+var decoded = JSON.parse(encoded);
 
-    var data_out;
-    if (decoded.charCodeAt(0) === 0) {
-       // strip first character and decode base64 to raw string
-       var raw = window.atob(decoded.substring(1));
+var data_out;
+if (decoded.charCodeAt(0) === 0) {
+   // strip first character and decode base64 to raw string
+   var raw = window.atob(decoded.substring(1));
 
-       // convert raw string to byte array
-       var data_out = new Uint8Array(new ArrayBuffer(raw.length));
-       for (var i = 0; i < raw.length; ++i) {
-          data_out[i] = raw.charCodeAt(i);
-       }
-    } else {
-       data_out = decoded;
-    }
+   // convert raw string to byte array
+   var data_out = new Uint8Array(new ArrayBuffer(raw.length));
+   for (var i = 0; i < raw.length; ++i) {
+      data_out[i] = raw.charCodeAt(i);
+   }
+} else {
+   data_out = decoded;
+}
 
-    console.log(data_out);
-    <CODE ENDS>
+console.log(data_out);
 ```

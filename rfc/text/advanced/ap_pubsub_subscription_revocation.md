@@ -1,8 +1,11 @@
-### Subscription Revocation
+## Subscription Revocation
 
 Feature status: **alpha**
 
-#### Feature Announcement
+This feature allows a *Broker* to actively revoke a previously granted subscription.
+To achieve this, the existing UNSUBSCRIBED message is extended as described below.
+
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Subscribers* (role := "subscriber") and *Brokers* (role := "broker") via
 
@@ -15,12 +18,7 @@ support administrative functionality. In this case, the *Broker* MUST NOT send a
 message to the *Subscriber*. The *Subscriber* MAY use the subscription meta event `wamp.subscription.on_unsubscribe`
 to determine whether a session is removed from a subscription.
 
-#### Feature Definition
-
-This feature allows a *Broker* to actively revoke a previously granted subscription.
-To achieve this, the existing UNSUBSCRIBED message is extended as described below.
-
-#### Extending UNSUBSCRIBED
+**Extending UNSUBSCRIBED**
 
 When revoking a subscription, the router has no request ID to reply to. So it's set to zero and another argument is
 appended to indicate which subscription to revoke. Optionally, a reason why the subscription was revoked is also appended.

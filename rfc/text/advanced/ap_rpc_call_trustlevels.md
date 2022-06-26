@@ -1,6 +1,4 @@
-### Call Trust Levels
-
-#### Feature Definition
+## Call Trust Levels
 
 A *Dealer* may be configured to automatically assign *trust levels* to calls issued by *Callers* according to the *Dealer* configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) *Caller*.
 
@@ -18,8 +16,7 @@ in an `INVOCATION` message sent to a *Callee*. The trustlevel `0` means lowest t
 
 In above event, the *Dealer* has (by configuration and/or other information) deemed the call (and hence the invocation) to be of trustlevel `2`.
 
-
-#### Feature Announcement
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 

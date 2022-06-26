@@ -1,4 +1,4 @@
-### Challenge Response Authentication {#wampcra}
+## Challenge Response Authentication {#wampcra}
 
 WAMP Challenge-Response ("WAMP-CRA") authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a secret. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.
 
@@ -85,7 +85,7 @@ The `WELCOME.Details` again contain the actual authentication information active
 If the authentication fails, the server will response with an `ABORT` message.
 
 
-#### Server-side Verification
+**Server-side Verification**
 
 The challenge sent during WAMP-CRA contains
 
@@ -95,7 +95,7 @@ The challenge sent during WAMP-CRA contains
 4. all the authentication information that relates to authorization like `authid` and `authrole`
 
 
-#### Three-legged Authentication
+**Three-legged Authentication**
 
 The signing of the challenge sent by the server usually is done directly on the client. However, this is no strict requirement.
 
@@ -108,7 +108,7 @@ In this case, the secret is actually shared between the WAMP server who wants to
 This scenario is also the reason the challenge sent with WAMP-CRA is not simply a random value, but a JSON serialized object containing sufficient authentication information for the third party to check.
 
 
-#### Password Salting
+**Password Salting**
 
 WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret often requires storage of that secret on the client and the server - and storing a password verbatim (unencrypted) is not recommended in general.
 

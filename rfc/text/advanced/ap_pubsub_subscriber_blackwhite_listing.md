@@ -1,6 +1,4 @@
-### Subscriber Black- and Whitelisting
-
-#### Introduction
+## Subscriber Black- and Whitelisting
 
 **Subscriber Black- and Whitelisting** is an advanced *Broker* feature where a *Publisher* is able to restrict the set of receivers of a published event.
 
@@ -10,9 +8,9 @@ The *Publisher* can explicitly **exclude** *Subscribers* based on WAMP `sessioni
 
 A *Publisher* may also explicitly define a **eligible** list of *Subscribers** based on WAMP `sessionid`, `authid` or `authrole`. This is referred to as **Whitelisting**.
 
-#### Use Cases
+Use Cases include the following.
 
-##### Avoiding Callers from being self-notified
+**Avoiding Callers from being self-notified**
 
 Consider an application that exposes a procedure to update a product price. The procedure might not only actually update the product price (e.g. in a backend database), but additionally publish an event with the updated product price, so that **all** application components get notified actively of the new price.
 
@@ -24,7 +22,7 @@ The product price update procedure can use `PUBLISH.Options.exclude|list[int]` t
 
 A similar approach can be used for other CRUD-like procedures.
 
-##### Restricting receivers of sensitive information
+**Restricting receivers of sensitive information**
 
 Consider an application with users that have different `authroles`, such as "manager" and "staff" that publishes events with updates to "customers". The topics being published to could be structured like
 
@@ -35,7 +33,7 @@ The application might want to restrict the receivers of customer updates dependi
 
 The application can publish **all** customer updates to the **same** topic `com.example.myapp.customer.<customer ID>` and use `PUBLISH.Options.eligible_authrole|list[string]` to safely restrict the set of actual receivers as desired.
 
-#### Feature Definition
+**Feature Definition**
 
 A *Publisher* may restrict the actual receivers of an event from the set of *Subscribers* through the use of
 
@@ -135,7 +133,7 @@ The above event will get dispatched to WAMP sessions with IDs `7891255` or `1245
 
 The above event will get dispatched to WAMP sessions with IDs `1245751` or `9912315` only, since `7891255` is excluded - but only if those are actually subscribed to the topic `com.myapp.mytopic1`.
 
-#### Feature Announcement
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 

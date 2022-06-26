@@ -1,4 +1,4 @@
-# Predefined URIs
+# Basic Profile URIs
 
 WAMP pre-defines the following error URIs for the **Basic Profile**. WAMP peers SHOULD only use the defined error messages.
 

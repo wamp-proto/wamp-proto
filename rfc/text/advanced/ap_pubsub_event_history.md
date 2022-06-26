@@ -1,6 +1,4 @@
-### Event History
-
-#### Feature Definition
+## Event History
 
 Instead of complex QoS for message delivery, a *Broker* may provide *message history*. A *Subscriber* is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 
@@ -52,7 +50,7 @@ with `Arguments = [topic|uri, publication|id]`
 5. How are black/whitelisted sessionIDs treated? A client which requests event history will have a different sessionID than on previous connections, and may receive events for which it was excluded in the previous session, or not receive events for which it was whitelisted. - see https://github.com/wamp-proto/wamp-proto/issues/206
 
 
-#### Feature Announcement
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Subscribers* (`role := "subscriber"`) and *Brokers* (`role := "broker"`) via
 

@@ -1,4 +1,4 @@
-### Router-to-Router Links
+## Router-to-Router Links
 
 1. Resolve global realm name R_name via ENS to the on-chain address R_adr of the realm.
 2. Retrieve list of Domains R_DR routing realm R_adr.
@@ -11,7 +11,7 @@
 9. When receiving a traffic payable event, buy the respective key by
 calling `xbr.pool.buy_key`, and calling `wamp.r2r.submit_traffic_payment`, which returns a traffic usage report.
 
-#### Data Spaces
+### Data Spaces
 
 Data Spaces are end-to-end encrypted routing realms connecting data driven microservices.
 

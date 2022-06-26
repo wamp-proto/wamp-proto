@@ -1,4 +1,4 @@
-### Message Batching {#batchedwebsocket}
+## Message Batching {#batchedwebsocket}
 
 *WAMP-over-Batched-WebSocket* is a variant of WAMP-over-WebSocket where multiple WAMP messages are sent in one WebSocket message.
 
@@ -8,6 +8,7 @@ WAMP-over-Batched-WebSocket is negotiated between Peers in the WebSocket opening
 
 * `wamp.2.json.batched`
 * `wamp.2.msgpack.batched`
+* `wamp.2.cbor.batched`
 
 Batching with JSON works by serializing each WAMP message to JSON as normally, appending the single ASCII control character `\30` ([record separator](http://en.wikipedia.org/wiki/Record_separator#Field_separators)) octet `0x1e` to *each* serialized messages, and packing a sequence of such serialized messages into a single WebSocket message:
 

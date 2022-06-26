@@ -9,7 +9,7 @@ A WAMP Advanced Profile may provide applications options to relax ordering guara
 
 ## Ordering Guarantees
 
-### Publish & Subscribe Ordering
+**Publish & Subscribe Ordering**
 
 Regarding **Publish & Subscribe**, the ordering guarantees are as follows:
 
@@ -22,7 +22,7 @@ Further, if *Subscriber A* subscribes to **Topic 1**, the `SUBSCRIBED` message w
 There is no guarantee regarding the order of return for multiple subsequent subscribe requests. A subscribe request might require the *Broker* to do a time-consuming lookup in some database, whereas another subscribe request second might be permissible immediately.
 
 
-### Remote Procedure Call Ordering
+**Remote Procedure Call Ordering**
 
 Regarding **Remote Procedure Calls**, the ordering guarantees are as follows:
 

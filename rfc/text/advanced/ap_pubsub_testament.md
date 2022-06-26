@@ -1,6 +1,4 @@
-### Testament
-
-#### Feature Definition
+## Testament
 
 When a WAMP client disconnects, or the WAMP session is destroyed, it may want to notify other subscribers or publish some fixed data.
 Since a client may disconnect uncleanly, this can't be done reliably by them.
@@ -9,14 +7,22 @@ It can be triggered when a Session is either detached (the client has disconnect
 
 This allows clients that otherwise would not be able to know when other clients disconnect get a notification (for example, by using the WAMP Session Meta API) with a format the disconnected client chose.
 
-#### Testament Meta Procedures
+**Feature Announcement**
+
+Support for this feature MUST be announced by *Dealers* (`role := "dealer"`) via
+
+{align="left"}
+        HELLO.Details.roles.dealer.features.
+            testament_meta_api|bool := true
+
+### Testament Meta Procedures
 
 A *Client* can call the following procedures to set/flush Testaments:
 
 * `wamp.session.add_testament` to add a Testament which will be published on a particular topic when the Session is detached or destroyed.
 * `wamp.session.flush_testaments` to remove the Testaments for that Session, either for when it is detached or destroyed.
 
-##### wamp.session.add_testament
+#### wamp.session.add_testament
 
 Adds a new testament:
 
@@ -33,7 +39,7 @@ Adds a new testament:
 
 `wamp.session.add_testament` does not return a value.
 
-##### wamp.session.flush_testaments
+#### wamp.session.flush_testaments
 
 Removes testaments for the given scope:
 
@@ -43,7 +49,7 @@ Removes testaments for the given scope:
 
 `wamp.session.flush_testaments` does not return a value.
 
-#### Testaments in Use
+### Testaments in Use
 
 A *Client* that wishes to send some form of data when their *Session* ends unexpectedly or their *Transport* becomes lost can set a testament using the WAMP Testament Meta API, when a *Router* supports it.
 For example, a client may call `add_testament` (this example uses the implicit `scope` option of `destroyed`):
@@ -73,11 +79,3 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 ```
 
 The *Router* will then flush all Testaments stored for the given scope.
-
-#### Feature Announcement
-
-Support for this feature MUST be announced by *Dealers* (`role := "dealer"`) via
-
-{align="left"}
-        HELLO.Details.roles.dealer.features.
-            testament_meta_api|bool := true

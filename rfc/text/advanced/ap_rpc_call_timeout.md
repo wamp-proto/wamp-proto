@@ -1,6 +1,4 @@
-### Call Timeouts
-
-#### Feature Definition
+## Call Timeouts
 
 A *Caller* might want to issue a call and provide a *timeout* after which the call will finish.
 
@@ -22,10 +20,9 @@ In fact, a timeout timer might run at three places:
  * *Callee*
 
 
-#### Feature Announcement
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
 
 {align="left"}
         HELLO.Details.roles.<role>.features.call_timeout|bool := true
-

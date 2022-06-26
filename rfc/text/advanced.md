@@ -9,16 +9,16 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_features.md}}
 
 
-## WAMP Meta API
+# Meta API
 
-{{advanced/ap_session_meta_api.md}}
+{{advanced/ap_meta_api_sessions.md}}
 
-{{advanced/ap_rpc_registration_meta_api.md}}
+{{advanced/ap_meta_api_registrations.md}}
 
-{{advanced/ap_pubsub_subscription_meta_api.md}}
+{{advanced/ap_meta_api_subscriptions.md}}
 
 
-## Advanced RPC Features
+# Advanced RPC
 
 {{advanced/ap_rpc_progressive_call_results.md}}
 
@@ -43,7 +43,7 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_rpc_registration_revocation.md}}
 
 
-## Advanced PubSub Features
+# Advanced PubSub
 
 {{advanced/ap_pubsub_subscriber_blackwhite_listing.md}}
 
@@ -64,7 +64,7 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_pubsub_testament.md}}
 
 
-## Authentication Methods
+# Authentication Methods
 
 {{advanced/ap_authentication.md}}
 
@@ -75,7 +75,7 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_authentication_scram.md}}
 
 
-## Transports and Serialization Features
+# Advanced Transports and Serializers
 
 {{advanced/ap_transports.md}}
 
@@ -90,7 +90,7 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_serialization_binary_json.md}}
 
 
-## WAMP Interfaces
+# WAMP Interfaces
 
 {{advanced/ap_interface_definition.md}}
 
@@ -99,9 +99,11 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_node_control_api.md}}
 
 
-## Router-to-Router Links
+# Router-to-Router Links
 
 {{advanced/ap_r2r.md}}
 
+
+# Advanced Profile URIs
 
 {{advanced/ap_uris.md}}

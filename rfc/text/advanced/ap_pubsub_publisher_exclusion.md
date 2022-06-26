@@ -1,6 +1,4 @@
-### Publisher Exclusion
-
-#### Feature Definition
+## Publisher Exclusion
 
 By default, a *Publisher* of an event will **not** itself receive an event published, even when subscribed to the `Topic` the *Publisher* is publishing to. This behavior can be overridden using this feature.
 
@@ -28,7 +26,7 @@ When publishing with `PUBLISH.Options.exclude_me := false`, the *Publisher* of t
 
 In this example, the *Publisher* will receive the published event, if it is subscribed to `com.myapp.mytopic1`.
 
-#### Feature Announcement
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`) and *Brokers* (`role := "broker"`) via
 

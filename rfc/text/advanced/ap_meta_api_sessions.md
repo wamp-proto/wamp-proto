@@ -1,6 +1,4 @@
-### Session Meta API
-
-#### Introduction
+## Sessions Meta API
 
 WAMP enables the monitoring of when sessions join a realm on the router or when they leave it via **Session Meta Events**. It also allows retrieving information about currently connected sessions via **Session Meta Procedures**.
 
@@ -19,7 +17,46 @@ results or event payloads is contained in
 
 which uses FlatBuffers IDL to describe the API. The method of using FlatBuffers IDL and type definitions to formally define WAMP procedures and topics is detailed in section [WAMP IDL](#wamp-idl).
 
-#### Session Meta Events
+
+**Feature Announcement**
+
+Support for this feature MUST be announced by **both** *Dealers* and *Brokers* via:
+
+{align="left"}
+        HELLO.Details.roles.<role>.features.
+            session_meta_api|bool := true
+
+Here is a `WELCOME` message from a *Router* with support for both the *Broker* and *Dealer* role, and with support for **Session Meta API**:
+
+{align="left"}
+```json
+    [
+        2,
+        4580268554656113,
+        {
+            "authid":"OL3AeppwDLXiAAPbqm9IVhnw",
+            "authrole": "anonymous",
+            "authmethod": "anonymous",
+            "roles": {
+                "broker": {
+                    "features": {
+                        "session_meta_api": true
+                    }
+                },
+                "dealer": {
+                    "features": {
+                        "session_meta_api": true
+                    }
+                }
+            }
+        }
+    ]
+```
+
+> Note in particular that the feature is announced on both the *Broker* and the *Dealer* roles.
+
+
+### Events
 
 A client can subscribe to the following session meta-events, which cover the lifecycle of a session:
 
@@ -28,7 +65,7 @@ A client can subscribe to the following session meta-events, which cover the lif
 
 **Session Meta Events** MUST be dispatched by the *Router* to the same realm as the WAMP session which triggered the event.
 
-##### wamp.session.on_join
+#### wamp.session.on_join
 
 Fired when a session joins a realm on the router. The event payload consists of a single positional argument `details|dict`:
 
@@ -41,7 +78,7 @@ Fired when a session joins a realm on the router. The event payload consists of 
 
 > See **Authentication** for a description of the `authid`, `authrole`, `authmethod` and `authprovider` properties.
 
-##### wamp.session.on_leave
+#### wamp.session.on_leave
 
 Fired when a session leaves a realm on the router or is disconnected. The event payload consists of three positional arguments:
 
@@ -49,7 +86,8 @@ Fired when a session leaves a realm on the router or is disconnected. The event 
 * `authid`|string` - The authentication ID of the session that left
 * `authrole|string` - The authentication role of the session that left
 
-#### Session Meta Procedures
+
+### Procedures
 
 A client can actively retrieve information about sessions, or forcefully close sessions, via the following meta-procedures:
 
@@ -63,7 +101,7 @@ A client can actively retrieve information about sessions, or forcefully close s
 
 Session meta procedures MUST be registered by the *Router* on the same realm as the WAMP session about which information is retrieved.
 
-##### wamp.session.count
+#### wamp.session.count
 
 Obtains the number of sessions currently attached to the realm.
 
@@ -76,7 +114,7 @@ Obtains the number of sessions currently attached to the realm.
 1. `count|int` - The number of sessions currently attached to the realm.
 
 
-##### wamp.session.list
+#### wamp.session.list
 
 Retrieves a list of the session IDs for all sessions currently attached to the realm.
 
@@ -89,7 +127,7 @@ Retrieves a list of the session IDs for all sessions currently attached to the r
 1. `session_ids|list` - List of WAMP session IDs (order undefined).
 
 
-##### wamp.session.get
+#### wamp.session.get
 
 Retrieves information on a specific session.
 
@@ -114,7 +152,7 @@ Retrieves information on a specific session.
 * `wamp.error.no_such_session` - No session with the given ID exists on the router.
 
 
-##### wamp.session.kill
+#### wamp.session.kill
 
 Kill a single session identified by session ID.
 
@@ -162,7 +200,7 @@ The keyword arguments are optional, and if not provided the reason defaults to `
 * `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
 
 
-##### wamp.session.kill_by_authrole
+#### wamp.session.kill_by_authrole
 
 Kill all currently connected sessions that have the specified `authrole`.
 
@@ -188,7 +226,7 @@ The keyword arguments are optional, and if not provided the reason defaults to `
 * `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
 
 
-##### wamp.session.kill_all
+#### wamp.session.kill_all
 
 Kill all currently connected sessions in the caller's realm.
 
@@ -208,44 +246,3 @@ The keyword arguments are optional, and if not provided the reason defaults to `
 **Errors**
 
 * `wamp.error.invalid_uri` - A `reason` keyword argument has a value that is not a valid non-empty URI.
-
-
-#### Feature Announcement
-
-Support for this feature MUST be announced by **both** *Dealers* and *Brokers* via:
-
-{align="left"}
-        HELLO.Details.roles.<role>.features.
-            session_meta_api|bool := true
-
-**Example**
-
-Here is a `WELCOME` message from a *Router* with support for both the *Broker* and *Dealer* role, and with support for **Session Meta API**:
-
-{align="left"}
-```json
-    [
-        2,
-        4580268554656113,
-        {
-            "authid":"OL3AeppwDLXiAAPbqm9IVhnw",
-            "authrole": "anonymous",
-            "authmethod": "anonymous",
-            "roles": {
-                "broker": {
-                    "features": {
-                        "session_meta_api": true
-                    }
-                },
-                "dealer": {
-                    "features": {
-                        "session_meta_api": true
-                    }
-                }
-            }
-        }
-    ]
-```
-
-> Note in particular that the feature is announced on both the *Broker* and the *Dealer* roles.
-

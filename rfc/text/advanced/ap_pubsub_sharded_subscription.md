@@ -1,4 +1,4 @@
-### Sharded Subscriptions
+## Sharded Subscriptions
 
 Feature status: **alpha**
 
@@ -15,7 +15,7 @@ Resource keys: `PUBLISH.Options.rkey|string` is a stable, technical **resource k
 *Example*
 
 {align="left"}
-        [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019. 
+        [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.
             temperature", [33.9]]
 
 
@@ -26,5 +26,5 @@ Node keys: `SUBSCRIBE.Options.nkey|string` is a stable, technical **node key**.
 *Example*
 
 {align="left"}
-        [32, 912873614, {"match": "wildcard", "nkey": "node23"}, 
+        [32, 912873614, {"match": "wildcard", "nkey": "node23"},
             "com.myapp.sensor..temperature"]

@@ -1,8 +1,8 @@
-### Node Control API {#node-control-api}
+## Node Control API {#node-control-api}
 
 Write me.
 
-#### WAMP Meta API Remoting
+### WAMP Meta API Remoting
 
 The *local WAMP meta API* exists on URI prefix `wamp.` on the respective application realm:
 

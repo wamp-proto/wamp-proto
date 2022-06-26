@@ -1,5 +1,3 @@
-# Predefined URIs
-
 WAMP pre-defines the following error URIs for the **Advanced Profile**. WAMP peers SHOULD only use the defined error messages.
 
 A *Dealer* or *Callee* canceled a call previously issued

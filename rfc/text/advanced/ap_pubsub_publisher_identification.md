@@ -1,6 +1,4 @@
-### Publisher Identification
-
-#### Feature Definition
+## Publisher Identification
 
 A *Publisher* may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting
 
@@ -30,7 +28,7 @@ Note that a *Broker* may deny a *Publisher's* request to disclose its identity:
 
 A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is set up to do so.
 
-#### Feature Announcement
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Brokers* (`role := "broker"`) and *Subscribers* (`role := "subscriber"`) via
 
