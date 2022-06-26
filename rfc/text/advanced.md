@@ -94,6 +94,8 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 
 # WAMP Interfaces
 
+{{advanced/ap_interfaces.md}}
+
 {{advanced/ap_interface_definition.md}}
 
 {{advanced/ap_interface_catalogs.md}}
