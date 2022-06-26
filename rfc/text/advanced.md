@@ -74,6 +74,8 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 
 {{advanced/ap_authentication_scram.md}}
 
+{{advanced/ap_authentication_cryptosign.md}}
+
 
 # Advanced Transports and Serializers
 
@@ -94,7 +96,12 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 
 {{advanced/ap_interface_definition.md}}
 
+{{advanced/ap_interface_catalogs.md}}
+
 {{advanced/ap_interface_reflection.md}}
+
+
+# Node Control API
 
 {{advanced/ap_node_control_api.md}}
 

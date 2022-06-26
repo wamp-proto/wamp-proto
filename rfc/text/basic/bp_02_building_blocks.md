@@ -3,7 +3,7 @@
 WAMP is defined with respect to the following building blocks
 
 1.  Identifiers
-2.  Serializations
+2.  Serializers
 3.  Transports
 
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
@@ -32,7 +32,7 @@ The URIs are understood to form a single, global, hierarchical namespace for WAM
 
 To avoid resource naming conflicts, the package naming convention from Java is used, where URIs SHOULD begin with (reversed) domain names owned by the organization defining the URI.
 
-#### Relaxed/Loose URIs
+**Relaxed/Loose URIs**
 
 URI components (the parts between two `.`s, the head part up to the first `.`, the tail part after the last `.`) MUST NOT contain a `.`, `#` or whitespace characters and MUST NOT be empty (zero-length strings).
 
@@ -52,7 +52,7 @@ When **empty URI components are allowed** (which is the case for specific messag
 pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
 ```
 
-#### Strict URIs
+**Strict URIs**
 
 While the above rules MUST be followed, following a stricter URI rule is recommended: URI components SHOULD only contain lower-case letters, digits and `_`.
 
@@ -73,7 +73,7 @@ pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
 Following the suggested regular expression for **strict URIs** will make URI components valid identifiers in most languages (modulo URIs starting with a digit and language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language environment in a completely transparent way.
 
 
-#### Reserved URIs
+**Reserved URIs**
 
 Further, application URIs MUST NOT use `wamp` as a first URI component, since this is reserved for URIs predefined with the WAMP protocol itself.
 
@@ -105,14 +105,14 @@ These are identified in WAMP using IDs that are integers between (inclusive) **1
 
 The following is a complete list of usage of IDs in the three categories for all WAMP messages. For a full definition of these see [messages section](#messages).
 
-#### Global Scope IDs
+**Global Scope IDs**
 
 * `WELCOME.Session`
 * `PUBLISHED.Publication`
 * `EVENT.Publication`
 
 
-#### Router Scope IDs
+**Router Scope IDs**
 
 * `EVENT.Subscription`
 * `SUBSCRIBED.Subscription`
@@ -122,7 +122,7 @@ The following is a complete list of usage of IDs in the three categories for all
 * `INVOCATION.Registration`
 
 
-#### Session Scope IDs
+**Session Scope IDs**
 
 * `ERROR.Request`
 * `PUBLISH.Request`

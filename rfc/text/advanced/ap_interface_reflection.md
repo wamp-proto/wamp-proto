@@ -1,4 +1,4 @@
-## Interface Reflection
+## Interface Reflection {#interface-reflection}
 
 Feature status: **sketch**
 
@@ -40,19 +40,17 @@ A peer that acts as a *Dealer* SHOULD announce support for the reflection API by
 
 > Since *Brokers* might provide (broker) procedures and *Dealers* might provide (dealer) topics, both SHOULD implement the complete API above (even if the peer only implements one of *Broker* or *Dealer* roles).
 
-**Reflection**
+**Reflection Events and Procedures**
 
 A topic or procedure is defined for reflection:
 
 {align="left"}
         wamp.reflect.define
 
-A topic or procedure was asked to be described (reflected upon):
+A topic or procedure is asked to be described (reflected upon):
 
 {align="left"}
         wamp.reflect.describe
-
-**Reflection**
 
 A topic or procedure has been defined for reflection:
 
