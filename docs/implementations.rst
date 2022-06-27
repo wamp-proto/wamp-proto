@@ -37,7 +37,7 @@ AutobahnJava_       Java 8, Android or Netty            WAMP client library for 
 AutobahnJS_         Javascript, HTML5 and NodeJS        WAMP client library for both browsers (HTML5) and `NodeJS <http://nodejs.org/>`_ using Promises.
 AutobahnPython_     Python 2/3, Twisted and asyncio     WAMP client library + WebSocket client/server impl. for Python 2 and 3, on `Twisted <https://twistedmatrix.com>`_ and `asyncio <https://docs.python.org/3/library/asyncio.html>`_.
 awre_               Erlang                              awre is a WAMP V2 implementation in `Erlang <http://www.erlang.org/>`_ with client roles.
-Backbone_           JavaScript                          Allows two-way synchronisation of Backbone models & collections between frontends and backends.
+Backbone.wamp_      JavaScript                          Allows two-way synchronisation of Backbone models & collections between frontends and backends.
 connectanum_        Java, Netty                         A Java WAMP implementation based on Netty. Both Client and Router roles.
 connectanum-dart_   Dart, Flutter                       A WAMP client implementation for the `dart language <https://dart.dev/>`_ and `flutter <https://flutter.dev/>`_ projects.
 CppWAMP_            C++ 11                              CppWAMP is a WAMP V2 implementation in C++11.
@@ -60,7 +60,7 @@ wampcc_             C++                                 A C++ WAMP library that 
 WAMP_POCO_          C++                                 A fork of AutobahnCpp that is using `POCO <http://pocoproject.org/>`_ instead of Boost.
 wamped_             C++                                 Intended for running on `ARM mbed OS <https://www.mbed.com/en/>`_. Experimental.
 WAMPexClient_       Elixir                              Elixir client library that implements the complete client Basic Profile and much of the Advanced Profile.
-WampSyncClient_      PHP                                 Synchronous (blocking) PHP client implementing Caller and Publisher roles
+WampSyncClient_     PHP                                 Synchronous (blocking) PHP client implementing Caller and Publisher roles
 wamprx.js_          TypeScript                          Simple WAMP TypeScript client-side implementation (of course also usable in JavaScript). It heavily relies on RxJS.
 WampSharp_          C#                                  C# implementation of WAMP: both client and router roles, both JSON and `MessagePack <http://msgpack.org/>`_ support.
 wampy_              Python                              Python implementation for classic blocking Python applications.
@@ -120,7 +120,7 @@ wick_               Go                                  CLI tool to make WAMP RP
 .. _AutobahnJS: https://github.com/crossbario/autobahn-js
 .. _AutobahnPython: https://github.com/crossbario/autobahn-python
 .. _awre: https://github.com/bwegh/awre
-.. _Backbone: https://github.com/darrrk/backbone.wamp
+.. _Backbone.wamp: https://github.com/darrrk/backbone.wamp
 .. _Bondy: https://gitlab.com/leapsight/bondy
 .. _Bonefish: https://github.com/tplgy/bonefish
 .. _Cargotube: https://github.com/CargoTube/cargotube

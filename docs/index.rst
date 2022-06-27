@@ -42,8 +42,8 @@ WAMP development is sponsored since then by `Crossbar.io (the company) <https://
     routing
     spec
     comparison
-    users
     implementations
+    users
     roadmap
     faq
     impressum
