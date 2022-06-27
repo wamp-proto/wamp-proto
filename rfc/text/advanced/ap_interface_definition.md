@@ -2,6 +2,8 @@
 
 ### Application Payload Typing
 
+To define the application payload `Arguments|list` and `ArgumentsKw|dict`, WAMP IDL reuses the [FlatBuffers IDL](https://google.github.io/flatbuffers/md__schemas.html), specifically, we map a pair of `Arguments|list` and `ArgumentsKw|dict` to a FlatBuffers Table with WAMP defined FlatBuffers *Attributes*.
+
 User defined WAMP application payloads are transmitted in `Arguments|list` and `ArgumentsKw|dict` elements of the following WAMP messages:
 
 * `PUBLISH`
@@ -14,39 +16,37 @@ User defined WAMP application payloads are transmitted in `Arguments|list` and `
 
 A *Publisher* uses the
 
-* `PUBLISH.Arguments|list`, `PUBLISH.ArgumentsKw|dict`
+* `PUBLISH.Arguments|list` and `PUBLISH.ArgumentsKw|dict`
 
-message to send the event payload to be published to the *Broker*. When the event is accepted by the *Broker*, it will dispatch
+message elements to send the event payload to be published to the *Broker* in `PUBLISH` messages. When the event is accepted by the *Broker*, it will dispatch an `EVENT` message with
 
-* `EVENT.Arguments|list`, `EVENT.ArgumentsKw|dict`
+* `EVENT.Arguments|list` and `EVENT.ArgumentsKw|dict`
 
-messages to all (eligible, and not excluded) *Subscribers.
+message elements to all (eligible, and not excluded) *Subscribers*.
 
 A *Caller* uses the
 
-* `CALL.Arguments|list`, `CALL.ArgumentsKw|dict`
+* `CALL.Arguments|list` and `CALL.ArgumentsKw|dict`
 
-message to send the call arguments to be used to the *Dealer*. When the call is accepted by the *Dealer*, it will forward
+message elements to send the call arguments to be used to the *Dealer* in `CALL` messages. When the call is accepted by the *Dealer*, it will forward
 
-* `INVOCATION.Arguments|list`, `INVOCATION.ArgumentsKw|dict`
+* `INVOCATION.Arguments|list` and `INVOCATION.ArgumentsKw|dict`
 
-to the (or one of) *Callee*, and receive a
+to the (or one of) *Callee*, and receive `YIELD` messages with
 
-* `YIELD.Arguments|list`, `YIELD.ArgumentsKw|dict`
+* `YIELD.Arguments|list` and `YIELD.ArgumentsKw|dict`
 
-message, which it will return to the original *Caller*
+message elements, which it will return to the original *Caller* in `RESULT` messages with
 
-* `RESULT.Arguments|list`, `RESULT.ArgumentsKw|dict`
+* `RESULT.Arguments|list` and `RESULT.ArgumentsKw|dict`
 
-In the error case, a *Callee* MAY return an
+In the error case, a *Callee* MAY return an `ERROR` message with
 
-* `ERROR.Arguments|list`, `ERROR.ArgumentsKw|dict`
+* `ERROR.Arguments|list` and `ERROR.ArgumentsKw|dict`
 
-which again is returned to the original *Caller*.
+message elements, which again is returned to the original *Caller*.
 
 > It is important to note that the above messages and message elements are the only ones free for use with application and user defined payloads. In particular, even though the following WAMP messages and message element carry payloads defined by the specific WAMP authentication method used, they do *not* carry arbitrary application payloads: `HELLO.Details["authextra"]|dict`, `WELCOME.Details["authextra"]|dict`, `CHALLENGE.Extra|dict`, `AUTHENTICATE.Extra|dict`.
-
-To define the application payload `Arguments|list` and `ArgumentsKw|dict`, WAMP IDL reuses the [FlatBuffers IDL](https://google.github.io/flatbuffers/md__schemas.html), specifically, we map a pair of `Arguments|list` and `ArgumentsKw|dict` to a FlatBuffers Table with WAMP defined FlatBuffers *Attributes*.
 
 For example, the [Session Meta API]({#session-metapi}) includes a procedure to [kill all sessions by authid](#name-wampsessionkill_by_authid) with:
 

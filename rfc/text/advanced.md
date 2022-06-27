@@ -77,7 +77,7 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_authentication_cryptosign.md}}
 
 
-# Dynamic Authentication
+# Dynamic Authentication API
 
 {{advanced/ap_authentication_dynamic.md}}
 
@@ -108,14 +108,9 @@ While all implementations MUST implement the subset of the Basic Profile necessa
 {{advanced/ap_interface_reflection.md}}
 
 
-# Node Control API
-
-{{advanced/ap_node_control_api.md}}
-
-
 # Router-to-Router Links
 
-{{advanced/ap_r2r.md}}
+{{advanced/ap_router_to_router_link.md}}
 
 
 # Advanced Profile URIs
