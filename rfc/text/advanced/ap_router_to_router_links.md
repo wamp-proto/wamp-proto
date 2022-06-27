@@ -1,3 +1,5 @@
+# Router-to-Router Links {#r2r-links}
+
 Write me.
 
 1. Resolve global realm name R_name via ENS to the on-chain address R_adr of the realm.

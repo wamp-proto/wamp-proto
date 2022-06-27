@@ -1,3 +1,5 @@
+# WAMP Interfaces {#interfaces}
+
 WAMP was designed with the goals of being easy to approach and use for application developers. Creating a procedure to expose some custom functionality should be possible in any supported programming language using that language's native elements, with the least amount of additional effort.
 
 Following from that, WAMP uses *dynamic typing* for the application payloads of calls, call results and error, as well as event payloads.
