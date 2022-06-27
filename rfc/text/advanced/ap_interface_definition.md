@@ -282,5 +282,60 @@ Independently, meta events on topic `wamp.session.on_leave` are published with
 detailed `SessionInfo` of the sessions left as event payload.
 This follows a common "do-something-and-notify-observers" pattern for a pair of
 a procedure and topic working together.
+
 The *Interface* then collects a number of *Procedures* and *Topics* under one
 named unit of `type == "interface"` which includes a UUID in an `uuid` *Attribute*.
+
+**Declaring Services**
+
+Declaring services involves three element types:
+
+* *Topics*
+* *Procedures*
+* *Interfaces*
+
+The general form for declaring *Topics* is:
+
+```flatbuffers
+<TOPIC-METHOD> (<TOPIC-PAYLOAD-TABLE>): Void (
+    type: "topic",
+    wampuri: <TOPIC-URI>
+);
+```
+
+The application payload transmitted in EVENTs is typed via `<TOPIC-PAYLOAD-TABLE>`. The return type MUST always be `Void`, which is a dummy marker type declared in `wamp.fbs`.
+
+> Note: With *Acknowledge Event Delivery* (future), when a *Subscriber* receives an EVENT, the *Subscriber* will return an *Event-Acknowledgement* including `args`/ `kwargs`. Once we do have this feature in WAMP PubSub, the type of the *Event-Acknowledgement* can be specified using a non-`Void` return type.
+
+The general form for declaring *Procedures* is:
+
+```flatbuffers
+<PROCEDURE-METHOD> (<CALL-PAYLOAD-TABLE>): <CALLRESULT-PAYLOAD-TABLE> (
+    type: "procedure",
+    wampuri: <PROCEDURE-URI>
+);
+```
+
+The application payload transmitted in CALLs is typed via `<CALL-PAYLOAD-TABLE>`. The return type of the CALL is typed via `<CALLRESULT-PAYLOAD-TABLE>`.
+
+The general form for declaring *Interfaces*, which collect *Procedures* and *Topics* is:
+
+```flatbuffers
+rpc_service <INTERFACE> (
+    type: "interface",
+    uuid: <INTERFACE-UUID>,
+    wampuri: <INTERFACE-URI-PREFIX>
+) {
+    /// Method declarations of WAMP Procedures and Topics
+}
+```
+
+> Note: We are reusing FlatBuffers IDL here, specifically the `rpc_service` service definitions which [were designed for gRPC](https://grpc.io/blog/grpc-flatbuffers/). We reuse this element to declare both WAMP *Topics* and *Procedures* by using the `type` Attribute. Do not get confused with "rpc" in `rpc_service`.
+
+**Declaring Progressive Call Results**
+
+Write me.
+
+**Declaring Call Errors**
+
+Write me.
