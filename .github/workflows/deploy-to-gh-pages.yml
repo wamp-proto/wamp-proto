@@ -29,6 +29,10 @@ jobs:
       - run: pip install -r requirements.txt
       - run: npm install -g grunt-cli
       - run: npm install
+      - run: wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
+      - run: tar xvzf mmark_2.2.25_linux_amd64.tgz
+      - run: rm -f ./mmark*.tgz
+      - run: sudo cp ./mmark /usr/local/bin/
       - run: make build
       - run: mv dist/_graphics dist/graphics
       - run: mv dist/_images dist/images
