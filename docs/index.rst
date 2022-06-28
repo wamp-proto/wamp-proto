@@ -25,8 +25,7 @@ messaging patterns in one unified protocol:
 
 and can run over different transport, like:
 
-* `WebSocket <https://tools.ietf.org/html/rfc6455>`_
-`subprotocol <https://www.iana.org/assignments/websocket/websocket.xml>`_
+* `WebSocket <https://tools.ietf.org/html/rfc6455>`_ `subprotocol <https://www.iana.org/assignments/websocket/websocket.xml>`_
 * Raw TCP Socket
 * Unix domain sockets
 
