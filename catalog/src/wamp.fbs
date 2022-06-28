@@ -28,7 +28,7 @@ attribute kwarg;
 attribute timestamp;
 
 
-/// WAMP ID, that is an integer ``[1, 2^53]``, see https://wamp-proto.org/_static/gen/wamp_latest.html#ids
+/// WAMP ID, that is an integer ``[1, 2^53]``, see https://wamp-proto.org/_static/gen/wamp_latest_ietf.html#ids
 attribute wampid;
 
 /// WAMP URI component (aka "name"), loose rules (minimum required to combine to dotted URIs), must match regular expression ``^[^\s\.#]+$``.
@@ -203,7 +203,7 @@ table KeyValues
 /// A single WAMP ID.
 table WampId
 {
-    /// WAMP ID (integers [1, 2^53]), see https://wamp-proto.org/_static/gen/wamp_latest.html#ids
+    /// WAMP ID (integers [1, 2^53]), see https://wamp-proto.org/_static/gen/wamp_latest_ietf.html#ids
     value: uint64 (arg, wampid);
 }
 

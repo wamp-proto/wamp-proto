@@ -14,10 +14,6 @@ jobs:
     environment: github-pages
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 14
-          cache: 'npm'
       - uses: actions/setup-python@v3
         with:
           python-version: '3.6'
@@ -27,8 +23,6 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install -y xml2rfc libxml2-utils libenchant-2-2 enscript
       - run: pip install -r requirements.txt
-      - run: npm install -g grunt-cli
-      - run: npm install
       - run: wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
       - run: tar xvzf mmark_2.2.25_linux_amd64.tgz
       - run: rm -f ./mmark*.tgz

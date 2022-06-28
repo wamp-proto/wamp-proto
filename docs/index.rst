@@ -11,7 +11,7 @@ The Web Application Messaging Protocol
     :target: https://wamp-proto.org/index.html
 
 .. |Spec| image:: https://img.shields.io/badge/spec-latest-ff69b4.svg
-    :target: wamp_latest.html
+    :target: wamp_latest_ietf.html
 
 -------
 
