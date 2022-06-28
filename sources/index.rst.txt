@@ -18,16 +18,24 @@ The Web Application Messaging Protocol
 Welcome to the Web Application Messaging Protocol (WAMP)!
 
 WAMP is an open application level protocol that provides two
-messaging patterns in one unified protocol:
+messaging patterns:
 
 * Routed **Remote Procedure Calls** and
 * **Publish & Subscribe**
 
-and can run over different transport, like:
+uses different serializers for message encoding, like:
+
+* `JSON <https://www.json.org>`_
+* `MessagePack <https://msgpack.org/>`_
+* `FlatBuffers <https://google.github.io/flatbuffers/>`_
+* `CBOR <https://cbor.io/>`_
+* and many others
+
+and can run over different transports, like:
 
 * `WebSocket <https://tools.ietf.org/html/rfc6455>`_ `subprotocol <https://www.iana.org/assignments/websocket/websocket.xml>`_
 * Raw TCP Socket
-* Unix domain sockets
+* Unix domain socket
 
 The WAMP protocol is a community effort and the specification is made available for
 free under an open license for everyone to use or implement. The original design

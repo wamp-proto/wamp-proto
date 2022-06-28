@@ -89,16 +89,24 @@
 <hr class="docutils" />
 <p>Welcome to the Web Application Messaging Protocol (WAMP)!</p>
 <p>WAMP is an open application level protocol that provides two
-messaging patterns in one unified protocol:</p>
+messaging patterns:</p>
 <ul class="simple">
 <li><p>Routed <strong>Remote Procedure Calls</strong> and</p></li>
 <li><p><strong>Publish &amp; Subscribe</strong></p></li>
 </ul>
-<p>and can run over different transport, like:</p>
+<p>uses different serializers for message encoding, like:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.json.org">JSON</a></p></li>
+<li><p><a class="reference external" href="https://msgpack.org/">MessagePack</a></p></li>
+<li><p><a class="reference external" href="https://google.github.io/flatbuffers/">FlatBuffers</a></p></li>
+<li><p><a class="reference external" href="https://cbor.io/">CBOR</a></p></li>
+<li><p>and many others</p></li>
+</ul>
+<p>and can run over different transports, like:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://tools.ietf.org/html/rfc6455">WebSocket</a> <a class="reference external" href="https://www.iana.org/assignments/websocket/websocket.xml">subprotocol</a></p></li>
 <li><p>Raw TCP Socket</p></li>
-<li><p>Unix domain sockets</p></li>
+<li><p>Unix domain socket</p></li>
 </ul>
 <p>The WAMP protocol is a community effort and the specification is made available for
 free under an open license for everyone to use or implement. The original design
