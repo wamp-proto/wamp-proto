@@ -2,11 +2,16 @@
 
 RFC drafts can be submitted in several formats, with XML the preferred one, since it is easiest on the IETF RFC editors.
 
+We will use two tools to generate the spec in the target formats TXT, HTML and PDF from the Markdown sources using:
+
+1. [mmark](https://mmark.miek.nl/)
+2. [xml2rfc](http://xml2rfc.ietf.org/)
+
 ## Mmark
 
-We want to author our drafts in a sane format. Furtunately, there is [Mmark](https://github.com/miekg/mmark), a converter for an extended markdown flavor to RFC XML.
+We want to author our drafts in a sane format. Furtunately, there is [Mmark](https://github.com/mmarkdown/mmark), a converter for an extended markdown flavor to RFC XML.
 
-A reference about the markdown flavor used can be found in the [project readme](https://github.com/miekg/mmark/blob/master/README.md), and some famous RFCs are provided in markdown form as [examples](https://github.com/miekg/mmark/tree/master/rfc).
+A reference about the markdown flavor used can be found in the [project readme](https://github.com/mmarkdown/mmark/blob/master/README.md), and some famous RFCs are provided in markdown form as [examples](https://github.com/mmarkdown/mmark/tree/master/rfc).
 
 ### Installation
 
@@ -21,46 +26,27 @@ Go requires a `GOPATH` environment variable to be set, so add the following to y
 
 Now install Mmark directly from the GitHub repository
 
-    go get github.com/miekg/mmark
+    go get github.com/mmarkdown/mmark
 
 
 > There is no feedback about a successful installation.
 
-Installation is not done yet, you need to 
+Installation is not done yet, you need to
 
-    cd $GOPATH/src/github.com/miekg/mmark
+    cd $GOPATH/src/github.com/mmarkdown/mmark
     make all
 
 This should have created the `mmark` executable. Add the following to your `.profile`:
 
-    export $PATH=${GOPATH}/src/github.com/miekg/mmark/mmark:${PATH}
+    export $PATH=${GOPATH}/src/github.com/mmarkdown/mmark/mmark:${PATH}
 
 ### Testing
 
 Now quickly test if the `mmark` tool works:
 
 ```console
-oberstet@corei7ub1310:~$ mmark -h
-Mmark Markdown Processor
-Available at http://github.com/miekg/mmark
-
-Copyright © 2014 Miek Gieben <miek@miek.nl>
-Copyright © 2011 Russ Ross <russ@russross.com>
-Distributed under the Simplified BSD License
-
-Usage:
-  mmark [options] [inputfile [outputfile]]
-
-Options:
-  -bib-id="http://xml2rfc.ietf.org/public/rfc/bibxml3/": ID bibliography URL
-  -bib-rfc="http://xml2rfc.ietf.org/public/rfc/bibxml/": RFC bibliography URL
-  -css="": link to a CSS stylesheet (implies -page)
-  -head="": link to HTML to be included in head (implies -page)
-  -page=false: generate a standalone HTML page
-  -rfc7328=false: parse RFC 7328 style input
-  -toml=false: input file is xml2rfc XML which is convert to TOML titleblock
-  -xml=false: generate XML2RFC v3 output
-  -xml2=false: generate XML2RFC v2 output
+(base) oberstet@intel-nuci7:~/scm/wamp-proto/wamp-proto$ mmark -version
+2.2.25
 ```
 
 ### Converting
@@ -88,15 +74,22 @@ To install from Ubuntu/Debian package repository
 
     sudo apt-get xml2rfc
 
+Since we also want to produce PDF output format for the spec, we additionally need to (Linux):
+
+    sudo apt install enscript
+
+and then:
+
+    pip install 'pycairo>=1.18' 'weasyprint<=0.42.3'
 
 ### Testing
 
 Now quickly test if the `xml2rfc` tool works:
 
 ```console
-oberstet@corei7ub1310:~$ xml2rfc --version
-2.4.3
-``` 
+(base) oberstet@intel-nuci7:~/scm/wamp-proto/wamp-proto$ xml2rfc --version
+xml2rfc 2.40.0
+```
 
 ### Converting
 
@@ -144,7 +137,7 @@ After adding or modifying a diagram, just do `make diagrams`. This clears the pr
 
 # Formatting the markdown file for RFC
 
-This document collects formatting conventions and formatting tips for drafting a RFC in markdown format when using [mmark](https://github.com/miekg/mmark) to transform the markdown into XML.
+This document collects formatting conventions and formatting tips for drafting a RFC in markdown format when using [mmark](https://github.com/mmarkdown/mmark) to transform the markdown into XML.
 
 ## Code indentation
 
@@ -175,7 +168,7 @@ This means that we need to manually line-wrap code blocks.
 
 ## Defined Terms
 
-Terms that we define as part of the WAMP spec are 
+Terms that we define as part of the WAMP spec are
 
 * capitalized throughout the text and
 * italicised on their first use only.
@@ -189,9 +182,9 @@ Terms that we define as part of the WAMP spec are
 
 ## Internal links
 
-[what the link is about](#linktitle) 
+[what the link is about](#linktitle)
 
-or 
+or
 
 (#linktitle)
 
