@@ -33,6 +33,22 @@ usage:
 
 .PHONY: build grep_options clean authors publish_aws run_docs spellcheck_docs
 
+
+# for convenience, when on Linux, you can use these targets to install required tools locally:
+
+# install xml2rfc (incl. PDF support) on Linux locally (see: https://xml2rfc.tools.ietf.org/)
+requirements_xml2rfc:
+	apt install xml2rfc enscript
+	pip install 'pycairo>=1.18' 'weasyprint<=0.42.3'
+
+# install mmark on Linux locally (see: https://github.com/mmarkdown/mmark)
+requirements_mmark:
+	wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
+	tar xvzf mmark_2.2.25_linux_amd64.tgz
+	rm -f ./mmark*.tgz
+	cp ./mmark /usr/local/bin/
+
+
 grep_options:
 	@find rfc/ -name "*.md" -type f -exec grep -o "\`\w*\.Options\.[a-z_]*|.*\`" {} \;
 
@@ -75,19 +91,6 @@ build: clean start_build build_images build_spec build_docs
 build_images: $(SITEBUILDDIR)/$(OBJECTS)
 
 build_spec: build_spec_rfc build_spec_w3c
-
-# PS and RTF support are provided using a combination of wkhtmltopdf, pdf2ps and/or GNU enscript.
-requirements_xml2rfc:
-	sudo apt install xml2rfc enscript
-	pip install 'pycairo>=1.18' 'weasyprint<=0.42.3'
-
-# https://github.com/mmarkdown/mmark
-# sudo apt install -y mmark
-requirements_mmark:
-	wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
-	tar xvzf mmark_2.2.25_linux_amd64.tgz
-	rm -f ./mmark*.tgz
-	sudo cp ./mmark /usr/local/bin/
 
 # https://mmark.miek.nl/post/syntax/
 build_spec_rfc: build_spec_rfc_mmark build_spec_bp_rfc_mmark build_spec_ap_rfc_mmark
