@@ -1,6 +1,4 @@
-### Event Retention
-
-#### Feature Definition
+## Event Retention
 
 Event Retention is where a particular topic has an event associated with it which is delivered upon an opting-in client subscribing to the topic.
 
@@ -24,7 +22,7 @@ When they opt-in to receiving the Retained Event, the Broker MUST send the Subsc
 The Broker MUST NOT send the Subscriber a Retained Event that they would not be eligible to receive if they were subscribing when it was published.
 The *Retained Event*, as sent to the subscribing client, MUST have `Event.Details.retained|bool` set to `true`, to inform subscribers that it is not an immediately new message.
 
-#### Feature Announcement
+**Feature Announcement**
 
 Support for this feature MUST be announced by *Brokers* (`role := "broker"`) via
 

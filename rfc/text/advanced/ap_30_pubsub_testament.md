@@ -1,4 +1,4 @@
-## Testament
+## Session Testament
 
 When a WAMP client disconnects, or the WAMP session is destroyed, it may want to notify other subscribers or publish some fixed data.
 Since a client may disconnect uncleanly, this can't be done reliably by them.
@@ -15,41 +15,41 @@ Support for this feature MUST be announced by *Dealers* (`role := "dealer"`) via
         HELLO.Details.roles.dealer.features.
             testament_meta_api|bool := true
 
-### Testament Meta Procedures
+**Testament Meta Procedures**
 
 A *Client* can call the following procedures to set/flush Testaments:
 
 * `wamp.session.add_testament` to add a Testament which will be published on a particular topic when the Session is detached or destroyed.
 * `wamp.session.flush_testaments` to remove the Testaments for that Session, either for when it is detached or destroyed.
 
-#### wamp.session.add_testament
+**wamp.session.add_testament**
 
 Adds a new testament:
 
-**Positional arguments**
+*Positional arguments*
 
 1. `topic|uri` - the topic to publish the event on
 2. `args|list` - positional arguments for the event
 3. `kwargs|dict` - keyword arguments for the event
 
-**Keyword arguments**
+*Keyword arguments*
 
 1. `publish_options|dict` - options for the event when it is published -- see `Publish.Options`. Not all options may be honoured (for example, `acknowledge`). By default, there are no options.
 2. `scope|string` - When the testament should be published. Valid values are `detached` (when the WAMP session is detached, for example, when using Event Retention) or `destroyed` (when the WAMP session is finalized and destroyed on the Broker). Default MUST be `destroyed`.
 
 `wamp.session.add_testament` does not return a value.
 
-#### wamp.session.flush_testaments
+**wamp.session.flush_testaments**
 
 Removes testaments for the given scope:
 
-**Keyword arguments**
+*Keyword arguments*
 
 1. `scope|string` - Which set of testaments to be removed. Valid values are the same as `wamp.session.add_testament`, and the default MUST be `destroyed`.
 
 `wamp.session.flush_testaments` does not return a value.
 
-### Testaments in Use
+**Testaments in Use**
 
 A *Client* that wishes to send some form of data when their *Session* ends unexpectedly or their *Transport* becomes lost can set a testament using the WAMP Testament Meta API, when a *Router* supports it.
 For example, a client may call `add_testament` (this example uses the implicit `scope` option of `destroyed`):
