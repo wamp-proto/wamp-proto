@@ -49,8 +49,8 @@
 <li class="toctree-l1"><a class="reference internal" href="routing.html">Message Routing in WAMP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementations.html">Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
@@ -84,16 +84,21 @@
   <section id="the-web-application-messaging-protocol">
 <span id="home"></span><h1>The Web Application Messaging Protocol<a class="headerlink" href="#the-web-application-messaging-protocol" title="Permalink to this heading">¶</a></h1>
 <div class="line-block">
-<div class="line"><a class="reference external" href="wamp_latest.html"><img alt="Spec" src="https://img.shields.io/badge/spec-latest-ff69b4.svg" /></a> <a class="reference external" href="https://s3.eu-central-1.amazonaws.com/wamp-proto.org/index.html"><img alt="Docs-S3" src="https://img.shields.io/badge/docs-s3-brightgreen.svg?style=flat" /></a> <a class="reference external" href="https://wamp-proto.org/index.html"><img alt="Docs-CDN" src="https://img.shields.io/badge/docs-cdn-brightgreen.svg?style=flat" /></a></div>
+<div class="line"><a class="reference external" href="wamp_latest_ietf.html"><img alt="Spec" src="https://img.shields.io/badge/spec-latest-ff69b4.svg" /></a> <a class="reference external" href="https://wamp-proto.org/index.html"><img alt="Docs-CDN" src="https://img.shields.io/badge/docs-cdn-brightgreen.svg?style=flat" /></a></div>
 </div>
 <hr class="docutils" />
 <p>Welcome to the Web Application Messaging Protocol (WAMP)!</p>
-<p>WAMP is an open standard <a class="reference external" href="https://tools.ietf.org/html/rfc6455">WebSocket</a>
-<a class="reference external" href="https://www.iana.org/assignments/websocket/websocket.xml">subprotocol</a> that provides two
-application messaging patterns in one unified protocol:</p>
+<p>WAMP is an open application level protocol that provides two
+messaging patterns in one unified protocol:</p>
 <ul class="simple">
-<li><p>routed <strong>Remote Procedure Calls</strong> and</p></li>
+<li><p>Routed <strong>Remote Procedure Calls</strong> and</p></li>
 <li><p><strong>Publish &amp; Subscribe</strong></p></li>
+</ul>
+<p>and can run over different transport, like:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://tools.ietf.org/html/rfc6455">WebSocket</a> <a class="reference external" href="https://www.iana.org/assignments/websocket/websocket.xml">subprotocol</a></p></li>
+<li><p>Raw TCP Socket</p></li>
+<li><p>Unix domain sockets</p></li>
 </ul>
 <p>The WAMP protocol is a community effort and the specification is made available for
 free under an open license for everyone to use or implement. The original design
@@ -117,16 +122,16 @@ WAMP development is sponsored since then by <a class="reference external" href="
 </li>
 <li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="users.html#open-source-projects">Open-source projects</a></li>
-<li class="toctree-l2"><a class="reference internal" href="users.html#commercial-users">Commercial users</a></li>
-<li class="toctree-l2"><a class="reference internal" href="users.html#publications">Publications</a></li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="implementations.html">Implementations</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="implementations.html#libraries">Libraries</a></li>
 <li class="toctree-l2"><a class="reference internal" href="implementations.html#routers">Routers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="implementations.html#utilities">Utilities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="users.html#open-source-projects">Open-source projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html#commercial-users">Commercial users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users.html#publications">Publications</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a><ul>
@@ -143,10 +148,11 @@ WAMP development is sponsored since then by <a class="reference external" href="
 <li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
 </ul>
 </div>
-<p><strong>Get in touch</strong> with us on our mailing list, chat room or search for answers on StackOverflow:</p>
+<p><strong>Get in touch</strong> with us on our mailing list, github or search for answers on StackOverflow:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://groups.google.com/group/wampws">WAMP Google group</a></p></li>
-<li><p><a class="reference external" href="http://fix.me">WAMP StackOverflow Q&amp;A</a></p></li>
+<li><p><a class="reference external" href="https://github.com/wamp-proto/wamp-proto">WAMP Protocol GitHub Repository</a></p></li>
+<li><p><a class="reference external" href="https://stackoverflow.com/questions/tagged/wamp-protocol">WAMP StackOverflow Q&amp;A</a></p></li>
 </ul>
 <p>The WAMP protocol is also looking for contributors that help polishing up the spec,
 filling in gaps. A good starting point are our open issues on our

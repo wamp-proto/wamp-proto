@@ -5,27 +5,29 @@
 The Web Application Messaging Protocol
 ======================================
 
-| |Spec| |Docs-S3| |Docs-CDN|
-
-.. |Docs-S3| image:: https://img.shields.io/badge/docs-s3-brightgreen.svg?style=flat
-    :target: https://s3.eu-central-1.amazonaws.com/wamp-proto.org/index.html
+| |Spec| |Docs-CDN|
 
 .. |Docs-CDN| image:: https://img.shields.io/badge/docs-cdn-brightgreen.svg?style=flat
     :target: https://wamp-proto.org/index.html
 
 .. |Spec| image:: https://img.shields.io/badge/spec-latest-ff69b4.svg
-    :target: wamp_latest.html
+    :target: wamp_latest_ietf.html
 
 -------
 
 Welcome to the Web Application Messaging Protocol (WAMP)!
 
-WAMP is an open standard `WebSocket <https://tools.ietf.org/html/rfc6455>`_
-`subprotocol <https://www.iana.org/assignments/websocket/websocket.xml>`_ that provides two
-application messaging patterns in one unified protocol:
+WAMP is an open application level protocol that provides two
+messaging patterns in one unified protocol:
 
-* routed **Remote Procedure Calls** and
+* Routed **Remote Procedure Calls** and
 * **Publish & Subscribe**
+
+and can run over different transport, like:
+
+* `WebSocket <https://tools.ietf.org/html/rfc6455>`_ `subprotocol <https://www.iana.org/assignments/websocket/websocket.xml>`_
+* Raw TCP Socket
+* Unix domain sockets
 
 The WAMP protocol is a community effort and the specification is made available for
 free under an open license for everyone to use or implement. The original design
@@ -39,16 +41,17 @@ WAMP development is sponsored since then by `Crossbar.io (the company) <https://
     routing
     spec
     comparison
-    users
     implementations
+    users
     roadmap
     faq
     impressum
 
-**Get in touch** with us on our mailing list, chat room or search for answers on StackOverflow:
+**Get in touch** with us on our mailing list, github or search for answers on StackOverflow:
 
 - `WAMP Google group <https://groups.google.com/group/wampws>`_
-- `WAMP StackOverflow Q&A <http://fix.me>`_
+- `WAMP Protocol GitHub Repository <https://github.com/wamp-proto/wamp-proto>`_
+- `WAMP StackOverflow Q&A <https://stackoverflow.com/questions/tagged/wamp-protocol>`_
 
 The WAMP protocol is also looking for contributors that help polishing up the spec,
 filling in gaps. A good starting point are our open issues on our
