@@ -79,7 +79,7 @@ build: clean start_build build_images build_spec build_docs
 
 build_images: $(SITEBUILDDIR)/$(OBJECTS)
 
-build_spec: build_spec_rfc build_spec_w3c
+build_spec: build_spec_rfc
 
 # https://mmark.miek.nl/post/syntax/
 build_spec_rfc: build_spec_rfc_mmark build_spec_bp_rfc_mmark build_spec_ap_rfc_mmark
