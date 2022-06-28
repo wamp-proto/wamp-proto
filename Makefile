@@ -30,7 +30,7 @@ usage:
 	@echo "make run_docs - run http server on 8010 port to serve docs"
 	@echo "make spellcheck_docs - spell check the docs via sphinx-build"
 
-.PHONY: build grep_options clean authors publish_aws run_docs spellcheck_docs
+.PHONY: build grep_options clean authors run_docs spellcheck_docs
 
 
 # for convenience, when on Linux, you can use these targets to install required tools locally:
@@ -55,8 +55,6 @@ clean:
 	if [ -d $(OUTPUTDIR) ]; then rm -rf $(OUTPUTDIR); fi
 	if [ -d $(TMPBUILDDIR) ]; then rm -rf $(TMPBUILDDIR); fi
 	if [ -d $(SITEBUILDDIR) ]; then rm -rf $(SITEBUILDDIR); fi
-	if [ -f ./rfc/aux/authors.json ]; then rm ./rfc/aux/authors.json; fi
-	if [ -f mmark ]; then rm mmark; fi
 	mkdir -p $(OUTPUTDIR)
 	mkdir -p $(TMPBUILDDIR)
 	mkdir -p $(SITEBUILDDIR)
@@ -118,13 +116,6 @@ build_spec_ap_rfc_mmark:
 	xml2rfc --v3 --text $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.txt
 	xml2rfc --v3 --html $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.html
 	xml2rfc --v3 --pdf $(TMPBUILDDIR)/wamp-ap.xml -o $(OUTPUTDIR)/wamp_ap_latest_ietf.pdf
-
-# firefox dist/wamp_latest.html
-build_spec_w3c:
-	git log --pretty=format:"{ name: \"%an\" }," rfc | \
-		grep -v -e "ecorm" -e "Andrew J. Gillis" | \
-		sort | uniq > ./rfc/aux/authors.json
-	grunt
 
 build_docs:
 	# first test with all warnings fatal
