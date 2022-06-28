@@ -86,6 +86,7 @@ start_build:
 $(SITEBUILDDIR)/%.svg: $(SOURCEDIR)/%.svg
 	$(SCOUR) $(SCOUR_FLAGS) $< $@
 
+# this target is used from GH actions (!)
 build: clean start_build build_images build_spec build_docs
 
 build_images: $(SITEBUILDDIR)/$(OBJECTS)
