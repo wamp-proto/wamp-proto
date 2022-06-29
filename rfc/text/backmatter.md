@@ -18,3 +18,25 @@ Conformance requirements phrased as algorithms or specific steps MAY  be impleme
 ## Terminology and Other Conventions
 
 Key terms such as named algorithms or definitions are indicated like _this_ when they first occur, and are capitalized throughout the text.
+
+# Contributors
+
+WAMP was developed in an open process from the beginning, and a lot of people have contributed ideas and other feedback. Here we are listing people who have opted in to being mentioned:
+
+* Alexander Goedde
+* Amber Brown
+* Andrew Gillis
+* David Chappelle
+* Elvis Stansvik
+* Emile Cormier
+* Felipe Gasper
+* Johan 't Hart
+* Josh Soref
+* Konstantin Burkalev
+* Pahaz Blinov
+* Paolo Angioletti
+* Roberto Requena
+* Roger Erens
+* Christoph Herzog
+* Tobias Oberstein
+* Zhigang Wang
