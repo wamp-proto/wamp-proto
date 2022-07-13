@@ -217,7 +217,7 @@ The following test vectors allow to verify an implementation of WAMP-Cryptosign 
 The test vectors contain instances for both with and without a `channel_id`, which represents the TLS channel ID when using TLS with `tls-unique` channel binding.
 
 {align="left"}
-```python
+```
 test_vectors_1 = [
     {
         'channel_id': None,
@@ -267,3 +267,277 @@ Write me.
 ### Trustroots and Certificates
 
 Write me.
+
+* ``"eth"``: An Ethereum address, e.g. ``"0xe59C7418403CF1D973485B36660728a5f4A8fF9c"``.
+* ``"ens"``: An Ethereum ENS name, e.g. ``"wamp-proto.eth"``.
+* ``"reverse_ens"``: An Ethereum ENS name in reverse notation, e.g. ``"eth.wamp-proto"``.
+
+
+all realm names in Autobahn/Crossbar.io must match this
+
+_URI_PAT_REALM_NAME = re.compile(r"^[A-Za-z][A-Za-z\d_\-@\.]{2,254}$")
+
+if Ethereum addresses are enabled, realm names which are "0x" prefixed Ethereum addresses are also valid
+
+_URI_PAT_REALM_NAME_ETH = re.compile(r"^0x([A-Fa-f\d]{40})$")
+
+realms names might also specifically match ENS URIs
+
+_URI_PAT_REALM_NAME_ENS = re.compile(r"^([a-z\d_\-@\.]{2,250})\.eth$")
+
+since WAMP recommends using reverse dotted notation, reverse ENS names can be checked with this pattern
+
+_URI_PAT_REALM_NAME_ENS_REVERSE = re.compile(r"^eth\.([a-z\d_\-@\.]{2,250})$")
+
+
+### Example Message Exchanges
+
+#### Example 1
+
+* *with* router challenge
+* *without* TLS channel binding
+
+```
+WAMP-Transmit(-, -) >>
+  HELLO::
+    [1,
+     'devices',
+     {'authextra': {'challenge': 'bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb',
+                    'channel_binding': None,
+                    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'},
+      'authmethods': ['cryptosign'],
+      'roles': {'callee': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True,
+                                        'registration_revocation': True,
+                                        'shared_registration': True}},
+                'caller': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True}},
+                'publisher': {'features': {'payload_encryption_cryptobox': True,
+                                           'payload_transparency': True,
+                                           'publisher_exclusion': True,
+                                           'publisher_identification': True,
+                                           'subscriber_blackwhite_listing': True,
+                                           'x_acknowledged_event_delivery': True}},
+                'subscriber': {'features': {'pattern_based_subscription': True,
+                                            'payload_encryption_cryptobox': True,
+                                            'payload_transparency': True,
+                                            'publisher_identification': True,
+                                            'subscription_revocation': True}}}}]
+>>
+
+WAMP-Receive(-, -) <<
+  CHALLENGE::
+    [4,
+     'cryptosign',
+     {'challenge': '0e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+      'channel_binding': None,
+      'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+      'signature': 'fd5128d2d207ba58a9d1d6f41b72c747964ad9d1294077b3b1eee6130b05843ab12c53c7f2519f73d4feb82db19d8ca0fc26b62bde6518e79a882f5795bc9f00bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb'}]
+<<
+
+WAMP-Transmit(-, -) >>
+  AUTHENTICATE::
+    [5,
+     'a3a178fe792ed772a8fc092f8341e455de96670c8901264a7c312dbf940d5743626fe9fbc29b23dcd2169b308eca309de85a89ccd296b24835de3d95b16b77030e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+     {}]
+>>
+
+WAMP-Receive(-, -) <<
+  WELCOME::
+    [2,
+     3735119691078036,
+     {'authextra': {'x_cb_node': 'intel-nuci7-49879',
+                    'x_cb_peer': 'tcp4:127.0.0.1:53976',
+                    'x_cb_pid': 49987,
+                    'x_cb_worker': 'worker001'},
+      'authid': 'client01@example.com',
+      'authmethod': 'cryptosign',
+      'authprovider': 'static',
+      'authrole': 'device',
+      'realm': 'devices',
+      'roles': {'broker': {'features': {'event_retention': True,
+                                        'pattern_based_subscription': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'publisher_exclusion': True,
+                                        'publisher_identification': True,
+                                        'session_meta_api': True,
+                                        'subscriber_blackwhite_listing': True,
+                                        'subscription_meta_api': True,
+                                        'subscription_revocation': True}},
+                'dealer': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True,
+                                        'registration_meta_api': True,
+                                        'registration_revocation': True,
+                                        'session_meta_api': True,
+                                        'shared_registration': True,
+                                        'testament_meta_api': True}}},
+      'x_cb_node': 'intel-nuci7-49879',
+      'x_cb_peer': 'tcp4:127.0.0.1:53976',
+      'x_cb_pid': 49987,
+      'x_cb_worker': 'worker001'}]
+<<
+
+WAMP-Transmit(3735119691078036, client01@example.com) >>
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+>>
+
+WAMP-Receive(3735119691078036, client01@example.com) <<
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+<<
+```
+
+#### Example 2
+
+* *with* router challenge
+* *with* TLS channel binding
+
+```
+WAMP-Transmit(-, -) >>
+  HELLO::
+    [1,
+     'devices',
+     {'authextra': {'challenge': '4f861f12796c2972b7b0026522a687aa851d90355122a61d4f1fdce4d06b564f',
+                    'channel_binding': 'tls-unique',
+                    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'},
+      'authmethods': ['cryptosign'],
+      'roles': {'callee': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True,
+                                        'registration_revocation': True,
+                                        'shared_registration': True}},
+                'caller': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True}},
+                'publisher': {'features': {'payload_encryption_cryptobox': True,
+                                           'payload_transparency': True,
+                                           'publisher_exclusion': True,
+                                           'publisher_identification': True,
+                                           'subscriber_blackwhite_listing': True,
+                                           'x_acknowledged_event_delivery': True}},
+                'subscriber': {'features': {'pattern_based_subscription': True,
+                                            'payload_encryption_cryptobox': True,
+                                            'payload_transparency': True,
+                                            'publisher_identification': True,
+                                            'subscription_revocation': True}}}}]
+>>
+
+WAMP-Receive(-, -) <<
+  CHALLENGE::
+    [4,
+     'cryptosign',
+     {'challenge': '358625312c6c3bf64ed51d17d210ce21af1639c774cabf5735a9651d7d91fc6a',
+      'channel_binding': 'tls-unique',
+      'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+      'signature': 'aa05f4cd7747d36b79443f1d4703a681e107edc085d876b508714e2a3a8135bacaae1c018452c4acb3ad2818aa97a6d23e5ac7e3734c7b1f40e6232a70938205a6f5a1f034a28090b195fb2ce2454a82532f5c8baf6ba1dfb5ddae63c09ce72f'}]
+<<
+
+WAMP-Transmit(-, -) >>
+  AUTHENTICATE::
+    [5,
+     '25114474580d6e99a6126b091b4565c23db567d686c5b8c3a94e3f2f09dc80300c5b40a124236733fa56396df721eb12ac092362379bd5b27b4db9e2beaa1408dcf59bd361a2921448f0e45e12f303097924f5798a83b895cf6b179a6d664d0a',
+     {}]
+>>
+
+WAMP-Receive(-, -) <<
+  WELCOME::
+    [2,
+     7325966140445461,
+     {'authextra': {'x_cb_node': 'intel-nuci7-49879',
+                    'x_cb_peer': 'tcp4:127.0.0.1:54046',
+                    'x_cb_pid': 49987,
+                    'x_cb_worker': 'worker001'},
+      'authid': 'client01@example.com',
+      'authmethod': 'cryptosign',
+      'authprovider': 'static',
+      'authrole': 'device',
+      'realm': 'devices',
+      'roles': {'broker': {'features': {'event_retention': True,
+                                        'pattern_based_subscription': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'publisher_exclusion': True,
+                                        'publisher_identification': True,
+                                        'session_meta_api': True,
+                                        'subscriber_blackwhite_listing': True,
+                                        'subscription_meta_api': True,
+                                        'subscription_revocation': True}},
+                'dealer': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True,
+                                        'registration_meta_api': True,
+                                        'registration_revocation': True,
+                                        'session_meta_api': True,
+                                        'shared_registration': True,
+                                        'testament_meta_api': True}}},
+      'x_cb_node': 'intel-nuci7-49879',
+      'x_cb_peer': 'tcp4:127.0.0.1:54046',
+      'x_cb_pid': 49987,
+      'x_cb_worker': 'worker001'}]
+<<
+2022-07-13T17:38:29+0200 session joined: {'authextra': {'x_cb_node': 'intel-nuci7-49879',
+               'x_cb_peer': 'tcp4:127.0.0.1:54046',
+               'x_cb_pid': 49987,
+               'x_cb_worker': 'worker001'},
+ 'authid': 'client01@example.com',
+ 'authmethod': 'cryptosign',
+ 'authprovider': 'static',
+ 'authrole': 'device',
+ 'realm': 'devices',
+ 'resumable': False,
+ 'resume_token': None,
+ 'resumed': False,
+ 'serializer': 'cbor.batched',
+ 'session': 7325966140445461,
+ 'transport': {'channel_framing': 'websocket',
+               'channel_id': {'tls-unique': b'\xe9s\xbe\xe2M\xce\xa9\xe2'
+                                            b'\x06%\xf9I\xc0\xe3\xcd('
+                                            b'\xd62\xcc\xbe\xfeI\x07\xc2'
+                                            b'\xfa\xc2r\x87\x10\xf7\xb1`'},
+               'channel_serializer': None,
+               'channel_type': 'tls',
+               'http_cbtid': None,
+               'http_headers_received': None,
+               'http_headers_sent': None,
+               'is_secure': True,
+               'is_server': False,
+               'own': None,
+               'own_fd': -1,
+               'own_pid': 50690,
+               'own_tid': 50690,
+               'peer': 'tcp4:127.0.0.1:8080',
+               'peer_cert': None,
+               'websocket_extensions_in_use': None,
+               'websocket_protocol': None}}
+
+WAMP-Transmit(7325966140445461, client01@example.com) >>
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+>>
+
+WAMP-Receive(7325966140445461, client01@example.com) <<
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+<<
+```
