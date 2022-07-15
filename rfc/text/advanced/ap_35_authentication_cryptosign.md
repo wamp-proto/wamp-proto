@@ -289,8 +289,84 @@ since WAMP recommends using reverse dotted notation, reverse ENS names can be ch
 
 _URI_PAT_REALM_NAME_ENS_REVERSE = re.compile(r"^eth\.([a-z\d_\-@\.]{2,250})$")
 
+#### Certificate Chains
+
+```
+           EIP712AuthorityCertificate
+        +------------------------------+
+        |   chainId                    |       Root Certificate
+        |   verifyingContract          |
+        |   validFrom                  |         * trust anchor, stored on-chain
+   +----+-- issuer (== realm owner)    |         * tied to a realm
+   +----+-> subject (== issuer) -------+----+    * self-signed by realm owner
+        |   realm                      |    |
+        |   capabilities               |    |
+        |   meta                       |    |
+        +------------------------------+    |   +------------------------------+
+        |   issuerSignature            +----+---> Public Blockchain (L1 or L2) |
+        +------------------------------+    |   +------------------------------+
+                                            |
+                                            |
+                                            |
+                                            |
+                                            |
+           EIP712AuthorityCertificate       |
+        +------------------------------+    |
+        |   chainId                    |    |   Intermediate Certificate
+        |   verifyingContract          |    |
+        |   validFrom                  |    |    * stored off-chain
+        |   issuer  <------------------+----+    * same realm as issueing cert
+  +-----+-- subject                    |         * subset of capabilities
+  |     |   realm                      |             of issueing cert
+  |     |   capabilities               |
+  |     |   meta                       |
+  |     +------------------------------+
+  |     |   issuerSignature            |
+  |     +------------------------------+
+  |
+
+
+optional hierarchical chain of intermediate certificates
+
+
+  |
+  |        EIP712AuthorityCertificate
+  |     +------------------------------+
+  |     |   chainId                    |        Intermediate Certificate
+  |     |   verifyingContract          |
+  |     |   validFrom                  |         * stored off-chain
+  +-----+-> issuer                     |         * same realm as issueing cert
+        |   subject--------------------+----+    * subset of capabilities
+        |   realm                      |    |        of issueing cert
+        |   capabilities               |    |
+        |   meta                       |    |
+        +------------------------------+    |
+        |   issuerSignature            |    |
+        +------------------------------+    |
+                                            |
+                                            |
+                                            |
+                                            |
+                                            |
+           EIP712DelegateCertificate        |
+        +------------------------------+    |
+        |   chainId                    |    |   End-point Certificate
+        |   verifyingContract          |    |
+        |   validFrom                  |    |     * ephemeral, generate per-boot
+        |   delegate <-----------------+----+     * subject is WAMP-Cryptosign pubkey
+        |   csPubKey                   |          * Boot time (UTC in Posix ns)
+        |   bootedAt                   |
+        |   meta                       |
+        |                              |
+        |                              |
+        +------------------------------+         +--------------------------+
+        |   delegateSignature          +---------> Hardware Security Module |
+        +------------------------------+         +--------------------------+
+```
 
 ### Example Message Exchanges
+
+sdfsd
 
 #### Example 1
 
@@ -541,3 +617,9 @@ WAMP-Receive(7325966140445461, client01@example.com) <<
     [6, {}, 'wamp.close.normal']
 <<
 ```
+
+#### Example 3
+
+* *with* router challenge
+* *with* TLS channel binding
+* *with* client trustroot and certificates
