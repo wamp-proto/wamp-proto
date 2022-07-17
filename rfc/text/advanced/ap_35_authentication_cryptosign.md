@@ -291,6 +291,35 @@ _URI_PAT_REALM_NAME_ENS_REVERSE = re.compile(r"^eth\.([a-z\d_\-@\.]{2,250})$")
 
 #### Certificate Chains
 
+A public-key certificate is a signed statement that is used to establish an association between an identity and a public key. This is called a machine identity. The entity that vouches for this association and signs the certificate is the issuer of the certificate and the identity whose public key is being vouched for is the subject of the certificate. In order to associate the identity and the public key, a chain of certificates is used. The certificate chain is also called the certification path or chain of trust.
+
+*What is a Certificate Chain?*
+
+A certificate chain is a list of certificates (usually starting with an end-entity certificate) followed by one or more CA certificates (usually the last one being a self-signed certificate), with the following properties:
+
+* The **issuer** of each certificate (except the last one) matches the **subject of** the next certificate in the list.
+* Each certificate (except the last one) is supposed to be signed by the secret key corresponding to the next certificate in the chain (i.e. the signature of one certificate can be verified using the public key contained in the following certificate).
+* The last certificate in the list is a **trust anchor**: a certificate that you trust because it was delivered to you by some trustworthy procedure. A trust anchor is a CA certificate (or more precisely, the public verification key of a CA) used by a relying party as the starting point for path validation.
+
+*What are On-chain Trust Anchors?*
+
+In x509, the set of trusted root CA certificates are stored in a machine/device local certificate store. This set of trusted root CA certificates are:
+
+1. filled and fixed by the software or device vendor with a default root CA certificates set
+2. may be extendable or replaceable by a user provided custom root CA certificates set
+
+With 1., the user implicitly trusts the vendor, and all root CAs in the set installed by the vendor.
+With 2., the user must manage a public-private key infrastructure, and when information is to be
+shared with other parties, the use PKI must be made available to those parties, and the parties
+will operationally and administratively depend on the PKI hosting party.
+In summary, x509 follows a centralized and hierarchical trust model.
+
+With WAMP-Cryptosign, we use a public blockchain for certificate chain trust anchors. Using a public blockchain, specifically Ethereum, provides a decentralized, shared and cryptographically secure
+storage for root CA certificates, that is trust anchors. These anchors can be associated with
+other entities stored on-chain, such as *federated Realms*.
+
+The following diagram shows the structure of certificate chains in WAMP-Cryptosign:
+
 ```
            EIP712AuthorityCertificate
         +------------------------------+
@@ -364,9 +393,81 @@ optional hierarchical chain of intermediate certificates
         +------------------------------+         +--------------------------+
 ```
 
-### Example Message Exchanges
+#### Certificate Types
 
-sdfsd
+The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificate` follow [EIP712](https://eips.ethereum.org/EIPS/eip-712) and use Ethereum signatures.
+
+```json
+"EIP712AuthorityCertificate": [
+    {
+        "name": "chainId",
+        "type": "uint256"
+    },
+    {
+        "name": "verifyingContract",
+        "type": "address"
+    },
+    {
+        "name": "validFrom",
+        "type": "uint256"
+    },
+    {
+        "name": "issuer",
+        "type": "address"
+    },
+    {
+        "name": "subject",
+        "type": "address"
+    },
+    {
+        "name": "realm",
+        "type": "address"
+    },
+    {
+        "name": "capabilities",
+        "type": "uint64"
+    },
+    {
+        "name": "meta",
+        "type": "string"
+    }
+]
+```
+
+```json
+"EIP712DelegateCertificate": [
+    {
+        "name": "chainId",
+        "type": "uint256"
+    },
+    {
+        "name": "verifyingContract",
+        "type": "address"
+    },
+    {
+        "name": "validFrom",
+        "type": "uint256"
+    },
+    {
+        "name": "delegate",
+        "type": "address"
+    },
+    {
+        "name": "csPubKey",
+        "type": "bytes32"
+    },
+    {
+        "name": "bootedAt",
+        "type": "uint64"
+    },
+    {
+        "name": "meta",
+        "type": "string"
+    }
+]
+```
+
+### Example Message Exchanges
 
 #### Example 1
 
