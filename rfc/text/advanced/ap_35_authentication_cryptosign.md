@@ -467,6 +467,44 @@ The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificat
 ]
 ```
 
+#### Capabilities
+
+* **Bit 0**: `CAPABILITY_ROOT_CA`
+* **Bit 1**: `CAPABILITY_INTERMEDIATE_CA`
+* **Bit 2**: `CAPABILITY_PUBLIC_RELAY`
+* **Bit 3**: `CAPABILITY_PRIVATE_RELAY`
+* **Bit 4**: `CAPABILITY_PROVIDER`
+* **Bit 5**: `CAPABILITY_CONSUMER`
+* **Bits 6 - 63**: future use, all set to `0`
+
+#### Certificate Chain Verification
+
+To verify a certificate chain and respective certificate signatures
+
+```
+[
+    (EIP712DelegateCertificate, Signature),       // delegate certificate
+    (EIP712AuthorityCertificate, Signature),      // intermediate CA certificate
+    ...
+    (EIP712AuthorityCertificate, Signature),      // intermediate CA certificate
+    (EIP712AuthorityCertificate, Signature)       // root CA certificate
+]
+```
+
+the following rules must be checked:
+
+* CC0: `chainId` and `verifyingContract` must match for all certificates to what we expect, and `validFrom` before current block number on the respective chain
+* CC1: check certificate types, the first must be a `EIP712DelegateCertificate`, and all subsequent certificates must be of type `EIP712AuthorityCertificate`
+* CC2: last certificate must be self-signed (`issuer` equals `subject`), it is a root CA certificate
+* CC3.1: intermediate certificate's `issuer` must be the root CA certificate `subject`
+* CC3.2: root certificate must be `validFrom` before the intermediate certificate
+* CC3.3: `capabilities` of intermediate certificate must be a subset of the root cert
+* CC4.1: intermediate certificate's `subject` must be the delegate certificate `delegate`
+* CC4.2: intermediate certificate must be `validFrom` before the delegate certificate
+* CC5: verify `signature` on root certificate
+* CC6: verify `signature` on intermediate certificate
+* CC7: verify `signature` on delegate certificate
+
 ### Example Message Exchanges
 
 #### Example 1
