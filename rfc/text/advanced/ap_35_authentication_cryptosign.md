@@ -3,17 +3,26 @@
 *WAMP-Cryptosign* is a WAMP authentication method based on
 *public-private key cryptography*. Specifically, it is based on [Ed25519](https://ed25519.cr.yp.to/) digital signatures as described in [@!RFC8032].
 
-**Ed25519** is an [elliptic curve signature scheme](https://ed25519.cr.yp.to/ed25519-20110926.pdf) that instantiates
-the Edwards-curve Digital Signature Algorithm (EdDSA) with
-elliptic curve parameters which are equivalent to [Curve25519](https://cr.yp.to/ecdh.html).
-
-**Curve25519** is a [SafeCurve](https://safecurves.cr.yp.to/), which means
-it is easy to implement securely and avoid security issues resulting from common implementation challenges and bugs.
-
+**Ed25519** is an [elliptic curve signature scheme](https://ed25519.cr.yp.to/ed25519-20110926.pdf) that instantiates the Edwards-curve Digital Signature Algorithm (EdDSA) with elliptic curve parameters which are equivalent to [Curve25519](https://cr.yp.to/ecdh.html).
+**Curve25519** is a [SafeCurve](https://safecurves.cr.yp.to/), which means it is easy to implement securely and avoid security issues resulting from common implementation challenges and bugs.
 Ed25519 is intended to operate at around the 128-bit security level, and there are robust native implementations available as open-source, e.g. [libsodium](https://github.com/jedisct1/libsodium), which can be used from script languages, e.g. [PyNaCl](https://github.com/pyca/pynacl).
 
+An implementation of *WAMP-Cryptosign* MUST provide
 
-### Client Authentication
+* [Client Authentication](#clientauth)
+
+and MAY implement one or more of
+
+* [TLS Channel Binding](#channelbinding)
+* [Router Authentication](#routerauth)
+* [Trustroots and Certificates](#trustrootcerts)
+
+Examples of complete authentication message exchanges can be found in
+
+* [Example Message Exchanges](#examplemessageexchanges)
+
+
+### Client Authentication {#clientauth}
 
 A *Client* is authenticated to a *Router* by:
 
@@ -34,7 +43,34 @@ A *Router* is optionally (see [Router Authentication](#name-router-authenticatio
 Again, in this case, the *Router* includes a trustroot and certificate for the client to verify.
 
 
-### Example Message Flow
+#### Computing the Signature
+
+The challenge sent by the router is a 32 bytes random value, encoded as a Hex string in `CHALLENGE.extra.challenge|string`.
+
+When no channel binding is active, the signature over the 32 bytes message MUST be computed using the WAMP-Cryptosign *private key* of the authenticating client.
+
+When channel binding is active, the challenge MUST first be XOR'ed bytewise with the channel ID, e.g. the 32 bytes from TLS with channel binding `"tls-unique"`, and the resulting message (which again has length 32 bytes) MUST be signed using the WAMP-Cryptosign *private key* of the authenticating client.
+
+To compute the signature
+
+
+        if channel_id_type == 'tls-unique':
+            assert len(
+                channel_id_raw) == 32, 'unexpected TLS transport channel ID length (was {}, but expected 32)'.format(
+                len(channel_id_raw))
+
+            # with TLS channel binding of type "tls-unique", the message to be signed by the client actually
+            # is the XOR of the challenge and the TLS channel ID
+            data = util.xor(challenge_raw, channel_id_raw)
+
+
+we return the concatenation of the signature and the message signed (96 bytes)
+
+
+https://pynacl.readthedocs.io/en/latest/signing/#algorithm
+
+
+#### Example Message Flow
 
 A typical authentication begins with the client sending a `HELLO` message specifying the `cryptosign` method as (one of) the authentication methods:
 
@@ -170,47 +206,7 @@ When the authentication is successful, `WELCOME.Details.authextra.roles|dict` wi
     }
 ```
 
-### TLS Channel Binding
-
-Write me.
-
-https://tools.ietf.org/html/rfc5056
-https://tools.ietf.org/html/rfc5929
-https://www.ietf.org/proceedings/90/slides/slides-90-uta-0.pdf
-
-
-self._challenge = os.urandom(32)
-
-
-
-### Computing the Signature
-
-The challenge sent by the router is a 32 bytes random value, encoded as a Hex string in `CHALLENGE.extra.challenge|string`.
-
-When no channel binding is active, the signature over the 32 bytes message MUST be computed using the WAMP-Cryptosign *private key* of the authenticating client.
-
-When channel binding is active, the challenge MUST first be XOR'ed bytewise with the channel ID, e.g. the 32 bytes from TLS with channel binding `"tls-unique"`, and the resulting message (which again has length 32 bytes) MUST be signed using the WAMP-Cryptosign *private key* of the authenticating client.
-
-To compute the signature
-
-
-        if channel_id_type == 'tls-unique':
-            assert len(
-                channel_id_raw) == 32, 'unexpected TLS transport channel ID length (was {}, but expected 32)'.format(
-                len(channel_id_raw))
-
-            # with TLS channel binding of type "tls-unique", the message to be signed by the client actually
-            # is the XOR of the challenge and the TLS channel ID
-            data = util.xor(challenge_raw, channel_id_raw)
-
-
-we return the concatenation of the signature and the message signed (96 bytes)
-
-
-https://pynacl.readthedocs.io/en/latest/signing/#algorithm
-
-
-### Test Vectors
+#### Test Vectors
 
 The following test vectors allow to verify an implementation of WAMP-Cryptosign signatures. You can use `channel_id`, `private_key` and `challenge` as input, and check the computed signature matches `signature`.
 
@@ -258,13 +254,21 @@ test_vectors_1 = [
 ]
 ```
 
+### TLS Channel Binding {#channelbinding}
 
-### Router Authentication
+Write me.
+
+* https://tools.ietf.org/html/rfc5056
+* https://tools.ietf.org/html/rfc5929
+* https://www.ietf.org/proceedings/90/slides/slides-90-uta-0.pdf
+
+
+### Router Authentication {#routerauth}
 
 Write me.
 
 
-### Trustroots and Certificates
+### Trustroots and Certificates {#trustrootcerts}
 
 Write me.
 
@@ -397,8 +401,10 @@ optional hierarchical chain of intermediate certificates
 
 The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificate` follow [EIP712](https://eips.ethereum.org/EIPS/eip-712) and use Ethereum signatures.
 
+`EIP712AuthorityCertificate`:
+
 ```json
-"EIP712AuthorityCertificate": [
+[
     {
         "name": "chainId",
         "type": "uint256"
@@ -434,8 +440,10 @@ The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificat
 ]
 ```
 
+`EIP712DelegateCertificate`:
+
 ```json
-"EIP712DelegateCertificate": [
+[
     {
         "name": "chainId",
         "type": "uint256"
@@ -491,21 +499,23 @@ To verify a certificate chain and respective certificate signatures
 ]
 ```
 
-the following rules must be checked:
+the following Certificate Chain Rules (CCR) must be checked:
 
-* CC0: `chainId` and `verifyingContract` must match for all certificates to what we expect, and `validFrom` before current block number on the respective chain
-* CC1: check certificate types, the first must be a `EIP712DelegateCertificate`, and all subsequent certificates must be of type `EIP712AuthorityCertificate`
-* CC2: last certificate must be self-signed (`issuer` equals `subject`), it is a root CA certificate
-* CC3.1: intermediate certificate's `issuer` must be the root CA certificate `subject`
-* CC3.2: root certificate must be `validFrom` before the intermediate certificate
-* CC3.3: `capabilities` of intermediate certificate must be a subset of the root cert
-* CC4.1: intermediate certificate's `subject` must be the delegate certificate `delegate`
-* CC4.2: intermediate certificate must be `validFrom` before the delegate certificate
-* CC5: verify `signature` on root certificate
-* CC6: verify `signature` on intermediate certificate
-* CC7: verify `signature` on delegate certificate
+1. **CCR-1**: The `chainId` and `verifyingContract` must match for all certificates to what we expect, and `validFrom` before current block number on the respective chain.
+2. **CCR-2**: The `realm` must match for all certificates to the respective realm.
+3. **CCR-3**: The type of the first certificate in the chain must be a `EIP712DelegateCertificate`, and all subsequent certificates must be of type `EIP712AuthorityCertificate`.
+4. **CCR-4**: The last certificate must be self-signed (`issuer` equals `subject`), it is a root CA certificate.
+5. **CCR-5**: The intermediate certificate's `issuer` must be equal to the `subject` of the previous certificate.
+6. **CCR-6**: The root certificate must be `validFrom` before the intermediate certificate
+7. **CCR-7**: The `capabilities` of intermediate certificate must be a subset of the root cert
+8. **CCR-8**: The intermediate certificate's `subject` must be the delegate certificate `delegate`
+9. **CCR-9**: The intermediate certificate must be `validFrom` before the delegate certificate
+10. **CCR-10**: The root certificate's signature must be valid and signed by the root certificate's `issuer`.
+11. **CCR-11**: The intermediate certificate's signature must be valid and signed by the intermediate certificate's `issuer`.
+12. **CCR-12**: The delegate certificate's signature must be valid and signed by the `delegate`.
 
-### Example Message Exchanges
+
+### Example Message Exchanges {#examplemessageexchanges}
 
 #### Example 1
 
