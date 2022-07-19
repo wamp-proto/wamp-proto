@@ -47,27 +47,11 @@ Again, in this case, the *Router* includes a trustroot and certificate for the c
 
 The challenge sent by the router is a 32 bytes random value, encoded as a Hex string in `CHALLENGE.extra.challenge|string`.
 
-When no channel binding is active, the signature over the 32 bytes message MUST be computed using the WAMP-Cryptosign *private key* of the authenticating client.
+When no channel binding is active, the Ed25519 signature over the 32 bytes message MUST be computed using the WAMP-Cryptosign *private key* of the authenticating client.
 
 When channel binding is active, the challenge MUST first be XOR'ed bytewise with the channel ID, e.g. the 32 bytes from TLS with channel binding `"tls-unique"`, and the resulting message (which again has length 32 bytes) MUST be signed using the WAMP-Cryptosign *private key* of the authenticating client.
 
-To compute the signature
-
-
-        if channel_id_type == 'tls-unique':
-            assert len(
-                channel_id_raw) == 32, 'unexpected TLS transport channel ID length (was {}, but expected 32)'.format(
-                len(channel_id_raw))
-
-            # with TLS channel binding of type "tls-unique", the message to be signed by the client actually
-            # is the XOR of the challenge and the TLS channel ID
-            data = util.xor(challenge_raw, channel_id_raw)
-
-
-we return the concatenation of the signature and the message signed (96 bytes)
-
-
-https://pynacl.readthedocs.io/en/latest/signing/#algorithm
+The client MUST return the concatenation of the signature and the message signed (96 bytes) in the `AUTHENTICATE` message.
 
 
 #### Example Message Flow
@@ -272,26 +256,6 @@ Write me.
 
 Write me.
 
-* ``"eth"``: An Ethereum address, e.g. ``"0xe59C7418403CF1D973485B36660728a5f4A8fF9c"``.
-* ``"ens"``: An Ethereum ENS name, e.g. ``"wamp-proto.eth"``.
-* ``"reverse_ens"``: An Ethereum ENS name in reverse notation, e.g. ``"eth.wamp-proto"``.
-
-
-all realm names in Autobahn/Crossbar.io must match this
-
-_URI_PAT_REALM_NAME = re.compile(r"^[A-Za-z][A-Za-z\d_\-@\.]{2,254}$")
-
-if Ethereum addresses are enabled, realm names which are "0x" prefixed Ethereum addresses are also valid
-
-_URI_PAT_REALM_NAME_ETH = re.compile(r"^0x([A-Fa-f\d]{40})$")
-
-realms names might also specifically match ENS URIs
-
-_URI_PAT_REALM_NAME_ENS = re.compile(r"^([a-z\d_\-@\.]{2,250})\.eth$")
-
-since WAMP recommends using reverse dotted notation, reverse ENS names can be checked with this pattern
-
-_URI_PAT_REALM_NAME_ENS_REVERSE = re.compile(r"^eth\.([a-z\d_\-@\.]{2,250})$")
 
 #### Certificate Chains
 
@@ -481,9 +445,12 @@ The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificat
 * **Bit 1**: `CAPABILITY_INTERMEDIATE_CA`
 * **Bit 2**: `CAPABILITY_PUBLIC_RELAY`
 * **Bit 3**: `CAPABILITY_PRIVATE_RELAY`
-* **Bit 4**: `CAPABILITY_PROVIDER`
-* **Bit 5**: `CAPABILITY_CONSUMER`
-* **Bits 6 - 63**: future use, all set to `0`
+* **Bit 4**: `CAPABILITY_GATEWAY`
+* **Bit 5**: `CAPABILITY_EXCHANGE`
+* **Bit 6**: `CAPABILITY_PROVIDER`
+* **Bit 7**: `CAPABILITY_CONSUMER`
+* **Bits 8 - 63**: future use, all set to `0`
+
 
 #### Certificate Chain Verification
 
