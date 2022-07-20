@@ -451,6 +451,14 @@ The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificat
 * **Bit 7**: `CAPABILITY_CONSUMER`
 * **Bits 8 - 63**: future use, all set to `0`
 
+Permission to create a `CAPABILITY_PUBLIC_RELAY` certificate on a realm can be
+configured by the realm owner for:
+
+* `PRIVATE`: signed by realm owner
+* `PERMISSIONED`: signed by requestor and realm owner
+* `OPEN`: signed by requestor
+
+Permission for `CAPABILITY_ROOT_CA` is always `PRIVATE`.
 
 #### Certificate Chain Verification
 
@@ -484,7 +492,11 @@ the following Certificate Chain Rules (CCR) must be checked:
 
 ### Example Message Exchanges {#examplemessageexchanges}
 
-#### Example 1
+* [Example 1]( {#message-exchange-example1})
+* [Example 2]( {#message-exchange-example2})
+* [Example 3]( {#message-exchange-example3})
+
+#### Example 1 {#message-exchange-example1}
 
 * *with* router challenge
 * *without* TLS channel binding
@@ -592,7 +604,7 @@ WAMP-Receive(3735119691078036, client01@example.com) <<
 <<
 ```
 
-#### Example 2
+#### Example 2 {#message-exchange-example2}
 
 * *with* router challenge
 * *with* TLS channel binding
@@ -734,8 +746,192 @@ WAMP-Receive(7325966140445461, client01@example.com) <<
 <<
 ```
 
-#### Example 3
+#### Example 3 {#message-exchange-example3}
 
 * *with* router challenge
 * *with* TLS channel binding
 * *with* client trustroot and certificates
+
+```
+WAMP-Transmit(-, -) >>
+  HELLO::
+    [1,
+     'devices',
+     {'authextra': {'certificates': [({'domain': {'name': 'WMP', 'version': '1'},
+                                       'message': {'bootedAt': 1658329429834290428,
+                                                   'chainId': 1,
+                                                   'csPubKey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+                                                   'delegate': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
+                                                   'meta': '',
+                                                   'validFrom': 15180179,
+                                                   'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+                                       'primaryType': 'EIP712DelegateCertificate',
+                                       'types': {'EIP712DelegateCertificate': [{'name': 'chainId',
+                                                                                'type': 'uint256'},
+                                                                               {'name': 'verifyingContract',
+                                                                                'type': 'address'},
+                                                                               {'name': 'validFrom',
+                                                                                'type': 'uint256'},
+                                                                               {'name': 'delegate',
+                                                                                'type': 'address'},
+                                                                               {'name': 'csPubKey',
+                                                                                'type': 'bytes32'},
+                                                                               {'name': 'bootedAt',
+                                                                                'type': 'uint64'},
+                                                                               {'name': 'meta',
+                                                                                'type': 'string'}],
+                                                 'EIP712Domain': [{'name': 'name',
+                                                                   'type': 'string'},
+                                                                  {'name': 'version',
+                                                                   'type': 'string'}]}},
+                                      '99e7b6f639c2f5bef1d65e473738569a530bfaefcd60f37fc1e70bf94d6413c34c84623ed0e40805eee83ba8842088623b6ebdd6c77b020790e7ab0fe6cce2771b'),
+                                     ({'domain': {'name': 'WMP', 'version': '1'},
+                                       'message': {'capabilities': 12,
+                                                   'chainId': 1,
+                                                   'issuer': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57',
+                                                   'meta': '',
+                                                   'realm': '0xA6e693CC4A2b4F1400391a728D26369D9b82ef96',
+                                                   'subject': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
+                                                   'validFrom': 15180179,
+                                                   'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+                                       'primaryType': 'EIP712AuthorityCertificate',
+                                       'types': {'EIP712AuthorityCertificate': [{'name': 'chainId',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'verifyingContract',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'validFrom',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'issuer',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'subject',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'realm',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'capabilities',
+                                                                                 'type': 'uint64'},
+                                                                                {'name': 'meta',
+                                                                                 'type': 'string'}],
+                                                 'EIP712Domain': [{'name': 'name',
+                                                                   'type': 'string'},
+                                                                  {'name': 'version',
+                                                                   'type': 'string'}]}},
+                                      '7d7bc1123d59535c9c8ead702ecab19a9fe4a3ec6f49ba78e1c8c67a3703f6fc3feb0972538624479a14cf67ea8dff3f0defed1754848e5a18d4a0f8808a63c21c'),
+                                     ({'domain': {'name': 'WMP', 'version': '1'},
+                                       'message': {'capabilities': 63,
+                                                   'chainId': 1,
+                                                   'issuer': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57',
+                                                   'meta': '',
+                                                   'realm': '0xA6e693CC4A2b4F1400391a728D26369D9b82ef96',
+                                                   'subject': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57',
+                                                   'validFrom': 15180179,
+                                                   'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+                                       'primaryType': 'EIP712AuthorityCertificate',
+                                       'types': {'EIP712AuthorityCertificate': [{'name': 'chainId',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'verifyingContract',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'validFrom',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'issuer',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'subject',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'realm',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'capabilities',
+                                                                                 'type': 'uint64'},
+                                                                                {'name': 'meta',
+                                                                                 'type': 'string'}],
+                                                 'EIP712Domain': [{'name': 'name',
+                                                                   'type': 'string'},
+                                                                  {'name': 'version',
+                                                                   'type': 'string'}]}},
+                                      'd3d9a2a24dd25cf133042c2b6d69fd79a4ae578bcc8b126e78792b7a4aff77ca7dfc9d6c167ee6602bea6a45e54afabe4ae94aab96813d772c8ed7d2357e89ed1b')],
+                    'challenge': 'f868ad07dd33ce380c45aecd7bf3b717fa860a0a4ac4e6816120f9057d9bad43',
+                    'channel_binding': 'tls-unique',
+                    'pubkey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+                    'trustroot': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+      'authmethods': ['cryptosign'],
+      'roles': {'callee': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True,
+                                        'registration_revocation': True,
+                                        'shared_registration': True}},
+                'caller': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True}},
+                'publisher': {'features': {'payload_encryption_cryptobox': True,
+                                           'payload_transparency': True,
+                                           'publisher_exclusion': True,
+                                           'publisher_identification': True,
+                                           'subscriber_blackwhite_listing': True,
+                                           'x_acknowledged_event_delivery': True}},
+                'subscriber': {'features': {'pattern_based_subscription': True,
+                                            'payload_encryption_cryptobox': True,
+                                            'payload_transparency': True,
+                                            'publisher_identification': True,
+                                            'subscription_revocation': True}}}}]
+>>
+
+WAMP-Transmit(-, -) >>
+  AUTHENTICATE::
+    [5,
+     '2a9ad5aab8a05ab6a261fe2bbe32fe5dfa872673503ce6654067e0dd2a0d9dba44796e57b7b6cec1b00e42a109a603a03d4c30a602efd9e7d16de86fa122730789a48c795d740d99ec4dc31d19380e48c965a0b451f47a65d83ea4420d41b734',
+     {}]
+>>
+
+WAMP-Receive(-, -) <<
+  WELCOME::
+    [2,
+     4389585628739437,
+     {'authextra': {'x_cb_node': 'intel-nuci7-54783',
+                    'x_cb_peer': 'tcp4:127.0.0.1:41214',
+                    'x_cb_pid': 54887,
+                    'x_cb_worker': 'worker001'},
+      'authid': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
+      'authmethod': 'cryptosign',
+      'authprovider': 'static',
+      'authrole': 'user',
+      'realm': 'realm1',
+      'roles': {'broker': {'features': {'event_retention': True,
+                                        'pattern_based_subscription': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'publisher_exclusion': True,
+                                        'publisher_identification': True,
+                                        'session_meta_api': True,
+                                        'subscriber_blackwhite_listing': True,
+                                        'subscription_meta_api': True,
+                                        'subscription_revocation': True}},
+                'dealer': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'payload_encryption_cryptobox': True,
+                                        'payload_transparency': True,
+                                        'progressive_call_results': True,
+                                        'registration_meta_api': True,
+                                        'registration_revocation': True,
+                                        'session_meta_api': True,
+                                        'shared_registration': True,
+                                        'testament_meta_api': True}}},
+      'x_cb_node': 'intel-nuci7-54783',
+      'x_cb_peer': 'tcp4:127.0.0.1:41214',
+      'x_cb_pid': 54887,
+      'x_cb_worker': 'worker001'}]
+<<
+
+WAMP-Transmit(4389585628739437, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) >>
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+>>
+
+WAMP-Receive(4389585628739437, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+<<
+```
