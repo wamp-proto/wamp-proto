@@ -2,8 +2,10 @@
 
 A *Caller* may issue a progressive call. This can be useful in few cases:
 
-* Payload is too big to send it whole in one request.
+* Payload is too big to send it whole in one request. E.g. uploading a file.
 * Payload is long term-based, and it is required to start processing it earlier.
+* Partial results should be made available to the caller as quickly as possible. This can be accomplished
+  in conjunction with progressive call results feature.
 * RPC is called too often. So overall processing can be optimized: there is no need to generate new id for request,
   initiate structures for new call, etc.
 
@@ -15,14 +17,29 @@ This results in efficient two-way streams between *Caller* and *Callee*.
 
 **Feature Announcement**
 
-Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
+Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) 
+and *Dealers* (`role := "dealer"`) via
 
 {align="left"}
 HELLO.Details.roles.<role>.features.progressive_calls|bool := true
 
+Progressive Calls can work only if all three nodes support and announced this feature. 
+
+Cases when *Caller* sends `CALL` message with `progressive_calls := true` without announcing it during `HELLO` 
+handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with 
+`wamp.error.protocol_violation` error reason.
+
+Cases when *Caller* sends `CALL` message with `progressive_calls := true` to *Dealer*, that did not announce 
+progressive calls support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP 
+connections must be aborted with `wamp.error.protocol_violation` error reason.
+
+Cases when *Caller* sends `CALL` message with `progressive_calls := true` to the *Dealer* that supports this feature,
+which then must be routed to the *Callee* which doesn't support progressive calls MUST be treated as *APPLICATION ERRORS*
+and *Dealer* MUST respond to *Caller* with `wamp.error.feature_not_supported` error message.
+
 **Message Flow**
 
-The message flow for progressive call when *Callee* waits for all chunks before processing:
+The message flow for progressive call when *Callee* waits for all chunks before processing and sending single result:
 
 {align="left"}
 ,------.            ,------.                 ,------.
@@ -224,7 +241,9 @@ canceling when mode="killnowait"). So, it is not necessary for the *Callee* to s
 
 **Ignoring Progressive Call Requests**
 
-A *Callee* that does not support progressive call SHOULD ignore any `INVOCATION.Details.progress` flag.
+Unlike other advanced features, this one can not be omitted by *Callee*.
+So if *Callee* doesn't support this feature, *Dealer* MUST respond to *Caller* with 
+`wamp.error.feature_not_supported` error message. 
 
 A *Callee* that supports progressive calls, but does not support call canceling is considered by the *Dealer* to 
 not support progressive calls.
