@@ -91,25 +91,16 @@ The client needs to announce the WAMP `roles` and features it supports, for exam
 {"callee": {"features": {"call_canceling": True,
                          "caller_identification": True,
                          "pattern_based_registration": True,
-                         "payload_encryption_cryptobox": True,
-                         "payload_transparency": True,
                          "progressive_call_results": True,
                          "registration_revocation": True,
                          "shared_registration": True}},
 "caller": {"features": {"call_canceling": True,
                         "caller_identification": True,
-                        "payload_encryption_cryptobox": True,
-                        "payload_transparency": True,
                         "progressive_call_results": True}},
-"publisher": {"features": {"payload_encryption_cryptobox": True,
-                           "payload_transparency": True,
-                           "publisher_exclusion": True,
+"publisher": {"features": {"publisher_exclusion": True,
                            "publisher_identification": True,
-                           "subscriber_blackwhite_listing": True,
-                           "x_acknowledged_event_delivery": True}},
+                           "subscriber_blackwhite_listing": True}},
 "subscriber": {"features": {"pattern_based_subscription": True,
-                            "payload_encryption_cryptobox": True,
-                            "payload_transparency": True,
                             "publisher_identification": True,
                             "subscription_revocation": True}}}}
 ```
@@ -162,14 +153,12 @@ where
 
 The `WELCOME.Details` again contain the actual authentication information active. If the authentication fails, the router will response with an `ABORT` message.
 
-When the authentication is successful, `WELCOME.Details.authextra.roles|dict` will announce the roles and features the router supports:
+When the authentication is successful, `WELCOME.Details.roles|dict` will announce the roles and features the router supports:
 
 {align="left"}
 ```javascript
 {"broker": {"features": {"event_retention": True,
                                     "pattern_based_subscription": True,
-                                    "payload_encryption_cryptobox": True,
-                                    "payload_transparency": True,
                                     "publisher_exclusion": True,
                                     "publisher_identification": True,
                                     "session_meta_api": True,
@@ -179,8 +168,6 @@ When the authentication is successful, `WELCOME.Details.authextra.roles|dict` wi
             "dealer": {"features": {"call_canceling": True,
                                     "caller_identification": True,
                                     "pattern_based_registration": True,
-                                    "payload_encryption_cryptobox": True,
-                                    "payload_transparency": True,
                                     "progressive_call_results": True,
                                     "registration_meta_api": True,
                                     "registration_revocation": True,
@@ -516,25 +503,16 @@ WAMP-Transmit(-, -) >>
       'roles': {'callee': {'features': {'call_canceling': True,
                                         'caller_identification': True,
                                         'pattern_based_registration': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True,
                                         'registration_revocation': True,
                                         'shared_registration': True}},
                 'caller': {'features': {'call_canceling': True,
                                         'caller_identification': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True}},
-                'publisher': {'features': {'payload_encryption_cryptobox': True,
-                                           'payload_transparency': True,
-                                           'publisher_exclusion': True,
+                'publisher': {'features': {'publisher_exclusion': True,
                                            'publisher_identification': True,
-                                           'subscriber_blackwhite_listing': True,
-                                           'x_acknowledged_event_delivery': True}},
+                                           'subscriber_blackwhite_listing': True}},
                 'subscriber': {'features': {'pattern_based_subscription': True,
-                                            'payload_encryption_cryptobox': True,
-                                            'payload_transparency': True,
                                             'publisher_identification': True,
                                             'subscription_revocation': True}}}}]
 >>
@@ -571,8 +549,6 @@ WAMP-Receive(-, -) <<
       'realm': 'devices',
       'roles': {'broker': {'features': {'event_retention': True,
                                         'pattern_based_subscription': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'publisher_exclusion': True,
                                         'publisher_identification': True,
                                         'session_meta_api': True,
@@ -582,8 +558,6 @@ WAMP-Receive(-, -) <<
                 'dealer': {'features': {'call_canceling': True,
                                         'caller_identification': True,
                                         'pattern_based_registration': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True,
                                         'registration_meta_api': True,
                                         'registration_revocation': True,
@@ -624,25 +598,16 @@ WAMP-Transmit(-, -) >>
       'roles': {'callee': {'features': {'call_canceling': True,
                                         'caller_identification': True,
                                         'pattern_based_registration': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True,
                                         'registration_revocation': True,
                                         'shared_registration': True}},
                 'caller': {'features': {'call_canceling': True,
                                         'caller_identification': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True}},
-                'publisher': {'features': {'payload_encryption_cryptobox': True,
-                                           'payload_transparency': True,
-                                           'publisher_exclusion': True,
+                'publisher': {'features': {'publisher_exclusion': True,
                                            'publisher_identification': True,
-                                           'subscriber_blackwhite_listing': True,
-                                           'x_acknowledged_event_delivery': True}},
+                                           'subscriber_blackwhite_listing': True}},
                 'subscriber': {'features': {'pattern_based_subscription': True,
-                                            'payload_encryption_cryptobox': True,
-                                            'payload_transparency': True,
                                             'publisher_identification': True,
                                             'subscription_revocation': True}}}}]
 >>
@@ -679,8 +644,6 @@ WAMP-Receive(-, -) <<
       'realm': 'devices',
       'roles': {'broker': {'features': {'event_retention': True,
                                         'pattern_based_subscription': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'publisher_exclusion': True,
                                         'publisher_identification': True,
                                         'session_meta_api': True,
@@ -690,8 +653,6 @@ WAMP-Receive(-, -) <<
                 'dealer': {'features': {'call_canceling': True,
                                         'caller_identification': True,
                                         'pattern_based_registration': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True,
                                         'registration_meta_api': True,
                                         'registration_revocation': True,
@@ -761,12 +722,12 @@ WAMP-Transmit(-, -) >>
     [1,
      'devices',
      {'authextra': {'certificates': [({'domain': {'name': 'WMP', 'version': '1'},
-                                       'message': {'bootedAt': 1658329429834290428,
+                                       'message': {'bootedAt': 1658765756680628959,
                                                    'chainId': 1,
                                                    'csPubKey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
                                                    'delegate': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
                                                    'meta': '',
-                                                   'validFrom': 15180179,
+                                                   'validFrom': 15212703,
                                                    'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
                                        'primaryType': 'EIP712DelegateCertificate',
                                        'types': {'EIP712DelegateCertificate': [{'name': 'chainId',
@@ -787,7 +748,7 @@ WAMP-Transmit(-, -) >>
                                                                    'type': 'string'},
                                                                   {'name': 'version',
                                                                    'type': 'string'}]}},
-                                      '99e7b6f639c2f5bef1d65e473738569a530bfaefcd60f37fc1e70bf94d6413c34c84623ed0e40805eee83ba8842088623b6ebdd6c77b020790e7ab0fe6cce2771b'),
+                                      '8fe06bb269110c6bc0e011ea2b7da07091c674f7fe67458c1805157157da702b70b56cdf662666dc386820ded0116b6b84151df1ed65210eeecd7e477cdb765b1b'),
                                      ({'domain': {'name': 'WMP', 'version': '1'},
                                        'message': {'capabilities': 12,
                                                    'chainId': 1,
@@ -795,7 +756,7 @@ WAMP-Transmit(-, -) >>
                                                    'meta': '',
                                                    'realm': '0xA6e693CC4A2b4F1400391a728D26369D9b82ef96',
                                                    'subject': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
-                                                   'validFrom': 15180179,
+                                                   'validFrom': 15212703,
                                                    'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
                                        'primaryType': 'EIP712AuthorityCertificate',
                                        'types': {'EIP712AuthorityCertificate': [{'name': 'chainId',
@@ -818,7 +779,7 @@ WAMP-Transmit(-, -) >>
                                                                    'type': 'string'},
                                                                   {'name': 'version',
                                                                    'type': 'string'}]}},
-                                      '7d7bc1123d59535c9c8ead702ecab19a9fe4a3ec6f49ba78e1c8c67a3703f6fc3feb0972538624479a14cf67ea8dff3f0defed1754848e5a18d4a0f8808a63c21c'),
+                                      '0c0eb60a108dbd72a204b41c1d18505358e4e7886b0c9787192a33ac9e0f94c92ce158f8de576fa9cccf28a8c9404ed66c2d355ea4ae7ee65cff0b73215b91bb1c'),
                                      ({'domain': {'name': 'WMP', 'version': '1'},
                                        'message': {'capabilities': 63,
                                                    'chainId': 1,
@@ -826,7 +787,7 @@ WAMP-Transmit(-, -) >>
                                                    'meta': '',
                                                    'realm': '0xA6e693CC4A2b4F1400391a728D26369D9b82ef96',
                                                    'subject': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57',
-                                                   'validFrom': 15180179,
+                                                   'validFrom': 15212703,
                                                    'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
                                        'primaryType': 'EIP712AuthorityCertificate',
                                        'types': {'EIP712AuthorityCertificate': [{'name': 'chainId',
@@ -849,8 +810,8 @@ WAMP-Transmit(-, -) >>
                                                                    'type': 'string'},
                                                                   {'name': 'version',
                                                                    'type': 'string'}]}},
-                                      'd3d9a2a24dd25cf133042c2b6d69fd79a4ae578bcc8b126e78792b7a4aff77ca7dfc9d6c167ee6602bea6a45e54afabe4ae94aab96813d772c8ed7d2357e89ed1b')],
-                    'challenge': 'f868ad07dd33ce380c45aecd7bf3b717fa860a0a4ac4e6816120f9057d9bad43',
+                                      'be35c8d6ae735d3bd8b5e27b1e1a067eba53e6a1cb4ef0f607c4717435e8ffa676246e7d08dfb4e83c78ad26f423b727b5d2c90627bdf6c94c1dbdf01979c34b1c')],
+                    'challenge': '2763e7fdb1c34a74e8497daf6c913744d11161a94cec3b16aeec60a788612e17',
                     'channel_binding': 'tls-unique',
                     'pubkey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
                     'trustroot': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
@@ -858,43 +819,44 @@ WAMP-Transmit(-, -) >>
       'roles': {'callee': {'features': {'call_canceling': True,
                                         'caller_identification': True,
                                         'pattern_based_registration': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True,
                                         'registration_revocation': True,
                                         'shared_registration': True}},
                 'caller': {'features': {'call_canceling': True,
                                         'caller_identification': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True}},
-                'publisher': {'features': {'payload_encryption_cryptobox': True,
-                                           'payload_transparency': True,
-                                           'publisher_exclusion': True,
+                'publisher': {'features': {'publisher_exclusion': True,
                                            'publisher_identification': True,
-                                           'subscriber_blackwhite_listing': True,
-                                           'x_acknowledged_event_delivery': True}},
+                                           'subscriber_blackwhite_listing': True}},
                 'subscriber': {'features': {'pattern_based_subscription': True,
-                                            'payload_encryption_cryptobox': True,
-                                            'payload_transparency': True,
                                             'publisher_identification': True,
                                             'subscription_revocation': True}}}}]
 >>
 
+WAMP-Receive(-, -) <<
+  CHALLENGE::
+    [4,
+     'cryptosign',
+     {'challenge': 'e4b40f72f9604754789d472225483bace926b9668d72c9122545e540d8d98f23',
+      'channel_binding': 'tls-unique',
+      'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+      'signature': 'ce456092998d796533d7ef2bab543300409d161066c9520c9284df6bbfb82947b37fb78d69fd56e5118afec62e35e015c60569af2e18ed92fedc738552242d039a38790e9c94064d89335393d39973c14074cd1008d7266de74c641103e30609'}]
+<<
+
 WAMP-Transmit(-, -) >>
   AUTHENTICATE::
     [5,
-     '2a9ad5aab8a05ab6a261fe2bbe32fe5dfa872673503ce6654067e0dd2a0d9dba44796e57b7b6cec1b00e42a109a603a03d4c30a602efd9e7d16de86fa122730789a48c795d740d99ec4dc31d19380e48c965a0b451f47a65d83ea4420d41b734',
+     '16c89629e72aff3f44661e701341b2221a2fa9d93205826fad85e70d3a8dab70a8f54314c14d470ebeb77a0dd16c833928c01134a52b2e73862b7d3f258b600059ef9181d4370b6d19e7691e9a407f29784315dfc949d4696ce5e1f6535ba73d',
      {}]
 >>
 
 WAMP-Receive(-, -) <<
   WELCOME::
     [2,
-     4389585628739437,
-     {'authextra': {'x_cb_node': 'intel-nuci7-54783',
-                    'x_cb_peer': 'tcp4:127.0.0.1:41214',
-                    'x_cb_pid': 54887,
+     869996509191260,
+     {'authextra': {'x_cb_node': 'intel-nuci7-30969',
+                    'x_cb_peer': 'tcp4:127.0.0.1:59172',
+                    'x_cb_pid': 31090,
                     'x_cb_worker': 'worker001'},
       'authid': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
       'authmethod': 'cryptosign',
@@ -903,8 +865,6 @@ WAMP-Receive(-, -) <<
       'realm': 'realm1',
       'roles': {'broker': {'features': {'event_retention': True,
                                         'pattern_based_subscription': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'publisher_exclusion': True,
                                         'publisher_identification': True,
                                         'session_meta_api': True,
@@ -914,26 +874,24 @@ WAMP-Receive(-, -) <<
                 'dealer': {'features': {'call_canceling': True,
                                         'caller_identification': True,
                                         'pattern_based_registration': True,
-                                        'payload_encryption_cryptobox': True,
-                                        'payload_transparency': True,
                                         'progressive_call_results': True,
                                         'registration_meta_api': True,
                                         'registration_revocation': True,
                                         'session_meta_api': True,
                                         'shared_registration': True,
                                         'testament_meta_api': True}}},
-      'x_cb_node': 'intel-nuci7-54783',
-      'x_cb_peer': 'tcp4:127.0.0.1:41214',
-      'x_cb_pid': 54887,
+      'x_cb_node': 'intel-nuci7-30969',
+      'x_cb_peer': 'tcp4:127.0.0.1:59172',
+      'x_cb_pid': 31090,
       'x_cb_worker': 'worker001'}]
 <<
 
-WAMP-Transmit(4389585628739437, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) >>
+WAMP-Transmit(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) >>
   GOODBYE::
     [6, {}, 'wamp.close.normal']
 >>
 
-WAMP-Receive(4389585628739437, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
+WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
   GOODBYE::
     [6, {}, 'wamp.close.normal']
 <<
