@@ -74,9 +74,9 @@ As `progressive` call is still the same call *Callee* must send the same `Reques
 must also send the same `Request|id` with every `INVOCATION` to the *Callee*.
 
 
-The message flow for progressive call when *Callee* starts sending progressive call results immediately. Please note,
-that `YIELD` messages doesn't need to be aligned with `CALL`/`INVOCATION` messages. E.g. *Caller* can send a few 
-`CALL` messages before starting to receive `RESULTS`, they do not need to be correlated. 
+The following message flow illustrates a progressive call when *Callee* starts sending progressive call 
+results immediately. Please note that `YIELD` messages don't need to be matched with `CALL`/`INVOCATION` messages. 
+E.g. *Caller* can send a few `CALL` messages before starting to receive `RESULTS`, they do not need to be correlated. 
 
 {align="left"}
 ,------.                  ,------.                 ,------.
@@ -187,9 +187,9 @@ CALL.Options.sticky|bool := true
 In this case *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all 
 subsequent `progressive` calls to the same *Callee*.
 
-If binding all ongoing `progressive` calls to the same *Callee* is not required, *Caller* can set `sticky` option to `FALSE`. 
+If binding all ongoing `progressive` calls to the same *Callee* is not required, *Caller* can set the `sticky` option to `FALSE`. 
 
-If `CALL.Options.sticky` is not specified it is treated like `TRUE`, so all `progressive`
+If `CALL.Options.sticky` is not specified, it is treated like `TRUE`, so all `progressive`
 calls go to the same *Callee*.
 
 **Progressive Call Cancellation**
@@ -206,12 +206,12 @@ Options:
 INTERRUPT.Options.mode|string == "killnowait"
 ```
 
-Progressive call cancellation, like progressive call result cancellation closes an important safety gap: 
-In cases where progressive calls are used to stream data from *Callers*, and network connectivity is unreliable, 
-*Callers* my often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
+Progressive call cancellation, like progressive call results cancellation closes an important safety gap: 
+In cases where progressive calls are used to stream data from *Caller*, and network connectivity is unreliable, 
+*Caller* may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
 consumption on *Dealer* and *Callee* sides, because of storing runtime data about ongoing calls.
 
-The message flow for progressive results cancellation involves:
+The message flow for cancelling progressive calls involves:
 
 {align="left"}
 ,------.            ,------.                 ,------.
@@ -237,12 +237,12 @@ The message flow for progressive results cancellation involves:
                     `------'                 `------'
 
 
-Note: Any `ERROR` returned by the *Callee*, in response to the `INTERRUPT`, is ignored (same as in regular call 
+Note: Any `ERROR` returned by the *Callee*, in response to an `INTERRUPT`, is ignored (same as in regular call 
 canceling when mode="killnowait"). So, it is not necessary for the *Callee* to send an `ERROR` message.
 
 **Ignoring Progressive Call Requests**
 
-Unlike other advanced features, this one can not be omitted by *Callee*.
+Unlike other advanced features, the *Callee* cannot be unaware of progressive call requests.
 So if *Callee* doesn't support this feature, *Dealer* MUST respond to *Caller* with 
 `wamp.error.feature_not_supported` error message. 
 
