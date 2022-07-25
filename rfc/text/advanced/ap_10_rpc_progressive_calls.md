@@ -5,7 +5,7 @@ A *Caller* may issue a progressive call. This can be useful in few cases:
 * Payload is too big to send it whole in one request. E.g. uploading a file.
 * Payload is long term-based, and it is required to start processing it earlier.
 * Partial results should be made available to the caller as quickly as possible. This can be accomplished
-  in conjunction with progressive call results feature.
+  in conjunction with Progressive Call Results feature.
 * RPC is called too often. So overall processing can be optimized: there is no need to generate new id for request,
   initiate structures for new call, etc.
 
@@ -25,50 +25,50 @@ HELLO.Details.roles.<role>.features.progressive_calls|bool := true
 
 Progressive Calls can work only if all three nodes support and announced this feature. 
 
-Cases when *Caller* sends `CALL` message with `progressive_calls := true` without announcing it during `HELLO` 
+Cases where *Caller* sends `CALL` message with `progressive_calls := true` without announcing it during `HELLO` 
 handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with 
 `wamp.error.protocol_violation` error reason.
 
-Cases when *Caller* sends `CALL` message with `progressive_calls := true` to *Dealer*, that did not announce 
+Cases where *Caller* sends `CALL` message with `progressive_calls := true` to *Dealer*, that did not announce 
 progressive calls support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP 
 connections must be aborted with `wamp.error.protocol_violation` error reason.
 
-Cases when *Caller* sends `CALL` message with `progressive_calls := true` to the *Dealer* that supports this feature,
+Cases where *Caller* sends `CALL` message with `progressive_calls := true` to the *Dealer* that supports this feature,
 which then must be routed to the *Callee* which doesn't support progressive calls MUST be treated as *APPLICATION ERRORS*
 and *Dealer* MUST respond to *Caller* with `wamp.error.feature_not_supported` error message.
 
 **Message Flow**
 
-The message flow for progressive call when *Callee* waits for all chunks before processing and sending single result:
+The message flow for a progressive call when *Callee* waits for all chunks before processing and sending a single result:
 
 {align="left"}
-,------.            ,------.                 ,------.
-|Caller|            |Dealer|                 |Callee|
-`--+---'            `--+---'                 `--+---'
-   |  CALL (progress)  |                        |
-   | ----------------->|                        |
-   |                   | INVOCATION (progress)  |
-   |                   | ---------------------->|
-   |  CALL (progress)  |                        |
-   | ----------------->|                        |
-   |                   | INVOCATION (progress)  |
-   |                   | ---------------------->|
-   |                   |                        |
-   |       ...         |       ...              |
-   |                   |                        |
-   |  CALL (final)     |                        |
-   | ----------------->|                        |
-   |                   | INVOCATION (final)     |
-   |                   | ---------------------->|
-   |                   |                        |
-   |                   |  YIELD or ERROR        |
-   |                   | <----------------------|
-   |                   |                        |
-   |  RESULT or ERROR  |                        |
-   | <-----------------|                        |
-,--+---.            ,--+---.                 ,--+---.
-|Caller|            |Dealer|                 |Callee|
-`------'            `------'                 `------'
+,------.                  ,------.                 ,------.
+|Caller|                  |Dealer|                 |Callee|
+`--+---'                  `--+---'                 `--+---'
+   |     CALL (progress)     |                        |
+   | ----------------------> |                        |
+   |                         | INVOCATION (progress)  |
+   |                         | ---------------------->|
+   |     CALL (progress)     |                        |
+   | ----------------------->|                        |
+   |                         | INVOCATION (progress)  |
+   |                         | ---------------------->|
+   |                         |                        |
+   |           ...           |          ...           |
+   |                         |                        |
+   |     CALL (final)        |                        |
+   | ----------------------->|                        |
+   |                         |   INVOCATION (final)   |
+   |                         | ---------------------->|
+   |                         |                        |
+   |                         | YIELD (final) or ERROR |
+   |                         | <----------------------|
+   |                         |                        |
+   | RESULT (final) or ERROR |                        |
+   | <-----------------------|                        |
+,--+---.                  ,--+---.                 ,--+---.
+|Caller|                  |Dealer|                 |Callee|
+`------'                  `------'                 `------'
 
 As `progressive` call is still the same call *Callee* must send the same `Request|id` with every `CALL` and *Dealer*
 must also send the same `Request|id` with every `INVOCATION` to the *Callee*.
@@ -79,56 +79,56 @@ that `YIELD` messages doesn't need to be aligned with `CALL`/`INVOCATION` messag
 `CALL` messages before starting to receive `RESULTS`, they do not need to be correlated. 
 
 {align="left"}
-,------.            ,------.                ,------.
-|Caller|            |Dealer|                |Callee|
-`--+---'            `--+---'                `--+---'
-   |  CALL (progress)  |                       |
-   |------------------>|                       |
-   |                   | INVOCATION (progress) |
-   |                   |---------------------->|
-   |                   |                       |
-   |                   | YIELD (progress)      |
-   |                   |<----------------------|
-   |                   |                       |
-   | RESULT (progress) |                       |
-   |<------------------|                       |
-   |                   |                       |
-   | CALL (progress)   |                       |
-   |------------------>|                       |
-   |                   | INVOCATION (progress) |
-   |                   |---------------------->|
-   |                   |                       |
-   | CALL (progress)   |                       |
-   |------------------>|                       |
-   |                   | INVOCATION (progress) |
-   |                   |---------------------->|
-   |                   | YIELD (progress)      |
-   |                   |<----------------------|
-   |                   |                       |
-   | RESULT (progress) |                       |
-   |<------------------|                       |
-   |                   |                       |
-   |                   | YIELD (progress)      |
-   |                   |<----------------------|
-   |                   |                       |
-   | RESULT (progress) |                       |
-   |<------------------|                       |
-   |                   |                       |
-   |       ...         |       ...             |
-   |                   |                       |
-   |  CALL (final)     |                       |
-   |------------------>|                       |
-   |                   | INVOCATION (final)    |
-   |                   |---------------------->|
-   |                   |                       |
-   |                   |  YIELD or ERROR       |
-   |                   |<----------------------|
-   |                   |                       |
-   |  RESULT or ERROR  |                       |
-   |<------------------|                       |
-,--+---.            ,--+---.                ,--+---.
-|Caller|            |Dealer|                |Callee|
-`------'            `------'                `------'
+,------.                  ,------.                 ,------.
+|Caller|                  |Dealer|                 |Callee|
+`--+---'                  `--+---'                 `--+---'
+   |     CALL (progress)     |                        |
+   |------------------------>|                        |
+   |                         | INVOCATION (progress)  |
+   |                         |----------------------->|
+   |                         |                        |
+   |                         |   YIELD (progress)     |
+   |                         |<-----------------------|
+   |                         |                        |
+   |   RESULT (progress)     |                        |
+   |<------------------------|                        |
+   |                         |                        |
+   |    CALL (progress)      |                        |
+   |------------------------>|                        |
+   |                         | INVOCATION (progress)  |
+   |                         |----------------------->|
+   |                         |                        |
+   |    CALL (progress)      |                        |
+   |------------------------>|                        |
+   |                         | INVOCATION (progress)  |
+   |                         |----------------------->|
+   |                         |    YIELD (progress)    |
+   |                         |<-----------------------|
+   |                         |                        |
+   |   RESULT (progress)     |                        |
+   |<------------------------|                        |
+   |                         |                        |
+   |                         |    YIELD (progress)    |
+   |                         |<-----------------------|
+   |                         |                        |
+   |   RESULT (progress)     |                        |
+   |<------------------------|                        |
+   |                         |                        |
+   |          ...            |          ...           |
+   |                         |                        |
+   |      CALL (final)       |                        |
+   |------------------------>|                        |
+   |                         |   INVOCATION (final)   |
+   |                         |----------------------->|
+   |                         |                        |
+   |                         | YIELD (final) or ERROR |
+   |                         |<-----------------------|
+   |                         |                        |
+   | RESULT (final) or ERROR |                        |
+   |<------------------------|                        |
+,--+---.                  ,--+---.                 ,--+---.
+|Caller|                  |Dealer|                 |Callee|
+`------'                  `------'                 `------'
 
 A *Caller* indicates its willingness to issue a progressive call by setting
 
@@ -150,7 +150,7 @@ CALL.Options.progress|bool := true
     ]
 ```
 
-If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to send progressive calls by setting
+If the *Callee* supports progressive calls, the *Dealer* shall forward the *Caller's* willingness to send progressive calls by setting
 
 {align="left"}
 INVOCATION.Details.progress|bool := true
@@ -171,20 +171,21 @@ INVOCATION.Details.progress|bool := true
     ]
 ```
 
-A call invocation MUST *always* end in a *normal* `CALL` without `"progress": true` option, or explicitly set `"progress": false` which is default.
+A call invocation MUST *always* end in a *normal* `CALL` without `"progress": true` option, or explicitly 
+set `"progress": false` which is the default.
 
 **Progressive calls and shared registration**
 
 RPCs can have a multiple registrations (see `Shared Registration` feature) with different `<invocation_policies>`.
-In this case `progressive` `CALLs` can be routed to different *Callees*, what can lead to unexpected results.
+In this case `progressive` `CALLs` can be routed to different *Callees*, which can lead to unexpected results.
 To bind `INVOCATIONs` to the same *Callee* *Caller* can specify `sticky` option during `CALL`
 
 {align="left"}
 CALL.Options.sticky|bool := true
 
 
-In this case *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all next `progressive` 
-calls to the same *Callee*.
+In this case *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all 
+subsequent `progressive` calls to the same *Callee*.
 
 If binding all ongoing `progressive` calls to the same *Callee* is not required, *Caller* can set `sticky` option to `FALSE`. 
 
