@@ -332,7 +332,7 @@ The message flow for progressive results cancellation involves:
 
 Note: Any `ERROR` returned by the *Callee*, in response to the `INTERRUPT`, is ignored (same as in call canceling when mode="killnowait"). So, it is not necessary for the *Callee* to send an `ERROR` message.
 
-**Ignoring Progressive Call Requests**
+**Ignoring Progressive Call Results Requests**
 
 A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
 

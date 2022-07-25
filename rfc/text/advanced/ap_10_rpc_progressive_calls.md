@@ -173,3 +173,58 @@ If binding all ongoing `progressive` calls to the same *Callee* is not required,
 
 If `CALL.Options.sticky` is not specified it is treated like `TRUE`, so all `progressive`
 calls go to the same *Callee*.
+
+**Progressive Call Cancellation**
+
+If the original *Caller* is no longer available for some reason (has left the realm), then the *Dealer* will send 
+an `INTERRUPT` to the *Callee*. The `INTERRUPT` will have `Options.mode` set to `"killnowait"` to indicate to the 
+client that no response should be sent to the `INTERRUPT`.
+
+```
+[INTERRUPT, INVOCATION.Request|id, Options|dict]
+```
+Options:
+```
+INTERRUPT.Options.mode|string == "killnowait"
+```
+
+Progressive call cancellation, like progressive call result cancellation closes an important safety gap: 
+In cases where progressive calls are used to stream data from *Callers*, and network connectivity is unreliable, 
+*Callers* my often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
+consumption on *Dealer* and *Callee* sides, because of storing runtime data about ongoing calls.
+
+The message flow for progressive results cancellation involves:
+
+{align="left"}
+,------.            ,------.                 ,------.
+|Caller|            |Dealer|                 |Callee|
+`--+---'            `--+---'                 `--+---'
+   |  CALL (progress)  |                        |
+   | ----------------->|                        |
+   |                   | INVOCATION (progress)  |
+   |                   | ---------------------->|
+   |  CALL (progress)  |                        |
+   | ----------------->|                        |
+   |                   | INVOCATION (progress)  |
+   |                   | ---------------------->|
+,--+---.               |                        |
+|Caller|               |                        |
+`------'               |                        |
+ (gone)                |                        |
+                       |       INTERRUPT        |
+                       | ---------------------->|
+                       |                        |
+                    ,--+---.                 ,--+---.
+                    |Dealer|                 |Callee|
+                    `------'                 `------'
+
+
+Note: Any `ERROR` returned by the *Callee*, in response to the `INTERRUPT`, is ignored (same as in regular call 
+canceling when mode="killnowait"). So, it is not necessary for the *Callee* to send an `ERROR` message.
+
+**Ignoring Progressive Call Requests**
+
+A *Callee* that does not support progressive call SHOULD ignore any `INVOCATION.Details.progress` flag.
+
+A *Callee* that supports progressive calls, but does not support call canceling is considered by the *Dealer* to 
+not support progressive calls.
