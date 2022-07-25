@@ -462,6 +462,8 @@ Permission for `CAPABILITY_ROOT_CA` is always `PRIVATE`.
 
 #### Certificate Chain Verification
 
+use of a specific method/mechanism, when it comes to establishing trust (i.e. certifying public keys).
+
 To verify a certificate chain and respective certificate signatures
 
 ```
@@ -489,12 +491,13 @@ the following Certificate Chain Rules (CCR) must be checked:
 11. **CCR-11**: The intermediate certificate's signature must be valid and signed by the intermediate certificate's `issuer`.
 12. **CCR-12**: The delegate certificate's signature must be valid and signed by the `delegate`.
 
+-----
 
 ### Example Message Exchanges {#examplemessageexchanges}
 
-* [Example 1]( {#message-exchange-example1})
-* [Example 2]( {#message-exchange-example2})
-* [Example 3]( {#message-exchange-example3})
+* [Example 1](#message-exchange-example1)
+* [Example 2](#message-exchange-example2)
+* [Example 3](#message-exchange-example3)
 
 #### Example 1 {#message-exchange-example1}
 
