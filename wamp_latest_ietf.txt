@@ -3253,10 +3253,10 @@ Internet-Draft                    WAMP                         July 2022
    +=================================+========+==+===+===+====+===+====+
    |Feature                          | Status |P | B | S | Cr | D | Ce |
    +=================================+========+==+===+===+====+===+====+
-   |Progressive Call Results (#rpc-  | beta   |  |   |   | X  | X | X  |
+   |Progressive Call Results (#rpc-  | stable |  |   |   | X  | X | X  |
    |progressive-call-results)        |        |  |   |   |    |   |    |
    +---------------------------------+--------+--+---+---+----+---+----+
-   |Progressive Calls (#rpc-         | sketch |  |   |   | X  | X | X  |
+   |Progressive Calls (#rpc-         | alpha  |  |   |   | X  | X | X  |
    |progressive-calls)               |        |  |   |   |    |   |    |
    +---------------------------------+--------+--+---+---+----+---+----+
    |Call Timeout (#rpc-call-timeout) | alpha  |  |   |   | X  | X | X  |
@@ -3264,7 +3264,7 @@ Internet-Draft                    WAMP                         July 2022
    |Call Canceling (#rpc-call-       | alpha  |  |   |   | X  | X | X  |
    |canceling)                       |        |  |   |   |    |   |    |
    +---------------------------------+--------+--+---+---+----+---+----+
-   |Caller Identification (#rpc-call-| alpha  |  |   |   | X  | X | X  |
+   |Caller Identification (#rpc-call-| stable |  |   |   | X  | X | X  |
    |identification)                  |        |  |   |   |    |   |    |
    +---------------------------------+--------+--+---+---+----+---+----+
    |Call Trustlevels (#rpc-call-     | alpha  |  |   |   |    | X | X  |
@@ -3273,7 +3273,7 @@ Internet-Draft                    WAMP                         July 2022
    |Registration Meta API (#rpc-reg- | beta   |  |   |   |    | X |    |
    |metapi)                          |        |  |   |   |    |   |    |
    +---------------------------------+--------+--+---+---+----+---+----+
-   |Pattern-based Registration (#rpc-| beta   |  |   |   |    | X | X  |
+   |Pattern-based Registration (#rpc-| stable |  |   |   |    | X | X  |
    |pattern-reg)                     |        |  |   |   |    |   |    |
    +---------------------------------+--------+--+---+---+----+---+----+
    |Shared Registration (#rpc-shared-| beta   |  |   |   |    | X | X  |
@@ -3315,7 +3315,7 @@ Internet-Draft                    WAMP                         July 2022
    |Publisher Exclusion (#pubsub-   | stable | X | X |   |    |   |    |
    |pub-exclusion)                  |        |   |   |   |    |   |    |
    +--------------------------------+--------+---+---+---+----+---+----+
-   |Publisher Identification        | alpha  | X | X | X |    |   |    |
+   |Publisher Identification        | stable | X | X | X |    |   |    |
    |(#pubsub-pub-identification)    |        |   |   |   |    |   |    |
    +--------------------------------+--------+---+---+---+----+---+----+
    |Publication Trustlevels         | alpha  |   | X | X |    |   |    |
@@ -3324,7 +3324,7 @@ Internet-Draft                    WAMP                         July 2022
    |Subscription Meta API (#pubsub- | beta   |   | X |   |    |   |    |
    |sub-metapi)                     |        |   |   |   |    |   |    |
    +--------------------------------+--------+---+---+---+----+---+----+
-   |Pattern-based Subscription      | beta   |   | X | X |    |   |    |
+   |Pattern-based Subscription      | stable |   | X | X |    |   |    |
    |(#pattern-based-subscription)   |        |   |   |   |    |   |    |
    +--------------------------------+--------+---+---+---+----+---+----+
    |Sharded Subscription (#pubsub-  | alpha  |   | X | X |    |   |    |
@@ -3365,7 +3365,7 @@ Internet-Draft                    WAMP                         July 2022
    +=================================================+========+
    | Feature                                         | Status |
    +=================================================+========+
-   | Challenge-response Authentication (#wampcra)    | beta   |
+   | Challenge-response Authentication (#wampcra)    | stable |
    +-------------------------------------------------+--------+
    | Ticket authentication (#ticketauth)             | beta   |
    +-------------------------------------------------+--------+
