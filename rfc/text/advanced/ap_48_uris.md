@@ -31,3 +31,9 @@ A *Dealer* could not perform a call, since a procedure with the given URI is reg
 
 {align="left"}
         wamp.error.no_available_callee
+
+A *Dealer* received a `CALL` message with advanced features that cannot be processed by the *Callee*
+
+{align="left"}
+        wamp.error.feature_not_supported
+
