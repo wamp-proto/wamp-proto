@@ -70,6 +70,12 @@
 
 {{advanced/ap_36_authentication_dynamic.md}}
 
+{{advanced/ap_49_security_features.md}}
+
+{{advanced/ap_50_payload_transparency.md}}
+
+{{advanced/ap_51_e2e_encryption.md}}
+
 {{advanced/ap_37_transports.md}}
 
 {{advanced/ap_38_transport_rawsocket.md}}
