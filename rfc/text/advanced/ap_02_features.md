@@ -8,7 +8,7 @@ Support for advanced features must be announced by the peers which implement the
 | Feature                                                    | Status | P | B | S | Cr | D | Ce|
 |------------------------------------------------------------|--------|---|---|---|----|---|---|
 | [Progressive Call Results](#rpc-progressive-call-results)  | stable |   |   |   | X  | X | X |
-| [Progressive Calls](#rpc-progressive-calls)                | beta   |   |   |   | X  | X | X |
+| [Progressive Calls](#rpc-progressive-calls)                | alpha  |   |   |   | X  | X | X |
 | [Call Timeout](#rpc-call-timeout)                          | alpha  |   |   |   | X  | X | X |
 | [Call Canceling](#rpc-call-canceling)                      | alpha  |   |   |   | X  | X | X |
 | [Caller Identification](#rpc-call-identification)          | stable |   |   |   | X  | X | X |
