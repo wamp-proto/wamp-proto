@@ -1,4 +1,4 @@
-## Payload Transparency
+## Protected Payload Mode
 
 In some situations, you may want to reduce the access the router has to the information users transmit, or
 payload data is presented in some specific format that can not be simply recognized by WAMP router serializer.
@@ -8,14 +8,12 @@ These are example use cases:
   is for example mqtt message that should be simply delivered to wamp topic as is. 
 * Sensitive user data that should be delivered to target *Callee* without any possibility to unveil it during delivery.
 
-This needs can be covered with `Payload Transparency` feature. This feature allows:
+This needs can be covered with `Protected Payload Mode` feature. This feature allows:
 
-* Specifying additional attributes during `CALL` or `PUBLISH` messages to signal *Router* to skip payload inspection.
+* Specifying additional attributes during `CALL`, `PUBLISH`, `EVENT`, `YIELD`, `RESULT` messages 
+  to signal *Router* to skip payload inspection.
 * Encrypting and decrypting payload with crypto algorithms.
 * Providing additional information about payload format and type.
-
-[//]: # (* Signing payload with initiator crypto-sign to be sure that payload came from trusted source.)
-[//]: # (this is for E2E Enc)
 
 **Feature Announcement**
 
@@ -24,39 +22,51 @@ Support for this advanced feature MUST be announced by *Callers* (`role := "call
 and *Brokers* (`role := "broker"`) via
 
 {align="left"}
-HELLO.Details.roles.<role>.features.payload_transparency|bool := true
+HELLO.Details.roles.<role>.features.protected_payload_mode|bool := true
 
-Payload Transparency can work only if all three nodes (*Caller*, *Dealer*, *Callee* or
+Protected Payload Mode can work only if all three nodes (*Caller*, *Dealer*, *Callee* or
 *Publisher*, *Broker*, *Subscriber*) support and announced this feature.
 
-Cases where *Caller* sends `CALL` message with `transparent payload` without announcing it during `HELLO`
+Cases where *Caller* sends `CALL` message with `protected payload` without announcing it during `HELLO`
 handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with
 `wamp.error.protocol_violation` error reason.
 
-Cases where *Caller* sends `CALL` message with `transparent payload` to *Dealer*, that did not announce
-transparent payload support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP
+Cases where *Caller* sends `CALL` message with `protected payload` to *Dealer*, that did not announce
+protected payload support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP
 connections must be aborted with `wamp.error.protocol_violation` error reason.
 
-Cases where *Caller* sends `CALL` message with `transparent payload` to the *Dealer* that supports this feature,
-which then must be routed to the *Callee* which doesn't support `transparent payload` MUST be treated as 
+Cases where *Caller* sends `CALL` message with `protected payload` to the *Dealer* that supports this feature,
+which then must be routed to the *Callee* which doesn't support `protected payload` MUST be treated as 
 *APPLICATION ERRORS* and *Dealer* MUST respond to *Caller* with `wamp.error.feature_not_supported` error message.
 
-Cases where *Publisher* sends `PUBLISH` message with `transparent payload` without announcing it during `HELLO`
+Cases where *Publisher* sends `PUBLISH` message with `protected payload` without announcing it during `HELLO`
 handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with
 `wamp.error.protocol_violation` error reason.
 
-Cases where *Publisher* sends `PUBLISH` message with `transparent payload` to *Broker*, that did not announce
-transparent payload support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP
+Cases where *Publisher* sends `PUBLISH` message with `protected payload` to *Broker*, that did not announce
+protected payload support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP
 connections must be aborted with `wamp.error.protocol_violation` error reason.
 
-Cases where *Publisher* sends `PUBLISH` message with `transparent payload` to the *Broker* that supports this feature,
-which then must be routed to the *Subscriber* which doesn't support `transparent payload` cannot be recognized at the
+Cases where *Publisher* sends `PUBLISH` message with `protected payload` to the *Broker* that supports this feature,
+which then must be routed to the *Subscriber* which doesn't support `protected payload` cannot be recognized at the
 protocol level due to asynchronous message processing and must be covered at *Subscriber* side.
+
+Cases where *Callee* sends `YIELD` message with `protected payload` without announcing it during `HELLO`
+handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with
+`wamp.error.protocol_violation` error reason.
+
+Cases where *Callee* sends `YIELD` message with `protected payload` to *Dealer*, that did not announce
+protected payload support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP
+connections must be aborted with `wamp.error.protocol_violation` error reason.
+
+Cases where *Callee* sends `YIELD` message with `protected payload` to the *Dealer* that supports this feature,
+which then must be routed to the *Caller* which doesn't support `protected payload` MUST be treated as
+*APPLICATION ERRORS* and *Dealer* MUST respond to *Callee* with `wamp.error.feature_not_supported` error message.
 
 **Message attributes**
 
-For this feature to be in use, `CALL` and `PUBLISH` messages options are extended with additional attributes. 
-This attributes then are passed as is within `INVOCATION` and `EVENT` messages.
+For this feature to be in use, `CALL`, `PUBLISH` and `YIELD` messages options are extended with additional attributes. 
+This attributes then are passed as is within `INVOCATION`, `EVENT` and `RESULT` messages respectively.
 
 {align="left"}
         CALL.Options.enc_serializer|string
@@ -73,12 +83,18 @@ This attributes then are passed as is within `INVOCATION` and `EVENT` messages.
         PUBLISH.Options.enc_key|string
 
 
+{align="left"}
+        YIELD.Options.enc_serializer|string
+        YIELD.Options.enc_algo|string
+        YIELD.Options.enc_keyname|string
+        YIELD.Options.enc_key|string
+
 **enc_serializer attribute**
 
 `enc_serializer` attribute is required. It specifies what serializer was used to build up payload object.
 It can be `mqtt`, `amqp`, `stomp` value when processing data from related technologies or ordinary 
-`json`, `msgpack`, `cbor` data serializers. *Router* understands that `Payload Transparency` feature is in use
-by checking the existence and non-empty value of this attribute in `CALL` and `PUBLISH` messages options.
+`json`, `msgpack`, `cbor` data serializers. *Router* understands that `Protected Payload Mode` is in use
+by checking the existence and non-empty value of this attribute in `CALL`, `PUBLISH` and `YIELD` messages options.
 
 **enc_algo attribute**
 
@@ -108,7 +124,7 @@ converted to base64-encoded string.
 
 **Message structure**
 
-With `Payload Transparency` feature in use message payload MUST BE sent as one binary item inside 
+With `Protected Payload Mode` in use message payload MUST BE sent as one binary item inside 
 `Arguments|list`, while `ArgumentsKw|dict` MUST BE missing.
 
 *Example.* Caller-to-Dealer `CALL` with encryption and keyname
