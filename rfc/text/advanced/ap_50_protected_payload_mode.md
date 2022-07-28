@@ -99,19 +99,26 @@ by checking the existence and non-empty value of this attribute in `CALL`, `PUBL
 **enc_algo attribute**
 
 `enc_algo` attribute is optional. It is required if payload is encrypted. This attribute specifies cryptographic
-algorithm that was used to encrypt payload. It can be `curve25519`, `XSalsa20` or any other valid algorithm.
+algorithm that was used to encrypt payload. It can be `curve25519`, `xsalsa20poly1305` or any other valid algorithm.
 
-**enc_keyname attribute**
+**enc_kms attribute**
 
-`enc_keyname` attribute is optional. This attribute can contain encryption key name that was used to encrypt payload.
-E.g. when public/private key pair is used to encrypt and decrypt payload, this attribute may contain general name
-for this key pair that is well known to *Callee* or *Subscriber* peer to choose appreciate private key without guessing.
+`enc_kms` stands for Key Management Schema. It is optional string attribute. This attribute can contain name or
+identifier of key management provider which is known to target peer, so it can be used to obtain information
+about encryption keys.
 
 **enc_key attribute**
 
-`enc_key` attribute is optional. As opposed to `enc_keyname` attribute this one can contain encryption key itself.
+`enc_key` attribute is optional. This attribute can contain encryption key id that was used to encrypt payload.
+`enc_key` attribute is always a type of string. The value can be a hex-encoded string, uri, DNS name, 
+Ethereum address, UUID identifier - any meaningful value by which target peer can choose private key 
+without guessing. Format of the value may depend on `enc_kms` attribute.
+
+**enc_key_val attribute**
+
+`enc_key_val` attribute is optional. As opposed to `enc_key` attribute this one can contain encryption key itself.
 As payload encryption is done with public key there is no need to hide it. And sometimes it is useful to pass it
-through the wire. `enc_key` attribute is a type of string. To store the key which is binary, the key need to be
+through the wire. `enc_key_val` attribute is a type of string. To store the key which is binary, the key need to be
 converted to base64-encoded string.
 
 **enc_resp_key attribute**
@@ -127,7 +134,7 @@ converted to base64-encoded string.
 With `Protected Payload Mode` in use message payload MUST BE sent as one binary item inside 
 `Arguments|list`, while `ArgumentsKw|dict` MUST BE missing.
 
-*Example.* Caller-to-Dealer `CALL` with encryption and keyname
+*Example.* Caller-to-Dealer `CALL` with encryption and key ID
 
 {align="left"}
 ```json
@@ -137,7 +144,7 @@ With `Protected Payload Mode` in use message payload MUST BE sent as one binary 
         {
             "enc_serializer": "json",
             "enc_algo": "curve25519",
-            "enc_keyname": "the_one_you_generated_yesterday"
+            "enc_key": "the_one_you_generated_yesterday"
         },
         "com.myapp.secret_rpc_for_sensitive_data",
         [Payload|binary]
@@ -147,7 +154,7 @@ With `Protected Payload Mode` in use message payload MUST BE sent as one binary 
 If RPC doesn't provide any results, or it is kind of `success` flag and there is no need to encrypt it, 
 `enc_resp_key` option can be omitted.
 
-*Example.* Caller-to-Dealer `CALL` with encryption and keyname and response key
+*Example.* Caller-to-Dealer `CALL` with encryption and key ID and response key
 
 {align="left"}
 ```json
@@ -157,7 +164,7 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
         {
             "enc_serializer": "json",
             "enc_algo": "curve25519",
-            "enc_keyname": "the_one_you_generated_yesterday",
+            "enc_key": "the_one_you_generated_yesterday",
             "enc_resp_key": "caller_public_key"
         },
         "com.myapp.secret_rpc_for_sensitive_data",
@@ -198,7 +205,7 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
     ]
 ```
 
-*Example.* Dealer-to-Callee `INVOCATION` with encryption and keyname
+*Example.* Dealer-to-Callee `INVOCATION` with encryption and key ID
 
 {align="left"}
 ```json
@@ -209,13 +216,13 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
         {
             "enc_serializer": "json",
             "enc_algo": "curve25519",
-            "enc_keyname": "the_one_you_generated_yesterday"
+            "enc_key": "the_one_you_generated_yesterday"
         },
         [Payload|binary]
     ]
 ```
 
-*Example.* Dealer-to-Callee `INVOCATION` with encryption and keyname and response key
+*Example.* Dealer-to-Callee `INVOCATION` with encryption and key ID and response key
 
 {align="left"}
 ```json
@@ -226,7 +233,7 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
         {
             "enc_serializer": "json",
             "enc_algo": "curve25519",
-            "enc_keyname": "the_one_you_generated_yesterday",
+            "enc_key": "the_one_you_generated_yesterday",
             "enc_resp_key": "caller_public_key"
         },
         [Payload|binary]
@@ -265,3 +272,13 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
         [Payload|binary]
     ]
 ```
+
+TODO: Provide more examples of messages of different types and options.
+
+
+**About supported serializers and cryptographic cyphers**
+
+WAMP works as infrastructure for delivering messages between peers. Regardless of what encryption algorithm 
+and serializer were chosen for protected payload mode, *Router* will not inspect and analyze related encryption 
+message options and payload. It is up to an application side code responsibility to use serializers and 
+cyphers known to every peer involved into message processing.
