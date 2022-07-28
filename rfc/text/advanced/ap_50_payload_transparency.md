@@ -63,6 +63,7 @@ This attributes then are passed as is within `INVOCATION` and `EVENT` messages.
         CALL.Options.enc_algo|string
         CALL.Options.enc_keyname|string
         CALL.Options.enc_key|string
+        CALL.Options.enc_resp_key|string
 
 
 {align="left"}
@@ -97,6 +98,14 @@ As payload encryption is done with public key there is no need to hide it. And s
 through the wire. `enc_key` attribute is a type of string. To store the key which is binary, the key need to be
 converted to base64-encoded string.
 
+**enc_resp_key attribute**
+
+`enc_resp_key` attribute is optional. One RPC can be called by many clients. To securely transmit RPC results to the
+client, they need also to be encrypted with *Caller* public key. This can be hard to maintain all keys for every client.
+Instead of this client can send his public key to use for encrypting payload right with the `CALL` request. And
+*Callee* then will use it for encrypting results. To store the key which is binary, the key need to be
+converted to base64-encoded string.
+
 **Message structure**
 
 With `Payload Transparency` feature in use message payload MUST BE sent as one binary item inside 
@@ -119,7 +128,10 @@ With `Payload Transparency` feature in use message payload MUST BE sent as one b
     ]
 ```
 
-*Example.* Caller-to-Dealer `CALL` with encryption and public key itself
+If RPC doesn't provide any results, or it is kind of `success` flag and there is no need to encrypt it, 
+`enc_resp_key` option can be omitted.
+
+*Example.* Caller-to-Dealer `CALL` with encryption and keyname and response key
 
 {align="left"}
 ```json
@@ -129,7 +141,26 @@ With `Payload Transparency` feature in use message payload MUST BE sent as one b
         {
             "enc_serializer": "json",
             "enc_algo": "curve25519",
-            "enc_key": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
+            "enc_keyname": "the_one_you_generated_yesterday",
+            "enc_resp_key": "caller_public_key"
+        },
+        "com.myapp.secret_rpc_for_sensitive_data",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Caller-to-Dealer `CALL` with encryption and public key itself and response key
+
+{align="left"}
+```json
+    [
+        48,
+        25471,
+        {
+            "enc_serializer": "json",
+            "enc_algo": "curve25519",
+            "enc_key": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "enc_resp_key": "caller_public_key"
         },
         "com.myapp.secret_rpc_for_sensitive_data",
         [Payload|binary]
@@ -168,7 +199,25 @@ With `Payload Transparency` feature in use message payload MUST BE sent as one b
     ]
 ```
 
-*Example.* Dealer-to-Callee `INVOCATION` with encryption and public key itself
+*Example.* Dealer-to-Callee `INVOCATION` with encryption and keyname and response key
+
+{align="left"}
+```json
+    [
+        68,
+        35477,
+        1147,
+        {
+            "enc_serializer": "json",
+            "enc_algo": "curve25519",
+            "enc_keyname": "the_one_you_generated_yesterday",
+            "enc_resp_key": "caller_public_key"
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Dealer-to-Callee `INVOCATION` with encryption and public key itself and response key
 
 {align="left"}
 ```json
@@ -179,7 +228,8 @@ With `Payload Transparency` feature in use message payload MUST BE sent as one b
         {
             "enc_serializer": "json",
             "enc_algo": "curve25519",
-            "enc_key": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
+            "enc_key": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "enc_resp_key": "caller_public_key"
         },
         [Payload|binary]
     ]
