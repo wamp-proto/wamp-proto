@@ -72,7 +72,7 @@
 
 {{advanced/ap_49_security_features.md}}
 
-{{advanced/ap_50_protected_payload_mode.md}}
+{{advanced/ap_50_payload_passthru_mode.md}}
 
 {{advanced/ap_51_e2e_encryption.md}}
 
