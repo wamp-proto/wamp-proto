@@ -66,40 +66,63 @@ which then must be routed to the *Caller* which doesn't support `payload passthr
 **Message attributes**
 
 For this feature to be in use, `CALL`, `PUBLISH` and `YIELD` messages options are extended with additional attributes. 
-This attributes then are passed as is within `INVOCATION`, `EVENT` and `RESULT` messages respectively.
+This attributes then are passed as is within `INVOCATION`, `EVENT` and `RESULT` messages respectively and to `ERROR`
+message in case of failures.
 
 {align="left"}
         CALL.Options.enc_serializer|string
         CALL.Options.enc_algo|string
-        CALL.Options.enc_keyname|string
-        CALL.Options.enc_key|string
-        CALL.Options.enc_resp_key|string
-
+        CALL.Options.enc_kms|string
+        CALL.Options.enc_keyid|string
+        ---
+        INVOCATION.Options.enc_serializer|string
+        INVOCATION.Options.enc_algo|string
+        INVOCATION.Options.enc_kms|string
+        INVOCATION.Options.enc_keyid|string
+        ---
+        YIELD.Options.enc_serializer|string
+        YIELD.Options.enc_algo|string
+        YIELD.Options.enc_kms|string
+        YIELD.Options.enc_keyid|string
+        ---
+        RESULT.Options.enc_serializer|string
+        RESULT.Options.enc_algo|string
+        RESULT.Options.enc_kms|string
+        RESULT.Options.enc_keyid|string
+        ---
+        ERROR.Options.enc_serializer|string
+        ERROR.Options.enc_algo|string
+        ERROR.Options.enc_kms|string
+        ERROR.Options.enc_keyid|string
 
 {align="left"}
         PUBLISH.Options.enc_serializer|string
         PUBLISH.Options.enc_algo|string
-        PUBLISH.Options.enc_keyname|string
-        PUBLISH.Options.enc_key|string
+        PUBLISH.Options.enc_kms|string
+        PUBLISH.Options.enc_keyid|string
+        ---
+        EVENT.Options.enc_serializer|string
+        EVENT.Options.enc_algo|string
+        EVENT.Options.enc_kms|string
+        EVENT.Options.enc_keyid|string
+        ---
+        ERROR.Options.enc_serializer|string
+        ERROR.Options.enc_algo|string
+        ERROR.Options.enc_kms|string
+        ERROR.Options.enc_keyid|string
 
-
-{align="left"}
-        YIELD.Options.enc_serializer|string
-        YIELD.Options.enc_algo|string
-        YIELD.Options.enc_keyname|string
-        YIELD.Options.enc_key|string
 
 **enc_serializer attribute**
 
 `enc_serializer` attribute is required. It specifies what serializer was used to build up payload object.
-It can be `mqtt`, `amqp`, `stomp` value when processing data from related technologies or ordinary 
-`json`, `msgpack`, `cbor` data serializers. *Router* understands that `Payload Passthru Mode` is in use
+It can be `mqtt`, `amqp`, `stomp` value just to inform that coming data is from related technologies or ordinary 
+`json`, `msgpack`, `cbor`, `flatbuffers` data serializers. *Router* understands that `Payload Passthru Mode` is in use
 by checking the existence and non-empty value of this attribute in `CALL`, `PUBLISH` and `YIELD` messages options.
 
 **enc_algo attribute**
 
 `enc_algo` attribute is optional. It is required if payload is encrypted. This attribute specifies cryptographic
-algorithm that was used to encrypt payload. It can be `curve25519`, `xsalsa20poly1305` or any other valid algorithm.
+algorithm that was used to encrypt payload. It can be `xsalsa20poly1305` for now.
 
 **enc_kms attribute**
 
@@ -107,32 +130,17 @@ algorithm that was used to encrypt payload. It can be `curve25519`, `xsalsa20pol
 identifier of key management provider which is known to target peer, so it can be used to obtain information
 about encryption keys.
 
-**enc_key attribute**
+**enc_keyid attribute**
 
-`enc_key` attribute is optional. This attribute can contain encryption key id that was used to encrypt payload.
-`enc_key` attribute is always a type of string. The value can be a hex-encoded string, uri, DNS name, 
+`enc_keyid` attribute is optional. This attribute can contain encryption key id that was used to encrypt payload.
+`enc_keyid` attribute is always a type of string. The value can be a hex-encoded string, uri, DNS name, 
 Ethereum address, UUID identifier - any meaningful value by which target peer can choose private key 
 without guessing. Format of the value may depend on `enc_kms` attribute.
-
-**enc_key_val attribute**
-
-`enc_key_val` attribute is optional. As opposed to `enc_key` attribute this one can contain encryption key itself.
-As payload encryption is done with public key there is no need to hide it. And sometimes it is useful to pass it
-through the wire. `enc_key_val` attribute is a type of string. To store the key which is binary, the key need to be
-converted to base64-encoded string.
-
-**enc_resp_key attribute**
-
-`enc_resp_key` attribute is optional. One RPC can be called by many clients. To securely transmit RPC results to the
-client, they need also to be encrypted with *Caller* public key. This can be hard to maintain all keys for every client.
-Instead of this client can send his public key to use for encrypting payload right with the `CALL` request. And
-*Callee* then will use it for encrypting results. To store the key which is binary, the key need to be
-converted to base64-encoded string.
 
 **Message structure**
 
 With `Payload Passthru Mode` in use message payload MUST BE sent as one binary item inside 
-`Arguments|list`, while `ArgumentsKw|dict` MUST BE missing.
+`Arguments|list`, while `ArgumentsKw|dict` MUST BE missing or empty.
 
 *Example.* Caller-to-Dealer `CALL` with encryption and key ID
 
@@ -143,18 +151,17 @@ With `Payload Passthru Mode` in use message payload MUST BE sent as one binary i
         25471,
         {
             "enc_serializer": "json",
-            "enc_algo": "curve25519",
-            "enc_key": "the_one_you_generated_yesterday"
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
         },
         "com.myapp.secret_rpc_for_sensitive_data",
         [Payload|binary]
     ]
 ```
 
-If RPC doesn't provide any results, or it is kind of `success` flag and there is no need to encrypt it, 
-`enc_resp_key` option can be omitted.
+*Example.* Caller-to-Dealer progressive `CALL` with encryption and key ID.
 
-*Example.* Caller-to-Dealer `CALL` with encryption and key ID and response key
+Nothing prevents to use `Payload Passthru Mode` with other features, for example `Progressive Calls`
 
 {align="left"}
 ```json
@@ -163,29 +170,11 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
         25471,
         {
             "enc_serializer": "json",
-            "enc_algo": "curve25519",
-            "enc_key": "the_one_you_generated_yesterday",
-            "enc_resp_key": "caller_public_key"
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "progress": true
         },
-        "com.myapp.secret_rpc_for_sensitive_data",
-        [Payload|binary]
-    ]
-```
-
-*Example.* Caller-to-Dealer `CALL` with encryption and public key itself and response key
-
-{align="left"}
-```json
-    [
-        48,
-        25471,
-        {
-            "enc_serializer": "json",
-            "enc_algo": "curve25519",
-            "enc_key": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
-            "enc_resp_key": "caller_public_key"
-        },
-        "com.myapp.secret_rpc_for_sensitive_data",
+        "com.myapp.progressive_rpc_for_sensitive_data",
         [Payload|binary]
     ]
 ```
@@ -215,44 +204,8 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
         1147,
         {
             "enc_serializer": "json",
-            "enc_algo": "curve25519",
-            "enc_key": "the_one_you_generated_yesterday"
-        },
-        [Payload|binary]
-    ]
-```
-
-*Example.* Dealer-to-Callee `INVOCATION` with encryption and key ID and response key
-
-{align="left"}
-```json
-    [
-        68,
-        35477,
-        1147,
-        {
-            "enc_serializer": "json",
-            "enc_algo": "curve25519",
-            "enc_key": "the_one_you_generated_yesterday",
-            "enc_resp_key": "caller_public_key"
-        },
-        [Payload|binary]
-    ]
-```
-
-*Example.* Dealer-to-Callee `INVOCATION` with encryption and public key itself and response key
-
-{align="left"}
-```json
-    [
-        68,
-        35478,
-        2192,
-        {
-            "enc_serializer": "json",
-            "enc_algo": "curve25519",
-            "enc_key": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
-            "enc_resp_key": "caller_public_key"
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
         },
         [Payload|binary]
     ]
@@ -273,8 +226,127 @@ If RPC doesn't provide any results, or it is kind of `success` flag and there is
     ]
 ```
 
-TODO: Provide more examples of messages of different types and options.
+*Example.* Callee-to-Dealer `YIELD` with encryption and key ID
 
+{align="left"}
+```json
+    [
+        70,
+        87683,
+        {
+            "enc_serializer": "flatbuffers",
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Callee-to-Dealer progressive `YIELD` with encryption and key ID
+
+Nothing prevents to use `Payload Passthru Mode` with other features, for example `Progressive Call Results`
+
+{align="left"}
+```json
+    [
+        70,
+        87683,
+        {
+            "enc_serializer": "flatbuffers",
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "progress": true
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Dealer-to-Caller `RESULT` with encryption and key ID
+
+{align="left"}
+```json
+    [
+        50,
+        77133,
+        {
+            "enc_serializer": "flatbuffers",
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Dealer-to-Caller progressive `RESULT` with encryption and key ID
+
+Nothing prevents to use `Payload Passthru Mode` with other features, for example `Progressive Call Results`
+
+{align="left"}
+```json
+    [
+        50,
+        77133,
+        {
+            "enc_serializer": "flatbuffers",
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "progress": true
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Callee-to-Dealer `ERROR` with encryption and key ID
+
+{align="left"}
+```json
+    [
+        8,
+        68,
+        87683,
+        {
+            "enc_serializer": "cbor",
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+        },
+        "com.myapp.invalid_revenue_year",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Publishing event to a topic with encryption and key ID
+
+{align="left"}
+```json
+    [
+        16,
+        45677,
+        {
+            "enc_serializer": "cbor",
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+        },
+        "com.myapp.mytopic1",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Receiving event for a topic with encryption and key ID
+
+{align="left"}
+```json
+    [
+        36,
+        5512315355,
+        4429313566,
+        {
+            "enc_serializer": "json",
+            "enc_algo": "xsalsa20poly1305",
+            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+        },
+        [Payload|binary]
+    ]
+```
 
 **About supported serializers and cryptographic cyphers**
 

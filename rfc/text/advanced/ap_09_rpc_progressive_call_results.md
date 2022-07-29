@@ -176,7 +176,8 @@ An invocation MUST *always* end in either a *normal* `RESULT` or `ERROR` message
 {align="left"}
 ```json
     [
-        4,
+        8,
+        68,
         87683,
         {},
         "com.myapp.invalid_revenue_year",
@@ -203,7 +204,8 @@ A call MUST *always* end in either a *normal* `RESULT` or `ERROR` message being 
 {align="left"}
 ```json
     [
-        4,
+        8,
+        68,
         77133,
         {},
         "com.myapp.invalid_revenue_year",
