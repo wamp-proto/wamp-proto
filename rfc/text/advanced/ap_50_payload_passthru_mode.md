@@ -70,72 +70,72 @@ This attributes then are passed as is within `INVOCATION`, `EVENT` and `RESULT` 
 message in case of failures.
 
 {align="left"}
-        CALL.Options.enc_serializer|string
-        CALL.Options.enc_algo|string
-        CALL.Options.enc_kms|string
-        CALL.Options.enc_keyid|string
+        CALL.Options.ppt_serializer|string
+        CALL.Options.ppt_cipher|string
+        CALL.Options.ppt_scheme|string
+        CALL.Options.ppt_keyid|string
         ---
-        INVOCATION.Options.enc_serializer|string
-        INVOCATION.Options.enc_algo|string
-        INVOCATION.Options.enc_kms|string
-        INVOCATION.Options.enc_keyid|string
+        INVOCATION.Options.ppt_serializer|string
+        INVOCATION.Options.ppt_cipher|string
+        INVOCATION.Options.ppt_scheme|string
+        INVOCATION.Options.ppt_keyid|string
         ---
-        YIELD.Options.enc_serializer|string
-        YIELD.Options.enc_algo|string
-        YIELD.Options.enc_kms|string
-        YIELD.Options.enc_keyid|string
+        YIELD.Options.ppt_serializer|string
+        YIELD.Options.ppt_cipher|string
+        YIELD.Options.ppt_scheme|string
+        YIELD.Options.ppt_keyid|string
         ---
-        RESULT.Options.enc_serializer|string
-        RESULT.Options.enc_algo|string
-        RESULT.Options.enc_kms|string
-        RESULT.Options.enc_keyid|string
+        RESULT.Options.ppt_serializer|string
+        RESULT.Options.ppt_cipher|string
+        RESULT.Options.ppt_scheme|string
+        RESULT.Options.ppt_keyid|string
         ---
-        ERROR.Options.enc_serializer|string
-        ERROR.Options.enc_algo|string
-        ERROR.Options.enc_kms|string
-        ERROR.Options.enc_keyid|string
+        ERROR.Options.ppt_serializer|string
+        ERROR.Options.ppt_cipher|string
+        ERROR.Options.ppt_scheme|string
+        ERROR.Options.ppt_keyid|string
 
 {align="left"}
-        PUBLISH.Options.enc_serializer|string
-        PUBLISH.Options.enc_algo|string
-        PUBLISH.Options.enc_kms|string
-        PUBLISH.Options.enc_keyid|string
+        PUBLISH.Options.ppt_serializer|string
+        PUBLISH.Options.ppt_cipher|string
+        PUBLISH.Options.ppt_scheme|string
+        PUBLISH.Options.ppt_keyid|string
         ---
-        EVENT.Options.enc_serializer|string
-        EVENT.Options.enc_algo|string
-        EVENT.Options.enc_kms|string
-        EVENT.Options.enc_keyid|string
+        EVENT.Options.ppt_serializer|string
+        EVENT.Options.ppt_cipher|string
+        EVENT.Options.ppt_scheme|string
+        EVENT.Options.ppt_keyid|string
         ---
-        ERROR.Options.enc_serializer|string
-        ERROR.Options.enc_algo|string
-        ERROR.Options.enc_kms|string
-        ERROR.Options.enc_keyid|string
+        ERROR.Options.ppt_serializer|string
+        ERROR.Options.ppt_cipher|string
+        ERROR.Options.ppt_scheme|string
+        ERROR.Options.ppt_keyid|string
 
 
-**enc_serializer attribute**
+**ppt_serializer attribute**
 
-`enc_serializer` attribute is required. It specifies what serializer was used to build up payload object.
+`ppt_serializer` attribute is required. It specifies what serializer was used to build up payload object.
 It can be `mqtt`, `amqp`, `stomp` value just to inform that coming data is from related technologies or ordinary 
 `json`, `msgpack`, `cbor`, `flatbuffers` data serializers. *Router* understands that `Payload Passthru Mode` is in use
 by checking the existence and non-empty value of this attribute in `CALL`, `PUBLISH` and `YIELD` messages options.
 
-**enc_algo attribute**
+**ppt_cipher attribute**
 
-`enc_algo` attribute is optional. It is required if payload is encrypted. This attribute specifies cryptographic
-algorithm that was used to encrypt payload. It can be `xsalsa20poly1305` for now.
+`ppt_cipher` attribute is optional. It is required if payload is encrypted. This attribute specifies cryptographic
+algorithm that was used to encrypt payload. It can be `xsalsa20poly1305`, `aes256gcm` for now.
 
-**enc_kms attribute**
+**ppt_scheme attribute**
 
-`enc_kms` stands for Key Management Schema. It is optional string attribute. This attribute can contain name or
+`ppt_scheme` stands for Key Management Schema. It is optional string attribute. This attribute can contain name or
 identifier of key management provider which is known to target peer, so it can be used to obtain information
 about encryption keys.
 
-**enc_keyid attribute**
+**ppt_keyid attribute**
 
-`enc_keyid` attribute is optional. This attribute can contain encryption key id that was used to encrypt payload.
-`enc_keyid` attribute is always a type of string. The value can be a hex-encoded string, uri, DNS name, 
+`ppt_keyid` attribute is optional. This attribute can contain encryption key id that was used to encrypt payload.
+`ppt_keyid` attribute is always a type of string. The value can be a hex-encoded string, uri, DNS name, 
 Ethereum address, UUID identifier - any meaningful value by which target peer can choose private key 
-without guessing. Format of the value may depend on `enc_kms` attribute.
+without guessing. Format of the value may depend on `ppt_scheme` attribute.
 
 **Message structure**
 
@@ -150,9 +150,9 @@ With `Payload Passthru Mode` in use message payload MUST BE sent as one binary i
         48,
         25471,
         {
-            "enc_serializer": "json",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
+            "ppt_serializer": "json",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
         },
         "com.myapp.secret_rpc_for_sensitive_data",
         [Payload|binary]
@@ -169,9 +169,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         48,
         25471,
         {
-            "enc_serializer": "json",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "ppt_serializer": "json",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
             "progress": true
         },
         "com.myapp.progressive_rpc_for_sensitive_data",
@@ -187,7 +187,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         48,
         25471,
         {
-            "enc_serializer": "mqtt"
+            "ppt_serializer": "mqtt"
         },
         "com.myapp.mqtt_processing",
         [Payload|binary]
@@ -203,9 +203,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         35477,
         1147,
         {
-            "enc_serializer": "json",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
+            "ppt_serializer": "json",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
         },
         [Payload|binary]
     ]
@@ -220,7 +220,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         35479,
         3344,
         {
-            "enc_serializer": "mqtt"
+            "ppt_serializer": "mqtt"
         },
         [Payload|binary]
     ]
@@ -234,9 +234,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         70,
         87683,
         {
-            "enc_serializer": "flatbuffers",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
         },
         [Payload|binary]
     ]
@@ -252,9 +252,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         70,
         87683,
         {
-            "enc_serializer": "flatbuffers",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
             "progress": true
         },
         [Payload|binary]
@@ -269,9 +269,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         50,
         77133,
         {
-            "enc_serializer": "flatbuffers",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
         },
         [Payload|binary]
     ]
@@ -287,9 +287,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         50,
         77133,
         {
-            "enc_serializer": "flatbuffers",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
             "progress": true
         },
         [Payload|binary]
@@ -305,9 +305,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         68,
         87683,
         {
-            "enc_serializer": "cbor",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+            "ppt_serializer": "cbor",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
         },
         "com.myapp.invalid_revenue_year",
         [Payload|binary]
@@ -322,9 +322,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         16,
         45677,
         {
-            "enc_serializer": "cbor",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+            "ppt_serializer": "cbor",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
         },
         "com.myapp.mytopic1",
         [Payload|binary]
@@ -340,9 +340,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         5512315355,
         4429313566,
         {
-            "enc_serializer": "json",
-            "enc_algo": "xsalsa20poly1305",
-            "enc_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+            "ppt_serializer": "json",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
         },
         [Payload|binary]
     ]
