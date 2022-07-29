@@ -50,9 +50,10 @@ Support for advanced features must be announced by the peers which implement the
 | [HTTP Longpoll transport](#longpoll)             | beta   |
 | [Session Meta API](#session-metapi)              | beta   |
 | [Call Rerouting](#rpc-call-rerouting)            | sketch |
+| [Payload Passthru Mode](#payload-passthru-mode)  | sketch |
 
 
-The status of the respective AP feature is marked as follow:
+The status of the respective AP feature is marked as follows:
 
 | Status | Description                                                                                                                                                                                              |
 |--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
