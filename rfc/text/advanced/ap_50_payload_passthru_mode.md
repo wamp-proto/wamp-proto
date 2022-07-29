@@ -75,25 +75,25 @@ message in case of failures.
         CALL.Options.ppt_scheme|string
         CALL.Options.ppt_keyid|string
         ---
-        INVOCATION.Options.ppt_serializer|string
-        INVOCATION.Options.ppt_cipher|string
-        INVOCATION.Options.ppt_scheme|string
-        INVOCATION.Options.ppt_keyid|string
+        INVOCATION.Details.ppt_serializer|string
+        INVOCATION.Details.ppt_cipher|string
+        INVOCATION.Details.ppt_scheme|string
+        INVOCATION.Details.ppt_keyid|string
         ---
         YIELD.Options.ppt_serializer|string
         YIELD.Options.ppt_cipher|string
         YIELD.Options.ppt_scheme|string
         YIELD.Options.ppt_keyid|string
         ---
-        RESULT.Options.ppt_serializer|string
-        RESULT.Options.ppt_cipher|string
-        RESULT.Options.ppt_scheme|string
-        RESULT.Options.ppt_keyid|string
+        RESULT.Details.ppt_serializer|string
+        RESULT.Details.ppt_cipher|string
+        RESULT.Details.ppt_scheme|string
+        RESULT.Details.ppt_keyid|string
         ---
-        ERROR.Options.ppt_serializer|string
-        ERROR.Options.ppt_cipher|string
-        ERROR.Options.ppt_scheme|string
-        ERROR.Options.ppt_keyid|string
+        ERROR.Details.ppt_serializer|string
+        ERROR.Details.ppt_cipher|string
+        ERROR.Details.ppt_scheme|string
+        ERROR.Details.ppt_keyid|string
 
 {align="left"}
         PUBLISH.Options.ppt_serializer|string
@@ -101,10 +101,10 @@ message in case of failures.
         PUBLISH.Options.ppt_scheme|string
         PUBLISH.Options.ppt_keyid|string
         ---
-        EVENT.Options.ppt_serializer|string
-        EVENT.Options.ppt_cipher|string
-        EVENT.Options.ppt_scheme|string
-        EVENT.Options.ppt_keyid|string
+        EVENT.Details.ppt_serializer|string
+        EVENT.Details.ppt_cipher|string
+        EVENT.Details.ppt_scheme|string
+        EVENT.Details.ppt_keyid|string
         ---
         ERROR.Options.ppt_serializer|string
         ERROR.Options.ppt_cipher|string
