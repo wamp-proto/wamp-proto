@@ -16,6 +16,7 @@ and MAY implement one or more of
 * [TLS Channel Binding](#channelbinding)
 * [Router Authentication](#routerauth)
 * [Trustroots and Certificates](#trustrootcerts)
+* [Remote Attestation](#remoteattestation)
 
 Examples of complete authentication message exchanges can be found in
 
@@ -240,8 +241,6 @@ Write me.
 
 
 ### Trustroots and Certificates {#trustrootcerts}
-
-Write me.
 
 
 #### Certificate Chains
@@ -478,7 +477,46 @@ the following Certificate Chain Rules (CCR) must be checked:
 11. **CCR-11**: The intermediate certificate's signature must be valid and signed by the intermediate certificate's `issuer`.
 12. **CCR-12**: The delegate certificate's signature must be valid and signed by the `delegate`.
 
+
+#### Certificate Authority Root CAs
+
+There is only one root CA certificate per PKI tree.
+
+Trust Root: Ethereum
+Trust Anchor: TPM
+
+**Private Root CAs**
+
+**Public Root CAs**
+
+[EIP155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md) chain IDs:
+
+* Ethereum Mainnet (ChainID 1)
+* Goerli Testnet (ChainID 5)
+* zkSync 2.0 Alpha Testnet (ChainID 280)
+
+Other potential chains:
+
+* Arbitrum One (ChainID 42161)
+* Optimism (ChainID 10)
+
+
+### Remote Attestation {#remoteattestation}
+
+Measured Boot: Event Log (PCRs)
+
+Manufacturer Key (MK)
+Endorsement Key (EK)
+Attestation Key (AK)
+
+Quotation: Event Log signed by AK
+
+tss2_quote
+https://tpm2-tools.readthedocs.io/en/latest/man/tss2_quote.1/
+https://tpm2-tss.readthedocs.io/en/latest/group___fapi___quote.html
+
 -----
+
 
 ### Example Message Exchanges {#examplemessageexchanges}
 
