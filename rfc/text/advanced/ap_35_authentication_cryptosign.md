@@ -4,9 +4,7 @@
 *public-private key cryptography*. Specifically, it is based on [Ed25519](https://ed25519.cr.yp.to/) digital signatures as described in [@!RFC8032].
 
 **Ed25519** is an [elliptic curve signature scheme](https://ed25519.cr.yp.to/ed25519-20110926.pdf) that instantiates the Edwards-curve Digital Signature Algorithm (EdDSA) with elliptic curve parameters which are equivalent to [Curve25519](https://cr.yp.to/ecdh.html).
-
 **Curve25519** is a [SafeCurve](https://safecurves.cr.yp.to/), which means it is easy to implement and avoid security issues resulting from common implementation challenges and bugs.
-
 Ed25519 is intended to operate at around the 128-bit security level, and there are robust native implementations available as open-source, e.g. [libsodium](https://github.com/jedisct1/libsodium), which can be used from script languages, e.g. [PyNaCl](https://github.com/pyca/pynacl).
 
 An implementation of *WAMP-Cryptosign* MUST provide
@@ -20,9 +18,10 @@ and MAY implement one or more of
 * [Trustroots and Certificates](#trustrootcerts)
 * [Remote Attestation](#remoteattestation)
 
-Examples of complete authentication message exchanges can be found in
+The following sections describe each of above features of *WAMP-Cryptosign*.
 
-* [Example Message Exchanges](#examplemessageexchanges)
+Examples of complete authentication message exchanges can be found at the end of this
+chapter in [Example Message Exchanges](#examplemessageexchanges).
 
 
 ### Client Authentication {#clientauth}
@@ -496,6 +495,18 @@ The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificat
 ]
 ```
 
+The EIP712 types for certificates contain:
+
+* `chainId`: the chain ID of the blockchain this signed typed data is bound to
+* `verifyingContract`: the address of the (main) smart contract this signed typed data is bound to
+
+This prevents cross-chain and cross-contract attacks. The `chainId` is an integer according to [EIP155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md):
+
+* Ethereum Mainnet (ChainID 1)
+* Goerli Testnet (ChainID 5)
+* zkSync 2.0 Alpha Testnet (ChainID 280)
+
+
 #### Capabilities
 
 * **Bit 0**: `CAPABILITY_ROOT_CA`
@@ -549,16 +560,12 @@ the following Certificate Chain Rules (CCR) must be checked:
 12. **CCR-12**: The delegate certificate's signature must be valid and signed by the `delegate`.
 
 
-#### Certificate Authority Root CAs
+#### Trustroots
 
-Certificate chains allow to verify a delegate certificate following the Issuers-Subjects up to a *Root CA*,
-which is a self-signed certificate (issuer and subject are identical).
-
-The *Root CA* represents the *Trustroot* of all involved delegates.
+Certificate chains allow to verify a delegate certificate following the Issuers-Subjects up to a *Root CA*, which is a self-signed certificate (issuer and subject are identical). The *Root CA* represents the *Trustroot* of all involved delegates.
 
 When both a connecting WAMP client and the WAMP router are using the same *Root CA* and thus use a common
 *Trustroot*, they are said to be authorized in the same trust domain (identified by the trustroot).
-
 There are two types of *Root CAs* and *Trustroots*:
 
 1. *Standalone Trustroot*
@@ -583,88 +590,62 @@ and fixed when the trustroot is created:
 With an *Open On-chain Trustroot*, new certificates can be added to a certificate chain freely
 and only requires a signature by the respective intermediate CA issuer.
 
-----
+##### Standalone Trustroots
 
-
-
-There is only one root CA certificate per PKI tree.
-
-Trust Root: Ethereum
-Trust Anchor: TPM
-
-
-
-all realm names in Autobahn/Crossbar.io must match this
+For a *Standalone Trustroot* the `trustroot` MUST be specified in `HELLO.Details.authextra.trustroot|string`
 
 ```
-import re
-
-pattern = re.compile(r"...")
-re.match(realm_name)
+{'authextra': {'certificates': [/* certificate, see below */],
+              'challenge': '2763e7fdb1c34a74e8497daf6c913744d11161a94cec3b16aeec60a788612e17',
+              'channel_binding': 'tls-unique',
+              'pubkey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+              'trustroot': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
 ```
 
-all realm names in WAMP must match this
+and `certificates` MUST contain
+
+* a single `EIP712DelegateCertificate`, and have the complete certificate chain of `EIP712AuthorityCertificate`s up to `trustroot` pre-agreed (locally stored or built-in) OR
+* the complete chain of certificates starting with a `EIP712DelegateCertificate` followed by one or more `EIP712AuthorityCertificate`s up to `trustroot`.
+
+[Example 3](#message-exchange-example3) contains an example gor the latter, with a bundled complete certificate chain, that is the last certificate in the list is self-signed (is a root CA certificate) and matches `trustroot`
 
 ```
-^([^\s\.#]+)(\.[^\s\.#]+)*$
+trustroot == 0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57
+          == certificates[-1].issuer
+          == certificates[-1].subject
 ```
 
-all realm names in Autobahn/Crossbar.io must match this
+##### On-chain Trustroots
+
+For an *On-chain Trustroot* the `trustroot` MUST be specified in `HELLO.Details.authextra.trustroot|string`
 
 ```
-^[A-Za-z][A-Za-z\d_\-@\.]{2,254}$
+{'authextra': {'certificates': [/* certificate, see below */],
+              'challenge': '2763e7fdb1c34a74e8497daf6c913744d11161a94cec3b16aeec60a788612e17',
+              'channel_binding': 'tls-unique',
+              'pubkey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+              'trustroot': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
 ```
 
-if Ethereum addresses are enabled, realm names which are "0x" prefixed Ethereum addresses are also valid
+and `certificates` MUST contain a single `EIP712DelegateCertificate`, and have the complete certificate chain of `EIP712AuthorityCertificate`s up to `trustroot` stored on-chain (Ethereum).
 
-```
-^0x([A-Fa-f\d]{40})$
-```
+This is called a free-standing, on-chain CA.
 
-realms names might also specifically match ENS URIs
-
-```
-^([a-z\d_\-@\.]{2,250})\.eth$
-```
-
-since WAMP recommends using reverse dotted notation, reverse ENS names can be checked with this pattern
-
-```
-^eth\.([a-z\d_\-@\.]{2,250})$
-```
-
-
-**Private Root CAs**
-
-**Public Root CAs**
-
-[EIP155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md) chain IDs:
-
-* Ethereum Mainnet (ChainID 1)
-* Goerli Testnet (ChainID 5)
-* zkSync 2.0 Alpha Testnet (ChainID 280)
-
-Other potential chains:
-
-* Arbitrum One (ChainID 42161)
-* Optimism (ChainID 10)
+When the `trustroot` is associated with an on-chain *Realm* that has `trustroot` configured as the
+*Realm CA*, this is called *On-chain CA with CA associated with On-chain Realm*.
 
 
 ### Remote Attestation {#remoteattestation}
 
-Measured Boot: Event Log (PCRs)
+Remote attestation is a method by which a host (WAMP client) authenticates its hardware and software configuration to a remote host (WAMP router). The goal of remote attestation is to enable a remote system (challenger) to determine the level of trust in the integrity of the platform of another system (attestator).
 
-Manufacturer Key (MK)
-Endorsement Key (EK)
-Attestation Key (AK)
+Remote attestation is requested by the router sending `CHALLENGE.extra.attest|bool == true`.
 
-Quotation: Event Log signed by AK
+A client receiving such a `CHALLENGE` MUST include an *Event Log* with PCRs collected from *measured boot* signed by the device's security module's *Attestation Key (AK)* and using the challenge sent by the router `CHALLENGE.extra.challenge|string` as a nonce.
 
-tss2_quote
-https://tpm2-tools.readthedocs.io/en/latest/man/tss2_quote.1/
-https://tpm2-tss.readthedocs.io/en/latest/group___fapi___quote.html
+[TPM 2.0](https://en.wikipedia.org/wiki/Trusted_Platform_Module) of the [TCG](https://en.wikipedia.org/wiki/Trusted_Computing_Group) specifies a suitable function in [tss2_quote](https://tpm2-tools.readthedocs.io/en/latest/man/tss2_quote.1/) (also see [here](https://tpm2-tss.readthedocs.io/en/latest/group___fapi___quote.html)).
 
------
+The client MUST include the signed attestation in `AUTHENTICATE.Extra.attestation|string`.
 
 
 ### Example Message Exchanges {#examplemessageexchanges}
