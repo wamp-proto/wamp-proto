@@ -4,7 +4,9 @@
 *public-private key cryptography*. Specifically, it is based on [Ed25519](https://ed25519.cr.yp.to/) digital signatures as described in [@!RFC8032].
 
 **Ed25519** is an [elliptic curve signature scheme](https://ed25519.cr.yp.to/ed25519-20110926.pdf) that instantiates the Edwards-curve Digital Signature Algorithm (EdDSA) with elliptic curve parameters which are equivalent to [Curve25519](https://cr.yp.to/ecdh.html).
-**Curve25519** is a [SafeCurve](https://safecurves.cr.yp.to/), which means it is easy to implement securely and avoid security issues resulting from common implementation challenges and bugs.
+
+**Curve25519** is a [SafeCurve](https://safecurves.cr.yp.to/), which means it is easy to implement and avoid security issues resulting from common implementation challenges and bugs.
+
 Ed25519 is intended to operate at around the 128-bit security level, and there are robust native implementations available as open-source, e.g. [libsodium](https://github.com/jedisct1/libsodium), which can be used from script languages, e.g. [PyNaCl](https://github.com/pyca/pynacl).
 
 An implementation of *WAMP-Cryptosign* MUST provide
@@ -228,16 +230,85 @@ test_vectors_1 = [
 
 ### TLS Channel Binding {#channelbinding}
 
-Write me.
+*TLS Channel Binding* is an optional feature for WAMP-Cryptosign when running on top of TLS for link encryption.
+The use of "channel binding" to bind authentication at application layers to secure sessions at lower layers in the network stack protects against certain attack scenarios. For more background information, please see
 
-* https://tools.ietf.org/html/rfc5056
-* https://tools.ietf.org/html/rfc5929
-* https://www.ietf.org/proceedings/90/slides/slides-90-uta-0.pdf
+* [RFC5056: On the Use of Channel Bindings to Secure Channels](https://tools.ietf.org/html/rfc5056)
+* [Binding Security Tokens to TLS Channels](https://www.ietf.org/proceedings/90/slides/slides-90-uta-0.pdf)
+
+A client that wishes to use TLS Channel Binding with WAMP-Cryptosign must include an attribute `channel_binding` in the `authextra` sent in `HELLO.Details`:
+
+```
+[1, 'realm1', {
+  'authextra': {
+    'channel_binding': 'tls-unique',
+    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'
+  },
+  'authmethods': ['cryptosign']
+  }]
+```
+
+The `channel_binding`, if present, MUST be a string with a value of `tls-unique` or `tls-exporter`,
+to specify the channel binding type that is to be used:
+
+* `tls-unique`: [RFC5929: Channel Bindings for TLS](https://datatracker.ietf.org/doc/html/rfc5929)
+* `tls-exporter`: [RFC9266: Channel Bindings for TLS 1.3](https://datatracker.ietf.org/doc/html/rfc9266)
+
+When a router receives a HELLO message from a client with a TLS channel binding attribute present,
+the router MUST:
+
+1. get the TLS channel ID (32 bytes) of the TLS session with the respective channel type requested
+2. generate new challenge (32 random bytes)
+3. expect the client to send back a signature in AUTHENTICATE computed over `challenge XOR channel_id`
+
+and send back the `channel_binding` in use, and the `challenge` in a CHALLENGE message:
+
+```
+[4, 'cryptosign', {
+  'challenge': '0e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+  'channel_binding': 'tls-unique'}]
+```
+
+The authenticating client MUST verify the actual channel binding in use matches the one it requested. If a router does not support the `channel_binding` the client requested, it may chose to continue the authentication without channel binding, and hence `CHALLENGE.Extra` would not contain a `channel_binding`.
+
+The client MUST then locally fetch the `channel_id` from the underlying TLS connection and
+sign `CHALLENGE.Extra.challenge XOR channel_id` using its private key.
 
 
 ### Router Authentication {#routerauth}
 
-Write me.
+With the basic *Client Authentication* mechanism in WAMP-Cryptosign, the router is able to authenticate
+the client, since to successfully sign `CHALLENGE.Extra.challenge` the client will need the
+private key corresponding to the public key which the client announced in `HELLO.Details.pubkey` to be authenticated under.
+
+However, from this alone, the client can not be sure the router against which it is authenticating is
+actually valid, as in authentic. *Router Authentication* adds this capability.
+
+To request a router to authenticate, a client will start the authentication handshake by sending
+`HELLO.Details.challenge|string`:
+
+```
+[1, 'realm1', {
+  'authextra': {
+    'challenge': 'bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb',
+    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'
+    }}]
+```
+
+Similar to *Client Authentication*, the `challenge` must encode a 32 bytes random value as a string in HEX format, and the router MUST respond by signing this challenge value with its (the router's) private key,
+and send back the signature in `CHALLENGE.Extra.signature`
+
+```
+[4, 'cryptosign', {
+  'challenge': '0e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+  'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+  'signature': 'fd5128d2d207ba58a9d1d6f41b72c747964ad9d1294077b3b1eee6130b05843ab12c53c7f2519f73d4feb82db19d8ca0fc26b62bde6518e79a882f5795bc9f00bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb'}]
+```
+
+When *Router Authentication* is used, the router MUST also send its public key in `CHALLENGE.Extra.pubkey`.
+
+Further, *Router Authentication* can be combined with *TLS Channel Binding*, in which case the value
+signed by the router will be `HELLO.Details.challenge XOR channel_id`.
 
 
 ### Trustroots and Certificates {#trustrootcerts}
@@ -480,10 +551,88 @@ the following Certificate Chain Rules (CCR) must be checked:
 
 #### Certificate Authority Root CAs
 
+Certificate chains allow to verify a delegate certificate following the Issuers-Subjects up to a *Root CA*,
+which is a self-signed certificate (issuer and subject are identical).
+
+The *Root CA* represents the *Trustroot* of all involved delegates.
+
+When both a connecting WAMP client and the WAMP router are using the same *Root CA* and thus use a common
+*Trustroot*, they are said to be authorized in the same trust domain (identified by the trustroot).
+
+There are two types of *Root CAs* and *Trustroots*:
+
+1. *Standalone Trustroot*
+2. *On-chain Trustroot*
+
+A *Standalone Trustroot* is managed by a single operator/owner, does not allow infrastructure elements
+(nodes, client, realms) to be integrated between different operators/owners and is privately stored on the
+respective operators systems only, usually as files or in databases.
+
+An *On-chain Trustroot* in contrast is stored in Ethereum and publically shared between different
+operators/owners which allows infrastructure elements (nodes, clients, realms) to be integrated.
+For example, clients/nodes operated by different operators can authenticate to each other and
+nodes operated by different operators can authenticate to each other sharing the hosting of one realm.
+
+The management of *On-Chain Trustroots* depends on the policy of the trustroot which is chosen
+and fixed when the trustroot is created:
+
+1. *Open*
+2. *Permitted*
+3. *Private*
+
+With an *Open On-chain Trustroot*, new certificates can be added to a certificate chain freely
+and only requires a signature by the respective intermediate CA issuer.
+
+----
+
+
+
 There is only one root CA certificate per PKI tree.
 
 Trust Root: Ethereum
 Trust Anchor: TPM
+
+
+
+all realm names in Autobahn/Crossbar.io must match this
+
+```
+import re
+
+pattern = re.compile(r"...")
+re.match(realm_name)
+```
+
+all realm names in WAMP must match this
+
+```
+^([^\s\.#]+)(\.[^\s\.#]+)*$
+```
+
+all realm names in Autobahn/Crossbar.io must match this
+
+```
+^[A-Za-z][A-Za-z\d_\-@\.]{2,254}$
+```
+
+if Ethereum addresses are enabled, realm names which are "0x" prefixed Ethereum addresses are also valid
+
+```
+^0x([A-Fa-f\d]{40})$
+```
+
+realms names might also specifically match ENS URIs
+
+```
+^([a-z\d_\-@\.]{2,250})\.eth$
+```
+
+since WAMP recommends using reverse dotted notation, reverse ENS names can be checked with this pattern
+
+```
+^eth\.([a-z\d_\-@\.]{2,250})$
+```
+
 
 **Private Root CAs**
 
