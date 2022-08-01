@@ -639,13 +639,72 @@ When the `trustroot` is associated with an on-chain *Realm* that has `trustroot`
 
 Remote attestation is a method by which a host (WAMP client) authenticates its hardware and software configuration to a remote host (WAMP router). The goal of remote attestation is to enable a remote system (challenger) to determine the level of trust in the integrity of the platform of another system (attestator).
 
-Remote attestation is requested by the router sending `CHALLENGE.extra.attest|bool == true`.
+Remote attestation allows to
+
+* perform security decisions based on security policy and measurement log
+* tie device identity into authentication infrastructure
+* verify device state in access control decisions
+* avoid exfiltration of credentials
+
+Remote attestation is requested by the router sending `CHALLENGE.extra.attest|list[int]` with a list of device PCRs to be attestated.
 
 A client receiving such a `CHALLENGE` MUST include an *Event Log* with PCRs collected from *measured boot* signed by the device's security module's *Attestation Key (AK)* and using the challenge sent by the router `CHALLENGE.extra.challenge|string` as a nonce.
 
 [TPM 2.0](https://en.wikipedia.org/wiki/Trusted_Platform_Module) of the [TCG](https://en.wikipedia.org/wiki/Trusted_Computing_Group) specifies a suitable function in [tss2_quote](https://tpm2-tools.readthedocs.io/en/latest/man/tss2_quote.1/) (also see [here](https://tpm2-tss.readthedocs.io/en/latest/group___fapi___quote.html)).
 
-The client MUST include the signed attestation in `AUTHENTICATE.Extra.attestation|string`.
+The client MUST include the signed attestation in `AUTHENTICATE.Extra.quote` and the corresponding measurement log in `AUTHENTICATE.Extra.measurement`.
+
+The following diagram illustrates *Remote Attestation* with WAMP-Cryptosign:
+
+```
+    +------------------------------+
+    | CHALLENGE sent by router     |
+    +------------------------------+
+
+      Selected PCRs (bitmap) == CHALLENGE.Extra.attest
+
+      Nonce == CHALLENGE.Extra.challenge
+
+        |
+        |
+        |
+        |       Quote (signed with AK)
+        |      +------------------------------+
+        |      |                              |
+        +----> | Selected PCRs (bitmap)       |
+        |      |                              |
+        |      | PCR values (digest)          |
+        |      |                              |
+        +----> | Nonce                        |
+              |                              |
+              +------------------------------+
+              | Signature (Attestation Key)  |
+              |                              |
+              +------------------------------+
+
+                            +
+
+              +------------------------------+
+              |                              |
+              | Measurement Log              |
+              |                              |
+              |                              |
+              |                              |
+              +------------------------------+
+
+                    |
+                    |
+                    |
+                    |
+                    |
+                    |    +------------------------------+
+                    +--> | AUTHENTICATE sent by client  |
+                        +------------------------------+
+
+                            AUTHENTICATE.Extra.quote
+
+                            AUTHENTICATE.Extra.measurement
+```
 
 
 ### Example Message Exchanges {#examplemessageexchanges}
