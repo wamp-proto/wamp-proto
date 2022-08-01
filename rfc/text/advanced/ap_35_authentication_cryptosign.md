@@ -325,6 +325,8 @@ A certificate chain is a list of certificates (usually starting with an end-enti
 * Each certificate (except the last one) is supposed to be signed by the secret key corresponding to the next certificate in the chain (i.e. the signature of one certificate can be verified using the public key contained in the following certificate).
 * The last certificate in the list is a **trust anchor**: a certificate that you trust because it was delivered to you by some trustworthy procedure. A trust anchor is a CA certificate (or more precisely, the public verification key of a CA) used by a relying party as the starting point for path validation.
 
+More information about certificate chains, while in the context of x509, can be found in this white paper published by the *PKI forum*: [Understanding Certification Path Construction](http://www.oasis-pki.org/pdfs/Understanding_Path_construction-DS2.pdf).
+
 *What are On-chain Trust Anchors?*
 
 In x509, the set of trusted root CA certificates are stored in a machine/device local certificate store. This set of trusted root CA certificates are:
@@ -417,6 +419,7 @@ optional hierarchical chain of intermediate certificates
         +------------------------------+         +--------------------------+
 ```
 
+
 #### Certificate Types
 
 The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificate` follow [EIP712](https://eips.ethereum.org/EIPS/eip-712) and use Ethereum signatures.
@@ -505,6 +508,11 @@ This prevents cross-chain and cross-contract attacks. The `chainId` is an intege
 * Ethereum Mainnet (ChainID 1)
 * Goerli Testnet (ChainID 5)
 * zkSync 2.0 Alpha Testnet (ChainID 280)
+
+Besides EIP712, other comparable approaches to specify cryptographically hashable, typed structured data ("messages") include:
+
+* [Veriform](https://docs.rs/veriform/latest/veriform/): cryptographically verifiable and canonicalized [message format](https://github.com/iqlusioninc/veriform/blob/develop/spec/draft-veriform-spec.md) similar to Protocol Buffers, with an "embedded-first" (heapless) implementation suitable for certificates or other signed objects
+* [objecthash](https://github.com/benlaurie/objecthash): A way to cryptographically hash objects (in the JSON-ish sense) that works cross-language. And, therefore, cross-encoding.
 
 
 #### Capabilities
@@ -704,6 +712,37 @@ The following diagram illustrates *Remote Attestation* with WAMP-Cryptosign:
 
                             AUTHENTICATE.Extra.measurement
 ```
+
+### Cryptographic Primitives
+
+WAMP-Cryptosign uses the following cryptographic primitives:
+
+**Elliptic Curves**
+
+|  SECG        |  Usage in WAMP                                            |
+|--------------|-----------------------------------------------------------|
+|  secp256r1   |  Transport Encryption (TLS)                               |
+|  curve25519  |  Session Authentication (WAMP-Cryptosign)                 |
+|  secp256k1   |  Data Signatures (Ethereum, WAMP-Cryptosign, WAMP-E2E)    |
+
+* [RFC4492: Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)](https://datatracker.ietf.org/doc/html/rfc4492)
+* [RFC7748: Elliptic Curves for Security](https://datatracker.ietf.org/doc/html/rfc7748)
+
+**Hash Functions**
+
+|  SECG        |  Usage in WAMP                                            |
+|--------------|-----------------------------------------------------------|
+|  sha256      |  Session Authentication (WAMP-Cryptosign)                 |
+|  keccak256   |  Data Signatures (Ethereum, WAMP-Cryptosign, WAMP-E2E)    |
+
+> Note: `sha256` refers to the SHA-2 algorithm, while `sha3-256` is a different algorithm refering to SHA-3
+
+**Signature Schemes**
+
+|  SECG        |  Usage in WAMP                                            |
+|--------------|-----------------------------------------------------------|
+|  ed25519     |  Session Authentication (WAMP-Cryptosign)                 |
+|  ecdsa       |  Data Signatures (Ethereum, WAMP-Cryptosign, WAMP-E2E)    |
 
 
 ### Example Message Exchanges {#examplemessageexchanges}
