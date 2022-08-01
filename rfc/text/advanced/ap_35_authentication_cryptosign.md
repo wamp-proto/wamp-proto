@@ -23,6 +23,35 @@ The following sections describe each of above features of *WAMP-Cryptosign*.
 Examples of complete authentication message exchanges can be found at the end of this
 chapter in [Example Message Exchanges](#examplemessageexchanges).
 
+In WAMP, the following **cryptographic primitives** are used with *WAMP-Cryptosign* authentication:
+
+**Elliptic Curves:**
+
+|  SECG        |  Usage in WAMP                                                           |
+|--------------|--------------------------------------------------------------------------|
+|  secp256r1   |  Transport Encryption (WAMP transport rncryption)                        |
+|  curve25519  |  Session Authentication (WAMP-Cryptosign authentication)                 |
+|  secp256k1   |  Data Signatures (WAMP-Cryptosign certificates, WAMP E2E encryption)     |
+
+* [RFC4492: Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)](https://datatracker.ietf.org/doc/html/rfc4492)
+* [RFC7748: Elliptic Curves for Security](https://datatracker.ietf.org/doc/html/rfc7748)
+
+**Hash Functions:**
+
+|  SECG        |  Usage in WAMP                                                           |
+|--------------|--------------------------------------------------------------------------|
+|  sha256      |  Session Authentication (WAMP-Cryptosign authentication)                 |
+|  keccak256   |  Data Signatures (WAMP-Cryptosign certificates, WAMP E2E encryption)     |
+
+Note that `sha256` refers to the SHA-2 algorithm, while `sha3-256` is a different algorithm refering to SHA-3.
+
+**Signature Schemes:**
+
+|  SECG        |  Usage in WAMP                                                           |
+|--------------|--------------------------------------------------------------------------|
+|  ed25519     |  Session Authentication (WAMP-Cryptosign Authentication)                 |
+|  ecdsa       |  Data Signatures (Ethereum, WAMP-Cryptosign Certificates, WAMP-E2E)      |
+
 
 ### Client Authentication {#clientauth}
 
@@ -67,8 +96,7 @@ A typical authentication begins with the client sending a `HELLO` message specif
     "authmethods": ["cryptosign"],
     "authid": "client01@example.com",
     "authextra": {
-        "pubkey": "545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122",
-        "channel_binding": null
+        "pubkey": "545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122"
     }
 }]
 ```
@@ -84,7 +112,7 @@ The `HELLO.Details.authextra|dict` contains the following members for WAMP-Crypt
 | pubkey            | string   | yes      | The client public key (32 bytes) as a Hex encoded string, e.g. `545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122` |
 | channel_binding   | string   | no       | If TLS channel binding is in use, the TLS channel binding type, e.g. `"tls-unique"`. |
 | challenge         | string   | no       | A client chosen, random challenge (32 bytes) as a Hex encoded string, to be signed by the router. |
-| trustroot         | string   | no       | When the client includes a client certificate (see below), the Ethereum address of the trustroot of the certificate, e.g. `0x72b3486d38E9f49215b487CeAaDF27D6acf22115` |
+| trustroot         | string   | no       | When the client includes a client certificate (see below), the Ethereum address of the trustroot of the certificate chain to be used, e.g. `0x72b3486d38E9f49215b487CeAaDF27D6acf22115`, which can be a *Standalone Trustroot* or an *On-chain Trustroot* (see [Trustroots](#trustroots)) |
 
 The client needs to announce the WAMP `roles` and features it supports, for example:
 
@@ -568,12 +596,15 @@ the following Certificate Chain Rules (CCR) must be checked:
 12. **CCR-12**: The delegate certificate's signature must be valid and signed by the `delegate`.
 
 
-#### Trustroots
+#### Trustroots {#trustroots}
 
 Certificate chains allow to verify a delegate certificate following the Issuers-Subjects up to a *Root CA*, which is a self-signed certificate (issuer and subject are identical). The *Root CA* represents the *Trustroot* of all involved delegates.
 
 When both a connecting WAMP client and the WAMP router are using the same *Root CA* and thus use a common
 *Trustroot*, they are said to be authorized in the same trust domain (identified by the trustroot).
+
+Trustroots are identified by their Ethereum address, which is computed from the issuer public key according to [EIP-55](https://github.com/ethereumbook/ethereumbook/blob/develop/04keys-addresses.asciidoc#ethereum-addresses).
+
 There are two types of *Root CAs* and *Trustroots*:
 
 1. *Standalone Trustroot*
@@ -582,6 +613,9 @@ There are two types of *Root CAs* and *Trustroots*:
 A *Standalone Trustroot* is managed by a single operator/owner, does not allow infrastructure elements
 (nodes, client, realms) to be integrated between different operators/owners and is privately stored on the
 respective operators systems only, usually as files or in databases.
+
+Note that the Ethereum *address*, can be *computed* deterministically from the public key of the issuer
+of a certificate, even when the certificate (or the issuer) is *not* stored on-chain.
 
 An *On-chain Trustroot* in contrast is stored in Ethereum and publically shared between different
 operators/owners which allows infrastructure elements (nodes, clients, realms) to be integrated.
@@ -712,38 +746,6 @@ The following diagram illustrates *Remote Attestation* with WAMP-Cryptosign:
 
                             AUTHENTICATE.Extra.measurement
 ```
-
-### Cryptographic Primitives
-
-WAMP-Cryptosign uses the following cryptographic primitives:
-
-**Elliptic Curves**
-
-|  SECG        |  Usage in WAMP                                            |
-|--------------|-----------------------------------------------------------|
-|  secp256r1   |  Transport Encryption (TLS)                               |
-|  curve25519  |  Session Authentication (WAMP-Cryptosign)                 |
-|  secp256k1   |  Data Signatures (Ethereum, WAMP-Cryptosign, WAMP-E2E)    |
-
-* [RFC4492: Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)](https://datatracker.ietf.org/doc/html/rfc4492)
-* [RFC7748: Elliptic Curves for Security](https://datatracker.ietf.org/doc/html/rfc7748)
-
-**Hash Functions**
-
-|  SECG        |  Usage in WAMP                                            |
-|--------------|-----------------------------------------------------------|
-|  sha256      |  Session Authentication (WAMP-Cryptosign)                 |
-|  keccak256   |  Data Signatures (Ethereum, WAMP-Cryptosign, WAMP-E2E)    |
-
-> Note: `sha256` refers to the SHA-2 algorithm, while `sha3-256` is a different algorithm refering to SHA-3
-
-**Signature Schemes**
-
-|  SECG        |  Usage in WAMP                                            |
-|--------------|-----------------------------------------------------------|
-|  ed25519     |  Session Authentication (WAMP-Cryptosign)                 |
-|  ecdsa       |  Data Signatures (Ethereum, WAMP-Cryptosign, WAMP-E2E)    |
-
 
 ### Example Message Exchanges {#examplemessageexchanges}
 
