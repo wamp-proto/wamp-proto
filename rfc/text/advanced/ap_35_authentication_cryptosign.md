@@ -29,7 +29,7 @@ In WAMP, the following **cryptographic primitives** are used with *WAMP-Cryptosi
 
 |  SECG        |  Usage in WAMP                                                           |
 |--------------|--------------------------------------------------------------------------|
-|  secp256r1   |  Transport Encryption (WAMP transport rncryption)                        |
+|  secp256r1   |  Transport Encryption (WAMP transport encryption)                        |
 |  curve25519  |  Session Authentication (WAMP-Cryptosign authentication)                 |
 |  secp256k1   |  Data Signatures (WAMP-Cryptosign certificates, WAMP E2E encryption)     |
 
