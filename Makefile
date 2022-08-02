@@ -84,9 +84,13 @@ build_spec: build_spec_rfc
 # https://mmark.miek.nl/post/syntax/
 build_spec_rfc: build_spec_rfc_mmark build_spec_bp_rfc_mmark build_spec_ap_rfc_mmark
 
+update_spec_date:
+	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp.md
+	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp-bp.md
+	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp-ap.md
+
 # firefox dist/wamp_latest_ietf.html
 build_spec_rfc_mmark:
-	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp.md
 	mmark ./rfc/wamp.md > $(TMPBUILDDIR)/wamp.xml
 	sed $(sed_args) 's/<sourcecode align="left"/<sourcecode/g' $(TMPBUILDDIR)/wamp.xml
 	sed $(sed_args) 's/<t align="left"/<t/g' $(TMPBUILDDIR)/wamp.xml
@@ -97,7 +101,6 @@ build_spec_rfc_mmark:
 
 # firefox dist/wamp_bp_latest_ietf.html
 build_spec_bp_rfc_mmark:
-	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp-bp.md
 	mmark ./rfc/wamp-bp.md > $(TMPBUILDDIR)/wamp-bp.xml
 	sed $(sed_args) 's/<sourcecode align="left"/<sourcecode/g' $(TMPBUILDDIR)/wamp-bp.xml
 	sed $(sed_args) 's/<t align="left"/<t/g' $(TMPBUILDDIR)/wamp-bp.xml
@@ -108,7 +111,6 @@ build_spec_bp_rfc_mmark:
 
 # firefox dist/wamp_ap_latest_ietf.html
 build_spec_ap_rfc_mmark:
-	sed $(sed_args) -e 's/^date = .*/date = $(CURRENTDATE)/g' ./rfc/wamp-ap.md
 	mmark ./rfc/wamp-ap.md > $(TMPBUILDDIR)/wamp-ap.xml
 	sed $(sed_args) 's/<sourcecode align="left"/<sourcecode/g' $(TMPBUILDDIR)/wamp-ap.xml
 	sed $(sed_args) 's/<t align="left"/<t/g' $(TMPBUILDDIR)/wamp-ap.xml
