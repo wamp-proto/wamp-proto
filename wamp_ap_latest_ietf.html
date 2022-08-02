@@ -23,7 +23,7 @@
     MarkupSafe 2.0.1
     pycairo 1.20.1
     pycountry 22.3.5
-    pyflakes 2.4.0
+    pyflakes 2.5.0
     PyYAML 6.0
     requests 2.27.1
     setuptools 40.6.2
@@ -1187,7 +1187,7 @@ li > p:last-of-type {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 28 January 2023</td>
+<td class="center">Expires 27 January 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1200,12 +1200,12 @@ li > p:last-of-type {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2022-07-27" class="published">27 July 2022</time>
+<time datetime="2022-07-26" class="published">26 July 2022</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-01-28">28 January 2023</time></dd>
+<dd class="expires"><time datetime="2023-01-27">27 January 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1235,7 +1235,7 @@ li > p:last-of-type {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 January 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 January 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1452,6 +1452,26 @@ li > p:last-of-type {
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
                 <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-cryptosign-based-authentica" class="xref">Cryptosign-based Authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.1">
+                    <p id="section-toc.1-1.5.2.4.2.1.1"><a href="#section-5.4.1" class="xref">5.4.1</a>.  <a href="#name-client-authentication" class="xref">Client Authentication</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.2">
+                    <p id="section-toc.1-1.5.2.4.2.2.1"><a href="#section-5.4.2" class="xref">5.4.2</a>.  <a href="#name-tls-channel-binding" class="xref">TLS Channel Binding</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.3">
+                    <p id="section-toc.1-1.5.2.4.2.3.1"><a href="#section-5.4.3" class="xref">5.4.3</a>.  <a href="#name-router-authentication" class="xref">Router Authentication</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.4">
+                    <p id="section-toc.1-1.5.2.4.2.4.1"><a href="#section-5.4.4" class="xref">5.4.4</a>.  <a href="#name-trustroots-and-certificates" class="xref">Trustroots and Certificates</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.5">
+                    <p id="section-toc.1-1.5.2.4.2.5.1"><a href="#section-5.4.5" class="xref">5.4.5</a>.  <a href="#name-remote-attestation" class="xref">Remote Attestation</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.6">
+                    <p id="section-toc.1-1.5.2.4.2.6.1"><a href="#section-5.4.6" class="xref">5.4.6</a>.  <a href="#name-example-message-exchanges" class="xref">Example Message Exchanges</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.5">
                 <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="xref">5.5</a>.  <a href="#name-dynamic-authentication-api" class="xref">Dynamic Authentication API</a></p>
@@ -5729,7 +5749,1400 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
         <h3 id="name-cryptosign-based-authentica">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-cryptosign-based-authentica" class="section-name selfRef">Cryptosign-based Authentication</a>
         </h3>
-<p id="section-5.4-1">Write me.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-1"><em>WAMP-Cryptosign</em> is a WAMP authentication method based on
+<em>public-private key cryptography</em>. Specifically, it is based on <a href="https://ed25519.cr.yp.to/">Ed25519</a> digital signatures as described in <span>[<a href="#RFC8032" class="xref">RFC8032</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-2"><strong>Ed25519</strong> is an <a href="https://ed25519.cr.yp.to/ed25519-20110926.pdf">elliptic curve signature scheme</a> that instantiates the Edwards-curve Digital Signature Algorithm (EdDSA) with elliptic curve parameters which are equivalent to <a href="https://cr.yp.to/ecdh.html">Curve25519</a>.
+<strong>Curve25519</strong> is a <a href="https://safecurves.cr.yp.to/">SafeCurve</a>, which means it is easy to implement and avoid security issues resulting from common implementation challenges and bugs.
+Ed25519 is intended to operate at around the 128-bit security level, and there are robust native implementations available as open-source, e.g. <a href="https://github.com/jedisct1/libsodium">libsodium</a>, which can be used from script languages, e.g. <a href="https://github.com/pyca/pynacl">PyNaCl</a>.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
+<p id="section-5.4-3">An implementation of <em>WAMP-Cryptosign</em> MUST provide<a href="#section-5.4-3" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4-4.1">
+            <a href="#clientauth">Client Authentication</a><a href="#section-5.4-4.1" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-5.4-5">and MAY implement one or more of<a href="#section-5.4-5" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4-6.1">
+            <a href="#channelbinding">TLS Channel Binding</a><a href="#section-5.4-6.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.4-6.2">
+            <a href="#routerauth">Router Authentication</a><a href="#section-5.4-6.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.4-6.3">
+            <a href="#trustrootcerts">Trustroots and Certificates</a><a href="#section-5.4-6.3" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.4-6.4">
+            <a href="#remoteattestation">Remote Attestation</a><a href="#section-5.4-6.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-5.4-7">The following sections describe each of above features of <em>WAMP-Cryptosign</em>.<a href="#section-5.4-7" class="pilcrow">¶</a></p>
+<p id="section-5.4-8">Examples of complete authentication message exchanges can be found at the end of this
+chapter in <a href="#examplemessageexchanges">Example Message Exchanges</a>.<a href="#section-5.4-8" class="pilcrow">¶</a></p>
+<p id="section-5.4-9">In WAMP, the following <strong>cryptographic primitives</strong> are used with <em>WAMP-Cryptosign</em> authentication:<a href="#section-5.4-9" class="pilcrow">¶</a></p>
+<p id="section-5.4-10"><strong>Elliptic Curves:</strong><a href="#section-5.4-10" class="pilcrow">¶</a></p>
+<table class="center" id="table-9">
+          <caption><a href="#table-9" class="selfRef">Table 9</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">SECG</th>
+              <th class="text-left" rowspan="1" colspan="1">Usage in WAMP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">secp256r1</td>
+              <td class="text-left" rowspan="1" colspan="1">Transport Encryption (WAMP transport encryption)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">curve25519</td>
+              <td class="text-left" rowspan="1" colspan="1">Session Authentication (WAMP-Cryptosign authentication)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">secp256k1</td>
+              <td class="text-left" rowspan="1" colspan="1">Data Signatures (WAMP-Cryptosign certificates, WAMP E2E encryption)</td>
+            </tr>
+          </tbody>
+        </table>
+<ul class="compact">
+<li class="compact" id="section-5.4-12.1">
+            <a href="https://datatracker.ietf.org/doc/html/rfc4492">RFC4492: Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)</a><a href="#section-5.4-12.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.4-12.2">
+            <a href="https://datatracker.ietf.org/doc/html/rfc7748">RFC7748: Elliptic Curves for Security</a><a href="#section-5.4-12.2" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-5.4-13"><strong>Hash Functions:</strong><a href="#section-5.4-13" class="pilcrow">¶</a></p>
+<table class="center" id="table-10">
+          <caption><a href="#table-10" class="selfRef">Table 10</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">SECG</th>
+              <th class="text-left" rowspan="1" colspan="1">Usage in WAMP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">sha256</td>
+              <td class="text-left" rowspan="1" colspan="1">Session Authentication (WAMP-Cryptosign authentication)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">keccak256</td>
+              <td class="text-left" rowspan="1" colspan="1">Data Signatures (WAMP-Cryptosign certificates, WAMP E2E encryption)</td>
+            </tr>
+          </tbody>
+        </table>
+<p id="section-5.4-15">Note that <code>sha256</code> refers to the SHA-2 algorithm, while <code>sha3-256</code> is a different algorithm refering to SHA-3.<a href="#section-5.4-15" class="pilcrow">¶</a></p>
+<p id="section-5.4-16"><strong>Signature Schemes:</strong><a href="#section-5.4-16" class="pilcrow">¶</a></p>
+<table class="center" id="table-11">
+          <caption><a href="#table-11" class="selfRef">Table 11</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">SECG</th>
+              <th class="text-left" rowspan="1" colspan="1">Usage in WAMP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ed25519</td>
+              <td class="text-left" rowspan="1" colspan="1">Session Authentication (WAMP-Cryptosign Authentication)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">ecdsa</td>
+              <td class="text-left" rowspan="1" colspan="1">Data Signatures (Ethereum, WAMP-Cryptosign Certificates, WAMP-E2E)</td>
+            </tr>
+          </tbody>
+        </table>
+<div id="clientauth">
+<section id="section-5.4.1">
+          <h4 id="name-client-authentication">
+<a href="#section-5.4.1" class="section-number selfRef">5.4.1. </a><a href="#name-client-authentication" class="section-name selfRef">Client Authentication</a>
+          </h4>
+<p id="section-5.4.1-1">A <em>Client</em> is authenticated to a <em>Router</em> by:<a href="#section-5.4.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.1-2">
+<li id="section-5.4.1-2.1">sending a <code>HELLO</code>, announcing its public key<a href="#section-5.4.1-2.1" class="pilcrow">¶</a>
+</li>
+            <li id="section-5.4.1-2.2">signing a (random) challenge received in <code>CHALLENGE</code> with its private key<a href="#section-5.4.1-2.2" class="pilcrow">¶</a>
+</li>
+            <li id="section-5.4.1-2.3">let the router verify the signature, proofing the client actually controls the private key, and thus the authenticity of the client as identified by the public key<a href="#section-5.4.1-2.3" class="pilcrow">¶</a>
+</li>
+            <li id="section-5.4.1-2.4">let the router admit the client to a realm under a role, based on the public key<a href="#section-5.4.1-2.4" class="pilcrow">¶</a>
+</li>
+          </ol>
+<p id="section-5.4.1-3">Thus, the client is identified using its public key, and the <em>Router</em> needs to know said public key and its desired realm and role in advance.<a href="#section-5.4.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.4.1-4">A <em>Client</em> for which the <em>Router</em> does not previously know the client's public key MAY use the <a href="#name-trustroots-and-certificates">Trustroots and Certificates</a> feature to trust a <em>Client</em> based on an additional certificate presented by the client.<a href="#section-5.4.1-4" class="pilcrow">¶</a></p>
+<p id="section-5.4.1-5">A <em>Router</em> is optionally (see <a href="#name-router-authentication">Router Authentication</a>) authenticated to a <em>Client</em> by:<a href="#section-5.4.1-5" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.1-6">
+<li id="section-5.4.1-6.1">client includes a (random) <code>HELLO.Details.challenge|string</code><a href="#section-5.4.1-6.1" class="pilcrow">¶</a>
+</li>
+            <li id="section-5.4.1-6.2">the router sends the signature as part of its challenge to the client, in <code>CHALLENGE.extra.signature|string</code><a href="#section-5.4.1-6.2" class="pilcrow">¶</a>
+</li>
+          </ol>
+<p id="section-5.4.1-7">Again, in this case, the <em>Router</em> includes a trustroot and certificate for the client to verify.<a href="#section-5.4.1-7" class="pilcrow">¶</a></p>
+<div id="computing-the-signature">
+<section id="section-5.4.1.1">
+            <h5 id="name-computing-the-signature">
+<a href="#section-5.4.1.1" class="section-number selfRef">5.4.1.1. </a><a href="#name-computing-the-signature" class="section-name selfRef">Computing the Signature</a>
+            </h5>
+<p id="section-5.4.1.1-1">The challenge sent by the router is a 32 bytes random value, encoded as a Hex string in <code>CHALLENGE.extra.challenge|string</code>.<a href="#section-5.4.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.1-2">When no channel binding is active, the Ed25519 signature over the 32 bytes message MUST be computed using the WAMP-Cryptosign <em>private key</em> of the authenticating client.<a href="#section-5.4.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.1-3">When channel binding is active, the challenge MUST first be XOR'ed bytewise with the channel ID, e.g. the 32 bytes from TLS with channel binding <code>"tls-unique"</code>, and the resulting message (which again has length 32 bytes) MUST be signed using the WAMP-Cryptosign <em>private key</em> of the authenticating client.<a href="#section-5.4.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.1-4">The client MUST return the concatenation of the signature and the message signed (96 bytes) in the <code>AUTHENTICATE</code> message.<a href="#section-5.4.1.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="example-message-flow">
+<section id="section-5.4.1.2">
+            <h5 id="name-example-message-flow">
+<a href="#section-5.4.1.2" class="section-number selfRef">5.4.1.2. </a><a href="#name-example-message-flow" class="section-name selfRef">Example Message Flow</a>
+            </h5>
+<p id="section-5.4.1.2-1">A typical authentication begins with the client sending a <code>HELLO</code> message specifying the <code>cryptosign</code> method as (one of) the authentication methods:<a href="#section-5.4.1.2-1" class="pilcrow">¶</a></p>
+<div id="section-5.4.1.2-2">
+<pre class="lang-javascript sourcecode">[1, "realm1", {
+    "roles": {/* see below */},
+    "authmethods": ["cryptosign"],
+    "authid": "client01@example.com",
+    "authextra": {
+        "pubkey": "545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122"
+    }
+}]
+</pre><a href="#section-5.4.1.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.1.2-3">The <code>HELLO.Details.authmethods|list</code> is used by the client to announce the authentication methods it is prepared to perform. For WAMP-Cryptosign, this MUST include <code>"cryptosign"</code>.<a href="#section-5.4.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.2-4">The <code>HELLO.Details.authid|string</code> is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-Cryptosign authentication, this MAY be provided. If no <code>authid</code> is provided, the router SHOULD automatically chose and assign an <code>authid</code> (e.g. the Hex encode public key).<a href="#section-5.4.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.2-5">The <code>HELLO.Details.authextra|dict</code> contains the following members for WAMP-Cryptosign:<a href="#section-5.4.1.2-5" class="pilcrow">¶</a></p>
+<table class="center" id="table-12">
+              <caption><a href="#table-12" class="selfRef">Table 12</a></caption>
+<thead>
+                <tr>
+                  <th class="text-left" rowspan="1" colspan="1">Field</th>
+                  <th class="text-left" rowspan="1" colspan="1">Type</th>
+                  <th class="text-left" rowspan="1" colspan="1">Required</th>
+                  <th class="text-left" rowspan="1" colspan="1">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">pubkey</td>
+                  <td class="text-left" rowspan="1" colspan="1">string</td>
+                  <td class="text-left" rowspan="1" colspan="1">yes</td>
+                  <td class="text-left" rowspan="1" colspan="1">The client public key (32 bytes) as a Hex encoded string, e.g. <code>545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122</code>
+</td>
+                </tr>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">channel_binding</td>
+                  <td class="text-left" rowspan="1" colspan="1">string</td>
+                  <td class="text-left" rowspan="1" colspan="1">no</td>
+                  <td class="text-left" rowspan="1" colspan="1">If TLS channel binding is in use, the TLS channel binding type, e.g. <code>"tls-unique"</code>.</td>
+                </tr>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">challenge</td>
+                  <td class="text-left" rowspan="1" colspan="1">string</td>
+                  <td class="text-left" rowspan="1" colspan="1">no</td>
+                  <td class="text-left" rowspan="1" colspan="1">A client chosen, random challenge (32 bytes) as a Hex encoded string, to be signed by the router.</td>
+                </tr>
+                <tr>
+                  <td class="text-left" rowspan="1" colspan="1">trustroot</td>
+                  <td class="text-left" rowspan="1" colspan="1">string</td>
+                  <td class="text-left" rowspan="1" colspan="1">no</td>
+                  <td class="text-left" rowspan="1" colspan="1">When the client includes a client certificate (see below), the Ethereum address of the trustroot of the certificate chain to be used, e.g. <code>0x72b3486d38E9f49215b487CeAaDF27D6acf22115</code>, which can be a <em>Standalone Trustroot</em> or an <em>On-chain Trustroot</em> (see <a href="#trustroots">Trustroots</a>)</td>
+                </tr>
+              </tbody>
+            </table>
+<p id="section-5.4.1.2-7">The client needs to announce the WAMP <code>roles</code> and features it supports, for example:<a href="#section-5.4.1.2-7" class="pilcrow">¶</a></p>
+<div id="section-5.4.1.2-8">
+<pre class="lang-javascript sourcecode">{"callee": {"features": {"call_canceling": True,
+                         "caller_identification": True,
+                         "pattern_based_registration": True,
+                         "progressive_call_results": True,
+                         "registration_revocation": True,
+                         "shared_registration": True}},
+"caller": {"features": {"call_canceling": True,
+                        "caller_identification": True,
+                        "progressive_call_results": True}},
+"publisher": {"features": {"publisher_exclusion": True,
+                           "publisher_identification": True,
+                           "subscriber_blackwhite_listing": True}},
+"subscriber": {"features": {"pattern_based_subscription": True,
+                            "publisher_identification": True,
+                            "subscription_revocation": True}}}}
+</pre><a href="#section-5.4.1.2-8" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.1.2-9">If the router is unwilling or unable to perform WAMP-Cryptosign authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <code>ABORT</code> message.<a href="#section-5.4.1.2-9" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.2-10">If the router is willing to let the client authenticate using WAMP-Cryptosign and the router recognizes the provided <code>HELLO.Details.authextra.pubkey|string</code>, it'll send a <code>CHALLENGE</code> message:<a href="#section-5.4.1.2-10" class="pilcrow">¶</a></p>
+<div id="section-5.4.1.2-11">
+<pre class="lang-javascript sourcecode">[4, "cryptosign", {
+    "challenge": "fa034062ad76352b53a25358854577730db82f367aa439709c91296d04a5716c",
+    "channel_binding": null
+}]
+</pre><a href="#section-5.4.1.2-11" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.1.2-12">The client will send an <code>AUTHENTICATE</code> message containing a signature:<a href="#section-5.4.1.2-12" class="pilcrow">¶</a></p>
+<div id="section-5.4.1.2-13">
+<pre class="lang-javascript sourcecode">[5 'e2f0297a193b63b7a4a92028e9e2e6107f82730560d54a657bd982cb4b3151490399debbbde998e494d3c3b2a5e2e91271291e10dee85a6cfaa127885ddd8b0afa034062ad76352b53a25358854577730db82f367aa439709c91296d04a5716c', {}]
+</pre><a href="#section-5.4.1.2-13" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.1.2-14">If the authentication succeeds, the server will router respond with a <code>WELCOME</code> message:<a href="#section-5.4.1.2-14" class="pilcrow">¶</a></p>
+<div id="section-5.4.1.2-15">
+<pre class="lang-javascript sourcecode">[2, 7562122397119786, {
+    "authextra": {
+        "x_cb_node": "intel-nuci7-27532",
+        "x_cb_peer": "tcp4:127.0.0.1:49032",
+        "x_cb_pid": 27637,
+        "x_cb_worker": "worker001"
+    },
+    "authid": "client01@example.com",
+    "authmethod": "cryptosign",
+    "authprovider": "static",
+    "authrole": "user",
+    "realm": "realm1",
+    "roles": {/* see below */}
+}]
+</pre><a href="#section-5.4.1.2-15" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.1.2-16">where<a href="#section-5.4.1.2-16" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.1.2-17">
+<li id="section-5.4.1.2-17.1">
+                <code>authid|string</code>: The authentication ID the client was (actually) authenticated as.<a href="#section-5.4.1.2-17.1" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.1.2-17.2">
+                <code>authrole|string</code>: The authentication role the client was authenticated for.<a href="#section-5.4.1.2-17.2" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.1.2-17.3">
+                <code>authmethod|string</code>: The authentication method, here <code>"cryptosign"</code><a href="#section-5.4.1.2-17.3" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.1.2-17.4">
+                <code>authprovider|string</code>: The actual provider of authentication. For Ticket-based authentication, this can be freely chosen by the app, e.g. <code>static</code> or <code>dynamic</code>.<a href="#section-5.4.1.2-17.4" class="pilcrow">¶</a>
+</li>
+            </ol>
+<p id="section-5.4.1.2-18">The <code>WELCOME.Details</code> again contain the actual authentication information active. If the authentication fails, the router will response with an <code>ABORT</code> message.<a href="#section-5.4.1.2-18" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.2-19">When the authentication is successful, <code>WELCOME.Details.roles|dict</code> will announce the roles and features the router supports:<a href="#section-5.4.1.2-19" class="pilcrow">¶</a></p>
+<div id="section-5.4.1.2-20">
+<pre class="lang-javascript sourcecode">{"broker": {"features": {"event_retention": True,
+                                    "pattern_based_subscription": True,
+                                    "publisher_exclusion": True,
+                                    "publisher_identification": True,
+                                    "session_meta_api": True,
+                                    "subscriber_blackwhite_listing": True,
+                                    "subscription_meta_api": True,
+                                    "subscription_revocation": True}},
+            "dealer": {"features": {"call_canceling": True,
+                                    "caller_identification": True,
+                                    "pattern_based_registration": True,
+                                    "progressive_call_results": True,
+                                    "registration_meta_api": True,
+                                    "registration_revocation": True,
+                                    "session_meta_api": True,
+                                    "shared_registration": True,
+                                    "testament_meta_api": True}}
+    }
+</pre><a href="#section-5.4.1.2-20" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="test-vectors">
+<section id="section-5.4.1.3">
+            <h5 id="name-test-vectors">
+<a href="#section-5.4.1.3" class="section-number selfRef">5.4.1.3. </a><a href="#name-test-vectors" class="section-name selfRef">Test Vectors</a>
+            </h5>
+<p id="section-5.4.1.3-1">The following test vectors allow to verify an implementation of WAMP-Cryptosign signatures. You can use <code>channel_id</code>, <code>private_key</code> and <code>challenge</code> as input, and check the computed signature matches <code>signature</code>.<a href="#section-5.4.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.1.3-2">The test vectors contain instances for both with and without a <code>channel_id</code>, which represents the TLS channel ID when using TLS with <code>tls-unique</code> channel binding.<a href="#section-5.4.1.3-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.1.3-3">
+<pre>test_vectors_1 = [
+    {
+        'channel_id': None,
+        'private_key': '4d57d97a68f555696620a6d849c0ce582568518d729eb753dc7c732de2804510',
+        'challenge': 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+        'signature': 'b32675b221f08593213737bef8240e7c15228b07028e19595294678c90d11c0cae80a357331bfc5cc9fb71081464e6e75013517c2cf067ad566a6b7b728e5d03ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
+    },
+    {
+        'channel_id': None,
+        'private_key': 'd511fe78e23934b3dadb52fcd022974b80bd92bccc7c5cf404e46cc0a8a2f5cd',
+        'challenge': 'b26c1f87c13fc1da14997f1b5a71995dff8fbe0a62fae8473c7bdbd05bfb607d',
+        'signature': 'd4209ad10d5aff6bfbc009d7e924795de138a63515efc7afc6b01b7fe5201372190374886a70207b042294af5bd64ce725cd8dceb344e6d11c09d1aaaf4d660fb26c1f87c13fc1da14997f1b5a71995dff8fbe0a62fae8473c7bdbd05bfb607d'
+    },
+    {
+        'channel_id': None,
+        'private_key': '6e1fde9cf9e2359a87420b65a87dc0c66136e66945196ba2475990d8a0c3a25b',
+        'challenge': 'b05e6b8ad4d69abf74aa3be3c0ee40ae07d66e1895b9ab09285a2f1192d562d2',
+        'signature': '7beb282184baadd08f166f16dd683b39cab53816ed81e6955def951cb2ddad1ec184e206746fd82bda075af03711d3d5658fc84a76196b0fa8d1ebc92ef9f30bb05e6b8ad4d69abf74aa3be3c0ee40ae07d66e1895b9ab09285a2f1192d562d2'
+    },
+    {
+        'channel_id': '62e935ae755f3d48f80d4d59f6121358c435722a67e859cc0caa8b539027f2ff',
+        'private_key': '4d57d97a68f555696620a6d849c0ce582568518d729eb753dc7c732de2804510',
+        'challenge': 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+        'signature': '9b6f41540c9b95b4b7b281c3042fa9c54cef43c842d62ea3fd6030fcb66e70b3e80d49d44c29d1635da9348d02ec93f3ed1ef227dfb59a07b580095c2b82f80f9d16ca518aa0c2b707f2b2a609edeca73bca8dd59817a633f35574ac6fd80d00'
+    },
+    {
+        'channel_id': '62e935ae755f3d48f80d4d59f6121358c435722a67e859cc0caa8b539027f2ff',
+        'private_key': 'd511fe78e23934b3dadb52fcd022974b80bd92bccc7c5cf404e46cc0a8a2f5cd',
+        'challenge': 'b26c1f87c13fc1da14997f1b5a71995dff8fbe0a62fae8473c7bdbd05bfb607d',
+        'signature': '305aaa3ac25e98f651427688b3fc43fe7d8a68a7ec1d7d61c61517c519bd4a427c3015599d83ca28b4c652333920223844ef0725eb5dc2febfd6af7677b73f01d0852a29b460fc92ec943242ac638a053bbacc200512b18b30d15083cbdc9282'
+    },
+    {
+        'channel_id': '62e935ae755f3d48f80d4d59f6121358c435722a67e859cc0caa8b539027f2ff',
+        'private_key': '6e1fde9cf9e2359a87420b65a87dc0c66136e66945196ba2475990d8a0c3a25b',
+        'challenge': 'b05e6b8ad4d69abf74aa3be3c0ee40ae07d66e1895b9ab09285a2f1192d562d2',
+        'signature': 'ee3c7644fd8070532bc1fde3d70d742267da545d8c8f03e63bda63f1ad4214f4d2c4bfdb4eb9526def42deeb7e31602a6ff99eba893e0a4ad4d45892ca75e608d2b75e24a189a7f78ca776ba36fc53f6c3e31c32f251f2c524f0a44202f2902d'
+    },
+]
+</pre><a href="#section-5.4.1.3-3" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="channelbinding">
+<section id="section-5.4.2">
+          <h4 id="name-tls-channel-binding">
+<a href="#section-5.4.2" class="section-number selfRef">5.4.2. </a><a href="#name-tls-channel-binding" class="section-name selfRef">TLS Channel Binding</a>
+          </h4>
+<p id="section-5.4.2-1"><em>TLS Channel Binding</em> is an optional feature for WAMP-Cryptosign when running on top of TLS for link encryption.
+The use of "channel binding" to bind authentication at application layers to secure sessions at lower layers in the network stack protects against certain attack scenarios. For more background information, please see<a href="#section-5.4.2-1" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.2-2.1">
+              <a href="https://tools.ietf.org/html/rfc5056">RFC5056: On the Use of Channel Bindings to Secure Channels</a><a href="#section-5.4.2-2.1" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-5.4.2-2.2">
+              <a href="https://www.ietf.org/proceedings/90/slides/slides-90-uta-0.pdf">Binding Security Tokens to TLS Channels</a><a href="#section-5.4.2-2.2" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-5.4.2-3">A client that wishes to use TLS Channel Binding with WAMP-Cryptosign must include an attribute <code>channel_binding</code> in the <code>authextra</code> sent in <code>HELLO.Details</code>:<a href="#section-5.4.2-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.2-4">
+<pre>[1, 'realm1', {
+  'authextra': {
+    'channel_binding': 'tls-unique',
+    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'
+  },
+  'authmethods': ['cryptosign']
+  }]
+</pre><a href="#section-5.4.2-4" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.2-5">The <code>channel_binding</code>, if present, MUST be a string with a value of <code>tls-unique</code> or <code>tls-exporter</code>,
+to specify the channel binding type that is to be used:<a href="#section-5.4.2-5" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.2-6.1">
+              <code>tls-unique</code>: <a href="https://datatracker.ietf.org/doc/html/rfc5929">RFC5929: Channel Bindings for TLS</a><a href="#section-5.4.2-6.1" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-5.4.2-6.2">
+              <code>tls-exporter</code>: <a href="https://datatracker.ietf.org/doc/html/rfc9266">RFC9266: Channel Bindings for TLS 1.3</a><a href="#section-5.4.2-6.2" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-5.4.2-7">When a router receives a HELLO message from a client with a TLS channel binding attribute present,
+the router MUST:<a href="#section-5.4.2-7" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.2-8">
+<li id="section-5.4.2-8.1">get the TLS channel ID (32 bytes) of the TLS session with the respective channel type requested<a href="#section-5.4.2-8.1" class="pilcrow">¶</a>
+</li>
+            <li id="section-5.4.2-8.2">generate new challenge (32 random bytes)<a href="#section-5.4.2-8.2" class="pilcrow">¶</a>
+</li>
+            <li id="section-5.4.2-8.3">expect the client to send back a signature in AUTHENTICATE computed over <code>challenge XOR channel_id</code><a href="#section-5.4.2-8.3" class="pilcrow">¶</a>
+</li>
+          </ol>
+<p id="section-5.4.2-9">and send back the <code>channel_binding</code> in use, and the <code>challenge</code> in a CHALLENGE message:<a href="#section-5.4.2-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.2-10">
+<pre>[4, 'cryptosign', {
+  'challenge': '0e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+  'channel_binding': 'tls-unique'}]
+</pre><a href="#section-5.4.2-10" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.2-11">The authenticating client MUST verify the actual channel binding in use matches the one it requested. If a router does not support the <code>channel_binding</code> the client requested, it may chose to continue the authentication without channel binding, and hence <code>CHALLENGE.Extra</code> would not contain a <code>channel_binding</code>.<a href="#section-5.4.2-11" class="pilcrow">¶</a></p>
+<p id="section-5.4.2-12">The client MUST then locally fetch the <code>channel_id</code> from the underlying TLS connection and
+sign <code>CHALLENGE.Extra.challenge XOR channel_id</code> using its private key.<a href="#section-5.4.2-12" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="routerauth">
+<section id="section-5.4.3">
+          <h4 id="name-router-authentication">
+<a href="#section-5.4.3" class="section-number selfRef">5.4.3. </a><a href="#name-router-authentication" class="section-name selfRef">Router Authentication</a>
+          </h4>
+<p id="section-5.4.3-1">With the basic <em>Client Authentication</em> mechanism in WAMP-Cryptosign, the router is able to authenticate
+the client, since to successfully sign <code>CHALLENGE.Extra.challenge</code> the client will need the
+private key corresponding to the public key which the client announced in <code>HELLO.Details.pubkey</code> to be authenticated under.<a href="#section-5.4.3-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.3-2">However, from this alone, the client can not be sure the router against which it is authenticating is
+actually valid, as in authentic. <em>Router Authentication</em> adds this capability.<a href="#section-5.4.3-2" class="pilcrow">¶</a></p>
+<p id="section-5.4.3-3">To request a router to authenticate, a client will start the authentication handshake by sending
+<code>HELLO.Details.challenge|string</code>:<a href="#section-5.4.3-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.3-4">
+<pre>[1, 'realm1', {
+  'authextra': {
+    'challenge': 'bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb',
+    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'
+    }}]
+</pre><a href="#section-5.4.3-4" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.3-5">Similar to <em>Client Authentication</em>, the <code>challenge</code> must encode a 32 bytes random value as a string in HEX format, and the router MUST respond by signing this challenge value with its (the router's) private key,
+and send back the signature in <code>CHALLENGE.Extra.signature</code><a href="#section-5.4.3-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.3-6">
+<pre>[4, 'cryptosign', {
+  'challenge': '0e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+  'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+  'signature': 'fd5128d2d207ba58a9d1d6f41b72c747964ad9d1294077b3b1eee6130b05843ab12c53c7f2519f73d4feb82db19d8ca0fc26b62bde6518e79a882f5795bc9f00bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb'}]
+</pre><a href="#section-5.4.3-6" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.3-7">When <em>Router Authentication</em> is used, the router MUST also send its public key in <code>CHALLENGE.Extra.pubkey</code>.<a href="#section-5.4.3-7" class="pilcrow">¶</a></p>
+<p id="section-5.4.3-8">Further, <em>Router Authentication</em> can be combined with <em>TLS Channel Binding</em>, in which case the value
+signed by the router will be <code>HELLO.Details.challenge XOR channel_id</code>.<a href="#section-5.4.3-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="trustrootcerts">
+<section id="section-5.4.4">
+          <h4 id="name-trustroots-and-certificates">
+<a href="#section-5.4.4" class="section-number selfRef">5.4.4. </a><a href="#name-trustroots-and-certificates" class="section-name selfRef">Trustroots and Certificates</a>
+          </h4>
+<div id="certificate-chains">
+<section id="section-5.4.4.1">
+            <h5 id="name-certificate-chains">
+<a href="#section-5.4.4.1" class="section-number selfRef">5.4.4.1. </a><a href="#name-certificate-chains" class="section-name selfRef">Certificate Chains</a>
+            </h5>
+<p id="section-5.4.4.1-1">A public-key certificate is a signed statement that is used to establish an association between an identity and a public key. This is called a machine identity. The entity that vouches for this association and signs the certificate is the issuer of the certificate and the identity whose public key is being vouched for is the subject of the certificate. In order to associate the identity and the public key, a chain of certificates is used. The certificate chain is also called the certification path or chain of trust.<a href="#section-5.4.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.1-2"><em>What is a Certificate Chain?</em><a href="#section-5.4.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.1-3">A certificate chain is a list of certificates (usually starting with an end-entity certificate) followed by one or more CA certificates (usually the last one being a self-signed certificate), with the following properties:<a href="#section-5.4.4.1-3" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.4.1-4.1">The <strong>issuer</strong> of each certificate (except the last one) matches the <strong>subject of</strong> the next certificate in the list.<a href="#section-5.4.4.1-4.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.1-4.2">Each certificate (except the last one) is supposed to be signed by the secret key corresponding to the next certificate in the chain (i.e. the signature of one certificate can be verified using the public key contained in the following certificate).<a href="#section-5.4.4.1-4.2" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.1-4.3">The last certificate in the list is a <strong>trust anchor</strong>: a certificate that you trust because it was delivered to you by some trustworthy procedure. A trust anchor is a CA certificate (or more precisely, the public verification key of a CA) used by a relying party as the starting point for path validation.<a href="#section-5.4.4.1-4.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-5.4.4.1-5">More information about certificate chains, while in the context of x509, can be found in this white paper published by the <em>PKI forum</em>: <a href="http://www.oasis-pki.org/pdfs/Understanding_Path_construction-DS2.pdf">Understanding Certification Path Construction</a>.<a href="#section-5.4.4.1-5" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.1-6"><em>What are On-chain Trust Anchors?</em><a href="#section-5.4.4.1-6" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.1-7">In x509, the set of trusted root CA certificates are stored in a machine/device local certificate store. This set of trusted root CA certificates are:<a href="#section-5.4.4.1-7" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.4.1-8">
+<li id="section-5.4.4.1-8.1">filled and fixed by the software or device vendor with a default root CA certificates set<a href="#section-5.4.4.1-8.1" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.1-8.2">may be extendable or replaceable by a user provided custom root CA certificates set<a href="#section-5.4.4.1-8.2" class="pilcrow">¶</a>
+</li>
+            </ol>
+<p id="section-5.4.4.1-9">With 1., the user implicitly trusts the vendor, and all root CAs in the set installed by the vendor.
+With 2., the user must manage a public-private key infrastructure, and when information is to be
+shared with other parties, the use PKI must be made available to those parties, and the parties
+will operationally and administratively depend on the PKI hosting party.
+In summary, x509 follows a centralized and hierarchical trust model.<a href="#section-5.4.4.1-9" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.1-10">With WAMP-Cryptosign, we use a public blockchain for certificate chain trust anchors. Using a public blockchain, specifically Ethereum, provides a decentralized, shared and cryptographically secure
+storage for root CA certificates, that is trust anchors. These anchors can be associated with
+other entities stored on-chain, such as <em>federated Realms</em>.<a href="#section-5.4.4.1-10" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.1-11">The following diagram shows the structure of certificate chains in WAMP-Cryptosign:<a href="#section-5.4.4.1-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.4.1-12">
+<pre>           EIP712AuthorityCertificate
+        +------------------------------+
+        |   chainId                    |       Root Certificate
+        |   verifyingContract          |
+        |   validFrom                  |         * trust anchor, stored on-chain
+   +----+-- issuer (== realm owner)    |         * tied to a realm
+   +----+-&gt; subject (== issuer) -------+----+    * self-signed by realm owner
+        |   realm                      |    |
+        |   capabilities               |    |
+        |   meta                       |    |
+        +------------------------------+    |   +------------------------------+
+        |   issuerSignature            +----+---&gt; Public Blockchain (L1 or L2) |
+        +------------------------------+    |   +------------------------------+
+                                            |
+                                            |
+                                            |
+                                            |
+                                            |
+           EIP712AuthorityCertificate       |
+        +------------------------------+    |
+        |   chainId                    |    |   Intermediate Certificate
+        |   verifyingContract          |    |
+        |   validFrom                  |    |    * stored off-chain
+        |   issuer  &lt;------------------+----+    * same realm as issueing cert
+  +-----+-- subject                    |         * subset of capabilities
+  |     |   realm                      |             of issueing cert
+  |     |   capabilities               |
+  |     |   meta                       |
+  |     +------------------------------+
+  |     |   issuerSignature            |
+  |     +------------------------------+
+  |
+
+
+optional hierarchical chain of intermediate certificates
+
+
+  |
+  |        EIP712AuthorityCertificate
+  |     +------------------------------+
+  |     |   chainId                    |        Intermediate Certificate
+  |     |   verifyingContract          |
+  |     |   validFrom                  |         * stored off-chain
+  +-----+-&gt; issuer                     |         * same realm as issueing cert
+        |   subject--------------------+----+    * subset of capabilities
+        |   realm                      |    |        of issueing cert
+        |   capabilities               |    |
+        |   meta                       |    |
+        +------------------------------+    |
+        |   issuerSignature            |    |
+        +------------------------------+    |
+                                            |
+                                            |
+                                            |
+                                            |
+                                            |
+           EIP712DelegateCertificate        |
+        +------------------------------+    |
+        |   chainId                    |    |   End-point Certificate
+        |   verifyingContract          |    |
+        |   validFrom                  |    |     * ephemeral, generate per-boot
+        |   delegate &lt;-----------------+----+     * subject is WAMP-Cryptosign pubkey
+        |   csPubKey                   |          * Boot time (UTC in Posix ns)
+        |   bootedAt                   |
+        |   meta                       |
+        |                              |
+        |                              |
+        +------------------------------+         +--------------------------+
+        |   delegateSignature          +---------&gt; Hardware Security Module |
+        +------------------------------+         +--------------------------+
+</pre><a href="#section-5.4.4.1-12" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="certificate-types">
+<section id="section-5.4.4.2">
+            <h5 id="name-certificate-types">
+<a href="#section-5.4.4.2" class="section-number selfRef">5.4.4.2. </a><a href="#name-certificate-types" class="section-name selfRef">Certificate Types</a>
+            </h5>
+<p id="section-5.4.4.2-1">The certificate types <code>EIP712AuthorityCertificate</code> and <code>EIP712DelegateCertificate</code> follow <a href="https://eips.ethereum.org/EIPS/eip-712">EIP712</a> and use Ethereum signatures.<a href="#section-5.4.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.2-2"><code>EIP712AuthorityCertificate</code>:<a href="#section-5.4.4.2-2" class="pilcrow">¶</a></p>
+<div id="section-5.4.4.2-3">
+<pre class="lang-json sourcecode">[
+    {
+        "name": "chainId",
+        "type": "uint256"
+    },
+    {
+        "name": "verifyingContract",
+        "type": "address"
+    },
+    {
+        "name": "validFrom",
+        "type": "uint256"
+    },
+    {
+        "name": "issuer",
+        "type": "address"
+    },
+    {
+        "name": "subject",
+        "type": "address"
+    },
+    {
+        "name": "realm",
+        "type": "address"
+    },
+    {
+        "name": "capabilities",
+        "type": "uint64"
+    },
+    {
+        "name": "meta",
+        "type": "string"
+    }
+]
+</pre><a href="#section-5.4.4.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.4.2-4"><code>EIP712DelegateCertificate</code>:<a href="#section-5.4.4.2-4" class="pilcrow">¶</a></p>
+<div id="section-5.4.4.2-5">
+<pre class="lang-json sourcecode">[
+    {
+        "name": "chainId",
+        "type": "uint256"
+    },
+    {
+        "name": "verifyingContract",
+        "type": "address"
+    },
+    {
+        "name": "validFrom",
+        "type": "uint256"
+    },
+    {
+        "name": "delegate",
+        "type": "address"
+    },
+    {
+        "name": "csPubKey",
+        "type": "bytes32"
+    },
+    {
+        "name": "bootedAt",
+        "type": "uint64"
+    },
+    {
+        "name": "meta",
+        "type": "string"
+    }
+]
+</pre><a href="#section-5.4.4.2-5" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.4.2-6">The EIP712 types for certificates contain:<a href="#section-5.4.4.2-6" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.4.2-7.1">
+                <code>chainId</code>: the chain ID of the blockchain this signed typed data is bound to<a href="#section-5.4.4.2-7.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.2-7.2">
+                <code>verifyingContract</code>: the address of the (main) smart contract this signed typed data is bound to<a href="#section-5.4.4.2-7.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-5.4.4.2-8">This prevents cross-chain and cross-contract attacks. The <code>chainId</code> is an integer according to <a href="https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md">EIP155</a>:<a href="#section-5.4.4.2-8" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.4.2-9.1">Ethereum Mainnet (ChainID 1)<a href="#section-5.4.4.2-9.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.2-9.2">Goerli Testnet (ChainID 5)<a href="#section-5.4.4.2-9.2" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.2-9.3">zkSync 2.0 Alpha Testnet (ChainID 280)<a href="#section-5.4.4.2-9.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-5.4.4.2-10">Besides EIP712, other comparable approaches to specify cryptographically hashable, typed structured data ("messages") include:<a href="#section-5.4.4.2-10" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.4.2-11.1">
+                <a href="https://docs.rs/veriform/latest/veriform/">Veriform</a>: cryptographically verifiable and canonicalized <a href="https://github.com/iqlusioninc/veriform/blob/develop/spec/draft-veriform-spec.md">message format</a> similar to Protocol Buffers, with an "embedded-first" (heapless) implementation suitable for certificates or other signed objects<a href="#section-5.4.4.2-11.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.2-11.2">
+                <a href="https://github.com/benlaurie/objecthash">objecthash</a>: A way to cryptographically hash objects (in the JSON-ish sense) that works cross-language. And, therefore, cross-encoding.<a href="#section-5.4.4.2-11.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</section>
+</div>
+<div id="capabilities">
+<section id="section-5.4.4.3">
+            <h5 id="name-capabilities">
+<a href="#section-5.4.4.3" class="section-number selfRef">5.4.4.3. </a><a href="#name-capabilities" class="section-name selfRef">Capabilities</a>
+            </h5>
+<ul class="compact">
+<li class="compact" id="section-5.4.4.3-1.1">
+                <strong>Bit 0</strong>: <code>CAPABILITY_ROOT_CA</code><a href="#section-5.4.4.3-1.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.2">
+                <strong>Bit 1</strong>: <code>CAPABILITY_INTERMEDIATE_CA</code><a href="#section-5.4.4.3-1.2" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.3">
+                <strong>Bit 2</strong>: <code>CAPABILITY_PUBLIC_RELAY</code><a href="#section-5.4.4.3-1.3" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.4">
+                <strong>Bit 3</strong>: <code>CAPABILITY_PRIVATE_RELAY</code><a href="#section-5.4.4.3-1.4" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.5">
+                <strong>Bit 4</strong>: <code>CAPABILITY_GATEWAY</code><a href="#section-5.4.4.3-1.5" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.6">
+                <strong>Bit 5</strong>: <code>CAPABILITY_EXCHANGE</code><a href="#section-5.4.4.3-1.6" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.7">
+                <strong>Bit 6</strong>: <code>CAPABILITY_PROVIDER</code><a href="#section-5.4.4.3-1.7" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.8">
+                <strong>Bit 7</strong>: <code>CAPABILITY_CONSUMER</code><a href="#section-5.4.4.3-1.8" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-1.9">
+                <strong>Bits 8 - 63</strong>: future use, all set to <code>0</code><a href="#section-5.4.4.3-1.9" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-5.4.4.3-2">Permission to create a <code>CAPABILITY_PUBLIC_RELAY</code> certificate on a realm can be
+configured by the realm owner for:<a href="#section-5.4.4.3-2" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.4.3-3.1">
+                <code>PRIVATE</code>: signed by realm owner<a href="#section-5.4.4.3-3.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-3.2">
+                <code>PERMISSIONED</code>: signed by requestor and realm owner<a href="#section-5.4.4.3-3.2" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.4.3-3.3">
+                <code>OPEN</code>: signed by requestor<a href="#section-5.4.4.3-3.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-5.4.4.3-4">Permission for <code>CAPABILITY_ROOT_CA</code> is always <code>PRIVATE</code>.<a href="#section-5.4.4.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="certificate-chain-verification">
+<section id="section-5.4.4.4">
+            <h5 id="name-certificate-chain-verificat">
+<a href="#section-5.4.4.4" class="section-number selfRef">5.4.4.4. </a><a href="#name-certificate-chain-verificat" class="section-name selfRef">Certificate Chain Verification</a>
+            </h5>
+<p id="section-5.4.4.4-1">use of a specific method/mechanism, when it comes to establishing trust (i.e. certifying public keys).<a href="#section-5.4.4.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.4-2">To verify a certificate chain and respective certificate signatures<a href="#section-5.4.4.4-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.4.4-3">
+<pre>[
+    (EIP712DelegateCertificate, Signature),       // delegate certificate
+    (EIP712AuthorityCertificate, Signature),      // intermediate CA certificate
+    ...
+    (EIP712AuthorityCertificate, Signature),      // intermediate CA certificate
+    (EIP712AuthorityCertificate, Signature)       // root CA certificate
+]
+</pre><a href="#section-5.4.4.4-3" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.4.4-4">the following Certificate Chain Rules (CCR) must be checked:<a href="#section-5.4.4.4-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.4.4-5">
+<li id="section-5.4.4.4-5.1">
+                <strong>CCR-1</strong>: The <code>chainId</code> and <code>verifyingContract</code> must match for all certificates to what we expect, and <code>validFrom</code> before current block number on the respective chain.<a href="#section-5.4.4.4-5.1" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.2">
+                <strong>CCR-2</strong>: The <code>realm</code> must match for all certificates to the respective realm.<a href="#section-5.4.4.4-5.2" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.3">
+                <strong>CCR-3</strong>: The type of the first certificate in the chain must be a <code>EIP712DelegateCertificate</code>, and all subsequent certificates must be of type <code>EIP712AuthorityCertificate</code>.<a href="#section-5.4.4.4-5.3" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.4">
+                <strong>CCR-4</strong>: The last certificate must be self-signed (<code>issuer</code> equals <code>subject</code>), it is a root CA certificate.<a href="#section-5.4.4.4-5.4" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.5">
+                <strong>CCR-5</strong>: The intermediate certificate's <code>issuer</code> must be equal to the <code>subject</code> of the previous certificate.<a href="#section-5.4.4.4-5.5" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.6">
+                <strong>CCR-6</strong>: The root certificate must be <code>validFrom</code> before the intermediate certificate<a href="#section-5.4.4.4-5.6" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.7">
+                <strong>CCR-7</strong>: The <code>capabilities</code> of intermediate certificate must be a subset of the root cert<a href="#section-5.4.4.4-5.7" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.8">
+                <strong>CCR-8</strong>: The intermediate certificate's <code>subject</code> must be the delegate certificate <code>delegate</code><a href="#section-5.4.4.4-5.8" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.9">
+                <strong>CCR-9</strong>: The intermediate certificate must be <code>validFrom</code> before the delegate certificate<a href="#section-5.4.4.4-5.9" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.10">
+                <strong>CCR-10</strong>: The root certificate's signature must be valid and signed by the root certificate's <code>issuer</code>.<a href="#section-5.4.4.4-5.10" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.11">
+                <strong>CCR-11</strong>: The intermediate certificate's signature must be valid and signed by the intermediate certificate's <code>issuer</code>.<a href="#section-5.4.4.4-5.11" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.4-5.12">
+                <strong>CCR-12</strong>: The delegate certificate's signature must be valid and signed by the <code>delegate</code>.<a href="#section-5.4.4.4-5.12" class="pilcrow">¶</a>
+</li>
+            </ol>
+</section>
+</div>
+<div id="trustroots">
+<section id="section-5.4.4.5">
+            <h5 id="name-trustroots">
+<a href="#section-5.4.4.5" class="section-number selfRef">5.4.4.5. </a><a href="#name-trustroots" class="section-name selfRef">Trustroots</a>
+            </h5>
+<p id="section-5.4.4.5-1">Certificate chains allow to verify a delegate certificate following the Issuers-Subjects up to a <em>Root CA</em>, which is a self-signed certificate (issuer and subject are identical). The <em>Root CA</em> represents the <em>Trustroot</em> of all involved delegates.<a href="#section-5.4.4.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5-2">When both a connecting WAMP client and the WAMP router are using the same <em>Root CA</em> and thus use a common
+<em>Trustroot</em>, they are said to be authorized in the same trust domain (identified by the trustroot).<a href="#section-5.4.4.5-2" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5-3">Trustroots are identified by their Ethereum address, which is computed from the issuer public key according to <a href="https://github.com/ethereumbook/ethereumbook/blob/develop/04keys-addresses.asciidoc#ethereum-addresses">EIP-55</a>.<a href="#section-5.4.4.5-3" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5-4">There are two types of <em>Root CAs</em> and <em>Trustroots</em>:<a href="#section-5.4.4.5-4" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.4.5-5">
+<li id="section-5.4.4.5-5.1">
+                <em>Standalone Trustroot</em><a href="#section-5.4.4.5-5.1" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.5-5.2">
+                <em>On-chain Trustroot</em><a href="#section-5.4.4.5-5.2" class="pilcrow">¶</a>
+</li>
+            </ol>
+<p id="section-5.4.4.5-6">A <em>Standalone Trustroot</em> is managed by a single operator/owner, does not allow infrastructure elements
+(nodes, client, realms) to be integrated between different operators/owners and is privately stored on the
+respective operators systems only, usually as files or in databases.<a href="#section-5.4.4.5-6" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5-7">Note that the Ethereum <em>address</em>, can be <em>computed</em> deterministically from the public key of the issuer
+of a certificate, even when the certificate (or the issuer) is <em>not</em> stored on-chain.<a href="#section-5.4.4.5-7" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5-8">An <em>On-chain Trustroot</em> in contrast is stored in Ethereum and publically shared between different
+operators/owners which allows infrastructure elements (nodes, clients, realms) to be integrated.
+For example, clients/nodes operated by different operators can authenticate to each other and
+nodes operated by different operators can authenticate to each other sharing the hosting of one realm.<a href="#section-5.4.4.5-8" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5-9">The management of <em>On-Chain Trustroots</em> depends on the policy of the trustroot which is chosen
+and fixed when the trustroot is created:<a href="#section-5.4.4.5-9" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-5.4.4.5-10">
+<li id="section-5.4.4.5-10.1">
+                <em>Open</em><a href="#section-5.4.4.5-10.1" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.5-10.2">
+                <em>Permitted</em><a href="#section-5.4.4.5-10.2" class="pilcrow">¶</a>
+</li>
+              <li id="section-5.4.4.5-10.3">
+                <em>Private</em><a href="#section-5.4.4.5-10.3" class="pilcrow">¶</a>
+</li>
+            </ol>
+<p id="section-5.4.4.5-11">With an <em>Open On-chain Trustroot</em>, new certificates can be added to a certificate chain freely
+and only requires a signature by the respective intermediate CA issuer.<a href="#section-5.4.4.5-11" class="pilcrow">¶</a></p>
+<div id="standalone-trustroots">
+<section id="section-5.4.4.5.1">
+              <h6 id="name-standalone-trustroots">
+<a href="#section-5.4.4.5.1" class="section-number selfRef">5.4.4.5.1. </a><a href="#name-standalone-trustroots" class="section-name selfRef">Standalone Trustroots</a>
+              </h6>
+<p id="section-5.4.4.5.1-1">For a <em>Standalone Trustroot</em> the <code>trustroot</code> MUST be specified in <code>HELLO.Details.authextra.trustroot|string</code><a href="#section-5.4.4.5.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.4.5.1-2">
+<pre>{'authextra': {'certificates': [/* certificate, see below */],
+              'challenge': '2763e7fdb1c34a74e8497daf6c913744d11161a94cec3b16aeec60a788612e17',
+              'channel_binding': 'tls-unique',
+              'pubkey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+              'trustroot': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+</pre><a href="#section-5.4.4.5.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.4.5.1-3">and <code>certificates</code> MUST contain<a href="#section-5.4.4.5.1-3" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.4.5.1-4.1">a single <code>EIP712DelegateCertificate</code>, and have the complete certificate chain of <code>EIP712AuthorityCertificate</code>s up to <code>trustroot</code> pre-agreed (locally stored or built-in) OR<a href="#section-5.4.4.5.1-4.1" class="pilcrow">¶</a>
+</li>
+                <li class="compact" id="section-5.4.4.5.1-4.2">the complete chain of certificates starting with a <code>EIP712DelegateCertificate</code> followed by one or more <code>EIP712AuthorityCertificate</code>s up to <code>trustroot</code>.<a href="#section-5.4.4.5.1-4.2" class="pilcrow">¶</a>
+</li>
+              </ul>
+<p id="section-5.4.4.5.1-5"><a href="#message-exchange-example3">Example 3</a> contains an example gor the latter, with a bundled complete certificate chain, that is the last certificate in the list is self-signed (is a root CA certificate) and matches <code>trustroot</code><a href="#section-5.4.4.5.1-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.4.5.1-6">
+<pre>trustroot == 0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57
+          == certificates[-1].issuer
+          == certificates[-1].subject
+</pre><a href="#section-5.4.4.5.1-6" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="on-chain-trustroots">
+<section id="section-5.4.4.5.2">
+              <h6 id="name-on-chain-trustroots">
+<a href="#section-5.4.4.5.2" class="section-number selfRef">5.4.4.5.2. </a><a href="#name-on-chain-trustroots" class="section-name selfRef">On-chain Trustroots</a>
+              </h6>
+<p id="section-5.4.4.5.2-1">For an <em>On-chain Trustroot</em> the <code>trustroot</code> MUST be specified in <code>HELLO.Details.authextra.trustroot|string</code><a href="#section-5.4.4.5.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.4.5.2-2">
+<pre>{'authextra': {'certificates': [/* certificate, see below */],
+              'challenge': '2763e7fdb1c34a74e8497daf6c913744d11161a94cec3b16aeec60a788612e17',
+              'channel_binding': 'tls-unique',
+              'pubkey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+              'trustroot': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+</pre><a href="#section-5.4.4.5.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-5.4.4.5.2-3">and <code>certificates</code> MUST contain a single <code>EIP712DelegateCertificate</code>, and have the complete certificate chain of <code>EIP712AuthorityCertificate</code>s up to <code>trustroot</code> stored on-chain (Ethereum).<a href="#section-5.4.4.5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5.2-4">This is called a free-standing, on-chain CA.<a href="#section-5.4.4.5.2-4" class="pilcrow">¶</a></p>
+<p id="section-5.4.4.5.2-5">When the <code>trustroot</code> is associated with an on-chain <em>Realm</em> that has <code>trustroot</code> configured as the
+<em>Realm CA</em>, this is called <em>On-chain CA with CA associated with On-chain Realm</em>.<a href="#section-5.4.4.5.2-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="remoteattestation">
+<section id="section-5.4.5">
+          <h4 id="name-remote-attestation">
+<a href="#section-5.4.5" class="section-number selfRef">5.4.5. </a><a href="#name-remote-attestation" class="section-name selfRef">Remote Attestation</a>
+          </h4>
+<p id="section-5.4.5-1">Remote attestation is a method by which a host (WAMP client) authenticates its hardware and software configuration to a remote host (WAMP router). The goal of remote attestation is to enable a remote system (challenger) to determine the level of trust in the integrity of the platform of another system (attestator).<a href="#section-5.4.5-1" class="pilcrow">¶</a></p>
+<p id="section-5.4.5-2">Remote attestation allows to<a href="#section-5.4.5-2" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.4.5-3.1">perform security decisions based on security policy and measurement log<a href="#section-5.4.5-3.1" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-5.4.5-3.2">tie device identity into authentication infrastructure<a href="#section-5.4.5-3.2" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-5.4.5-3.3">verify device state in access control decisions<a href="#section-5.4.5-3.3" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-5.4.5-3.4">avoid exfiltration of credentials<a href="#section-5.4.5-3.4" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-5.4.5-4">Remote attestation is requested by the router sending <code>CHALLENGE.extra.attest|list[int]</code> with a list of device PCRs to be quoted.
+A list of all PCRs available (usually 24) in a PCR bank of a device can be obtained running <a href="https://tpm2-tools.readthedocs.io/en/latest/man/tpm2_pcrread.1/#display-all-pcr-values">tpm2_pcrread</a> without arguments.<a href="#section-5.4.5-4" class="pilcrow">¶</a></p>
+<p id="section-5.4.5-5">A client receiving such a <code>CHALLENGE</code> MUST include an <em>Event Log</em> with PCRs collected from <em>measured boot</em> signed by the device's security module's <em>Attestation Key (AK)</em> and using the challenge sent by the router <code>CHALLENGE.extra.challenge|string</code> as a nonce.
+<a href="https://en.wikipedia.org/wiki/Trusted_Platform_Module">TPM 2.0</a> of the <a href="https://en.wikipedia.org/wiki/Trusted_Computing_Group">TCG</a> specifies a suitable function in <a href="https://tpm2-tools.readthedocs.io/en/latest/man/tss2_quote.1/">tss2_quote</a> (also see <a href="https://tpm2-tss.readthedocs.io/en/latest/group___fapi___quote.html">here</a>).<a href="#section-5.4.5-5" class="pilcrow">¶</a></p>
+<p id="section-5.4.5-6">The client MUST include the signed attestation in <code>AUTHENTICATE.Extra.quote</code> and the corresponding measurement log in <code>AUTHENTICATE.Extra.measurement</code>.
+The following diagram illustrates <em>Remote Attestation</em> with WAMP-Cryptosign:<a href="#section-5.4.5-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-5.4.5-7">
+<pre>    +------------------------------+
+    | CHALLENGE sent by router     |
+    +------------------------------+
+
+      Selected PCRs (bitmap) == CHALLENGE.Extra.attest
+
+      Nonce == CHALLENGE.Extra.challenge
+
+        |
+        |
+        |
+        |       Quote (signed with AK)
+        |      +------------------------------+
+        |      |                              |
+        +----&gt; | Selected PCRs (bitmap)       |
+        |      |                              |
+        |      | PCR values (digest)          |
+        |      |                              |
+        +----&gt; | Nonce                        |
+               |                              |
+               +------------------------------+
+               | Signature (Attestation Key)  |
+               |                              |
+               +------------------------------+
+
+                             +
+
+               +------------------------------+
+               |                              |
+               | Measurement Log              |
+               |                              |
+               |                              |
+               |                              |
+               +------------------------------+
+
+                    |
+                    |
+                    |
+                    |
+                    |
+                    |    +------------------------------+
+                    +--&gt; | AUTHENTICATE sent by client  |
+                         +------------------------------+
+
+                            AUTHENTICATE.Extra.quote
+
+                            AUTHENTICATE.Extra.measurement
+</pre><a href="#section-5.4.5-7" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="examplemessageexchanges">
+<section id="section-5.4.6">
+          <h4 id="name-example-message-exchanges">
+<a href="#section-5.4.6" class="section-number selfRef">5.4.6. </a><a href="#name-example-message-exchanges" class="section-name selfRef">Example Message Exchanges</a>
+          </h4>
+<ul class="compact">
+<li class="compact" id="section-5.4.6-1.1">
+              <a href="#message-exchange-example1">Example 1</a><a href="#section-5.4.6-1.1" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-5.4.6-1.2">
+              <a href="#message-exchange-example2">Example 2</a><a href="#section-5.4.6-1.2" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-5.4.6-1.3">
+              <a href="#message-exchange-example3">Example 3</a><a href="#section-5.4.6-1.3" class="pilcrow">¶</a>
+</li>
+          </ul>
+<div id="message-exchange-example1">
+<section id="section-5.4.6.1">
+            <h5 id="name-example-1">
+<a href="#section-5.4.6.1" class="section-number selfRef">5.4.6.1. </a><a href="#name-example-1" class="section-name selfRef">Example 1</a>
+            </h5>
+<ul class="compact">
+<li class="compact" id="section-5.4.6.1-1.1">
+                <em>with</em> router challenge<a href="#section-5.4.6.1-1.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.6.1-1.2">
+                <em>without</em> TLS channel binding<a href="#section-5.4.6.1-1.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+<div class="alignLeft art-text artwork" id="section-5.4.6.1-2">
+<pre>WAMP-Transmit(-, -) &gt;&gt;
+  HELLO::
+    [1,
+     'devices',
+     {'authextra': {'challenge': 'bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb',
+                    'channel_binding': None,
+                    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'},
+      'authmethods': ['cryptosign'],
+      'roles': {'callee': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'progressive_call_results': True,
+                                        'registration_revocation': True,
+                                        'shared_registration': True}},
+                'caller': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'progressive_call_results': True}},
+                'publisher': {'features': {'publisher_exclusion': True,
+                                           'publisher_identification': True,
+                                           'subscriber_blackwhite_listing': True}},
+                'subscriber': {'features': {'pattern_based_subscription': True,
+                                            'publisher_identification': True,
+                                            'subscription_revocation': True}}}}]
+&gt;&gt;
+
+WAMP-Receive(-, -) &lt;&lt;
+  CHALLENGE::
+    [4,
+     'cryptosign',
+     {'challenge': '0e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+      'channel_binding': None,
+      'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+      'signature': 'fd5128d2d207ba58a9d1d6f41b72c747964ad9d1294077b3b1eee6130b05843ab12c53c7f2519f73d4feb82db19d8ca0fc26b62bde6518e79a882f5795bc9f00bbae60ea44cdd7b20dc7010a618b0f0803fab25a817520b4b7f057299b524deb'}]
+&lt;&lt;
+
+WAMP-Transmit(-, -) &gt;&gt;
+  AUTHENTICATE::
+    [5,
+     'a3a178fe792ed772a8fc092f8341e455de96670c8901264a7c312dbf940d5743626fe9fbc29b23dcd2169b308eca309de85a89ccd296b24835de3d95b16b77030e9192bc08512c8198da159c1ae600ba91729215f35d56102ee318558e773537',
+     {}]
+&gt;&gt;
+
+WAMP-Receive(-, -) &lt;&lt;
+  WELCOME::
+    [2,
+     3735119691078036,
+     {'authextra': {'x_cb_node': 'intel-nuci7-49879',
+                    'x_cb_peer': 'tcp4:127.0.0.1:53976',
+                    'x_cb_pid': 49987,
+                    'x_cb_worker': 'worker001'},
+      'authid': 'client01@example.com',
+      'authmethod': 'cryptosign',
+      'authprovider': 'static',
+      'authrole': 'device',
+      'realm': 'devices',
+      'roles': {'broker': {'features': {'event_retention': True,
+                                        'pattern_based_subscription': True,
+                                        'publisher_exclusion': True,
+                                        'publisher_identification': True,
+                                        'session_meta_api': True,
+                                        'subscriber_blackwhite_listing': True,
+                                        'subscription_meta_api': True,
+                                        'subscription_revocation': True}},
+                'dealer': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'progressive_call_results': True,
+                                        'registration_meta_api': True,
+                                        'registration_revocation': True,
+                                        'session_meta_api': True,
+                                        'shared_registration': True,
+                                        'testament_meta_api': True}}},
+      'x_cb_node': 'intel-nuci7-49879',
+      'x_cb_peer': 'tcp4:127.0.0.1:53976',
+      'x_cb_pid': 49987,
+      'x_cb_worker': 'worker001'}]
+&lt;&lt;
+
+WAMP-Transmit(3735119691078036, client01@example.com) &gt;&gt;
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+&gt;&gt;
+
+WAMP-Receive(3735119691078036, client01@example.com) &lt;&lt;
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+&lt;&lt;
+</pre><a href="#section-5.4.6.1-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="message-exchange-example2">
+<section id="section-5.4.6.2">
+            <h5 id="name-example-2">
+<a href="#section-5.4.6.2" class="section-number selfRef">5.4.6.2. </a><a href="#name-example-2" class="section-name selfRef">Example 2</a>
+            </h5>
+<ul class="compact">
+<li class="compact" id="section-5.4.6.2-1.1">
+                <em>with</em> router challenge<a href="#section-5.4.6.2-1.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.6.2-1.2">
+                <em>with</em> TLS channel binding<a href="#section-5.4.6.2-1.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+<div class="alignLeft art-text artwork" id="section-5.4.6.2-2">
+<pre>WAMP-Transmit(-, -) &gt;&gt;
+  HELLO::
+    [1,
+     'devices',
+     {'authextra': {'challenge': '4f861f12796c2972b7b0026522a687aa851d90355122a61d4f1fdce4d06b564f',
+                    'channel_binding': 'tls-unique',
+                    'pubkey': '545efb0a2192db8d43f118e9bf9aee081466e1ef36c708b96ee6f62dddad9122'},
+      'authmethods': ['cryptosign'],
+      'roles': {'callee': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'progressive_call_results': True,
+                                        'registration_revocation': True,
+                                        'shared_registration': True}},
+                'caller': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'progressive_call_results': True}},
+                'publisher': {'features': {'publisher_exclusion': True,
+                                           'publisher_identification': True,
+                                           'subscriber_blackwhite_listing': True}},
+                'subscriber': {'features': {'pattern_based_subscription': True,
+                                            'publisher_identification': True,
+                                            'subscription_revocation': True}}}}]
+&gt;&gt;
+
+WAMP-Receive(-, -) &lt;&lt;
+  CHALLENGE::
+    [4,
+     'cryptosign',
+     {'challenge': '358625312c6c3bf64ed51d17d210ce21af1639c774cabf5735a9651d7d91fc6a',
+      'channel_binding': 'tls-unique',
+      'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+      'signature': 'aa05f4cd7747d36b79443f1d4703a681e107edc085d876b508714e2a3a8135bacaae1c018452c4acb3ad2818aa97a6d23e5ac7e3734c7b1f40e6232a70938205a6f5a1f034a28090b195fb2ce2454a82532f5c8baf6ba1dfb5ddae63c09ce72f'}]
+&lt;&lt;
+
+WAMP-Transmit(-, -) &gt;&gt;
+  AUTHENTICATE::
+    [5,
+     '25114474580d6e99a6126b091b4565c23db567d686c5b8c3a94e3f2f09dc80300c5b40a124236733fa56396df721eb12ac092362379bd5b27b4db9e2beaa1408dcf59bd361a2921448f0e45e12f303097924f5798a83b895cf6b179a6d664d0a',
+     {}]
+&gt;&gt;
+
+WAMP-Receive(-, -) &lt;&lt;
+  WELCOME::
+    [2,
+     7325966140445461,
+     {'authextra': {'x_cb_node': 'intel-nuci7-49879',
+                    'x_cb_peer': 'tcp4:127.0.0.1:54046',
+                    'x_cb_pid': 49987,
+                    'x_cb_worker': 'worker001'},
+      'authid': 'client01@example.com',
+      'authmethod': 'cryptosign',
+      'authprovider': 'static',
+      'authrole': 'device',
+      'realm': 'devices',
+      'roles': {'broker': {'features': {'event_retention': True,
+                                        'pattern_based_subscription': True,
+                                        'publisher_exclusion': True,
+                                        'publisher_identification': True,
+                                        'session_meta_api': True,
+                                        'subscriber_blackwhite_listing': True,
+                                        'subscription_meta_api': True,
+                                        'subscription_revocation': True}},
+                'dealer': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'progressive_call_results': True,
+                                        'registration_meta_api': True,
+                                        'registration_revocation': True,
+                                        'session_meta_api': True,
+                                        'shared_registration': True,
+                                        'testament_meta_api': True}}},
+      'x_cb_node': 'intel-nuci7-49879',
+      'x_cb_peer': 'tcp4:127.0.0.1:54046',
+      'x_cb_pid': 49987,
+      'x_cb_worker': 'worker001'}]
+&lt;&lt;
+2022-07-13T17:38:29+0200 session joined: {'authextra': {'x_cb_node': 'intel-nuci7-49879',
+               'x_cb_peer': 'tcp4:127.0.0.1:54046',
+               'x_cb_pid': 49987,
+               'x_cb_worker': 'worker001'},
+ 'authid': 'client01@example.com',
+ 'authmethod': 'cryptosign',
+ 'authprovider': 'static',
+ 'authrole': 'device',
+ 'realm': 'devices',
+ 'resumable': False,
+ 'resume_token': None,
+ 'resumed': False,
+ 'serializer': 'cbor.batched',
+ 'session': 7325966140445461,
+ 'transport': {'channel_framing': 'websocket',
+               'channel_id': {'tls-unique': b'\xe9s\xbe\xe2M\xce\xa9\xe2'
+                                            b'\x06%\xf9I\xc0\xe3\xcd('
+                                            b'\xd62\xcc\xbe\xfeI\x07\xc2'
+                                            b'\xfa\xc2r\x87\x10\xf7\xb1`'},
+               'channel_serializer': None,
+               'channel_type': 'tls',
+               'http_cbtid': None,
+               'http_headers_received': None,
+               'http_headers_sent': None,
+               'is_secure': True,
+               'is_server': False,
+               'own': None,
+               'own_fd': -1,
+               'own_pid': 50690,
+               'own_tid': 50690,
+               'peer': 'tcp4:127.0.0.1:8080',
+               'peer_cert': None,
+               'websocket_extensions_in_use': None,
+               'websocket_protocol': None}}
+
+WAMP-Transmit(7325966140445461, client01@example.com) &gt;&gt;
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+&gt;&gt;
+
+WAMP-Receive(7325966140445461, client01@example.com) &lt;&lt;
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+&lt;&lt;
+</pre><a href="#section-5.4.6.2-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="message-exchange-example3">
+<section id="section-5.4.6.3">
+            <h5 id="name-example-3">
+<a href="#section-5.4.6.3" class="section-number selfRef">5.4.6.3. </a><a href="#name-example-3" class="section-name selfRef">Example 3</a>
+            </h5>
+<ul class="compact">
+<li class="compact" id="section-5.4.6.3-1.1">
+                <em>with</em> router challenge<a href="#section-5.4.6.3-1.1" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.6.3-1.2">
+                <em>with</em> TLS channel binding<a href="#section-5.4.6.3-1.2" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-5.4.6.3-1.3">
+                <em>with</em> client trustroot and certificates<a href="#section-5.4.6.3-1.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+<div class="alignLeft art-text artwork" id="section-5.4.6.3-2">
+<pre>WAMP-Transmit(-, -) &gt;&gt;
+  HELLO::
+    [1,
+     'devices',
+     {'authextra': {'certificates': [({'domain': {'name': 'WMP', 'version': '1'},
+                                       'message': {'bootedAt': 1658765756680628959,
+                                                   'chainId': 1,
+                                                   'csPubKey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+                                                   'delegate': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
+                                                   'meta': '',
+                                                   'validFrom': 15212703,
+                                                   'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+                                       'primaryType': 'EIP712DelegateCertificate',
+                                       'types': {'EIP712DelegateCertificate': [{'name': 'chainId',
+                                                                                'type': 'uint256'},
+                                                                               {'name': 'verifyingContract',
+                                                                                'type': 'address'},
+                                                                               {'name': 'validFrom',
+                                                                                'type': 'uint256'},
+                                                                               {'name': 'delegate',
+                                                                                'type': 'address'},
+                                                                               {'name': 'csPubKey',
+                                                                                'type': 'bytes32'},
+                                                                               {'name': 'bootedAt',
+                                                                                'type': 'uint64'},
+                                                                               {'name': 'meta',
+                                                                                'type': 'string'}],
+                                                 'EIP712Domain': [{'name': 'name',
+                                                                   'type': 'string'},
+                                                                  {'name': 'version',
+                                                                   'type': 'string'}]}},
+                                      '8fe06bb269110c6bc0e011ea2b7da07091c674f7fe67458c1805157157da702b70b56cdf662666dc386820ded0116b6b84151df1ed65210eeecd7e477cdb765b1b'),
+                                     ({'domain': {'name': 'WMP', 'version': '1'},
+                                       'message': {'capabilities': 12,
+                                                   'chainId': 1,
+                                                   'issuer': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57',
+                                                   'meta': '',
+                                                   'realm': '0xA6e693CC4A2b4F1400391a728D26369D9b82ef96',
+                                                   'subject': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
+                                                   'validFrom': 15212703,
+                                                   'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+                                       'primaryType': 'EIP712AuthorityCertificate',
+                                       'types': {'EIP712AuthorityCertificate': [{'name': 'chainId',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'verifyingContract',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'validFrom',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'issuer',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'subject',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'realm',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'capabilities',
+                                                                                 'type': 'uint64'},
+                                                                                {'name': 'meta',
+                                                                                 'type': 'string'}],
+                                                 'EIP712Domain': [{'name': 'name',
+                                                                   'type': 'string'},
+                                                                  {'name': 'version',
+                                                                   'type': 'string'}]}},
+                                      '0c0eb60a108dbd72a204b41c1d18505358e4e7886b0c9787192a33ac9e0f94c92ce158f8de576fa9cccf28a8c9404ed66c2d355ea4ae7ee65cff0b73215b91bb1c'),
+                                     ({'domain': {'name': 'WMP', 'version': '1'},
+                                       'message': {'capabilities': 63,
+                                                   'chainId': 1,
+                                                   'issuer': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57',
+                                                   'meta': '',
+                                                   'realm': '0xA6e693CC4A2b4F1400391a728D26369D9b82ef96',
+                                                   'subject': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57',
+                                                   'validFrom': 15212703,
+                                                   'verifyingContract': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+                                       'primaryType': 'EIP712AuthorityCertificate',
+                                       'types': {'EIP712AuthorityCertificate': [{'name': 'chainId',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'verifyingContract',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'validFrom',
+                                                                                 'type': 'uint256'},
+                                                                                {'name': 'issuer',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'subject',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'realm',
+                                                                                 'type': 'address'},
+                                                                                {'name': 'capabilities',
+                                                                                 'type': 'uint64'},
+                                                                                {'name': 'meta',
+                                                                                 'type': 'string'}],
+                                                 'EIP712Domain': [{'name': 'name',
+                                                                   'type': 'string'},
+                                                                  {'name': 'version',
+                                                                   'type': 'string'}]}},
+                                      'be35c8d6ae735d3bd8b5e27b1e1a067eba53e6a1cb4ef0f607c4717435e8ffa676246e7d08dfb4e83c78ad26f423b727b5d2c90627bdf6c94c1dbdf01979c34b1c')],
+                    'challenge': '2763e7fdb1c34a74e8497daf6c913744d11161a94cec3b16aeec60a788612e17',
+                    'channel_binding': 'tls-unique',
+                    'pubkey': '12ae0184b180e9a9c5e45be4a1afbce3c6491320063701cd9c4011a777d04089',
+                    'trustroot': '0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57'},
+      'authmethods': ['cryptosign'],
+      'roles': {'callee': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'progressive_call_results': True,
+                                        'registration_revocation': True,
+                                        'shared_registration': True}},
+                'caller': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'progressive_call_results': True}},
+                'publisher': {'features': {'publisher_exclusion': True,
+                                           'publisher_identification': True,
+                                           'subscriber_blackwhite_listing': True}},
+                'subscriber': {'features': {'pattern_based_subscription': True,
+                                            'publisher_identification': True,
+                                            'subscription_revocation': True}}}}]
+&gt;&gt;
+
+WAMP-Receive(-, -) &lt;&lt;
+  CHALLENGE::
+    [4,
+     'cryptosign',
+     {'challenge': 'e4b40f72f9604754789d472225483bace926b9668d72c9122545e540d8d98f23',
+      'channel_binding': 'tls-unique',
+      'pubkey': '4a3838f6fe75251e613329d53fc69b262d5eac97fb1d73bebbaed4015b53c862',
+      'signature': 'ce456092998d796533d7ef2bab543300409d161066c9520c9284df6bbfb82947b37fb78d69fd56e5118afec62e35e015c60569af2e18ed92fedc738552242d039a38790e9c94064d89335393d39973c14074cd1008d7266de74c641103e30609'}]
+&lt;&lt;
+
+WAMP-Transmit(-, -) &gt;&gt;
+  AUTHENTICATE::
+    [5,
+     '16c89629e72aff3f44661e701341b2221a2fa9d93205826fad85e70d3a8dab70a8f54314c14d470ebeb77a0dd16c833928c01134a52b2e73862b7d3f258b600059ef9181d4370b6d19e7691e9a407f29784315dfc949d4696ce5e1f6535ba73d',
+     {}]
+&gt;&gt;
+
+WAMP-Receive(-, -) &lt;&lt;
+  WELCOME::
+    [2,
+     869996509191260,
+     {'authextra': {'x_cb_node': 'intel-nuci7-30969',
+                    'x_cb_peer': 'tcp4:127.0.0.1:59172',
+                    'x_cb_pid': 31090,
+                    'x_cb_worker': 'worker001'},
+      'authid': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
+      'authmethod': 'cryptosign',
+      'authprovider': 'static',
+      'authrole': 'user',
+      'realm': 'realm1',
+      'roles': {'broker': {'features': {'event_retention': True,
+                                        'pattern_based_subscription': True,
+                                        'publisher_exclusion': True,
+                                        'publisher_identification': True,
+                                        'session_meta_api': True,
+                                        'subscriber_blackwhite_listing': True,
+                                        'subscription_meta_api': True,
+                                        'subscription_revocation': True}},
+                'dealer': {'features': {'call_canceling': True,
+                                        'caller_identification': True,
+                                        'pattern_based_registration': True,
+                                        'progressive_call_results': True,
+                                        'registration_meta_api': True,
+                                        'registration_revocation': True,
+                                        'session_meta_api': True,
+                                        'shared_registration': True,
+                                        'testament_meta_api': True}}},
+      'x_cb_node': 'intel-nuci7-30969',
+      'x_cb_peer': 'tcp4:127.0.0.1:59172',
+      'x_cb_pid': 31090,
+      'x_cb_worker': 'worker001'}]
+&lt;&lt;
+
+WAMP-Transmit(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) &gt;&gt;
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+&gt;&gt;
+
+WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) &lt;&lt;
+  GOODBYE::
+    [6, {}, 'wamp.close.normal']
+&lt;&lt;
+</pre><a href="#section-5.4.6.3-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="dynamic-auth.api">
@@ -6649,8 +8062,8 @@ Archive:  build/example.zip
 <a href="#section-7.2.2" class="section-number selfRef">7.2.2. </a><a href="#name-catalog-metadata" class="section-name selfRef">Catalog Metadata</a>
           </h4>
 <p id="section-7.2.2-1">The <code>catalog.yaml</code> file contains catalog metadata in <a href="https://yaml.org/">YAML Format</a>:<a href="#section-7.2.2-1" class="pilcrow">¶</a></p>
-<table class="left" id="table-9">
-            <caption><a href="#table-9" class="selfRef">Table 9</a></caption>
+<table class="left" id="table-13">
+            <caption><a href="#table-13" class="selfRef">Table 13</a></caption>
 <thead>
               <tr>
                 <th class="text-left" rowspan="1" colspan="1">Field</th>
@@ -7020,8 +8433,12 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
       </h2>
 <dl class="references">
 <dt id="RFC4122">[RFC4122]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leach, P.</span>, <span class="refAuthor">Mealling, M.</span>, and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"A Universally Unique IDentifier (UUID) URN Namespace"</span>, <span class="seriesInfo">RFC 4122</span>, <span class="seriesInfo">DOI 10.17487/RFC4122</span>, <time datetime="2005-07" class="refDate">July 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4122">https://www.rfc-editor.org/info/rfc4122</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8032">[RFC8032]</dt>
+    <dd>
+<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">I. Liusvaara</span>, <span class="refTitle">"Edwards-Curve Digital Signature Algorithm (EdDSA)"</span>, <span class="seriesInfo">RFC 8032</span>, <span class="seriesInfo">DOI 10.17487/RFC8032</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8032">https://www.rfc-editor.org/info/rfc8032</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
