@@ -4,6 +4,7 @@ In some situations, you may want to reduce the access the router has to the info
 payload data is presented in some specific format that can not be simply recognized by WAMP router serializer.
 
 These are example use cases:
+
 * Using WAMP alongside with gateways to other technologies like MQTT Brokers or AMQP Queues. So actual payload 
   is for example mqtt message that should be simply delivered to wamp topic as is. 
 * Sensitive user data that should be delivered to target *Callee* without any possibility to unveil it during delivery.
@@ -12,6 +13,7 @@ This needs can be covered with `Payload Passthru Mode` feature. This feature all
 
 * Specifying additional attributes during `CALL`, `PUBLISH`, `EVENT`, `YIELD`, `RESULT` messages 
   to signal *Router* to skip payload inspection.
+* Additional attributes are passed then alongside with `INVOCATION` and `ERROR` messages
 * Encrypting and decrypting payload with crypto algorithms.
 * Providing additional information about payload format and type.
 
@@ -70,65 +72,65 @@ This attributes then are passed as is within `INVOCATION`, `EVENT` and `RESULT` 
 message in case of failures.
 
 {align="left"}
+        CALL.Options.ppt_scheme|string
         CALL.Options.ppt_serializer|string
         CALL.Options.ppt_cipher|string
-        CALL.Options.ppt_scheme|string
         CALL.Options.ppt_keyid|string
         ---
+        INVOCATION.Details.ppt_scheme|string
         INVOCATION.Details.ppt_serializer|string
         INVOCATION.Details.ppt_cipher|string
-        INVOCATION.Details.ppt_scheme|string
         INVOCATION.Details.ppt_keyid|string
         ---
+        YIELD.Options.ppt_scheme|string
         YIELD.Options.ppt_serializer|string
         YIELD.Options.ppt_cipher|string
-        YIELD.Options.ppt_scheme|string
         YIELD.Options.ppt_keyid|string
         ---
+        RESULT.Details.ppt_scheme|string
         RESULT.Details.ppt_serializer|string
         RESULT.Details.ppt_cipher|string
-        RESULT.Details.ppt_scheme|string
         RESULT.Details.ppt_keyid|string
         ---
+        ERROR.Details.ppt_scheme|string
         ERROR.Details.ppt_serializer|string
         ERROR.Details.ppt_cipher|string
-        ERROR.Details.ppt_scheme|string
         ERROR.Details.ppt_keyid|string
 
 {align="left"}
+        PUBLISH.Options.ppt_scheme|string
         PUBLISH.Options.ppt_serializer|string
         PUBLISH.Options.ppt_cipher|string
-        PUBLISH.Options.ppt_scheme|string
         PUBLISH.Options.ppt_keyid|string
         ---
+        EVENT.Details.ppt_scheme|string
         EVENT.Details.ppt_serializer|string
         EVENT.Details.ppt_cipher|string
-        EVENT.Details.ppt_scheme|string
         EVENT.Details.ppt_keyid|string
         ---
+        ERROR.Options.ppt_scheme|string
         ERROR.Options.ppt_serializer|string
         ERROR.Options.ppt_cipher|string
-        ERROR.Options.ppt_scheme|string
         ERROR.Options.ppt_keyid|string
 
 
+**ppt_scheme attribute**
+
+`ppt_scheme` stands for Key Management Schema. It is required string attribute. This attribute can contain name or
+identifier of key management provider which is known to target peer, so it can be used to obtain information
+about encryption keys. *Router* understands that `Payload Passthru Mode` is in use
+by checking the existence and non-empty value of this attribute in `CALL`, `PUBLISH` and `YIELD` messages options.
+
 **ppt_serializer attribute**
 
-`ppt_serializer` attribute is required. It specifies what serializer was used to build up payload object.
+`ppt_serializer` attribute is optional. It specifies what serializer was used to build up payload object.
 It can be `mqtt`, `amqp`, `stomp` value just to inform that coming data is from related technologies or ordinary 
-`json`, `msgpack`, `cbor`, `flatbuffers` data serializers. *Router* understands that `Payload Passthru Mode` is in use
-by checking the existence and non-empty value of this attribute in `CALL`, `PUBLISH` and `YIELD` messages options.
+`json`, `msgpack`, `cbor`, `flatbuffers` data serializers.
 
 **ppt_cipher attribute**
 
 `ppt_cipher` attribute is optional. It is required if payload is encrypted. This attribute specifies cryptographic
 algorithm that was used to encrypt payload. It can be `xsalsa20poly1305`, `aes256gcm` for now.
-
-**ppt_scheme attribute**
-
-`ppt_scheme` stands for Key Management Schema. It is optional string attribute. This attribute can contain name or
-identifier of key management provider which is known to target peer, so it can be used to obtain information
-about encryption keys.
 
 **ppt_keyid attribute**
 
@@ -136,6 +138,18 @@ about encryption keys.
 `ppt_keyid` attribute is always a type of string. The value can be a hex-encoded string, uri, DNS name, 
 Ethereum address, UUID identifier - any meaningful value by which target peer can choose private key 
 without guessing. Format of the value may depend on `ppt_scheme` attribute.
+
+**ppt_ predefined schemes**
+
+| Attribute      | Required? | Predefined Scheme (mqtt)  | Predefined Scheme (End-to-End Encryption) | Custom Scheme Example |
+|----------------|-----------|---------------------------|-------------------------------------------|-----------------------|
+| ppt_scheme     | Y         | mqtt                      | wamp.eth                                  | x_my_ppt              |
+| ppt_serializer | N         | json, msgpack, cbor, mqtt | cbor, flatbuffers                         | custom                |
+| ppt_cipher     | N         | -                         | xsalsa20poly1305, aes256gcm               | custom                |
+| ppt_keyid      | N         | -                         | *                                         | custom                |
+
+*: Least significant 20 bytes (160 bits) of SHA256 of public key (32 bytes) of data encryption key as HEX encoded 
+string with prefix “0x”, and upper/lower case letters encoding a checksum according to EIP55.
 
 **Message structure**
 
@@ -150,7 +164,8 @@ With `Payload Passthru Mode` in use message payload MUST BE sent as one binary i
         48,
         25471,
         {
-            "ppt_serializer": "json",
+            "ppt_scheme": "wamp.eth",
+            "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
         },
@@ -169,7 +184,8 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         48,
         25471,
         {
-            "ppt_serializer": "json",
+            "ppt_scheme": "wamp.eth",
+            "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
             "progress": true
@@ -179,7 +195,8 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
     ]
 ```
 
-*Example.* Caller-to-Dealer `CALL` with mqtt payload
+*Example.* Caller-to-Dealer `CALL` with mqtt payload. Specifying `"ppt_serializer": "mqtt"` means, that 
+original mqtt message payload is passed as WAMP payload message without any transcoding, as is.
 
 {align="left"}
 ```json
@@ -187,7 +204,26 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         48,
         25471,
         {
+            "ppt_scheme": "mqtt",
             "ppt_serializer": "mqtt"
+        },
+        "com.myapp.mqtt_processing",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Caller-to-Dealer `CALL` with mqtt payload. Specifying `"ppt_scheme": "mqtt"` simply indicates, that
+original source of payload data is received from related system. Specifying `"ppt_serializer": "json"` means, that
+original mqtt message payload was parsed and encoded with `json` serializer.
+
+{align="left"}
+```json
+    [
+        48,
+        25471,
+        {
+            "ppt_scheme": "mqtt",
+            "ppt_serializer": "json"
         },
         "com.myapp.mqtt_processing",
         [Payload|binary]
@@ -203,7 +239,8 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         35477,
         1147,
         {
-            "ppt_serializer": "json",
+            "ppt_scheme": "wamp.eth",
+            "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
         },
@@ -220,6 +257,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         35479,
         3344,
         {
+            "ppt_scheme": "mqtt",
             "ppt_serializer": "mqtt"
         },
         [Payload|binary]
@@ -234,6 +272,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         70,
         87683,
         {
+            "ppt_scheme": "wamp.eth",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -252,6 +291,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         70,
         87683,
         {
+            "ppt_scheme": "wamp.eth",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
@@ -269,6 +309,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         50,
         77133,
         {
+            "ppt_scheme": "wamp.eth",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -287,6 +328,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         50,
         77133,
         {
+            "ppt_scheme": "wamp.eth",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
@@ -305,6 +347,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         68,
         87683,
         {
+            "ppt_scheme": "wamp.eth",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -322,6 +365,7 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         16,
         45677,
         {
+            "ppt_scheme": "wamp.eth",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -340,7 +384,8 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
         5512315355,
         4429313566,
         {
-            "ppt_serializer": "json",
+            "ppt_scheme": "wamp.eth",
+            "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
         },
@@ -348,9 +393,9 @@ Nothing prevents to use `Payload Passthru Mode` with other features, for example
     ]
 ```
 
-**About supported serializers and cryptographic cyphers**
+**About supported serializers and cryptographic ciphers**
 
 WAMP works as infrastructure for delivering messages between peers. Regardless of what encryption algorithm 
 and serializer were chosen for `Payload Passthru Mode`, *Router* will not inspect and analyze related encryption 
 message options and payload. It is up to an application side code responsibility to use serializers and 
-cyphers known to every peer involved into message processing.
+ciphers known to every peer involved into message processing.
