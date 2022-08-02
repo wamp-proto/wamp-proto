@@ -149,7 +149,7 @@ without guessing. Format of the value may depend on `ppt_scheme` attribute.
 | ppt_keyid      | N         | -                         | *                                         | custom                |
 
 *: Least significant 20 bytes (160 bits) of SHA256 of public key (32 bytes) of data encryption key as HEX encoded 
-string with prefix “0x”, and upper/lower case letters encoding a checksum according to EIP55.
+string with prefix `0x`, and upper/lower case letters encoding a checksum according to EIP55.
 
 **Message structure**
 
