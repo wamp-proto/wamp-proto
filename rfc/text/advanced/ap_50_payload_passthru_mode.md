@@ -146,6 +146,8 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 
 **MQTT Predefined Scheme**
 
+{align="left"}
+
 | Attribute      | Required? | Value                       |
 |----------------|-----------|-----------------------------|
 | ppt_scheme     | Y         | mqtt                        |
@@ -155,6 +157,8 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 
 **End-to-End Encryption Predefined Scheme**
 
+{align="left"}
+
 | Attribute      | Required? | Value                       |
 |----------------|-----------|-----------------------------|
 | ppt_scheme     | Y         | wamp.eth                    |
@@ -162,7 +166,13 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 | ppt_cipher     | N         | xsalsa20poly1305, aes256gcm |
 | ppt_keyid      | N         | *                           |
 
+*: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key,
+as a hex-encoded string with prefix `0x` and either uppercase/lowercase alphabetic characters, encoding a
+checksum according to EIP55.
+
 **Custom Scheme Example**
+
+{align="left"}
 
 | Attribute      | Required? | Value    |
 |----------------|-----------|----------|
@@ -171,9 +181,6 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 | ppt_cipher     | N         | custom   |
 | ppt_keyid      | N         | custom   |
 
-*: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key, 
-as a hex-encoded string with prefix `0x` and either uppercase/lowercase alphabetic characters, encoding a 
-checksum according to EIP55.
 
 When `Payload Passthru Mode` is used for gateways to other technologies, such as MQTT Brokers or AMQP Queues, then
 the `ppt_serializer` attribute may be set to the `native` value. This means that the payload is not to be modified 
