@@ -6,6 +6,16 @@ serialize
 compress
 encrypt
 
+
+
+1) standalone trustroots
+2) on-chain trustroots
+
+1) centralized trust model
+2) decentralized trust model
+
+management of the Operator-CA to Realm-CA relationships
+
 ---------------
 
 Who is "the user" of your system, service or application?
