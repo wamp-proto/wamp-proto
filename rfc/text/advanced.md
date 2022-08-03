@@ -70,6 +70,12 @@
 
 {{advanced/ap_36_authentication_dynamic.md}}
 
+{{advanced/ap_49_security_features.md}}
+
+{{advanced/ap_50_payload_passthru_mode.md}}
+
+{{advanced/ap_51_e2e_encryption.md}}
+
 {{advanced/ap_37_transports.md}}
 
 {{advanced/ap_38_transport_rawsocket.md}}
@@ -78,9 +84,9 @@
 
 {{advanced/ap_40_transport_http_longpoll.md}}
 
-{{advanced/ap_41_transport_multiplexed.md}}
+{{advanced/ap_41_serialization_binary_json.md}}
 
-{{advanced/ap_42_serialization_binary_json.md}}
+{{advanced/ap_42_transport_multiplexed.md}}
 
 {{advanced/ap_43_interfaces.md}}
 

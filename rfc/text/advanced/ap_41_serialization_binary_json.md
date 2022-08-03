@@ -1,4 +1,4 @@
-## Binary support in JSON
+## Binary support in JSON {#binary-support-in-json}
 
 Binary data follows a convention for conversion to JSON strings.
 
