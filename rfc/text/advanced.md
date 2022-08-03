@@ -84,9 +84,9 @@
 
 {{advanced/ap_40_transport_http_longpoll.md}}
 
-{{advanced/ap_41_transport_multiplexed.md}}
+{{advanced/ap_41_serialization_binary_json.md}}
 
-{{advanced/ap_42_serialization_binary_json.md}}
+{{advanced/ap_42_transport_multiplexed.md}}
 
 {{advanced/ap_43_interfaces.md}}
 
