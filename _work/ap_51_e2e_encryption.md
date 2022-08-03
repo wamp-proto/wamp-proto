@@ -1,3 +1,13 @@
+symmetric payload encryption
+decentralized trust establishment
+payload encryption key distribution
+
+serialize
+compress
+encrypt
+
+---------------
+
 Who is "the user" of your system, service or application?
 
 Here are a couple of user categories by **intent**.
