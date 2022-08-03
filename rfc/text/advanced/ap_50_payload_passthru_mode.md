@@ -144,32 +144,53 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 
 **ppt_ Predefined Schemes**
 
-| Attribute      | Required? | Predefined Scheme (MQTT)    | Predefined Scheme (End-to-End Encryption) | Custom Scheme Example |
-|----------------|-----------|-----------------------------|-------------------------------------------|-----------------------|
-| ppt_scheme     | Y         | mqtt                        | wamp.eth                                  | x_my_ppt              |
-| ppt_serializer | N         | json, msgpack, cbor, native | cbor, flatbuffers                         | custom                |
-| ppt_cipher     | N         | -                           | xsalsa20poly1305, aes256gcm               | custom                |
-| ppt_keyid      | N         | -                           | *                                         | custom                |
+**MQTT Predefined Scheme**
+
+| Attribute      | Required? | Value                       |
+|----------------|-----------|-----------------------------|
+| ppt_scheme     | Y         | mqtt                        |
+| ppt_serializer | N         | json, msgpack, cbor, native |
+| ppt_cipher     | N         | -                           |
+| ppt_keyid      | N         | -                           |
+
+**End-to-End Encryption Predefined Scheme**
+
+| Attribute      | Required? | Value                       |
+|----------------|-----------|-----------------------------|
+| ppt_scheme     | Y         | wamp.eth                    |
+| ppt_serializer | N         | cbor, flatbuffers           |
+| ppt_cipher     | N         | xsalsa20poly1305, aes256gcm |
+| ppt_keyid      | N         | *                           |
+
+**Custom Scheme Example**
+
+| Attribute      | Required? | Value    |
+|----------------|-----------|----------|
+| ppt_scheme     | Y         | x_my_ppt |
+| ppt_serializer | N         | custom   |
+| ppt_cipher     | N         | custom   |
+| ppt_keyid      | N         | custom   |
 
 *: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key, 
 as a hex-encoded string with prefix `0x` and either uppercase/lowercase alphabetic characters, encoding a 
 checksum according to EIP55.
 
-When `Payload Passthru Mode` is used for gateways to other technologies like MQTT Brokers or AMQP Queues and
-the `ppt_serializer` attribute may be set to `native` value. This means that payload is not touched by WAMP peers, 
-not serialized in any manner and is delivered as is from the originator peer. Another possible case is when
-the `ppt_serializer` attribute is set to any valid serializer, for example `msgpack`. In this case WAMP originator
-client peer first applies `ppt_serializer` to serialize payload (without encryption), then the resulting
-binary payload is embedded in a WAMP message, which might use different serializer that was chosen during
-WAMP Session establishment.
+When `Payload Passthru Mode` is used for gateways to other technologies, such as MQTT Brokers or AMQP Queues, then
+the `ppt_serializer` attribute may be set to the `native` value. This means that the payload is not to be modified 
+by WAMP peers, nor serialized in any manner, and is delivered as-is from the originating peer. Another possible case 
+is when the `ppt_serializer` attribute is set to any valid serializer, for example `msgpack`. In this case the 
+originating WAMP client peer first applies `ppt_serializer` to serialize the payload (without encryption), then 
+the resulting binary payload is embedded in the WAMP message, the latter having possibly a different serializer 
+depending on the one chosen during WAMP Session establishment.
 
-**Important note regarding JSON serializer**
+**Important Note Regarding JSON Serialization**
 
-With `Payload Passthru Mode` payloads are treated as binaries. To send binaries WAMP session serializer MUST
-support binary types. Most of the serializers support binary types, but JSON serializer does not. To use
-`Payload Passthru Mode` with JSON serializer WAMP peers MUST support 
-[Binary serialization in JSON](#binary-support-in-json). This come with huge overhead, so general advice is
-to use WAMP session serializers with native binary support, for example `MessagePack`, `CBOR`, `FlatBuffers`.
+With `Payload Passthru Mode`, payloads are treated as binary. To send these binary payloads, the WAMP session 
+serializer MUST support byte arrays. Most serialization formats known to WAMP support byte arrays, but JSON does 
+not support them natively. To use `Payload Passthru Mode` with a JSON serializer, WAMP peers MUST perform the special 
+[Binary serialization in JSON](#binary-support-in-json). This conversion may have unacceptable overhead, so it is 
+generally advised to use WAMP session serializers with native byte array support, for example, 
+`MessagePack`, `CBOR`, or `FlatBuffers`.
 
 **Message Structure**
 
