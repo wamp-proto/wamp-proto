@@ -21,7 +21,7 @@ Support for this advanced feature MUST be announced by *Callers* (`role := "call
 and *Dealers* (`role := "dealer"`) via
 
 {align="left"}
-HELLO.Details.roles.<role>.features.progressive_calls|bool := true
+        HELLO.Details.roles.<role>.features.progressive_calls|bool := true
 
 Progressive Calls can work only if all three nodes support and announced this feature. 
 
@@ -133,7 +133,7 @@ E.g. *Caller* can send a few `CALL` messages before starting to receive `RESULTS
 A *Caller* indicates its willingness to issue a progressive call by setting
 
 {align="left"}
-CALL.Options.progress|bool := true
+        CALL.Options.progress|bool := true
 
 *Example.* Caller-to-Dealer `CALL`
 
@@ -153,7 +153,7 @@ CALL.Options.progress|bool := true
 If the *Callee* supports progressive calls, the *Dealer* shall forward the *Caller's* willingness to send progressive calls by setting
 
 {align="left"}
-INVOCATION.Details.progress|bool := true
+        INVOCATION.Details.progress|bool := true
 
 
 *Example.* Dealer-to-Callee `INVOCATION`
@@ -181,7 +181,7 @@ In this case `progressive` `CALLs` can be routed to different *Callees*, which c
 To bind `INVOCATIONs` to the same *Callee*, the *Caller* can specify the `sticky` option during `CALL`
 
 {align="left"}
-CALL.Options.sticky|bool := true
+        CALL.Options.sticky|bool := true
 
 
 In this case *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all 
