@@ -1,10 +1,3 @@
-symmetric payload encryption
-decentralized trust establishment
-payload encryption key distribution
-
-1. serialize
-2. (compress)
-3. encrypt
 
 ppt_scheme      = "wamp.eth"
 ppt_serializer  = "cbor" | "flatbuffers"
@@ -15,9 +8,6 @@ ppt_keyid       = "0x..."
 https://lib.rs/crates/brotli
 https://lib.rs/crates/lzss
 
-
-mutual trust problem: decentralized on-chain certificates
-remote trust problem: e2ee and remote attestation
 
 
 Quote:
@@ -38,15 +28,21 @@ Endorsement Certificate
 Manufactorer Certificate
 
 
-1) standalone trustroots
-2) on-chain trustroots
+---------------
 
-1) centralized trust model
-2) decentralized trust model
 
-management of the Operator-CA to Realm-CA relationships
+Announcement: The End of the 3rd Round - the First PQC Algorithms to be Standardized
+
+The primary algorithms NIST recommends be implemented for most use cases are CRYSTALS-KYBER (key-establishment) and CRYSTALS-Dilithium (digital signatures).
+
+Public-Key Encryption/KEMs: CRYSTALS-KYBER
+Digital Signatures: CRYSTALS-Dilithium
+
+https://groups.google.com/a/list.nist.gov/g/pqc-forum/c/G0DoD7lkGPk
+
 
 ---------------
+
 
 Who is "the user" of your system, service or application?
 

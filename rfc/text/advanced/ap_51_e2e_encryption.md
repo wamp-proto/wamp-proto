@@ -1,17 +1,26 @@
 ## Payload End-to-End Encryption
 
-*WAMP End-to-End Encryption* ("WAMP-E2EE") is a feature in the *WAMP Advanced Profile* that enables an **enhanced security model** for WAMP based systems which isolates WAMP endpoints (e.g. *Callers* and *Callees*) from routers. It provides Authenticity, Confidentiality and Integrity of application payload data not only between WAMP endpoints and routers versus outside third-parties, but also versus the WAMP router nodes themself, transporting the application payload between WAMP endpoints.
+*WAMP End-to-End Encryption* ("WAMP-E2EE") is a feature in the *WAMP Advanced Profile* that enables an **enhanced security model** for WAMP based systems which isolates WAMP endpoints (e.g. *Callers* and *Callees*) from routers. It provides enhanced application payload
+
+* **Authenticity**,
+* **Confidentiality** and
+* **Integrity**
+
+not only between WAMP endpoints and routers versus outside third-parties, but also versus the WAMP router nodes themself, transporting the application payload between WAMP endpoints.
 
 
 ### Enhanced Security Model
 
-The security model of *Payload End-to-End Encryption* provides enhanced **Authenticity**, **Confidentiality** and **Integrity** levels, namely end-to-end between WAMP endpoints, rather than only for a WAMP endpoint-to-router link, while **Availability** remains independent and at the original level. Further new guarantees include
+The security model of *Payload End-to-End Encryption* provides enhanced **Authenticity**, **Confidentiality** and **Integrity** levels, namely end-to-end between WAMP endpoints, rather than only for a WAMP endpoint-to-router link, while **Availability** remains independent and at the original level.
+
+Further guarantees include
 
 * **Privacy**
 * **Plausible-deniability**
 * **Non-repudiability**
 
-of the application payload versus the *Router*. Note that this only applies to the payload, not the metadata such as the URI, which might itself e.g. reveal information to a router. Of course the metadata is necessary for a WAMP router to read, as it needs to take correct WAMP routing decisions based on WAMP message metadata.
+of the application payload versus the *Router*.
+Note that this only applies to the payload, not the metadata such as the URI, which might itself e.g. reveal information to a router. Of course the metadata is necessary for a WAMP router to read, as it needs to take correct WAMP routing decisions based on WAMP message metadata.
 
 
 ### How it works
@@ -23,25 +32,25 @@ Note that payload end-to-end encryption is different from link-level transport e
 *Payload End-to-End Encryption* can be divided into the following subproblems, and the approach taken by *WAMP-E2EE* is described in the following sections:
 
 1. [Payload Encryption](#payloadencr)
-2. [Payload Encryption Key Distribution](#encrkeydist)
+2. [Payload Transport](#payloadtnsp)
 3. [Trust Management](#trustmgmt)
+4. [Key Distribution](#keydist)
 
 
 #### Payload Encryption {#payloadencr}
 
-1. serialization
+1. payload serialization
 2. optional compression
 3. symmetric encryption with XSalsa20Poly1305 (a.k.a. [NaCl crypto_secretbox](https://nacl.cr.yp.to/secretbox.html))
-4. transport using [Payload Passthru Mode](#payload-passthru-mode)
 
 XSalsa20Poly1305 is an [authenticated encryption](https://en.wikipedia.org/wiki/Authenticated_encryption) cipher based on the [XSalsa20](https://en.wikipedia.org/wiki/Salsa20) [stream cipher](https://en.wikipedia.org/wiki/Stream_cipher) and the [Poly1305](https://en.wikipedia.org/wiki/Poly1305) hash function, which acts as a message authentication code.
 
 The secret encryption keys for XSalsa20Poly1305 are 32 octets in length, and message nonces are 24 octets.
 
 
-#### Payload Encryption Key Distribution {#encrkeydist}
+#### Payload Transport {#payloadtnsp}
 
-Write me.
+transport using WAMP AP [Payload Passthru Mode](#payload-passthru-mode)
 
 
 #### Trust Management {#trustmgmt}
@@ -53,3 +62,8 @@ management of the Operator-CA to Realm-CA relationships
 
 1) standalone trustroots / centralized trust model
 2) on-chain trustroots / decentralized trust model
+
+
+#### Key Distribution {#keydist}
+
+Write me.
