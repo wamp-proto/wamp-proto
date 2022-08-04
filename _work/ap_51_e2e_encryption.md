@@ -2,10 +2,40 @@ symmetric payload encryption
 decentralized trust establishment
 payload encryption key distribution
 
-serialize
-compress
-encrypt
+1. serialize
+2. (compress)
+3. encrypt
 
+ppt_scheme      = "wamp.eth"
+ppt_serializer  = "cbor" | "flatbuffers"
+ppt_compressor  = "lzss" | "brotli" | null
+ppt_cipher      = "xsalsa20poly1305" | "aes256gcm"
+ppt_keyid       = "0x..."
+
+https://lib.rs/crates/brotli
+https://lib.rs/crates/lzss
+
+
+mutual trust problem: decentralized on-chain certificates
+remote trust problem: e2ee and remote attestation
+
+
+Quote:
+contains set of PCR values (measurement) signed by the TPM
+
+PCRs:
+- Platform Firmware
+- EFI
+- Bootloader (2-stage)
+- OS kernel
+- OS kernel command line
+- Docker daemon
+- Docker image
+
+
+NO (!): Attestation Certificate
+Endorsement Certificate
+Manufactorer Certificate
 
 
 1) standalone trustroots
