@@ -55,6 +55,10 @@ transport using WAMP AP [Payload Passthru Mode](#payload-passthru-mode)
 
 #### Trust Management {#trustmgmt}
 
+[trust on first use](https://en.wikipedia.org/wiki/Trust_on_first_use)
+
+
+
 management of the Operator-CA to Realm-CA relationships
 
 * mutual trust problem: decentralized on-chain certificates

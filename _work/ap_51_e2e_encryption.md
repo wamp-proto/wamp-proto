@@ -30,6 +30,7 @@ Manufactorer Certificate
 
 ---------------
 
+NIST PQC
 
 Announcement: The End of the 3rd Round - the First PQC Algorithms to be Standardized
 
@@ -40,6 +41,12 @@ Digital Signatures: CRYSTALS-Dilithium
 
 https://groups.google.com/a/list.nist.gov/g/pqc-forum/c/G0DoD7lkGPk
 
+
+https://pq-crystals.org/dilithium/index.shtml
+https://github.com/pq-crystals/dilithium
+
+https://github.com/pq-crystals/kyber
+https://pq-crystals.org/kyber/
 
 ---------------
 
