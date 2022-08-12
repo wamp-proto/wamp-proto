@@ -9,6 +9,29 @@ https://lib.rs/crates/brotli
 https://lib.rs/crates/lzss
 
 
+--------------
+
+Establishing Trust in Linux Keyrings - Is Trust Built-in, Imputed, or Transitive? - Elaine Palmer, IBM Research & George Wilson, IBM Linux Technology Center
+
+Keys are used in firmware, in the Linux kernel, and in user space. They are used to sign, verify, and encrypt other keys, code, and data. They come from multiple authorities, and those used in the kernel are typically embedded in the kernel image at kernel build time. Problems arise, however, when authorities and trust relationships are unknown at build time, because it is difficult to dynamically establish trust later. Dynamically loaded keys can derive their trust from firmware (imputed trust) or from a chain of certificates linked back to a trusted root (transitive trust). In Linux, keys are loaded onto keyrings. These keyrings define trust domains (e.g., I trust keys built-in by the distro, but not others), scope (e.g., OK in user space, but not in the kernel), and key usage constraints (e.g., OK for verifying keys, but not code). Additionally, keyrings can support different threat models (e.g., OK in laptops, but not in locked down servers). This talk will review some of the kernel keyrings currently in use, how they are used, restrictions and constraints placed upon them, and how trust can be evaluated.
+
+--------------
+
+Threat-model:
+
+* remote attacker
+* remote attacker with compromised node
+* local attacker, arbitrary network access
+* local attacker, compromised host OS
+* local attacker with hardware level access
+* local attacker with local offline disk access
+
+CSR:
+* issuer-only signed ("private")
+* subject-only signed ("open")
+* issuer-and-subject signed ("permissioned")
+
+---------------------
 
 Quote:
 contains set of PCR values (measurement) signed by the TPM
@@ -21,6 +44,8 @@ PCRs:
 - OS kernel command line
 - Docker daemon
 - Docker image
+
+PCR Policy: TPM secret with associated policy for local disk encryption
 
 
 NO (!): Attestation Certificate
