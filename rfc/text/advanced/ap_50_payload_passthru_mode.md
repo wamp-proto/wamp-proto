@@ -155,7 +155,7 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 | ppt_cipher     | N         | -                            |
 | ppt_keyid      | N         | -                            |
 
-If `ppt_serializer` is not provided then it is assuming as `native`. So no additional serialization 
+*: If `ppt_serializer` is not provided then it is assuming as `native`. So no additional serialization 
 will be applied to payload and payload will be serialized within WAMP message with session serializer.
 
 **End-to-End Encryption Predefined Scheme**
@@ -165,11 +165,14 @@ will be applied to payload and payload will be serialized within WAMP message wi
 | Attribute      | Required? | Value                       |
 |----------------|-----------|-----------------------------|
 | ppt_scheme     | Y         | wamp.eth                    |
-| ppt_serializer | N         | cbor, flatbuffers           |
+| ppt_serializer | N         | cbor, flatbuffers, native*  |
 | ppt_cipher     | N         | xsalsa20poly1305, aes256gcm |
-| ppt_keyid      | N         | *                           |
+| ppt_keyid      | N         | **                          |
 
-*: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key,
+*: If `ppt_serializer` is not provided then it is assuming as `native`. So payload will be serialized 
+with session serializer, then encrypted and sent as binary in WAMP message serialized by session serializer.
+
+**: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key,
 as a hex-encoded string with prefix `0x` and either uppercase/lowercase alphabetic characters, encoding a
 checksum according to EIP55.
 
