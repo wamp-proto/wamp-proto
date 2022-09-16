@@ -118,17 +118,18 @@ as well as `ERROR` messages in the case of failures.
 
 **ppt_scheme Attribute**
 
-The `ppt_scheme` identifies the Key Management Schema. It is a required string attribute. This attribute can contain 
-the name or identifier of a key management provider that is known to the target peer, so it can be used to obtain 
-information about encryption keys. A *Router* can recognize that `Payload Passthru Mode` is in use
-by checking the existence and non-empty value of this attribute within the options of `CALL`, `PUBLISH` and `YIELD` 
-messages.
+The `ppt_scheme` identifies the Payload Schema. It is a required string attribute. For End-2-End Encryption flow
+this attribute can contain the name or identifier of a key management provider that is known to the target peer, 
+so it can be used to obtain information about encryption keys. For gateways and external schemas this can
+contain the name of related technology such as `mqtt`, `amqp`, `stomp`. A *Router* can recognize that 
+`Payload Passthru Mode` is in use by checking the existence and non-empty value of this attribute within the 
+options of `CALL`, `PUBLISH` and `YIELD` messages.
 
 **ppt_serializer Attribute**
 
 The `ppt_serializer` attribute is optional. It specifies what serializer was used to encode the payload.
-It can be a value a such as `mqtt`, `amqp`, `stomp` to indicate that the incoming data is tunneling through such 
-technologies, or it can be ordinary `json`, `msgpack`, `cbor`, `flatbuffers` data serializers.
+It can be a `native` value to indicate that the incoming data is tunneling through other technologies
+specified by the `ppt_scheme`, or it can be ordinary `json`, `msgpack`, `cbor`, `flatbuffers` data serializers.
 
 **ppt_cipher Attribute**
 
