@@ -148,12 +148,15 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 
 {align="left"}
 
-| Attribute      | Required? | Value                       |
-|----------------|-----------|-----------------------------|
-| ppt_scheme     | Y         | mqtt                        |
-| ppt_serializer | N         | json, msgpack, cbor, native |
-| ppt_cipher     | N         | -                           |
-| ppt_keyid      | N         | -                           |
+| Attribute      | Required? | Value                        |
+|----------------|-----------|------------------------------|
+| ppt_scheme     | Y         | mqtt                         |
+| ppt_serializer | N*        | json, msgpack, cbor, native* |
+| ppt_cipher     | N         | -                            |
+| ppt_keyid      | N         | -                            |
+
+If `ppt_serializer` is not provided then it is assuming as `native`. So no additional serialization 
+will be applied to payload and payload will be serialized within WAMP message with session serializer.
 
 **End-to-End Encryption Predefined Scheme**
 
@@ -244,8 +247,8 @@ for example, `Progressive Calls`.
     ]
 ```
 
-*Example.* Caller-to-Dealer `CALL` with MQTT payload. Specifying `"ppt_serializer": "mqtt"` means that 
-the original MQTT message payload is passed as WAMP payload message as is, without any transcoding, as is.
+*Example.* Caller-to-Dealer `CALL` with MQTT payload. Specifying `"ppt_serializer": "native"` means that 
+the original MQTT message payload is passed as WAMP payload message as is, without any transcoding.
 
 {align="left"}
 ```json
@@ -254,7 +257,7 @@ the original MQTT message payload is passed as WAMP payload message as is, witho
         25471,
         {
             "ppt_scheme": "mqtt",
-            "ppt_serializer": "mqtt"
+            "ppt_serializer": "native"
         },
         "com.myapp.mqtt_processing",
         [Payload|binary]
@@ -307,7 +310,7 @@ the original MQTT message payload was parsed and encoded with the `json` seriali
         3344,
         {
             "ppt_scheme": "mqtt",
-            "ppt_serializer": "mqtt"
+            "ppt_serializer": "native"
         },
         [Payload|binary]
     ]
