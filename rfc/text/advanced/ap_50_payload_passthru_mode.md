@@ -121,15 +121,17 @@ as well as `ERROR` messages in the case of failures.
 The `ppt_scheme` identifies the Payload Schema. It is a required string attribute. For End-2-End Encryption flow
 this attribute can contain the name or identifier of a key management provider that is known to the target peer, 
 so it can be used to obtain information about encryption keys. For gateways and external schemas this can
-contain the name of related technology such as `mqtt`, `amqp`, `stomp`. A *Router* can recognize that 
-`Payload Passthru Mode` is in use by checking the existence and non-empty value of this attribute within the 
-options of `CALL`, `PUBLISH` and `YIELD` messages.
+contain the name of related technology. The one predefined is `mqtt`. Others may be introduced later. 
+A *Router* can recognize that `Payload Passthru Mode` is in use by checking the existence and non-empty value of 
+this attribute within the options of `CALL`, `PUBLISH` and `YIELD` messages.
 
 **ppt_serializer Attribute**
 
 The `ppt_serializer` attribute is optional. It specifies what serializer was used to encode the payload.
 It can be a `native` value to indicate that the incoming data is tunneling through other technologies
 specified by the `ppt_scheme`, or it can be ordinary `json`, `msgpack`, `cbor`, `flatbuffers` data serializers.
+For some predefined `ppt_scheme` schemas this option may be omitted as schema defines the concrete serializer. 
+See predefined schemas below.
 
 **ppt_cipher Attribute**
 
@@ -149,15 +151,12 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 
 {align="left"}
 
-| Attribute      | Required? | Value                        |
-|----------------|-----------|------------------------------|
-| ppt_scheme     | Y         | mqtt                         |
-| ppt_serializer | N*        | json, msgpack, cbor, native* |
-| ppt_cipher     | N         | -                            |
-| ppt_keyid      | N         | -                            |
-
-*: If `ppt_serializer` is not provided then it is assuming as `native`. So no additional serialization 
-will be applied to payload and payload will be serialized within WAMP message with session serializer.
+| Attribute      | Required? | Value  |
+|----------------|-----------|--------|
+| ppt_scheme     | Y         | mqtt   |
+| ppt_serializer | N*        | native |
+| ppt_cipher     | N         | -      |
+| ppt_keyid      | N         | -      |
 
 **End-to-End Encryption Predefined Scheme**
 
@@ -166,14 +165,11 @@ will be applied to payload and payload will be serialized within WAMP message wi
 | Attribute      | Required? | Value                       |
 |----------------|-----------|-----------------------------|
 | ppt_scheme     | Y         | wamp.eth                    |
-| ppt_serializer | N         | cbor, flatbuffers, native*  |
+| ppt_serializer | Y         | cbor, flatbuffers           |
 | ppt_cipher     | N         | xsalsa20poly1305, aes256gcm |
-| ppt_keyid      | N         | **                          |
+| ppt_keyid      | N         | *                           |
 
-*: If `ppt_serializer` is not provided then it is assuming as `native`. So payload will be serialized 
-with session serializer, then encrypted and sent as binary in WAMP message serialized by session serializer.
-
-**: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key,
+*: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key,
 as a hex-encoded string with prefix `0x` and either uppercase/lowercase alphabetic characters, encoding a
 checksum according to EIP55.
 
@@ -189,7 +185,7 @@ checksum according to EIP55.
 | ppt_keyid      | N         | custom   |
 
 
-When `Payload Passthru Mode` is used for gateways to other technologies, such as MQTT Brokers or AMQP Queues, then
+When `Payload Passthru Mode` is used for gateways to other technologies, such as MQTT Brokers, then
 the `ppt_serializer` attribute may be set to the `native` value. This means that the payload is not to be modified 
 by WAMP peers, nor serialized in any manner, and is delivered as-is from the originating peer. Another possible case 
 is when the `ppt_serializer` attribute is set to any valid serializer, for example `msgpack`. In this case the 
