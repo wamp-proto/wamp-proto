@@ -154,7 +154,7 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 | Attribute      | Required? | Value  |
 |----------------|-----------|--------|
 | ppt_scheme     | Y         | mqtt   |
-| ppt_serializer | N*        | native |
+| ppt_serializer | N         | native |
 | ppt_cipher     | N         | -      |
 | ppt_keyid      | N         | -      |
 
