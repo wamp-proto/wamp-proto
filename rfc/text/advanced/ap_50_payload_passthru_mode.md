@@ -207,6 +207,22 @@ generally advised to use WAMP session serializers with native byte array support
 When `Payload Passthru Mode` is in use, the message payload MUST be sent as one binary item within 
 `Arguments|list`, while `ArgumentsKw|dict` MUST be absent or empty.
 
+Since many WAMP messages assume the possibility of simultaneous use of `Arguments|list` and `ArgumentsKw|dict`,
+WAMP client implementations must package arguments into the following hash table and then serialize it and
+transmit as a single element within `Arguments|list`.
+
+{align="left"}
+```json
+{
+    "args": Arguments|list,
+    "kwargs": ArgumentsKw|dict
+}
+```
+
+This will allow maintaining a single interface for client applications, regardless of whether the
+```Payload Passthru Mode``` mode, or especially `Payload End-to-End Encryption` which is built on top of
+`Payload End-to-End Encryption` is used or not.
+
 *Example.* Caller-to-Dealer `CALL` with encryption and key ID
 
 {align="left"}
