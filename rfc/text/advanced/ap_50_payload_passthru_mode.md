@@ -120,10 +120,10 @@ as well as `ERROR` messages in the case of failures.
 
 The `ppt_scheme` identifies the Payload Schema. It is a required string attribute. For End-2-End Encryption flow
 this attribute can contain the name or identifier of a key management provider that is known to the target peer, 
-so it can be used to obtain information about encryption keys. For gateways and external schemas this can
-contain the name of related technology. The one predefined is `mqtt`. Others may be introduced later. 
-A *Router* can recognize that `Payload Passthru Mode` is in use by checking the existence and non-empty value of 
-this attribute within the options of `CALL`, `PUBLISH` and `YIELD` messages.
+so it can be used with help of additional `ppt_*` attributes to obtain information about encryption keys. 
+For gateways and external schemas this can contain the name of related technology. The one predefined is `mqtt`. 
+Others may be introduced later. A *Router* can recognize that `Payload Passthru Mode` is in use by checking 
+the existence and non-empty value of this attribute within the options of `CALL`, `PUBLISH` and `YIELD` messages.
 
 **ppt_serializer Attribute**
 
@@ -160,12 +160,15 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 
 **End-to-End Encryption Predefined Scheme**
 
+For `End-to-End Encryption` flow both peers must support chosen `ppt_serializer` regardless of their own
+session serializer.
+
 {align="left"}
 
 | Attribute      | Required? | Value                       |
 |----------------|-----------|-----------------------------|
 | ppt_scheme     | Y         | wamp.eth                    |
-| ppt_serializer | Y         | cbor, flatbuffers           |
+| ppt_serializer | Y         | cbor, msgpack, flatbuffers  |
 | ppt_cipher     | N         | xsalsa20poly1305, aes256gcm |
 | ppt_keyid      | N         | *                           |
 
