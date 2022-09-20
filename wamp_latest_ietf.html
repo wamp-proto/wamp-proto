@@ -10587,15 +10587,18 @@ as well as <code>ERROR</code> messages in the case of failures.<a href="#section
 </pre><a href="#section-14.1-22" class="pilcrow">¶</a>
 </div>
 <p id="section-14.1-23"><strong>ppt_scheme Attribute</strong><a href="#section-14.1-23" class="pilcrow">¶</a></p>
-<p id="section-14.1-24">The <code>ppt_scheme</code> identifies the Key Management Schema. It is a required string attribute. This attribute can contain
-the name or identifier of a key management provider that is known to the target peer, so it can be used to obtain
-information about encryption keys. A <em>Router</em> can recognize that <code>Payload Passthru Mode</code> is in use
-by checking the existence and non-empty value of this attribute within the options of <code>CALL</code>, <code>PUBLISH</code> and <code>YIELD</code>
-messages.<a href="#section-14.1-24" class="pilcrow">¶</a></p>
+<p id="section-14.1-24">The <code>ppt_scheme</code> identifies the Payload Schema. It is a required string attribute. For End-2-End Encryption flow
+this attribute can contain the name or identifier of a key management provider that is known to the target peer,
+so it can be used with help of additional <code>ppt_*</code> attributes to obtain information about encryption keys.
+For gateways and external schemas this can contain the name of related technology. The one predefined is <code>mqtt</code>.
+Others may be introduced later. A <em>Router</em> can recognize that <code>Payload Passthru Mode</code> is in use by checking
+the existence and non-empty value of this attribute within the options of <code>CALL</code>, <code>PUBLISH</code> and <code>YIELD</code> messages.<a href="#section-14.1-24" class="pilcrow">¶</a></p>
 <p id="section-14.1-25"><strong>ppt_serializer Attribute</strong><a href="#section-14.1-25" class="pilcrow">¶</a></p>
 <p id="section-14.1-26">The <code>ppt_serializer</code> attribute is optional. It specifies what serializer was used to encode the payload.
-It can be a value a such as <code>mqtt</code>, <code>amqp</code>, <code>stomp</code> to indicate that the incoming data is tunneling through such
-technologies, or it can be ordinary <code>json</code>, <code>msgpack</code>, <code>cbor</code>, <code>flatbuffers</code> data serializers.<a href="#section-14.1-26" class="pilcrow">¶</a></p>
+It can be a <code>native</code> value to indicate that the incoming data is tunneling through other technologies
+specified by the <code>ppt_scheme</code>, or it can be ordinary <code>json</code>, <code>msgpack</code>, <code>cbor</code>, <code>flatbuffers</code> data serializers.
+For some predefined <code>ppt_scheme</code> schemas this option may be omitted as schema defines the concrete serializer.
+See predefined schemas below.<a href="#section-14.1-26" class="pilcrow">¶</a></p>
 <p id="section-14.1-27"><strong>ppt_cipher Attribute</strong><a href="#section-14.1-27" class="pilcrow">¶</a></p>
 <p id="section-14.1-28">The <code>ppt_cipher</code> attribute is optional. It is required if the payload is encrypted. This attribute specifies the
 cryptographic algorithm that was used to encrypt the payload. It can be <code>xsalsa20poly1305</code>, <code>aes256gcm</code> for now.<a href="#section-14.1-28" class="pilcrow">¶</a></p>
@@ -10623,8 +10626,8 @@ without guessing. The format of the value may depend on the <code>ppt_scheme</co
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ppt_serializer</td>
-              <td class="text-left" rowspan="1" colspan="1">N</td>
-              <td class="text-left" rowspan="1" colspan="1">json, msgpack, cbor, native</td>
+              <td class="text-left" rowspan="1" colspan="1">N*</td>
+              <td class="text-left" rowspan="1" colspan="1">native, json, msgpack, cbor</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ppt_cipher</td>
@@ -10638,7 +10641,11 @@ without guessing. The format of the value may depend on the <code>ppt_scheme</co
             </tr>
           </tbody>
         </table>
-<p id="section-14.1-34"><strong>End-to-End Encryption Predefined Scheme</strong><a href="#section-14.1-34" class="pilcrow">¶</a></p>
+<p id="section-14.1-34">*: If <code>ppt_serializer</code> is not provided then it is assuming as <code>native</code>. So no additional serialization
+will be applied to payload and payload will be serialized within WAMP message with session serializer.<a href="#section-14.1-34" class="pilcrow">¶</a></p>
+<p id="section-14.1-35"><strong>End-to-End Encryption Predefined Scheme</strong><a href="#section-14.1-35" class="pilcrow">¶</a></p>
+<p id="section-14.1-36">For <code>End-to-End Encryption</code> flow both peers must support chosen <code>ppt_serializer</code> regardless of their own
+session serializer.<a href="#section-14.1-36" class="pilcrow">¶</a></p>
 <table class="left" id="table-16">
           <caption><a href="#table-16" class="selfRef">Table 16</a></caption>
 <thead>
@@ -10652,11 +10659,11 @@ without guessing. The format of the value may depend on the <code>ppt_scheme</co
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ppt_scheme</td>
               <td class="text-left" rowspan="1" colspan="1">Y</td>
-              <td class="text-left" rowspan="1" colspan="1">wamp.eth</td>
+              <td class="text-left" rowspan="1" colspan="1">wamp</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">ppt_serializer</td>
-              <td class="text-left" rowspan="1" colspan="1">N</td>
+              <td class="text-left" rowspan="1" colspan="1">Y</td>
               <td class="text-left" rowspan="1" colspan="1">cbor, flatbuffers</td>
             </tr>
             <tr>
@@ -10671,10 +10678,10 @@ without guessing. The format of the value may depend on the <code>ppt_scheme</co
             </tr>
           </tbody>
         </table>
-<p id="section-14.1-36">*: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key,
+<p id="section-14.1-38">*: The least significant 20 bytes (160 bits) of the SHA256 of the public key (32 bytes) of the data encryption key,
 as a hex-encoded string with prefix <code>0x</code> and either uppercase/lowercase alphabetic characters, encoding a
-checksum according to EIP55.<a href="#section-14.1-36" class="pilcrow">¶</a></p>
-<p id="section-14.1-37"><strong>Custom Scheme Example</strong><a href="#section-14.1-37" class="pilcrow">¶</a></p>
+checksum according to EIP55.<a href="#section-14.1-38" class="pilcrow">¶</a></p>
+<p id="section-14.1-39"><strong>Custom Scheme Example</strong><a href="#section-14.1-39" class="pilcrow">¶</a></p>
 <table class="left" id="table-17">
           <caption><a href="#table-17" class="selfRef">Table 17</a></caption>
 <thead>
@@ -10707,30 +10714,43 @@ checksum according to EIP55.<a href="#section-14.1-36" class="pilcrow">¶</a></p
             </tr>
           </tbody>
         </table>
-<p id="section-14.1-39">When <code>Payload Passthru Mode</code> is used for gateways to other technologies, such as MQTT Brokers or AMQP Queues, then
+<p id="section-14.1-41">When <code>Payload Passthru Mode</code> is used for gateways to other technologies, such as MQTT Brokers, then
 the <code>ppt_serializer</code> attribute may be set to the <code>native</code> value. This means that the payload is not to be modified
 by WAMP peers, nor serialized in any manner, and is delivered as-is from the originating peer. Another possible case
 is when the <code>ppt_serializer</code> attribute is set to any valid serializer, for example <code>msgpack</code>. In this case the
 originating WAMP client peer first applies <code>ppt_serializer</code> to serialize the payload (without encryption), then
 the resulting binary payload is embedded in the WAMP message, the latter having possibly a different serializer
-depending on the one chosen during WAMP Session establishment.<a href="#section-14.1-39" class="pilcrow">¶</a></p>
-<p id="section-14.1-40"><strong>Important Note Regarding JSON Serialization</strong><a href="#section-14.1-40" class="pilcrow">¶</a></p>
-<p id="section-14.1-41">With <code>Payload Passthru Mode</code>, payloads are treated as binary. To send these binary payloads, the WAMP session
+depending on the one chosen during WAMP Session establishment.<a href="#section-14.1-41" class="pilcrow">¶</a></p>
+<p id="section-14.1-42"><strong>Important Note Regarding JSON Serialization</strong><a href="#section-14.1-42" class="pilcrow">¶</a></p>
+<p id="section-14.1-43">With <code>Payload Passthru Mode</code>, payloads are treated as binary. To send these binary payloads, the WAMP session
 serializer MUST support byte arrays. Most serialization formats known to WAMP support byte arrays, but JSON does
 not support them natively. To use <code>Payload Passthru Mode</code> with a JSON serializer, WAMP peers MUST perform the special
 <a href="#binary-support-in-json">Binary serialization in JSON</a>. This conversion may have unacceptable overhead, so it is
 generally advised to use WAMP session serializers with native byte array support, for example,
-<code>MessagePack</code>, <code>CBOR</code>, or <code>FlatBuffers</code>.<a href="#section-14.1-41" class="pilcrow">¶</a></p>
-<p id="section-14.1-42"><strong>Message Structure</strong><a href="#section-14.1-42" class="pilcrow">¶</a></p>
-<p id="section-14.1-43">When <code>Payload Passthru Mode</code> is in use, the message payload MUST be sent as one binary item within
-<code>Arguments|list</code>, while <code>ArgumentsKw|dict</code> MUST be absent or empty.<a href="#section-14.1-43" class="pilcrow">¶</a></p>
-<p id="section-14.1-44"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with encryption and key ID<a href="#section-14.1-44" class="pilcrow">¶</a></p>
-<div id="section-14.1-45">
+<code>MessagePack</code>, <code>CBOR</code>, or <code>FlatBuffers</code>.<a href="#section-14.1-43" class="pilcrow">¶</a></p>
+<p id="section-14.1-44"><strong>Message Structure</strong><a href="#section-14.1-44" class="pilcrow">¶</a></p>
+<p id="section-14.1-45">When <code>Payload Passthru Mode</code> is in use, the message payload MUST be sent as one binary item within
+<code>Arguments|list</code>, while <code>ArgumentsKw|dict</code> MUST be absent or empty.<a href="#section-14.1-45" class="pilcrow">¶</a></p>
+<p id="section-14.1-46">Since many WAMP messages assume the possibility of simultaneous use of <code>Arguments|list</code> and <code>ArgumentsKw|dict</code>,
+WAMP client implementations must package arguments into the following hash table and then serialize it and
+transmit as a single element within <code>Arguments|list</code>.<a href="#section-14.1-46" class="pilcrow">¶</a></p>
+<div id="section-14.1-47">
+<pre class="lang-json sourcecode">{
+    "args": Arguments|list,
+    "kwargs": ArgumentsKw|dict
+}
+</pre><a href="#section-14.1-47" class="pilcrow">¶</a>
+</div>
+<p id="section-14.1-48">This will allow maintaining a single interface for client applications, regardless of whether the
+<code>Payload Passthru Mode</code> mode, or especially <code>Payload End-to-End Encryption</code> which is built on top of
+<code>Payload End-to-End Encryption</code> is used or not.<a href="#section-14.1-48" class="pilcrow">¶</a></p>
+<p id="section-14.1-49"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with encryption and key ID<a href="#section-14.1-49" class="pilcrow">¶</a></p>
+<div id="section-14.1-50">
 <pre class="lang-json sourcecode">    [
         48,
         25471,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
@@ -10738,17 +10758,17 @@ generally advised to use WAMP session serializers with native byte array support
         "com.myapp.secret_rpc_for_sensitive_data",
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-45" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-50" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-46"><em>Example.</em> Caller-to-Dealer progressive <code>CALL</code> with encryption and key ID.<a href="#section-14.1-46" class="pilcrow">¶</a></p>
-<p id="section-14.1-47">Note that nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as,
-for example, <code>Progressive Calls</code>.<a href="#section-14.1-47" class="pilcrow">¶</a></p>
-<div id="section-14.1-48">
+<p id="section-14.1-51"><em>Example.</em> Caller-to-Dealer progressive <code>CALL</code> with encryption and key ID.<a href="#section-14.1-51" class="pilcrow">¶</a></p>
+<p id="section-14.1-52">Note that nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as,
+for example, <code>Progressive Calls</code>.<a href="#section-14.1-52" class="pilcrow">¶</a></p>
+<div id="section-14.1-53">
 <pre class="lang-json sourcecode">    [
         48,
         25471,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
@@ -10757,27 +10777,28 @@ for example, <code>Progressive Calls</code>.<a href="#section-14.1-47" class="pi
         "com.myapp.progressive_rpc_for_sensitive_data",
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-48" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-53" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-49"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with MQTT payload. Specifying <code>"ppt_serializer": "mqtt"</code> means that
-the original MQTT message payload is passed as WAMP payload message as is, without any transcoding, as is.<a href="#section-14.1-49" class="pilcrow">¶</a></p>
-<div id="section-14.1-50">
+<p id="section-14.1-54"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with MQTT payload. Specifying <code>"ppt_serializer": "native"</code> means that
+the original MQTT message payload is passed as WAMP payload message as is, without any transcoding.<a href="#section-14.1-54" class="pilcrow">¶</a></p>
+<div id="section-14.1-55">
 <pre class="lang-json sourcecode">    [
         48,
         25471,
         {
             "ppt_scheme": "mqtt",
-            "ppt_serializer": "mqtt"
+            "ppt_serializer": "native"
         },
         "com.myapp.mqtt_processing",
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-50" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-55" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-51"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with MQTT payload. Specifying <code>"ppt_scheme": "mqtt"</code> simply indicates that
-the original source of payload data is received from a related system. Specifying <code>"ppt_serializer": "json"</code> means that
-the original MQTT message payload was parsed and encoded with the <code>json</code> serializer.<a href="#section-14.1-51" class="pilcrow">¶</a></p>
-<div id="section-14.1-52">
+<p id="section-14.1-56"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with MQTT payload. Specifying <code>"ppt_scheme": "mqtt"</code> simply indicates that
+the original source of payload data is received from a related system. Specifying <code>"ppt_serializer": "json"</code>
+means that the original MQTT message payload was parsed and encoded with the <code>json</code> serializer before
+embedding it into WAMP message.<a href="#section-14.1-56" class="pilcrow">¶</a></p>
+<div id="section-14.1-57">
 <pre class="lang-json sourcecode">    [
         48,
         25471,
@@ -10788,77 +10809,45 @@ the original MQTT message payload was parsed and encoded with the <code>json</co
         "com.myapp.mqtt_processing",
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-52" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-57" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-53"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code> with encryption and key ID<a href="#section-14.1-53" class="pilcrow">¶</a></p>
-<div id="section-14.1-54">
+<p id="section-14.1-58"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code> with encryption and key ID<a href="#section-14.1-58" class="pilcrow">¶</a></p>
+<div id="section-14.1-59">
 <pre class="lang-json sourcecode">    [
         68,
         35477,
         1147,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
         },
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-54" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-59" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-55"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code> with MQTT payload<a href="#section-14.1-55" class="pilcrow">¶</a></p>
-<div id="section-14.1-56">
+<p id="section-14.1-60"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code> with MQTT payload<a href="#section-14.1-60" class="pilcrow">¶</a></p>
+<div id="section-14.1-61">
 <pre class="lang-json sourcecode">    [
         68,
         35479,
         3344,
         {
             "ppt_scheme": "mqtt",
-            "ppt_serializer": "mqtt"
-        },
-        [Payload|binary]
-    ]
-</pre><a href="#section-14.1-56" class="pilcrow">¶</a>
-</div>
-<p id="section-14.1-57"><em>Example.</em> Callee-to-Dealer <code>YIELD</code> with encryption and key ID<a href="#section-14.1-57" class="pilcrow">¶</a></p>
-<div id="section-14.1-58">
-<pre class="lang-json sourcecode">    [
-        70,
-        87683,
-        {
-            "ppt_scheme": "wamp.eth",
-            "ppt_serializer": "flatbuffers",
-            "ppt_cipher": "xsalsa20poly1305",
-            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
-        },
-        [Payload|binary]
-    ]
-</pre><a href="#section-14.1-58" class="pilcrow">¶</a>
-</div>
-<p id="section-14.1-59"><em>Example.</em> Callee-to-Dealer progressive <code>YIELD</code> with encryption and key ID<a href="#section-14.1-59" class="pilcrow">¶</a></p>
-<p id="section-14.1-60">Nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as, for example, <code>Progressive Call Results</code>.<a href="#section-14.1-60" class="pilcrow">¶</a></p>
-<div id="section-14.1-61">
-<pre class="lang-json sourcecode">    [
-        70,
-        87683,
-        {
-            "ppt_scheme": "wamp.eth",
-            "ppt_serializer": "flatbuffers",
-            "ppt_cipher": "xsalsa20poly1305",
-            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
-            "progress": true
+            "ppt_serializer": "native"
         },
         [Payload|binary]
     ]
 </pre><a href="#section-14.1-61" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-62"><em>Example.</em> Dealer-to-Caller <code>RESULT</code> with encryption and key ID<a href="#section-14.1-62" class="pilcrow">¶</a></p>
+<p id="section-14.1-62"><em>Example.</em> Callee-to-Dealer <code>YIELD</code> with encryption and key ID<a href="#section-14.1-62" class="pilcrow">¶</a></p>
 <div id="section-14.1-63">
 <pre class="lang-json sourcecode">    [
-        50,
-        77133,
+        70,
+        87683,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -10867,14 +10856,14 @@ the original MQTT message payload was parsed and encoded with the <code>json</co
     ]
 </pre><a href="#section-14.1-63" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-64"><em>Example.</em> Dealer-to-Caller progressive <code>RESULT</code> with encryption and key ID<a href="#section-14.1-64" class="pilcrow">¶</a></p>
+<p id="section-14.1-64"><em>Example.</em> Callee-to-Dealer progressive <code>YIELD</code> with encryption and key ID<a href="#section-14.1-64" class="pilcrow">¶</a></p>
 <p id="section-14.1-65">Nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as, for example, <code>Progressive Call Results</code>.<a href="#section-14.1-65" class="pilcrow">¶</a></p>
 <div id="section-14.1-66">
 <pre class="lang-json sourcecode">    [
-        50,
-        77133,
+        70,
+        87683,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
@@ -10884,14 +10873,46 @@ the original MQTT message payload was parsed and encoded with the <code>json</co
     ]
 </pre><a href="#section-14.1-66" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-67"><em>Example.</em> Callee-to-Dealer <code>ERROR</code> with encryption and key ID<a href="#section-14.1-67" class="pilcrow">¶</a></p>
+<p id="section-14.1-67"><em>Example.</em> Dealer-to-Caller <code>RESULT</code> with encryption and key ID<a href="#section-14.1-67" class="pilcrow">¶</a></p>
 <div id="section-14.1-68">
+<pre class="lang-json sourcecode">    [
+        50,
+        77133,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
+        },
+        [Payload|binary]
+    ]
+</pre><a href="#section-14.1-68" class="pilcrow">¶</a>
+</div>
+<p id="section-14.1-69"><em>Example.</em> Dealer-to-Caller progressive <code>RESULT</code> with encryption and key ID<a href="#section-14.1-69" class="pilcrow">¶</a></p>
+<p id="section-14.1-70">Nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as, for example, <code>Progressive Call Results</code>.<a href="#section-14.1-70" class="pilcrow">¶</a></p>
+<div id="section-14.1-71">
+<pre class="lang-json sourcecode">    [
+        50,
+        77133,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "progress": true
+        },
+        [Payload|binary]
+    ]
+</pre><a href="#section-14.1-71" class="pilcrow">¶</a>
+</div>
+<p id="section-14.1-72"><em>Example.</em> Callee-to-Dealer <code>ERROR</code> with encryption and key ID<a href="#section-14.1-72" class="pilcrow">¶</a></p>
+<div id="section-14.1-73">
 <pre class="lang-json sourcecode">    [
         8,
         68,
         87683,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -10899,15 +10920,15 @@ the original MQTT message payload was parsed and encoded with the <code>json</co
         "com.myapp.invalid_revenue_year",
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-68" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-73" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-69"><em>Example.</em> Publishing event to a topic with encryption and key ID<a href="#section-14.1-69" class="pilcrow">¶</a></p>
-<div id="section-14.1-70">
+<p id="section-14.1-74"><em>Example.</em> Publishing event to a topic with encryption and key ID<a href="#section-14.1-74" class="pilcrow">¶</a></p>
+<div id="section-14.1-75">
 <pre class="lang-json sourcecode">    [
         16,
         45677,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -10915,29 +10936,29 @@ the original MQTT message payload was parsed and encoded with the <code>json</co
         "com.myapp.mytopic1",
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-70" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-75" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-71"><em>Example.</em> Receiving event for a topic with encryption and key ID<a href="#section-14.1-71" class="pilcrow">¶</a></p>
-<div id="section-14.1-72">
+<p id="section-14.1-76"><em>Example.</em> Receiving event for a topic with encryption and key ID<a href="#section-14.1-76" class="pilcrow">¶</a></p>
+<div id="section-14.1-77">
 <pre class="lang-json sourcecode">    [
         36,
         5512315355,
         4429313566,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
         },
         [Payload|binary]
     ]
-</pre><a href="#section-14.1-72" class="pilcrow">¶</a>
+</pre><a href="#section-14.1-77" class="pilcrow">¶</a>
 </div>
-<p id="section-14.1-73"><strong>About Supported Serializers and Cryptographic Ciphers</strong><a href="#section-14.1-73" class="pilcrow">¶</a></p>
-<p id="section-14.1-74">WAMP serves as infrastructure for delivering messages between peers. Regardless of what encryption algorithm
+<p id="section-14.1-78"><strong>About Supported Serializers and Cryptographic Ciphers</strong><a href="#section-14.1-78" class="pilcrow">¶</a></p>
+<p id="section-14.1-79">WAMP serves as infrastructure for delivering messages between peers. Regardless of what encryption algorithm
 and serializer were chosen for <code>Payload Passthru Mode</code>, a <em>Router</em> shall not inspect and analyze the <code>ppt_</code> options
 and payload of encrypted messages. The application is responsible for choosing serializers and
-ciphers known to every peer involved in message processing.<a href="#section-14.1-74" class="pilcrow">¶</a></p>
+ciphers known to every peer involved in message processing.<a href="#section-14.1-79" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="payload-end-to-end-encryption">

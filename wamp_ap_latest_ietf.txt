@@ -7100,12 +7100,12 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    *ppt_scheme Attribute*
 
-
-
-
-
-
-
+   The ppt_scheme identifies the Payload Schema.  It is a required
+   string attribute.  For End-2-End Encryption flow this attribute can
+   contain the name or identifier of a key management provider that is
+   known to the target peer, so it can be used with help of additional
+   ppt_* attributes to obtain information about encryption keys.  For
+   gateways and external schemas this can contain the name of related
 
 
 
@@ -7114,21 +7114,20 @@ Oberstein                Expires 28 January 2023              [Page 127]
 Internet-Draft                   WAMP-AP                       July 2022
 
 
-   The ppt_scheme identifies the Key Management Schema.  It is a
-   required string attribute.  This attribute can contain the name or
-   identifier of a key management provider that is known to the target
-   peer, so it can be used to obtain information about encryption keys.
-   A _Router_ can recognize that Payload Passthru Mode is in use by
-   checking the existence and non-empty value of this attribute within
-   the options of CALL, PUBLISH and YIELD messages.
+   technology.  The one predefined is mqtt.  Others may be introduced
+   later.  A _Router_ can recognize that Payload Passthru Mode is in use
+   by checking the existence and non-empty value of this attribute
+   within the options of CALL, PUBLISH and YIELD messages.
 
    *ppt_serializer Attribute*
 
    The ppt_serializer attribute is optional.  It specifies what
-   serializer was used to encode the payload.  It can be a value a such
-   as mqtt, amqp, stomp to indicate that the incoming data is tunneling
-   through such technologies, or it can be ordinary json, msgpack, cbor,
-   flatbuffers data serializers.
+   serializer was used to encode the payload.  It can be a native value
+   to indicate that the incoming data is tunneling through other
+   technologies specified by the ppt_scheme, or it can be ordinary json,
+   msgpack, cbor, flatbuffers data serializers.  For some predefined
+   ppt_scheme schemas this option may be omitted as schema defines the
+   concrete serializer.  See predefined schemas below.
 
    *ppt_cipher Attribute*
 
@@ -7165,6 +7164,7 @@ Internet-Draft                   WAMP-AP                       July 2022
 
 
 
+
 Oberstein                Expires 28 January 2023              [Page 128]
 
 Internet-Draft                   WAMP-AP                       July 2022
@@ -7175,7 +7175,7 @@ Internet-Draft                   WAMP-AP                       July 2022
    +================+===========+=============================+
    | ppt_scheme     | Y         | mqtt                        |
    +----------------+-----------+-----------------------------+
-   | ppt_serializer | N         | json, msgpack, cbor, native |
+   | ppt_serializer | N*        | native, json, msgpack, cbor |
    +----------------+-----------+-----------------------------+
    | ppt_cipher     | N         | -                           |
    +----------------+-----------+-----------------------------+
@@ -7184,14 +7184,21 @@ Internet-Draft                   WAMP-AP                       July 2022
 
                              Table 13
 
+   *: If ppt_serializer is not provided then it is assuming as native.
+   So no additional serialization will be applied to payload and payload
+   will be serialized within WAMP message with session serializer.
+
    *End-to-End Encryption Predefined Scheme*
+
+   For End-to-End Encryption flow both peers must support chosen
+   ppt_serializer regardless of their own session serializer.
 
    +================+===========+=============================+
    | Attribute      | Required? | Value                       |
    +================+===========+=============================+
-   | ppt_scheme     | Y         | wamp.eth                    |
+   | ppt_scheme     | Y         | wamp                        |
    +----------------+-----------+-----------------------------+
-   | ppt_serializer | N         | cbor, flatbuffers           |
+   | ppt_serializer | Y         | cbor, flatbuffers           |
    +----------------+-----------+-----------------------------+
    | ppt_cipher     | N         | xsalsa20poly1305, aes256gcm |
    +----------------+-----------+-----------------------------+
@@ -7206,13 +7213,6 @@ Internet-Draft                   WAMP-AP                       July 2022
    characters, encoding a checksum according to EIP55.
 
    *Custom Scheme Example*
-
-
-
-
-
-
-
 
 
 
@@ -7241,17 +7241,16 @@ Internet-Draft                   WAMP-AP                       July 2022
                     Table 15
 
    When Payload Passthru Mode is used for gateways to other
-   technologies, such as MQTT Brokers or AMQP Queues, then the
-   ppt_serializer attribute may be set to the native value.  This means
-   that the payload is not to be modified by WAMP peers, nor serialized
-   in any manner, and is delivered as-is from the originating peer.
-   Another possible case is when the ppt_serializer attribute is set to
-   any valid serializer, for example msgpack.  In this case the
-   originating WAMP client peer first applies ppt_serializer to
-   serialize the payload (without encryption), then the resulting binary
-   payload is embedded in the WAMP message, the latter having possibly a
-   different serializer depending on the one chosen during WAMP Session
-   establishment.
+   technologies, such as MQTT Brokers, then the ppt_serializer attribute
+   may be set to the native value.  This means that the payload is not
+   to be modified by WAMP peers, nor serialized in any manner, and is
+   delivered as-is from the originating peer.  Another possible case is
+   when the ppt_serializer attribute is set to any valid serializer, for
+   example msgpack.  In this case the originating WAMP client peer first
+   applies ppt_serializer to serialize the payload (without encryption),
+   then the resulting binary payload is embedded in the WAMP message,
+   the latter having possibly a different serializer depending on the
+   one chosen during WAMP Session establishment.
 
    *Important Note Regarding JSON Serialization*
 
@@ -7271,9 +7270,10 @@ Internet-Draft                   WAMP-AP                       July 2022
    sent as one binary item within Arguments|list, while ArgumentsKw|dict
    MUST be absent or empty.
 
-   _Example._ Caller-to-Dealer CALL with encryption and key ID
-
-
+   Since many WAMP messages assume the possibility of simultaneous use
+   of Arguments|list and ArgumentsKw|dict, WAMP client implementations
+   must package arguments into the following hash table and then
+   serialize it and transmit as a single element within Arguments|list.
 
 
 
@@ -7282,11 +7282,23 @@ Oberstein                Expires 28 January 2023              [Page 130]
 Internet-Draft                   WAMP-AP                       July 2022
 
 
+   {
+       "args": Arguments|list,
+       "kwargs": ArgumentsKw|dict
+   }
+
+   This will allow maintaining a single interface for client
+   applications, regardless of whether the Payload Passthru Mode mode,
+   or especially Payload End-to-End Encryption which is built on top of
+   Payload End-to-End Encryption is used or not.
+
+   _Example._ Caller-to-Dealer CALL with encryption and key ID
+
        [
            48,
            25471,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "cbor",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
@@ -7305,7 +7317,7 @@ Internet-Draft                   WAMP-AP                       July 2022
            48,
            25471,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "flatbuffers",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
@@ -7315,21 +7327,9 @@ Internet-Draft                   WAMP-AP                       July 2022
            [Payload|binary]
        ]
 
-   _Example._ Caller-to-Dealer CALL with MQTT payload.  Specifying
-   "ppt_serializer": "mqtt" means that the original MQTT message payload
-   is passed as WAMP payload message as is, without any transcoding, as
-   is.
 
-       [
-           48,
-           25471,
-           {
-               "ppt_scheme": "mqtt",
-               "ppt_serializer": "mqtt"
-           },
-           "com.myapp.mqtt_processing",
-           [Payload|binary]
-       ]
+
+
 
 
 
@@ -7339,10 +7339,27 @@ Internet-Draft                   WAMP-AP                       July 2022
 
 
    _Example._ Caller-to-Dealer CALL with MQTT payload.  Specifying
+   "ppt_serializer": "native" means that the original MQTT message
+   payload is passed as WAMP payload message as is, without any
+   transcoding.
+
+       [
+           48,
+           25471,
+           {
+               "ppt_scheme": "mqtt",
+               "ppt_serializer": "native"
+           },
+           "com.myapp.mqtt_processing",
+           [Payload|binary]
+       ]
+
+   _Example._ Caller-to-Dealer CALL with MQTT payload.  Specifying
    "ppt_scheme": "mqtt" simply indicates that the original source of
    payload data is received from a related system.  Specifying
    "ppt_serializer": "json" means that the original MQTT message payload
-   was parsed and encoded with the json serializer.
+   was parsed and encoded with the json serializer before embedding it
+   into WAMP message.
 
        [
            48,
@@ -7362,13 +7379,20 @@ Internet-Draft                   WAMP-AP                       July 2022
            35477,
            1147,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "cbor",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
            },
            [Payload|binary]
        ]
+
+
+
+Oberstein                Expires 28 January 2023              [Page 132]
+
+Internet-Draft                   WAMP-AP                       July 2022
+
 
    _Example._ Dealer-to-Callee INVOCATION with MQTT payload
 
@@ -7378,27 +7402,18 @@ Internet-Draft                   WAMP-AP                       July 2022
            3344,
            {
                "ppt_scheme": "mqtt",
-               "ppt_serializer": "mqtt"
+               "ppt_serializer": "native"
            },
            [Payload|binary]
        ]
 
    _Example._ Callee-to-Dealer YIELD with encryption and key ID
 
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 132]
-
-Internet-Draft                   WAMP-AP                       July 2022
-
-
        [
            70,
            87683,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "flatbuffers",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -7416,7 +7431,7 @@ Internet-Draft                   WAMP-AP                       July 2022
            70,
            87683,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "flatbuffers",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
@@ -7427,11 +7442,19 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    _Example._ Dealer-to-Caller RESULT with encryption and key ID
 
+
+
+
+Oberstein                Expires 28 January 2023              [Page 133]
+
+Internet-Draft                   WAMP-AP                       July 2022
+
+
        [
            50,
            77133,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "flatbuffers",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -7442,14 +7465,6 @@ Internet-Draft                   WAMP-AP                       July 2022
    _Example._ Dealer-to-Caller progressive RESULT with encryption and
    key ID
 
-
-
-
-Oberstein                Expires 28 January 2023              [Page 133]
-
-Internet-Draft                   WAMP-AP                       July 2022
-
-
    Nothing prevents the use of Payload Passthru Mode with other features
    such as, for example, Progressive Call Results.
 
@@ -7457,7 +7472,7 @@ Internet-Draft                   WAMP-AP                       July 2022
            50,
            77133,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "flatbuffers",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
@@ -7473,7 +7488,7 @@ Internet-Draft                   WAMP-AP                       July 2022
            68,
            87683,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "cbor",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -7484,11 +7499,18 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    _Example._ Publishing event to a topic with encryption and key ID
 
+
+
+Oberstein                Expires 28 January 2023              [Page 134]
+
+Internet-Draft                   WAMP-AP                       July 2022
+
+
        [
            16,
            45677,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "cbor",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -7499,19 +7521,12 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    _Example._ Receiving event for a topic with encryption and key ID
 
-
-
-Oberstein                Expires 28 January 2023              [Page 134]
-
-Internet-Draft                   WAMP-AP                       July 2022
-
-
        [
            36,
            5512315355,
            4429313566,
            {
-               "ppt_scheme": "wamp.eth",
+               "ppt_scheme": "wamp",
                "ppt_serializer": "flatbuffers",
                "ppt_cipher": "xsalsa20poly1305",
                "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -7539,6 +7554,14 @@ Internet-Draft                   WAMP-AP                       July 2022
    This allows WAMP to run over different transports without any impact
    at the application layer.
 
+
+
+
+Oberstein                Expires 28 January 2023              [Page 135]
+
+Internet-Draft                   WAMP-AP                       July 2022
+
+
    Besides the WebSocket transport, the following WAMP transports are
    currently specified:
 
@@ -7549,18 +7572,6 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    |  Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined
    |  in the future.
-
-
-
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 135]
-
-Internet-Draft                   WAMP-AP                       July 2022
-
 
 7.1.  RawSocket Transport
 
@@ -7600,6 +7611,13 @@ Internet-Draft                   WAMP-AP                       July 2022
 
        0x 11 22 33 44
 
+
+
+Oberstein                Expires 28 January 2023              [Page 136]
+
+Internet-Draft                   WAMP-AP                       July 2022
+
+
    the first octet sent out to (or received from) the wire is 0x11 and
    the last octet sent out (or received) is 0x44.
 
@@ -7610,13 +7628,6 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    octets_received = b"\x11\x22\x33\x44"
    i = struct.unpack(">L", octets_received)[0]
-
-
-
-Oberstein                Expires 28 January 2023              [Page 136]
-
-Internet-Draft                   WAMP-AP                       July 2022
-
 
    The integer received has the value 287454020.
 
@@ -7656,6 +7667,13 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    The possible values for LENGTH are:
 
+
+
+Oberstein                Expires 28 January 2023              [Page 137]
+
+Internet-Draft                   WAMP-AP                       July 2022
+
+
         0: 2**9 octets
         1: 2**10 octets
        ...
@@ -7663,16 +7681,6 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    This means a _Client_ can choose the maximum message length between
    *512* and *16M* octets.
-
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 137]
-
-Internet-Draft                   WAMP-AP                       July 2022
-
 
    The SERIALIZER value is used by the _Client_ to request a specific
    serializer to be used.  When the handshake completes successfully,
@@ -7714,14 +7722,6 @@ Internet-Draft                   WAMP-AP                       July 2022
    transports on the connecting port (such as WebSocket or LongPoll),
    the _Router_ MUST *fail the connection*.
 
-   Here is an example of how a _Router_ could parse the _second octet_
-   in a _Clients_ handshake request:
-
-
-
-
-
-
 
 
 
@@ -7729,6 +7729,9 @@ Oberstein                Expires 28 January 2023              [Page 138]
 
 Internet-Draft                   WAMP-AP                       July 2022
 
+
+   Here is an example of how a _Router_ could parse the _second octet_
+   in a _Clients_ handshake request:
 
    # map RawSocket handshake request (2nd octet) to
    # serializer / max. msg length
@@ -7774,9 +7777,6 @@ Internet-Draft                   WAMP-AP                       July 2022
        31                                    0
        0111 1111 EEEE 0000 RRRR RRRR RRRR RRRR
 
-   An error reply has 4 octets: the _first octet_ is again the magic
-   0x7F, and the _third and forth octet_ are reserved and MUST all be
-   zeros for now.
 
 
 
@@ -7785,6 +7785,10 @@ Oberstein                Expires 28 January 2023              [Page 139]
 
 Internet-Draft                   WAMP-AP                       July 2022
 
+
+   An error reply has 4 octets: the _first octet_ is again the magic
+   0x7F, and the _third and forth octet_ are reserved and MUST all be
+   zeros for now.
 
    The _second octet_ has its lower 4 bits zero'ed (which distinguishes
    the reply from an success/accepting reply) and the upper 4 bits
@@ -7822,10 +7826,6 @@ Internet-Draft                   WAMP-AP                       July 2022
 
    Here is an example of how a _Client_ might parse the _second octet_
    in a _Router_ handshake reply:
-
-
-
-
 
 
 
