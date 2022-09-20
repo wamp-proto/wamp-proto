@@ -151,12 +151,15 @@ without guessing. The format of the value may depend on the `ppt_scheme` attribu
 
 {align="left"}
 
-| Attribute      | Required? | Value  |
-|----------------|-----------|--------|
-| ppt_scheme     | Y         | mqtt   |
-| ppt_serializer | N         | native |
-| ppt_cipher     | N         | -      |
-| ppt_keyid      | N         | -      |
+| Attribute      | Required? | Value                        |
+|----------------|-----------|------------------------------|
+| ppt_scheme     | Y         | mqtt                         |
+| ppt_serializer | N*        | native, json, msgpack, cbor  |
+| ppt_cipher     | N         | -                            |
+| ppt_keyid      | N         | -                            |
+
+*: If `ppt_serializer` is not provided then it is assuming as `native`. So no additional serialization
+will be applied to payload and payload will be serialized within WAMP message with session serializer.
 
 **End-to-End Encryption Predefined Scheme**
 
@@ -167,8 +170,8 @@ session serializer.
 
 | Attribute      | Required? | Value                       |
 |----------------|-----------|-----------------------------|
-| ppt_scheme     | Y         | wamp.eth                    |
-| ppt_serializer | Y         | cbor, msgpack, flatbuffers  |
+| ppt_scheme     | Y         | wamp                        |
+| ppt_serializer | Y         | cbor, flatbuffers           |
 | ppt_cipher     | N         | xsalsa20poly1305, aes256gcm |
 | ppt_keyid      | N         | *                           |
 
@@ -234,7 +237,7 @@ This will allow maintaining a single interface for client applications, regardle
         48,
         25471,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
@@ -255,7 +258,7 @@ for example, `Progressive Calls`.
         48,
         25471,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
@@ -284,8 +287,9 @@ the original MQTT message payload is passed as WAMP payload message as is, witho
 ```
 
 *Example.* Caller-to-Dealer `CALL` with MQTT payload. Specifying `"ppt_scheme": "mqtt"` simply indicates that
-the original source of payload data is received from a related system. Specifying `"ppt_serializer": "json"` means that
-the original MQTT message payload was parsed and encoded with the `json` serializer.
+the original source of payload data is received from a related system. Specifying `"ppt_serializer": "json"` 
+means that the original MQTT message payload was parsed and encoded with the `json` serializer before 
+embedding it into WAMP message.
 
 {align="left"}
 ```json
@@ -310,7 +314,7 @@ the original MQTT message payload was parsed and encoded with the `json` seriali
         35477,
         1147,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0="
@@ -343,7 +347,7 @@ the original MQTT message payload was parsed and encoded with the `json` seriali
         70,
         87683,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -362,7 +366,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
         70,
         87683,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
@@ -380,7 +384,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
         50,
         77133,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -399,7 +403,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
         50,
         77133,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
@@ -418,7 +422,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
         68,
         87683,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -436,7 +440,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
         16,
         45677,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
@@ -455,7 +459,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
         5512315355,
         4429313566,
         {
-            "ppt_scheme": "wamp.eth",
+            "ppt_scheme": "wamp",
             "ppt_serializer": "flatbuffers",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1="
