@@ -1,8 +1,8 @@
 ## Payload End-to-End Encryption
 
-*WAMP End-to-End Encryption* ("WAMP-E2EE") is a feature in the *WAMP Advanced Profile* that enables an
-**enhanced security model** for WAMP based systems which isolates WAMP endpoints (e.g. *Callers* and *Callees*)
-from routers. It provides enhanced application payload
+*WAMP End-to-End Encryption* ("WAMP-E2EE" or "E2EE" for short) is a feature in the *WAMP Advanced Profile* that 
+enables an **enhanced security model** for WAMP based systems which isolates WAMP endpoints (e.g. *Callers* 
+and *Callees*) from routers. It provides enhanced application payload
 
 * **Authenticity**,
 * **Confidentiality** and
@@ -134,26 +134,74 @@ is described in the following sections:
 
 1. [Payload Encryption](#payloadencr)
 2. [Payload Transport](#payloadtnsp)
-3. [Trust Management](#trustmgmt)
-4. [Key Distribution](#keydist)
+3. [Key Distribution](#keydist)
+4. [Trust Management](#trustmgmt)
 
 
 #### Payload Encryption {#payloadencr}
+
+Payload Encryption consists of next steps: 
 
 1. payload serialization
 2. optional compression
 3. symmetric encryption with XSalsa20Poly1305 (a.k.a. [NaCl crypto_secretbox](https://nacl.cr.yp.to/secretbox.html))
 
-XSalsa20Poly1305 is an [authenticated encryption](https://en.wikipedia.org/wiki/Authenticated_encryption) cipher
-based on
+In regular WAMP clients communication payload may be delivered as `Arguments|list` an/or as `ArgumentsKw|dict`. For
+optimal performance and security reasons `Arguments|list` and `ArgumentsKw|dict` are not encrypted separately and 
+thus need to be serialized into one item
+
+{align="left"}
+```json
+{
+    "args": Arguments|list,
+    "kwargs": ArgumentsKw|dict,
+    "uri": uri  // URI of RPC or Topic, read about this below
+}
+```
+
+#TODO: Write some words about `optional compression` or maybe put to the future revision?
+
+Then serialized payload is encrypted using XSalsa20Poly1305 
+[authenticated encryption](https://en.wikipedia.org/wiki/Authenticated_encryption) cipher based on
 the [XSalsa20](https://en.wikipedia.org/wiki/Salsa20) [stream cipher](https://en.wikipedia.org/wiki/Stream_cipher)
 and the [Poly1305](https://en.wikipedia.org/wiki/Poly1305) hash function, which acts as a message authentication code.
 
+Initiator peer that is going to send encrypted messages generate in runtime Ephemeral Payload Encryption Keys. 
 The secret encryption keys for XSalsa20Poly1305 are 32 octets in length, and message nonces are 24 octets.
+Peer can decide to choose different secret key rotation strategies: 
+
+* on per message basis
+* on per topic basis
+* regenerate keys every N messages
+* regenerate keys based on time
 
 #### Payload Transport {#payloadtnsp}
 
-transport using WAMP AP [Payload Passthru Mode](#payload-passthru-mode)
+After payload is encrypted it needs to be delivered within WAMP message to destination part. This is done using WAMP 
+AP [Payload Passthru Mode](#payload-passthru-mode).
+
+#### Key Distribution {#keydist}
+
+After encrypted message is delivered to destination target, how Peer can decrypt it if it doesn't have a secret key?
+This problem is solved as follows:
+
+Initiator peer registers an RPC for getting a secret encryption keys and pass the `URI` of this RPC as options 
+attribute to underlying WAMP message carrying encrypted payload. If target peer doesn't have a secret key it can
+examine message details and make a `CALL` to provided RPC requesting encryption key. At this point there is no
+secure channel between peers, so initiator peer can not simply send secret key as this will violate E2EE principle.
+Secure transfer of encryption keys are done using 
+[Public-key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography) 
+[Authenticated encryption](https://en.wikipedia.org/wiki/Authenticated_encryption).
+This includes:
+
+* sending target peer `Client Session Public Key` signed by target's peer `Delegated Certificate Private Key` 
+to initiator.
+* then initiator peer encrypts `secret key` with its own `Client Session Private Key` and 
+`Target Peer Client Session Public Key` that was received using [Curve25519](https://en.wikipedia.org/wiki/Curve25519) 
+Asymmetric Cipher 
+* and sends encrypted `secret key` and its own `Client Session Public Key` back to the target peer as a 
+RESULT of RPC Invocation so target peer can decrypt RESULT with its own `Client Session Private Key` and get
+the `secret key`.
 
 #### Trust Management {#trustmgmt}
 
@@ -167,6 +215,3 @@ management of the Operator-CA to Realm-CA relationships
 1) standalone trustroots / centralized trust model
 2) on-chain trustroots / decentralized trust model
 
-#### Key Distribution {#keydist}
-
-Write me.

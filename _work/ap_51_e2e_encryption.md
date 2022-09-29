@@ -1,5 +1,5 @@
 
-ppt_scheme      = "wamp.eth"
+ppt_scheme      = "wamp"
 ppt_serializer  = "cbor" | "flatbuffers"
 ppt_compressor  = "lzss" | "brotli" | null
 ppt_cipher      = "xsalsa20poly1305" | "aes256gcm"
