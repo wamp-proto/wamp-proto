@@ -151,8 +151,8 @@ optimal performance and security reasons `Arguments|list` and `ArgumentsKw|dict`
 thus need to be serialized into one item
 
 {align="left"}
-```json
-{
+```javascript
+payload = {
     "args": Arguments|list,
     "kwargs": ArgumentsKw|dict,
     "uri": uri  // URI of RPC or Topic, read about this below
