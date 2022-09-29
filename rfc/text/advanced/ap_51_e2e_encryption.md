@@ -40,6 +40,95 @@ uses TLS to connect to its uplink router. In this case, the WAMP message, and th
 embedded in the message can not be read by third parties (anyone outside the TLS connection), but it can be read
 by the router.
 
+{align="left"}
+```
+                       .-------------------.                                   
+                      ( Payload Encryption  )                                  
+                       `---------+---------'                                   
+                                  +                +-------------+             
+                                  v                |WAMP Message |             
+ +------+     +----------+     +----------------+  | +---------+ |     +------+
+ |      |     |Serialized|     |XSalsa20Poly1306|  | |Encrypted| |     |      |
+ |Peer 1+(1)->| Payload  +(2)->|Symmetric Cipher+--+>| Payload | +(3)->|Peer 2|
+ |      |     |          |     |                |  | |         | |     |      |
+ +------+     +----------+     +----------------+  | +---------+ |     +------+
+                                        ^          +-------------+        (8)  
+                                        |           E2E Encrypted              
+                               +--------+-------+  Payload Traffic             
+                               |  Secret Data   |                              
+                    Ephemeral  | Encryption Key |                              
+                     Payload   +----------------+                              
+                   Encryption  +----------------+                              
+                      Keys     |  Secret Data   |                              
+                               | Encryption Key |                              
+                               +----------------+                              
+                               +----------------+                              
+ Client Session                |  Secret Data   |               Client Session 
+ Authentication                | Encryption Key |               Authentication 
+      Keys                     +--------+-------+                    Keys      
+ +----------+    .---------------.      |                          +----------+
+ |Peer 1 CS |   (Key Distribution )     |                          |Peer 2 CS |
+ |Public Key|    `---------+-----'      |                 +------+-+Public Key|
+ |          |                           |                 |      | |          |
+ +----------+              |            v                 |      | +----------+
+ +----------+               - >+----------------+         |      | +----------+
+ |Peer 1 CS |                  |   Curve25519   |         |      | |Peer 2 CS |
+ | Private  +----------------->|   Asymmetric   |<--------+      | | Private  |
+ |   Key    |                  |     Cipher     |                | |   Key    |
+ +----------+                  +--------+-------+                | +----------+
+                                        |     Request Payload    |             
+                                        |      Encryption Key    |             
+                                       (7)   +----------------+  |             
+                                        |    |  WAMP Message  |  |             
+                                 +------+    |+--------------+|  |             
+                                 |           ||Peer 2 Signed ||  |             
+     +---------------------------+-----------+|EIP712Delegate||<-+--(4)----+   
+     |                           |           || Certificate  ||  |         |   
+     |                  +--------+-------+   |+--------------+|  |         |   
+     |                  |  WAMP M|ssage  |   +--------^-------+  |         |   
+     v                  |        v       |            |          |         |   
+ +------+               |+--------------+|            |          |     +---+--+
+ |      |               ||  Encrypted   ||            |          |     |      |
+ |Peer 1+-----(6)------>|| Secret Data  |+------------+----------+---->|Peer 2|
+ |      |               ||Encryption Key||            |          |     |      |
+ +------+               |+--------------+|            |          |     +------+
+                        |                |            |          |             
+                        +----------------+  +---------+--------+ |             
+                         Response Payload   |sec256k1 / EIP712 | |             
+                          Encryption Key  ->|    Asymmetric    |<+             
+                                         |  |    Signature     |               
+                                            +------------------+               
+ +----------+                            |            ^            +----------+
+ |Peer 1 ETH|                 .-------------------.   |            |Peer 2 ETH|
+ |Public Key|                ( Trust Establishment )  |            |Public Key|
+ |          |                 `-------------------'   |            |          |
+ +----------+                                         |            +----------+
+ +----------+                                         |            +----------+
+ |Peer 1 ETH|                                         |            |Peer 2 ETH|
+ | Private  |                                         +--(5)-------+ Private  |
+ |   Key    |                                                      |   Key    |
+ +----------+                                                      +----------+
+   Delegate                                                          Delegate  
+ Certificate                                                       Certificate 
+ Signing Keys                                                      Signing Keys
+```
+
+*Overview of End-to-End Encryption flow*
+
+1. Peer 1 decides to use E2EE Payload for sending message to Peer 2 (this can be RPC Call or Publishing event to topic).
+2. Peer 1 generates runtime ephemeral encryption key and encrypt payload using `XSalsa20Poly1306 Symmetric Cipher`.
+3. WAMP message with Encrypted Payload is delivered to Peer 2 and Peer 2 doesn't have encryption key to decrypt payload.
+4. Peer 2 makes an RPC CALL to procedure that name is provided by Peer 1 via options in sent WAMP message. 
+5. Peer 2 attaches to CALL message its own `Client Session Public Key` and signs it with its own Delegate Certificate 
+Private Key using `sec256k1 Asymmetric Signature`.
+6. Peer 1 receives RPC invocation, verifies message signature and certificate chain up to known Trustroot 
+(Standalone Trustroot, Shared Trustroot or On-chain Trustroot). 
+7. Then Peer 1 encrypts runtime ephemeral encryption key used for encryption of original payload with its own 
+`Client Session Private Key` and `Peer 2 Client Session Public Key` that was received in invocation message using
+`Curve25519 Asymmetric Cipher` and sends YIELD->RESULT message to Peer 2.
+8. Peer 2 decrypts RPC CALL RESULT with its own `Client Session Private Key` and gets runtime ephemeral encryption 
+key using which Peer 2 now can decrypt original E2EE Payload.
+
 *Payload End-to-End Encryption* can be divided into the following subproblems, and the approach taken by *WAMP-E2EE*
 is described in the following sections:
 
@@ -47,6 +136,7 @@ is described in the following sections:
 2. [Payload Transport](#payloadtnsp)
 3. [Trust Management](#trustmgmt)
 4. [Key Distribution](#keydist)
+
 
 #### Payload Encryption {#payloadencr}
 
