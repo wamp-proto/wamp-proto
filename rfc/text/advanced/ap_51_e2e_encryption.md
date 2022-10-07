@@ -215,3 +215,347 @@ management of the Operator-CA to Realm-CA relationships
 1) standalone trustroots / centralized trust model
 2) on-chain trustroots / decentralized trust model
 
+### Message structure
+
+**Feature Announcement**
+
+Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`),
+*Dealers* (`role := "dealer"`), *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`)
+and *Brokers* (`role := "broker"`) via
+
+{align="left"}
+HELLO.Details.roles.<role>.features.payload_encryption|bool := true
+
+Payload End-to-End Encryption can work only if all three nodes (*Caller*, *Dealer*, *Callee* or
+*Publisher*, *Broker*, *Subscriber*) support and announced this feature.
+
+Cases where a *Caller* sends a `CALL` message with `encrypted payload` without announcing it during the `HELLO`
+handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with
+the `wamp.error.protocol_violation` error reason.
+
+Cases where a *Caller* sends a `CALL` message with `encrypted payload` to a *Dealer*, the latter not announcing
+`encrypted payload` support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and the underlying WAMP
+connections must be aborted with the `wamp.error.protocol_violation` error reason.
+
+Cases where a *Caller* sends a `CALL` message with `encrypted payload` to a *Dealer* that supports this feature,
+which then must be routed to a *Callee* which doesn't support `encrypted payload`, MUST be treated as
+*APPLICATION ERRORS* and the *Dealer* MUST respond to the *Caller* with a `wamp.error.feature_not_supported`
+error message.
+
+Cases where a *Publisher* sends a `PUBLISH` message with `encrypted payload`, without announcing it during `HELLO`
+handshake, MUST be treated as *PROTOCOL ERRORS* and the underlying WAMP connections must be aborted with
+the `wamp.error.protocol_violation` error reason.
+
+Cases where a *Publisher* sends a `PUBLISH` message with `encrypted payload` to a *Broker*, with the latter not
+announcing `encrypted payload` support during the `WELCOME` handshake, MUST be treated as *PROTOCOL ERRORS* and
+the underlying WAMP connections must be aborted with the `wamp.error.protocol_violation` error reason.
+
+Cases where a *Publisher* sends a `PUBLISH` message with `encrypted payload` to a *Broker* that supports this feature,
+which then must be routed to a *Subscriber* which doesn't support `encrypted payload`, cannot be recognized at the
+protocol level due to asynchronous message processing and must be covered at the *Subscriber* side.
+
+Cases where a *Callee* sends a `YIELD` message with `encrypted payload` without announcing it during the `HELLO`
+handshake MUST be treated as *PROTOCOL ERRORS* and the underlying WAMP connections must be aborted with
+the `wamp.error.protocol_violation` error reason.
+
+Cases where a *Callee* sends a `YIELD` message with `encrypted payload` to a *Dealer*, with the latter not announcing
+`encrypted payload` support during the `WELCOME` handshake, MUST be treated as *PROTOCOL ERRORS* and the
+underlying WAMP connections must be aborted with the `wamp.error.protocol_violation` error reason.
+
+Cases where a *Callee* sends a `YIELD` message with `encrypted payload` to a *Dealer* that supports this feature,
+which then must be routed to the *Caller* which doesn't support `encrypted payload`, MUST be treated as
+*APPLICATION ERRORS* and the *Dealer* MUST respond to the *Callee* with a `wamp.error.feature_not_supported`
+error message.
+
+**Message Attributes**
+
+Payload End-to-End Encryption works on top of another WAMP advanced profile feature 
+[Payload Passthru Mode](#name-payload-passthru-mode). It reuses next attributes:
+
+* The `ppt_scheme` identifies the Payload Schema. There is a predefined scheme for End-to-End Encryption `wamp`.
+* The `ppt_serializer` specifies what serializer was used to encode the payload.
+* The `ppt_cipher` specifies the cryptographic algorithm that was used to encrypt the payload.
+* The `ppt_keyid` can contain the encryption key id that was used to encrypt the payload.
+
+And introduces a few more specific attributes:
+
+**e2ee_request_key_rpc Attribute** 
+
+The `e2ee_request_key_rpc` identifies the Initiator Peer registered RPC URI which other peers can call to get 
+*Secret Data Encryption Key* for payload decryption if they don't have it. It is a required string attribute. 
+Must conform to URI check rules. Initiator Peer must register this RPC first. RPC must be single, not pattern-based, 
+not shared, with `single` invocation policy. RPC may be registered on any side that encrypts payload: 
+*Caller*, *Callee* or *Publisher*. The Initiator peer may decide how and when to register this RPC:
+
+* It can be registered on per URI basis. One request key RPC for every topic or procedure.
+* It can be registered one time and serve all incoming requests for keys for all topics this peer publishes to 
+and all procedures invoked by this peer. Invocation to this RPC contains all required information. This
+is described later in this chapter.
+* Peer may decide to unregister RPC after invocation or on time basis.
+
+{align="left"}
+CALL.Options.ppt_scheme|string
+CALL.Options.ppt_serializer|string
+CALL.Options.ppt_cipher|string
+CALL.Options.ppt_keyid|string
+CALL.Options.e2ee_request_key_rpc|string
+---
+INVOCATION.Details.ppt_scheme|string
+INVOCATION.Details.ppt_serializer|string
+INVOCATION.Details.ppt_cipher|string
+INVOCATION.Details.ppt_keyid|string
+INVOCATION.Details.e2ee_request_key_rpc|string
+---
+YIELD.Options.ppt_scheme|string
+YIELD.Options.ppt_serializer|string
+YIELD.Options.ppt_cipher|string
+YIELD.Options.ppt_keyid|string
+YIELD.Options.e2ee_request_key_rpc|string
+---
+RESULT.Details.ppt_scheme|string
+RESULT.Details.ppt_serializer|string
+RESULT.Details.ppt_cipher|string
+RESULT.Details.ppt_keyid|string
+RESULT.Details.e2ee_request_key_rpc|string
+---
+ERROR.Details.ppt_scheme|string
+ERROR.Details.ppt_serializer|string
+ERROR.Details.ppt_cipher|string
+ERROR.Details.ppt_keyid|string
+ERROR.Details.e2ee_request_key_rpc|string
+
+{align="left"}
+PUBLISH.Options.ppt_scheme|string
+PUBLISH.Options.ppt_serializer|string
+PUBLISH.Options.ppt_cipher|string
+PUBLISH.Options.ppt_keyid|string
+PUBLISH.Options.e2ee_request_key_rpc|string
+---
+EVENT.Details.ppt_scheme|string
+EVENT.Details.ppt_serializer|string
+EVENT.Details.ppt_cipher|string
+EVENT.Details.ppt_keyid|string
+EVENT.Details.e2ee_request_key_rpc|string
+---
+ERROR.Options.ppt_scheme|string
+ERROR.Options.ppt_serializer|string
+ERROR.Options.ppt_cipher|string
+ERROR.Options.ppt_keyid|string
+ERROR.Options.e2ee_request_key_rpc|string
+
+**Message Structure**
+
+When `Payload End-to-End Encryption` is in use, the message payload MUST be sent as one binary item within
+`Arguments|list`, while `ArgumentsKw|dict` MUST be absent or empty.
+
+Since many WAMP messages assume the possibility of simultaneous use of `Arguments|list` and `ArgumentsKw|dict`,
+WAMP client implementations must package arguments into the following hash table and then serialize it and
+transmit as a single element within `Arguments|list`.
+
+{align="left"}
+```
+{
+    "uri": "URI of called RPC or Topic published to",
+    "args": Arguments|list,
+    "kwargs": ArgumentsKw|dict
+}
+```
+
+*Example.* Caller-to-Dealer `CALL` with encryption and key ID
+
+{align="left"}
+```
+    [
+        48,
+        25471,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "cbor",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.Uo8pe61D9ev"
+        },
+        "com.myapp.secret_rpc_for_sensitive_data",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Caller-to-Dealer progressive `CALL` with encryption and key ID.
+
+Note that nothing prevents the use of `Payload End-to-End Encryption` with other features such as,
+for example, `Progressive Calls`.
+
+{align="left"}
+```
+    [
+        48,
+        25471,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "progress": true,
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.1D9evIWpKGQ"
+        },
+        "com.myapp.progressive_rpc_for_sensitive_data",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Dealer-to-Callee `INVOCATION` with encryption and key ID
+
+{align="left"}
+```
+    [
+        68,
+        35477,
+        1147,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "cbor",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.7XGJO2"
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Callee-to-Dealer `YIELD` with encryption and key ID
+
+{align="left"}
+```
+    [
+        70,
+        87683,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.GMDQW"
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Callee-to-Dealer progressive `YIELD` with encryption and key ID
+
+Nothing prevents the use of `Payload End-to-End Encryption` with other features such as, 
+for example, `Progressive Call Results`.
+
+{align="left"}
+```
+    [
+        70,
+        87683,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "progress": true,
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.4AUo8pe61D"
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Dealer-to-Caller `RESULT` with encryption and key ID
+
+{align="left"}
+```
+    [
+        50,
+        77133,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.37XGJO"
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Dealer-to-Caller progressive `RESULT` with encryption and key ID
+
+Nothing prevents the use of `Payload End-to-End Encryption` with other features such as, 
+for example, `Progressive Call Results`.
+
+{align="left"}
+```
+    [
+        50,
+        77133,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "progress": true,
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.37XGJO"
+        },
+        [Payload|binary]
+    ]
+```
+
+*Example.* Callee-to-Dealer `ERROR` with encryption and key ID
+
+{align="left"}
+```
+    [
+        8,
+        68,
+        87683,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "cbor",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.8Dvx4AUo8"
+        },
+        "com.myapp.invalid_revenue_year",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Publishing event to a topic with encryption and key ID
+
+{align="left"}
+```
+    [
+        16,
+        45677,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "cbor",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.AUo8pe"
+        },
+        "com.myapp.mytopic1",
+        [Payload|binary]
+    ]
+```
+
+*Example.* Receiving event for a topic with encryption and key ID
+
+{align="left"}
+```
+    [
+        36,
+        5512315355,
+        4429313566,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "flatbuffers",
+            "ppt_cipher": "xsalsa20poly1305",
+            "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evNSpGMDQWdOh1=",
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.GJO2O4R"
+        },
+        [Payload|binary]
+    ]
+```

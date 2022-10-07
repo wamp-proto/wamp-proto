@@ -218,7 +218,7 @@ WAMP client implementations must package arguments into the following hash table
 transmit as a single element within `Arguments|list`.
 
 {align="left"}
-```json
+```
 {
     "args": Arguments|list,
     "kwargs": ArgumentsKw|dict
@@ -232,7 +232,7 @@ This will allow maintaining a single interface for client applications, regardle
 *Example.* Caller-to-Dealer `CALL` with encryption and key ID
 
 {align="left"}
-```json
+```
     [
         48,
         25471,
@@ -253,7 +253,7 @@ Note that nothing prevents the use of `Payload Passthru Mode` with other feature
 for example, `Progressive Calls`.
 
 {align="left"}
-```json
+```
     [
         48,
         25471,
@@ -273,7 +273,7 @@ for example, `Progressive Calls`.
 the original MQTT message payload is passed as WAMP payload message as is, without any transcoding.
 
 {align="left"}
-```json
+```
     [
         48,
         25471,
@@ -292,7 +292,7 @@ means that the original MQTT message payload was parsed and encoded with the `js
 embedding it into WAMP message.
 
 {align="left"}
-```json
+```
     [
         48,
         25471,
@@ -308,7 +308,7 @@ embedding it into WAMP message.
 *Example.* Dealer-to-Callee `INVOCATION` with encryption and key ID
 
 {align="left"}
-```json
+```
     [
         68,
         35477,
@@ -326,7 +326,7 @@ embedding it into WAMP message.
 *Example.* Dealer-to-Callee `INVOCATION` with MQTT payload
 
 {align="left"}
-```json
+```
     [
         68,
         35479,
@@ -342,7 +342,7 @@ embedding it into WAMP message.
 *Example.* Callee-to-Dealer `YIELD` with encryption and key ID
 
 {align="left"}
-```json
+```
     [
         70,
         87683,
@@ -361,7 +361,7 @@ embedding it into WAMP message.
 Nothing prevents the use of `Payload Passthru Mode` with other features such as, for example, `Progressive Call Results`.
 
 {align="left"}
-```json
+```
     [
         70,
         87683,
@@ -379,7 +379,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
 *Example.* Dealer-to-Caller `RESULT` with encryption and key ID
 
 {align="left"}
-```json
+```
     [
         50,
         77133,
@@ -398,7 +398,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
 Nothing prevents the use of `Payload Passthru Mode` with other features such as, for example, `Progressive Call Results`.
 
 {align="left"}
-```json
+```
     [
         50,
         77133,
@@ -416,7 +416,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
 *Example.* Callee-to-Dealer `ERROR` with encryption and key ID
 
 {align="left"}
-```json
+```
     [
         8,
         68,
@@ -435,7 +435,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
 *Example.* Publishing event to a topic with encryption and key ID
 
 {align="left"}
-```json
+```
     [
         16,
         45677,
@@ -453,7 +453,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
 *Example.* Receiving event for a topic with encryption and key ID
 
 {align="left"}
-```json
+```
     [
         36,
         5512315355,
