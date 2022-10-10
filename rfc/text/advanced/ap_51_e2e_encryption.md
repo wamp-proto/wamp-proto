@@ -180,7 +180,7 @@ Peer can decide to choose different secret key rotation strategies:
 After payload is encrypted it needs to be delivered within WAMP message to destination part. This is done using WAMP 
 AP [Payload Passthru Mode](#payload-passthru-mode).
 
-#### Encrypted Payload Flows
+#### Encrypted Payload Flows {#encryptedpayloadflows}
 
 There are few possible encrypted message flows:
 
@@ -199,20 +199,26 @@ request will be needed.
 #### Key Distribution {#keydist}
 
 After encrypted message is delivered to destination target, how Peer can decrypt it if it doesn't have a secret key?
-This problem is solved as follows:
+This problem can be solved in different ways:
 
-Initiator peer registers an RPC for getting a secret encryption keys and pass the `URI` of this RPC as options 
+* Initiator peer can provide an RPC to get the keys directly from it. In this case Initiator peer registers 
+an RPC for getting a secret encryption keys and passes the `URI` of this RPC as options attribute to underlying 
+WAMP message carrying encrypted payload. If target peer doesn't have a secret key it can examine message 
+details and make a `CALL` to provided RPC requesting encryption key.
+* Or there can be a third party WAMP peer the `Key exchange` which initiator peer trusts to and which is responsible
+for key management. In this case Initiator peer passes the `URI` of trusted `Key exchange` RPC as options
 attribute to underlying WAMP message carrying encrypted payload. If target peer doesn't have a secret key it can
-examine message details and make a `CALL` to provided RPC requesting encryption key. At this point there is no
-secure channel between peers, so initiator peer can not simply send secret key as this will violate E2EE principle.
-Secure transfer of encryption keys are done using 
+examine message details and make a `CALL` to provided RPC requesting encryption key.
+
+In any case at this point there is no secure channel between peers, so initiator peer can not simply send 
+secret key as this will violate E2EE principle. Secure transfer of encryption keys are done using 
 [Public-key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography) 
 [Authenticated encryption](https://en.wikipedia.org/wiki/Authenticated_encryption).
 This includes:
 
 * sending target peer `Client Session Public Key` signed by target's peer `Delegated Certificate Private Key` 
-to initiator.
-* then initiator peer encrypts `secret key` with its own `Client Session Private Key` and 
+to initiator or `Key exchange`.
+* then initiator or `Key exchange` peer encrypts `secret key` with its own `Client Session Private Key` and 
 `Target Peer Client Session Public Key` that was received using [Curve25519](https://en.wikipedia.org/wiki/Curve25519) 
 Asymmetric Cipher 
 * and sends encrypted `secret key` and its own `Client Session Public Key` back to the target peer as a 
