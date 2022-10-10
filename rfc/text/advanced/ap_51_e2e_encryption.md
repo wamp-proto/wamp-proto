@@ -188,7 +188,7 @@ There are few possible encrypted message flows:
 subscribers interested in that data must get that key.
 * CALLing an RPC with plain unencrypted payload and receiving encrypted results. In this case **Callee** choose
 secret key to encrypt data and **Caller** must get that key.
-* CALLing an RPC with encrypted payload and receiving plain unencrypted results. In this case **Caller** choos
+* CALLing an RPC with encrypted payload and receiving plain unencrypted results. In this case **Caller** choose
 secret key to encrypt data and **Callee** must get that key.
 * CALLing an RPC with encrypted payload and receiving encrypted results. In this case there are 2 bidirectional
 flows with encrypted data. In general every peer can use its own secret key and other peer has to obtain that key.
