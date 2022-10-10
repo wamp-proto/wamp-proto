@@ -180,6 +180,22 @@ Peer can decide to choose different secret key rotation strategies:
 After payload is encrypted it needs to be delivered within WAMP message to destination part. This is done using WAMP 
 AP [Payload Passthru Mode](#payload-passthru-mode).
 
+#### Encrypted Payload Flows
+
+There are few possible encrypted message flows:
+
+* PUBLISHing an encrypted message to a topic. In this case **Publisher** choose secret key to encrypt data and all
+subscribers interested in that data must get that key.
+* CALLing an RPC with plain unencrypted payload and receiving encrypted results. In this case **Callee** choose
+secret key to encrypt data and **Caller** must get that key.
+* CALLing an RPC with encrypted payload and receiving plain unencrypted results. In this case **Caller** choos
+secret key to encrypt data and **Callee** must get that key.
+* CALLing an RPC with encrypted payload and receiving encrypted results. In this case there are 2 bidirectional
+flows with encrypted data. In general every peer can use its own secret key and other peer has to obtain that key.
+This can be suboptimal in some cases, especially with `Shared Registration`/`Sharded Registration` AP features
+and may be improved by **Caller** requesting to use the same key to encrypt the result. So only one secret key
+request will be needed.
+
 #### Key Distribution {#keydist}
 
 After encrypted message is delivered to destination target, how Peer can decrypt it if it doesn't have a secret key?
@@ -293,18 +309,25 @@ and all procedures invoked by this peer. Invocation to this RPC contains all req
 is described later in this chapter.
 * Peer may decide to unregister RPC after invocation or on time basis.
 
+**e2ee_use_same_key Attribute**
+
+The `e2ee_use_same_key` boolean attribute indicates the wish of the **Caller** sending the encrypted data -
+that **Callee** uses the same secret key to send the result back.
+
 {align="left"}
 CALL.Options.ppt_scheme|string
 CALL.Options.ppt_serializer|string
 CALL.Options.ppt_cipher|string
 CALL.Options.ppt_keyid|string
 CALL.Options.e2ee_request_key_rpc|string
+CALL.Options.e2ee_use_same_key|boolean
 ---
 INVOCATION.Details.ppt_scheme|string
 INVOCATION.Details.ppt_serializer|string
 INVOCATION.Details.ppt_cipher|string
 INVOCATION.Details.ppt_keyid|string
 INVOCATION.Details.e2ee_request_key_rpc|string
+INVOCATION.Details.e2ee_use_same_key|boolean
 ---
 YIELD.Options.ppt_scheme|string
 YIELD.Options.ppt_serializer|string
