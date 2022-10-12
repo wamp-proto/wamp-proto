@@ -210,6 +210,9 @@ for key management. In this case Initiator peer passes the `URI` of trusted `Key
 attribute to underlying WAMP message carrying encrypted payload. If target peer doesn't have a secret key it can
 examine message details and make a `CALL` to provided RPC requesting encryption key.
 
+RPC may be registered on any side that encrypts payload: *Caller*, *Callee* or *Publisher* or by 3rd party
+Key exchange component.
+
 In any case at this point there is no secure channel between peers, so initiator peer can not simply send 
 secret key as this will violate E2EE principle. Secure transfer of encryption keys are done using 
 [Public-key cryptography](https://en.wikipedia.org/wiki/Public-key_cryptography) 
@@ -224,6 +227,22 @@ Asymmetric Cipher
 * and sends encrypted `secret key` and its own `Client Session Public Key` back to the target peer as a 
 RESULT of RPC Invocation so target peer can decrypt RESULT with its own `Client Session Private Key` and get
 the `secret key`.
+
+Independently of who is providing an RPC for obtaining secret key (Initiator peer or Key exchange), RPC
+registration must conform next rules:
+
+* Must be single
+* Must be not pattern-based
+* Must be not shared
+* Must be with `single` invocation policy
+
+The Initiator peer or Key exchange may decide how and when to register this RPC:
+
+* It can be registered on per URI basis. One request key RPC for every topic or procedure.
+* It can be registered one time and serve all incoming requests for keys for all topics this peer publishes to
+  and all procedures invoked by this peer. Invocation to this RPC contains all required information. This
+  is described later in this chapter.
+* Peer may decide to unregister RPC after invocation or on time basis.
 
 #### Trust Management {#trustmgmt}
 
@@ -303,17 +322,9 @@ And introduces a few more specific attributes:
 
 **e2ee_request_key_rpc Attribute** 
 
-The `e2ee_request_key_rpc` identifies the Initiator Peer registered RPC URI which other peers can call to get 
-*Secret Data Encryption Key* for payload decryption if they don't have it. It is a required string attribute. 
-Must conform to URI check rules. Initiator Peer must register this RPC first. RPC must be single, not pattern-based, 
-not shared, with `single` invocation policy. RPC may be registered on any side that encrypts payload: 
-*Caller*, *Callee* or *Publisher*. The Initiator peer may decide how and when to register this RPC:
-
-* It can be registered on per URI basis. One request key RPC for every topic or procedure.
-* It can be registered one time and serve all incoming requests for keys for all topics this peer publishes to 
-and all procedures invoked by this peer. Invocation to this RPC contains all required information. This
-is described later in this chapter.
-* Peer may decide to unregister RPC after invocation or on time basis.
+The `e2ee_request_key_rpc` identifies the Initiator Peer or Key exchange registered RPC URI which other peers can
+call to get *Secret Data Encryption Key* for payload decryption if they don't have it. It is a required string
+attribute. Must conform to URI check rules. This must be existing registered RPC.
 
 **e2ee_use_same_key Attribute**
 
@@ -409,6 +420,25 @@ transmit as a single element within `Arguments|list`.
     ]
 ```
 
+*Example.* Caller-to-Dealer `CALL` with encryption and requesting Callee to use the same encryption key for results
+
+{align="left"}
+```
+    [
+        48,
+        25471,
+        {
+            "ppt_scheme": "wamp",
+            "ppt_serializer": "cbor",
+            "ppt_cipher": "xsalsa20poly1305",
+            "e2ee_use_same_key": true,
+            "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.Uo8pe61D9ev"
+        },
+        "com.myapp.secret_rpc_for_sensitive_data",
+        [Payload|binary]
+    ]
+```
+
 *Example.* Caller-to-Dealer progressive `CALL` with encryption and key ID.
 
 Note that nothing prevents the use of `Payload End-to-End Encryption` with other features such as,
@@ -432,7 +462,8 @@ for example, `Progressive Calls`.
     ]
 ```
 
-*Example.* Dealer-to-Callee `INVOCATION` with encryption and key ID
+*Example.* Dealer-to-Callee `INVOCATION` with encryption, key ID and requesting Callee to use the same encryption
+key for results
 
 {align="left"}
 ```
@@ -445,6 +476,7 @@ for example, `Progressive Calls`.
             "ppt_serializer": "cbor",
             "ppt_cipher": "xsalsa20poly1305",
             "ppt_keyid": "GTtQ37XGJO2O4R8Dvx4AUo8pe61D9evIWpKGQAPdOh0=",
+            "e2ee_use_same_key": true,
             "e2ee_request_key_rpc": "peer.runtime.generated.registered.rpc.7XGJO2"
         },
         [Payload|binary]
