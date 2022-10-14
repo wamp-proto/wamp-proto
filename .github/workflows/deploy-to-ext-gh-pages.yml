@@ -1,4 +1,4 @@
-name: Deploy to Ext github pages (researching)
+name: Deploy to Ext github pages (research)
 on:
   push:
 
