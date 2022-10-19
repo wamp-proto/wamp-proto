@@ -16,7 +16,7 @@ jobs:
         run: |
           curl -X POST https://api.github.com/repos/wamp-proto/wamp-site-gen/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -u ${{ secrets.ACCESS_TOKEN }} \
+          -H 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
           --data '{"event_type": "publish", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'", "commit_sha": "'"$GITHUB_SHA"'" }}'
   deploy-to-gh-pages:
     name: Deploy spec site to github pages

@@ -13,4 +13,3 @@ jobs:
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -H 'Authorization: token ${{ secrets.ACCESS_TOKEN }}' \
           --data '{"event_type": "publish", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'", "commit_sha": "'"$GITHUB_SHA"'" }}'
-
