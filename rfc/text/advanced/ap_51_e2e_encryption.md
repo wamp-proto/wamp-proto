@@ -223,7 +223,7 @@ This includes:
 to initiator or `Key exchange`.
 * then initiator or `Key exchange` peer encrypts `secret key` with its own `Client Session Private Key` and 
 `Target Peer Client Session Public Key` that was received using [Curve25519](https://en.wikipedia.org/wiki/Curve25519) 
-Asymmetric Cipher 
+Asymmetric Cipher
 * and sends encrypted `secret key` and its own `Client Session Public Key` back to the target peer as a 
 RESULT of RPC Invocation so target peer can decrypt RESULT with its own `Client Session Private Key` and get
 the `secret key`.
@@ -243,6 +243,26 @@ The Initiator peer or Key exchange may decide how and when to register this RPC:
   and all procedures invoked by this peer. Invocation to this RPC contains all required information. This
   is described later in this chapter.
 * Peer may decide to unregister RPC after invocation or on time basis.
+
+Secret Key request RPC must be called with next `ArgumentsKw|dict` payload:
+
+```
+    {
+        "uri": "URI of RPC or Topic for which/from which encrypted payload is intended",
+        "uri_type": "rpc|topic",
+        "peer_type": "caller|calee|publisher|subscriber",
+        "pubkey": "32 bytes hex encoded string of peer Ed25519 Public Key"
+    }
+```
+
+If RPC holder (Peer or Key exchange) is willing to fulfill request it must answer with next `ArgumentsKw|dict` payload:
+
+```
+    {
+        "secret": "binary string with secret key encrypted with Curve25519 Asymmetric Cipher",
+        "pubkey": "32 bytes hex encoded string of peer Ed25519 Public Key"
+    }
+```
 
 #### Trust Management {#trustmgmt}
 
