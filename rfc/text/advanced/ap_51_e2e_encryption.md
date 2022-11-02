@@ -255,12 +255,13 @@ Secret Key request RPC must be called with next `ArgumentsKw|dict` payload:
     }
 ```
 
-If RPC holder (Peer or Key exchange) is willing to fulfill request it must send the binary string with secret key
-encrypted with Curve25519 Asymmetric Cipher as one item in `Arguments|list` alongside with
+If RPC holder (Peer or Key exchange) is willing to fulfill request it must answer with 
 next `ArgumentsKw|dict` payload:
+
 
 ```
     {
+        "secret": "hex encoded string with secret key encrypted with Curve25519 Asymmetric Cipher",
         "pubkey": "32 bytes hex encoded string of peer Ed25519 Public Key",
         "nonce": "24 bytes hex encoded unique nonce used for exactly this one encryption of secret key",
         "keyid": "secret key id string",
