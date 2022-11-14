@@ -25,15 +25,15 @@ and *Dealers* (`role := "dealer"`) via
 
 Progressive Calls can work only if all three nodes support and announced this feature. 
 
-Cases where *Caller* sends `CALL` message with `progressive_calls := true` without announcing it during `HELLO` 
+Cases where *Caller* sends `CALL` message with `progress := true` without announcing it during `HELLO`
 handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with 
 `wamp.error.protocol_violation` error reason.
 
-Cases where *Caller* sends `CALL` message with `progressive_calls := true` to *Dealer*, that did not announce 
-progressive calls support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP 
+Cases where *Caller* sends `CALL` message with `progress := true` to *Dealer*, that did not announce 
+progressive calls support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP
 connections must be aborted with `wamp.error.protocol_violation` error reason.
 
-Cases where *Caller* sends `CALL` message with `progressive_calls := true` to the *Dealer* that supports this feature,
+Cases where *Caller* sends `CALL` message with `progress := true` to the *Dealer* that supports this feature,
 which then must be routed to the *Callee* which doesn't support progressive calls MUST be treated as *APPLICATION ERRORS*
 and *Dealer* MUST respond to *Caller* with `wamp.error.feature_not_supported` error message.
 
