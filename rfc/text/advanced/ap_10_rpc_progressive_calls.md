@@ -25,15 +25,15 @@ and *Dealers* (`role := "dealer"`) via
 
 Progressive Calls can work only if all three nodes support and announced this feature. 
 
-Cases where *Caller* sends `CALL` message with `progress := true` without announcing it during `HELLO`
+Cases when *Caller* sends `CALL` message with `progress := true` without announcing it during `HELLO`
 handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP connections must be aborted with 
 `wamp.error.protocol_violation` error reason.
 
-Cases where *Caller* sends `CALL` message with `progress := true` to *Dealer*, that did not announce 
+Cases when *Caller* sends `CALL` message with `progress := true` to *Dealer*, that did not announce 
 progressive calls support during `WELCOME` handshake MUST be treated as *PROTOCOL ERRORS* and underlying WAMP
 connections must be aborted with `wamp.error.protocol_violation` error reason.
 
-Cases where *Caller* sends `CALL` message with `progress := true` to the *Dealer* that supports this feature,
+Cases when *Caller* sends `CALL` message with `progress := true` to the *Dealer* that supports this feature,
 which then must be routed to the *Callee* which doesn't support progressive calls MUST be treated as *APPLICATION ERRORS*
 and *Dealer* MUST respond to *Caller* with `wamp.error.feature_not_supported` error message.
 
@@ -70,7 +70,7 @@ The message flow for a progressive call when *Callee* waits for all chunks befor
      |Caller|                  |Dealer|                 |Callee|
      `------'                  `------'                 `------'
 
-As `progressive` call is still the same call *Callee* must send the same `Request|id` with every `CALL` and *Dealer*
+As `progressive` call is still the same call *Caller* must send the same `Request|id` with every `CALL` and *Dealer*
 must also send the same `Request|id` with every `INVOCATION` to the *Callee*.
 
 
