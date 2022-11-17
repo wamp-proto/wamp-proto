@@ -3525,13 +3525,13 @@ and <em>Dealers</em> (<code>role := "dealer"</code>) via<a href="#section-3.2-5"
 </pre><a href="#section-3.2-6" class="pilcrow">¶</a>
 </div>
 <p id="section-3.2-7">Progressive Calls can work only if all three nodes support and announced this feature.<a href="#section-3.2-7" class="pilcrow">¶</a></p>
-<p id="section-3.2-8">Cases where <em>Caller</em> sends <code>CALL</code> message with <code>progressive_calls := true</code> without announcing it during <code>HELLO</code>
+<p id="section-3.2-8">Cases when <em>Caller</em> sends <code>CALL</code> message with <code>progress := true</code> without announcing it during <code>HELLO</code>
 handshake MUST be treated as <em>PROTOCOL ERRORS</em> and underlying WAMP connections must be aborted with
 <code>wamp.error.protocol_violation</code> error reason.<a href="#section-3.2-8" class="pilcrow">¶</a></p>
-<p id="section-3.2-9">Cases where <em>Caller</em> sends <code>CALL</code> message with <code>progressive_calls := true</code> to <em>Dealer</em>, that did not announce
+<p id="section-3.2-9">Cases when <em>Caller</em> sends <code>CALL</code> message with <code>progress := true</code> to <em>Dealer</em>, that did not announce
 progressive calls support during <code>WELCOME</code> handshake MUST be treated as <em>PROTOCOL ERRORS</em> and underlying WAMP
 connections must be aborted with <code>wamp.error.protocol_violation</code> error reason.<a href="#section-3.2-9" class="pilcrow">¶</a></p>
-<p id="section-3.2-10">Cases where <em>Caller</em> sends <code>CALL</code> message with <code>progressive_calls := true</code> to the <em>Dealer</em> that supports this feature,
+<p id="section-3.2-10">Cases when <em>Caller</em> sends <code>CALL</code> message with <code>progress := true</code> to the <em>Dealer</em> that supports this feature,
 which then must be routed to the <em>Callee</em> which doesn't support progressive calls MUST be treated as <em>APPLICATION ERRORS</em>
 and <em>Dealer</em> MUST respond to <em>Caller</em> with <code>wamp.error.feature_not_supported</code> error message.<a href="#section-3.2-10" class="pilcrow">¶</a></p>
 <p id="section-3.2-11"><strong>Message Flow</strong><a href="#section-3.2-11" class="pilcrow">¶</a></p>
@@ -3566,7 +3566,7 @@ and <em>Dealer</em> MUST respond to <em>Caller</em> with <code>wamp.error.featur
  `------'                  `------'                 `------'
 </pre><a href="#section-3.2-13" class="pilcrow">¶</a>
 </div>
-<p id="section-3.2-14">As <code>progressive</code> call is still the same call <em>Callee</em> must send the same <code>Request|id</code> with every <code>CALL</code> and <em>Dealer</em>
+<p id="section-3.2-14">As <code>progressive</code> call is still the same call <em>Caller</em> must send the same <code>Request|id</code> with every <code>CALL</code> and <em>Dealer</em>
 must also send the same <code>Request|id</code> with every <code>INVOCATION</code> to the <em>Callee</em>.<a href="#section-3.2-14" class="pilcrow">¶</a></p>
 <p id="section-3.2-15">The following message flow illustrates a progressive call when <em>Callee</em> starts sending progressive call
 results immediately. Please note that <code>YIELD</code> messages don't need to be matched with <code>CALL</code>/<code>INVOCATION</code> messages.
@@ -9107,15 +9107,15 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
 <dl class="references">
 <dt id="RFC4122">[RFC4122]</dt>
       <dd>
-<span class="refAuthor">Leach, P.</span>, <span class="refAuthor">Mealling, M.</span>, and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"A Universally Unique IDentifier (UUID) URN Namespace"</span>, <span class="seriesInfo">RFC 4122</span>, <span class="seriesInfo">DOI 10.17487/RFC4122</span>, <time datetime="2005-07" class="refDate">July 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4122">https://www.rfc-editor.org/info/rfc4122</a>&gt;</span>. </dd>
+<span class="refAuthor">Leach, P.</span>, <span class="refAuthor">Mealling, M.</span>, <span class="refAuthor">Salz, R.</span>, and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"A Universally Unique IDentifier (UUID) URN Namespace"</span>, <span class="seriesInfo">RFC 4122</span>, <span class="seriesInfo">DOI 10.17487/RFC4122</span>, <time datetime="2005-07" class="refDate">July 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4122">https://www.rfc-editor.org/info/rfc4122</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4648">[RFC4648]</dt>
       <dd>
-<span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4648">https://www.rfc-editor.org/info/rfc4648</a>&gt;</span>. </dd>
+<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4648">https://www.rfc-editor.org/info/rfc4648</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8032">[RFC8032]</dt>
     <dd>
-<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">I. Liusvaara</span>, <span class="refTitle">"Edwards-Curve Digital Signature Algorithm (EdDSA)"</span>, <span class="seriesInfo">RFC 8032</span>, <span class="seriesInfo">DOI 10.17487/RFC8032</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8032">https://www.rfc-editor.org/info/rfc8032</a>&gt;</span>. </dd>
+<span class="refAuthor">Josefsson, S.</span>, <span class="refAuthor">Liusvaara, I.</span>, and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"Edwards-Curve Digital Signature Algorithm (EdDSA)"</span>, <span class="seriesInfo">RFC 8032</span>, <span class="seriesInfo">DOI 10.17487/RFC8032</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8032">https://www.rfc-editor.org/info/rfc8032</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -9126,7 +9126,7 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
     <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<span class="refAuthor">Bradner, S.</span> and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

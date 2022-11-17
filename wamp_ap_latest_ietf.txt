@@ -2048,22 +2048,22 @@ Internet-Draft                   WAMP-AP                       July 2022
    Progressive Calls can work only if all three nodes support and
    announced this feature.
 
-   Cases where _Caller_ sends CALL message with progressive_calls :=
-   true without announcing it during HELLO handshake MUST be treated as
-   _PROTOCOL ERRORS_ and underlying WAMP connections must be aborted
-   with wamp.error.protocol_violation error reason.
-
-   Cases where _Caller_ sends CALL message with progressive_calls :=
-   true to _Dealer_, that did not announce progressive calls support
-   during WELCOME handshake MUST be treated as _PROTOCOL ERRORS_ and
-   underlying WAMP connections must be aborted with
+   Cases when _Caller_ sends CALL message with progress := true without
+   announcing it during HELLO handshake MUST be treated as _PROTOCOL
+   ERRORS_ and underlying WAMP connections must be aborted with
    wamp.error.protocol_violation error reason.
 
-   Cases where _Caller_ sends CALL message with progressive_calls :=
-   true to the _Dealer_ that supports this feature, which then must be
-   routed to the _Callee_ which doesn't support progressive calls MUST
-   be treated as _APPLICATION ERRORS_ and _Dealer_ MUST respond to
-   _Caller_ with wamp.error.feature_not_supported error message.
+   Cases when _Caller_ sends CALL message with progress := true to
+   _Dealer_, that did not announce progressive calls support during
+   WELCOME handshake MUST be treated as _PROTOCOL ERRORS_ and underlying
+   WAMP connections must be aborted with wamp.error.protocol_violation
+   error reason.
+
+   Cases when _Caller_ sends CALL message with progress := true to the
+   _Dealer_ that supports this feature, which then must be routed to the
+   _Callee_ which doesn't support progressive calls MUST be treated as
+   _APPLICATION ERRORS_ and _Dealer_ MUST respond to _Caller_ with
+   wamp.error.feature_not_supported error message.
 
    *Message Flow*
 
@@ -2105,7 +2105,7 @@ Internet-Draft                   WAMP-AP                       July 2022
     |Caller|                  |Dealer|                 |Callee|
     `------'                  `------'                 `------'
 
-   As progressive call is still the same call _Callee_ must send the
+   As progressive call is still the same call _Caller_ must send the
    same Request|id with every CALL and _Dealer_ must also send the same
    Request|id with every INVOCATION to the _Callee_.
 
@@ -9318,24 +9318,24 @@ Internet-Draft                   WAMP-AP                       July 2022
 
 14.  Normative References
 
-   [RFC4122]  Leach, P., Mealling, M., and R. Salz, "A Universally
-              Unique IDentifier (UUID) URN Namespace", RFC 4122,
-              DOI 10.17487/RFC4122, July 2005,
+   [RFC4122]  Leach, P., Mealling, M., Salz, R., and RFC Publisher, "A
+              Universally Unique IDentifier (UUID) URN Namespace",
+              RFC 4122, DOI 10.17487/RFC4122, July 2005,
               <https://www.rfc-editor.org/info/rfc4122>.
 
-   [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
-              Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
-              <https://www.rfc-editor.org/info/rfc4648>.
+   [RFC4648]  Josefsson, S. and RFC Publisher, "The Base16, Base32, and
+              Base64 Data Encodings", RFC 4648, DOI 10.17487/RFC4648,
+              October 2006, <https://www.rfc-editor.org/info/rfc4648>.
 
-   [RFC8032]  Josefsson, S. and I. Liusvaara, "Edwards-Curve Digital
-              Signature Algorithm (EdDSA)", RFC 8032,
+   [RFC8032]  Josefsson, S., Liusvaara, I., and RFC Publisher, "Edwards-
+              Curve Digital Signature Algorithm (EdDSA)", RFC 8032,
               DOI 10.17487/RFC8032, January 2017,
               <https://www.rfc-editor.org/info/rfc8032>.
 
 15.  Informative References
 
-   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119,
+   [RFC2119]  Bradner, S. and RFC Publisher, "Key words for use in RFCs
+              to Indicate Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
