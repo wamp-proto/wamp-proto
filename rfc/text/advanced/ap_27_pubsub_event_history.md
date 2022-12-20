@@ -123,7 +123,9 @@ must be filtered out from this concrete request results on the router side.
 `black-white-listing` feature also allows to filter events delivery on `session ID` basis. In the context of
 event history that can results in unexpected behaviour: `session ID` are generated randomly in runtime for every
 session connection so newly connected sessions asking for event history may receive events originally excluded 
-or vice versa may not receive expected events due to session ID mismatch.
+or vice versa may not receive expected events due to session ID mismatch. To prevent this unexpected behaviour
+all events published with `Options.exclude|list[int]` or `Options.eligible|list[int]` should be ignored by event
+history implementation, mean not saved at all.
 
 *FIXME*
 
