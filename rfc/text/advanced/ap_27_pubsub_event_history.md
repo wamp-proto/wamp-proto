@@ -127,12 +127,6 @@ or vice versa may not receive expected events due to session ID mismatch. To pre
 all events published with `Options.exclude|list[int]` or `Options.eligible|list[int]` should be ignored by event
 history implementation, mean not saved at all.
 
-*FIXME*
-
-1. The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a 
-   broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from 
-   the broker.
-2. How are black/whitelisted sessionIDs treated? A client which requests event history will have a different sessionID 
-   than on previous connections, and may receive events for which it was excluded in the previous session, or not 
-   receive events for which it was whitelisted. - see https://github.com/wamp-proto/wamp-proto/issues/206
-
+To wrap it up: event history may operate on rather stable session attributes, for now it is `authrole` and `authid`,
+all dynamic attributes like `session ID` or maybe other custom attributes in future should lead to ignore storing
+such events by event history implementation.
