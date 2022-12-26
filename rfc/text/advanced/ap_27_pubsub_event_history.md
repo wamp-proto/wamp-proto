@@ -11,9 +11,18 @@ parameters such as compression, or the event history data retention policy.
 
 To understand what actually event history means lets review the publication flow. When one peer decides to publish
 a message to a topic it results in `Publication` WAMP message with concrete `publication_id`, `payload` and `options`
-among other attributes. The *Broker* in his turn checks current subscriptions and create an `Event` WAMP message for
-every subscription. There can be no subscriptions, one exactly matched to publication topic subscription and zero or 
-more pattern-based subscriptions. Every unique subscription (based on topic URI and options) has unique ID. All
+among other attributes. 
+
+A given event received by the router from a publisher (a PUBLISH message) will lead to one or more 
+matching subscriptions:
+
+* zero or one exact subscription
+* zero or more prefix subscriptions
+* zero or more wildcard subscriptions
+
+One and the same published event is dispatched and sent to every subscriber of all subscriptions matching. 
+Thus, a given event might be sent multiple times to the same client under different subscriptions.
+Every unique subscription (based on topic URI and options) has unique ID. All
 subscribers of the same subscription get the same subscription ID.
 
 {align="left"}
