@@ -30,7 +30,8 @@ subscribers of the same subscription get the same subscription ID.
                                 |          |---Event--->|Subscription|-------->|   peer   |
                                 +----------+            +------------+         +----------+
 
-Event History means the events published to concrete subscription in historical order. Let's see an example.
+Event History means the events published to concrete subscription in historical order (that is by broker receive time). 
+Let's see an example.
 
 Subscriptions:
 
