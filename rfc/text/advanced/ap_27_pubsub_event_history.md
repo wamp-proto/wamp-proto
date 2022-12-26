@@ -5,7 +5,9 @@ responsible to handle overlaps (duplicates) when it wants "exactly-once" message
 
 The event history may be transient or persistent message history (surviving *Broker* restarts).
 
-The *Broker* implementation may allow for configuration on a per-topic basis.
+The *Broker* implementation may allow for configuration of event history on a per-topic or on a per-topic 
+pattern basis. Such configuration could enable/disable the feature, event history storage location and 
+parameters such as compression, or the event history data retention policy.
 
 To understand what actually event history means lets review the publication flow. When one peer decides to publish
 a message to a topic it results in `Publication` WAMP message with concrete `publication_id`, `payload` and `options`
