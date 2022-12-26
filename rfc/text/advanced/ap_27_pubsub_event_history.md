@@ -132,6 +132,9 @@ if WAMP router supports it.
 
 **Security Aspects**
 
+TODO/FIXME: This part of Event History needs more discussion and clarification.
+But at least provides some basic information to take into account.
+
 To be able to request event history, peer must be allowed to subscribe to desired subscription first. Thus, if peer
 can not subscribe to a topic (which results in subscription under the hood) it can not receive events history too. 
 And second point: peer must be allowed to call related META procedures for getting the event history described above.
