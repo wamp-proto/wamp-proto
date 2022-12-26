@@ -15,7 +15,18 @@ more pattern-based subscriptions. Every unique subscription (based on topic URI 
 subscribers of the same subscription get the same subscription ID.
 
 {align="left"}
-    TODO: Some scheme for pub/sub
+                                +----------+            +------------+         +----------+
+                                |          |            |   Exact    |         |Subscriber|
+                                |          |---Event--->|Subscription|----+--->|   peer   |
+                                |          |            +------------+    |    +----------+
+   +----------+                 |          |            +------------+    |    +----------+
+   |Publisher |                 |  Broker  |            |  Wildcard  |    +--->|Subscriber|
+   |   peer   |--Publication--->|          |---Event--->|Subscription|----+--->|   peer   |
+   +----------+                 |          |            +------------+    |    +----------+
+                                |          |            +------------+    |    +----------+
+                                |          |            |   Prefix   |    +--->|Subscriber|
+                                |          |---Event--->|Subscription|-------->|   peer   |
+                                +----------+            +------------+         +----------+
 
 Event History means the events published to concrete subscription in historical order. Let's see an example.
 
