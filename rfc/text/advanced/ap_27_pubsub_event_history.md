@@ -3,7 +3,7 @@
 Instead of complex QoS for message delivery, a *Broker* may provide *Event History*. With event history, a *Subscriber* is 
 responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 
-The event history may be transient or persistent message history (surviving *Broker* restarts).
+The event history may be transient, or or it may be persistent where it survives *Broker* restarts.
 
 The *Broker* implementation may allow for configuration of event history on a per-topic or on a per-topic 
 pattern basis. Such configuration could enable/disable the feature, event history storage location and 
