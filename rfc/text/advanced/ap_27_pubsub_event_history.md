@@ -50,10 +50,14 @@ With payload:
 * `Arguments` = `[subscription|id]`. The subscription id for which to retrieve event history
 * `ArgumentsKw`:
   * `limit`. Positive integer. Optional. Indicates the number of the latest events to retrieve
+  * `from`. RFC3339-formatted timestamp string. Optional. Only include publications occurring at the 
+    given RFC3339 timestamp or after (using `>=` comparison)
   * `after`. RFC3339-formatted timestamp string. Optional. Only include publications occurring after the 
-    given RFC3339 timestamp
+    given RFC3339 timestamp (using `>` comparison)
   * `before`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
-    given RFC3339 timestamp
+    given RFC3339 timestamp (using `<` comparison)
+  * `up_to`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
+    given RFC3339 timestamp including date itself (using `<=` comparison)
   * `topic_uri`. WAMP URI. Optional. For pattern-based subscriptions only include publications to 
     specified topic
 
