@@ -3,41 +3,11 @@
 Instead of complex QoS for message delivery, a *Broker* may provide *Event History*. With event history, a *Subscriber* 
 is responsible for handling overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 
-The event history may be transient, or or it may be persistent where it survives *Broker* restarts.
+The event history may be transient, or it may be persistent where it survives *Broker* restarts.
 
 The *Broker* implementation may allow for configuration of event history on a per-topic or per-topic-pattern
 basis. Such configuration could enable/disable the feature, set the event history storage location,
 set parameters for sub-features such as compression, or set the event history data retention policy.
-
-To understand event history, let's first review the event publication flow. When one peer decides to publish
-a message to a topic, it results in a `PUBLISH` WAMP message with fields for the `Publication` id, `Details` 
-dictionary, and, optionally, the payload arguments.
-
-A given event received by the router from a publisher via a PUBLISH message will match one or more 
-subscriptions:
-
-* zero or one exact subscription
-* zero or more prefix subscriptions
-* zero or more wildcard subscriptions
-
-The same published event is then forwarded to subscribers for every matching subscription.
-Thus, a given event might be sent multiple times to the same client under different subscriptions.
-Every subscription instance, based on a topic URI and some options, has a unique ID. All
-subscribers of the same subscription are given the same subscription ID.
-
-{align="left"}
-                                +----------+            +------------+         +----------+
-                                |          |            |   Exact    |         |Subscriber|
-                                |          |---Event--->|Subscription|----+--->|   peer   |
-                                |          |            +------------+    |    +----------+
-   +----------+                 |          |            +------------+    |    +----------+
-   |Publisher |                 |  Broker  |            |  Wildcard  |    +--->|Subscriber|
-   |   peer   |--Publication--->|          |---Event--->|Subscription|----+--->|   peer   |
-   +----------+                 |          |            +------------+    |    +----------+
-                                |          |            +------------+    |    +----------+
-                                |          |            |   Prefix   |    +--->|Subscriber|
-                                |          |---Event--->|Subscription|-------->|   peer   |
-                                +----------+            +------------+         +----------+
 
 Event History saves events published to discrete subscriptions, in the chronological order received by the broker.
 Let us examine an example.
