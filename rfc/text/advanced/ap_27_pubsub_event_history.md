@@ -5,7 +5,7 @@ responsible to handle overlaps (duplicates) when it wants "exactly-once" message
 
 The event history may be transient, or or it may be persistent where it survives *Broker* restarts.
 
-The *Broker* implementation may allow for configuration of event history on a per-topic or on a per-topic 
+The *Broker* implementation may allow for configuration of event history on a per-topic or per-topic-pattern
 pattern basis. Such configuration could enable/disable the feature, event history storage location and 
 parameters such as compression, or the event history data retention policy.
 
