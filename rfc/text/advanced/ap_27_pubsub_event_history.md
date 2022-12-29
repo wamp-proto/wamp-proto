@@ -1,29 +1,28 @@
 ## Event History {#pubsub-event-history}
 
 Instead of complex QoS for message delivery, a *Broker* may provide *Event History*. With event history, a *Subscriber* is 
-responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
+responsible for handling overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 
 The event history may be transient, or or it may be persistent where it survives *Broker* restarts.
 
 The *Broker* implementation may allow for configuration of event history on a per-topic or per-topic-pattern
-pattern basis. Such configuration could enable/disable the feature, event history storage location and 
-parameters such as compression, or the event history data retention policy.
+basis. Such configuration could enable/disable the feature, set the event history storage location,
+set parameters for sub-features such as compression, or set the event history data retention policy.
 
-To understand what actually event history means lets review the publication flow. When one peer decides to publish
-a message to a topic it results in `Publication` WAMP message with concrete `publication_id`, `payload` and `options`
-among other attributes. 
+To understand event history, let's first review the event publication flow. When one peer decides to publish
+a message to a topic, it results in a `PUBLISH` WAMP message with fields for the `Publication` id, `Details` dictionary, and, optionally, the payload arguments.
 
-A given event received by the router from a publisher (a PUBLISH message) will lead to one or more 
-matching subscriptions:
+A given event received by the router from a publisher via a PUBLISH message will match one or more 
+subscriptions:
 
 * zero or one exact subscription
 * zero or more prefix subscriptions
 * zero or more wildcard subscriptions
 
-One and the same published event is dispatched and sent to every subscriber of all subscriptions matching. 
+The same published event is then forwarded to subscribers for every matching subscription.
 Thus, a given event might be sent multiple times to the same client under different subscriptions.
-Every unique subscription (based on topic URI and options) has unique ID. All
-subscribers of the same subscription get the same subscription ID.
+Every subscription instance, based on a topic URI and some options, has a unique ID. All
+subscribers of the same subscription are given the same subscription ID.
 
 {align="left"}
                                 +----------+            +------------+         +----------+
@@ -39,8 +38,8 @@ subscribers of the same subscription get the same subscription ID.
                                 |          |---Event--->|Subscription|-------->|   peer   |
                                 +----------+            +------------+         +----------+
 
-Event History means the events published to concrete subscription in historical order (that is by broker receive time). 
-Let's see an example.
+Event History saves events published to discrete subscriptions, in the chronological order received by the broker.
+Let us examine an example.
 
 Subscriptions:
 
@@ -50,35 +49,35 @@ Subscriptions:
 
 Publication messages:
 
-1. Publication to topic 'com.mycompany.log.auth'. Delivered as event to 1st and 3rd subscriptions.
-2. Publication to topic 'com.mycompany.log.basket'. Delivered as event to 2nd and 3rd subscriptions.
-3. Publication to topic 'com.mycompany.log.basket'. Delivered as event to 2nd and 3rd subscriptions.
-4. Publication to topic 'com.mycompany.log.basket'. Delivered as event to 2nd and 3rd subscriptions.
-5. Publication to topic 'com.mycompany.log.checkout'. Delivered as event to 3rd subscription only.
+1. Publication to topic 'com.mycompany.log.auth'. Forwarded as events to subscriptions 1 and 3.
+2. Publication to topic 'com.mycompany.log.basket'. Delivered as event to subscriptions 2 and 3.
+3. Publication to topic 'com.mycompany.log.basket'. Delivered as events to subscriptions 2 and 3.
+4. Publication to topic 'com.mycompany.log.basket'. Delivered as events subscriptions 2 and 3.
+5. Publication to topic 'com.mycompany.log.checkout'. Delivered as an event to subscription 3 only.
 
 Event History:
 
-* Event History for 1st subscription includes only 1st publication.
-* Event History for 2nd subscription includes 2nd, 3rd, 4th publications.
-* Event History for 3rd subscription includes all publications.
+* Event history for subscription 1 contains publication 1 only.
+* Event history for subscription 2 contains publications 2, 3, and 4.
+* Event history for subscription 3 contains all publications.
 
 **Feature Announcement**
 
 A *Broker* that implements *event history* must indicate 
-`HELLO.roles.broker.features.event_history = true` and (also) announce role `HELLO.roles.callee`, 
-and provide the builtin procedures described below.
+`HELLO.roles.broker.features.event_history = true`, must announce the role `HELLO.roles.callee`, 
+and must provide the meta procedures described below.
 
 **Receiving Event History**
 
-A *Caller* can request message history by calling the *Broker* procedure
+A *Caller* can request message history by calling the *Broker* meta procedure
 
 {align="left"}
         wamp.event.history.last
 
 with `Arguments = [subscription|id, limit|integer]` where
 
-* `subscription` is the subscription id to retrieve event history for
-* `limit` indicates the number of last N events to retrieve
+* `subscription` is the subscription id for which to retrieve event history
+* `limit` indicates the number of the latest events to retrieve
 
 or by calling
 
@@ -87,8 +86,8 @@ or by calling
 
 with `Arguments = [subscription|id, timestamp|string]` where
 
-* `subscription` is the subscription id to retrieve event history for
-* `timestamp` indicates the UTC timestamp since when to retrieve the events in the ISO-8601 format `yyyy-MM-ddThh:mm:ss:SSSZ` (e.g. `"2013-12-21T13:43:11:000Z"`)
+* `subscription` is the subscription id for which to retrieve event history
+* `timestamp` is a RFC3339-formatted timestamp string, demarcating the UTC time from which to start retrieving the event history. The format is `yyyy-MM-ddThh:mm:ss.SSSZ` (e.g. `"2013-12-21T13:43:11.000Z"`).
 
 or by calling
 
@@ -97,18 +96,18 @@ or by calling
 
 with `Arguments = [subscription|id, publication|id]`
 
-* `subscription` is the subscription id to retrieve event history for
+* `subscription` is the subscription id for which to retrieve event history
 * `publication` is the id of an event which marks the start of the events to retrieve from history
 
-The results of all RPC above are the same and looks like an `arguments` array of `Event` objects with additional event 
-timestamp and some additional general information about request in `argumentsKw`. It can also be an empty array in case there were no publications to specified subscription yet or all 
-events were filtered out by specified criteria.
+The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing an additional 
+timestamp attribute. It can also be an empty array in the case where there were no publications to the specified subscription, or all 
+events were filtered out by the specified criteria. Some additional general information about the query are returned via the `argumentsKw` payload field.
 
 {align="left"}
 ```javascript
   [
     {
-        "timestamp": "yyyy-MM-ddThh:mm:ss:SSSZ", // Ыtring with event date in ISO-8601 format
+        "timestamp": "yyyy-MM-ddThh:mm:ss.SSSZ", // sring with event date/time in RFC3339 format
         "subscription": 2342423, // The subscription ID of the event
         "publication": 32445235, // The original publication ID of the event
         "details": {},           // The original details of the event
@@ -118,41 +117,40 @@ events were filtered out by specified criteria.
   ]
 ```
 
-In cases when the events set is pretty big to send it in a single result, router implementations
-may provide additional options, like pagination or returning a progressive results. 
+In cases where the events list too large to send as a single RPC result, router implementations
+may provide additional options, such as pagination or returning progressive results.
 
-As Event History feature operates on `subscription|id` there can be situations when there is no subscribers to topic
-of interest yet, but publications happens. In this case the *Broker* can not prematurely know what events to store.
+As the Event History feature operates on `subscription|id`, there can be situations when there are not yet any subscribers to a topic
+of interest, but publications to the topic occur. In this situation, the *Broker* cannot predict that events under that topic should be stored.
 If the *Broker* implementation allows configuration on per-topic basis, it may overcome this situations by 
-preinitializing history-enabled topics with subscriptions even if there is no real subscribers yet exists.
+preinitializing history-enabled topics with "dummy" subscriptions even if there are not yet any real subscribers to those topics.
 
-Sometimes a client may not be interested in subscribing to a topic just to get a subscription id. In that case
-a client may use some [Subscriptions Meta API RPC](#name-procedures-3) for retrieving subscription IDs by topic URIs
-if WAMP router supports it.
+Sometimes, a client may not be willing to subscribe to a topic just for the purpose of obtaining a subscription id. In that case
+a client may use other [Subscriptions Meta API RPC](#name-procedures-3) for retrieving subscription IDs by topic URIs
+if the router supports it.
 
 **Security Aspects**
 
 TODO/FIXME: This part of Event History needs more discussion and clarification.
 But at least provides some basic information to take into account.
 
-To be able to request event history, peer must be allowed to subscribe to desired subscription first. Thus, if peer
-can not subscribe to a topic (which results in subscription under the hood) it can not receive events history too. 
-And second point: peer must be allowed to call related META procedures for getting the event history described above.
-Event History RPC calls with prohibited requests must fail with `wamp.error.not_authorized` Error URI.
+In order to request event history, a peer must be allowed to subscribe to a desired subscription first. Thus, if a peer
+cannot subscribe to a topic resulting in a subscription, it means that it cannot receive events history for that topic either. 
+To sidestep this problem, a peer must be allowed to call related meta procedures for obtaining the event history as described above.
+Prohibited Event History meta procedure calls must fail with the `wamp.error.not_authorized` error URI.
 
-Original publications may include additional options, like `black-white-listing` that enforces special event 
-processing. The same rules must apply to event history requests. For example, if original publication has 
-`eligible_authrole = 'admin'`, but request for history came from peer with `authrole = 'user'`, then even if 
-`user` is authorized to subscribe to topic and thus is authorized to ask for event history, this publication 
-must be filtered out from this concrete request results on the router side.
+Original publications may include additional options, such as `black-white-listing` that triggers special event 
+processing. These same rules must also apply to event history requests. For example, if the original publication contains 
+`eligible_authrole = 'admin'`, but the request for history came from a peer with `authrole = 'user'`, then even if 
+`user` is authorized to subscribe to the topic (and thus is authorized to ask for event history), this publication 
+must be filtered out from the results of this specific request, by the router side.
 
-`black-white-listing` feature also allows to filter events delivery on `session ID` basis. In the context of
-event history that can results in unexpected behaviour: `session ID` are generated randomly in runtime for every
-session connection so newly connected sessions asking for event history may receive events originally excluded 
-or vice versa may not receive expected events due to session ID mismatch. To prevent this unexpected behaviour
-all events published with `Options.exclude|list[int]` or `Options.eligible|list[int]` should be ignored by event
-history implementation, mean not saved at all.
+The `black-white-listing` feature also allows the filtering of event delivery on a `session ID` basis. In the context of
+event history, this can result in unexpected behaviour: session ids are generated randomly at runtime for every
+session establishment, so newly connected sessions asking for event history may receive events that were originally excluded,
+or, vice versa, may not receive expected events due to session ID mismatch. To prevent this unexpected behaviour,
+all events published with `Options.exclude|list[int]` or `Options.eligible|list[int]` should be ignored by the Event
+History mechanism and not be saved at all.
 
-To wrap it up: event history may operate on rather stable session attributes, for now it is `authrole` and `authid`,
-all dynamic attributes like `session ID` or maybe other custom attributes in future should lead to ignore storing
-such events by event history implementation.
+Finally, Event History should only filtered according to attributes that do not change during the run time of the router, which are currently `authrole` and `authid`.
+Filtering based on ephemeral attributes like `session ID` – and perhaps other future custom attributes – should result in the event not being stored in the history at all, to avoid unintentional leaking of event information.
