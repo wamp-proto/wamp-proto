@@ -58,7 +58,7 @@ With payload:
     given RFC3339 timestamp (using `<` comparison)
   * `up_to`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
     given RFC3339 timestamp including date itself (using `<=` comparison)
-  * `topic_uri`. WAMP URI. Optional. For pattern-based subscriptions only include publications to 
+  * `topic`. WAMP URI. Optional. For pattern-based subscriptions only include publications to 
     specified topic
 
 The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing 
