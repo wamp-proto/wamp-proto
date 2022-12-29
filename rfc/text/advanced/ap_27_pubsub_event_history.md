@@ -43,7 +43,7 @@ and must provide the meta procedures described below.
 A *Caller* can request message history by calling the *Broker* meta procedure
 
 {align="left"}
-        wamp.subscription.get_history
+        wamp.subscription.get_events
 
 With payload:
 
