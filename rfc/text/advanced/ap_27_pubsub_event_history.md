@@ -1,7 +1,7 @@
 ## Event History {#pubsub-event-history}
 
-Instead of complex QoS for message delivery, a *Broker* may provide *Event History*. With event history, a *Subscriber* is 
-responsible for handling overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
+Instead of complex QoS for message delivery, a *Broker* may provide *Event History*. With event history, a *Subscriber* 
+is responsible for handling overlaps (duplicates) when it wants "exactly-once" message processing across restarts.
 
 The event history may be transient, or or it may be persistent where it survives *Broker* restarts.
 
@@ -10,7 +10,8 @@ basis. Such configuration could enable/disable the feature, set the event histor
 set parameters for sub-features such as compression, or set the event history data retention policy.
 
 To understand event history, let's first review the event publication flow. When one peer decides to publish
-a message to a topic, it results in a `PUBLISH` WAMP message with fields for the `Publication` id, `Details` dictionary, and, optionally, the payload arguments.
+a message to a topic, it results in a `PUBLISH` WAMP message with fields for the `Publication` id, `Details` 
+dictionary, and, optionally, the payload arguments.
 
 A given event received by the router from a publisher via a PUBLISH message will match one or more 
 subscriptions:
@@ -87,7 +88,8 @@ or by calling
 with `Arguments = [subscription|id, timestamp|string]` where
 
 * `subscription` is the subscription id for which to retrieve event history
-* `timestamp` is a RFC3339-formatted timestamp string, demarcating the UTC time from which to start retrieving the event history. The format is `yyyy-MM-ddThh:mm:ss.SSSZ` (e.g. `"2013-12-21T13:43:11.000Z"`).
+* `timestamp` is a RFC3339-formatted timestamp string, demarcating the UTC time from which to start retrieving 
+  the event history. The format is `yyyy-MM-ddThh:mm:ss.SSSZ` (e.g. `"2013-12-21T13:43:11.000Z"`).
 
 or by calling
 
@@ -99,9 +101,10 @@ with `Arguments = [subscription|id, publication|id]`
 * `subscription` is the subscription id for which to retrieve event history
 * `publication` is the id of an event which marks the start of the events to retrieve from history
 
-The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing an additional 
-timestamp attribute. It can also be an empty array in the case where there were no publications to the specified subscription, or all 
-events were filtered out by the specified criteria. Some additional general information about the query are returned via the `argumentsKw` payload field.
+The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing 
+an additional timestamp attribute. It can also be an empty array in the case where there were no publications to the 
+specified subscription, or all events were filtered out by the specified criteria. Some additional general information 
+about the query are returned via the `argumentsKw` payload field.
 
 {align="left"}
 ```javascript
@@ -120,14 +123,15 @@ events were filtered out by the specified criteria. Some additional general info
 In cases where the events list too large to send as a single RPC result, router implementations
 may provide additional options, such as pagination or returning progressive results.
 
-As the Event History feature operates on `subscription|id`, there can be situations when there are not yet any subscribers to a topic
-of interest, but publications to the topic occur. In this situation, the *Broker* cannot predict that events under that topic should be stored.
-If the *Broker* implementation allows configuration on per-topic basis, it may overcome this situations by 
-preinitializing history-enabled topics with "dummy" subscriptions even if there are not yet any real subscribers to those topics.
+As the Event History feature operates on `subscription|id`, there can be situations when there are not yet any 
+subscribers to a topic of interest, but publications to the topic occur. In this situation, the *Broker* cannot 
+predict that events under that topic should be stored. If the *Broker* implementation allows configuration on 
+per-topic basis, it may overcome this situations by preinitializing history-enabled topics with "dummy" 
+subscriptions even if there are not yet any real subscribers to those topics.
 
-Sometimes, a client may not be willing to subscribe to a topic just for the purpose of obtaining a subscription id. In that case
-a client may use other [Subscriptions Meta API RPC](#name-procedures-3) for retrieving subscription IDs by topic URIs
-if the router supports it.
+Sometimes, a client may not be willing to subscribe to a topic just for the purpose of obtaining a subscription id. 
+In that case a client may use other [Subscriptions Meta API RPC](#name-procedures-3) for retrieving subscription 
+IDs by topic URIs if the router supports it.
 
 **Security Aspects**
 
@@ -135,9 +139,10 @@ TODO/FIXME: This part of Event History needs more discussion and clarification.
 But at least provides some basic information to take into account.
 
 In order to request event history, a peer must be allowed to subscribe to a desired subscription first. Thus, if a peer
-cannot subscribe to a topic resulting in a subscription, it means that it cannot receive events history for that topic either. 
-To sidestep this problem, a peer must be allowed to call related meta procedures for obtaining the event history as described above.
-Prohibited Event History meta procedure calls must fail with the `wamp.error.not_authorized` error URI.
+cannot subscribe to a topic resulting in a subscription, it means that it cannot receive events history for that 
+topic either. To sidestep this problem, a peer must be allowed to call related meta procedures for obtaining the 
+event history as described above. Prohibited Event History meta procedure calls must fail with the 
+`wamp.error.not_authorized` error URI.
 
 Original publications may include additional options, such as `black-white-listing` that triggers special event 
 processing. These same rules must also apply to event history requests. For example, if the original publication contains 
@@ -147,10 +152,12 @@ must be filtered out from the results of this specific request, by the router si
 
 The `black-white-listing` feature also allows the filtering of event delivery on a `session ID` basis. In the context of
 event history, this can result in unexpected behaviour: session ids are generated randomly at runtime for every
-session establishment, so newly connected sessions asking for event history may receive events that were originally excluded,
-or, vice versa, may not receive expected events due to session ID mismatch. To prevent this unexpected behaviour,
-all events published with `Options.exclude|list[int]` or `Options.eligible|list[int]` should be ignored by the Event
-History mechanism and not be saved at all.
+session establishment, so newly connected sessions asking for event history may receive events that were originally 
+excluded, or, vice versa, may not receive expected events due to session ID mismatch. To prevent this unexpected 
+behaviour, all events published with `Options.exclude|list[int]` or `Options.eligible|list[int]` should be ignored by 
+the Event History mechanism and not be saved at all.
 
-Finally, Event History should only filtered according to attributes that do not change during the run time of the router, which are currently `authrole` and `authid`.
-Filtering based on ephemeral attributes like `session ID` – and perhaps other future custom attributes – should result in the event not being stored in the history at all, to avoid unintentional leaking of event information.
+Finally, Event History should only filter according to attributes that do not change during the run time of the router, 
+which are currently `authrole` and `authid`. Filtering based on ephemeral attributes like `session ID` – and perhaps 
+other future custom attributes – should result in the event not being stored in the history at all, to avoid 
+unintentional leaking of event information.
