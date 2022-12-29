@@ -43,33 +43,19 @@ and must provide the meta procedures described below.
 A *Caller* can request message history by calling the *Broker* meta procedure
 
 {align="left"}
-        wamp.event.history.last
+        wamp.subscription.get_history
 
-with `Arguments = [subscription|id, limit|integer]` where
+With payload:
 
-* `subscription` is the subscription id for which to retrieve event history
-* `limit` indicates the number of the latest events to retrieve
-
-or by calling
-
-{align="left"}
-        wamp.event.history.since
-
-with `Arguments = [subscription|id, timestamp|string]` where
-
-* `subscription` is the subscription id for which to retrieve event history
-* `timestamp` is a RFC3339-formatted timestamp string, demarcating the UTC time from which to start retrieving 
-  the event history. The format is `yyyy-MM-ddThh:mm:ss.SSSZ` (e.g. `"2013-12-21T13:43:11.000Z"`).
-
-or by calling
-
-{align="left"}
-        wamp.event.history.after
-
-with `Arguments = [subscription|id, publication|id]`
-
-* `subscription` is the subscription id for which to retrieve event history
-* `publication` is the id of an event which marks the start of the events to retrieve from history
+* `Arguments` = `[subscription|id]`. The subscription id for which to retrieve event history
+* `ArgumentsKw`:
+  * `limit`. Positive integer. Optional. Indicates the number of the latest events to retrieve
+  * `after`. RFC3339-formatted timestamp string. Optional. Only include publications occurring after the 
+    given RFC3339 timestamp
+  * `before`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
+    given RFC3339 timestamp
+  * `topic_uri`. WAMP URI. Optional. For pattern-based subscriptions only include publications to 
+    specified topic
 
 The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing 
 an additional timestamp attribute. It can also be an empty array in the case where there were no publications to the 
