@@ -49,34 +49,32 @@ With payload:
 
 * `Arguments` = `[subscription|id]`. The subscription id for which to retrieve event history
 * `ArgumentsKw`:
-  * `reverse`. Boolean. Optional. Traverses events in from newest to oldest, instead of oldest to newest, 
-    which is default.
+  * `reverse`. Boolean. Optional. Traverses events in reverse order of occurrence. 
+    The default is to traverse events in order of occurrence.
   * `limit`. Positive integer. Optional. Indicates the maximum number of events to retrieve. Can be used for pagination.
   * `from_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring at the 
-    given RFC3339 timestamp or after (using `>=` comparison).
+    given timestamp or after (using `>=` comparison).
   * `after_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring after the 
     given RFC3339 timestamp (using `>` comparison).
   * `before_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
     given RFC3339 timestamp (using `<` comparison).
   * `until_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
     given RFC3339 timestamp including date itself (using `<=` comparison).
-  * `topic`. WAMP URI. Optional. For pattern-based subscriptions only include publications to 
-    specified topic.
-  * `from_publication`. Positive integer. Optional. The position after which to return results (using `>=` comparison). 
-    This corresponds to the `publication|id` attribute of the event.
-  * `after_publication`. Positive integer. Optional. The position after which to return results (using `>` comparison). 
-    This corresponds to the `publication|id` attribute of the event. Useful for pagination: pass the `publication|id` 
-    attribute of the last event returned in the previous page of results when navigating from past to present.
-  * `before_publication`. Positive integer. Optional. The position before which to return results (using `<` comparison). 
-    This corresponds to the `publication|id` attribute of the event. Useful for pagination: pass the `publication|id` 
-    attribute of the first event returned in the previous page of results when navigating from present to past.
-  * `until_publication`. Positive integer. Optional. The position before which to return results (using `<=` comparison). 
-    This corresponds to the `publication|id` attribute of the event.
+  * `topic`. WAMP URI. Optional. For pattern-based subscriptions, only include publications to 
+    the specified topic.
+  * `from_publication`. Positive integer. Optional. Events in the results must have occurred at or following the event with the given `publication|id| (includes the event with the given `publication|id` in the results).
+  * `after_publication`. Positive integer. Optional. Events in the results must have occurred following the event with the given `publication_id` (excludes the event with the given `publication|id` in the results).
+    Useful for pagination: pass the `publication|id` 
+    attribute of the last event returned in the previous page of results when navigating in order of occurrence (`reverse` argument absent or false).
+  * `before_publication`. Positive integer. Optional. Events in the results must have occurred previously to the event with the given `publication|id` (excludes the event with the given `publication|id` in the results).
+    Useful for pagination: pass the `publication|id` 
+    attribute of the last event returned in the previous page of results when navigating in reverse order of occurrence (`reverse=true`).
+  * `until_publication`. Positive integer. Optional. Events in the results must have occurred at or previously to the event with the given `publication|id` (includes the event with the given `publication|id` in the results).
 
 It is possible to pass multiple options at the same time. In this case they will be treated as conditions with 
-logical `AND`. `publication|id` event attribute is not ordered as it belongs to the Global scope, but as events are
-stored in order they are received by the broker it is enough to find event with specified `publication|id` and then
-return events including or excluding matched one depending on `*_publication` filter attribute.
+logical `AND`. Note that the `publication|id` event attribute is not ordered as it belongs to the Global scope. But since events are
+stored in the order they are received by the broker, it is possible to find an event with the specified `publication|id` and then
+return events including or excluding the matched one depending on the `*_publication` filter attributes.
 
 The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing 
 an additional timestamp attribute. It can also be an empty array in the case where there were no publications to the 
