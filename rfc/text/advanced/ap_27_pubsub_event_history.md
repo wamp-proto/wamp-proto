@@ -52,31 +52,31 @@ With payload:
   * `reverse`. Boolean. Optional. Traverses events in from newest to oldest, instead of oldest to newest, 
     which is default.
   * `limit`. Positive integer. Optional. Indicates the maximum number of events to retrieve. Can be used for pagination.
-  * `from`. RFC3339-formatted timestamp string. Optional. Only include publications occurring at the 
+  * `from_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring at the 
     given RFC3339 timestamp or after (using `>=` comparison).
-  * `after`. RFC3339-formatted timestamp string. Optional. Only include publications occurring after the 
+  * `after_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring after the 
     given RFC3339 timestamp (using `>` comparison).
-  * `before`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
+  * `before_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
     given RFC3339 timestamp (using `<` comparison).
-  * `until`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
+  * `until_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
     given RFC3339 timestamp including date itself (using `<=` comparison).
   * `topic`. WAMP URI. Optional. For pattern-based subscriptions only include publications to 
     specified topic.
-  * `position_from`. Positive integer. Optional. The position after which to return results (using `>=` comparison). 
+  * `from_publication`. Positive integer. Optional. The position after which to return results (using `>=` comparison). 
     This corresponds to the `publication|id` attribute of the event.
-  * `position_after`. Positive integer. Optional. The position after which to return results (using `>` comparison). 
+  * `after_publication`. Positive integer. Optional. The position after which to return results (using `>` comparison). 
     This corresponds to the `publication|id` attribute of the event. Useful for pagination: pass the `publication|id` 
     attribute of the last event returned in the previous page of results when navigating from past to present.
-  * `position_before`. Positive integer. Optional. The position before which to return results (using `<` comparison). 
+  * `before_publication`. Positive integer. Optional. The position before which to return results (using `<` comparison). 
     This corresponds to the `publication|id` attribute of the event. Useful for pagination: pass the `publication|id` 
     attribute of the first event returned in the previous page of results when navigating from present to past.
-  * `position_until`. Positive integer. Optional. The position before which to return results (using `<=` comparison). 
+  * `until_publication`. Positive integer. Optional. The position before which to return results (using `<=` comparison). 
     This corresponds to the `publication|id` attribute of the event.
 
 It is possible to pass multiple options at the same time. In this case they will be treated as conditions with 
 logical `AND`. `publication|id` event attribute is not ordered as it belongs to the Global scope, but as events are
 stored in order they are received by the broker it is enough to find event with specified `publication|id` and then
-return events including or excluding matched one depending on `position_*` filter attribute.
+return events including or excluding matched one depending on `*_publication` filter attribute.
 
 The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing 
 an additional timestamp attribute. It can also be an empty array in the case where there were no publications to the 
