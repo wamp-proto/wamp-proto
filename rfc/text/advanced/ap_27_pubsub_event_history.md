@@ -62,7 +62,7 @@ With payload:
     given timestamp including date itself (using `<=` comparison).
   * `topic`. WAMP URI. Optional. For pattern-based subscriptions, only include publications to 
     the specified topic.
-  * `from_publication`. Positive integer. Optional. Events in the results must have occurred at or following the event with the given `publication|id| (includes the event with the given `publication|id` in the results).
+  * `from_publication`. Positive integer. Optional. Events in the results must have occurred at or following the event with the given `publication|id` (includes the event with the given `publication|id` in the results).
   * `after_publication`. Positive integer. Optional. Events in the results must have occurred following the event with the given `publication_id` (excludes the event with the given `publication|id` in the results).
     Useful for pagination: pass the `publication|id` 
     attribute of the last event returned in the previous page of results when navigating in order of occurrence (`reverse` argument absent or false).
@@ -77,15 +77,15 @@ stored in the order they are received by the broker, it is possible to find an e
 return events including or excluding the matched one depending on the `*_publication` filter attributes.
 
 The `arguments` payload field returned by the above RPC uses the same schema: an array of `Event` objects containing 
-an additional timestamp attribute. It can also be an empty array in the case where there were no publications to the 
-specified subscription, or all events were filtered out by the specified criteria. Some additional general information 
-about the query are returned via the `argumentsKw` payload field.
+an additional `timestamp` string attribute in [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) format. It can also be an empty array in the case where there were no publications to the 
+specified subscription, or all events were filtered out by the specified criteria. Additional general information 
+about the query may be returned via the `argumentsKw` payload field.
 
 {align="left"}
 ```javascript
   [
     {
-        "timestamp": "yyyy-MM-ddThh:mm:ss.SSSZ", // sring with event date/time in RFC3339 format
+        "timestamp": "yyyy-MM-ddThh:mm:ss.SSSZ", // string with event date/time in RFC3339 format
         "subscription": 2342423, // The subscription ID of the event
         "publication": 32445235, // The original publication ID of the event
         "details": {},           // The original details of the event
@@ -95,13 +95,15 @@ about the query are returned via the `argumentsKw` payload field.
   ]
 ```
 
-In cases where the events list too large to send as a single RPC result, router implementations
+Clients should not rely on timestamps being unique and monotonic. When events occur in quick succession, it's possible for some of them to have the same timestamp. When a router in an IoT system is deployed off-grid and is not synchronized to an NTP server, it's possible for the timestamps to jump backwards when the router's wall clock time or time zone is manually adjusted.
+
+In cases where the events list is too large to send as a single RPC result, router implementations
 may provide additional options, such as pagination or returning progressive results.
 
 As the Event History feature operates on `subscription|id`, there can be situations when there are not yet any 
 subscribers to a topic of interest, but publications to the topic occur. In this situation, the *Broker* cannot 
 predict that events under that topic should be stored. If the *Broker* implementation allows configuration on 
-per-topic basis, it may overcome this situations by preinitializing history-enabled topics with "dummy" 
+a per-topic basis, it may overcome this situations by preinitializing history-enabled topics with "dummy" 
 subscriptions even if there are not yet any real subscribers to those topics.
 
 Sometimes, a client may not be willing to subscribe to a topic just for the purpose of obtaining a subscription id. 
