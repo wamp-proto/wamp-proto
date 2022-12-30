@@ -55,11 +55,11 @@ With payload:
   * `from_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring at the 
     given timestamp or after (using `>=` comparison).
   * `after_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring after the 
-    given RFC3339 timestamp (using `>` comparison).
+    given timestamp (using `>` comparison).
   * `before_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
-    given RFC3339 timestamp (using `<` comparison).
+    given timestamp (using `<` comparison).
   * `until_time`. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the 
-    given RFC3339 timestamp including date itself (using `<=` comparison).
+    given timestamp including date itself (using `<=` comparison).
   * `topic`. WAMP URI. Optional. For pattern-based subscriptions, only include publications to 
     the specified topic.
   * `from_publication`. Positive integer. Optional. Events in the results must have occurred at or following the event with the given `publication|id| (includes the event with the given `publication|id` in the results).
