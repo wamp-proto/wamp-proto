@@ -1,8 +1,43 @@
 ## Pattern-based Subscription {#pattern-based-subscription}
 
-By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) *exactly* matches the topic subscribed to (`SUBSCRIBE.Topic`).
+By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be 
+dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) *exactly* matches the 
+topic subscribed to (`SUBSCRIBE.Topic`).
 
-A *Subscriber* might want to subscribe to topics based on a *pattern*. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the *Subscriber* is not aware of at the time of subscription, or which do not yet exist at this time.
+A *Subscriber* might want to subscribe to topics based on a *pattern*. This can be useful to reduce the number of 
+individual subscriptions to be set up and to subscribe to topics the *Subscriber* is not aware of at the time of 
+subscription, or which do not yet exist at this time.
+
+Let's review the event publication flow. When one peer decides to publish a message to a topic, it results in 
+a `PUBLISH` WAMP message with fields for the `Publication` id, `Details` dictionary, and, optionally, 
+the payload arguments.
+
+A given event received by the router from a publisher via a `PUBLISH` message will match one or more 
+subscriptions:
+
+* zero or one exact subscription
+* zero or more prefix subscriptions
+* zero or more wildcard subscriptions
+
+The same published event is then forwarded to subscribers for every matching subscription.
+Thus, a given event might be sent multiple times to the same client under different subscriptions.
+Every subscription instance, based on a topic URI and some options, has a unique ID. All
+subscribers of the same subscription are given the same subscription ID.
+
+{align="left"}
+                                +----------+            +------------+         +----------+
+                                |          |            |   Exact    |         |Subscriber|
+                                |          |---Event--->|Subscription|----+--->|   peer   |
+                                |          |            +------------+    |    +----------+
+   +----------+                 |          |            +------------+    |    +----------+
+   |Publisher |                 |  Broker  |            |  Wildcard  |    +--->|Subscriber|
+   |   peer   |--Publication--->|          |---Event--->|Subscription|----+--->|   peer   |
+   +----------+                 |          |            +------------+    |    +----------+
+                                |          |            +------------+    |    +----------+
+                                |          |            |   Prefix   |    +--->|Subscriber|
+                                |          |---Event--->|Subscription|-------->|   peer   |
+                                +----------+            +------------+         +----------+
+
 
 If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, this matching can happen by
 
