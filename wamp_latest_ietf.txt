@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                               27 July 2022
-Expires: 28 January 2023
+Intended status: Experimental                             2 January 2023
+Expires: 6 July 2023
 
 
                  The Web Application Messaging Protocol
@@ -26,11 +26,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 January 2023.
+   This Internet-Draft will expire on 6 July 2023.
 
 Copyright Notice
 
-   Copyright (c) 2022 IETF Trust and the persons identified as the
+   Copyright (c) 2023 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -53,9 +53,9 @@ Table of Contents
 
 
 
-Oberstein                Expires 28 January 2023                [Page 1]
+Oberstein                  Expires 6 July 2023                  [Page 1]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        1.3.3.  Publish & Subscribe . . . . . . . . . . . . . . . . .   8
@@ -109,9 +109,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 2]
+Oberstein                  Expires 6 July 2023                  [Page 2]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        5.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  42
@@ -165,9 +165,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 3]
+Oberstein                  Expires 6 July 2023                  [Page 3]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
      11.8.  Pattern-based Registrations  . . . . . . . . . . . . . . 104
@@ -221,9 +221,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 4]
+Oberstein                  Expires 6 July 2023                  [Page 4]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        16.1.1.  Application Payload Typing . . . . . . . . . . . . . 208
@@ -277,9 +277,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 5]
+Oberstein                  Expires 6 July 2023                  [Page 5]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 1.2.  Introduction
@@ -333,9 +333,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 6]
+Oberstein                  Expires 6 July 2023                  [Page 6]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    the callee, since all traffic is routed.  This enables the calling of
@@ -389,9 +389,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 7]
+Oberstein                  Expires 6 July 2023                  [Page 7]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Broker
@@ -445,9 +445,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 8]
+Oberstein                  Expires 6 July 2023                  [Page 8]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The Publisher and Subscriber will usually run application code, while
@@ -501,9 +501,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023                [Page 9]
+Oberstein                  Expires 6 July 2023                  [Page 9]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    While WAMP was originally developed to use WebSocket as a transport,
@@ -557,9 +557,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 10]
+Oberstein                  Expires 6 July 2023                 [Page 10]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 1.4.4.  Peers with multiple Roles
@@ -613,9 +613,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 11]
+Oberstein                  Expires 6 July 2023                 [Page 11]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    These are identified in WAMP using Uniform Resource Identifiers
@@ -669,9 +669,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 12]
+Oberstein                  Expires 6 July 2023                 [Page 12]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Strict URIs*
@@ -725,9 +725,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 13]
+Oberstein                  Expires 6 July 2023                 [Page 13]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    These are identified in WAMP using IDs that are integers between
@@ -781,9 +781,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 14]
+Oberstein                  Expires 6 July 2023                 [Page 14]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  CALL.Request
@@ -837,9 +837,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 15]
+Oberstein                  Expires 6 July 2023                 [Page 15]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    With JSON serialization, each WAMP message is serialized according to
@@ -893,9 +893,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 16]
+Oberstein                  Expires 6 July 2023                 [Page 16]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  wamp.2.json
@@ -949,9 +949,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 17]
+Oberstein                  Expires 6 July 2023                 [Page 17]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        ,------.                                    ,------.
@@ -1005,9 +1005,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 18]
+Oberstein                  Expires 6 July 2023                 [Page 18]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Receiving CHALLENGE message, after session was established.
@@ -1061,9 +1061,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 19]
+Oberstein                  Expires 6 July 2023                 [Page 19]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  dict: a dictionary (map) where keys MUST be strings, keys MUST be
@@ -1117,9 +1117,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 20]
+Oberstein                  Expires 6 July 2023                 [Page 20]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 3.4.  Message Definitions
@@ -1173,9 +1173,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 21]
+Oberstein                  Expires 6 July 2023                 [Page 21]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
     [ERROR, REQUEST.Type|int, REQUEST.Request|id, Details|dict, Error|uri]
@@ -1229,9 +1229,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 22]
+Oberstein                  Expires 6 July 2023                 [Page 22]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 3.4.2.6.  UNSUBSCRIBED
@@ -1285,9 +1285,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 23]
+Oberstein                  Expires 6 July 2023                 [Page 23]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 3.4.3.3.  REGISTER
@@ -1341,9 +1341,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 24]
+Oberstein                  Expires 6 July 2023                 [Page 24]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 3.5.  Message Codes and Direction
@@ -1397,9 +1397,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 25]
+Oberstein                  Expires 6 July 2023                 [Page 25]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    | 64  | REGISTER     |      |      |      |      | Rx    | Tx     |
@@ -1453,9 +1453,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 26]
+Oberstein                  Expires 6 July 2023                 [Page 26]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 4.  Sessions
@@ -1509,9 +1509,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 27]
+Oberstein                  Expires 6 July 2023                 [Page 27]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
                             +--------------+                           
@@ -1565,9 +1565,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 28]
+Oberstein                  Expires 6 July 2023                 [Page 28]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +====+==============================================================+
@@ -1621,9 +1621,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 29]
+Oberstein                  Expires 6 July 2023                 [Page 29]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Realm is a string identifying the realm this session should attach
@@ -1677,9 +1677,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 30]
+Oberstein                  Expires 6 July 2023                 [Page 30]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    A Client can support any combination of the above roles but must
@@ -1733,9 +1733,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 31]
+Oberstein                  Expires 6 July 2023                 [Page 31]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [2, 9129137332, {
@@ -1789,9 +1789,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 32]
+Oberstein                  Expires 6 July 2023                 [Page 32]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The <role>|dict is a dictionary describing features supported by the
@@ -1845,9 +1845,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 33]
+Oberstein                  Expires 6 July 2023                 [Page 33]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [3, {"message": "The realm does not exist."},
@@ -1901,9 +1901,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 34]
+Oberstein                  Expires 6 July 2023                 [Page 34]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        ,------.          ,------.
@@ -1957,9 +1957,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 35]
+Oberstein                  Expires 6 July 2023                 [Page 35]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    |  Though ABORT and GOODBYE are structurally identical, using
@@ -2013,9 +2013,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 36]
+Oberstein                  Expires 6 July 2023                 [Page 36]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Upon subscribing to a topic via the SUBSCRIBE message, a Subscriber
@@ -2069,9 +2069,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 37]
+Oberstein                  Expires 6 July 2023                 [Page 37]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    where
@@ -2125,9 +2125,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 38]
+Oberstein                  Expires 6 July 2023                 [Page 38]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Request MUST be a random, ephemeral ID chosen by the Subscriber
@@ -2181,9 +2181,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 39]
+Oberstein                  Expires 6 July 2023                 [Page 39]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    2.  PUBLISHED
@@ -2237,9 +2237,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 40]
+Oberstein                  Expires 6 July 2023                 [Page 40]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  ArgumentsKw is an optional dictionary containing application-level
@@ -2293,9 +2293,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 41]
+Oberstein                  Expires 6 July 2023                 [Page 41]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [ERROR, PUBLISH, PUBLISH.Request|id, Details|dict, Error|uri]
@@ -2349,9 +2349,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 42]
+Oberstein                  Expires 6 July 2023                 [Page 42]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Details is a dictionary that allows the Broker to provide
@@ -2405,9 +2405,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 43]
+Oberstein                  Expires 6 July 2023                 [Page 43]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        ,------.          ,------.               ,------.
@@ -2461,9 +2461,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 44]
+Oberstein                  Expires 6 July 2023                 [Page 44]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 6.1.2.  REGISTERED
@@ -2517,9 +2517,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 45]
+Oberstein                  Expires 6 July 2023                 [Page 45]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    _Example_
@@ -2573,9 +2573,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 46]
+Oberstein                  Expires 6 July 2023                 [Page 46]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        ,------.          ,------.          ,------.
@@ -2629,9 +2629,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 47]
+Oberstein                  Expires 6 July 2023                 [Page 47]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Arguments is a list of positional call arguments (each of
@@ -2685,9 +2685,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 48]
+Oberstein                  Expires 6 July 2023                 [Page 48]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Details is a dictionary that allows to provide additional
@@ -2741,9 +2741,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 49]
+Oberstein                  Expires 6 July 2023                 [Page 49]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    _Example_
@@ -2797,9 +2797,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 50]
+Oberstein                  Expires 6 July 2023                 [Page 50]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    _Example_
@@ -2853,9 +2853,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 51]
+Oberstein                  Expires 6 July 2023                 [Page 51]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 6.2.6.  Call ERROR
@@ -2909,9 +2909,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 52]
+Oberstein                  Expires 6 July 2023                 [Page 52]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    All WAMP implementations, in particular Routers MUST support the
@@ -2965,9 +2965,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 53]
+Oberstein                  Expires 6 July 2023                 [Page 53]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    There are no guarantees on the order of call results and errors in
@@ -3021,9 +3021,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 54]
+Oberstein                  Expires 6 July 2023                 [Page 54]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    1.  against a certificate trust database that comes with the Clients
@@ -3077,9 +3077,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 55]
+Oberstein                  Expires 6 July 2023                 [Page 55]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Incorrect URIs*
@@ -3133,9 +3133,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 56]
+Oberstein                  Expires 6 July 2023                 [Page 56]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        wamp.close.system_shutdown
@@ -3189,9 +3189,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 57]
+Oberstein                  Expires 6 July 2023                 [Page 57]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 9.  WAMP Advanced Profile
@@ -3245,9 +3245,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 58]
+Oberstein                  Expires 6 July 2023                 [Page 58]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +==================================+========+=+===+===+====+===+====+
@@ -3301,9 +3301,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 59]
+Oberstein                  Expires 6 July 2023                 [Page 59]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +================================+========+=+===+===+====+===+====+
@@ -3357,9 +3357,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 60]
+Oberstein                  Expires 6 July 2023                 [Page 60]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +=================================================+========+
@@ -3413,9 +3413,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 61]
+Oberstein                  Expires 6 July 2023                 [Page 61]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
     +========+=======================================================+
@@ -3469,9 +3469,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 62]
+Oberstein                  Expires 6 July 2023                 [Page 62]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 9.2.1.  CHALLENGE
@@ -3525,9 +3525,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 63]
+Oberstein                  Expires 6 July 2023                 [Page 63]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    |  Note that an implementation that only supports a _Broker_ or
@@ -3581,9 +3581,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 64]
+Oberstein                  Expires 6 July 2023                 [Page 64]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -3637,9 +3637,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 65]
+Oberstein                  Expires 6 July 2023                 [Page 65]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  authmethod|string - The authentication method that was used for
@@ -3693,9 +3693,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 66]
+Oberstein                  Expires 6 July 2023                 [Page 66]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Positional results*
@@ -3749,9 +3749,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 67]
+Oberstein                  Expires 6 July 2023                 [Page 67]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  wamp.error.no_such_session - No session with the given ID exists
@@ -3805,9 +3805,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 68]
+Oberstein                  Expires 6 July 2023                 [Page 68]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    1.  authid|string - The authentication ID identifying sessions to
@@ -3861,9 +3861,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 69]
+Oberstein                  Expires 6 July 2023                 [Page 69]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Errors*
@@ -3917,9 +3917,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 70]
+Oberstein                  Expires 6 July 2023                 [Page 70]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    |  Note that an implementation that only supports a _Broker_ or
@@ -3973,9 +3973,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 71]
+Oberstein                  Expires 6 July 2023                 [Page 71]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -4029,9 +4029,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 72]
+Oberstein                  Expires 6 July 2023                 [Page 72]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 10.2.1.1.  wamp.registration.on_create
@@ -4085,9 +4085,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 73]
+Oberstein                  Expires 6 July 2023                 [Page 73]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 10.2.1.4.  wamp.registration.on_delete
@@ -4141,9 +4141,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 74]
+Oberstein                  Expires 6 July 2023                 [Page 74]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        RegistrationLists :=
@@ -4197,9 +4197,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 75]
+Oberstein                  Expires 6 July 2023                 [Page 75]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  RegistrationDetails|dict: Details on the registration.
@@ -4253,9 +4253,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 76]
+Oberstein                  Expires 6 July 2023                 [Page 76]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  registration|id: The ID of the registration to get the number of
@@ -4309,9 +4309,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 77]
+Oberstein                  Expires 6 July 2023                 [Page 77]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    which uses FlatBuffers IDL to describe the API.  The method of using
@@ -4365,9 +4365,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 78]
+Oberstein                  Expires 6 July 2023                 [Page 78]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  wamp.subscription.on_unsubscribe: Fired when a session is removed
@@ -4421,9 +4421,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 79]
+Oberstein                  Expires 6 July 2023                 [Page 79]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 10.3.1.3.  wamp.subscription.on_unsubscribe
@@ -4477,9 +4477,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 80]
+Oberstein                  Expires 6 July 2023                 [Page 80]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  SubscriptionLists|dict: A dictionary with a list of subscription
@@ -4533,9 +4533,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 81]
+Oberstein                  Expires 6 July 2023                 [Page 81]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 10.3.2.4.  wamp.subscription.get
@@ -4589,9 +4589,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 82]
+Oberstein                  Expires 6 July 2023                 [Page 82]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  wamp.error.no_such_subscription: No subscription with the given ID
@@ -4645,9 +4645,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 83]
+Oberstein                  Expires 6 July 2023                 [Page 83]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Message Flow*
@@ -4701,9 +4701,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 84]
+Oberstein                  Expires 6 July 2023                 [Page 84]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -4757,9 +4757,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 85]
+Oberstein                  Expires 6 July 2023                 [Page 85]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -4813,9 +4813,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 86]
+Oberstein                  Expires 6 July 2023                 [Page 86]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -4869,9 +4869,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 87]
+Oberstein                  Expires 6 July 2023                 [Page 87]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    _Example._ Callee-to-Dealer YIELDs
@@ -4925,9 +4925,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 88]
+Oberstein                  Expires 6 July 2023                 [Page 88]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [70, 87683, {"progress": true}, ["partial 1", 10]]
@@ -4981,9 +4981,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 89]
+Oberstein                  Expires 6 July 2023                 [Page 89]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The message flow for progressive results cancellation involves:
@@ -5037,9 +5037,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 90]
+Oberstein                  Expires 6 July 2023                 [Page 90]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Payload is too big to send it whole in one request.  E.g.
@@ -5093,9 +5093,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 91]
+Oberstein                  Expires 6 July 2023                 [Page 91]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The message flow for a progressive call when _Callee_ waits for all
@@ -5149,9 +5149,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 92]
+Oberstein                  Expires 6 July 2023                 [Page 92]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        |                         |----------------------->|
@@ -5205,9 +5205,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 93]
+Oberstein                  Expires 6 July 2023                 [Page 93]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        CALL.Options.progress|bool := true
@@ -5261,9 +5261,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 94]
+Oberstein                  Expires 6 July 2023                 [Page 94]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    In this case _Dealer_ must make a first INVOCATION based on
@@ -5317,9 +5317,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 95]
+Oberstein                  Expires 6 July 2023                 [Page 95]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
     ,------.            ,------.                 ,------.
@@ -5373,9 +5373,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 96]
+Oberstein                  Expires 6 July 2023                 [Page 96]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        CALL.Options.timeout|integer
@@ -5429,9 +5429,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 97]
+Oberstein                  Expires 6 July 2023                 [Page 97]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    A call may be canceled at the _Callee_ or  (U+00A0)at  (U+00A0)the 
@@ -5485,9 +5485,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 98]
+Oberstein                  Expires 6 July 2023                 [Page 98]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Message flow during call canceling when  (U+00A0)_Callee_ does not
@@ -5541,9 +5541,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023               [Page 99]
+Oberstein                  Expires 6 July 2023                 [Page 99]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        ,------.          ,------.          ,------.
@@ -5597,9 +5597,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 100]
+Oberstein                  Expires 6 July 2023                [Page 100]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  _CALLEE_ has dependency issues which prevent it from being able to
@@ -5653,9 +5653,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 101]
+Oberstein                  Expires 6 July 2023                [Page 101]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
       +============+================================================+
@@ -5709,9 +5709,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 102]
+Oberstein                  Expires 6 July 2023                [Page 102]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [68, 6131533, 9823526, {"caller": 3335656}, ["Hello, world!"]]
@@ -5765,9 +5765,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 103]
+Oberstein                  Expires 6 July 2023                [Page 103]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    in an INVOCATION message sent to a _Callee_. The trustlevel 0 means
@@ -5821,9 +5821,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 104]
+Oberstein                  Expires 6 July 2023                [Page 104]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 11.8.1.  Prefix Matching
@@ -5877,9 +5877,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 105]
+Oberstein                  Expires 6 July 2023                [Page 105]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    _Example_
@@ -5933,9 +5933,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 106]
+Oberstein                  Expires 6 July 2023                [Page 106]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The following algorithm MUST be applied to  (U+00A0)find a single RPC
@@ -5989,9 +5989,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 107]
+Oberstein                  Expires 6 July 2023                [Page 107]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Registered RPCs:
@@ -6045,9 +6045,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 108]
+Oberstein                  Expires 6 July 2023                [Page 108]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -6101,9 +6101,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 109]
+Oberstein                  Expires 6 July 2023                [Page 109]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    With the other values, the *Dealer* MUST fail all subsequent attempts
@@ -6157,9 +6157,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 110]
+Oberstein                  Expires 6 July 2023                [Page 110]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 11.10.1.  "All" Calls
@@ -6213,9 +6213,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 111]
+Oberstein                  Expires 6 July 2023                [Page 111]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Details.registration|bool MUST be a previously issued registration
@@ -6269,9 +6269,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 112]
+Oberstein                  Expires 6 July 2023                [Page 112]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The product price update procedure can use
@@ -6325,9 +6325,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 113]
+Oberstein                  Expires 6 July 2023                [Page 113]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    PUBLISH.Options.exclude is a list of integers with WAMP sessionids
@@ -6381,9 +6381,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 114]
+Oberstein                  Expires 6 July 2023                [Page 114]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -6437,9 +6437,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 115]
+Oberstein                  Expires 6 July 2023                [Page 115]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -6493,9 +6493,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 116]
+Oberstein                  Expires 6 July 2023                [Page 116]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -6549,9 +6549,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 117]
+Oberstein                  Expires 6 July 2023                [Page 117]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    A _Broker_ may also (automatically) disclose the identity of a
@@ -6605,9 +6605,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 118]
+Oberstein                  Expires 6 July 2023                [Page 118]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 12.5.  Pattern-based Subscription
@@ -6661,9 +6661,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 119]
+Oberstein                  Expires 6 July 2023                [Page 119]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  prefix-matching policy
@@ -6717,9 +6717,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 120]
+Oberstein                  Expires 6 July 2023                [Page 120]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        SUBSCRIBE.Options.match|string := "wildcard"
@@ -6773,9 +6773,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 121]
+Oberstein                  Expires 6 July 2023                [Page 121]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The _Subscriber_ can detect the delivery of that same event on
@@ -6829,9 +6829,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 122]
+Oberstein                  Expires 6 July 2023                [Page 122]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Node keys: SUBSCRIBE.Options.nkey|string is a stable, technical *node
@@ -6885,9 +6885,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 123]
+Oberstein                  Expires 6 July 2023                [Page 123]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    5.  Publication to topic 'com.mycompany.log.checkout'.  Delivered as
@@ -6941,9 +6941,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 124]
+Oberstein                  Expires 6 July 2023                [Page 124]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
       -  from_publication.  Positive integer.  Optional.  Events in the
@@ -6997,9 +6997,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 125]
+Oberstein                  Expires 6 July 2023                [Page 125]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
      [
@@ -7053,9 +7053,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 126]
+Oberstein                  Expires 6 July 2023                [Page 126]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    for obtaining the event history as described above.  Prohibited Event
@@ -7109,9 +7109,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 127]
+Oberstein                  Expires 6 July 2023                [Page 127]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    to the topic it was sent to, which can be delivered upon a new client
@@ -7165,9 +7165,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 128]
+Oberstein                  Expires 6 July 2023                [Page 128]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Feature Announcement*
@@ -7221,9 +7221,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 129]
+Oberstein                  Expires 6 July 2023                [Page 129]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    This allows clients that otherwise would not be able to know when
@@ -7277,9 +7277,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 130]
+Oberstein                  Expires 6 July 2023                [Page 130]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Removes testaments for the given scope:
@@ -7333,9 +7333,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 131]
+Oberstein                  Expires 6 July 2023                [Page 131]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    yield self.call('wamp.session.flush_testaments', scope='detached')
@@ -7389,9 +7389,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 132]
+Oberstein                  Expires 6 July 2023                [Page 132]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
         ,------.          ,------.
@@ -7445,9 +7445,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 133]
+Oberstein                  Expires 6 July 2023                [Page 133]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Transport-level Authentication*
@@ -7501,9 +7501,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 134]
+Oberstein                  Expires 6 July 2023                [Page 134]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [1, "realm1",
@@ -7557,9 +7557,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 135]
+Oberstein                  Expires 6 July 2023                [Page 135]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    1.  authid|string: The authentication ID the client was (actually)
@@ -7613,9 +7613,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 136]
+Oberstein                  Expires 6 July 2023                [Page 136]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    If the server is willing to let the client authenticate using WAMP-
@@ -7669,9 +7669,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 137]
+Oberstein                  Expires 6 July 2023                [Page 137]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    If the authentication succeeds, the server will finally respond with
@@ -7725,9 +7725,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 138]
+Oberstein                  Expires 6 July 2023                [Page 138]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    In this case, the secret is actually shared between the WAMP server
@@ -7781,9 +7781,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 139]
+Oberstein                  Expires 6 July 2023                [Page 139]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 13.3.  Salted Challenge Response Authentication
@@ -7837,9 +7837,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 140]
+Oberstein                  Expires 6 July 2023                [Page 140]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    1.  To simplify parsing, SCRAM attributes in the authentication
@@ -7893,9 +7893,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 141]
+Oberstein                  Expires 6 July 2023                [Page 141]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Salts*
@@ -7949,9 +7949,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 142]
+Oberstein                  Expires 6 July 2023                [Page 142]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The tls-unique channel binding type allows the WAMP layer to
@@ -8005,9 +8005,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 143]
+Oberstein                  Expires 6 July 2023                [Page 143]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +========================================+==============+
@@ -8061,9 +8061,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 144]
+Oberstein                  Expires 6 July 2023                [Page 144]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Upon receiving the HELLO message, the server MUST terminate the
@@ -8117,9 +8117,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 145]
+Oberstein                  Expires 6 July 2023                [Page 145]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    5.  memory|integer: The memory cost factor to use for generating the
@@ -8173,9 +8173,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 146]
+Oberstein                  Expires 6 July 2023                [Page 146]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  The ClientProof passed via the Signature|string argument is
@@ -8229,9 +8229,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 147]
+Oberstein                  Expires 6 July 2023                [Page 147]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    If the authentication fails, the server SHALL respond with an ABORT
@@ -8285,9 +8285,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 148]
+Oberstein                  Expires 6 July 2023                [Page 148]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Data Stored on the Server*
@@ -8341,9 +8341,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 149]
+Oberstein                  Expires 6 July 2023                [Page 149]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    ClientFirstBare = "n=" + Escape(HELLO.Details.authid) + "," +
@@ -8397,9 +8397,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 150]
+Oberstein                  Expires 6 July 2023                [Page 150]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *ServerSignature*
@@ -8453,9 +8453,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 151]
+Oberstein                  Expires 6 July 2023                [Page 151]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Which KDF is used to hash the password during user registration is up
@@ -8509,9 +8509,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 152]
+Oberstein                  Expires 6 July 2023                [Page 152]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  CHALLENGE.Details.salt as the cryptographic salt,
@@ -8565,9 +8565,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 153]
+Oberstein                  Expires 6 July 2023                [Page 153]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Examples of complete authentication message exchanges can be found at
@@ -8621,9 +8621,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 154]
+Oberstein                  Expires 6 July 2023                [Page 154]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +=========+=========================================================+
@@ -8677,9 +8677,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 155]
+Oberstein                  Expires 6 July 2023                [Page 155]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    When no channel binding is active, the Ed25519 signature over the 32
@@ -8733,9 +8733,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 156]
+Oberstein                  Expires 6 July 2023                [Page 156]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +===============+======+========+================================================================+
@@ -8789,9 +8789,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 157]
+Oberstein                  Expires 6 July 2023                [Page 157]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    [4, "cryptosign", {
@@ -8845,9 +8845,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 158]
+Oberstein                  Expires 6 July 2023                [Page 158]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    {"broker": {"features": {"event_retention": True,
@@ -8901,9 +8901,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 159]
+Oberstein                  Expires 6 July 2023                [Page 159]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 test_vectors_1 = [
@@ -8957,9 +8957,9 @@ test_vectors_1 = [
 
 
 
-Oberstein                Expires 28 January 2023              [Page 160]
+Oberstein                  Expires 6 July 2023                [Page 160]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  RFC5056: On the Use of Channel Bindings to Secure Channels
@@ -9013,9 +9013,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 161]
+Oberstein                  Expires 6 July 2023                [Page 161]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The client MUST then locally fetch the channel_id from the underlying
@@ -9069,9 +9069,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 162]
+Oberstein                  Expires 6 July 2023                [Page 162]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 13.4.4.1.  Certificate Chains
@@ -9125,9 +9125,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 163]
+Oberstein                  Expires 6 July 2023                [Page 163]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    With 1., the user implicitly trusts the vendor, and all root CAs in
@@ -9181,9 +9181,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 164]
+Oberstein                  Expires 6 July 2023                [Page 164]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
   |     +------------------------------+
@@ -9237,9 +9237,9 @@ optional hierarchical chain of intermediate certificates
 
 
 
-Oberstein                Expires 28 January 2023              [Page 165]
+Oberstein                  Expires 6 July 2023                [Page 165]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    [
@@ -9293,9 +9293,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 166]
+Oberstein                  Expires 6 July 2023                [Page 166]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    [
@@ -9349,9 +9349,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 167]
+Oberstein                  Expires 6 July 2023                [Page 167]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Besides EIP712, other comparable approaches to specify
@@ -9405,9 +9405,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 168]
+Oberstein                  Expires 6 July 2023                [Page 168]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 [
@@ -9461,9 +9461,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 169]
+Oberstein                  Expires 6 July 2023                [Page 169]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Trustroots are identified by their Ethereum address, which is
@@ -9517,9 +9517,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 170]
+Oberstein                  Expires 6 July 2023                [Page 170]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    and certificates MUST contain
@@ -9573,9 +9573,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 171]
+Oberstein                  Expires 6 July 2023                [Page 171]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  perform security decisions based on security policy and
@@ -9629,9 +9629,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 172]
+Oberstein                  Expires 6 July 2023                [Page 172]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        +------------------------------+
@@ -9685,9 +9685,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 173]
+Oberstein                  Expires 6 July 2023                [Page 173]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 13.4.6.  Example Message Exchanges
@@ -9741,9 +9741,9 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 28 January 2023              [Page 174]
+Oberstein                  Expires 6 July 2023                [Page 174]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
     [5,
@@ -9797,9 +9797,9 @@ WAMP-Receive(3735119691078036, client01@example.com) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 175]
+Oberstein                  Expires 6 July 2023                [Page 175]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
     [6, {}, 'wamp.close.normal']
@@ -9853,9 +9853,9 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 28 January 2023              [Page 176]
+Oberstein                  Expires 6 July 2023                [Page 176]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
 >>
@@ -9909,9 +9909,9 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 177]
+Oberstein                  Expires 6 July 2023                [Page 177]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
  'resumed': False,
@@ -9965,9 +9965,9 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 28 January 2023              [Page 178]
+Oberstein                  Expires 6 July 2023                [Page 178]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
                                                    'delegate': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
@@ -10021,9 +10021,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 179]
+Oberstein                  Expires 6 July 2023                [Page 179]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
                                                                                 {'name': 'meta',
@@ -10077,9 +10077,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 180]
+Oberstein                  Expires 6 July 2023                [Page 180]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
                                         'shared_registration': True}},
@@ -10133,9 +10133,9 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 181]
+Oberstein                  Expires 6 July 2023                [Page 181]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
                                         'subscription_meta_api': True,
@@ -10189,9 +10189,9 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 182]
+Oberstein                  Expires 6 July 2023                [Page 182]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Sensitive user data that should be delivered to a target _Callee_
@@ -10245,9 +10245,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 183]
+Oberstein                  Expires 6 July 2023                [Page 183]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Cases where a _Publisher_ sends a PUBLISH message with payload
@@ -10301,9 +10301,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 184]
+Oberstein                  Expires 6 July 2023                [Page 184]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        CALL.Options.ppt_scheme|string
@@ -10357,9 +10357,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 185]
+Oberstein                  Expires 6 July 2023                [Page 185]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    technology.  The one predefined is mqtt.  Others may be introduced
@@ -10413,9 +10413,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 186]
+Oberstein                  Expires 6 July 2023                [Page 186]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +================+===========+=============================+
@@ -10469,9 +10469,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 187]
+Oberstein                  Expires 6 July 2023                [Page 187]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +================+===========+==========+
@@ -10525,9 +10525,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 188]
+Oberstein                  Expires 6 July 2023                [Page 188]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    {
@@ -10581,9 +10581,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 189]
+Oberstein                  Expires 6 July 2023                [Page 189]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    _Example._ Caller-to-Dealer CALL with MQTT payload.  Specifying
@@ -10637,9 +10637,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 190]
+Oberstein                  Expires 6 July 2023                [Page 190]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    _Example._ Dealer-to-Callee INVOCATION with MQTT payload
@@ -10693,9 +10693,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 191]
+Oberstein                  Expires 6 July 2023                [Page 191]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -10749,9 +10749,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 192]
+Oberstein                  Expires 6 July 2023                [Page 192]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        [
@@ -10805,9 +10805,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 193]
+Oberstein                  Expires 6 July 2023                [Page 193]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Besides the WebSocket transport, the following WAMP transports are
@@ -10861,9 +10861,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 194]
+Oberstein                  Expires 6 July 2023                [Page 194]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    the first octet sent out to (or received from) the wire is 0x11 and
@@ -10917,9 +10917,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 195]
+Oberstein                  Expires 6 July 2023                [Page 195]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
         0: 2**9 octets
@@ -10973,9 +10973,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 196]
+Oberstein                  Expires 6 July 2023                [Page 196]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Here is an example of how a _Router_ could parse the _second octet_
@@ -11029,9 +11029,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 197]
+Oberstein                  Expires 6 July 2023                [Page 197]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    An error reply has 4 octets: the _first octet_ is again the magic
@@ -11085,9 +11085,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 198]
+Oberstein                  Expires 6 July 2023                [Page 198]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    # map RawSocket handshake reply (2nd octet)
@@ -11141,9 +11141,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 199]
+Oberstein                  Expires 6 July 2023                [Page 199]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        MSB   LSB
@@ -11197,9 +11197,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 200]
+Oberstein                  Expires 6 July 2023                [Page 200]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    WAMP-over-Batched-WebSocket is negotiated between Peers in the
@@ -11253,9 +11253,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 201]
+Oberstein                  Expires 6 July 2023                [Page 201]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        http://mypp.com/longpoll/open
@@ -11309,9 +11309,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 202]
+Oberstein                  Expires 6 July 2023                [Page 202]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
        http://mypp.com/longpoll/<transport_id>/receive
@@ -11365,9 +11365,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 203]
+Oberstein                  Expires 6 July 2023                [Page 203]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Upon success, the request will return with HTTP status code 202 ("no
@@ -11421,9 +11421,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 204]
+Oberstein                  Expires 6 July 2023                [Page 204]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    2.  If the string starts with a \0 character, interpret the rest
@@ -11477,9 +11477,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 205]
+Oberstein                  Expires 6 July 2023                [Page 205]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    var data_in = new Uint8Array(new ArrayBuffer(16));
@@ -11533,9 +11533,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 206]
+Oberstein                  Expires 6 July 2023                [Page 206]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    As an example, the proposed WebSocket extension "permessage-priority"
@@ -11589,9 +11589,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 207]
+Oberstein                  Expires 6 July 2023                [Page 207]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Problems such above could be avoided when WAMP supported an _option_
@@ -11645,9 +11645,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 208]
+Oberstein                  Expires 6 July 2023                [Page 208]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  PUBLISH.Arguments|list and PUBLISH.ArgumentsKw|dict
@@ -11701,9 +11701,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 209]
+Oberstein                  Expires 6 July 2023                [Page 209]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Positional arguments* (args|list)
@@ -11757,9 +11757,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 210]
+Oberstein                  Expires 6 July 2023                [Page 210]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    When successful, the procedure will return a list of WAMP session IDs
@@ -11813,9 +11813,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 211]
+Oberstein                  Expires 6 July 2023                [Page 211]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  arg (default)
@@ -11869,9 +11869,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 212]
+Oberstein                  Expires 6 July 2023                [Page 212]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *Type/Object UUIDs*
@@ -11925,9 +11925,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 213]
+Oberstein                  Expires 6 July 2023                [Page 213]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    /// An unsigned integer with 160 bits.
@@ -11981,9 +11981,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 214]
+Oberstein                  Expires 6 July 2023                [Page 214]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    The procedure will be registered under the WAMP URI
@@ -12037,9 +12037,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 215]
+Oberstein                  Expires 6 July 2023                [Page 215]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  _Interfaces_
@@ -12093,9 +12093,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 216]
+Oberstein                  Expires 6 July 2023                [Page 216]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Write me.
@@ -12149,9 +12149,9 @@ flatc -o ./schema --binary --schema --bfbs-comments --bfbs-builtins ./src
 
 
 
-Oberstein                Expires 28 January 2023              [Page 217]
+Oberstein                  Expires 6 July 2023                [Page 217]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    rpc_service IExample1 (
@@ -12205,9 +12205,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 218]
+Oberstein                  Expires 6 July 2023                [Page 218]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    +=============+===============================================+
@@ -12261,9 +12261,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 219]
+Oberstein                  Expires 6 July 2023                [Page 219]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    name: example
@@ -12317,9 +12317,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 220]
+Oberstein                  Expires 6 July 2023                [Page 220]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Removing all unwanted ZIP archive metadata can be achieved using
@@ -12373,9 +12373,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 221]
+Oberstein                  Expires 6 July 2023                [Page 221]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    Predefined WAMP reflection procedures to _describe_ resources by
@@ -12429,9 +12429,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 222]
+Oberstein                  Expires 6 July 2023                [Page 222]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    3.  Retrieve the node's N1 own domain D_N1 given the node's address
@@ -12485,9 +12485,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 223]
+Oberstein                  Expires 6 July 2023                [Page 223]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    A _Dealer_ could not perform a call, since a procedure with the given
@@ -12541,9 +12541,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 224]
+Oberstein                  Expires 6 July 2023                [Page 224]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    *  Alexander Goedde
@@ -12597,9 +12597,9 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 225]
+Oberstein                  Expires 6 July 2023                [Page 225]
 
-Internet-Draft                    WAMP                         July 2022
+Internet-Draft                    WAMP                      January 2023
 
 
    [RFC8032]  Josefsson, S., Liusvaara, I., and RFC Publisher, "Edwards-
@@ -12653,4 +12653,4 @@ Author's Address
 
 
 
-Oberstein                Expires 28 January 2023              [Page 226]
+Oberstein                  Expires 6 July 2023                [Page 226]
