@@ -26,13 +26,14 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v3
         with:
-          python-version: '3.6'
+          python-version: '3.9'
           cache: 'pip'
       - run: export PATH=$PATH:$HOME/.local/bin
       - run: export WAMP_BUILD_ID="$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})"
       - run: sudo apt update
-      - run: sudo apt install -y xml2rfc libxml2-utils libenchant-2-2 enscript
+      - run: sudo apt install -y xml2rfc libxml2-utils libenchant-2-2 enscript weasyprint libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 python3-cffi python3-brotli
       - run: pip install -r requirements.txt
+      - run: pip install 'weasyprint>=53.0'
       - run: wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
       - run: tar xvzf mmark_2.2.25_linux_amd64.tgz
       - run: rm -f ./mmark*.tgz
