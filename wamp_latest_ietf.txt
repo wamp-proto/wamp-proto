@@ -187,37 +187,37 @@ Internet-Draft                    WAMP                         July 2022
      12.3.  Publisher Identification . . . . . . . . . . . . . . . . 117
      12.4.  Publication Trust Levels . . . . . . . . . . . . . . . . 118
      12.5.  Pattern-based Subscription . . . . . . . . . . . . . . . 119
-       12.5.1.  Prefix Matching  . . . . . . . . . . . . . . . . . . 119
+       12.5.1.  Prefix Matching  . . . . . . . . . . . . . . . . . . 120
        12.5.2.  Wildcard Matching  . . . . . . . . . . . . . . . . . 120
        12.5.3.  Design Aspects . . . . . . . . . . . . . . . . . . . 121
-     12.6.  Sharded Subscription . . . . . . . . . . . . . . . . . . 121
-     12.7.  Event History  . . . . . . . . . . . . . . . . . . . . . 122
-     12.8.  Event Retention  . . . . . . . . . . . . . . . . . . . . 124
-     12.9.  Subscription Revocation  . . . . . . . . . . . . . . . . 125
-     12.10. Session Testament  . . . . . . . . . . . . . . . . . . . 126
-   13. Authentication Methods  . . . . . . . . . . . . . . . . . . . 128
-     13.1.  Ticket-based Authentication  . . . . . . . . . . . . . . 131
-     13.2.  Challenge Response Authentication  . . . . . . . . . . . 132
-     13.3.  Salted Challenge Response Authentication . . . . . . . . 136
-     13.4.  Cryptosign-based Authentication  . . . . . . . . . . . . 149
-       13.4.1.  Client Authentication  . . . . . . . . . . . . . . . 151
-       13.4.2.  TLS Channel Binding  . . . . . . . . . . . . . . . . 156
-       13.4.3.  Router Authentication  . . . . . . . . . . . . . . . 158
-       13.4.4.  Trustroots and Certificates  . . . . . . . . . . . . 158
-       13.4.5.  Remote Attestation . . . . . . . . . . . . . . . . . 167
-       13.4.6.  Example Message Exchanges  . . . . . . . . . . . . . 170
-     13.5.  Dynamic Authentication API . . . . . . . . . . . . . . . 178
-   14. Advanced Security Features  . . . . . . . . . . . . . . . . . 178
-     14.1.  Payload Passthru Mode  . . . . . . . . . . . . . . . . . 178
-     14.2.  Payload End-to-End Encryption  . . . . . . . . . . . . . 189
-   15. Advanced Transports and Serializers . . . . . . . . . . . . . 189
-     15.1.  RawSocket Transport  . . . . . . . . . . . . . . . . . . 190
-     15.2.  Message Batching . . . . . . . . . . . . . . . . . . . . 196
-     15.3.  HTTP Longpoll Transport  . . . . . . . . . . . . . . . . 197
-     15.4.  Binary support in JSON . . . . . . . . . . . . . . . . . 200
-     15.5.  Multiplexed Transport  . . . . . . . . . . . . . . . . . 202
-   16. WAMP Interfaces . . . . . . . . . . . . . . . . . . . . . . . 203
-     16.1.  WAMP IDL . . . . . . . . . . . . . . . . . . . . . . . . 204
+     12.6.  Sharded Subscription . . . . . . . . . . . . . . . . . . 122
+     12.7.  Event History  . . . . . . . . . . . . . . . . . . . . . 123
+     12.8.  Event Retention  . . . . . . . . . . . . . . . . . . . . 127
+     12.9.  Subscription Revocation  . . . . . . . . . . . . . . . . 128
+     12.10. Session Testament  . . . . . . . . . . . . . . . . . . . 129
+   13. Authentication Methods  . . . . . . . . . . . . . . . . . . . 132
+     13.1.  Ticket-based Authentication  . . . . . . . . . . . . . . 134
+     13.2.  Challenge Response Authentication  . . . . . . . . . . . 136
+     13.3.  Salted Challenge Response Authentication . . . . . . . . 140
+     13.4.  Cryptosign-based Authentication  . . . . . . . . . . . . 153
+       13.4.1.  Client Authentication  . . . . . . . . . . . . . . . 155
+       13.4.2.  TLS Channel Binding  . . . . . . . . . . . . . . . . 160
+       13.4.3.  Router Authentication  . . . . . . . . . . . . . . . 162
+       13.4.4.  Trustroots and Certificates  . . . . . . . . . . . . 162
+       13.4.5.  Remote Attestation . . . . . . . . . . . . . . . . . 171
+       13.4.6.  Example Message Exchanges  . . . . . . . . . . . . . 174
+     13.5.  Dynamic Authentication API . . . . . . . . . . . . . . . 182
+   14. Advanced Security Features  . . . . . . . . . . . . . . . . . 182
+     14.1.  Payload Passthru Mode  . . . . . . . . . . . . . . . . . 182
+     14.2.  Payload End-to-End Encryption  . . . . . . . . . . . . . 193
+   15. Advanced Transports and Serializers . . . . . . . . . . . . . 193
+     15.1.  RawSocket Transport  . . . . . . . . . . . . . . . . . . 194
+     15.2.  Message Batching . . . . . . . . . . . . . . . . . . . . 200
+     15.3.  HTTP Longpoll Transport  . . . . . . . . . . . . . . . . 201
+     15.4.  Binary support in JSON . . . . . . . . . . . . . . . . . 204
+     15.5.  Multiplexed Transport  . . . . . . . . . . . . . . . . . 206
+   16. WAMP Interfaces . . . . . . . . . . . . . . . . . . . . . . . 207
+     16.1.  WAMP IDL . . . . . . . . . . . . . . . . . . . . . . . . 208
 
 
 
@@ -226,24 +226,24 @@ Oberstein                Expires 28 January 2023                [Page 4]
 Internet-Draft                    WAMP                         July 2022
 
 
-       16.1.1.  Application Payload Typing . . . . . . . . . . . . . 204
-       16.1.2.  WAMP IDL Attributes  . . . . . . . . . . . . . . . . 207
-       16.1.3.  WAMP Service Declaration . . . . . . . . . . . . . . 211
-     16.2.  Interface Catalogs . . . . . . . . . . . . . . . . . . . 213
-       16.2.1.  Catalog Archive File . . . . . . . . . . . . . . . . 213
-       16.2.2.  Catalog Metadata . . . . . . . . . . . . . . . . . . 214
-       16.2.3.  Catalog Sharing and Publication  . . . . . . . . . . 216
-     16.3.  Interface Reflection . . . . . . . . . . . . . . . . . . 217
-   17. Router-to-Router Links  . . . . . . . . . . . . . . . . . . . 218
-   18. Advanced Profile URIs . . . . . . . . . . . . . . . . . . . . 219
-   19. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 220
-   20. Conformance Requirements  . . . . . . . . . . . . . . . . . . 220
-     20.1.  Terminology and Other Conventions  . . . . . . . . . . . 220
-   21. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 220
-   22. Normative References  . . . . . . . . . . . . . . . . . . . . 221
-   23. Informative References  . . . . . . . . . . . . . . . . . . . 222
-   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 222
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 222
+       16.1.1.  Application Payload Typing . . . . . . . . . . . . . 208
+       16.1.2.  WAMP IDL Attributes  . . . . . . . . . . . . . . . . 211
+       16.1.3.  WAMP Service Declaration . . . . . . . . . . . . . . 215
+     16.2.  Interface Catalogs . . . . . . . . . . . . . . . . . . . 217
+       16.2.1.  Catalog Archive File . . . . . . . . . . . . . . . . 217
+       16.2.2.  Catalog Metadata . . . . . . . . . . . . . . . . . . 218
+       16.2.3.  Catalog Sharing and Publication  . . . . . . . . . . 220
+     16.3.  Interface Reflection . . . . . . . . . . . . . . . . . . 221
+   17. Router-to-Router Links  . . . . . . . . . . . . . . . . . . . 222
+   18. Advanced Profile URIs . . . . . . . . . . . . . . . . . . . . 223
+   19. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 224
+   20. Conformance Requirements  . . . . . . . . . . . . . . . . . . 224
+     20.1.  Terminology and Other Conventions  . . . . . . . . . . . 224
+   21. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 224
+   22. Normative References  . . . . . . . . . . . . . . . . . . . . 225
+   23. Informative References  . . . . . . . . . . . . . . . . . . . 226
+   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 226
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 226
 
 1.  WAMP Basic Profile
 
@@ -3250,50 +3250,50 @@ Oberstein                Expires 28 January 2023               [Page 58]
 Internet-Draft                    WAMP                         July 2022
 
 
-   +=================================+========+==+===+===+====+===+====+
-   |Feature                          | Status |P | B | S | Cr | D | Ce |
-   +=================================+========+==+===+===+====+===+====+
-   |Progressive Call Results (#rpc-  | stable |  |   |   | X  | X | X  |
-   |progressive-call-results)        |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Progressive Calls (#rpc-         | alpha  |  |   |   | X  | X | X  |
-   |progressive-calls)               |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Call Timeout (#rpc-call-timeout) | alpha  |  |   |   | X  | X | X  |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Call Canceling (#rpc-call-       | alpha  |  |   |   | X  | X | X  |
-   |canceling)                       |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Caller Identification (#rpc-call-| stable |  |   |   | X  | X | X  |
-   |identification)                  |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Call Trustlevels (#rpc-call-     | alpha  |  |   |   |    | X | X  |
-   |trust-levels)                    |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Registration Meta API (#rpc-reg- | beta   |  |   |   |    | X |    |
-   |metapi)                          |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Pattern-based Registration (#rpc-| stable |  |   |   |    | X | X  |
-   |pattern-reg)                     |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Shared Registration (#rpc-shared-| beta   |  |   |   |    | X | X  |
-   |registration)                    |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Sharded Registration (##rpc-     | alpha  |  |   |   |    | X | X  |
-   |sharded-registration)            |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |Registration Revocation (#rpc-   | alpha  |  |   |   |    | X | X  |
-   |registration-revocation)         |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
-   |(Interface) Procedure Reflection | sketch |  |   |   |    | X |    |
-   |(#interface-reflection)          |        |  |   |   |    |   |    |
-   +---------------------------------+--------+--+---+---+----+---+----+
+   +==================================+========+=+===+===+====+===+====+
+   | Feature                          | Status |P| B | S | Cr | D | Ce |
+   +==================================+========+=+===+===+====+===+====+
+   | Progressive Call Results (#rpc-  | stable | |   |   | X  | X | X  |
+   | progressive-call-results)        |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Progressive Calls (#rpc-         | alpha  | |   |   | X  | X | X  |
+   | progressive-calls)               |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Call Timeout (#rpc-call-         | alpha  | |   |   | X  | X | X  |
+   | timeout)                         |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Call Canceling (#rpc-call-       | alpha  | |   |   | X  | X | X  |
+   | canceling)                       |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Caller Identification (#rpc-     | stable | |   |   | X  | X | X  |
+   | call-identification)             |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Call Trustlevels (#rpc-call-     | alpha  | |   |   |    | X | X  |
+   | trust-levels)                    |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Registration Meta API (#rpc-     | beta   | |   |   |    | X |    |
+   | reg-metapi)                      |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Pattern-based Registration       | stable | |   |   |    | X | X  |
+   | (#rpc-pattern-reg)               |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Shared Registration (#rpc-       | beta   | |   |   |    | X | X  |
+   | shared-registration)             |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Sharded Registration (##rpc-     | alpha  | |   |   |    | X | X  |
+   | sharded-registration)            |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | Registration Revocation (#rpc-   | alpha  | |   |   |    | X | X  |
+   | registration-revocation)         |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
+   | (Interface) Procedure            | sketch | |   |   |    | X |    |
+   | Reflection (#interface-          |        | |   |   |    |   |    |
+   | reflection)                      |        | |   |   |    |   |    |
+   +----------------------------------+--------+-+---+---+----+---+----+
 
                                   Table 3
 
    *Advanced PubSub Features*
-
-
 
 
 
@@ -3306,38 +3306,38 @@ Oberstein                Expires 28 January 2023               [Page 59]
 Internet-Draft                    WAMP                         July 2022
 
 
-   +================================+========+===+===+===+====+===+====+
-   |Feature                         | Status | P | B | S | Cr | D | Ce |
-   +================================+========+===+===+===+====+===+====+
-   |Subscriber Blackwhite Listing   | stable | X | X |   |    |   |    |
-   |(#pubsub-bw-listing)            |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |Publisher Exclusion (#pubsub-   | stable | X | X |   |    |   |    |
-   |pub-exclusion)                  |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |Publisher Identification        | stable | X | X | X |    |   |    |
-   |(#pubsub-pub-identification)    |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |Publication Trustlevels         | alpha  |   | X | X |    |   |    |
-   |(#pubsub-pub-trustlevels)       |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |Subscription Meta API (#pubsub- | beta   |   | X |   |    |   |    |
-   |sub-metapi)                     |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |Pattern-based Subscription      | stable |   | X | X |    |   |    |
-   |(#pattern-based-subscription)   |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |Sharded Subscription (#pubsub-  | alpha  |   | X | X |    |   |    |
-   |sharded-subscription)           |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |Event History (#pubsub-event-   | alpha  |   | X | X |    |   |    |
-   |history)                        |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
-   |(Interface) Topic Reflection    | sketch |   | X |   |    |   |    |
-   |(#interface-reflection)         |        |   |   |   |    |   |    |
-   +--------------------------------+--------+---+---+---+----+---+----+
+   +================================+========+=+===+===+====+===+====+
+   | Feature                        | Status |P| B | S | Cr | D | Ce |
+   +================================+========+=+===+===+====+===+====+
+   | Subscriber Blackwhite Listing  | stable |X| X |   |    |   |    |
+   | (#pubsub-bw-listing)           |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | Publisher Exclusion (#pubsub-  | stable |X| X |   |    |   |    |
+   | pub-exclusion)                 |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | Publisher Identification       | stable |X| X | X |    |   |    |
+   | (#pubsub-pub-identification)   |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | Publication Trustlevels        | alpha  | | X | X |    |   |    |
+   | (#pubsub-pub-trustlevels)      |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | Subscription Meta API          | beta   | | X |   |    |   |    |
+   | (#pubsub-sub-metapi)           |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | Pattern-based Subscription     | stable | | X | X |    |   |    |
+   | (#pattern-based-subscription)  |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | Sharded Subscription (#pubsub- | alpha  | | X | X |    |   |    |
+   | sharded-subscription)          |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | Event History (#pubsub-event-  | alpha  | | X | X |    |   |    |
+   | history)                       |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
+   | (Interface) Topic Reflection   | sketch | | X |   |    |   |    |
+   | (#interface-reflection)        |        | |   |   |    |   |    |
+   +--------------------------------+--------+-+---+---+----+---+----+
 
-                                  Table 4
+                                 Table 4
 
    *Other Advanced Features*
 
@@ -3450,19 +3450,19 @@ Internet-Draft                    WAMP                         July 2022
    between peer roles.  Here, "Tx" ("Rx") means the message is sent
    (received) by a peer of the respective role.
 
-   +====+=============+=========+======+==========+======+======+======+
-   |Code|Message      |Publisher|Broker|Subscriber|Caller|Dealer|Callee|
-   +====+=============+=========+======+==========+======+======+======+
-   |4   |CHALLENGE    |Rx       |Tx    |Rx        |Rx    |Tx    |Rx    |
-   +----+-------------+---------+------+----------+------+------+------+
-   |5   |AUTHENTICATE |Tx       |Rx    |Tx        |Tx    |Rx    |Tx    |
-   +----+-------------+---------+------+----------+------+------+------+
-   |49  |CANCEL       |         |      |          |Tx    |Rx    |      |
-   +----+-------------+---------+------+----------+------+------+------+
-   |69  |INTERRUPT    |         |      |          |      |Tx    |Rx    |
-   +----+-------------+---------+------+----------+------+------+------+
+   +====+============+=========+======+==========+======+======+======+
+   |Code|Message     |Publisher|Broker|Subscriber|Caller|Dealer|Callee|
+   +====+============+=========+======+==========+======+======+======+
+   |4   |CHALLENGE   |Rx       |Tx    |Rx        |Rx    |Tx    |Rx    |
+   +----+------------+---------+------+----------+------+------+------+
+   |5   |AUTHENTICATE|Tx       |Rx    |Tx        |Tx    |Rx    |Tx    |
+   +----+------------+---------+------+----------+------+------+------+
+   |49  |CANCEL      |         |      |          |Tx    |Rx    |      |
+   +----+------------+---------+------+----------+------+------+------+
+   |69  |INTERRUPT   |         |      |          |      |Tx    |Rx    |
+   +----+------------+---------+------+----------+------+------+------+
 
-                                  Table 7
+                                 Table 7
 
 
 
@@ -6623,8 +6623,48 @@ Internet-Draft                    WAMP                         July 2022
    _Subscriber_ is not aware of at the time of subscription, or which do
    not yet exist at this time.
 
+   Let's review the event publication flow.  When one peer decides to
+   publish a message to a topic, it results in a PUBLISH WAMP message
+   with fields for the Publication id, Details dictionary, and,
+   optionally, the payload arguments.
+
+   A given event received by the router from a publisher via a PUBLISH
+   message will match one or more subscriptions:
+
+   *  zero or one exact subscription
+   *  zero or more prefix subscriptions
+   *  zero or more wildcard subscriptions
+
+   The same published event is then forwarded to subscribers for every
+   matching subscription.  Thus, a given event might be sent multiple
+   times to the same client under different subscriptions.  Every
+   subscription instance, based on a topic URI and some options, has a
+   unique ID.  All subscribers of the same subscription are given the
+   same subscription ID.
+
+                            +----------+            +------------+         +----------+
+                            |          |            |   Exact    |         |Subscriber|
+                            |          |---Event--->|Subscription|----+--->|   peer   |
+                            |          |            +------------+    |    +----------+
+
+   +----------+ | | +------------+ | +----------+ |Publisher | |
+   Broker | | Wildcard | +--->|Subscriber| |
+   peer |--Publication--->| |---Event--->|Subscription|----+--->| peer |
+   +----------+ | | +------------+ | +----------+ | | +------------+ |
+   +----------+ | | | Prefix |
+   +--->|Subscriber| | |---Event--->|Subscription|-------->| peer |
+   +----------+ +------------+ +----------+
+
    If the _Broker_ and the _Subscriber_ support *pattern-based
    subscriptions*, this matching can happen by
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 119]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    *  prefix-matching policy
    *  wildcard-matching policy
@@ -6659,13 +6699,6 @@ Internet-Draft                    WAMP                         July 2022
    that has SUBSCRIBE.Topic as a _prefix_ will match the subscription,
    and potentially be delivered to _Subscribers_ on the subscription.
 
-
-
-Oberstein                Expires 28 January 2023              [Page 119]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    In the above example, events with PUBLISH.Topic
 
    *  com.myapp.topic.emergency.11
@@ -6680,6 +6713,14 @@ Internet-Draft                    WAMP                         July 2022
 
    A _Subscriber_ requests *wildcard-matching policy* with a
    subscription request by setting
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 120]
+
+Internet-Draft                    WAMP                         July 2022
+
 
        SUBSCRIBE.Options.match|string := "wildcard"
 
@@ -6713,15 +6754,6 @@ Internet-Draft                    WAMP                         July 2022
 
    will not apply for dispatching.
 
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 120]
-
-Internet-Draft                    WAMP                         July 2022
-
-
 12.5.3.  Design Aspects
 
    *No set semantics*
@@ -6737,6 +6769,14 @@ Internet-Draft                    WAMP                         July 2022
 
    When a single event matches more than one of a _Subscriber's_
    subscriptions, the event will be delivered for each subscription.
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 121]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    The _Subscriber_ can detect the delivery of that same event on
    multiple subscriptions via EVENT.PUBLISHED.Publication, which will be
@@ -6768,16 +6808,6 @@ Internet-Draft                    WAMP                         July 2022
 
    Feature status: *alpha*
 
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 121]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    Support for this feature MUST be announced by _Publishers_ (role :=
    "publisher"), _Subscribers_ (role := "subscriber") and _Brokers_
    (role := "broker") via
@@ -6796,6 +6826,14 @@ Internet-Draft                    WAMP                         July 2022
        [16, 239714735, {"rkey": "sn239019"}, "com.myapp.sensor.sn239019.
            temperature", [33.9]]
 
+
+
+
+Oberstein                Expires 28 January 2023              [Page 122]
+
+Internet-Draft                    WAMP                         July 2022
+
+
    Node keys: SUBSCRIBE.Options.nkey|string is a stable, technical *node
    key*.
 
@@ -6810,78 +6848,40 @@ Internet-Draft                    WAMP                         July 2022
 12.7.  Event History
 
    Instead of complex QoS for message delivery, a _Broker_ may provide
-   _message history_. A _Subscriber_ is responsible to handle overlaps
-   (duplicates) when it wants "exactly-once" message processing across
-   restarts.
+   _Event History_. With event history, a _Subscriber_ is responsible
+   for handling overlaps (duplicates) when it wants "exactly-once"
+   message processing across restarts.
 
-   The _Broker_ may allow for configuration on a per-topic basis.
+   The event history may be transient, or it may be persistent where it
+   survives _Broker_ restarts.
 
-   The event history may be transient or persistent message history
-   (surviving _Broker_ restarts).
+   The _Broker_ implementation may allow for configuration of event
+   history on a per-topic or per-topic-pattern basis.  Such
+   configuration could enable/disable the feature, set the event history
+   storage location, set parameters for sub-features such as
+   compression, or set the event history data retention policy.
 
-   A _Broker_ that implements _event history_ must (also) announce role
-   HELLO.roles.callee, indicate HELLO.roles.broker.history == 1 and
-   provide the following (builtin) procedures.
+   Event History saves events published to discrete subscriptions, in
+   the chronological order received by the broker.  Let us examine an
+   example.
 
-   A _Caller_ can request message history by calling the _Broker_
-   procedure
+   Subscriptions:
 
+   1.  Subscription to exact match 'com.mycompany.log.auth' topic
+   2.  Subscription to exact match 'com.mycompany.log.basket' topic
+   3.  Subscription to prefix-based 'com.mycompany.log' topic
 
+   Publication messages:
 
+   1.  Publication to topic 'com.mycompany.log.auth'.  Forwarded as
+       events to subscriptions 1 and 3.
+   2.  Publication to topic 'com.mycompany.log.basket'.  Delivered as
+       event to subscriptions 2 and 3.
+   3.  Publication to topic 'com.mycompany.log.basket'.  Delivered as
+       events to subscriptions 2 and 3.
+   4.  Publication to topic 'com.mycompany.log.basket'.  Delivered as
+       events subscriptions 2 and 3.
 
-Oberstein                Expires 28 January 2023              [Page 122]
-
-Internet-Draft                    WAMP                         July 2022
-
-
-       wamp.topic.history.last
-
-   with Arguments = [topic|uri, limit|integer] where
-
-   *  topic is the topic to retrieve event history for
-   *  limit indicates the number of last N events to retrieve
-
-   or by calling
-
-       wamp.topic.history.since
-
-   with Arguments = [topic|uri, timestamp|string] where
-
-   *  topic is the topic to retrieve event history for
-   *  timestamp indicates the UTC timestamp since when to retrieve the
-      events in the ISO-8601 format yyyy-MM-ddThh:mm:ss:SSSZ (e.g.
-      "2013-12-21T13:43:11:000Z")
-
-   or by calling
-
-       wamp.topic.history.after
-
-   with Arguments = [topic|uri, publication|id]
-
-   *  topic is the topic to retrieve event history for
-   *  publication is the id of an event which marks the start of the
-      events to retrieve from history
-
-   _FIXME_
-
-   1.  Should we use topic|uri or subscription|id in Arguments?
-       *  Since we need to be able to get history for pattern-based
-          subscriptions as well, a subscription|id makes more sense:
-          create pattern-based subscription, then get the event history
-          for this.
-       *  The only restriction then is that we may not get event history
-          without a current subscription covering the events.  This is a
-          minor inconvenience at worst.
-   2.  Can wamp.topic.history.after be implemented (efficiently) at all?
-   3.  How does that interact with pattern-based subscriptions?
-   4.  The same question as with the subscriber lists applies where: to
-       stay within our separation of roles, we need a broker + a
-       separate peer which implements the callee role.  Here we do not
-       have a mechanism to get the history from the broker.
-   5.  How are black/whitelisted sessionIDs treated?  A client which
-       requests event history will have a different sessionID than on
-       previous connections, and may receive events for which it was
-       excluded in the previous session, or not receive events for which
 
 
 
@@ -6890,16 +6890,206 @@ Oberstein                Expires 28 January 2023              [Page 123]
 Internet-Draft                    WAMP                         July 2022
 
 
-       it was whitelisted. - see https://github.com/wamp-proto/wamp-
-       proto/issues/206 (https://github.com/wamp-proto/wamp-proto/
-       issues/206)
+   5.  Publication to topic 'com.mycompany.log.checkout'.  Delivered as
+       an event to subscription 3 only.
+
+   Event History:
+
+   *  Event history for subscription 1 contains publication 1 only.
+   *  Event history for subscription 2 contains publications 2, 3, and
+      4.
+   *  Event history for subscription 3 contains all publications.
 
    *Feature Announcement*
 
-   Support for this feature MUST be announced by _Subscribers_ (role :=
-   "subscriber") and _Brokers_ (role := "broker") via
+   A _Broker_ that implements _event history_ must indicate
+   HELLO.roles.broker.features.event_history = true, must announce the
+   role HELLO.roles.callee, and must provide the meta procedures
+   described below.
 
-       HELLO.Details.roles.<role>.features.event_history|bool := true
+   *Receiving Event History*
+
+   A _Caller_ can request message history by calling the _Broker_ meta
+   procedure
+
+       wamp.subscription.get_events
+
+   With payload:
+
+   *  Arguments = [subscription|id].  The subscription id for which to
+      retrieve event history
+   *  ArgumentsKw:
+      -  reverse.  Boolean.  Optional.  Traverses events in reverse
+         order of occurrence.  The default is to traverse events in
+         order of occurrence.
+      -  limit.  Positive integer.  Optional.  Indicates the maximum
+         number of events to retrieve.  Can be used for pagination.
+      -  from_time.  RFC3339-formatted timestamp string.  Optional.
+         Only include publications occurring at the given timestamp or
+         after (using >= comparison).
+      -  after_time.  RFC3339-formatted timestamp string.  Optional.
+         Only include publications occurring after the given timestamp
+         (using > comparison).
+      -  before_time.  RFC3339-formatted timestamp string.  Optional.
+         Only include publications occurring before the given timestamp
+         (using < comparison).
+      -  until_time.  RFC3339-formatted timestamp string.  Optional.
+         Only include publications occurring before the given timestamp
+         including date itself (using <= comparison).
+      -  topic.  WAMP URI.  Optional.  For pattern-based subscriptions,
+         only include publications to the specified topic.
+
+
+
+Oberstein                Expires 28 January 2023              [Page 124]
+
+Internet-Draft                    WAMP                         July 2022
+
+
+      -  from_publication.  Positive integer.  Optional.  Events in the
+         results must have occurred at or following the event with the
+         given publication|id (includes the event with the given
+         publication|id in the results).
+      -  after_publication.  Positive integer.  Optional.  Events in the
+         results must have occurred following the event with the given
+         publication_id (excludes the event with the given
+         publication|id in the results).  Useful for pagination: pass
+         the publication|id attribute of the last event returned in the
+         previous page of results when navigating in order of occurrence
+         (reverse argument absent or false).
+      -  before_publication.  Positive integer.  Optional.  Events in
+         the results must have occurred previously to the event with the
+         given publication|id (excludes the event with the given
+         publication|id in the results).  Useful for pagination: pass
+         the publication|id attribute of the last event returned in the
+         previous page of results when navigating in reverse order of
+         occurrence (reverse=true).
+      -  until_publication.  Positive integer.  Optional.  Events in the
+         results must have occurred at or previously to the event with
+         the given publication|id (includes the event with the given
+         publication|id in the results).
+
+   It is possible to pass multiple options at the same time.  In this
+   case they will be treated as conditions with logical AND.  Note that
+   the publication|id event attribute is not ordered as it belongs to
+   the Global scope.  But since events are stored in the order they are
+   received by the broker, it is possible to find an event with the
+   specified publication|id and then return events including or
+   excluding the matched one depending on the *_publication filter
+   attributes.
+
+   The arguments payload field returned by the above RPC uses the same
+   schema: an array of Event objects containing an additional timestamp
+   string attribute in RFC3339 (https://www.ietf.org/rfc/rfc3339.txt)
+   format.  It can also be an empty array in the case where there were
+   no publications to the specified subscription, or all events were
+   filtered out by the specified criteria.  Additional general
+   information about the query may be returned via the argumentsKw
+   payload field.
+
+
+
+
+
+
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 125]
+
+Internet-Draft                    WAMP                         July 2022
+
+
+     [
+       {
+           "timestamp": "yyyy-MM-ddThh:mm:ss.SSSZ", // string with event date/time in RFC3339 format
+           "subscription": 2342423, // The subscription ID of the event
+           "publication": 32445235, // The original publication ID of the event
+           "details": {},           // The original details of the event
+           "args": [],              // The original list arguments payload of the event. May be ommited
+           "kwargs": {}             // The original key-value arguments payload of the event. May be ommited
+       }
+     ]
+
+   Clients should not rely on timestamps being unique and monotonic.
+   When events occur in quick succession, it's possible for some of them
+   to have the same timestamp.  When a router in an IoT system is
+   deployed off-grid and is not synchronized to an NTP server, it's
+   possible for the timestamps to jump backwards when the router's wall
+   clock time or time zone is manually adjusted.
+
+   In cases where the events list is too large to send as a single RPC
+   result, router implementations may provide additional options, such
+   as pagination or returning progressive results.
+
+   As the Event History feature operates on subscription|id, there can
+   be situations when there are not yet any subscribers to a topic of
+   interest, but publications to the topic occur.  In this situation,
+   the _Broker_ cannot predict that events under that topic should be
+   stored.  If the _Broker_ implementation allows configuration on a
+   per-topic basis, it may overcome this situations by preinitializing
+   history-enabled topics with "dummy" subscriptions even if there are
+   not yet any real subscribers to those topics.
+
+   Sometimes, a client may not be willing to subscribe to a topic just
+   for the purpose of obtaining a subscription id.  In that case a
+   client may use other Subscriptions Meta API RPC (#name-procedures-3)
+   for retrieving subscription IDs by topic URIs if the router supports
+   it.
+
+   *Security Aspects*
+
+   TODO/FIXME: This part of Event History needs more discussion and
+   clarification.  But at least provides some basic information to take
+   into account.
+
+   In order to request event history, a peer must be allowed to
+   subscribe to a desired subscription first.  Thus, if a peer cannot
+   subscribe to a topic resulting in a subscription, it means that it
+   cannot receive events history for that topic either.  To sidestep
+   this problem, a peer must be allowed to call related meta procedures
+
+
+
+Oberstein                Expires 28 January 2023              [Page 126]
+
+Internet-Draft                    WAMP                         July 2022
+
+
+   for obtaining the event history as described above.  Prohibited Event
+   History meta procedure calls must fail with the
+   wamp.error.not_authorized error URI.
+
+   Original publications may include additional options, such as black-
+   white-listing that triggers special event processing.  These same
+   rules must also apply to event history requests.  For example, if the
+   original publication contains eligible_authrole = 'admin', but the
+   request for history came from a peer with authrole = 'user', then
+   even if user is authorized to subscribe to the topic (and thus is
+   authorized to ask for event history), this publication must be
+   filtered out from the results of this specific request, by the router
+   side.
+
+   The black-white-listing feature also allows the filtering of event
+   delivery on a session ID basis.  In the context of event history,
+   this can result in unexpected behaviour: session ids are generated
+   randomly at runtime for every session establishment, so newly
+   connected sessions asking for event history may receive events that
+   were originally excluded, or, vice versa, may not receive expected
+   events due to session ID mismatch.  To prevent this unexpected
+   behaviour, all events published with Options.exclude|list[int] or
+   Options.eligible|list[int] should be ignored by the Event History
+   mechanism and not be saved at all.
+
+   Finally, Event History should only filter according to attributes
+   that do not change during the run time of the router, which are
+   currently authrole and authid.  Filtering based on ephemeral
+   attributes like session ID – (U+2013) and perhaps other future custom
+   attributes – (U+2013) should result in the event not being stored in
+   the history at all, to avoid unintentional leaking of event
+   information.
 
 12.8.  Event Retention
 
@@ -6916,6 +7106,14 @@ Internet-Draft                    WAMP                         July 2022
    the last-known value upon connection, rather than waiting an unknown
    period of time until it is updated.  Event Retention covers this use
    case by allowing the Publisher to mark a event as 'retained', bound
+
+
+
+Oberstein                Expires 28 January 2023              [Page 127]
+
+Internet-Draft                    WAMP                         July 2022
+
+
    to the topic it was sent to, which can be delivered upon a new client
    subscription that asks for it.  It is similar to Event History, but
    allows the publisher to decide what the most important recent event
@@ -6936,15 +7134,6 @@ Internet-Draft                    WAMP                         July 2022
    Publish.Options.retain value.  Brokers that allow event retention on
    the given topic MUST set the topic Retained Event to this if it were
    eligible to be published on the topic.
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 124]
-
-Internet-Draft                    WAMP                         July 2022
-
 
    _Subscribers_ may request access to the Retained Event by setting
    Subscribe.Options.get_retained|bool to true.  Lack of the key in
@@ -6973,6 +7162,14 @@ Internet-Draft                    WAMP                         July 2022
    granted subscription.  To achieve this, the existing UNSUBSCRIBED
    message is extended as described below.
 
+
+
+
+Oberstein                Expires 28 January 2023              [Page 128]
+
+Internet-Draft                    WAMP                         July 2022
+
+
    *Feature Announcement*
 
    Support for this feature MUST be announced by _Subscribers_ (role :=
@@ -6994,13 +7191,6 @@ Internet-Draft                    WAMP                         July 2022
    to.  So it's set to zero and another argument is appended to indicate
    which subscription to revoke.  Optionally, a reason why the
    subscription was revoked is also appended.
-
-
-
-Oberstein                Expires 28 January 2023              [Page 125]
-
-Internet-Draft                    WAMP                         July 2022
-
 
        [UNSUBSCRIBED, 0, Details|dict]
 
@@ -7028,6 +7218,14 @@ Internet-Draft                    WAMP                         July 2022
    Resumption) or destroyed (when the WAMP session no longer exists on
    the server).
 
+
+
+
+Oberstein                Expires 28 January 2023              [Page 129]
+
+Internet-Draft                    WAMP                         July 2022
+
+
    This allows clients that otherwise would not be able to know when
    other clients disconnect get a notification (for example, by using
    the WAMP Session Meta API) with a format the disconnected client
@@ -7050,13 +7248,6 @@ Internet-Draft                    WAMP                         July 2022
       destroyed.
    *  wamp.session.flush_testaments to remove the Testaments for that
       Session, either for when it is detached or destroyed.
-
-
-
-Oberstein                Expires 28 January 2023              [Page 126]
-
-Internet-Draft                    WAMP                         July 2022
-
 
    *wamp.session.add_testament*
 
@@ -7083,6 +7274,14 @@ Internet-Draft                    WAMP                         July 2022
 
    *wamp.session.flush_testaments*
 
+
+
+
+Oberstein                Expires 28 January 2023              [Page 130]
+
+Internet-Draft                    WAMP                         July 2022
+
+
    Removes testaments for the given scope:
 
    _Keyword arguments_
@@ -7103,16 +7302,6 @@ Internet-Draft                    WAMP                         July 2022
 
    yield self.call('wamp.session.add_testament',
                    'com.myapp.mytopic', ['Seeya!'], {'my_name': 'app1'})
-
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 127]
-
-Internet-Draft                    WAMP                         July 2022
-
 
    The _Router_ will then store this information on the WAMP Session,
    either in a detached or destroyed bucket, in the order they were
@@ -7141,6 +7330,14 @@ Internet-Draft                    WAMP                         July 2022
    relevant (for example, it is shutting down completely cleanly).  For
    example, a client may call wamp.session.flush_testaments:
 
+
+
+
+Oberstein                Expires 28 January 2023              [Page 131]
+
+Internet-Draft                    WAMP                         July 2022
+
+
    yield self.call('wamp.session.flush_testaments', scope='detached')
    yield self.call('wamp.session.flush_testaments', scope='destroyed')
 
@@ -7161,15 +7358,6 @@ Internet-Draft                    WAMP                         July 2022
    using external mechanisms (completely outside and independent of
    WAMP).
 
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 128]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    Some applications might want to perform their own authentication
    schemes by using basic WAMP mechanisms, e.g. by using application-
    defined remote procedure calls.
@@ -7185,6 +7373,26 @@ Internet-Draft                    WAMP                         July 2022
 
    1.  CHALLENGE
    2.  AUTHENTICATE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 132]
+
+Internet-Draft                    WAMP                         July 2022
+
 
         ,------.          ,------.
         |Client|          |Router|
@@ -7216,16 +7424,6 @@ Internet-Draft                    WAMP                         July 2022
 
    _CHALLENGE_
 
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 129]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    An authentication MAY be required for the establishment of a session.
    Such requirement MAY be based on the Realm the connection is
    requested for.
@@ -7244,6 +7442,13 @@ Internet-Draft                    WAMP                         July 2022
 
    If the authentication succeeds, the Router MUST send a WELCOME
    message, else it MUST send an ABORT message.
+
+
+
+Oberstein                Expires 28 January 2023              [Page 133]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    *Transport-level Authentication*
 
@@ -7271,17 +7476,6 @@ Internet-Draft                    WAMP                         July 2022
    the WAMP level within HELLO.Details.transport.auth|any in both
    directions (if available).
 
-
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 130]
-
-Internet-Draft                    WAMP                         July 2022
-
-
 13.1.  Ticket-based Authentication
 
    With _Ticket-based authentication_, the client needs to present the
@@ -7303,6 +7497,14 @@ Internet-Draft                    WAMP                         July 2022
    A typical authentication begins with the client sending a HELLO
    message specifying the ticket method as (one of) the authentication
    methods:
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 134]
+
+Internet-Draft                    WAMP                         July 2022
+
 
        [1, "realm1",
          {
@@ -7330,14 +7532,6 @@ Internet-Draft                    WAMP                         July 2022
 
        [4, "ticket", {}]
 
-
-
-
-Oberstein                Expires 28 January 2023              [Page 131]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    The client will send an AUTHENTICATE message containing a ticket:
 
        [5, "secret!!!", {}]
@@ -7359,6 +7553,14 @@ Internet-Draft                    WAMP                         July 2022
        ]
 
    where
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 135]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    1.  authid|string: The authentication ID the client was (actually)
        authenticated as.
@@ -7386,14 +7588,6 @@ Internet-Draft                    WAMP                         July 2022
    message specifying the wampcra method as (one of) the authentication
    methods:
 
-
-
-
-Oberstein                Expires 28 January 2023              [Page 132]
-
-Internet-Draft                    WAMP                         July 2022
-
-
        [1, "realm1",
            {
                "roles": ...,
@@ -7414,6 +7608,15 @@ Internet-Draft                    WAMP                         July 2022
    authentication, it MAY either skip forward trying other
    authentication methods (if the client announced any) or send an ABORT
    message.
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 136]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    If the server is willing to let the client authenticate using WAMP-
    CRA, and the server recognizes the provided authid, it MUST send a
@@ -7441,15 +7644,6 @@ Internet-Draft                    WAMP                         July 2022
    4.  authprovider|string: The actual provider of authentication.  For
        WAMP-CRA, this can be freely chosen by the app, e.g. userdb.
    5.  nonce|string: A random value.
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 133]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    6.  timestamp|string: The UTC timestamp (ISO8601 format) the
        authentication was started, e.g. 2014-06-22T16:51:41.643Z.
    7.  session|int: The WAMP session ID that will be assigned to the
@@ -7471,6 +7665,14 @@ Internet-Draft                    WAMP                         July 2022
 
    *  the signature matches the one expected
    *  the AUTHENTICATE message was sent in due time
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 137]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    If the authentication succeeds, the server will finally respond with
    a WELCOME message:
@@ -7497,15 +7699,6 @@ Internet-Draft                    WAMP                         July 2022
 
    1.  random information (the nonce) to make WAMP-CRA robust against
        replay attacks
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 134]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    2.  timestamp information (the timestamp) to allow WAMP-CRA timeout
        on authentication requests that took too long
    3.  session information (the session) to bind the authentication to a
@@ -7526,6 +7719,16 @@ Internet-Draft                    WAMP                         July 2022
    The third party would, upon receiving a signing request, simply check
    if the client is already authenticated, and if so, create a signature
    for WAMP-CRA.
+
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 138]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    In this case, the secret is actually shared between the WAMP server
    who wants to authenticate clients using WAMP-CRA and the third party
@@ -7551,17 +7754,6 @@ Internet-Draft                    WAMP                         July 2022
    When the password is salted, the server will during WAMP-CRA send a
    CHALLENGE message containing additional information:
 
-
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 135]
-
-Internet-Draft                    WAMP                         July 2022
-
-
        [4, "wampcra",
            {
                "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
@@ -7578,6 +7770,21 @@ Internet-Draft                    WAMP                         July 2022
    The CHALLENGE.Details.salt|string is the password salt in use.  The
    CHALLENGE.Details.keylen|int and CHALLENGE.Details.iterations|int are
    parameters for the PBKDF2 algorithm.
+
+
+
+
+
+
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 139]
+
+Internet-Draft                    WAMP                         July 2022
+
 
 13.3.  Salted Challenge Response Authentication
 
@@ -7611,13 +7818,6 @@ Internet-Draft                    WAMP                         July 2022
    that user on all servers using the same salt.  That's why it's
    important to use a per-user random salt.
 
-
-
-Oberstein                Expires 28 January 2023              [Page 136]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    An eavesdropper that captures a user authentication exchange has
    enough information to mount an offline, brute-force dictionary attack
    for that particular user.  If passwords are sufficiently strong, the
@@ -7634,6 +7834,13 @@ Internet-Draft                    WAMP                         July 2022
    same between client and router.
 
    *Deviations from RFC5802*
+
+
+
+Oberstein                Expires 28 January 2023              [Page 140]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    1.  To simplify parsing, SCRAM attributes in the authentication
        exchange messages are encoded as members of the Options/Details
@@ -7664,16 +7871,6 @@ Internet-Draft                    WAMP                         July 2022
 
    *authmethod Type String*
 
-
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 137]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    "wamp-scram" SHALL be used as the authmethod type string for WAMP-
    SCRAM authentication.  Announcement by routers of WAMP-SCRAM support
    is outside the scope of this document.
@@ -7693,6 +7890,13 @@ Internet-Draft                    WAMP                         July 2022
 
    See RFC4086 (https://tools.ietf.org/html/rfc4086) (_Randomness
    Requirements for Security_) for best practices concerning randomness.
+
+
+
+Oberstein                Expires 28 January 2023              [Page 141]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    *Salts*
 
@@ -7722,14 +7926,6 @@ Internet-Draft                    WAMP                         July 2022
    (https://tools.ietf.org/html/rfc5056) (_On the Use of Channel
    Bindings_) for an in-depth discussion.
 
-
-
-
-Oberstein                Expires 28 January 2023              [Page 138]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    RFC5929 (https://tools.ietf.org/html/rfc5929) defines binding types
    for use with TLS transports, of which tls-unique and tls-server-end-
    point are applicable for WAMP-SCRAM.  For each channel binding type,
@@ -7747,6 +7943,16 @@ Internet-Draft                    WAMP                         July 2022
    purpose.
 
    _The tls-unique Channel Binding Type_
+
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 142]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    The tls-unique channel binding type allows the WAMP layer to
    establish that the other peer is authenticating over the same, unique
@@ -7777,19 +7983,32 @@ Internet-Draft                    WAMP                         July 2022
 
    *Authentication Exchange*
 
-
-
-
-
-Oberstein                Expires 28 January 2023              [Page 139]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    WAMP-SCRAM uses a single round of challenge/response pairs after the
    client authentication request and before the authentication outcome.
 
    The mapping of RFC5802 messages to WAMP messages is as follows:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 143]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    +========================================+==============+
    | SCRAM Message                          | WAMP Message |
@@ -7834,17 +8053,18 @@ Internet-Draft                    WAMP                         July 2022
        RFC5802.
    2.  authextra.nonce|string: A base64-encoded sequence of random
        octets, generated by the client.  See Nonces (#nonces).
-
-
-
-Oberstein                Expires 28 January 2023              [Page 140]
-
-Internet-Draft                    WAMP                         July 2022
-
-
    3.  authextra.channel_binding|string: Optional string containing the
        desired channel binding type.  See Channel Bindings (#channel-
        binding).
+
+
+
+
+
+Oberstein                Expires 28 January 2023              [Page 144]
+
+Internet-Draft                    WAMP                         July 2022
+
 
    Upon receiving the HELLO message, the server MUST terminate the
    authentication process by sending an ABORT message under any of the
@@ -7890,17 +8110,18 @@ Internet-Draft                    WAMP                         July 2022
        This value is stored with each user record in the authentication
        database.  See Key Derivation Functions (#key-derivation-
        functions).
+   4.  iterations|integer: The execution time cost factor to use for
+       generating the SaltedPassword hash.  This value is stored with
+       each user record in the authentication database.
 
 
 
-Oberstein                Expires 28 January 2023              [Page 141]
+
+Oberstein                Expires 28 January 2023              [Page 145]
 
 Internet-Draft                    WAMP                         July 2022
 
 
-   4.  iterations|integer: The execution time cost factor to use for
-       generating the SaltedPassword hash.  This value is stored with
-       each user record in the authentication database.
    5.  memory|integer: The memory cost factor to use for generating the
        SaltedPassword hash.  This is only used by the Argon2 key
        derivation function, where it is stored with each user record in
@@ -7947,14 +8168,16 @@ Internet-Draft                    WAMP                         July 2022
    Upon receiving the AUTHENTICATE message, the server SHALL then check
    that:
 
+   *  The AUTHENTICATE message was received in due time.
 
 
-Oberstein                Expires 28 January 2023              [Page 142]
+
+
+Oberstein                Expires 28 January 2023              [Page 146]
 
 Internet-Draft                    WAMP                         July 2022
 
 
-   *  The AUTHENTICATE message was received in due time.
    *  The ClientProof passed via the Signature|string argument is
       validated against the StoredKey and ServerKey stored in the
       authentication database.  See SCRAM Algorithms (#scram-
@@ -8005,7 +8228,8 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 143]
+
+Oberstein                Expires 28 January 2023              [Page 147]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8061,7 +8285,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 144]
+Oberstein                Expires 28 January 2023              [Page 148]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8117,7 +8341,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 145]
+Oberstein                Expires 28 January 2023              [Page 149]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8173,7 +8397,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 146]
+Oberstein                Expires 28 January 2023              [Page 150]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8229,7 +8453,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 147]
+Oberstein                Expires 28 January 2023              [Page 151]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8285,7 +8509,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 148]
+Oberstein                Expires 28 January 2023              [Page 152]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8341,7 +8565,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 149]
+Oberstein                Expires 28 January 2023              [Page 153]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8397,7 +8621,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 150]
+Oberstein                Expires 28 January 2023              [Page 154]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8453,7 +8677,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 151]
+Oberstein                Expires 28 January 2023              [Page 155]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8509,7 +8733,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 152]
+Oberstein                Expires 28 January 2023              [Page 156]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8565,7 +8789,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 153]
+Oberstein                Expires 28 January 2023              [Page 157]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8621,7 +8845,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 154]
+Oberstein                Expires 28 January 2023              [Page 158]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8677,7 +8901,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 155]
+Oberstein                Expires 28 January 2023              [Page 159]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8733,7 +8957,7 @@ test_vectors_1 = [
 
 
 
-Oberstein                Expires 28 January 2023              [Page 156]
+Oberstein                Expires 28 January 2023              [Page 160]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8789,7 +9013,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 157]
+Oberstein                Expires 28 January 2023              [Page 161]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8845,7 +9069,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 158]
+Oberstein                Expires 28 January 2023              [Page 162]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8901,7 +9125,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 159]
+Oberstein                Expires 28 January 2023              [Page 163]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -8957,7 +9181,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 160]
+Oberstein                Expires 28 January 2023              [Page 164]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9013,7 +9237,7 @@ optional hierarchical chain of intermediate certificates
 
 
 
-Oberstein                Expires 28 January 2023              [Page 161]
+Oberstein                Expires 28 January 2023              [Page 165]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9069,7 +9293,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 162]
+Oberstein                Expires 28 January 2023              [Page 166]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9125,7 +9349,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 163]
+Oberstein                Expires 28 January 2023              [Page 167]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9181,7 +9405,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 164]
+Oberstein                Expires 28 January 2023              [Page 168]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9237,7 +9461,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 165]
+Oberstein                Expires 28 January 2023              [Page 169]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9293,7 +9517,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 166]
+Oberstein                Expires 28 January 2023              [Page 170]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9349,7 +9573,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 167]
+Oberstein                Expires 28 January 2023              [Page 171]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9405,7 +9629,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 168]
+Oberstein                Expires 28 January 2023              [Page 172]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9461,7 +9685,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 169]
+Oberstein                Expires 28 January 2023              [Page 173]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9517,7 +9741,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 28 January 2023              [Page 170]
+Oberstein                Expires 28 January 2023              [Page 174]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9573,7 +9797,7 @@ WAMP-Receive(3735119691078036, client01@example.com) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 171]
+Oberstein                Expires 28 January 2023              [Page 175]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9629,7 +9853,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 28 January 2023              [Page 172]
+Oberstein                Expires 28 January 2023              [Page 176]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9685,7 +9909,7 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 173]
+Oberstein                Expires 28 January 2023              [Page 177]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9741,7 +9965,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 28 January 2023              [Page 174]
+Oberstein                Expires 28 January 2023              [Page 178]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9797,7 +10021,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 175]
+Oberstein                Expires 28 January 2023              [Page 179]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9853,7 +10077,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 176]
+Oberstein                Expires 28 January 2023              [Page 180]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9909,7 +10133,7 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 177]
+Oberstein                Expires 28 January 2023              [Page 181]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -9965,7 +10189,7 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
 
 
 
-Oberstein                Expires 28 January 2023              [Page 178]
+Oberstein                Expires 28 January 2023              [Page 182]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10021,7 +10245,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 179]
+Oberstein                Expires 28 January 2023              [Page 183]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10077,7 +10301,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 180]
+Oberstein                Expires 28 January 2023              [Page 184]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10133,7 +10357,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 181]
+Oberstein                Expires 28 January 2023              [Page 185]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10189,7 +10413,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 182]
+Oberstein                Expires 28 January 2023              [Page 186]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10245,7 +10469,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 183]
+Oberstein                Expires 28 January 2023              [Page 187]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10301,7 +10525,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 184]
+Oberstein                Expires 28 January 2023              [Page 188]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10357,7 +10581,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 185]
+Oberstein                Expires 28 January 2023              [Page 189]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10413,7 +10637,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 186]
+Oberstein                Expires 28 January 2023              [Page 190]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10469,7 +10693,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 187]
+Oberstein                Expires 28 January 2023              [Page 191]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10525,7 +10749,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 188]
+Oberstein                Expires 28 January 2023              [Page 192]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10581,7 +10805,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 189]
+Oberstein                Expires 28 January 2023              [Page 193]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10637,7 +10861,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 190]
+Oberstein                Expires 28 January 2023              [Page 194]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10693,7 +10917,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 191]
+Oberstein                Expires 28 January 2023              [Page 195]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10749,7 +10973,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 192]
+Oberstein                Expires 28 January 2023              [Page 196]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10805,7 +11029,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 193]
+Oberstein                Expires 28 January 2023              [Page 197]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10861,7 +11085,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 194]
+Oberstein                Expires 28 January 2023              [Page 198]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10917,7 +11141,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 195]
+Oberstein                Expires 28 January 2023              [Page 199]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -10973,7 +11197,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 196]
+Oberstein                Expires 28 January 2023              [Page 200]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11029,7 +11253,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 197]
+Oberstein                Expires 28 January 2023              [Page 201]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11085,7 +11309,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 198]
+Oberstein                Expires 28 January 2023              [Page 202]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11141,7 +11365,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 199]
+Oberstein                Expires 28 January 2023              [Page 203]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11197,7 +11421,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 200]
+Oberstein                Expires 28 January 2023              [Page 204]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11253,7 +11477,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 201]
+Oberstein                Expires 28 January 2023              [Page 205]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11309,7 +11533,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 202]
+Oberstein                Expires 28 January 2023              [Page 206]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11365,7 +11589,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 203]
+Oberstein                Expires 28 January 2023              [Page 207]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11421,7 +11645,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 204]
+Oberstein                Expires 28 January 2023              [Page 208]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11477,7 +11701,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 205]
+Oberstein                Expires 28 January 2023              [Page 209]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11533,7 +11757,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 206]
+Oberstein                Expires 28 January 2023              [Page 210]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11589,7 +11813,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 207]
+Oberstein                Expires 28 January 2023              [Page 211]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11645,7 +11869,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 208]
+Oberstein                Expires 28 January 2023              [Page 212]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11701,7 +11925,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 209]
+Oberstein                Expires 28 January 2023              [Page 213]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11757,7 +11981,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 210]
+Oberstein                Expires 28 January 2023              [Page 214]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11813,7 +12037,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 211]
+Oberstein                Expires 28 January 2023              [Page 215]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11869,7 +12093,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 212]
+Oberstein                Expires 28 January 2023              [Page 216]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11925,7 +12149,7 @@ flatc -o ./schema --binary --schema --bfbs-comments --bfbs-builtins ./src
 
 
 
-Oberstein                Expires 28 January 2023              [Page 213]
+Oberstein                Expires 28 January 2023              [Page 217]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -11981,7 +12205,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 214]
+Oberstein                Expires 28 January 2023              [Page 218]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12037,7 +12261,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 215]
+Oberstein                Expires 28 January 2023              [Page 219]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12093,7 +12317,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 216]
+Oberstein                Expires 28 January 2023              [Page 220]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12149,7 +12373,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 217]
+Oberstein                Expires 28 January 2023              [Page 221]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12205,7 +12429,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 218]
+Oberstein                Expires 28 January 2023              [Page 222]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12261,7 +12485,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 219]
+Oberstein                Expires 28 January 2023              [Page 223]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12317,7 +12541,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 220]
+Oberstein                Expires 28 January 2023              [Page 224]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12373,7 +12597,7 @@ Internet-Draft                    WAMP                         July 2022
 
 
 
-Oberstein                Expires 28 January 2023              [Page 221]
+Oberstein                Expires 28 January 2023              [Page 225]
 
 Internet-Draft                    WAMP                         July 2022
 
@@ -12429,4 +12653,4 @@ Author's Address
 
 
 
-Oberstein                Expires 28 January 2023              [Page 222]
+Oberstein                Expires 28 January 2023              [Page 226]

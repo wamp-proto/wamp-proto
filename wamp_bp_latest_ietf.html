@@ -6,29 +6,27 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>WAMP Basic Profile</title>
 <meta content="Tobias Oberstein" name="author">
-<meta content="xml2rfc 3.12.10" name="generator">
+<meta content="xml2rfc 3.15.3" name="generator">
 <meta content="WebSocket, WAMP, real-time, RPC, PubSub" name="keyword">
 <meta content="WAMP" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.10
-    Python 3.6.15
+  xml2rfc 3.15.3
+    Python 3.9.16
     appdirs 1.4.4
     ConfigArgParse 1.5.3
     google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
-    Jinja2 2.11.3
-    kitchen 1.2.6
-    lxml 4.9.1
-    MarkupSafe 2.0.1
-    pycairo 1.20.1
+    Jinja2 3.1.2
+    lxml 4.9.2
+    MarkupSafe 2.1.1
     pycountry 22.3.5
-    pyflakes 2.5.0
     PyYAML 6.0
-    requests 2.27.1
-    setuptools 40.6.2
+    requests 2.28.1
+    setuptools 58.1.0
     six 1.16.0
-    WeasyPrint 0.42.3
+    wcwidth 0.2.5
+    weasyprint 57.2
 -->
 <link href="./.build/wamp-bp.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -40,7 +38,7 @@
   this can be consolidated so that style settings occur only in one place, but
   for now the contents of this file consists first of the initial CSS work as
   provided to the RFC Formatter (xml2rfc) work, followed by itemized and
-  commented changes found necssary during the development of the v3
+  commented changes found necessary during the development of the v3
   formatters.
 
 */
@@ -49,6 +47,12 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+:root {
+  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
+  --font-serif: 'Noto Serif', 'Times', 'Times New Roman', serif;
+  --font-mono: 'Roboto Mono', Courier, 'Courier New', monospace;
+}
 
 @viewport {
   zoom: 1.0;
@@ -67,7 +71,7 @@ body {
   color: #222;
   background-color: #fff;
   font-size: 14px;
-  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
   scroll-behavior: smooth;
 }
@@ -156,6 +160,15 @@ div {
 svg {
   display: block;
 }
+svg[font-family~="serif" i], svg [font-family~="serif" i] {
+  font-family: var(--font-serif);
+}
+svg[font-family~="sans-serif" i], svg [font-family~="sans-serif" i] {
+  font-family: var(--font-sans);
+}
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
 .alignCenter.art-text {
   background-color: #f9f9f9;
   border: 1px solid #eee;
@@ -170,6 +183,7 @@ svg {
   margin: 1em 0;
 }
 .alignCenter > *:first-child {
+  display: table;
   border: none;
   margin: 0 auto;
 }
@@ -248,9 +262,9 @@ a.selfRef:hover {
 } */
 
 /* Figures */
-tt, code, pre, code {
+tt, code, pre {
   background-color: #f9f9f9;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-mono);
 }
 pre {
   border: 1px solid #eee;
@@ -487,7 +501,7 @@ address.vcard .nameRole {
   margin-left: 0;
 }
 address.vcard .label {
-  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  font-family: var(--font-sans);
   margin: 0.5em 0;
 }
 address.vcard .type {
@@ -650,7 +664,7 @@ hr.addr {
   figure {
     overflow: scroll;
   }
-  pre.breakable {
+  .breakable pre {
     break-inside: auto;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -720,7 +734,7 @@ hr.addr {
   size: A4;
   margin-bottom: 45mm;
   padding-top: 20px;
-  /* The follwing is commented out here, but set appropriately by in code, as
+  /* The following is commented out here, but set appropriately by in code, as
      the content depends on the document */
   /*
   @top-left {
@@ -820,12 +834,12 @@ section {
 }
 
 /* prevent monospace from becoming overly large */
-tt, code, pre, code {
+tt, code, pre {
   font-size: 95%;
 }
 
 /* Fix the height/width aspect for ascii art*/
-pre.sourcecode,
+.sourcecode pre,
 .art-text pre {
   line-height: 1.12;
 }
@@ -861,7 +875,7 @@ table th.text-right {
   text-align: right;
 }
 
-/* Make the alternative author contact informatio look less like just another
+/* Make the alternative author contact information look less like just another
    author, and group it closer with the primary author contact information */
 .alternative-contact {
   margin: 0.5em 0 0.25em 0;
@@ -1043,6 +1057,7 @@ aside > p {
 /* Sourcecode margin in print, when there's no pilcrow */
 @media print {
   .artwork,
+  .artwork > pre,
   .sourcecode {
     margin-bottom: 1em;
   }
@@ -1057,12 +1072,15 @@ ol.type-A { list-style-type: upper-alpha; }
 ol.type-i { list-style-type: lower-roman; }
 ol.type-I { list-style-type: lower-roman; }
 /* Apply the print table and row borders in general, on request from the RPC,
-and increase the contrast between border and odd row background sligthtly */
+and increase the contrast between border and odd row background slightly */
 table {
   border: 1px solid #ddd;
 }
 td {
   border-top: 1px solid #ddd;
+}
+tr {
+  break-inside: avoid;
 }
 tr:nth-child(2n+1) > td {
   background-color: #f8f8f8;
@@ -1114,7 +1132,7 @@ span.break, dd.break {
     break-before: auto;
   }
 }
-/* Text in compact lists should not get extra bottim margin space,
+/* Text in compact lists should not get extra bottom margin space,
    since that would makes the list not compact */
 ul.compact p, .ulCompact p,
 ol.compact p, .olCompact p {
@@ -1139,7 +1157,7 @@ p tt, p code, li tt, li code {
 pre {
    margin-top: 0.5px;
 }
-/* Tweak the comact list text */
+/* Tweak the compact list text */
 ul.compact, .ulCompact,
 ol.compact, .olCompact,
 dl.compact, .dlCompact {
@@ -1157,7 +1175,7 @@ dd > div.artwork:first-child,
 dd > aside:first-child,
 dd > figure:first-child,
 dd > ol:first-child,
-dd > div:first-child > pre.sourcecode,
+dd > div.sourcecode:first-child,
 dd > table:first-child,
 dd > ul:first-child {
   clear: left;
@@ -1171,13 +1189,13 @@ li > p {
   margin-bottom: 0.5em
 }
 /* Don't let p margin spill out from inside list items */
-li > p:last-of-type {
+li > p:last-of-type:only-child {
   margin-bottom: 0;
 }
 </style>
 <link href="rfc-local.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="xml2rfc">
 <script src="metadata.min.js"></script>
 <table class="ears">
 <thead><tr>
@@ -1265,294 +1283,294 @@ li > p:last-of-type {
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-wamp-basic-profile" class="xref">WAMP Basic Profile</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-wamp-basic-profile" class="internal xref">WAMP Basic Profile</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
-                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-basic-vs-advanced-profile" class="xref">Basic vs Advanced Profile</a></p>
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-basic-vs-advanced-profile" class="internal xref">Basic vs Advanced Profile</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
-                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="xref">1.2</a>.  <a href="#name-introduction" class="xref">Introduction</a></p>
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3">
-                <p id="section-toc.1-1.1.2.3.1"><a href="#section-1.3" class="xref">1.3</a>.  <a href="#name-protocol-overview" class="xref">Protocol Overview</a></p>
+                <p id="section-toc.1-1.1.2.3.1"><a href="#section-1.3" class="auto internal xref">1.3</a>.  <a href="#name-protocol-overview" class="internal xref">Protocol Overview</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3.2.1">
-                    <p id="section-toc.1-1.1.2.3.2.1.1" class="keepWithNext"><a href="#section-1.3.1" class="xref">1.3.1</a>.  <a href="#name-realms-sessions-and-transpo" class="xref">Realms, Sessions and Transports</a></p>
+                    <p id="section-toc.1-1.1.2.3.2.1.1" class="keepWithNext"><a href="#section-1.3.1" class="auto internal xref">1.3.1</a>.  <a href="#name-realms-sessions-and-transpo" class="internal xref">Realms, Sessions and Transports</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3.2.2">
-                    <p id="section-toc.1-1.1.2.3.2.2.1"><a href="#section-1.3.2" class="xref">1.3.2</a>.  <a href="#name-peers-and-roles" class="xref">Peers and Roles</a></p>
+                    <p id="section-toc.1-1.1.2.3.2.2.1"><a href="#section-1.3.2" class="auto internal xref">1.3.2</a>.  <a href="#name-peers-and-roles" class="internal xref">Peers and Roles</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3.2.3">
-                    <p id="section-toc.1-1.1.2.3.2.3.1"><a href="#section-1.3.3" class="xref">1.3.3</a>.  <a href="#name-publish-subscribe" class="xref">Publish &amp; Subscribe</a></p>
+                    <p id="section-toc.1-1.1.2.3.2.3.1"><a href="#section-1.3.3" class="auto internal xref">1.3.3</a>.  <a href="#name-publish-subscribe" class="internal xref">Publish &amp; Subscribe</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.3.2.4">
-                    <p id="section-toc.1-1.1.2.3.2.4.1"><a href="#section-1.3.4" class="xref">1.3.4</a>.  <a href="#name-remote-procedure-calls" class="xref">Remote Procedure Calls</a></p>
+                    <p id="section-toc.1-1.1.2.3.2.4.1"><a href="#section-1.3.4" class="auto internal xref">1.3.4</a>.  <a href="#name-remote-procedure-calls" class="internal xref">Remote Procedure Calls</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4">
-                <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="xref">1.4</a>.  <a href="#name-design-aspects" class="xref">Design Aspects</a></p>
+                <p id="section-toc.1-1.1.2.4.1"><a href="#section-1.4" class="auto internal xref">1.4</a>.  <a href="#name-design-aspects" class="internal xref">Design Aspects</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.1">
-                    <p id="section-toc.1-1.1.2.4.2.1.1"><a href="#section-1.4.1" class="xref">1.4.1</a>.  <a href="#name-application-code" class="xref">Application Code</a></p>
+                    <p id="section-toc.1-1.1.2.4.2.1.1"><a href="#section-1.4.1" class="auto internal xref">1.4.1</a>.  <a href="#name-application-code" class="internal xref">Application Code</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.2">
-                    <p id="section-toc.1-1.1.2.4.2.2.1"><a href="#section-1.4.2" class="xref">1.4.2</a>.  <a href="#name-language-agnostic" class="xref">Language Agnostic</a></p>
+                    <p id="section-toc.1-1.1.2.4.2.2.1"><a href="#section-1.4.2" class="auto internal xref">1.4.2</a>.  <a href="#name-language-agnostic" class="internal xref">Language Agnostic</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.3">
-                    <p id="section-toc.1-1.1.2.4.2.3.1"><a href="#section-1.4.3" class="xref">1.4.3</a>.  <a href="#name-symmetric-messaging" class="xref">Symmetric Messaging</a></p>
+                    <p id="section-toc.1-1.1.2.4.2.3.1"><a href="#section-1.4.3" class="auto internal xref">1.4.3</a>.  <a href="#name-symmetric-messaging" class="internal xref">Symmetric Messaging</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.4">
-                    <p id="section-toc.1-1.1.2.4.2.4.1"><a href="#section-1.4.4" class="xref">1.4.4</a>.  <a href="#name-peers-with-multiple-roles" class="xref">Peers with multiple Roles</a></p>
+                    <p id="section-toc.1-1.1.2.4.2.4.1"><a href="#section-1.4.4" class="auto internal xref">1.4.4</a>.  <a href="#name-peers-with-multiple-roles" class="internal xref">Peers with multiple Roles</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.5">
-                    <p id="section-toc.1-1.1.2.4.2.5.1"><a href="#section-1.4.5" class="xref">1.4.5</a>.  <a href="#name-router-implementation-speci" class="xref">Router Implementation Specifics</a></p>
+                    <p id="section-toc.1-1.1.2.4.2.5.1"><a href="#section-1.4.5" class="auto internal xref">1.4.5</a>.  <a href="#name-router-implementation-speci" class="internal xref">Router Implementation Specifics</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.6">
-                    <p id="section-toc.1-1.1.2.4.2.6.1"><a href="#section-1.4.6" class="xref">1.4.6</a>.  <a href="#name-relationship-to-websocket" class="xref">Relationship to WebSocket</a></p>
+                    <p id="section-toc.1-1.1.2.4.2.6.1"><a href="#section-1.4.6" class="auto internal xref">1.4.6</a>.  <a href="#name-relationship-to-websocket" class="internal xref">Relationship to WebSocket</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-building-blocks" class="xref">Building Blocks</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-building-blocks" class="internal xref">Building Blocks</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-identifiers" class="xref">Identifiers</a></p>
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-identifiers" class="internal xref">Identifiers</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.1">
-                    <p id="section-toc.1-1.2.2.1.2.1.1"><a href="#section-2.1.1" class="xref">2.1.1</a>.  <a href="#name-uris" class="xref">URIs</a></p>
+                    <p id="section-toc.1-1.2.2.1.2.1.1"><a href="#section-2.1.1" class="auto internal xref">2.1.1</a>.  <a href="#name-uris" class="internal xref">URIs</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.2">
-                    <p id="section-toc.1-1.2.2.1.2.2.1"><a href="#section-2.1.2" class="xref">2.1.2</a>.  <a href="#name-ids" class="xref">IDs</a></p>
+                    <p id="section-toc.1-1.2.2.1.2.2.1"><a href="#section-2.1.2" class="auto internal xref">2.1.2</a>.  <a href="#name-ids" class="internal xref">IDs</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
-                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-serializers" class="xref">Serializers</a></p>
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-serializers" class="internal xref">Serializers</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
-                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-transports" class="xref">Transports</a></p>
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-transports" class="internal xref">Transports</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.1">
-                    <p id="section-toc.1-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="xref">2.3.1</a>.  <a href="#name-websocket-transport" class="xref">WebSocket Transport</a></p>
+                    <p id="section-toc.1-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="auto internal xref">2.3.1</a>.  <a href="#name-websocket-transport" class="internal xref">WebSocket Transport</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.2">
-                    <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="xref">2.3.2</a>.  <a href="#name-transport-and-session-lifet" class="xref">Transport and Session Lifetime</a></p>
+                    <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="auto internal xref">2.3.2</a>.  <a href="#name-transport-and-session-lifet" class="internal xref">Transport and Session Lifetime</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.3">
-                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="xref">2.3.3</a>.  <a href="#name-protocol-errors" class="xref">Protocol errors</a></p>
+                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="auto internal xref">2.3.3</a>.  <a href="#name-protocol-errors" class="internal xref">Protocol errors</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-messages" class="xref">Messages</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-messages" class="internal xref">Messages</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-extensibility" class="xref">Extensibility</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-extensibility" class="internal xref">Extensibility</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-no-polymorphism" class="xref">No Polymorphism</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-no-polymorphism" class="internal xref">No Polymorphism</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-structure" class="xref">Structure</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-structure" class="internal xref">Structure</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
-                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-message-definitions" class="xref">Message Definitions</a></p>
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-message-definitions" class="internal xref">Message Definitions</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.1">
-                    <p id="section-toc.1-1.3.2.4.2.1.1"><a href="#section-3.4.1" class="xref">3.4.1</a>.  <a href="#name-session-lifecycle" class="xref">Session Lifecycle</a></p>
+                    <p id="section-toc.1-1.3.2.4.2.1.1"><a href="#section-3.4.1" class="auto internal xref">3.4.1</a>.  <a href="#name-session-lifecycle" class="internal xref">Session Lifecycle</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.2">
-                    <p id="section-toc.1-1.3.2.4.2.2.1"><a href="#section-3.4.2" class="xref">3.4.2</a>.  <a href="#name-publish-subscribe-2" class="xref">Publish &amp; Subscribe</a></p>
+                    <p id="section-toc.1-1.3.2.4.2.2.1"><a href="#section-3.4.2" class="auto internal xref">3.4.2</a>.  <a href="#name-publish-subscribe-2" class="internal xref">Publish &amp; Subscribe</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.3">
-                    <p id="section-toc.1-1.3.2.4.2.3.1"><a href="#section-3.4.3" class="xref">3.4.3</a>.  <a href="#name-routed-remote-procedure-cal" class="xref">Routed Remote Procedure Calls</a></p>
+                    <p id="section-toc.1-1.3.2.4.2.3.1"><a href="#section-3.4.3" class="auto internal xref">3.4.3</a>.  <a href="#name-routed-remote-procedure-cal" class="internal xref">Routed Remote Procedure Calls</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
-                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="xref">3.5</a>.  <a href="#name-message-codes-and-direction" class="xref">Message Codes and Direction</a></p>
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-message-codes-and-direction" class="internal xref">Message Codes and Direction</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6">
-                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="xref">3.6</a>.  <a href="#name-extension-messages" class="xref">Extension Messages</a></p>
+                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-extension-messages" class="internal xref">Extension Messages</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7">
-                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="xref">3.7</a>.  <a href="#name-empty-arguments-and-keyword" class="xref">Empty Arguments and Keyword Arguments</a></p>
+                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-empty-arguments-and-keyword" class="internal xref">Empty Arguments and Keyword Arguments</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-sessions" class="xref">Sessions</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-sessions" class="internal xref">Sessions</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-session-establishment" class="xref">Session Establishment</a></p>
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-session-establishment" class="internal xref">Session Establishment</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.1">
-                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="xref">4.1.1</a>.  <a href="#name-hello-2" class="xref">HELLO</a></p>
+                    <p id="section-toc.1-1.4.2.1.2.1.1"><a href="#section-4.1.1" class="auto internal xref">4.1.1</a>.  <a href="#name-hello-2" class="internal xref">HELLO</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.2">
-                    <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="xref">4.1.2</a>.  <a href="#name-welcome-2" class="xref">WELCOME</a></p>
+                    <p id="section-toc.1-1.4.2.1.2.2.1"><a href="#section-4.1.2" class="auto internal xref">4.1.2</a>.  <a href="#name-welcome-2" class="internal xref">WELCOME</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1.2.3">
-                    <p id="section-toc.1-1.4.2.1.2.3.1"><a href="#section-4.1.3" class="xref">4.1.3</a>.  <a href="#name-abort-2" class="xref">ABORT</a></p>
+                    <p id="section-toc.1-1.4.2.1.2.3.1"><a href="#section-4.1.3" class="auto internal xref">4.1.3</a>.  <a href="#name-abort-2" class="internal xref">ABORT</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-session-closing" class="xref">Session Closing</a></p>
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-session-closing" class="internal xref">Session Closing</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.1">
-                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="xref">4.2.1</a>.  <a href="#name-goodbye-2" class="xref">GOODBYE</a></p>
+                    <p id="section-toc.1-1.4.2.2.2.1.1"><a href="#section-4.2.1" class="auto internal xref">4.2.1</a>.  <a href="#name-goodbye-2" class="internal xref">GOODBYE</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-publish-and-subscribe" class="xref">Publish and Subscribe</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-publish-and-subscribe" class="internal xref">Publish and Subscribe</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-subscribing-and-unsubscribi" class="xref">Subscribing and Unsubscribing</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-subscribing-and-unsubscribi" class="internal xref">Subscribing and Unsubscribing</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.1">
-                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="xref">5.1.1</a>.  <a href="#name-subscribe-2" class="xref">SUBSCRIBE</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-subscribe-2" class="internal xref">SUBSCRIBE</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
-                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="xref">5.1.2</a>.  <a href="#name-subscribed-2" class="xref">SUBSCRIBED</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-subscribed-2" class="internal xref">SUBSCRIBED</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.3">
-                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="xref">5.1.3</a>.  <a href="#name-subscribe-error" class="xref">Subscribe ERROR</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.3.1"><a href="#section-5.1.3" class="auto internal xref">5.1.3</a>.  <a href="#name-subscribe-error" class="internal xref">Subscribe ERROR</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.4">
-                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="xref">5.1.4</a>.  <a href="#name-unsubscribe-2" class="xref">UNSUBSCRIBE</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.4.1"><a href="#section-5.1.4" class="auto internal xref">5.1.4</a>.  <a href="#name-unsubscribe-2" class="internal xref">UNSUBSCRIBE</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.5">
-                    <p id="section-toc.1-1.5.2.1.2.5.1"><a href="#section-5.1.5" class="xref">5.1.5</a>.  <a href="#name-unsubscribed-2" class="xref">UNSUBSCRIBED</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.5.1"><a href="#section-5.1.5" class="auto internal xref">5.1.5</a>.  <a href="#name-unsubscribed-2" class="internal xref">UNSUBSCRIBED</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.6">
-                    <p id="section-toc.1-1.5.2.1.2.6.1"><a href="#section-5.1.6" class="xref">5.1.6</a>.  <a href="#name-unsubscribe-error" class="xref">Unsubscribe ERROR</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.6.1"><a href="#section-5.1.6" class="auto internal xref">5.1.6</a>.  <a href="#name-unsubscribe-error" class="internal xref">Unsubscribe ERROR</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-publishing-and-events" class="xref">Publishing and Events</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-publishing-and-events" class="internal xref">Publishing and Events</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.1">
-                    <p id="section-toc.1-1.5.2.2.2.1.1"><a href="#section-5.2.1" class="xref">5.2.1</a>.  <a href="#name-publish-2" class="xref">PUBLISH</a></p>
+                    <p id="section-toc.1-1.5.2.2.2.1.1"><a href="#section-5.2.1" class="auto internal xref">5.2.1</a>.  <a href="#name-publish-2" class="internal xref">PUBLISH</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.2">
-                    <p id="section-toc.1-1.5.2.2.2.2.1"><a href="#section-5.2.2" class="xref">5.2.2</a>.  <a href="#name-published-2" class="xref">PUBLISHED</a></p>
+                    <p id="section-toc.1-1.5.2.2.2.2.1"><a href="#section-5.2.2" class="auto internal xref">5.2.2</a>.  <a href="#name-published-2" class="internal xref">PUBLISHED</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.3">
-                    <p id="section-toc.1-1.5.2.2.2.3.1"><a href="#section-5.2.3" class="xref">5.2.3</a>.  <a href="#name-publish-error" class="xref">Publish ERROR</a></p>
+                    <p id="section-toc.1-1.5.2.2.2.3.1"><a href="#section-5.2.3" class="auto internal xref">5.2.3</a>.  <a href="#name-publish-error" class="internal xref">Publish ERROR</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2.2.4">
-                    <p id="section-toc.1-1.5.2.2.2.4.1"><a href="#section-5.2.4" class="xref">5.2.4</a>.  <a href="#name-event-2" class="xref">EVENT</a></p>
+                    <p id="section-toc.1-1.5.2.2.2.4.1"><a href="#section-5.2.4" class="auto internal xref">5.2.4</a>.  <a href="#name-event-2" class="internal xref">EVENT</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-remote-procedure-calls-2" class="xref">Remote Procedure Calls</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-remote-procedure-calls-2" class="internal xref">Remote Procedure Calls</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-registering-and-unregisteri" class="xref">Registering and Unregistering</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-registering-and-unregisteri" class="internal xref">Registering and Unregistering</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
-                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="xref">6.1.1</a>.  <a href="#name-register-2" class="xref">REGISTER</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-register-2" class="internal xref">REGISTER</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
-                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="xref">6.1.2</a>.  <a href="#name-registered-2" class="xref">REGISTERED</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-registered-2" class="internal xref">REGISTERED</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.3">
-                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="xref">6.1.3</a>.  <a href="#name-register-error" class="xref">Register ERROR</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-register-error" class="internal xref">Register ERROR</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.4">
-                    <p id="section-toc.1-1.6.2.1.2.4.1"><a href="#section-6.1.4" class="xref">6.1.4</a>.  <a href="#name-unregister-2" class="xref">UNREGISTER</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.4.1"><a href="#section-6.1.4" class="auto internal xref">6.1.4</a>.  <a href="#name-unregister-2" class="internal xref">UNREGISTER</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.5">
-                    <p id="section-toc.1-1.6.2.1.2.5.1"><a href="#section-6.1.5" class="xref">6.1.5</a>.  <a href="#name-unregistered-2" class="xref">UNREGISTERED</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.5.1"><a href="#section-6.1.5" class="auto internal xref">6.1.5</a>.  <a href="#name-unregistered-2" class="internal xref">UNREGISTERED</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.6">
-                    <p id="section-toc.1-1.6.2.1.2.6.1"><a href="#section-6.1.6" class="xref">6.1.6</a>.  <a href="#name-unregister-error" class="xref">Unregister ERROR</a></p>
+                    <p id="section-toc.1-1.6.2.1.2.6.1"><a href="#section-6.1.6" class="auto internal xref">6.1.6</a>.  <a href="#name-unregister-error" class="internal xref">Unregister ERROR</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-calling-and-invocations" class="xref">Calling and Invocations</a></p>
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-calling-and-invocations" class="internal xref">Calling and Invocations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.1">
-                    <p id="section-toc.1-1.6.2.2.2.1.1"><a href="#section-6.2.1" class="xref">6.2.1</a>.  <a href="#name-call-2" class="xref">CALL</a></p>
+                    <p id="section-toc.1-1.6.2.2.2.1.1"><a href="#section-6.2.1" class="auto internal xref">6.2.1</a>.  <a href="#name-call-2" class="internal xref">CALL</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.2">
-                    <p id="section-toc.1-1.6.2.2.2.2.1"><a href="#section-6.2.2" class="xref">6.2.2</a>.  <a href="#name-invocation-2" class="xref">INVOCATION</a></p>
+                    <p id="section-toc.1-1.6.2.2.2.2.1"><a href="#section-6.2.2" class="auto internal xref">6.2.2</a>.  <a href="#name-invocation-2" class="internal xref">INVOCATION</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.3">
-                    <p id="section-toc.1-1.6.2.2.2.3.1"><a href="#section-6.2.3" class="xref">6.2.3</a>.  <a href="#name-yield-2" class="xref">YIELD</a></p>
+                    <p id="section-toc.1-1.6.2.2.2.3.1"><a href="#section-6.2.3" class="auto internal xref">6.2.3</a>.  <a href="#name-yield-2" class="internal xref">YIELD</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.4">
-                    <p id="section-toc.1-1.6.2.2.2.4.1"><a href="#section-6.2.4" class="xref">6.2.4</a>.  <a href="#name-result-2" class="xref">RESULT</a></p>
+                    <p id="section-toc.1-1.6.2.2.2.4.1"><a href="#section-6.2.4" class="auto internal xref">6.2.4</a>.  <a href="#name-result-2" class="internal xref">RESULT</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.5">
-                    <p id="section-toc.1-1.6.2.2.2.5.1"><a href="#section-6.2.5" class="xref">6.2.5</a>.  <a href="#name-invocation-error" class="xref">Invocation ERROR</a></p>
+                    <p id="section-toc.1-1.6.2.2.2.5.1"><a href="#section-6.2.5" class="auto internal xref">6.2.5</a>.  <a href="#name-invocation-error" class="internal xref">Invocation ERROR</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.6">
-                    <p id="section-toc.1-1.6.2.2.2.6.1"><a href="#section-6.2.6" class="xref">6.2.6</a>.  <a href="#name-call-error" class="xref">Call ERROR</a></p>
+                    <p id="section-toc.1-1.6.2.2.2.6.1"><a href="#section-6.2.6" class="auto internal xref">6.2.6</a>.  <a href="#name-call-error" class="internal xref">Call ERROR</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-security-model" class="xref">Security Model</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-model" class="internal xref">Security Model</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-ordering-guarantees" class="xref">Ordering Guarantees</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-ordering-guarantees" class="internal xref">Ordering Guarantees</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-transport-encryption-and-in" class="xref">Transport Encryption and Integrity</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-transport-encryption-and-in" class="internal xref">Transport Encryption and Integrity</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
-                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="xref">7.3</a>.  <a href="#name-router-authentication" class="xref">Router Authentication</a></p>
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-router-authentication" class="internal xref">Router Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
-                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="xref">7.4</a>.  <a href="#name-client-authentication" class="xref">Client Authentication</a></p>
+                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-client-authentication" class="internal xref">Client Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5">
-                <p id="section-toc.1-1.7.2.5.1"><a href="#section-7.5" class="xref">7.5</a>.  <a href="#name-routers-are-trusted" class="xref">Routers are trusted</a></p>
+                <p id="section-toc.1-1.7.2.5.1"><a href="#section-7.5" class="auto internal xref">7.5</a>.  <a href="#name-routers-are-trusted" class="internal xref">Routers are trusted</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-basic-profile-uris" class="xref">Basic Profile URIs</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-basic-profile-uris" class="internal xref">Basic Profile URIs</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-conformance-requirements" class="xref">Conformance Requirements</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-conformance-requirements" class="internal xref">Conformance Requirements</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="xref">10.1</a>.  <a href="#name-terminology-and-other-conve" class="xref">Terminology and Other Conventions</a></p>
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-terminology-and-other-conve" class="internal xref">Terminology and Other Conventions</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="xref">11</a>. <a href="#name-contributors" class="xref">Contributors</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-contributors" class="internal xref">Contributors</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-12" class="xref">12</a>. <a href="#name-normative-references" class="xref">Normative References</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-13" class="xref">13</a>. <a href="#name-informative-references" class="xref">Informative References</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#appendix-A" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a></p>
+            <p id="section-toc.1-1.14.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1606,7 +1624,7 @@ li > p:last-of-type {
 <p id="section-1.3.1-2">A Session is a transient conversation between two Peers attached to a Realm and running over a Transport.<a href="#section-1.3.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.3.1-3">A Transport connects two WAMP Peers and provides a channel over which WAMP messages for a WAMP Session can flow in both directions.<a href="#section-1.3.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.3.1-4">WAMP can run over any Transport which is message-based, bidirectional,  reliable and ordered.<a href="#section-1.3.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.3.1-5">The default transport for WAMP is WebSocket <span>[<a href="#RFC6455" class="xref">RFC6455</a>]</span>, where WAMP is an <a href="http://www.iana.org/assignments/websocket/websocket.xml">officially registered</a> subprotocol.<a href="#section-1.3.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.3.1-5">The default transport for WAMP is WebSocket <span>[<a href="#RFC6455" class="cite xref">RFC6455</a>]</span>, where WAMP is an <a href="http://www.iana.org/assignments/websocket/websocket.xml">officially registered</a> subprotocol.<a href="#section-1.3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="peers-and-roles">
@@ -1797,8 +1815,8 @@ The Callee will execute the procedure using the supplied arguments to the call a
             <li id="section-2.1.1-2.3">Errors<a href="#section-2.1.1-2.3" class="pilcrow">¶</a>
 </li>
           </ol>
-<p id="section-2.1.1-3">These are identified in WAMP using Uniform Resource Identifiers (URIs) <span>[<a href="#RFC3986" class="xref">RFC3986</a>]</span> that MUST be Unicode strings.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.1.1-4">When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 <span>[<a href="#RFC3629" class="xref">RFC3629</a>]</span> encoding.<a href="#section-2.1.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-3">These are identified in WAMP using Uniform Resource Identifiers (URIs) <span>[<a href="#RFC3986" class="cite xref">RFC3986</a>]</span> that MUST be Unicode strings.<a href="#section-2.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.1-4">When using JSON as WAMP serialization format, URIs (as other strings) are transmitted in UTF-8 <span>[<a href="#RFC3629" class="cite xref">RFC3629</a>]</span> encoding.<a href="#section-2.1.1-4" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-5"><em>Examples</em><a href="#section-2.1.1-5" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-2.1.1-6.1">
@@ -1817,25 +1835,25 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <p id="section-2.1.1-10">URI components (the parts between two <code>.</code>s, the head part up to the first <code>.</code>, the tail part after the last <code>.</code>) MUST NOT contain a <code>.</code>, <code>#</code> or whitespace characters and MUST NOT be empty (zero-length strings).<a href="#section-2.1.1-10" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-11">The restriction not to allow <code>.</code> in component strings is due to the fact that <code>.</code> is used to separate components, and WAMP associates semantics with resource hierarchies, such as in pattern-based subscriptions that are part of the Advanced Profile. The restriction not to allow empty (zero-length) strings as components is due to the fact that this may be used to denote wildcard components with pattern-based subscriptions and registrations in the Advanced Profile. The character <code>#</code> is not allowed since this is reserved for internal use by Dealers and Brokers.<a href="#section-2.1.1-11" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-12">As an example, the following regular expression could be used in Python to check URIs according to the above rules, when <strong>NO empty URI components are allowed</strong>:<a href="#section-2.1.1-12" class="pilcrow">¶</a></p>
-<div id="section-2.1.1-13">
-<pre class="lang-python sourcecode">pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
+<div class="lang-python sourcecode" id="section-2.1.1-13">
+<pre>pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
 </pre><a href="#section-2.1.1-13" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1.1-14">When <strong>empty URI components are allowed</strong> (which is the case for specific messages that are part of the Advanced Profile), this following regular expression can be used (shown used in Python):<a href="#section-2.1.1-14" class="pilcrow">¶</a></p>
-<div id="section-2.1.1-15">
-<pre class="lang-python sourcecode">pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
+<div class="lang-python sourcecode" id="section-2.1.1-15">
+<pre>pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
 </pre><a href="#section-2.1.1-15" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1.1-16"><strong>Strict URIs</strong><a href="#section-2.1.1-16" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-17">While the above rules MUST be followed, following a stricter URI rule is recommended: URI components SHOULD only contain lower-case letters, digits and <code>_</code>.<a href="#section-2.1.1-17" class="pilcrow">¶</a></p>
 <p id="section-2.1.1-18">As an example, the following regular expression could be used in Python to check URIs according to the above rules, when <strong>NO empty URI components are allowed</strong>:<a href="#section-2.1.1-18" class="pilcrow">¶</a></p>
-<div id="section-2.1.1-19">
-<pre class="lang-python sourcecode">pattern = re.compile(r"^([0-9a-z_]+\.)*([0-9a-z_]+)$")
+<div class="lang-python sourcecode" id="section-2.1.1-19">
+<pre>pattern = re.compile(r"^([0-9a-z_]+\.)*([0-9a-z_]+)$")
 </pre><a href="#section-2.1.1-19" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1.1-20">When <strong>empty URI components are allowed</strong>, which is the case for specific messages that are part of the Advanced Profile, the following regular expression can be used (shown in Python):<a href="#section-2.1.1-20" class="pilcrow">¶</a></p>
-<div id="section-2.1.1-21">
-<pre class="lang-python sourcecode">pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
+<div class="lang-python sourcecode" id="section-2.1.1-21">
+<pre>pattern = re.compile(r"^(([0-9a-z_]+\.)|\.)*([0-9a-z_]+)?$")
 </pre><a href="#section-2.1.1-21" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1.1-22">Following the suggested regular expression for <strong>strict URIs</strong> will make URI components valid identifiers in most languages (modulo URIs starting with a digit and language keywords) and the use of lower-case only will make those identifiers unique in languages that have case-insensitive identifiers. Following this suggestion can allow implementations to map topics, procedures and errors to the language environment in a completely transparent way.<a href="#section-2.1.1-22" class="pilcrow">¶</a></p>
@@ -2013,11 +2031,11 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </li>
         </ol>
 <p id="section-2.2-8">Other bindings for serialization may be defined in the WAMP Advanced Profile.<a href="#section-2.2-8" class="pilcrow">¶</a></p>
-<p id="section-2.2-9">With JSON serialization, each WAMP message is serialized according to the JSON specification as described in <span>[<a href="#RFC7159" class="xref">RFC7159</a>]</span>.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
+<p id="section-2.2-9">With JSON serialization, each WAMP message is serialized according to the JSON specification as described in <span>[<a href="#RFC7159" class="cite xref">RFC7159</a>]</span>.<a href="#section-2.2-9" class="pilcrow">¶</a></p>
 <p id="section-2.2-10">Further, binary data follows a convention for conversion to JSON strings. For details see the Appendix.<a href="#section-2.2-10" class="pilcrow">¶</a></p>
 <p id="section-2.2-11">With <a href="https://msgpack.org/">MessagePack</a> serialization, each WAMP message is serialized according to the <a href="https://github.com/msgpack/msgpack/blob/master/spec.md">MessagePack specification</a>.<a href="#section-2.2-11" class="pilcrow">¶</a></p>
 <p id="section-2.2-12">Version 5 or later of MessagePack MUST BE used, since this version is able to differentiate between strings and binary values.<a href="#section-2.2-12" class="pilcrow">¶</a></p>
-<p id="section-2.2-13">With CBOR serialization, each WAMP message is serialized according to the CBOR specification as described in <span>[<a href="#RFC8949" class="xref">RFC8949</a>]</span>.<a href="#section-2.2-13" class="pilcrow">¶</a></p>
+<p id="section-2.2-13">With CBOR serialization, each WAMP message is serialized according to the CBOR specification as described in <span>[<a href="#RFC8949" class="cite xref">RFC8949</a>]</span>.<a href="#section-2.2-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="transports">
@@ -2042,9 +2060,9 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
           <h4 id="name-websocket-transport">
 <a href="#section-2.3.1" class="section-number selfRef">2.3.1. </a><a href="#name-websocket-transport" class="section-name selfRef">WebSocket Transport</a>
           </h4>
-<p id="section-2.3.1-1">The default transport binding for WAMP is WebSocket (<span>[<a href="#RFC6455" class="xref">RFC6455</a>]</span>).<a href="#section-2.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.1-1">The default transport binding for WAMP is WebSocket (<span>[<a href="#RFC6455" class="cite xref">RFC6455</a>]</span>).<a href="#section-2.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.3.1-2">In the Basic Profile, WAMP messages are transmitted as WebSocket messages: each WAMP message is transmitted as a separate WebSocket message (not WebSocket frame). The Advanced Profile may define other modes, e.g. a <strong>batched mode</strong> where multiple WAMP messages are transmitted via single WebSocket message.<a href="#section-2.3.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.3.1-3">The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism (<span>[<a href="#RFC6455" class="xref">RFC6455</a>]</span> section 4).<a href="#section-2.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.3.1-3">The WAMP protocol MUST BE negotiated during the WebSocket opening handshake between Peers using the WebSocket subprotocol negotiation mechanism (<span>[<a href="#RFC6455" class="cite xref">RFC6455</a>]</span> section 4).<a href="#section-2.3.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.3.1-4">WAMP uses the following WebSocket subprotocol identifiers (for unbatched modes):<a href="#section-2.3.1-4" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-2.3.1-5.1">
@@ -4583,7 +4601,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <p id="section-10-1">All diagrams, examples, and notes in this specification are non-normative, as are all sections explicitly marked non-normative. Everything else in this specification is normative.<a href="#section-10-1" class="pilcrow">¶</a></p>
 <p id="section-10-2">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in
-this document are to be interpreted as described in RFC 2119 <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span>.<a href="#section-10-2" class="pilcrow">¶</a></p>
+this document are to be interpreted as described in RFC 2119 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span>.<a href="#section-10-2" class="pilcrow">¶</a></p>
 <p id="section-10-3">Requirements phrased in the imperative as part of algorithms (such as "strip any leading space characters" or "return false and abort these steps") are to be interpreted with the meaning of the key word ("MUST", "SHOULD", "MAY", etc.) used in introducing the algorithm.<a href="#section-10-3" class="pilcrow">¶</a></p>
 <p id="section-10-4">Conformance requirements phrased as algorithms or specific steps MAY  be implemented in any manner, so long as the end result is equivalent.<a href="#section-10-4" class="pilcrow">¶</a></p>
 <div id="terminology-and-other-conventions">

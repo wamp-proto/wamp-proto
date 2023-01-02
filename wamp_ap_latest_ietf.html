@@ -6,29 +6,27 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>WAMP Advanced Profile</title>
 <meta content="Tobias Oberstein" name="author">
-<meta content="xml2rfc 3.12.10" name="generator">
+<meta content="xml2rfc 3.15.3" name="generator">
 <meta content="WebSocket, WAMP, real-time, RPC, PubSub" name="keyword">
 <meta content="WAMP" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.12.10
-    Python 3.6.15
+  xml2rfc 3.15.3
+    Python 3.9.16
     appdirs 1.4.4
     ConfigArgParse 1.5.3
     google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
-    Jinja2 2.11.3
-    kitchen 1.2.6
-    lxml 4.9.1
-    MarkupSafe 2.0.1
-    pycairo 1.20.1
+    Jinja2 3.1.2
+    lxml 4.9.2
+    MarkupSafe 2.1.1
     pycountry 22.3.5
-    pyflakes 2.5.0
     PyYAML 6.0
-    requests 2.27.1
-    setuptools 40.6.2
+    requests 2.28.1
+    setuptools 58.1.0
     six 1.16.0
-    WeasyPrint 0.42.3
+    wcwidth 0.2.5
+    weasyprint 57.2
 -->
 <link href="./.build/wamp-ap.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -40,7 +38,7 @@
   this can be consolidated so that style settings occur only in one place, but
   for now the contents of this file consists first of the initial CSS work as
   provided to the RFC Formatter (xml2rfc) work, followed by itemized and
-  commented changes found necssary during the development of the v3
+  commented changes found necessary during the development of the v3
   formatters.
 
 */
@@ -49,6 +47,12 @@
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+:root {
+  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
+  --font-serif: 'Noto Serif', 'Times', 'Times New Roman', serif;
+  --font-mono: 'Roboto Mono', Courier, 'Courier New', monospace;
+}
 
 @viewport {
   zoom: 1.0;
@@ -67,7 +71,7 @@ body {
   color: #222;
   background-color: #fff;
   font-size: 14px;
-  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
   scroll-behavior: smooth;
 }
@@ -156,6 +160,15 @@ div {
 svg {
   display: block;
 }
+svg[font-family~="serif" i], svg [font-family~="serif" i] {
+  font-family: var(--font-serif);
+}
+svg[font-family~="sans-serif" i], svg [font-family~="sans-serif" i] {
+  font-family: var(--font-sans);
+}
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
 .alignCenter.art-text {
   background-color: #f9f9f9;
   border: 1px solid #eee;
@@ -170,6 +183,7 @@ svg {
   margin: 1em 0;
 }
 .alignCenter > *:first-child {
+  display: table;
   border: none;
   margin: 0 auto;
 }
@@ -248,9 +262,9 @@ a.selfRef:hover {
 } */
 
 /* Figures */
-tt, code, pre, code {
+tt, code, pre {
   background-color: #f9f9f9;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-mono);
 }
 pre {
   border: 1px solid #eee;
@@ -487,7 +501,7 @@ address.vcard .nameRole {
   margin-left: 0;
 }
 address.vcard .label {
-  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  font-family: var(--font-sans);
   margin: 0.5em 0;
 }
 address.vcard .type {
@@ -650,7 +664,7 @@ hr.addr {
   figure {
     overflow: scroll;
   }
-  pre.breakable {
+  .breakable pre {
     break-inside: auto;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -720,7 +734,7 @@ hr.addr {
   size: A4;
   margin-bottom: 45mm;
   padding-top: 20px;
-  /* The follwing is commented out here, but set appropriately by in code, as
+  /* The following is commented out here, but set appropriately by in code, as
      the content depends on the document */
   /*
   @top-left {
@@ -820,12 +834,12 @@ section {
 }
 
 /* prevent monospace from becoming overly large */
-tt, code, pre, code {
+tt, code, pre {
   font-size: 95%;
 }
 
 /* Fix the height/width aspect for ascii art*/
-pre.sourcecode,
+.sourcecode pre,
 .art-text pre {
   line-height: 1.12;
 }
@@ -861,7 +875,7 @@ table th.text-right {
   text-align: right;
 }
 
-/* Make the alternative author contact informatio look less like just another
+/* Make the alternative author contact information look less like just another
    author, and group it closer with the primary author contact information */
 .alternative-contact {
   margin: 0.5em 0 0.25em 0;
@@ -1043,6 +1057,7 @@ aside > p {
 /* Sourcecode margin in print, when there's no pilcrow */
 @media print {
   .artwork,
+  .artwork > pre,
   .sourcecode {
     margin-bottom: 1em;
   }
@@ -1057,12 +1072,15 @@ ol.type-A { list-style-type: upper-alpha; }
 ol.type-i { list-style-type: lower-roman; }
 ol.type-I { list-style-type: lower-roman; }
 /* Apply the print table and row borders in general, on request from the RPC,
-and increase the contrast between border and odd row background sligthtly */
+and increase the contrast between border and odd row background slightly */
 table {
   border: 1px solid #ddd;
 }
 td {
   border-top: 1px solid #ddd;
+}
+tr {
+  break-inside: avoid;
 }
 tr:nth-child(2n+1) > td {
   background-color: #f8f8f8;
@@ -1114,7 +1132,7 @@ span.break, dd.break {
     break-before: auto;
   }
 }
-/* Text in compact lists should not get extra bottim margin space,
+/* Text in compact lists should not get extra bottom margin space,
    since that would makes the list not compact */
 ul.compact p, .ulCompact p,
 ol.compact p, .olCompact p {
@@ -1139,7 +1157,7 @@ p tt, p code, li tt, li code {
 pre {
    margin-top: 0.5px;
 }
-/* Tweak the comact list text */
+/* Tweak the compact list text */
 ul.compact, .ulCompact,
 ol.compact, .olCompact,
 dl.compact, .dlCompact {
@@ -1157,7 +1175,7 @@ dd > div.artwork:first-child,
 dd > aside:first-child,
 dd > figure:first-child,
 dd > ol:first-child,
-dd > div:first-child > pre.sourcecode,
+dd > div.sourcecode:first-child,
 dd > table:first-child,
 dd > ul:first-child {
   clear: left;
@@ -1171,13 +1189,13 @@ li > p {
   margin-bottom: 0.5em
 }
 /* Don't let p margin spill out from inside list items */
-li > p:last-of-type {
+li > p:last-of-type:only-child {
   margin-bottom: 0;
 }
 </style>
 <link href="rfc-local.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="xml2rfc">
 <script src="metadata.min.js"></script>
 <table class="ears">
 <thead><tr>
@@ -1265,317 +1283,317 @@ li > p:last-of-type {
         </h2>
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
-            <p id="section-toc.1-1.1.1"><a href="#section-1" class="xref">1</a>.  <a href="#name-wamp-advanced-profile" class="xref">WAMP Advanced Profile</a></p>
+            <p id="section-toc.1-1.1.1"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-wamp-advanced-profile" class="internal xref">WAMP Advanced Profile</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
-                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="xref">1.1</a>.  <a href="#name-feature-announcement" class="xref">Feature Announcement</a></p>
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-feature-announcement" class="internal xref">Feature Announcement</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
-                <p id="section-toc.1-1.1.2.2.1"><a href="#section-1.2" class="xref">1.2</a>.  <a href="#name-additional-messages" class="xref">Additional Messages</a></p>
+                <p id="section-toc.1-1.1.2.2.1"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-additional-messages" class="internal xref">Additional Messages</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.1">
-                    <p id="section-toc.1-1.1.2.2.2.1.1" class="keepWithNext"><a href="#section-1.2.1" class="xref">1.2.1</a>.  <a href="#name-challenge" class="xref">CHALLENGE</a></p>
+                    <p id="section-toc.1-1.1.2.2.2.1.1" class="keepWithNext"><a href="#section-1.2.1" class="auto internal xref">1.2.1</a>.  <a href="#name-challenge" class="internal xref">CHALLENGE</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.2">
-                    <p id="section-toc.1-1.1.2.2.2.2.1" class="keepWithNext"><a href="#section-1.2.2" class="xref">1.2.2</a>.  <a href="#name-authenticate" class="xref">AUTHENTICATE</a></p>
+                    <p id="section-toc.1-1.1.2.2.2.2.1" class="keepWithNext"><a href="#section-1.2.2" class="auto internal xref">1.2.2</a>.  <a href="#name-authenticate" class="internal xref">AUTHENTICATE</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.3">
-                    <p id="section-toc.1-1.1.2.2.2.3.1"><a href="#section-1.2.3" class="xref">1.2.3</a>.  <a href="#name-cancel" class="xref">CANCEL</a></p>
+                    <p id="section-toc.1-1.1.2.2.2.3.1"><a href="#section-1.2.3" class="auto internal xref">1.2.3</a>.  <a href="#name-cancel" class="internal xref">CANCEL</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2.2.4">
-                    <p id="section-toc.1-1.1.2.2.2.4.1"><a href="#section-1.2.4" class="xref">1.2.4</a>.  <a href="#name-interrupt" class="xref">INTERRUPT</a></p>
+                    <p id="section-toc.1-1.1.2.2.2.4.1"><a href="#section-1.2.4" class="auto internal xref">1.2.4</a>.  <a href="#name-interrupt" class="internal xref">INTERRUPT</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1"><a href="#section-2" class="xref">2</a>.  <a href="#name-meta-api" class="xref">Meta API</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-meta-api" class="internal xref">Meta API</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
-                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="xref">2.1</a>.  <a href="#name-session-meta-api" class="xref">Session Meta API</a></p>
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-session-meta-api" class="internal xref">Session Meta API</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.1">
-                    <p id="section-toc.1-1.2.2.1.2.1.1"><a href="#section-2.1.1" class="xref">2.1.1</a>.  <a href="#name-events" class="xref">Events</a></p>
+                    <p id="section-toc.1-1.2.2.1.2.1.1"><a href="#section-2.1.1" class="auto internal xref">2.1.1</a>.  <a href="#name-events" class="internal xref">Events</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1.2.2">
-                    <p id="section-toc.1-1.2.2.1.2.2.1"><a href="#section-2.1.2" class="xref">2.1.2</a>.  <a href="#name-procedures" class="xref">Procedures</a></p>
+                    <p id="section-toc.1-1.2.2.1.2.2.1"><a href="#section-2.1.2" class="auto internal xref">2.1.2</a>.  <a href="#name-procedures" class="internal xref">Procedures</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
-                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="xref">2.2</a>.  <a href="#name-registration-meta-api" class="xref">Registration Meta API</a></p>
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-registration-meta-api" class="internal xref">Registration Meta API</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.1">
-                    <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="xref">2.2.1</a>.  <a href="#name-events-2" class="xref">Events</a></p>
+                    <p id="section-toc.1-1.2.2.2.2.1.1"><a href="#section-2.2.1" class="auto internal xref">2.2.1</a>.  <a href="#name-events-2" class="internal xref">Events</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2.2.2">
-                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="xref">2.2.2</a>.  <a href="#name-procedures-2" class="xref">Procedures</a></p>
+                    <p id="section-toc.1-1.2.2.2.2.2.1"><a href="#section-2.2.2" class="auto internal xref">2.2.2</a>.  <a href="#name-procedures-2" class="internal xref">Procedures</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
-                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="xref">2.3</a>.  <a href="#name-subscriptions-meta-api" class="xref">Subscriptions Meta API</a></p>
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-subscriptions-meta-api" class="internal xref">Subscriptions Meta API</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.1">
-                    <p id="section-toc.1-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="xref">2.3.1</a>.  <a href="#name-events-3" class="xref">Events</a></p>
+                    <p id="section-toc.1-1.2.2.3.2.1.1"><a href="#section-2.3.1" class="auto internal xref">2.3.1</a>.  <a href="#name-events-3" class="internal xref">Events</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.2">
-                    <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="xref">2.3.2</a>.  <a href="#name-procedures-3" class="xref">Procedures</a></p>
+                    <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="auto internal xref">2.3.2</a>.  <a href="#name-procedures-3" class="internal xref">Procedures</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1"><a href="#section-3" class="xref">3</a>.  <a href="#name-advanced-rpc" class="xref">Advanced RPC</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-advanced-rpc" class="internal xref">Advanced RPC</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="xref">3.1</a>.  <a href="#name-progressive-call-results" class="xref">Progressive Call Results</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-progressive-call-results" class="internal xref">Progressive Call Results</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
-                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="xref">3.2</a>.  <a href="#name-progressive-calls" class="xref">Progressive Calls</a></p>
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-progressive-calls" class="internal xref">Progressive Calls</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
-                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="xref">3.3</a>.  <a href="#name-call-timeouts" class="xref">Call Timeouts</a></p>
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-call-timeouts" class="internal xref">Call Timeouts</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
-                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="xref">3.4</a>.  <a href="#name-call-canceling" class="xref">Call Canceling</a></p>
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-call-canceling" class="internal xref">Call Canceling</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
-                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="xref">3.5</a>.  <a href="#name-call-re-routing" class="xref">Call Re-Routing</a></p>
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-call-re-routing" class="internal xref">Call Re-Routing</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6">
-                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="xref">3.6</a>.  <a href="#name-caller-identification" class="xref">Caller Identification</a></p>
+                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-caller-identification" class="internal xref">Caller Identification</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7">
-                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="xref">3.7</a>.  <a href="#name-call-trust-levels" class="xref">Call Trust Levels</a></p>
+                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-call-trust-levels" class="internal xref">Call Trust Levels</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.8">
-                <p id="section-toc.1-1.3.2.8.1"><a href="#section-3.8" class="xref">3.8</a>.  <a href="#name-pattern-based-registrations" class="xref">Pattern-based Registrations</a></p>
+                <p id="section-toc.1-1.3.2.8.1"><a href="#section-3.8" class="auto internal xref">3.8</a>.  <a href="#name-pattern-based-registrations" class="internal xref">Pattern-based Registrations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.8.2.1">
-                    <p id="section-toc.1-1.3.2.8.2.1.1"><a href="#section-3.8.1" class="xref">3.8.1</a>.  <a href="#name-prefix-matching" class="xref">Prefix Matching</a></p>
+                    <p id="section-toc.1-1.3.2.8.2.1.1"><a href="#section-3.8.1" class="auto internal xref">3.8.1</a>.  <a href="#name-prefix-matching" class="internal xref">Prefix Matching</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.8.2.2">
-                    <p id="section-toc.1-1.3.2.8.2.2.1"><a href="#section-3.8.2" class="xref">3.8.2</a>.  <a href="#name-wildcard-matching" class="xref">Wildcard Matching</a></p>
+                    <p id="section-toc.1-1.3.2.8.2.2.1"><a href="#section-3.8.2" class="auto internal xref">3.8.2</a>.  <a href="#name-wildcard-matching" class="internal xref">Wildcard Matching</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.8.2.3">
-                    <p id="section-toc.1-1.3.2.8.2.3.1"><a href="#section-3.8.3" class="xref">3.8.3</a>.  <a href="#name-design-aspects" class="xref">Design Aspects</a></p>
+                    <p id="section-toc.1-1.3.2.8.2.3.1"><a href="#section-3.8.3" class="auto internal xref">3.8.3</a>.  <a href="#name-design-aspects" class="internal xref">Design Aspects</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.9">
-                <p id="section-toc.1-1.3.2.9.1"><a href="#section-3.9" class="xref">3.9</a>.  <a href="#name-shared-registration" class="xref">Shared Registration</a></p>
+                <p id="section-toc.1-1.3.2.9.1"><a href="#section-3.9" class="auto internal xref">3.9</a>.  <a href="#name-shared-registration" class="internal xref">Shared Registration</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.9.2.1">
-                    <p id="section-toc.1-1.3.2.9.2.1.1"><a href="#section-3.9.1" class="xref">3.9.1</a>.  <a href="#name-load-balancing" class="xref">Load Balancing</a></p>
+                    <p id="section-toc.1-1.3.2.9.2.1.1"><a href="#section-3.9.1" class="auto internal xref">3.9.1</a>.  <a href="#name-load-balancing" class="internal xref">Load Balancing</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.9.2.2">
-                    <p id="section-toc.1-1.3.2.9.2.2.1"><a href="#section-3.9.2" class="xref">3.9.2</a>.  <a href="#name-hot-stand-by" class="xref">Hot Stand-By</a></p>
+                    <p id="section-toc.1-1.3.2.9.2.2.1"><a href="#section-3.9.2" class="auto internal xref">3.9.2</a>.  <a href="#name-hot-stand-by" class="internal xref">Hot Stand-By</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.10">
-                <p id="section-toc.1-1.3.2.10.1"><a href="#section-3.10" class="xref">3.10</a>. <a href="#name-sharded-registration" class="xref">Sharded Registration</a></p>
+                <p id="section-toc.1-1.3.2.10.1"><a href="#section-3.10" class="auto internal xref">3.10</a>. <a href="#name-sharded-registration" class="internal xref">Sharded Registration</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.10.2.1">
-                    <p id="section-toc.1-1.3.2.10.2.1.1"><a href="#section-3.10.1" class="xref">3.10.1</a>.  <a href="#name-all-calls" class="xref">"All" Calls</a></p>
+                    <p id="section-toc.1-1.3.2.10.2.1.1"><a href="#section-3.10.1" class="auto internal xref">3.10.1</a>.  <a href="#name-all-calls" class="internal xref">"All" Calls</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.10.2.2">
-                    <p id="section-toc.1-1.3.2.10.2.2.1"><a href="#section-3.10.2" class="xref">3.10.2</a>.  <a href="#name-partitioned-calls" class="xref">"Partitioned" Calls</a></p>
+                    <p id="section-toc.1-1.3.2.10.2.2.1"><a href="#section-3.10.2" class="auto internal xref">3.10.2</a>.  <a href="#name-partitioned-calls" class="internal xref">"Partitioned" Calls</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.11">
-                <p id="section-toc.1-1.3.2.11.1"><a href="#section-3.11" class="xref">3.11</a>. <a href="#name-registration-revocation" class="xref">Registration Revocation</a></p>
+                <p id="section-toc.1-1.3.2.11.1"><a href="#section-3.11" class="auto internal xref">3.11</a>. <a href="#name-registration-revocation" class="internal xref">Registration Revocation</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="xref">4</a>.  <a href="#name-advanced-pubsub" class="xref">Advanced PubSub</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-advanced-pubsub" class="internal xref">Advanced PubSub</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
-                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="xref">4.1</a>.  <a href="#name-subscriber-black-and-whitel" class="xref">Subscriber Black- and Whitelisting</a></p>
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-subscriber-black-and-whitel" class="internal xref">Subscriber Black- and Whitelisting</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2">
-                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="xref">4.2</a>.  <a href="#name-publisher-exclusion" class="xref">Publisher Exclusion</a></p>
+                <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-publisher-exclusion" class="internal xref">Publisher Exclusion</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="xref">4.3</a>.  <a href="#name-publisher-identification" class="xref">Publisher Identification</a></p>
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-publisher-identification" class="internal xref">Publisher Identification</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
-                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="xref">4.4</a>.  <a href="#name-publication-trust-levels" class="xref">Publication Trust Levels</a></p>
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-publication-trust-levels" class="internal xref">Publication Trust Levels</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5">
-                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="xref">4.5</a>.  <a href="#name-pattern-based-subscription" class="xref">Pattern-based Subscription</a></p>
+                <p id="section-toc.1-1.4.2.5.1"><a href="#section-4.5" class="auto internal xref">4.5</a>.  <a href="#name-pattern-based-subscription" class="internal xref">Pattern-based Subscription</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.1">
-                    <p id="section-toc.1-1.4.2.5.2.1.1"><a href="#section-4.5.1" class="xref">4.5.1</a>.  <a href="#name-prefix-matching-2" class="xref">Prefix Matching</a></p>
+                    <p id="section-toc.1-1.4.2.5.2.1.1"><a href="#section-4.5.1" class="auto internal xref">4.5.1</a>.  <a href="#name-prefix-matching-2" class="internal xref">Prefix Matching</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.2">
-                    <p id="section-toc.1-1.4.2.5.2.2.1"><a href="#section-4.5.2" class="xref">4.5.2</a>.  <a href="#name-wildcard-matching-2" class="xref">Wildcard Matching</a></p>
+                    <p id="section-toc.1-1.4.2.5.2.2.1"><a href="#section-4.5.2" class="auto internal xref">4.5.2</a>.  <a href="#name-wildcard-matching-2" class="internal xref">Wildcard Matching</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.5.2.3">
-                    <p id="section-toc.1-1.4.2.5.2.3.1"><a href="#section-4.5.3" class="xref">4.5.3</a>.  <a href="#name-design-aspects-2" class="xref">Design Aspects</a></p>
+                    <p id="section-toc.1-1.4.2.5.2.3.1"><a href="#section-4.5.3" class="auto internal xref">4.5.3</a>.  <a href="#name-design-aspects-2" class="internal xref">Design Aspects</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.6">
-                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="xref">4.6</a>.  <a href="#name-sharded-subscription" class="xref">Sharded Subscription</a></p>
+                <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="auto internal xref">4.6</a>.  <a href="#name-sharded-subscription" class="internal xref">Sharded Subscription</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.7">
-                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="xref">4.7</a>.  <a href="#name-event-history" class="xref">Event History</a></p>
+                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="auto internal xref">4.7</a>.  <a href="#name-event-history" class="internal xref">Event History</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8">
-                <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="xref">4.8</a>.  <a href="#name-event-retention" class="xref">Event Retention</a></p>
+                <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="auto internal xref">4.8</a>.  <a href="#name-event-retention" class="internal xref">Event Retention</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.9">
-                <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="xref">4.9</a>.  <a href="#name-subscription-revocation" class="xref">Subscription Revocation</a></p>
+                <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="auto internal xref">4.9</a>.  <a href="#name-subscription-revocation" class="internal xref">Subscription Revocation</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.10">
-                <p id="section-toc.1-1.4.2.10.1"><a href="#section-4.10" class="xref">4.10</a>. <a href="#name-session-testament" class="xref">Session Testament</a></p>
+                <p id="section-toc.1-1.4.2.10.1"><a href="#section-4.10" class="auto internal xref">4.10</a>. <a href="#name-session-testament" class="internal xref">Session Testament</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="xref">5</a>.  <a href="#name-authentication-methods" class="xref">Authentication Methods</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-authentication-methods" class="internal xref">Authentication Methods</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="xref">5.1</a>.  <a href="#name-ticket-based-authentication" class="xref">Ticket-based Authentication</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-ticket-based-authentication" class="internal xref">Ticket-based Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="xref">5.2</a>.  <a href="#name-challenge-response-authenti" class="xref">Challenge Response Authentication</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-challenge-response-authenti" class="internal xref">Challenge Response Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="xref">5.3</a>.  <a href="#name-salted-challenge-response-a" class="xref">Salted Challenge Response Authentication</a></p>
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-salted-challenge-response-a" class="internal xref">Salted Challenge Response Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
-                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="xref">5.4</a>.  <a href="#name-cryptosign-based-authentica" class="xref">Cryptosign-based Authentication</a></p>
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-cryptosign-based-authentica" class="internal xref">Cryptosign-based Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.1">
-                    <p id="section-toc.1-1.5.2.4.2.1.1"><a href="#section-5.4.1" class="xref">5.4.1</a>.  <a href="#name-client-authentication" class="xref">Client Authentication</a></p>
+                    <p id="section-toc.1-1.5.2.4.2.1.1"><a href="#section-5.4.1" class="auto internal xref">5.4.1</a>.  <a href="#name-client-authentication" class="internal xref">Client Authentication</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.2">
-                    <p id="section-toc.1-1.5.2.4.2.2.1"><a href="#section-5.4.2" class="xref">5.4.2</a>.  <a href="#name-tls-channel-binding" class="xref">TLS Channel Binding</a></p>
+                    <p id="section-toc.1-1.5.2.4.2.2.1"><a href="#section-5.4.2" class="auto internal xref">5.4.2</a>.  <a href="#name-tls-channel-binding" class="internal xref">TLS Channel Binding</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.3">
-                    <p id="section-toc.1-1.5.2.4.2.3.1"><a href="#section-5.4.3" class="xref">5.4.3</a>.  <a href="#name-router-authentication" class="xref">Router Authentication</a></p>
+                    <p id="section-toc.1-1.5.2.4.2.3.1"><a href="#section-5.4.3" class="auto internal xref">5.4.3</a>.  <a href="#name-router-authentication" class="internal xref">Router Authentication</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.4">
-                    <p id="section-toc.1-1.5.2.4.2.4.1"><a href="#section-5.4.4" class="xref">5.4.4</a>.  <a href="#name-trustroots-and-certificates" class="xref">Trustroots and Certificates</a></p>
+                    <p id="section-toc.1-1.5.2.4.2.4.1"><a href="#section-5.4.4" class="auto internal xref">5.4.4</a>.  <a href="#name-trustroots-and-certificates" class="internal xref">Trustroots and Certificates</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.5">
-                    <p id="section-toc.1-1.5.2.4.2.5.1"><a href="#section-5.4.5" class="xref">5.4.5</a>.  <a href="#name-remote-attestation" class="xref">Remote Attestation</a></p>
+                    <p id="section-toc.1-1.5.2.4.2.5.1"><a href="#section-5.4.5" class="auto internal xref">5.4.5</a>.  <a href="#name-remote-attestation" class="internal xref">Remote Attestation</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4.2.6">
-                    <p id="section-toc.1-1.5.2.4.2.6.1"><a href="#section-5.4.6" class="xref">5.4.6</a>.  <a href="#name-example-message-exchanges" class="xref">Example Message Exchanges</a></p>
+                    <p id="section-toc.1-1.5.2.4.2.6.1"><a href="#section-5.4.6" class="auto internal xref">5.4.6</a>.  <a href="#name-example-message-exchanges" class="internal xref">Example Message Exchanges</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.5">
-                <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="xref">5.5</a>.  <a href="#name-dynamic-authentication-api" class="xref">Dynamic Authentication API</a></p>
+                <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="auto internal xref">5.5</a>.  <a href="#name-dynamic-authentication-api" class="internal xref">Dynamic Authentication API</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="xref">6</a>.  <a href="#name-advanced-security-features" class="xref">Advanced Security Features</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-advanced-security-features" class="internal xref">Advanced Security Features</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="xref">6.1</a>.  <a href="#name-payload-passthru-mode" class="xref">Payload Passthru Mode</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-payload-passthru-mode" class="internal xref">Payload Passthru Mode</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
-                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="xref">6.2</a>.  <a href="#name-payload-end-to-end-encrypti" class="xref">Payload End-to-End Encryption</a></p>
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-payload-end-to-end-encrypti" class="internal xref">Payload End-to-End Encryption</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#section-7" class="xref">7</a>.  <a href="#name-advanced-transports-and-ser" class="xref">Advanced Transports and Serializers</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-advanced-transports-and-ser" class="internal xref">Advanced Transports and Serializers</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="xref">7.1</a>.  <a href="#name-rawsocket-transport" class="xref">RawSocket Transport</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-rawsocket-transport" class="internal xref">RawSocket Transport</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="xref">7.2</a>.  <a href="#name-message-batching" class="xref">Message Batching</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-message-batching" class="internal xref">Message Batching</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
-                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="xref">7.3</a>.  <a href="#name-http-longpoll-transport" class="xref">HTTP Longpoll Transport</a></p>
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-http-longpoll-transport" class="internal xref">HTTP Longpoll Transport</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.4">
-                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="xref">7.4</a>.  <a href="#name-binary-support-in-json" class="xref">Binary support in JSON</a></p>
+                <p id="section-toc.1-1.7.2.4.1"><a href="#section-7.4" class="auto internal xref">7.4</a>.  <a href="#name-binary-support-in-json" class="internal xref">Binary support in JSON</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.5">
-                <p id="section-toc.1-1.7.2.5.1"><a href="#section-7.5" class="xref">7.5</a>.  <a href="#name-multiplexed-transport" class="xref">Multiplexed Transport</a></p>
+                <p id="section-toc.1-1.7.2.5.1"><a href="#section-7.5" class="auto internal xref">7.5</a>.  <a href="#name-multiplexed-transport" class="internal xref">Multiplexed Transport</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
-            <p id="section-toc.1-1.8.1"><a href="#section-8" class="xref">8</a>.  <a href="#name-wamp-interfaces" class="xref">WAMP Interfaces</a></p>
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-wamp-interfaces" class="internal xref">WAMP Interfaces</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="xref">8.1</a>.  <a href="#name-wamp-idl" class="xref">WAMP IDL</a></p>
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-wamp-idl" class="internal xref">WAMP IDL</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.1">
-                    <p id="section-toc.1-1.8.2.1.2.1.1"><a href="#section-8.1.1" class="xref">8.1.1</a>.  <a href="#name-application-payload-typing" class="xref">Application Payload Typing</a></p>
+                    <p id="section-toc.1-1.8.2.1.2.1.1"><a href="#section-8.1.1" class="auto internal xref">8.1.1</a>.  <a href="#name-application-payload-typing" class="internal xref">Application Payload Typing</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.2">
-                    <p id="section-toc.1-1.8.2.1.2.2.1"><a href="#section-8.1.2" class="xref">8.1.2</a>.  <a href="#name-wamp-idl-attributes" class="xref">WAMP IDL Attributes</a></p>
+                    <p id="section-toc.1-1.8.2.1.2.2.1"><a href="#section-8.1.2" class="auto internal xref">8.1.2</a>.  <a href="#name-wamp-idl-attributes" class="internal xref">WAMP IDL Attributes</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.3">
-                    <p id="section-toc.1-1.8.2.1.2.3.1"><a href="#section-8.1.3" class="xref">8.1.3</a>.  <a href="#name-wamp-service-declaration" class="xref">WAMP Service Declaration</a></p>
+                    <p id="section-toc.1-1.8.2.1.2.3.1"><a href="#section-8.1.3" class="auto internal xref">8.1.3</a>.  <a href="#name-wamp-service-declaration" class="internal xref">WAMP Service Declaration</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
-                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="xref">8.2</a>.  <a href="#name-interface-catalogs" class="xref">Interface Catalogs</a></p>
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-interface-catalogs" class="internal xref">Interface Catalogs</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.1">
-                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="xref">8.2.1</a>.  <a href="#name-catalog-archive-file" class="xref">Catalog Archive File</a></p>
+                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="auto internal xref">8.2.1</a>.  <a href="#name-catalog-archive-file" class="internal xref">Catalog Archive File</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.2">
-                    <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="xref">8.2.2</a>.  <a href="#name-catalog-metadata" class="xref">Catalog Metadata</a></p>
+                    <p id="section-toc.1-1.8.2.2.2.2.1"><a href="#section-8.2.2" class="auto internal xref">8.2.2</a>.  <a href="#name-catalog-metadata" class="internal xref">Catalog Metadata</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.3">
-                    <p id="section-toc.1-1.8.2.2.2.3.1"><a href="#section-8.2.3" class="xref">8.2.3</a>.  <a href="#name-catalog-sharing-and-publica" class="xref">Catalog Sharing and Publication</a></p>
+                    <p id="section-toc.1-1.8.2.2.2.3.1"><a href="#section-8.2.3" class="auto internal xref">8.2.3</a>.  <a href="#name-catalog-sharing-and-publica" class="internal xref">Catalog Sharing and Publication</a></p>
 </li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
-                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="xref">8.3</a>.  <a href="#name-interface-reflection" class="xref">Interface Reflection</a></p>
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-interface-reflection" class="internal xref">Interface Reflection</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#section-9" class="xref">9</a>.  <a href="#name-router-to-router-links" class="xref">Router-to-Router Links</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-router-to-router-links" class="internal xref">Router-to-Router Links</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="xref">10</a>. <a href="#name-advanced-profile-uris" class="xref">Advanced Profile URIs</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-advanced-profile-uris" class="internal xref">Advanced Profile URIs</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="xref">11</a>. <a href="#name-iana-considerations" class="xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-12" class="xref">12</a>. <a href="#name-conformance-requirements" class="xref">Conformance Requirements</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-conformance-requirements" class="internal xref">Conformance Requirements</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="xref">12.1</a>.  <a href="#name-terminology-and-other-conve" class="xref">Terminology and Other Conventions</a></p>
+                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-terminology-and-other-conve" class="internal xref">Terminology and Other Conventions</a></p>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-13" class="xref">13</a>. <a href="#name-contributors" class="xref">Contributors</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-contributors" class="internal xref">Contributors</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#section-14" class="xref">14</a>. <a href="#name-normative-references" class="xref">Normative References</a></p>
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-normative-references" class="internal xref">Normative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#section-15" class="xref">15</a>. <a href="#name-informative-references" class="xref">Informative References</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
-            <p id="section-toc.1-1.16.1"><a href="#appendix-A" class="xref"></a><a href="#name-index" class="xref">Index</a></p>
+            <p id="section-toc.1-1.16.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-index" class="internal xref">Index</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
-            <p id="section-toc.1-1.17.1"><a href="#appendix-B" class="xref"></a><a href="#name-authors-address" class="xref">Author's Address</a></p>
+            <p id="section-toc.1-1.17.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -2139,8 +2157,8 @@ results or event payloads is contained in<a href="#section-2.1-4" class="pilcrow
 </pre><a href="#section-2.1-9" class="pilcrow">¶</a>
 </div>
 <p id="section-2.1-10">Here is a <code>WELCOME</code> message from a <em>Router</em> with support for both the <em>Broker</em> and <em>Dealer</em> role, and with support for <strong>Session Meta API</strong>:<a href="#section-2.1-10" class="pilcrow">¶</a></p>
-<div id="section-2.1-11">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-2.1-11">
+<pre>    [
         2,
         4580268554656113,
         {
@@ -2523,8 +2541,8 @@ A formal definition of the WAMP Meta API in terms of available WAMP procedures a
 </pre><a href="#section-2.2-10" class="pilcrow">¶</a>
 </div>
 <p id="section-2.2-11">Here is a <code>WELCOME</code> message from a <em>Router</em> with support for both the <em>Broker</em> and <em>Dealer</em> role, and with support for <strong>Registration Meta API</strong>:<a href="#section-2.2-11" class="pilcrow">¶</a></p>
-<div id="section-2.2-12">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-2.2-12">
+<pre>    [
         2,
         4580268554656113,
         {
@@ -2584,8 +2602,8 @@ A formal definition of the WAMP Meta API in terms of available WAMP procedures a
 </li>
             </ul>
 <p id="section-2.2.1.1-3"><strong>Object Schemas</strong><a href="#section-2.2.1.1-3" class="pilcrow">¶</a></p>
-<div id="section-2.2.1.1-4">
-<pre class="lang-javascript sourcecode">    RegistrationDetails :=
+<div class="lang-javascript sourcecode" id="section-2.2.1.1-4">
+<pre>    RegistrationDetails :=
     {
         "id": registration|id,
         "created": time_created|iso_8601_string,
@@ -2695,8 +2713,8 @@ A formal definition of the WAMP Meta API in terms of available WAMP procedures a
 </li>
             </ul>
 <p id="section-2.2.2.1-6"><strong>Object Schemas</strong><a href="#section-2.2.2.1-6" class="pilcrow">¶</a></p>
-<div id="section-2.2.2.1-7">
-<pre class="lang-javascript sourcecode">    RegistrationLists :=
+<div class="lang-javascript sourcecode" id="section-2.2.2.1-7">
+<pre>    RegistrationLists :=
     {
         "exact": registration_ids|list,
         "prefix": registration_ids|list,
@@ -2772,8 +2790,8 @@ A formal definition of the WAMP Meta API in terms of available WAMP procedures a
 </li>
             </ul>
 <p id="section-2.2.2.4-8"><strong>Object Schemas</strong><a href="#section-2.2.2.4-8" class="pilcrow">¶</a></p>
-<div id="section-2.2.2.4-9">
-<pre class="lang-javascript sourcecode">    RegistrationDetails :=
+<div class="lang-javascript sourcecode" id="section-2.2.2.4-9">
+<pre>    RegistrationDetails :=
     {
         "id": registration|id,
         "created": time_created|iso_8601_string,
@@ -2877,8 +2895,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </pre><a href="#section-2.3-11" class="pilcrow">¶</a>
 </div>
 <p id="section-2.3-12">Here is a <code>WELCOME</code> message from a <em>Router</em> with support for both the <em>Broker</em> and <em>Dealer</em> role, and with support for <strong>Subscription Meta API</strong>:<a href="#section-2.3-12" class="pilcrow">¶</a></p>
-<div id="section-2.3-13">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-2.3-13">
+<pre>    [
         2,
         4580268554656113,
         {
@@ -2937,8 +2955,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </li>
             </ul>
 <p id="section-2.3.1.1-3"><strong>Object Schemas</strong><a href="#section-2.3.1.1-3" class="pilcrow">¶</a></p>
-<div id="section-2.3.1.1-4">
-<pre class="lang-javascript sourcecode">      SubscriptionDetails :=
+<div class="lang-javascript sourcecode" id="section-2.3.1.1-4">
+<pre>      SubscriptionDetails :=
       {
           "id": subscription|id,
           "created": time_created|iso_8601_string,
@@ -3042,8 +3060,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </li>
             </ul>
 <p id="section-2.3.2.1-6"><strong>Object Schemas</strong><a href="#section-2.3.2.1-6" class="pilcrow">¶</a></p>
-<div id="section-2.3.2.1-7">
-<pre class="lang-javascript sourcecode">      SubscriptionLists :=
+<div class="lang-javascript sourcecode" id="section-2.3.2.1-7">
+<pre>      SubscriptionLists :=
       {
           "exact": subscription_ids|list,
           "prefix": subscription_ids|list,
@@ -3122,8 +3140,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </li>
             </ul>
 <p id="section-2.3.2.4-9"><strong>Object Schemas</strong><a href="#section-2.3.2.4-9" class="pilcrow">¶</a></p>
-<div id="section-2.3.2.4-10">
-<pre class="lang-javascript sourcecode">      SubscriptionDetails :=
+<div class="lang-javascript sourcecode" id="section-2.3.2.4-10">
+<pre>      SubscriptionDetails :=
       {
           "id": subscription|id,
           "created": time_created|iso_8601_string,
@@ -3253,8 +3271,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </pre><a href="#section-3.1-10" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1-11"><em>Example.</em> Caller-to-Dealer <code>CALL</code><a href="#section-3.1-11" class="pilcrow">¶</a></p>
-<div id="section-3.1-12">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-12">
+<pre>    [
         48,
         77133,
         {
@@ -3271,8 +3289,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </pre><a href="#section-3.1-14" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1-15"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code><a href="#section-3.1-15" class="pilcrow">¶</a></p>
-<div id="section-3.1-16">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-16">
+<pre>    [
         68,
         87683,
         324,
@@ -3289,8 +3307,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </pre><a href="#section-3.1-18" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1-19"><em>Example.</em> Callee-to-Dealer progressive <code>YIELDs</code><a href="#section-3.1-19" class="pilcrow">¶</a></p>
-<div id="section-3.1-20">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-20">
+<pre>    [
         70,
         87683,
         {
@@ -3300,8 +3318,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
     ]
 </pre><a href="#section-3.1-20" class="pilcrow">¶</a>
 </div>
-<div id="section-3.1-21">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-21">
+<pre>    [
         70,
         87683,
         {
@@ -3317,8 +3335,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </pre><a href="#section-3.1-23" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1-24"><em>Example.</em> Dealer-to-Caller progressive <code>RESULTs</code><a href="#section-3.1-24" class="pilcrow">¶</a></p>
-<div id="section-3.1-25">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-25">
+<pre>    [
         50,
         77133,
         {
@@ -3328,8 +3346,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
     ]
 </pre><a href="#section-3.1-25" class="pilcrow">¶</a>
 </div>
-<div id="section-3.1-26">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-26">
+<pre>    [
         50,
         77133,
         {
@@ -3342,8 +3360,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 <p id="section-3.1-27">and so on...<a href="#section-3.1-27" class="pilcrow">¶</a></p>
 <p id="section-3.1-28">An invocation MUST <em>always</em> end in either a <em>normal</em> <code>RESULT</code> or <code>ERROR</code> message being sent by the <em>Callee</em> and received by the <em>Dealer</em>.<a href="#section-3.1-28" class="pilcrow">¶</a></p>
 <p id="section-3.1-29"><em>Example.</em> Callee-to-Dealer final <code>YIELD</code><a href="#section-3.1-29" class="pilcrow">¶</a></p>
-<div id="section-3.1-30">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-30">
+<pre>    [
         70,
         87683,
         {},
@@ -3352,8 +3370,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </pre><a href="#section-3.1-30" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1-31"><em>Example.</em> Callee-to-Dealer final <code>ERROR</code><a href="#section-3.1-31" class="pilcrow">¶</a></p>
-<div id="section-3.1-32">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-32">
+<pre>    [
         8,
         68,
         87683,
@@ -3365,8 +3383,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </div>
 <p id="section-3.1-33">A call MUST <em>always</em> end in either a <em>normal</em> <code>RESULT</code> or <code>ERROR</code> message being sent by the <em>Dealer</em> and received by the <em>Caller</em>.<a href="#section-3.1-33" class="pilcrow">¶</a></p>
 <p id="section-3.1-34"><em>Example.</em> Dealer-to-Caller final <code>RESULT</code><a href="#section-3.1-34" class="pilcrow">¶</a></p>
-<div id="section-3.1-35">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-35">
+<pre>    [
         50,
         77133,
         {},
@@ -3375,8 +3393,8 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 </pre><a href="#section-3.1-35" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1-36"><em>Example.</em> Dealer-to-Caller final <code>ERROR</code><a href="#section-3.1-36" class="pilcrow">¶</a></p>
-<div id="section-3.1-37">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.1-37">
+<pre>    [
         8,
         68,
         77133,
@@ -3630,8 +3648,8 @@ E.g. <em>Caller</em> can send a few <code>CALL</code> messages before starting t
 </pre><a href="#section-3.2-18" class="pilcrow">¶</a>
 </div>
 <p id="section-3.2-19"><em>Example.</em> Caller-to-Dealer <code>CALL</code><a href="#section-3.2-19" class="pilcrow">¶</a></p>
-<div id="section-3.2-20">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.2-20">
+<pre>    [
         48,
         77245,
         {
@@ -3648,8 +3666,8 @@ E.g. <em>Caller</em> can send a few <code>CALL</code> messages before starting t
 </pre><a href="#section-3.2-22" class="pilcrow">¶</a>
 </div>
 <p id="section-3.2-23"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code><a href="#section-3.2-23" class="pilcrow">¶</a></p>
-<div id="section-3.2-24">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.2-24">
+<pre>    [
         68,
         35224,
         379,
@@ -4081,8 +4099,8 @@ as not supporting progressive calls.<a href="#section-3.2-43" class="pilcrow">¶
 </pre><a href="#section-3.8.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-3.8.1-3"><em>Example</em><a href="#section-3.8.1-3" class="pilcrow">¶</a></p>
-<div id="section-3.8.1-4">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.8.1-4">
+<pre>    [
         64,
         612352435,
         {
@@ -4132,8 +4150,8 @@ as not supporting progressive calls.<a href="#section-3.2-43" class="pilcrow">¶
 </div>
 <p id="section-3.8.2-3">Wildcard-matching allows to provide wildcards for <strong>whole</strong> URI components.<a href="#section-3.8.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.8.2-4"><em>Example</em><a href="#section-3.8.2-4" class="pilcrow">¶</a></p>
-<div id="section-3.8.2-5">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.8.2-5">
+<pre>    [
         64,
         612352435,
         {
@@ -4230,8 +4248,8 @@ Call request RPC URI: 'a2.b2.c2.d2.e2' →
 </div>
 <p id="section-3.8.3-13">to the <em>Callee</em>.<a href="#section-3.8.3-13" class="pilcrow">¶</a></p>
 <p id="section-3.8.3-14"><em>Example</em><a href="#section-3.8.3-14" class="pilcrow">¶</a></p>
-<div id="section-3.8.3-15">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-3.8.3-15">
+<pre>    [
         68,
         6131533,
         9823527,
@@ -4459,8 +4477,8 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
         </ol>
 <p id="section-4.1-25">For example, if both <code>PUBLISH.Options.exclude</code> and <code>PUBLISH.Options.eligible</code> are present, the <em>Broker</em> will dispatch events published only to <em>Subscribers</em> that are not explicitly excluded in <code>PUBLISH.Options.exclude</code> <strong>and</strong> which are explicitly eligible via <code>PUBLISH.Options.eligible</code>.<a href="#section-4.1-25" class="pilcrow">¶</a></p>
 <p id="section-4.1-26"><em>Example</em><a href="#section-4.1-26" class="pilcrow">¶</a></p>
-<div id="section-4.1-27">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-4.1-27">
+<pre>    [
        16,
        239714735,
        {
@@ -4478,8 +4496,8 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 </div>
 <p id="section-4.1-28">The above event will get dispatched to all <em>Subscribers</em> of <code>com.myapp.mytopic1</code>, but not WAMP sessions with IDs <code>7891255</code> or <code>1245751</code> (and also not the publishing session).<a href="#section-4.1-28" class="pilcrow">¶</a></p>
 <p id="section-4.1-29"><em>Example</em><a href="#section-4.1-29" class="pilcrow">¶</a></p>
-<div id="section-4.1-30">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-4.1-30">
+<pre>    [
        16,
        239714735,
        {
@@ -4497,8 +4515,8 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 </div>
 <p id="section-4.1-31">The above event will get dispatched to WAMP sessions with IDs <code>7891255</code> or <code>1245751</code> only - but only if those are actually subscribed to the topic <code>com.myapp.mytopic1</code>.<a href="#section-4.1-31" class="pilcrow">¶</a></p>
 <p id="section-4.1-32"><em>Example</em><a href="#section-4.1-32" class="pilcrow">¶</a></p>
-<div id="section-4.1-33">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-4.1-33">
+<pre>    [
        16,
        239714735,
        {
@@ -4541,8 +4559,8 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 </div>
 <p id="section-4.2-4">When publishing with <code>PUBLISH.Options.exclude_me := false</code>, the <em>Publisher</em> of the event will receive that event, if it is subscribed to the <code>Topic</code> published to.<a href="#section-4.2-4" class="pilcrow">¶</a></p>
 <p id="section-4.2-5"><em>Example</em><a href="#section-4.2-5" class="pilcrow">¶</a></p>
-<div id="section-4.2-6">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-4.2-6">
+<pre>    [
         16,
         239714735,
         {
@@ -4635,21 +4653,57 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
         <h3 id="name-pattern-based-subscription">
 <a href="#section-4.5" class="section-number selfRef">4.5. </a><a href="#name-pattern-based-subscription" class="section-name selfRef">Pattern-based Subscription</a>
         </h3>
-<p id="section-4.5-1">By default, <em>Subscribers</em> subscribe to topics with <strong>exact matching policy</strong>. That is an event will only be dispatched to a <em>Subscriber</em> by the <em>Broker</em> if the topic published to (<code>PUBLISH.Topic</code>) <em>exactly</em> matches the topic subscribed to (<code>SUBSCRIBE.Topic</code>).<a href="#section-4.5-1" class="pilcrow">¶</a></p>
-<p id="section-4.5-2">A <em>Subscriber</em> might want to subscribe to topics based on a <em>pattern</em>. This can be useful to reduce the number of individual subscriptions to be set up and to subscribe to topics the <em>Subscriber</em> is not aware of at the time of subscription, or which do not yet exist at this time.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
-<p id="section-4.5-3">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by<a href="#section-4.5-3" class="pilcrow">¶</a></p>
+<p id="section-4.5-1">By default, <em>Subscribers</em> subscribe to topics with <strong>exact matching policy</strong>. That is an event will only be
+dispatched to a <em>Subscriber</em> by the <em>Broker</em> if the topic published to (<code>PUBLISH.Topic</code>) <em>exactly</em> matches the
+topic subscribed to (<code>SUBSCRIBE.Topic</code>).<a href="#section-4.5-1" class="pilcrow">¶</a></p>
+<p id="section-4.5-2">A <em>Subscriber</em> might want to subscribe to topics based on a <em>pattern</em>. This can be useful to reduce the number of
+individual subscriptions to be set up and to subscribe to topics the <em>Subscriber</em> is not aware of at the time of
+subscription, or which do not yet exist at this time.<a href="#section-4.5-2" class="pilcrow">¶</a></p>
+<p id="section-4.5-3">Let's review the event publication flow. When one peer decides to publish a message to a topic, it results in
+a <code>PUBLISH</code> WAMP message with fields for the <code>Publication</code> id, <code>Details</code> dictionary, and, optionally,
+the payload arguments.<a href="#section-4.5-3" class="pilcrow">¶</a></p>
+<p id="section-4.5-4">A given event received by the router from a publisher via a <code>PUBLISH</code> message will match one or more
+subscriptions:<a href="#section-4.5-4" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-4.5-4.1">prefix-matching policy<a href="#section-4.5-4.1" class="pilcrow">¶</a>
+<li class="compact" id="section-4.5-5.1">zero or one exact subscription<a href="#section-4.5-5.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-4.5-4.2">wildcard-matching policy<a href="#section-4.5-4.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-4.5-5.2">zero or more prefix subscriptions<a href="#section-4.5-5.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-4.5-5.3">zero or more wildcard subscriptions<a href="#section-4.5-5.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-4.5-5"><strong>Feature Announcement</strong><a href="#section-4.5-5" class="pilcrow">¶</a></p>
-<p id="section-4.5-6">Support for this feature MUST be announced by <em>Subscribers</em> (<code>role := "subscriber"</code>) and <em>Brokers</em> (<code>role := "broker"</code>) via<a href="#section-4.5-6" class="pilcrow">¶</a></p>
+<p id="section-4.5-6">The same published event is then forwarded to subscribers for every matching subscription.
+Thus, a given event might be sent multiple times to the same client under different subscriptions.
+Every subscription instance, based on a topic URI and some options, has a unique ID. All
+subscribers of the same subscription are given the same subscription ID.<a href="#section-4.5-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.5-7">
+<pre>                            +----------+            +------------+         +----------+
+                            |          |            |   Exact    |         |Subscriber|
+                            |          |---Event---&gt;|Subscription|----+---&gt;|   peer   |
+                            |          |            +------------+    |    +----------+
+</pre><a href="#section-4.5-7" class="pilcrow">¶</a>
+</div>
+<p id="section-4.5-8">+----------+                 |          |            +------------+    |    +----------+
+   |Publisher |                 |  Broker  |            |  Wildcard  |    +---&gt;|Subscriber|
+   |   peer   |--Publication---&gt;|          |---Event---&gt;|Subscription|----+---&gt;|   peer   |
+   +----------+                 |          |            +------------+    |    +----------+
+                                |          |            +------------+    |    +----------+
+                                |          |            |   Prefix   |    +---&gt;|Subscriber|
+                                |          |---Event---&gt;|Subscription|--------&gt;|   peer   |
+                                +----------+            +------------+         +----------+<a href="#section-4.5-8" class="pilcrow">¶</a></p>
+<p id="section-4.5-9">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by<a href="#section-4.5-9" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-4.5-10.1">prefix-matching policy<a href="#section-4.5-10.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-4.5-10.2">wildcard-matching policy<a href="#section-4.5-10.2" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-4.5-11"><strong>Feature Announcement</strong><a href="#section-4.5-11" class="pilcrow">¶</a></p>
+<p id="section-4.5-12">Support for this feature MUST be announced by <em>Subscribers</em> (<code>role := "subscriber"</code>) and <em>Brokers</em> (<code>role := "broker"</code>) via<a href="#section-4.5-12" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.5-13">
 <pre>    HELLO.Details.roles.&lt;role&gt;.features.
         pattern_based_subscription|bool := true
-</pre><a href="#section-4.5-7" class="pilcrow">¶</a>
+</pre><a href="#section-4.5-13" class="pilcrow">¶</a>
 </div>
 <div id="prefix-matching-1">
 <section id="section-4.5.1">
@@ -4662,8 +4716,8 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 </pre><a href="#section-4.5.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-4.5.1-3"><em>Example</em><a href="#section-4.5.1-3" class="pilcrow">¶</a></p>
-<div id="section-4.5.1-4">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-4.5.1-4">
+<pre>    [
         32,
         912873614,
         {
@@ -4704,8 +4758,8 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 </div>
 <p id="section-4.5.2-3">Wildcard-matching allows to provide wildcards for <strong>whole</strong> URI components.<a href="#section-4.5.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.5.2-4"><em>Example</em><a href="#section-4.5.2-4" class="pilcrow">¶</a></p>
-<div id="section-4.5.2-5">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-4.5.2-5">
+<pre>    [
         32,
         912873614,
         {
@@ -4761,8 +4815,8 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 </div>
 <p id="section-4.5.3-10">to the <em>Subscribers</em>.<a href="#section-4.5.3-10" class="pilcrow">¶</a></p>
 <p id="section-4.5.3-11"><em>Example</em><a href="#section-4.5.3-11" class="pilcrow">¶</a></p>
-<div id="section-4.5.3-12">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-4.5.3-12">
+<pre>    [
         36,
         5512315355,
         4429313566,
@@ -4816,78 +4870,164 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
         <h3 id="name-event-history">
 <a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-event-history" class="section-name selfRef">Event History</a>
         </h3>
-<p id="section-4.7-1">Instead of complex QoS for message delivery, a <em>Broker</em> may provide <em>message history</em>. A <em>Subscriber</em> is responsible to handle overlaps (duplicates) when it wants "exactly-once" message processing across restarts.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
-<p id="section-4.7-2">The <em>Broker</em> may allow for configuration on a per-topic basis.<a href="#section-4.7-2" class="pilcrow">¶</a></p>
-<p id="section-4.7-3">The event history may be transient or persistent message history (surviving <em>Broker</em> restarts).<a href="#section-4.7-3" class="pilcrow">¶</a></p>
-<p id="section-4.7-4">A <em>Broker</em> that implements <em>event history</em> must (also) announce role <code>HELLO.roles.callee</code>, indicate <code>HELLO.roles.broker.history == 1</code> and provide the following (builtin) procedures.<a href="#section-4.7-4" class="pilcrow">¶</a></p>
-<p id="section-4.7-5">A <em>Caller</em> can request message history by calling the <em>Broker</em> procedure<a href="#section-4.7-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.7-6">
-<pre>    wamp.topic.history.last
-</pre><a href="#section-4.7-6" class="pilcrow">¶</a>
-</div>
-<p id="section-4.7-7">with <code>Arguments = [topic|uri, limit|integer]</code> where<a href="#section-4.7-7" class="pilcrow">¶</a></p>
-<ul class="compact">
-<li class="compact" id="section-4.7-8.1">
-            <code>topic</code> is the topic to retrieve event history for<a href="#section-4.7-8.1" class="pilcrow">¶</a>
+<p id="section-4.7-1">Instead of complex QoS for message delivery, a <em>Broker</em> may provide <em>Event History</em>. With event history, a <em>Subscriber</em>
+is responsible for handling overlaps (duplicates) when it wants "exactly-once" message processing across restarts.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
+<p id="section-4.7-2">The event history may be transient, or it may be persistent where it survives <em>Broker</em> restarts.<a href="#section-4.7-2" class="pilcrow">¶</a></p>
+<p id="section-4.7-3">The <em>Broker</em> implementation may allow for configuration of event history on a per-topic or per-topic-pattern
+basis. Such configuration could enable/disable the feature, set the event history storage location,
+set parameters for sub-features such as compression, or set the event history data retention policy.<a href="#section-4.7-3" class="pilcrow">¶</a></p>
+<p id="section-4.7-4">Event History saves events published to discrete subscriptions, in the chronological order received by the broker.
+Let us examine an example.<a href="#section-4.7-4" class="pilcrow">¶</a></p>
+<p id="section-4.7-5">Subscriptions:<a href="#section-4.7-5" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-4.7-6">
+<li id="section-4.7-6.1">Subscription to exact match 'com.mycompany.log.auth' topic<a href="#section-4.7-6.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-4.7-8.2">
-            <code>limit</code> indicates the number of last N events to retrieve<a href="#section-4.7-8.2" class="pilcrow">¶</a>
+          <li id="section-4.7-6.2">Subscription to exact match 'com.mycompany.log.basket' topic<a href="#section-4.7-6.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-6.3">Subscription to prefix-based 'com.mycompany.log' topic<a href="#section-4.7-6.3" class="pilcrow">¶</a>
+</li>
+        </ol>
+<p id="section-4.7-7">Publication messages:<a href="#section-4.7-7" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-4.7-8">
+<li id="section-4.7-8.1">Publication to topic 'com.mycompany.log.auth'. Forwarded as events to subscriptions 1 and 3.<a href="#section-4.7-8.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-8.2">Publication to topic 'com.mycompany.log.basket'. Delivered as event to subscriptions 2 and 3.<a href="#section-4.7-8.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-8.3">Publication to topic 'com.mycompany.log.basket'. Delivered as events to subscriptions 2 and 3.<a href="#section-4.7-8.3" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-8.4">Publication to topic 'com.mycompany.log.basket'. Delivered as events subscriptions 2 and 3.<a href="#section-4.7-8.4" class="pilcrow">¶</a>
+</li>
+          <li id="section-4.7-8.5">Publication to topic 'com.mycompany.log.checkout'. Delivered as an event to subscription 3 only.<a href="#section-4.7-8.5" class="pilcrow">¶</a>
+</li>
+        </ol>
+<p id="section-4.7-9">Event History:<a href="#section-4.7-9" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-4.7-10.1">Event history for subscription 1 contains publication 1 only.<a href="#section-4.7-10.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-4.7-10.2">Event history for subscription 2 contains publications 2, 3, and 4.<a href="#section-4.7-10.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-4.7-10.3">Event history for subscription 3 contains all publications.<a href="#section-4.7-10.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-4.7-9">or by calling<a href="#section-4.7-9" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.7-10">
-<pre>    wamp.topic.history.since
-</pre><a href="#section-4.7-10" class="pilcrow">¶</a>
+<p id="section-4.7-11"><strong>Feature Announcement</strong><a href="#section-4.7-11" class="pilcrow">¶</a></p>
+<p id="section-4.7-12">A <em>Broker</em> that implements <em>event history</em> must indicate
+<code>HELLO.roles.broker.features.event_history = true</code>, must announce the role <code>HELLO.roles.callee</code>,
+and must provide the meta procedures described below.<a href="#section-4.7-12" class="pilcrow">¶</a></p>
+<p id="section-4.7-13"><strong>Receiving Event History</strong><a href="#section-4.7-13" class="pilcrow">¶</a></p>
+<p id="section-4.7-14">A <em>Caller</em> can request message history by calling the <em>Broker</em> meta procedure<a href="#section-4.7-14" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-4.7-15">
+<pre>    wamp.subscription.get_events
+</pre><a href="#section-4.7-15" class="pilcrow">¶</a>
 </div>
-<p id="section-4.7-11">with <code>Arguments = [topic|uri, timestamp|string]</code> where<a href="#section-4.7-11" class="pilcrow">¶</a></p>
+<p id="section-4.7-16">With payload:<a href="#section-4.7-16" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-4.7-12.1">
-            <code>topic</code> is the topic to retrieve event history for<a href="#section-4.7-12.1" class="pilcrow">¶</a>
+<li class="compact" id="section-4.7-17.1">
+            <code>Arguments</code> = <code>[subscription|id]</code>. The subscription id for which to retrieve event history<a href="#section-4.7-17.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-4.7-12.2">
-            <code>timestamp</code> indicates the UTC timestamp since when to retrieve the events in the ISO-8601 format <code>yyyy-MM-ddThh:mm:ss:SSSZ</code> (e.g. <code>"2013-12-21T13:43:11:000Z"</code>)<a href="#section-4.7-12.2" class="pilcrow">¶</a>
-</li>
-        </ul>
-<p id="section-4.7-13">or by calling<a href="#section-4.7-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.7-14">
-<pre>    wamp.topic.history.after
-</pre><a href="#section-4.7-14" class="pilcrow">¶</a>
-</div>
-<p id="section-4.7-15">with <code>Arguments = [topic|uri, publication|id]</code><a href="#section-4.7-15" class="pilcrow">¶</a></p>
+          <li class="compact" id="section-4.7-17.2">
+            <p id="section-4.7-17.2.1"><code>ArgumentsKw</code>:<a href="#section-4.7-17.2.1" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-4.7-16.1">
-            <code>topic</code> is the topic to retrieve event history for<a href="#section-4.7-16.1" class="pilcrow">¶</a>
+<li class="compact" id="section-4.7-17.2.2.1">
+                <code>reverse</code>. Boolean. Optional. Traverses events in reverse order of occurrence.
+The default is to traverse events in order of occurrence.<a href="#section-4.7-17.2.2.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-4.7-16.2">
-            <code>publication</code> is the id of an event which marks the start of the events to retrieve from history<a href="#section-4.7-16.2" class="pilcrow">¶</a>
+              <li class="compact" id="section-4.7-17.2.2.2">
+                <code>limit</code>. Positive integer. Optional. Indicates the maximum number of events to retrieve. Can be used for pagination.<a href="#section-4.7-17.2.2.2" class="pilcrow">¶</a>
 </li>
-        </ul>
-<p id="section-4.7-17"><em>FIXME</em><a href="#section-4.7-17" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="compact type-1" id="section-4.7-18">
-<li id="section-4.7-18.1">
-            <p id="section-4.7-18.1.1">Should we use <code>topic|uri</code> or <code>subscription|id</code> in <code>Arguments</code>?<a href="#section-4.7-18.1.1" class="pilcrow">¶</a></p>
-<ul class="compact">
-<li class="compact" id="section-4.7-18.1.2.1">Since we need to be able to get history for pattern-based subscriptions as well, a subscription|id makes more sense: create pattern-based subscription, then get the event history for this.<a href="#section-4.7-18.1.2.1" class="pilcrow">¶</a>
+              <li class="compact" id="section-4.7-17.2.2.3">
+                <code>from_time</code>. RFC3339-formatted timestamp string. Optional. Only include publications occurring at the
+given timestamp or after (using <code>&gt;=</code> comparison).<a href="#section-4.7-17.2.2.3" class="pilcrow">¶</a>
 </li>
-              <li class="compact" id="section-4.7-18.1.2.2">The only restriction then is that we may not get event history without a current subscription covering the events. This is a minor inconvenience at worst.<a href="#section-4.7-18.1.2.2" class="pilcrow">¶</a>
+              <li class="compact" id="section-4.7-17.2.2.4">
+                <code>after_time</code>. RFC3339-formatted timestamp string. Optional. Only include publications occurring after the
+given timestamp (using <code>&gt;</code> comparison).<a href="#section-4.7-17.2.2.4" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-4.7-17.2.2.5">
+                <code>before_time</code>. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the
+given timestamp (using <code>&lt;</code> comparison).<a href="#section-4.7-17.2.2.5" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-4.7-17.2.2.6">
+                <code>until_time</code>. RFC3339-formatted timestamp string. Optional. Only include publications occurring before the
+given timestamp including date itself (using <code>&lt;=</code> comparison).<a href="#section-4.7-17.2.2.6" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-4.7-17.2.2.7">
+                <code>topic</code>. WAMP URI. Optional. For pattern-based subscriptions, only include publications to
+the specified topic.<a href="#section-4.7-17.2.2.7" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-4.7-17.2.2.8">
+                <code>from_publication</code>. Positive integer. Optional. Events in the results must have occurred at or following the event with the given <code>publication|id</code> (includes the event with the given <code>publication|id</code> in the results).<a href="#section-4.7-17.2.2.8" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-4.7-17.2.2.9">
+                <code>after_publication</code>. Positive integer. Optional. Events in the results must have occurred following the event with the given <code>publication_id</code> (excludes the event with the given <code>publication|id</code> in the results).
+Useful for pagination: pass the <code>publication|id</code>
+attribute of the last event returned in the previous page of results when navigating in order of occurrence (<code>reverse</code> argument absent or false).<a href="#section-4.7-17.2.2.9" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-4.7-17.2.2.10">
+                <code>before_publication</code>. Positive integer. Optional. Events in the results must have occurred previously to the event with the given <code>publication|id</code> (excludes the event with the given <code>publication|id</code> in the results).
+Useful for pagination: pass the <code>publication|id</code>
+attribute of the last event returned in the previous page of results when navigating in reverse order of occurrence (<code>reverse=true</code>).<a href="#section-4.7-17.2.2.10" class="pilcrow">¶</a>
+</li>
+              <li class="compact" id="section-4.7-17.2.2.11">
+                <code>until_publication</code>. Positive integer. Optional. Events in the results must have occurred at or previously to the event with the given <code>publication|id</code> (includes the event with the given <code>publication|id</code> in the results).<a href="#section-4.7-17.2.2.11" class="pilcrow">¶</a>
 </li>
             </ul>
 </li>
-          <li id="section-4.7-18.2">Can <code>wamp.topic.history.after</code> be implemented (efficiently) at all?<a href="#section-4.7-18.2" class="pilcrow">¶</a>
-</li>
-          <li id="section-4.7-18.3">How does that interact with pattern-based subscriptions?<a href="#section-4.7-18.3" class="pilcrow">¶</a>
-</li>
-          <li id="section-4.7-18.4">The same question as with the subscriber lists applies where: to stay within our separation of roles, we need a broker + a separate peer which implements the callee role. Here we do not have a mechanism to get the history from the broker.<a href="#section-4.7-18.4" class="pilcrow">¶</a>
-</li>
-          <li id="section-4.7-18.5">How are black/whitelisted sessionIDs treated? A client which requests event history will have a different sessionID than on previous connections, and may receive events for which it was excluded in the previous session, or not receive events for which it was whitelisted. - see <a href="https://github.com/wamp-proto/wamp-proto/issues/206">https://github.com/wamp-proto/wamp-proto/issues/206</a><a href="#section-4.7-18.5" class="pilcrow">¶</a>
-</li>
-        </ol>
-<p id="section-4.7-19"><strong>Feature Announcement</strong><a href="#section-4.7-19" class="pilcrow">¶</a></p>
-<p id="section-4.7-20">Support for this feature MUST be announced by <em>Subscribers</em> (<code>role := "subscriber"</code>) and <em>Brokers</em> (<code>role := "broker"</code>) via<a href="#section-4.7-20" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-4.7-21">
-<pre>    HELLO.Details.roles.&lt;role&gt;.features.event_history|bool := true
-</pre><a href="#section-4.7-21" class="pilcrow">¶</a>
+        </ul>
+<p id="section-4.7-18">It is possible to pass multiple options at the same time. In this case they will be treated as conditions with
+logical <code>AND</code>. Note that the <code>publication|id</code> event attribute is not ordered as it belongs to the Global scope. But since events are
+stored in the order they are received by the broker, it is possible to find an event with the specified <code>publication|id</code> and then
+return events including or excluding the matched one depending on the <code>*_publication</code> filter attributes.<a href="#section-4.7-18" class="pilcrow">¶</a></p>
+<p id="section-4.7-19">The <code>arguments</code> payload field returned by the above RPC uses the same schema: an array of <code>Event</code> objects containing
+an additional <code>timestamp</code> string attribute in <a href="https://www.ietf.org/rfc/rfc3339.txt">RFC3339</a> format. It can also be an empty array in the case where there were no publications to the
+specified subscription, or all events were filtered out by the specified criteria. Additional general information
+about the query may be returned via the <code>argumentsKw</code> payload field.<a href="#section-4.7-19" class="pilcrow">¶</a></p>
+<div class="lang-javascript sourcecode" id="section-4.7-20">
+<pre>  [
+    {
+        "timestamp": "yyyy-MM-ddThh:mm:ss.SSSZ", // string with event date/time in RFC3339 format
+        "subscription": 2342423, // The subscription ID of the event
+        "publication": 32445235, // The original publication ID of the event
+        "details": {},           // The original details of the event
+        "args": [],              // The original list arguments payload of the event. May be ommited
+        "kwargs": {}             // The original key-value arguments payload of the event. May be ommited
+    }
+  ]
+</pre><a href="#section-4.7-20" class="pilcrow">¶</a>
 </div>
+<p id="section-4.7-21">Clients should not rely on timestamps being unique and monotonic. When events occur in quick succession, it's possible for some of them to have the same timestamp. When a router in an IoT system is deployed off-grid and is not synchronized to an NTP server, it's possible for the timestamps to jump backwards when the router's wall clock time or time zone is manually adjusted.<a href="#section-4.7-21" class="pilcrow">¶</a></p>
+<p id="section-4.7-22">In cases where the events list is too large to send as a single RPC result, router implementations
+may provide additional options, such as pagination or returning progressive results.<a href="#section-4.7-22" class="pilcrow">¶</a></p>
+<p id="section-4.7-23">As the Event History feature operates on <code>subscription|id</code>, there can be situations when there are not yet any
+subscribers to a topic of interest, but publications to the topic occur. In this situation, the <em>Broker</em> cannot
+predict that events under that topic should be stored. If the <em>Broker</em> implementation allows configuration on
+a per-topic basis, it may overcome this situations by preinitializing history-enabled topics with "dummy"
+subscriptions even if there are not yet any real subscribers to those topics.<a href="#section-4.7-23" class="pilcrow">¶</a></p>
+<p id="section-4.7-24">Sometimes, a client may not be willing to subscribe to a topic just for the purpose of obtaining a subscription id.
+In that case a client may use other <a href="#name-procedures-3">Subscriptions Meta API RPC</a> for retrieving subscription
+IDs by topic URIs if the router supports it.<a href="#section-4.7-24" class="pilcrow">¶</a></p>
+<p id="section-4.7-25"><strong>Security Aspects</strong><a href="#section-4.7-25" class="pilcrow">¶</a></p>
+<p id="section-4.7-26">TODO/FIXME: This part of Event History needs more discussion and clarification.
+But at least provides some basic information to take into account.<a href="#section-4.7-26" class="pilcrow">¶</a></p>
+<p id="section-4.7-27">In order to request event history, a peer must be allowed to subscribe to a desired subscription first. Thus, if a peer
+cannot subscribe to a topic resulting in a subscription, it means that it cannot receive events history for that
+topic either. To sidestep this problem, a peer must be allowed to call related meta procedures for obtaining the
+event history as described above. Prohibited Event History meta procedure calls must fail with the
+<code>wamp.error.not_authorized</code> error URI.<a href="#section-4.7-27" class="pilcrow">¶</a></p>
+<p id="section-4.7-28">Original publications may include additional options, such as <code>black-white-listing</code> that triggers special event
+processing. These same rules must also apply to event history requests. For example, if the original publication contains
+<code>eligible_authrole = 'admin'</code>, but the request for history came from a peer with <code>authrole = 'user'</code>, then even if
+<code>user</code> is authorized to subscribe to the topic (and thus is authorized to ask for event history), this publication
+must be filtered out from the results of this specific request, by the router side.<a href="#section-4.7-28" class="pilcrow">¶</a></p>
+<p id="section-4.7-29">The <code>black-white-listing</code> feature also allows the filtering of event delivery on a <code>session ID</code> basis. In the context of
+event history, this can result in unexpected behaviour: session ids are generated randomly at runtime for every
+session establishment, so newly connected sessions asking for event history may receive events that were originally
+excluded, or, vice versa, may not receive expected events due to session ID mismatch. To prevent this unexpected
+behaviour, all events published with <code>Options.exclude|list[int]</code> or <code>Options.eligible|list[int]</code> should be ignored by
+the Event History mechanism and not be saved at all.<a href="#section-4.7-29" class="pilcrow">¶</a></p>
+<p id="section-4.7-30">Finally, Event History should only filter according to attributes that do not change during the run time of the router,
+which are currently <code>authrole</code> and <code>authid</code>. Filtering based on ephemeral attributes like <code>session ID</code> <span class="unicode">– (U+2013)</span> and perhaps
+other future custom attributes <span class="unicode">– (U+2013)</span> should result in the event not being stored in the history at all, to avoid
+unintentional leaking of event information.<a href="#section-4.7-30" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="event-retention">
@@ -5025,8 +5165,8 @@ It can be triggered when a Session is either detached (the client has disconnect
 <p id="section-4.10-21"><strong>Testaments in Use</strong><a href="#section-4.10-21" class="pilcrow">¶</a></p>
 <p id="section-4.10-22">A <em>Client</em> that wishes to send some form of data when their <em>Session</em> ends unexpectedly or their <em>Transport</em> becomes lost can set a testament using the WAMP Testament Meta API, when a <em>Router</em> supports it.
 For example, a client may call <code>add_testament</code> (this example uses the implicit <code>scope</code> option of <code>destroyed</code>):<a href="#section-4.10-22" class="pilcrow">¶</a></p>
-<div id="section-4.10-23">
-<pre class="lang-python sourcecode">yield self.call('wamp.session.add_testament',
+<div class="lang-python sourcecode" id="section-4.10-23">
+<pre>yield self.call('wamp.session.add_testament',
                 'com.myapp.mytopic', ['Seeya!'], {'my_name': 'app1'})
 </pre><a href="#section-4.10-23" class="pilcrow">¶</a>
 </div>
@@ -5039,8 +5179,8 @@ The <em>Router</em> MAY ignore publish options that do not make sense for a Test
 <p id="section-4.10-27">A <em>Router</em> that does not allow Session Resumption MUST send <code>detached</code>-scope Testaments before <code>destroyed</code>-scope Testaments.<a href="#section-4.10-27" class="pilcrow">¶</a></p>
 <p id="section-4.10-28">A <em>Client</em> can also clear testaments if the information is no longer relevant (for example, it is shutting down completely cleanly).
 For example, a client may call <code>wamp.session.flush_testaments</code>:<a href="#section-4.10-28" class="pilcrow">¶</a></p>
-<div id="section-4.10-29">
-<pre class="lang-python sourcecode">yield self.call('wamp.session.flush_testaments', scope='detached')
+<div class="lang-python sourcecode" id="section-4.10-29">
+<pre>yield self.call('wamp.session.flush_testaments', scope='detached')
 yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </pre><a href="#section-4.10-29" class="pilcrow">¶</a>
 </div>
@@ -5124,8 +5264,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
           <p id="section-5.1-3.1">Caution: This scheme is extremely simple and flexible, but the resulting security may be limited. E.g., the ticket value will be sent over the wire. If the transport WAMP is running over is not encrypted, a man-in-the-middle can sniff and possibly hijack the ticket. If the ticket value is reused, that might enable replay attacks.<a href="#section-5.1-3.1" class="pilcrow">¶</a></p>
 </blockquote>
 <p id="section-5.1-4">A typical authentication begins with the client sending a <code>HELLO</code> message specifying the <code>ticket</code> method as (one of) the authentication methods:<a href="#section-5.1-4" class="pilcrow">¶</a></p>
-<div id="section-5.1-5">
-<pre class="lang-javascript sourcecode">    [1, "realm1",
+<div class="lang-javascript sourcecode" id="section-5.1-5">
+<pre>    [1, "realm1",
       {
         "roles": ...,
         "authmethods": ["ticket"],
@@ -5138,19 +5278,19 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <p id="section-5.1-7">The <code>HELLO.Details.authid|string</code> is the authentication ID (e.g. username) the client wishes to authenticate as. For Ticket-based authentication, this MUST be provided.<a href="#section-5.1-7" class="pilcrow">¶</a></p>
 <p id="section-5.1-8">If the server is unwilling or unable to perform Ticket-based authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <code>ABORT</code> message.<a href="#section-5.1-8" class="pilcrow">¶</a></p>
 <p id="section-5.1-9">If the server is willing to let the client authenticate using a ticket and the server recognizes the provided <code>authid</code>, it'll send a <code>CHALLENGE</code> message:<a href="#section-5.1-9" class="pilcrow">¶</a></p>
-<div id="section-5.1-10">
-<pre class="lang-javascript sourcecode">    [4, "ticket", {}]
+<div class="lang-javascript sourcecode" id="section-5.1-10">
+<pre>    [4, "ticket", {}]
 </pre><a href="#section-5.1-10" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1-11">The client will send an <code>AUTHENTICATE</code> message containing a ticket:<a href="#section-5.1-11" class="pilcrow">¶</a></p>
-<div id="section-5.1-12">
-<pre class="lang-javascript sourcecode">    [5, "secret!!!", {}]
+<div class="lang-javascript sourcecode" id="section-5.1-12">
+<pre>    [5, "secret!!!", {}]
 </pre><a href="#section-5.1-12" class="pilcrow">¶</a>
 </div>
 <p id="section-5.1-13">The server will then check if the ticket provided is permissible (for the <code>authid</code> given).<a href="#section-5.1-13" class="pilcrow">¶</a></p>
 <p id="section-5.1-14">If the authentication succeeds, the server will finally respond with a <code>WELCOME</code> message:<a href="#section-5.1-14" class="pilcrow">¶</a></p>
-<div id="section-5.1-15">
-<pre class="lang-javascript sourcecode">    [2, 3251278072152162,
+<div class="lang-javascript sourcecode" id="section-5.1-15">
+<pre>    [2, 3251278072152162,
       {
         "authid": "joe",
         "authrole": "user",
@@ -5186,8 +5326,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
         </h3>
 <p id="section-5.2-1">WAMP Challenge-Response ("WAMP-CRA") authentication is a simple, secure authentication mechanism using a shared secret. The client and the server share a secret. The secret never travels the wire, hence WAMP-CRA can be used via non-TLS connections. The actual pre-sharing of the secret is outside the scope of the authentication mechanism.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">A typical authentication begins with the client sending a <code>HELLO</code> message specifying the <code>wampcra</code> method as (one of) the authentication methods:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<div id="section-5.2-3">
-<pre class="lang-javascript sourcecode">    [1, "realm1",
+<div class="lang-javascript sourcecode" id="section-5.2-3">
+<pre>    [1, "realm1",
         {
             "roles": ...,
             "authmethods": ["wampcra"],
@@ -5200,8 +5340,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <p id="section-5.2-5">The <code>HELLO.Details.authid|string</code> is the authentication ID (e.g. username) the client wishes to authenticate as. For WAMP-CRA, this MUST be provided.<a href="#section-5.2-5" class="pilcrow">¶</a></p>
 <p id="section-5.2-6">If the server is unwilling or unable to perform WAMP-CRA authentication, it MAY either skip forward trying other authentication methods (if the client announced any) or send an <code>ABORT</code> message.<a href="#section-5.2-6" class="pilcrow">¶</a></p>
 <p id="section-5.2-7">If the server is willing to let the client authenticate using WAMP-CRA, and the server recognizes the provided <code>authid</code>, it MUST send a <code>CHALLENGE</code> message:<a href="#section-5.2-7" class="pilcrow">¶</a></p>
-<div id="section-5.2-8">
-<pre class="lang-javascript sourcecode">    [4, "wampcra",
+<div class="lang-javascript sourcecode" id="section-5.2-8">
+<pre>    [4, "wampcra",
         {
             "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
                 \"authprovider\": \"userdb\", \"authid\": \"peter\",
@@ -5243,8 +5383,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </div>
 <p id="section-5.2-13">That is, compute the HMAC-SHA256 using the shared <code>secret</code> over the <code>challenge</code>.<a href="#section-5.2-13" class="pilcrow">¶</a></p>
 <p id="section-5.2-14">After computing the signature, the client will send an <code>AUTHENTICATE</code> message containing the signature, as a base64-encoded string:<a href="#section-5.2-14" class="pilcrow">¶</a></p>
-<div id="section-5.2-15">
-<pre class="lang-javascript sourcecode">    [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
+<div class="lang-javascript sourcecode" id="section-5.2-15">
+<pre>    [5, "gir1mSx+deCDUV7wRM5SGIn/+R/ClqLZuH4m7FJeBVI=", {}]
 </pre><a href="#section-5.2-15" class="pilcrow">¶</a>
 </div>
 <p id="section-5.2-16">The server will then check if<a href="#section-5.2-16" class="pilcrow">¶</a></p>
@@ -5255,8 +5395,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </li>
         </ul>
 <p id="section-5.2-18">If the authentication succeeds, the server will finally respond with a <code>WELCOME</code> message:<a href="#section-5.2-18" class="pilcrow">¶</a></p>
-<div id="section-5.2-19">
-<pre class="lang-javascript sourcecode">    [2, 3251278072152162,
+<div class="lang-javascript sourcecode" id="section-5.2-19">
+<pre>    [2, 3251278072152162,
         {
             "authid": "peter",
             "authrole": "user",
@@ -5291,8 +5431,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <p id="section-5.2-32">WAMP-CRA operates using a shared secret. While the secret is never sent over the wire, a shared secret often requires storage of that secret on the client and the server - and storing a password verbatim (unencrypted) is not recommended in general.<a href="#section-5.2-32" class="pilcrow">¶</a></p>
 <p id="section-5.2-33">WAMP-CRA allows the use of salted passwords following the <a href="http://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a> key derivation scheme. With salted passwords, the password itself is never stored, but only a key derived from the password and a password salt. This derived key is then practically working as the new shared secret.<a href="#section-5.2-33" class="pilcrow">¶</a></p>
 <p id="section-5.2-34">When the password is salted, the server will during WAMP-CRA send a <code>CHALLENGE</code> message containing additional information:<a href="#section-5.2-34" class="pilcrow">¶</a></p>
-<div id="section-5.2-35">
-<pre class="lang-javascript sourcecode">    [4, "wampcra",
+<div class="lang-javascript sourcecode" id="section-5.2-35">
+<pre>    [4, "wampcra",
         {
             "challenge": "{ \"nonce\": \"LHRTC9zeOIrt_9U3\",
                 \"authprovider\": \"userdb\", \"authid\": \"peter\",
@@ -5422,8 +5562,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
         </table>
 <p id="section-5.3-38"><em>Initial Client Authentication Message</em><a href="#section-5.3-38" class="pilcrow">¶</a></p>
 <p id="section-5.3-39">WAMP-SCRAM authentication begins with the client sending a <code>HELLO</code> message specifying the <code>wamp-scram</code> method as (one of) the authentication methods:<a href="#section-5.3-39" class="pilcrow">¶</a></p>
-<div id="section-5.3-40">
-<pre class="lang-javascript sourcecode">    [1, "realm1",
+<div class="lang-javascript sourcecode" id="section-5.3-40">
+<pre>    [1, "realm1",
         {
             "roles": ...,
             "authmethods": ["wamp-scram"],
@@ -5461,8 +5601,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
         </ul>
 <p id="section-5.3-45"><em>Initial Server Authentication Message</em><a href="#section-5.3-45" class="pilcrow">¶</a></p>
 <p id="section-5.3-46">If none of the above failure conditions apply, and the server is ready to let the client authenticate using WAMP-SCRAM, then it SHALL send a <code>CHALLENGE</code> message:<a href="#section-5.3-46" class="pilcrow">¶</a></p>
-<div id="section-5.3-47">
-<pre class="lang-javascript sourcecode">    [4, "wamp-scram",
+<div class="lang-javascript sourcecode" id="section-5.3-47">
+<pre>    [4, "wamp-scram",
         {
             "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
             "salt": "aBc+fx0NAVA=",
@@ -5495,8 +5635,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 <p id="section-5.3-51">The client SHOULD respond with an ABORT message if it detects that the cost parameters are unusually low. Such low-cost parameters could be the result of a rogue server attempting to obtain a weak password hash that can be easily cracked. What constitutes unusually low parameters is implementation-specific and is not covered by this document.<a href="#section-5.3-51" class="pilcrow">¶</a></p>
 <p id="section-5.3-52"><em>Final Client Authentication Message</em><a href="#section-5.3-52" class="pilcrow">¶</a></p>
 <p id="section-5.3-53">Upon receiving a valid <code>CHALLENGE</code> message, the client SHALL respond with an <code>AUTHENTICATE</code> message:<a href="#section-5.3-53" class="pilcrow">¶</a></p>
-<div id="section-5.3-54">
-<pre class="lang-javascript sourcecode">    [5, "dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ=",
+<div class="lang-javascript sourcecode" id="section-5.3-54">
+<pre>    [5, "dHzbZapWIk4jUhN+Ute9ytag9zjfMHgsqmmiz7AndVQ=",
         {
             "nonce": "egVDf3DMJh0=SBmkFIh7sSo=",
             "channel_binding": null,
@@ -5536,8 +5676,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
         </ul>
 <p id="section-5.3-59"><em>Final Server Authentication Message - Success</em><a href="#section-5.3-59" class="pilcrow">¶</a></p>
 <p id="section-5.3-60">If the authentication succeeds, the server SHALL finally respond with a <code>WELCOME</code> message:<a href="#section-5.3-60" class="pilcrow">¶</a></p>
-<div id="section-5.3-61">
-<pre class="lang-javascript sourcecode">    [2, 3251278072152162,
+<div class="lang-javascript sourcecode" id="section-5.3-61">
+<pre>    [2, 3251278072152162,
         {
             "authid": "user",
             "authrole": "frontend",
@@ -5632,8 +5772,8 @@ yield self.call('wamp.session.flush_testaments', scope='destroyed')
 </li>
         </ol>
 <p id="section-5.3-76">where <code>StoredKey</code> and <code>ServerKey</code> are computed as follows:<a href="#section-5.3-76" class="pilcrow">¶</a></p>
-<div id="section-5.3-77">
-<pre class="lang-javascript sourcecode">SaltedPassword  = KDF(Normalize(password), salt, params...)
+<div class="lang-javascript sourcecode" id="section-5.3-77">
+<pre>SaltedPassword  = KDF(Normalize(password), salt, params...)
 ClientKey       = HMAC(SaltedPassword, "Client Key")
 StoredKey       = SHA256(ClientKey)
 ServerKey       = HMAC(SaltedPassword, "Server Key")
@@ -5643,8 +5783,8 @@ ServerKey       = HMAC(SaltedPassword, "Server Key")
 <p id="section-5.3-79">The manner in which the <code>StoredKey</code> and <code>ServerKey</code> are shared with the server during user registration is outside the scope of SCRAM and this document.<a href="#section-5.3-79" class="pilcrow">¶</a></p>
 <p id="section-5.3-80"><strong>AuthMessage</strong><a href="#section-5.3-80" class="pilcrow">¶</a></p>
 <p id="section-5.3-81">In SCRAM, <code>AuthMessage</code> is used for computing <code>ClientProof</code> and <code>ServerSignature</code>. <code>AuthMessage</code> is computed using attributes that were sent in the first three messages of the authentication exchange.<a href="#section-5.3-81" class="pilcrow">¶</a></p>
-<div id="section-5.3-82">
-<pre class="lang-javascript sourcecode">ClientFirstBare = "n=" + Escape(HELLO.Details.authid) + "," +
+<div class="lang-javascript sourcecode" id="section-5.3-82">
+<pre>ClientFirstBare = "n=" + Escape(HELLO.Details.authid) + "," +
                   "r=" + HELLO.Details.authextra.nonce
 
 ServerFirst = "r=" + CHALLENGE.Details.nonce + "," +
@@ -5669,8 +5809,8 @@ AuthMessage = ClientFirstBare + "," + ServerFirst + "," +
 </div>
 <p id="section-5.3-83"><strong>ClientProof</strong><a href="#section-5.3-83" class="pilcrow">¶</a></p>
 <p id="section-5.3-84"><code>ClientProof</code> is computed by the client during the authentication exchange as follows:<a href="#section-5.3-84" class="pilcrow">¶</a></p>
-<div id="section-5.3-85">
-<pre class="lang-javascript sourcecode">SaltedPassword  = KDF(Normalize(password), salt, params...)
+<div class="lang-javascript sourcecode" id="section-5.3-85">
+<pre>SaltedPassword  = KDF(Normalize(password), salt, params...)
 ClientKey       = HMAC(SaltedPassword, "Client Key")
 StoredKey       = SHA256(ClientKey)
 ClientSignature = HMAC(StoredKey, AuthMessage)
@@ -5679,8 +5819,8 @@ ClientProof     = ClientKey XOR ClientSignature
 </div>
 <p id="section-5.3-86">The <code>ClientProof</code> is then sent to the server, base64-encoded, via the <code>AUTHENTICATE.Signature</code> argument.<a href="#section-5.3-86" class="pilcrow">¶</a></p>
 <p id="section-5.3-87">The server verifies the <code>ClientProof</code> by computing the <code>RecoveredStoredKey</code> and comparing it to the actual <code>StoredKey</code>:<a href="#section-5.3-87" class="pilcrow">¶</a></p>
-<div id="section-5.3-88">
-<pre class="lang-javascript sourcecode">ClientSignature    = HMAC(StoredKey, AuthMessage)
+<div class="lang-javascript sourcecode" id="section-5.3-88">
+<pre>ClientSignature    = HMAC(StoredKey, AuthMessage)
 RecoveredClientKey = ClientSignature XOR ReceivedClientProof
 RecoveredStoredKey = SHA256(RecoveredClientKey)
 </pre><a href="#section-5.3-88" class="pilcrow">¶</a>
@@ -5688,14 +5828,14 @@ RecoveredStoredKey = SHA256(RecoveredClientKey)
 <p id="section-5.3-89">Note that the client MAY cache the <code>ClientKey</code> and <code>StoredKey</code> (or just <code>SaltedPassword</code>) to avoid having to perform the expensive KDF computation for every authentication exchange. Storing these values securely on the client is outside the scope of this document.<a href="#section-5.3-89" class="pilcrow">¶</a></p>
 <p id="section-5.3-90"><strong>ServerSignature</strong><a href="#section-5.3-90" class="pilcrow">¶</a></p>
 <p id="section-5.3-91"><code>ServerSignature</code> is computed by the server during the authentication exchange as follows:<a href="#section-5.3-91" class="pilcrow">¶</a></p>
-<div id="section-5.3-92">
-<pre class="lang-javascript sourcecode">ServerSignature = HMAC(ServerKey, AuthMessage)
+<div class="lang-javascript sourcecode" id="section-5.3-92">
+<pre>ServerSignature = HMAC(ServerKey, AuthMessage)
 </pre><a href="#section-5.3-92" class="pilcrow">¶</a>
 </div>
 <p id="section-5.3-93">The <code>ServerSignature</code> is then sent to the client, base64-encoded, via the <code>WELCOME.Details.authextra.verifier</code> attribute.<a href="#section-5.3-93" class="pilcrow">¶</a></p>
 <p id="section-5.3-94">The client verifies the <code>ServerSignature</code> by computing it and comparing it with the <code>ServerSignature</code> sent by the server:<a href="#section-5.3-94" class="pilcrow">¶</a></p>
-<div id="section-5.3-95">
-<pre class="lang-javascript sourcecode">ServerKey       = HMAC(SaltedPassword, "Server Key")
+<div class="lang-javascript sourcecode" id="section-5.3-95">
+<pre>ServerKey       = HMAC(SaltedPassword, "Server Key")
 ServerSignature = HMAC(ServerKey, AuthMessage)
 </pre><a href="#section-5.3-95" class="pilcrow">¶</a>
 </div>
@@ -5787,7 +5927,7 @@ ServerSignature = HMAC(ServerKey, AuthMessage)
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-cryptosign-based-authentica" class="section-name selfRef">Cryptosign-based Authentication</a>
         </h3>
 <p id="section-5.4-1"><em>WAMP-Cryptosign</em> is a WAMP authentication method based on
-<em>public-private key cryptography</em>. Specifically, it is based on <a href="https://ed25519.cr.yp.to/">Ed25519</a> digital signatures as described in <span>[<a href="#RFC8032" class="xref">RFC8032</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<em>public-private key cryptography</em>. Specifically, it is based on <a href="https://ed25519.cr.yp.to/">Ed25519</a> digital signatures as described in <span>[<a href="#RFC8032" class="cite xref">RFC8032</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <p id="section-5.4-2"><strong>Ed25519</strong> is an <a href="https://ed25519.cr.yp.to/ed25519-20110926.pdf">elliptic curve signature scheme</a> that instantiates the Edwards-curve Digital Signature Algorithm (EdDSA) with elliptic curve parameters which are equivalent to <a href="https://cr.yp.to/ecdh.html">Curve25519</a>.
 <strong>Curve25519</strong> is a <a href="https://safecurves.cr.yp.to/">SafeCurve</a>, which means it is easy to implement and avoid security issues resulting from common implementation challenges and bugs.
 Ed25519 is intended to operate at around the 128-bit security level, and there are robust native implementations available as open-source, e.g. <a href="https://github.com/jedisct1/libsodium">libsodium</a>, which can be used from script languages, e.g. <a href="https://github.com/pyca/pynacl">PyNaCl</a>.<a href="#section-5.4-2" class="pilcrow">¶</a></p>
@@ -5932,8 +6072,8 @@ chapter in <a href="#examplemessageexchanges">Example Message Exchanges</a>.<a h
 <a href="#section-5.4.1.2" class="section-number selfRef">5.4.1.2. </a><a href="#name-example-message-flow" class="section-name selfRef">Example Message Flow</a>
             </h5>
 <p id="section-5.4.1.2-1">A typical authentication begins with the client sending a <code>HELLO</code> message specifying the <code>cryptosign</code> method as (one of) the authentication methods:<a href="#section-5.4.1.2-1" class="pilcrow">¶</a></p>
-<div id="section-5.4.1.2-2">
-<pre class="lang-javascript sourcecode">[1, "realm1", {
+<div class="lang-javascript sourcecode" id="section-5.4.1.2-2">
+<pre>[1, "realm1", {
     "roles": {/* see below */},
     "authmethods": ["cryptosign"],
     "authid": "client01@example.com",
@@ -5985,8 +6125,8 @@ chapter in <a href="#examplemessageexchanges">Example Message Exchanges</a>.<a h
               </tbody>
             </table>
 <p id="section-5.4.1.2-7">The client needs to announce the WAMP <code>roles</code> and features it supports, for example:<a href="#section-5.4.1.2-7" class="pilcrow">¶</a></p>
-<div id="section-5.4.1.2-8">
-<pre class="lang-javascript sourcecode">{"callee": {"features": {"call_canceling": True,
+<div class="lang-javascript sourcecode" id="section-5.4.1.2-8">
+<pre>{"callee": {"features": {"call_canceling": True,
                          "caller_identification": True,
                          "pattern_based_registration": True,
                          "progressive_call_results": True,
@@ -6005,21 +6145,21 @@ chapter in <a href="#examplemessageexchanges">Example Message Exchanges</a>.<a h
 </div>
 <p id="section-5.4.1.2-9">If the router is unwilling or unable to perform WAMP-Cryptosign authentication, it'll either skip forward trying other authentication methods (if the client announced any) or send an <code>ABORT</code> message.<a href="#section-5.4.1.2-9" class="pilcrow">¶</a></p>
 <p id="section-5.4.1.2-10">If the router is willing to let the client authenticate using WAMP-Cryptosign and the router recognizes the provided <code>HELLO.Details.authextra.pubkey|string</code>, it'll send a <code>CHALLENGE</code> message:<a href="#section-5.4.1.2-10" class="pilcrow">¶</a></p>
-<div id="section-5.4.1.2-11">
-<pre class="lang-javascript sourcecode">[4, "cryptosign", {
+<div class="lang-javascript sourcecode" id="section-5.4.1.2-11">
+<pre>[4, "cryptosign", {
     "challenge": "fa034062ad76352b53a25358854577730db82f367aa439709c91296d04a5716c",
     "channel_binding": null
 }]
 </pre><a href="#section-5.4.1.2-11" class="pilcrow">¶</a>
 </div>
 <p id="section-5.4.1.2-12">The client will send an <code>AUTHENTICATE</code> message containing a signature:<a href="#section-5.4.1.2-12" class="pilcrow">¶</a></p>
-<div id="section-5.4.1.2-13">
-<pre class="lang-javascript sourcecode">[5 'e2f0297a193b63b7a4a92028e9e2e6107f82730560d54a657bd982cb4b3151490399debbbde998e494d3c3b2a5e2e91271291e10dee85a6cfaa127885ddd8b0afa034062ad76352b53a25358854577730db82f367aa439709c91296d04a5716c', {}]
+<div class="lang-javascript sourcecode" id="section-5.4.1.2-13">
+<pre>[5 'e2f0297a193b63b7a4a92028e9e2e6107f82730560d54a657bd982cb4b3151490399debbbde998e494d3c3b2a5e2e91271291e10dee85a6cfaa127885ddd8b0afa034062ad76352b53a25358854577730db82f367aa439709c91296d04a5716c', {}]
 </pre><a href="#section-5.4.1.2-13" class="pilcrow">¶</a>
 </div>
 <p id="section-5.4.1.2-14">If the authentication succeeds, the server will router respond with a <code>WELCOME</code> message:<a href="#section-5.4.1.2-14" class="pilcrow">¶</a></p>
-<div id="section-5.4.1.2-15">
-<pre class="lang-javascript sourcecode">[2, 7562122397119786, {
+<div class="lang-javascript sourcecode" id="section-5.4.1.2-15">
+<pre>[2, 7562122397119786, {
     "authextra": {
         "x_cb_node": "intel-nuci7-27532",
         "x_cb_peer": "tcp4:127.0.0.1:49032",
@@ -6052,8 +6192,8 @@ chapter in <a href="#examplemessageexchanges">Example Message Exchanges</a>.<a h
             </ol>
 <p id="section-5.4.1.2-18">The <code>WELCOME.Details</code> again contain the actual authentication information active. If the authentication fails, the router will response with an <code>ABORT</code> message.<a href="#section-5.4.1.2-18" class="pilcrow">¶</a></p>
 <p id="section-5.4.1.2-19">When the authentication is successful, <code>WELCOME.Details.roles|dict</code> will announce the roles and features the router supports:<a href="#section-5.4.1.2-19" class="pilcrow">¶</a></p>
-<div id="section-5.4.1.2-20">
-<pre class="lang-javascript sourcecode">{"broker": {"features": {"event_retention": True,
+<div class="lang-javascript sourcecode" id="section-5.4.1.2-20">
+<pre>{"broker": {"features": {"event_retention": True,
                                     "pattern_based_subscription": True,
                                     "publisher_exclusion": True,
                                     "publisher_identification": True,
@@ -6340,8 +6480,8 @@ optional hierarchical chain of intermediate certificates
             </h5>
 <p id="section-5.4.4.2-1">The certificate types <code>EIP712AuthorityCertificate</code> and <code>EIP712DelegateCertificate</code> follow <a href="https://eips.ethereum.org/EIPS/eip-712">EIP712</a> and use Ethereum signatures.<a href="#section-5.4.4.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.4.4.2-2"><code>EIP712AuthorityCertificate</code>:<a href="#section-5.4.4.2-2" class="pilcrow">¶</a></p>
-<div id="section-5.4.4.2-3">
-<pre class="lang-json sourcecode">[
+<div class="lang-json sourcecode" id="section-5.4.4.2-3">
+<pre>[
     {
         "name": "chainId",
         "type": "uint256"
@@ -6378,8 +6518,8 @@ optional hierarchical chain of intermediate certificates
 </pre><a href="#section-5.4.4.2-3" class="pilcrow">¶</a>
 </div>
 <p id="section-5.4.4.2-4"><code>EIP712DelegateCertificate</code>:<a href="#section-5.4.4.2-4" class="pilcrow">¶</a></p>
-<div id="section-5.4.4.2-5">
-<pre class="lang-json sourcecode">[
+<div class="lang-json sourcecode" id="section-5.4.4.2-5">
+<pre>[
     {
         "name": "chainId",
         "type": "uint256"
@@ -7458,8 +7598,8 @@ generally advised to use WAMP session serializers with native byte array support
 <p id="section-6.1-46">Since many WAMP messages assume the possibility of simultaneous use of <code>Arguments|list</code> and <code>ArgumentsKw|dict</code>,
 WAMP client implementations must package arguments into the following hash table and then serialize it and
 transmit as a single element within <code>Arguments|list</code>.<a href="#section-6.1-46" class="pilcrow">¶</a></p>
-<div id="section-6.1-47">
-<pre class="lang-json sourcecode">{
+<div class="lang-json sourcecode" id="section-6.1-47">
+<pre>{
     "args": Arguments|list,
     "kwargs": ArgumentsKw|dict
 }
@@ -7469,8 +7609,8 @@ transmit as a single element within <code>Arguments|list</code>.<a href="#sectio
 <code>Payload Passthru Mode</code> mode, or especially <code>Payload End-to-End Encryption</code> which is built on top of
 <code>Payload End-to-End Encryption</code> is used or not.<a href="#section-6.1-48" class="pilcrow">¶</a></p>
 <p id="section-6.1-49"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with encryption and key ID<a href="#section-6.1-49" class="pilcrow">¶</a></p>
-<div id="section-6.1-50">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-50">
+<pre>    [
         48,
         25471,
         {
@@ -7487,8 +7627,8 @@ transmit as a single element within <code>Arguments|list</code>.<a href="#sectio
 <p id="section-6.1-51"><em>Example.</em> Caller-to-Dealer progressive <code>CALL</code> with encryption and key ID.<a href="#section-6.1-51" class="pilcrow">¶</a></p>
 <p id="section-6.1-52">Note that nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as,
 for example, <code>Progressive Calls</code>.<a href="#section-6.1-52" class="pilcrow">¶</a></p>
-<div id="section-6.1-53">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-53">
+<pre>    [
         48,
         25471,
         {
@@ -7505,8 +7645,8 @@ for example, <code>Progressive Calls</code>.<a href="#section-6.1-52" class="pil
 </div>
 <p id="section-6.1-54"><em>Example.</em> Caller-to-Dealer <code>CALL</code> with MQTT payload. Specifying <code>"ppt_serializer": "native"</code> means that
 the original MQTT message payload is passed as WAMP payload message as is, without any transcoding.<a href="#section-6.1-54" class="pilcrow">¶</a></p>
-<div id="section-6.1-55">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-55">
+<pre>    [
         48,
         25471,
         {
@@ -7522,8 +7662,8 @@ the original MQTT message payload is passed as WAMP payload message as is, witho
 the original source of payload data is received from a related system. Specifying <code>"ppt_serializer": "json"</code>
 means that the original MQTT message payload was parsed and encoded with the <code>json</code> serializer before
 embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a></p>
-<div id="section-6.1-57">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-57">
+<pre>    [
         48,
         25471,
         {
@@ -7536,8 +7676,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </pre><a href="#section-6.1-57" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-58"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code> with encryption and key ID<a href="#section-6.1-58" class="pilcrow">¶</a></p>
-<div id="section-6.1-59">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-59">
+<pre>    [
         68,
         35477,
         1147,
@@ -7552,8 +7692,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </pre><a href="#section-6.1-59" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-60"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code> with MQTT payload<a href="#section-6.1-60" class="pilcrow">¶</a></p>
-<div id="section-6.1-61">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-61">
+<pre>    [
         68,
         35479,
         3344,
@@ -7566,8 +7706,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </pre><a href="#section-6.1-61" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-62"><em>Example.</em> Callee-to-Dealer <code>YIELD</code> with encryption and key ID<a href="#section-6.1-62" class="pilcrow">¶</a></p>
-<div id="section-6.1-63">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-63">
+<pre>    [
         70,
         87683,
         {
@@ -7582,8 +7722,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </div>
 <p id="section-6.1-64"><em>Example.</em> Callee-to-Dealer progressive <code>YIELD</code> with encryption and key ID<a href="#section-6.1-64" class="pilcrow">¶</a></p>
 <p id="section-6.1-65">Nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as, for example, <code>Progressive Call Results</code>.<a href="#section-6.1-65" class="pilcrow">¶</a></p>
-<div id="section-6.1-66">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-66">
+<pre>    [
         70,
         87683,
         {
@@ -7598,8 +7738,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </pre><a href="#section-6.1-66" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-67"><em>Example.</em> Dealer-to-Caller <code>RESULT</code> with encryption and key ID<a href="#section-6.1-67" class="pilcrow">¶</a></p>
-<div id="section-6.1-68">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-68">
+<pre>    [
         50,
         77133,
         {
@@ -7614,8 +7754,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </div>
 <p id="section-6.1-69"><em>Example.</em> Dealer-to-Caller progressive <code>RESULT</code> with encryption and key ID<a href="#section-6.1-69" class="pilcrow">¶</a></p>
 <p id="section-6.1-70">Nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as, for example, <code>Progressive Call Results</code>.<a href="#section-6.1-70" class="pilcrow">¶</a></p>
-<div id="section-6.1-71">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-71">
+<pre>    [
         50,
         77133,
         {
@@ -7630,8 +7770,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </pre><a href="#section-6.1-71" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-72"><em>Example.</em> Callee-to-Dealer <code>ERROR</code> with encryption and key ID<a href="#section-6.1-72" class="pilcrow">¶</a></p>
-<div id="section-6.1-73">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-73">
+<pre>    [
         8,
         68,
         87683,
@@ -7647,8 +7787,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </pre><a href="#section-6.1-73" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-74"><em>Example.</em> Publishing event to a topic with encryption and key ID<a href="#section-6.1-74" class="pilcrow">¶</a></p>
-<div id="section-6.1-75">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-75">
+<pre>    [
         16,
         45677,
         {
@@ -7663,8 +7803,8 @@ embedding it into WAMP message.<a href="#section-6.1-56" class="pilcrow">¶</a><
 </pre><a href="#section-6.1-75" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-76"><em>Example.</em> Receiving event for a topic with encryption and key ID<a href="#section-6.1-76" class="pilcrow">¶</a></p>
-<div id="section-6.1-77">
-<pre class="lang-json sourcecode">    [
+<div class="lang-json sourcecode" id="section-6.1-77">
+<pre>    [
         36,
         5512315355,
         4429313566,
@@ -7737,8 +7877,8 @@ ciphers known to every peer involved in message processing.<a href="#section-6.1
 </div>
 <p id="section-7.1-9">the first octet sent out to (or received from) the wire is <code>0x11</code> and the last octet sent out (or received) is <code>0x44</code>.<a href="#section-7.1-9" class="pilcrow">¶</a></p>
 <p id="section-7.1-10">Here is how you would convert octets received from the wire into an integer in Python:<a href="#section-7.1-10" class="pilcrow">¶</a></p>
-<div id="section-7.1-11">
-<pre class="lang-python sourcecode">import struct
+<div class="lang-python sourcecode" id="section-7.1-11">
+<pre>import struct
 
 octets_received = b"\x11\x22\x33\x44"
 i = struct.unpack("&gt;L", octets_received)[0]
@@ -7746,8 +7886,8 @@ i = struct.unpack("&gt;L", octets_received)[0]
 </div>
 <p id="section-7.1-12">The integer received has the value <code>287454020</code>.<a href="#section-7.1-12" class="pilcrow">¶</a></p>
 <p id="section-7.1-13">And here is how you would send out an integer to the wire in Python:<a href="#section-7.1-13" class="pilcrow">¶</a></p>
-<div id="section-7.1-14">
-<pre class="lang-python sourcecode">octets_to_be_send = struct.pack("&gt;L", i)
+<div class="lang-python sourcecode" id="section-7.1-14">
+<pre>octets_to_be_send = struct.pack("&gt;L", i)
 </pre><a href="#section-7.1-14" class="pilcrow">¶</a>
 </div>
 <p id="section-7.1-15">The octets to be sent are <code>b"\x11\x22\x33\x44"</code>.<a href="#section-7.1-15" class="pilcrow">¶</a></p>
@@ -7784,8 +7924,8 @@ i = struct.unpack("&gt;L", octets_received)[0]
 </pre><a href="#section-7.1-28" class="pilcrow">¶</a>
 </div>
 <p id="section-7.1-29">Here is a Python program that prints all (currently) permissible values for the <em>second octet</em>:<a href="#section-7.1-29" class="pilcrow">¶</a></p>
-<div id="section-7.1-30">
-<pre class="lang-python sourcecode">SERMAP = {
+<div class="lang-python sourcecode" id="section-7.1-30">
+<pre>SERMAP = {
     1: 'json',
     2: 'messagepack'
 }
@@ -7803,8 +7943,8 @@ for ser in SERMAP:
 <p id="section-7.1-33">After a <em>Client</em> has connected to a <em>Router</em>, the <em>Router</em> will first receive the 4 octets handshake request from the <em>Client</em>.<a href="#section-7.1-33" class="pilcrow">¶</a></p>
 <p id="section-7.1-34">If the <em>first octet</em> differs from <code>0x7F</code>, it is not a WAMP-over-RawSocket request. Unless the <em>Router</em> also supports other transports on the connecting port (such as WebSocket or LongPoll), the <em>Router</em> MUST <strong>fail the connection</strong>.<a href="#section-7.1-34" class="pilcrow">¶</a></p>
 <p id="section-7.1-35">Here is an example of how a <em>Router</em> could parse the <em>second octet</em> in a <em>Clients</em> handshake request:<a href="#section-7.1-35" class="pilcrow">¶</a></p>
-<div id="section-7.1-36">
-<pre class="lang-python sourcecode"># map RawSocket handshake request (2nd octet) to
+<div class="lang-python sourcecode" id="section-7.1-36">
+<pre># map RawSocket handshake request (2nd octet) to
 # serializer / max. msg length
 for i in range(256):
     ser_id = i &amp; 0x0f
@@ -7850,8 +7990,8 @@ for i in range(256):
           <p id="section-7.1-49.1">Note that the error code <code>0</code> MUST NOT be used. This is to allow storage of error state in a host language variable, while allowing <code>0</code> to signal the current state "no error"<a href="#section-7.1-49.1" class="pilcrow">¶</a></p>
 </blockquote>
 <p id="section-7.1-50">Here is an example of how a <em>Router</em> might create the <em>second octet</em> in an error response:<a href="#section-7.1-50" class="pilcrow">¶</a></p>
-<div id="section-7.1-51">
-<pre class="lang-python sourcecode">ERRMAP = {
+<div class="lang-python sourcecode" id="section-7.1-51">
+<pre>ERRMAP = {
     0: "illegal (must not be used)",
     1: "serializer unsupported",
     2: "maximum message length unacceptable",
@@ -7867,8 +8007,8 @@ for err in ERRMAP:
 </div>
 <p id="section-7.1-52">The <em>Client</em> - after having sent its handshake request - will wait for the 4 octets from <em>Router</em> handshake reply.<a href="#section-7.1-52" class="pilcrow">¶</a></p>
 <p id="section-7.1-53">Here is an example of how a <em>Client</em> might parse the <em>second octet</em> in a <em>Router</em> handshake reply:<a href="#section-7.1-53" class="pilcrow">¶</a></p>
-<div id="section-7.1-54">
-<pre class="lang-python sourcecode"># map RawSocket handshake reply (2nd octet)
+<div class="lang-python sourcecode" id="section-7.1-54">
+<pre># map RawSocket handshake reply (2nd octet)
 for i in range(256):
     ser_id = i &amp; 0x0f
     if ser_id:
@@ -7974,8 +8114,8 @@ for i in range(256):
 </div>
 <p id="section-7.3-5">Here, <code>http://mypp.com/longpoll</code> is the base URL for the Long-Poll Transport and <code>/open</code> is a path dedicated for opening new sessions.<a href="#section-7.3-5" class="pilcrow">¶</a></p>
 <p id="section-7.3-6">The HTTP/POST request SHOULD have a <code>Content-Type</code> header set to <code>application/json</code> and MUST have a request body with a JSON document that is a dictionary:<a href="#section-7.3-6" class="pilcrow">¶</a></p>
-<div id="section-7.3-7">
-<pre class="lang-javascript sourcecode">    {
+<div class="lang-javascript sourcecode" id="section-7.3-7">
+<pre>    {
        "protocols": ["wamp.2.json"]
     }
 </pre><a href="#section-7.3-7" class="pilcrow">¶</a>
@@ -8008,8 +8148,8 @@ for i in range(256):
 <p id="section-7.3-11.3">The value is ignored, but may help in certain situations to prevent intermediaries from caching the request.<a href="#section-7.3-11.3" class="pilcrow">¶</a></p>
 </blockquote>
 <p id="section-7.3-12">Returned is a JSON document containing a transport ID and the protocol to speak:<a href="#section-7.3-12" class="pilcrow">¶</a></p>
-<div id="section-7.3-13">
-<pre class="lang-javascript sourcecode">    {
+<div class="lang-javascript sourcecode" id="section-7.3-13">
+<pre>    {
        "protocol": "wamp.2.json",
        "transport": "kjmd3sBLOUnb3Fyr"
     }
@@ -8073,7 +8213,7 @@ for i in range(256):
           <li id="section-7.4-3.3">serialize the string to a JSON string<a href="#section-7.4-3.3" class="pilcrow">¶</a>
 </li>
         </ol>
-<p id="section-7.4-4">where Base64 encoding follows Section 4 of <span>[<a href="#RFC4648" class="xref">RFC4648</a>]</span>.<a href="#section-7.4-4" class="pilcrow">¶</a></p>
+<p id="section-7.4-4">where Base64 encoding follows Section 4 of <span>[<a href="#RFC4648" class="cite xref">RFC4648</a>]</span>.<a href="#section-7.4-4" class="pilcrow">¶</a></p>
 <p id="section-7.4-5"><em>Example</em><a href="#section-7.4-5" class="pilcrow">¶</a></p>
 <p id="section-7.4-6">Consider the byte array (hex representation):<a href="#section-7.4-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-7.4-7">
@@ -8107,8 +8247,8 @@ for i in range(256):
 <p id="section-7.4-16">Below are complete Python and JavaScript code examples for conversion between byte arrays and JSON strings.<a href="#section-7.4-16" class="pilcrow">¶</a></p>
 <p id="section-7.4-17"><strong>Python</strong><a href="#section-7.4-17" class="pilcrow">¶</a></p>
 <p id="section-7.4-18">Here is a complete example in Python showing how byte arrays are converted to and from JSON:<a href="#section-7.4-18" class="pilcrow">¶</a></p>
-<div id="section-7.4-19">
-<pre class="lang-python sourcecode">import os, base64, json, sys, binascii
+<div class="lang-python sourcecode" id="section-7.4-19">
+<pre>import os, base64, json, sys, binascii
 
 data_in = os.urandom(16)
 print("In:   {}".format(binascii.hexlify(data_in)))
@@ -8134,8 +8274,8 @@ assert(data_out == data_in)
 </div>
 <p id="section-7.4-20"><strong>JavaScript</strong><a href="#section-7.4-20" class="pilcrow">¶</a></p>
 <p id="section-7.4-21">Here is a complete example in JavaScript showing how byte arrays are converted to and from JSON:<a href="#section-7.4-21" class="pilcrow">¶</a></p>
-<div id="section-7.4-22">
-<pre class="lang-javascript sourcecode">var data_in = new Uint8Array(new ArrayBuffer(16));
+<div class="lang-javascript sourcecode" id="section-7.4-22">
+<pre>var data_in = new Uint8Array(new ArrayBuffer(16));
 
 // initialize test data
 for (var i = 0; i &lt; data_in.length; ++i) {
@@ -8346,8 +8486,8 @@ These advantages in flexibility of course come at a price, as nothing is free, a
 </li>
           </ol>
 <p id="section-8.1.1-31">To specify the call arguments in FlatBuffers IDL, we can define a FlatBuffers table for both <code>args</code> and <code>kwargs</code>:<a href="#section-8.1.1-31" class="pilcrow">¶</a></p>
-<div id="section-8.1.1-32">
-<pre class="lang-flatbuffers sourcecode">/// Call args/kwargs for "wamp.session.kill_by_authid"
+<div class="lang-flatbuffers sourcecode" id="section-8.1.1-32">
+<pre>/// Call args/kwargs for "wamp.session.kill_by_authid"
 table SessionKillByAuthid
 {
     /// The WAMP authid of the sessions to kill.
@@ -8364,8 +8504,8 @@ table SessionKillByAuthid
 <p id="section-8.1.1-33">The table contains the list <code>args</code> as table elements (in order), unless the table element has an <em>Attribute</em> <code>kwarg</code>, in which case the element one in <code>kwarg</code>.<a href="#section-8.1.1-33" class="pilcrow">¶</a></p>
 <p id="section-8.1.1-34">The attributes <code>wampid</code> and <code>wampuri</code> are special markers that denote values that follow the respective WAMP identifier rules for WAMP IDs and URIs.<a href="#section-8.1.1-34" class="pilcrow">¶</a></p>
 <p id="section-8.1.1-35">When successful, the procedure will return a list of WAMP session IDs of session that were killed. Again, we can map this to FlatBuffers IDL:<a href="#section-8.1.1-35" class="pilcrow">¶</a></p>
-<div id="section-8.1.1-36">
-<pre class="lang-flatbuffers sourcecode">table WampIds
+<div class="lang-flatbuffers sourcecode" id="section-8.1.1-36">
+<pre>table WampIds
 {
     /// List of WAMP IDs.
     value: [uint64] (wampid);
@@ -8472,9 +8612,9 @@ table SessionKillByAuthid
 </li>
           </ol>
 <p id="section-8.1.2-18"><strong>Type/Object UUIDs</strong><a href="#section-8.1.2-18" class="pilcrow">¶</a></p>
-<p id="section-8.1.2-19">Types and generally any objects can be globally identified using UUIDs <span>[<a href="#RFC4122" class="xref">RFC4122</a>]</span>. UUIDs can be used in WAMP IDL using the <code>uuid</code> <em>Attribute</em>.<a href="#section-8.1.2-19" class="pilcrow">¶</a></p>
-<div id="section-8.1.2-20">
-<pre class="lang-flatbuffers sourcecode">/// UUID (canonical textual representation).
+<p id="section-8.1.2-19">Types and generally any objects can be globally identified using UUIDs <span>[<a href="#RFC4122" class="cite xref">RFC4122</a>]</span>. UUIDs can be used in WAMP IDL using the <code>uuid</code> <em>Attribute</em>.<a href="#section-8.1.2-19" class="pilcrow">¶</a></p>
+<div class="lang-flatbuffers sourcecode" id="section-8.1.2-20">
+<pre>/// UUID (canonical textual representation).
 my_field1: string (uuid);
 
 /// UUID (128 bit binary).
@@ -8482,8 +8622,8 @@ my_field2: uint128_t (uuid);
 </pre><a href="#section-8.1.2-20" class="pilcrow">¶</a>
 </div>
 <p id="section-8.1.2-21">The <code>uint128_t</code> is a struct type defined as<a href="#section-8.1.2-21" class="pilcrow">¶</a></p>
-<div id="section-8.1.2-22">
-<pre class="lang-flatbuffers sourcecode">/// An unsigned integer with 128 bits.
+<div class="lang-flatbuffers sourcecode" id="section-8.1.2-22">
+<pre>/// An unsigned integer with 128 bits.
 struct uint128_t {
     /// Least significand 32 bits.
     w0: uint32;
@@ -8503,8 +8643,8 @@ struct uint128_t {
 <p id="section-8.1.2-24">Ethereum addresses can be used to globally identify types or generally any object where
 the global ID also needs to be conflict free, consensually shared and owned by a respective
 Ethereum network user. Ethereum addresses can be used in WAMP IDL using the <code>ethadr</code> <em>Attribute</em>:<a href="#section-8.1.2-24" class="pilcrow">¶</a></p>
-<div id="section-8.1.2-25">
-<pre class="lang-flatbuffers sourcecode">/// Ethereum address (checksummed HEX encoded address).
+<div class="lang-flatbuffers sourcecode" id="section-8.1.2-25">
+<pre>/// Ethereum address (checksummed HEX encoded address).
 my_field1: string (ethadr);
 
 /// Ethereum address (160 bit binary).
@@ -8512,8 +8652,8 @@ my_field2: uint160_t (ethadr);
 </pre><a href="#section-8.1.2-25" class="pilcrow">¶</a>
 </div>
 <p id="section-8.1.2-26">The <code>uint160_t</code> is a struct type defined as<a href="#section-8.1.2-26" class="pilcrow">¶</a></p>
-<div id="section-8.1.2-27">
-<pre class="lang-flatbuffers sourcecode">/// An unsigned integer with 160 bits.
+<div class="lang-flatbuffers sourcecode" id="section-8.1.2-27">
+<pre>/// An unsigned integer with 160 bits.
 struct uint160_t {
     /// Least significand 32 bits.
     w0: uint32;
@@ -8541,8 +8681,8 @@ using the <em>Attribute</em><a href="#section-8.1.2-29" class="pilcrow">¶</a></
 </li>
           </ol>
 <p id="section-8.1.2-31">The <code>type</code> <em>Attribute</em> can be used to denote WAMP service interfaces, e.g. continuing with above WAMP Meta API procedure example, the <code>wamp.session.kill_by_authid</code> procedure can be declared like this:<a href="#section-8.1.2-31" class="pilcrow">¶</a></p>
-<div id="section-8.1.2-32">
-<pre class="lang-flatbuffers sourcecode">rpc_service IWampMeta(type: "interface",
+<div class="lang-flatbuffers sourcecode" id="section-8.1.2-32">
+<pre>rpc_service IWampMeta(type: "interface",
                       uuid: "88711231-3d95-44bc-9464-58d871dd7fd7",
                       wampuri: "wamp")
 {
@@ -8580,8 +8720,8 @@ using the <em>Attribute</em><a href="#section-8.1.2-29" class="pilcrow">¶</a></
 </li>
           </ul>
 <p id="section-8.1.3-3">We map the two WAMP service types to FlatBuffers IDL using the <em>Attribute</em> <code>type == "procedure" | "topic"</code> as in this example:<a href="#section-8.1.3-3" class="pilcrow">¶</a></p>
-<div id="section-8.1.3-4">
-<pre class="lang-flatbuffers sourcecode">rpc_service IWampMeta(type: "interface",
+<div class="lang-flatbuffers sourcecode" id="section-8.1.3-4">
+<pre>rpc_service IWampMeta(type: "interface",
                       uuid: "88711231-3d95-44bc-9464-58d871dd7fd7",
                       wampuri: "wamp")
 {
@@ -8620,8 +8760,8 @@ named unit of <code>type == "interface"</code> which includes a UUID in an <code
 </li>
           </ul>
 <p id="section-8.1.3-10">The general form for declaring <em>Topics</em> is:<a href="#section-8.1.3-10" class="pilcrow">¶</a></p>
-<div id="section-8.1.3-11">
-<pre class="lang-flatbuffers sourcecode">&lt;TOPIC-METHOD&gt; (&lt;TOPIC-PAYLOAD-TABLE&gt;): Void (
+<div class="lang-flatbuffers sourcecode" id="section-8.1.3-11">
+<pre>&lt;TOPIC-METHOD&gt; (&lt;TOPIC-PAYLOAD-TABLE&gt;): Void (
     type: "topic",
     wampuri: &lt;TOPIC-URI&gt;
 );
@@ -8632,8 +8772,8 @@ named unit of <code>type == "interface"</code> which includes a UUID in an <code
             <p id="section-8.1.3-13.1">Note: With <em>Acknowledge Event Delivery</em> (future), when a <em>Subscriber</em> receives an EVENT, the <em>Subscriber</em> will return an <em>Event-Acknowledgement</em> including <code>args</code>/ <code>kwargs</code>. Once we do have this feature in WAMP PubSub, the type of the <em>Event-Acknowledgement</em> can be specified using a non-<code>Void</code> return type.<a href="#section-8.1.3-13.1" class="pilcrow">¶</a></p>
 </blockquote>
 <p id="section-8.1.3-14">The general form for declaring <em>Procedures</em> is:<a href="#section-8.1.3-14" class="pilcrow">¶</a></p>
-<div id="section-8.1.3-15">
-<pre class="lang-flatbuffers sourcecode">&lt;PROCEDURE-METHOD&gt; (&lt;CALL-PAYLOAD-TABLE&gt;): &lt;CALLRESULT-PAYLOAD-TABLE&gt; (
+<div class="lang-flatbuffers sourcecode" id="section-8.1.3-15">
+<pre>&lt;PROCEDURE-METHOD&gt; (&lt;CALL-PAYLOAD-TABLE&gt;): &lt;CALLRESULT-PAYLOAD-TABLE&gt; (
     type: "procedure",
     wampuri: &lt;PROCEDURE-URI&gt;
 );
@@ -8641,8 +8781,8 @@ named unit of <code>type == "interface"</code> which includes a UUID in an <code
 </div>
 <p id="section-8.1.3-16">The application payload transmitted in CALLs is typed via <code>&lt;CALL-PAYLOAD-TABLE&gt;</code>. The return type of the CALL is typed via <code>&lt;CALLRESULT-PAYLOAD-TABLE&gt;</code>.<a href="#section-8.1.3-16" class="pilcrow">¶</a></p>
 <p id="section-8.1.3-17">The general form for declaring <em>Interfaces</em>, which collect <em>Procedures</em> and <em>Topics</em> is:<a href="#section-8.1.3-17" class="pilcrow">¶</a></p>
-<div id="section-8.1.3-18">
-<pre class="lang-flatbuffers sourcecode">rpc_service &lt;INTERFACE&gt; (
+<div class="lang-flatbuffers sourcecode" id="section-8.1.3-18">
+<pre>rpc_service &lt;INTERFACE&gt; (
     type: "interface",
     uuid: &lt;INTERFACE-UUID&gt;,
     wampuri: &lt;INTERFACE-URI-PREFIX&gt;
@@ -8687,8 +8827,8 @@ named unit of <code>type == "interface"</code> which includes a UUID in an <code
 <a href="#section-8.2.1" class="section-number selfRef">8.2.1. </a><a href="#name-catalog-archive-file" class="section-name selfRef">Catalog Archive File</a>
           </h4>
 <p id="section-8.2.1-1">The contents of an <code>example.zip</code> interface catalog:<a href="#section-8.2.1-1" class="pilcrow">¶</a></p>
-<div id="section-8.2.1-2">
-<pre class="lang-sh sourcecode">unzip -l build/example.zip
+<div class="lang-sh sourcecode" id="section-8.2.1-2">
+<pre>unzip -l build/example.zip
 Archive:  build/example.zip
   Length      Date    Time    Name
 ---------  ---------- -----   ----
@@ -8713,8 +8853,8 @@ Archive:  build/example.zip
 </pre><a href="#section-8.2.1-4" class="pilcrow">¶</a>
 </div>
 <p id="section-8.2.1-5">from FlatBuffers IDL sources, for example:<a href="#section-8.2.1-5" class="pilcrow">¶</a></p>
-<div id="section-8.2.1-6">
-<pre class="lang-flatbuffers sourcecode">rpc_service IExample1 (
+<div class="lang-flatbuffers sourcecode" id="section-8.2.1-6">
+<pre>rpc_service IExample1 (
     type: "interface", uuid: "bf469db0-efea-425b-8de4-24b5770e6241"
 ) {
     my_procedure1 (TestRequest1): TestResponse1 (
@@ -8819,8 +8959,8 @@ Archive:  build/example.zip
             </tbody>
           </table>
 <p id="section-8.2.2-3">Here is a complete example:<a href="#section-8.2.2-3" class="pilcrow">¶</a></p>
-<div id="section-8.2.2-4">
-<pre class="lang-yaml sourcecode">name: example
+<div class="lang-yaml sourcecode" id="section-8.2.2-4">
+<pre>name: example
 
 version: 22.6.1
 
@@ -9043,7 +9183,7 @@ calling <code>xbr.pool.buy_key</code>, and calling <code>wamp.r2r.submit_traffic
 <p id="section-12-1">All diagrams, examples, and notes in this specification are non-normative, as are all sections explicitly marked non-normative. Everything else in this specification is normative.<a href="#section-12-1" class="pilcrow">¶</a></p>
 <p id="section-12-2">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
 "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in
-this document are to be interpreted as described in RFC 2119 <span>[<a href="#RFC2119" class="xref">RFC2119</a>]</span>.<a href="#section-12-2" class="pilcrow">¶</a></p>
+this document are to be interpreted as described in RFC 2119 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span>.<a href="#section-12-2" class="pilcrow">¶</a></p>
 <p id="section-12-3">Requirements phrased in the imperative as part of algorithms (such as "strip any leading space characters" or "return false and abort these steps") are to be interpreted with the meaning of the key word ("MUST", "SHOULD", "MAY", etc.) used in introducing the algorithm.<a href="#section-12-3" class="pilcrow">¶</a></p>
 <p id="section-12-4">Conformance requirements phrased as algorithms or specific steps MAY  be implemented in any manner, so long as the end result is equivalent.<a href="#section-12-4" class="pilcrow">¶</a></p>
 <div id="terminology-and-other-conventions">
@@ -9136,13 +9276,13 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
       </h2>
 <div id="rfc.index.index">
 <p id="appendix-A-1">
-        <a href="#rfc.index.u61" class="xref">=</a><a href="#appendix-A-1" class="pilcrow">¶</a></p>
+        <a href="#rfc.index.u61" class="internal xref">=</a><a href="#appendix-A-1" class="pilcrow">¶</a></p>
 </div>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="appendix-A-2.1">
           <div id="rfc.index.u61">
 <p id="appendix-A-2.1.1" class="keepWithNext">
-            <a href="#rfc.index.u61" class="xref">=</a><a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+            <a href="#rfc.index.u61" class="internal xref">=</a><a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
 </div>
 <ul class="compact normal ulEmpty">
 <li class="compact normal ulEmpty" id="appendix-A-2.1.2.1">
@@ -9150,7 +9290,7 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
                 <dt id="appendix-A-2.1.2.1.1.1">=D_N1</dt>
                 <dd style="margin-left: 1.5em" id="appendix-A-2.1.2.1.1.2">
                   <p id="appendix-A-2.1.2.1.1.2.1">
-                    <a href="#section-9-2.5" class="xref">Section 9, Paragraph 2, Item 5</a><a href="#appendix-A-2.1.2.1.1.2.1" class="pilcrow">¶</a></p>
+                    <a href="#section-9-2.5" class="auto internal xref">Section 9, Paragraph 2, Item 5</a><a href="#appendix-A-2.1.2.1.1.2.1" class="pilcrow">¶</a></p>
 </dd>
               <dd class="break"></dd>
 </dl>
