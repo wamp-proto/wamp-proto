@@ -7953,33 +7953,33 @@ Thus, a given event might be sent multiple times to the same client under differ
 Every subscription instance, based on a topic URI and some options, has a unique ID. All
 subscribers of the same subscription are given the same subscription ID.<a href="#section-12.5-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-12.5-7">
-<pre>                            +----------+            +------------+         +----------+
-                            |          |            |   Exact    |         |Subscriber|
-                            |          |---Event---&gt;|Subscription|----+---&gt;|   peer   |
-                            |          |            +------------+    |    +----------+
+<pre>                             +----------+          +------------+        +----------+
+                             |          |          |   Exact    |        |Subscriber|
+                             |          |--Event--&gt;|Subscription|---+---&gt;|   peer   |
+                             |          |          +------------+   |    +----------+
+ +----------+                |          |          +------------+   |    +----------+
+ |Publisher |                |  Broker  |          |  Wildcard  |   +---&gt;|Subscriber|
+ |   peer   |--Publication--&gt;|          |--Event--&gt;|Subscription|---+---&gt;|   peer   |
+ +----------+                |          |          +------------+   |    +----------+
+                             |          |          +------------+   |    +----------+
+                             |          |          |   Prefix   |   +---&gt;|Subscriber|
+                             |          |--Event--&gt;|Subscription|-------&gt;|   peer   |
+                             +----------+          +------------+        +----------+
 </pre><a href="#section-12.5-7" class="pilcrow">¶</a>
 </div>
-<p id="section-12.5-8">+----------+                 |          |            +------------+    |    +----------+
-   |Publisher |                 |  Broker  |            |  Wildcard  |    +---&gt;|Subscriber|
-   |   peer   |--Publication---&gt;|          |---Event---&gt;|Subscription|----+---&gt;|   peer   |
-   +----------+                 |          |            +------------+    |    +----------+
-                                |          |            +------------+    |    +----------+
-                                |          |            |   Prefix   |    +---&gt;|Subscriber|
-                                |          |---Event---&gt;|Subscription|--------&gt;|   peer   |
-                                +----------+            +------------+         +----------+<a href="#section-12.5-8" class="pilcrow">¶</a></p>
-<p id="section-12.5-9">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by<a href="#section-12.5-9" class="pilcrow">¶</a></p>
+<p id="section-12.5-8">If the <em>Broker</em> and the <em>Subscriber</em> support <strong>pattern-based subscriptions</strong>, this matching can happen by<a href="#section-12.5-8" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-12.5-10.1">prefix-matching policy<a href="#section-12.5-10.1" class="pilcrow">¶</a>
+<li class="compact" id="section-12.5-9.1">prefix-matching policy<a href="#section-12.5-9.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-12.5-10.2">wildcard-matching policy<a href="#section-12.5-10.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-12.5-9.2">wildcard-matching policy<a href="#section-12.5-9.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-12.5-11"><strong>Feature Announcement</strong><a href="#section-12.5-11" class="pilcrow">¶</a></p>
-<p id="section-12.5-12">Support for this feature MUST be announced by <em>Subscribers</em> (<code>role := "subscriber"</code>) and <em>Brokers</em> (<code>role := "broker"</code>) via<a href="#section-12.5-12" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-12.5-13">
+<p id="section-12.5-10"><strong>Feature Announcement</strong><a href="#section-12.5-10" class="pilcrow">¶</a></p>
+<p id="section-12.5-11">Support for this feature MUST be announced by <em>Subscribers</em> (<code>role := "subscriber"</code>) and <em>Brokers</em> (<code>role := "broker"</code>) via<a href="#section-12.5-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-12.5-12">
 <pre>    HELLO.Details.roles.&lt;role&gt;.features.
         pattern_based_subscription|bool := true
-</pre><a href="#section-12.5-13" class="pilcrow">¶</a>
+</pre><a href="#section-12.5-12" class="pilcrow">¶</a>
 </div>
 <div id="prefix-matching-1">
 <section id="section-12.5.1">

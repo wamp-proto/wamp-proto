@@ -3618,18 +3618,18 @@ Internet-Draft                   WAMP-AP                    January 2023
    unique ID.  All subscribers of the same subscription are given the
    same subscription ID.
 
-                            +----------+            +------------+         +----------+
-                            |          |            |   Exact    |         |Subscriber|
-                            |          |---Event--->|Subscription|----+--->|   peer   |
-                            |          |            +------------+    |    +----------+
-
-   +----------+ | | +------------+ | +----------+ |Publisher | |
-   Broker | | Wildcard | +--->|Subscriber| |
-   peer |--Publication--->| |---Event--->|Subscription|----+--->| peer |
-   +----------+ | | +------------+ | +----------+ | | +------------+ |
-   +----------+ | | | Prefix |
-   +--->|Subscriber| | |---Event--->|Subscription|-------->| peer |
-   +----------+ +------------+ +----------+
+                             +----------+          +------------+        +----------+
+                             |          |          |   Exact    |        |Subscriber|
+                             |          |--Event-->|Subscription|---+--->|   peer   |
+                             |          |          +------------+   |    +----------+
+ +----------+                |          |          +------------+   |    +----------+
+ |Publisher |                |  Broker  |          |  Wildcard  |   +--->|Subscriber|
+ |   peer   |--Publication-->|          |--Event-->|Subscription|---+--->|   peer   |
+ +----------+                |          |          +------------+   |    +----------+
+                             |          |          +------------+   |    +----------+
+                             |          |          |   Prefix   |   +--->|Subscriber|
+                             |          |--Event-->|Subscription|------->|   peer   |
+                             +----------+          +------------+        +----------+
 
    If the _Broker_ and the _Subscriber_ support *pattern-based
    subscriptions*, this matching can happen by
