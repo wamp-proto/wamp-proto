@@ -38,7 +38,6 @@ subscribers of the same subscription are given the same subscription ID.
                                 |          |---Event--->|Subscription|-------->|   peer   |
                                 +----------+            +------------+         +----------+
 
-
 If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, this matching can happen by
 
 * prefix-matching policy
