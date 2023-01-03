@@ -33,7 +33,7 @@ Support for advanced features must be announced by the peers which implement the
 | [Subscription Meta API](#pubsub-sub-metapi)               | beta   |   | X |   |    |   |    |
 | [Pattern-based Subscription](#pattern-based-subscription) | stable |   | X | X |    |   |    |
 | [Sharded Subscription](#pubsub-sharded-subscription)      | alpha  |   | X | X |    |   |    |
-| [Event History](#pubsub-event-history)                    | alpha  |   | X | X |    |   |    |
+| [Event History](#pubsub-event-history)                    | beta   |   | X |   |    |   |    |
 | [(Interface) Topic Reflection](#interface-reflection)     | sketch |   | X |   |    |   |    |
 
 
