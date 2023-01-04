@@ -1,6 +1,6 @@
 scour
 sphinx
-sphinx_rtd_theme
+sphinx_rtd_theme>=1
 sphinxcontrib_spelling
 sphinxcontrib_images
 pygments
