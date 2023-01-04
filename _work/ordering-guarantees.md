@@ -39,6 +39,80 @@ $$
 
 ## System Model
 
+A distributed system is partial synchronous if there are bounds on transmission delay, clock drift and processing time and these bounds are unknown.
+
+GST (global stabilization time)
+
+https://dev.to/skoya76/communication-models-of-distributed-systems-26i2
+
+distributed system partial synchronous byzantine faults formel modeling
+
+APPROACH:
+
+formal definition of observable message traces, not system behavior
+
+the system behavior is defined in plain english
+
+the message traces that might be observed on a correctly behaving system are formally defined
+
+
+https://wamp-proto.org/
+https://wamp-proto.org/wamp_latest_ietf.html
+
+https://github.com/crossbario/autobahn-python
+https://wamp-proto.org/implementations.html
+
+Z3 SMT solver
+
+SMTLib (.smt2)
+
+https://github.com/Z3Prover/z3
+
+z3-solver
+
+https://github.com/Z3Prover/z3/tree/master/examples/python
+
+https://pypi.org/project/z3-solver/
+
+Z3 Python language bindings
+
+https://colab.research.google.com/github/philzook58/z3_tutorial/blob/master/Z3%20Tutorial.ipynb
+
+
+
+SIMULINK/STATEFLOW (S/S)
+https://www.mathworks.com/products/stateflow.html
+
+
+Constraint Solvers for the Working PL Researcher - Nadia Polikarpova at PLMW@ICFP
+https://www.youtube.com/watch?v=rTOqg-f2rNM
+
+Programming Z3
+Nikolaj Bjørner, Leonardo de Moura, Lev Nachmanson, and Christoph Wintersteiger, Microsoft Research
+https://theory.stanford.edu/~nikolaj/programmingz3.html
+
+Z3 - a Tutorial
+Leonardo de Moura, Nikolaj Bjørner, Microsoft Research
+https://www.cs.colostate.edu/~cs440/spring19/slides/z3-tutorial.pdf
+
+
+START FROM:
+https://github.com/crossbario/autobahn-js/blob/master/packages/autobahn/test/test_pubsub_basic.txt
+
+
+Logical Physical Clocks
+Sandeep S. Kulkarni1 , Murat Demirbas2 ,
+Deepak Madeppa2 , Bharadwaj Avva2 , and Marcelo Leone 1
+1 Michigan State University, 2 University of Buffalo, SUNY
+
+"HLC does not require waiting out the clock uncertainty, since it is able to record causality relations within this uncertainty interval using the HLC update rules"
+
+"HLC can be implemented using 64 bits space, and is backwards compatible with NTP clocks. Moreover, HLC only reads NTP clock values but does not change it."
+
+https://cse.buffalo.edu/~demirbas/publications/hlc.pdf
+https://arxiv.org/pdf/1707.07699.pdf
+
+
 ### System structure
 
 ### Peer behavior
