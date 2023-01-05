@@ -113,6 +113,15 @@ https://cse.buffalo.edu/~demirbas/publications/hlc.pdf
 https://arxiv.org/pdf/1707.07699.pdf
 
 
+"How to Have your Causality and Wall Clocks, Too" by Jon Moore
+https://www.youtube.com/watch?v=YqNGbvFHoKM
+
+
+MongoDB uses hybrid timestamp to maintain versions in its MVCC storage.
+
+CockroachDB and YugabyteDB use hybrid timestamp to maintain causality with distributed transactions.
+
+
 ### System structure
 
 ### Peer behavior

@@ -176,3 +176,67 @@ for k in sorted(MCL_VALID.keys()):
         print("Welcome")
     else:
         print("Other")
+
+
+a = Array('a', IntSort(), BoolSort())
+i = Int('i')
+print(a, a[i])
+
+
+def assert_array(solver, array, start_index, data):
+    for offset in range(len(data)):
+        solver.add(array[start_index + offset] == data[offset])
+
+msgs = [Hello.MESSAGE_TYPE, Welcome.MESSAGE_TYPE, Register.MESSAGE_TYPE, Register.MESSAGE_TYPE]
+msgs = [Hello.MESSAGE_TYPE, Welcome.MESSAGE_TYPE, Goodbye.MESSAGE_TYPE, Goodbye.MESSAGE_TYPE]
+# msgs = [Hello.MESSAGE_TYPE, Abort.MESSAGE_TYPE, Register.MESSAGE_TYPE]
+
+s = Solver()
+i, j = Int('i'), Int('j')
+
+a = Array('a', IntSort(), IntSort())
+
+for step, msg in enumerate(msgs):
+    # s.add(a[step] == msg)
+    a = Store(a, step, msg)
+
+s.add(a[0] == Hello.MESSAGE_TYPE)
+
+s.add(ForAll(i, Implies(i > 0, a[i] != Hello.MESSAGE_TYPE)))
+
+s.add(Or(a[1] == Welcome.MESSAGE_TYPE, a[1] == Abort.MESSAGE_TYPE))
+
+s.add(ForAll(i, Implies(i > 1, And(a[i] != Welcome.MESSAGE_TYPE), a[i] != Abort.MESSAGE_TYPE)))
+
+s.add(ForAll(i, Implies(And(i > 0, a[1] == Abort.MESSAGE_TYPE), a[i] == 0)))
+
+
+
+s.add(Exists(i, Implies(a[i] == Goodbye.MESSAGE_TYPE, Exists(j, And(j > i, a[j] == Goodbye.MESSAGE_TYPE)))))
+
+s.add(Implies(Exists([i, j], a[i] == Goodbye.MESSAGE_TYPE), And(j > i, a[j] == Goodbye.MESSAGE_TYPE)))
+
+s.add(Implies(Exists([i, j], And(a[i] == Goodbye.MESSAGE_TYPE, j > i)), a[j] == Goodbye.MESSAGE_TYPE))
+
+s.add(Exists(i, And(a[i] == Goodbye.MESSAGE_TYPE, j > i, a[j] == Goodbye.MESSAGE_TYPE)))
+
+s.add(Implies(Exists(i, a[i] == Goodbye.MESSAGE_TYPE), a[i + 1] == Goodbye.MESSAGE_TYPE))
+
+# s.add(ForAll(i, Implies(a[i] == Goodbye.MESSAGE_TYPE, Exists(j, And(j > i, a[j] == Goodbye.MESSAGE_TYPE)))))
+
+# s.add(ForAll(i, Implies(And(i > 0, a[i] == Goodbye.MESSAGE_TYPE), a[i + 1] == Goodbye.MESSAGE_TYPE)))
+
+#s.add(ForAll(u, Implies(u >= v,
+#                        Exists([x, y], And(x >= 0, y >= 0, u == a*x + b*y)))))
+print(s.check())
+
+
+print(s)
+
+if s.check().r == 1:
+    print(s.model())
+    print('\nsatisfied!')
+else:
+    print('\nunsatisfied!')
+
+# msgs = [Int('msg{}')]
