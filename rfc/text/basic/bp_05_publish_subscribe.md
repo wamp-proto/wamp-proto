@@ -289,7 +289,7 @@ or
 
 {align="left"}
         [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
-            PUBLISH.Arguments|list, PUBLISH.ArgumentKw|dict]
+            PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 
 where
 
@@ -297,7 +297,7 @@ where
 * `PUBLISHED.Publication` is the ID of the publication of the published event.
 * `Details` is a dictionary that allows the Broker to provide additional event details in a extensible way. This is described further below.
 * `PUBLISH.Arguments` is the application-level event payload that was provided with the original publication request.
-* `PUBLISH.ArgumentKw` is the application-level event payload that was provided with the original publication request.
+* `PUBLISH.ArgumentsKw` is the application-level event payload that was provided with the original publication request.
 
 *Example*
 
