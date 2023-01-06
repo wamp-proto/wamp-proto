@@ -55,7 +55,7 @@ A Subscriber communicates its interest in a topic to a Broker by sending a `SUBS
 
 where
 
- * `Request` MUST be a random, ephemeral ID chosen by the Subscriber and used to correlate the Broker's response with the request.
+ * `Request` MUST be a sequential ID in the _session scope_, incremented by the Subscriber and used to correlate the Broker's response with the request.
  * `Options` MUST be a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
  * `Topic` is the topic the Subscriber wants to subscribe to and MUST be a URI.
 
@@ -114,7 +114,7 @@ When a Subscriber is no longer interested in receiving events for a subscription
 
 where
 
- * `Request` MUST be a random, ephemeral ID chosen by the Subscriber and used to correlate the Broker's response with the request.
+ * `Request` MUST be a sequential ID in the _session scope_, incremented by the Subscriber and used to correlate the Broker's response with the request.
  * `SUBSCRIBED.Subscription` MUST be the ID for the subscription to unsubscribe from, originally handed out by the Broker to the Subscriber.
 
 *Example*
