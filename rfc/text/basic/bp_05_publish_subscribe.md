@@ -55,9 +55,9 @@ A Subscriber communicates its interest in a topic to a Broker by sending a `SUBS
 
 where
 
- * `Request` MUST be a sequential ID in the _session scope_, incremented by the Subscriber and used to correlate the Broker's response with the request.
- * `Options` MUST be a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
- * `Topic` is the topic the Subscriber wants to subscribe to and MUST be a URI.
+ * `Request` is a sequential ID in the _session scope_, incremented by the Subscriber and used to correlate the Broker's response with the request.
+ * `Options` is a dictionary that allows to provide additional subscription request details in a extensible way. This is described further below.
+ * `Topic` is the topic the Subscriber wants to subscribe to and is a URI.
 
 *Example*
 
@@ -75,8 +75,8 @@ If the Broker is able to fulfill and allow the subscription, it answers by sendi
 
 where
 
- * `SUBSCRIBE.Request` MUST be the ID from the original request.
- * `Subscription` MUST be an ID chosen by the Broker for the subscription.
+ * `SUBSCRIBE.Request` is the ID from the original subscription request.
+ * `Subscription` is an ID chosen by the Broker for the subscription.
 
 *Example*
 
@@ -96,8 +96,8 @@ When the request for subscription cannot be fulfilled by the Broker, the Broker 
 
 where
 
- * `SUBSCRIBE.Request` MUST be the ID from the original request.
- * `Error` MUST be a URI that gives the error of why the request could not be fulfilled.
+ * `SUBSCRIBE.Request` is the ID from the original request.
+ * `Error` is a URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
@@ -114,8 +114,8 @@ When a Subscriber is no longer interested in receiving events for a subscription
 
 where
 
- * `Request` MUST be a sequential ID in the _session scope_, incremented by the Subscriber and used to correlate the Broker's response with the request.
- * `SUBSCRIBED.Subscription` MUST be the ID for the subscription to unsubscribe from, originally handed out by the Broker to the Subscriber.
+ * `Request` is a sequential ID in the _session scope_, incremented by the Subscriber and used to correlate the Broker's response with the request.
+ * `SUBSCRIBED.Subscription` is the ID for the subscription to unsubscribe from, originally handed out by the Broker to the Subscriber.
 
 *Example*
 
@@ -131,7 +131,7 @@ Upon successful unsubscription, the Broker sends an `UNSUBSCRIBED` message to th
 
 where
 
- * `UNSUBSCRIBE.Request` MUST be the ID from the original request.
+ * `UNSUBSCRIBE.Request` is the ID from the original request.
 
 *Example*
 
@@ -148,8 +148,8 @@ When the request fails, the Broker sends an `ERROR`
 
 where
 
- * `UNSUBSCRIBE.Request` MUST be the ID from the original request.
- * `Error` MUST be a URI that gives the error of why the request could not be fulfilled.
+ * `UNSUBSCRIBE.Request` is the ID from the original request.
+ * `Error` is a URI that gives the error of why the request could not be fulfilled.
 
 *Example*
 
@@ -239,7 +239,7 @@ If the Broker is able to fulfill and allowing the publication, and `PUBLISH.Opti
 where
 
 * `PUBLISH.Request` is the ID from the original publication request.
-* `Publication` is a ID chosen by the Broker for the publication.
+* `Publication` is an ID chosen by the Broker for the publication.
 
 *Example*
 
