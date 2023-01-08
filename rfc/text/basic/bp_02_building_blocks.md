@@ -279,6 +279,7 @@ Following scenarios have to be considered protocol errors:
  - Receiving `REGISTERED` message, before session was established.
  - Receiving `UNREGISTERED` message, before session was established.
  - Receiving `INVOCATION` message, before session was established.
+ - Receiving message with non-sequential request ID, such as `SUBSCRIBE`, `UNSUBSCRIBE`, `PUBLISH`, `REGISTER`, `UNREGISTER`, `CALL` and `YIELD`.
  - Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.
  - Catching error during message encoding/decoding.
  - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second `HELLO` within the lifetime of a session).
