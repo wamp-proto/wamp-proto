@@ -124,23 +124,23 @@ The following is a complete list of usage of IDs in the three categories for all
 
 **Session Scope IDs** {#session_scope_ids}
 
-* `ERROR.Request`
-* `PUBLISH.Request`
-* `PUBLISHED.Request`
 * `SUBSCRIBE.Request`
-* `SUBSCRIBED.Request`
+* `SUBSCRIBED.Request` (mirrored `SUBSCRIBE.Request`)
 * `UNSUBSCRIBE.Request`
-* `UNSUBSCRIBED.Request`
-* `CALL.Request`
-* `CANCEL.Request`
-* `RESULT.Request`
+* `UNSUBSCRIBED.Request` (mirrored `UNSUBSCRIBE.Request`)
+* `PUBLISH.Request`
+* `PUBLISHED.Request` (mirrored `PUBLISH.Request`)
 * `REGISTER.Request`
-* `REGISTERED.Request`
+* `REGISTERED.Request` (mirrored `REGISTER.Request`)
 * `UNREGISTER.Request`
-* `UNREGISTERED.Request`
+* `UNREGISTERED.Request` (mirrored `UNREGISTER.Request`)
+* `CALL.Request`
+* `RESULT.Request` (mirrored `CALL.Request`)
+* `CANCEL.Request` (mirrored `CALL.Request`)
 * `INVOCATION.Request`
-* `INTERRUPT.Request`
-* `YIELD.Request`
+* `YIELD.Request` (mirrored `INVOCATION.Request`)
+* `INTERRUPT.Request` (mirrored `INVOCATION.Request`)
+* `ERROR.Request` (mirrored original request ID)
 
 
 ## Serializers
