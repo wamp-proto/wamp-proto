@@ -262,7 +262,7 @@ The diagram below illustrates the full transport connection and session lifecycl
 
 ### Protocol errors {#protocol_errors}
 
-WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
+WAMP implementations MUST abort sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
 
 Following scenarios have to be considered protocol errors:
 
@@ -287,5 +287,5 @@ Following scenarios have to be considered protocol errors:
 In all such cases WAMP implementations:
 
 1. MUST send an `ABORT` message to the offending peer, having reason `wamp.error.protocol_violation` and optional attributes in ABORT.Details such as a human readable error message.
-2. MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
+2. MUST abort the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
 3. SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)
