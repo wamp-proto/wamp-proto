@@ -97,7 +97,7 @@ These are identified in WAMP using IDs that are integers between (inclusive) **1
 
 * IDs in the *global scope* MUST be drawn *randomly* from a *uniform distribution* over the complete range [1, 2^53]
 * IDs in the *router scope* CAN be chosen freely by the specific router implementation
-* IDs in the *session scope* MUST be incremented by 1 beginning with 1 (for each direction - *Client-to-Router* and *Router-to-Client*)
+* IDs in the *session scope* MUST be incremented by 1 beginning with 1 (for each direction - *Client-to-Router* and *Router-to-Client*) {#session_scope_id}
 
 > The reason to choose the specific lower bound as 1 rather than 0 is that 0 is the null-like (falsy) value for many programming languages.
 > The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.
@@ -122,7 +122,7 @@ The following is a complete list of usage of IDs in the three categories for all
 * `INVOCATION.Registration`
 
 
-**Session Scope IDs**
+**Session Scope IDs** {#session_scope_ids}
 
 * `ERROR.Request`
 * `PUBLISH.Request`
@@ -279,7 +279,7 @@ Following scenarios have to be considered protocol errors:
  - Receiving `REGISTERED` message, before session was established.
  - Receiving `UNREGISTERED` message, before session was established.
  - Receiving `INVOCATION` message, before session was established.
- - Receiving message with non-sequential request ID, such as `SUBSCRIBE`, `UNSUBSCRIBE`, `PUBLISH`, `REGISTER`, `UNREGISTER`, `CALL` and `YIELD`.
+ - Receiving message with non-[sequential](#session_scope_id) [session scope](#session_scope_ids) request ID, such as `SUBSCRIBE`, `UNSUBSCRIBE`, `PUBLISH`, `REGISTER`, `UNREGISTER`, `CALL` and `YIELD`.
  - Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.
  - Catching error during message encoding/decoding.
  - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second `HELLO` within the lifetime of a session).
