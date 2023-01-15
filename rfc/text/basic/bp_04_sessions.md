@@ -10,44 +10,44 @@ The message flow between Clients and Routers for opening and closing WAMP sessio
 The following state chart gives the states that a WAMP peer can be in during the session lifetime cycle.
 
 {align="left"}
-                             +--------------+                           
-    +--------(6)------------->              |                           
-    |                        | CLOSED       <--------------------------+
-    | +------(4)------------->              <---+                      |
-    | |                      +--------------+   |                      |
-    | |                               |         |                      |
-    | |                              (1)       (7)                     |
-    | |                               |         |                      |
-    | |                      +--------v-----+   |                   (11)
-    | |                      |              +---+                      |
-    | |         +------------+ ESTABLISHING +----------------+         |
-    | |         |            |              |                |         |
-    | |         |            +--------------+                |         |
-    | |         |                     |                     (10)       |
-    | |         |                    (9)                     |         |
-    | |         |                     |                      |         |
-    | |        (2)           +--------v-----+       +--------v-------+ |
-    | |         |            |              |       |                | |
-    | |         |     +------> FAILED       <--(13)-+ CHALLENGING /  +-+
-    | |         |     |      |              |       | AUTHENTICATING |  
-    | |         |     |      +--------------+       +----------------+  
-    | |         |    (8)                                     |          
-    | |         |     |                                      |          
-    | |         |     |                                      |          
-    | | +-------v-------+                                    |          
-    | | |               <-------------------(12)-------------+          
-    | | | ESTABLISHED   |                                               
-    | | |               +--------------+                                
-    | | +---------------+              |                                
-    | |         |                      |                                
-    | |        (3)                    (5)                               
-    | |         |                      |                                
-    | | +-------v-------+     +--------v-----+                          
-    | | |               +--+  |              |                          
-    | +-+ SHUTTING DOWN |  |  | CLOSING      |                          
-    |   |               |(14) |              |                          
-    |   +-------^-------+  |  +--------------+                          
-    |           |----------+           |                                
+                             +--------------+                           
+    +--------(6)------------->              |                           
+    |                        | CLOSED       <--------------------------+
+    | +------(4)------------->              <---+                      |
+    | |                      +--------------+   |                      |
+    | |                               |         |                      |
+    | |                              (1)       (7)                     |
+    | |                               |         |                      |
+    | |                      +--------v-----+   |                   (11)
+    | |                      |              +---+                      |
+    | |         +------------+ ESTABLISHING +----------------+         |
+    | |         |            |              |                |         |
+    | |         |            +--------------+                |         |
+    | |         |                     |                     (10)       |
+    | |         |                    (9)                     |         |
+    | |         |                     |                      |         |
+    | |        (2)           +--------v-----+       +--------v-------+ |
+    | |         |            |              |       |                | |
+    | |         |     +------> FAILED       <--(13)-+ CHALLENGING /  +-+
+    | |         |     |      |              |       | AUTHENTICATING |  
+    | |         |     |      +--------------+       +----------------+  
+    | |         |    (8)                                     |          
+    | |         |     |                                      |          
+    | |         |     |                                      |          
+    | | +-------v-------+                                    |          
+    | | |               <-------------------(12)-------------+          
+    | | | ESTABLISHED   |                                               
+    | | |               +--------------+                                
+    | | +---------------+              |                                
+    | |         |                      |                                
+    | |        (3)                    (5)                               
+    | |         |                      |                                
+    | | +-------v-------+     +--------v-----+                          
+    | | |               +--+  |              |                          
+    | +-+ SHUTTING DOWN |  |  | CLOSING      |                          
+    |   |               |(14) |              |                          
+    |   +-------^-------+  |  +--------------+                          
+    |           |----------+           |                                
     +----------------------------------+
 
 The state transitions are listed in this table:
@@ -191,7 +191,7 @@ In the WAMP Basic Profile without session authentication, a `WELCOME` message MU
 
 **Router: Role and Feature Announcement**
 
-Similar to a Client announcing Roles and Features supported in the ``HELLO` message, a Router announces its supported Roles and Features in the `WELCOME` message.
+Similar to a Client announcing Roles and Features supported in the `HELLO` message, a Router announces its supported Roles and Features in the `WELCOME` message.
 
 A Router MUST announce the roles it supports via `Welcome.Details.roles|dict`, with a key mapping to a `Welcome.Details.roles.<role>|dict` where `<role>` can be:
 
@@ -225,7 +225,7 @@ where
 
 No response to an `ABORT` message is expected.
 
-There are few scenarios, when `ABORT` is used:
+There are few scenarios, when `ABORT` is used:
 
 * During session opening, if peer decided to abort connect.
 
@@ -249,7 +249,7 @@ There are few scenarios, when `ABORT` is used:
         [3, {"message": "The realm does not exist."},
             "wamp.error.no_such_realm"]
 
-* After session is opened, when protocol violation happens (see "Protocol errors" section).
+* After session is opened, when protocol violation happens (see "Protocol errors" section).
 
 *Examples*
 
@@ -333,6 +333,145 @@ and the other peer replies
 
 **Difference between ABORT and GOODBYE**
 
-The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
+The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
+
+
+## All Together
+
+### Correct Exapmle
+
+Here's a complete example showing how a client establishes and closes a session.
+
+(Client to Router) TLS Handshake Request
+
+{align="left"}
+    CONNECT example.net:443 HTTP/1.1
+    Host: example.net:443
+
+(Router to Client) TLS Handshake Response
+
+{align="left"}
+    HTTP/1.1 200 Connection established
+
+(Client to Router) WebSocket Handshake
+
+{align="left"}
+    GET / HTTP/1.1
+    Upgrade: websocket
+    Host: example.net
+    Origin: https://example.net
+    Sec-WebSocket-Key: ObmKzXaAVXFLmF7G6AlOZA==
+    Sec-WebSocket-Version: 13
+    Connection: Upgrade
+    Sec-WebSocket-Protocol: wamp.2.json
+
+(Router to Client) WebSocket Accept
+
+{align="left"}
+    HTTP/1.1 101 Switching Protocols
+    Date: Fri, 23 Mar 2012 16:45:00 GMT
+    Connection: upgrade
+    Upgrade: websocket
+    Sec-WebSocket-Accept: ftraiO6TrSF1uX+qeMp4tQ74zts=
+    Sec-WebSocket-Protocol: wamp.2.json
+    server: DemoRouter
+
+(Client to Router) Client Hello
+
+{align="left"}
+    [1, "org.example", {"agent": "WAMP/2.0 (Client)", "roles": {"publisher": {}, "subscriber": {}}}]
+
+(Router to Client) Router Welcome
+
+{align="left"}
+    [2, 5606911429535183, {"agent": "WAMP/2.0 (Router)", "roles": {"broker": {}}}]
+
+(Client to Router) Client Goodbye
+
+{align="left"}
+    [6, {}, "wamp.close.close_realm"]
+
+(Router to Client) Router Goodbye
+
+{align="left"}
+    [6, {}, "wamp.close.goodbye_and_out"]
+
+
+### Incorrect Example
+
+#### Not-Accepted Subprotocol
+
+When WAMP Router receives a client with a subprotocol it does not accept (see WebSocket Transport), it simply disconnects.
+
+(Client to Router) TLS Handshake Request
+
+{align="left"}
+    CONNECT example.net:443 HTTP/1.1
+    Host: example.net:443
+
+(Router to Client) TLS Handshake Response
+
+{align="left"}
+    HTTP/1.1 200 Connection established
+
+(Client to Router) WebSocket Handshake (Bad subprotocol)
+
+{align="left"}
+    GET / HTTP/1.1
+    Upgrade: websocket
+    Host: example.net
+    Origin: https://example.net
+    Sec-WebSocket-Key: ObmKzXaAVXFLmF7G6AlOZA==
+    Sec-WebSocket-Version: 13
+    Connection: Upgrade
+    Sec-WebSocket-Protocol: wamp
+
+(Router to Client) WebSocket Reject
+
+{align="left"}
+    HTTP/1.1 403 Forbidden
+    Date: Fri, 23 Mar 2012 16:45:00 GMT
+    Content-Type: text/plain
+    Content-Length: 0
+    Connection: close
+
+*(Connection Disconnected)*
+
+**Explain**
+
+The Router does NOT accept the "wamp" subprotocol, so it DROPs the connection.
+
+
+#### Bad Message
+
+When WAMP router receives an error message (see Protocol Errors), it responds with an ABORT message and drops the connection.
+
+*(Omit the WebSocket handshake process)*
+
+(Client to Router) Client Hello
+
+{align="left"}
+    [1, "org.example", {"agent": "WAMP/2.0 (Client)", "roles": {"publisher": {}, "subscriber": {}}}]
+
+(Router to Client) Router Welcome
+
+{align="left"}
+    [2, 5606911429535183, {"agent": "WAMP/2.0 (Router)", "roles": {"broker": {}}}]
+
+(Client to Router) Client Hello Again (Bad)
+
+{align="left"}
+    [1, "org.example", {"agent": "WAMP/2.0 (Client)", "roles": {"publisher": {}, "subscriber": {}}}]
+
+(Router to Client) Router Abort
+
+{align="left"}
+    [3, {"message": "Received HELLO message after session was established."}, "wamp.error.protocol_violation"]
+
+*(Connection Disconnected)*
+
+**Explain**
+
+The Router receives a "HELLO" message (Bad message) after session was established, so it ABORTs the session and DROPs the connection.
