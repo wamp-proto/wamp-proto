@@ -22,10 +22,10 @@
     MarkupSafe 2.1.1
     pycountry 22.3.5
     PyYAML 6.0
-    requests 2.28.1
+    requests 2.28.2
     setuptools 58.1.0
     six 1.16.0
-    wcwidth 0.2.5
+    wcwidth 0.2.6
     weasyprint 57.2
 -->
 <link href="./.build/wamp.xml" rel="alternate" type="application/rfc+xml">
@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 11 July 2023</td>
+<td class="center">Expires 20 July 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-01-07" class="published">7 January 2023</time>
+<time datetime="2023-01-16" class="published">16 January 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-07-11">11 July 2023</time></dd>
+<dd class="expires"><time datetime="2023-07-20">20 July 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1253,7 +1253,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 July 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 20 July 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2184,7 +2184,7 @@ The Callee will execute the procedure using the supplied arguments to the call a
 </li>
             <li class="compact" id="section-2.1.2-4.2">IDs in the <em>router scope</em> CAN be chosen freely by the specific router implementation<a href="#section-2.1.2-4.2" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-2.1.2-4.3">IDs in the <em>session scope</em> MUST be incremented by 1 beginning with 1 (for each direction - <em>Client-to-Router</em> and <em>Router-to-Client</em>)<a href="#section-2.1.2-4.3" class="pilcrow">¶</a>
+            <li class="compact" id="section-2.1.2-4.3">IDs in the <em>session scope</em> MUST be incremented by 1 beginning with 1 (for each direction - <em>Client-to-Router</em> and <em>Router-to-Client</em>) {#session_scope_id}<a href="#section-2.1.2-4.3" class="pilcrow">¶</a>
 </li>
           </ul>
 <blockquote id="section-2.1.2-5">
@@ -2225,58 +2225,58 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
               <code>INVOCATION.Registration</code><a href="#section-2.1.2-10.6" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-2.1.2-11"><strong>Session Scope IDs</strong><a href="#section-2.1.2-11" class="pilcrow">¶</a></p>
+<p id="section-2.1.2-11"><strong>Session Scope IDs</strong> {#session_scope_ids}<a href="#section-2.1.2-11" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-2.1.2-12.1">
-              <code>ERROR.Request</code><a href="#section-2.1.2-12.1" class="pilcrow">¶</a>
+              <code>SUBSCRIBE.Request</code><a href="#section-2.1.2-12.1" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.2">
-              <code>PUBLISH.Request</code><a href="#section-2.1.2-12.2" class="pilcrow">¶</a>
+              <code>SUBSCRIBED.Request</code> (mirrored <code>SUBSCRIBE.Request</code>)<a href="#section-2.1.2-12.2" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.3">
-              <code>PUBLISHED.Request</code><a href="#section-2.1.2-12.3" class="pilcrow">¶</a>
+              <code>UNSUBSCRIBE.Request</code><a href="#section-2.1.2-12.3" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.4">
-              <code>SUBSCRIBE.Request</code><a href="#section-2.1.2-12.4" class="pilcrow">¶</a>
+              <code>UNSUBSCRIBED.Request</code> (mirrored <code>UNSUBSCRIBE.Request</code>)<a href="#section-2.1.2-12.4" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.5">
-              <code>SUBSCRIBED.Request</code><a href="#section-2.1.2-12.5" class="pilcrow">¶</a>
+              <code>PUBLISH.Request</code><a href="#section-2.1.2-12.5" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.6">
-              <code>UNSUBSCRIBE.Request</code><a href="#section-2.1.2-12.6" class="pilcrow">¶</a>
+              <code>PUBLISHED.Request</code> (mirrored <code>PUBLISH.Request</code>)<a href="#section-2.1.2-12.6" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.7">
-              <code>UNSUBSCRIBED.Request</code><a href="#section-2.1.2-12.7" class="pilcrow">¶</a>
+              <code>REGISTER.Request</code><a href="#section-2.1.2-12.7" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.8">
-              <code>CALL.Request</code><a href="#section-2.1.2-12.8" class="pilcrow">¶</a>
+              <code>REGISTERED.Request</code> (mirrored <code>REGISTER.Request</code>)<a href="#section-2.1.2-12.8" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.9">
-              <code>CANCEL.Request</code><a href="#section-2.1.2-12.9" class="pilcrow">¶</a>
+              <code>UNREGISTER.Request</code><a href="#section-2.1.2-12.9" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.10">
-              <code>RESULT.Request</code><a href="#section-2.1.2-12.10" class="pilcrow">¶</a>
+              <code>UNREGISTERED.Request</code> (mirrored <code>UNREGISTER.Request</code>)<a href="#section-2.1.2-12.10" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.11">
-              <code>REGISTER.Request</code><a href="#section-2.1.2-12.11" class="pilcrow">¶</a>
+              <code>CALL.Request</code><a href="#section-2.1.2-12.11" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.12">
-              <code>REGISTERED.Request</code><a href="#section-2.1.2-12.12" class="pilcrow">¶</a>
+              <code>RESULT.Request</code> (mirrored <code>CALL.Request</code>)<a href="#section-2.1.2-12.12" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.13">
-              <code>UNREGISTER.Request</code><a href="#section-2.1.2-12.13" class="pilcrow">¶</a>
+              <code>CANCEL.Request</code> (mirrored <code>CALL.Request</code>)<a href="#section-2.1.2-12.13" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.14">
-              <code>UNREGISTERED.Request</code><a href="#section-2.1.2-12.14" class="pilcrow">¶</a>
+              <code>INVOCATION.Request</code><a href="#section-2.1.2-12.14" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.15">
-              <code>INVOCATION.Request</code><a href="#section-2.1.2-12.15" class="pilcrow">¶</a>
+              <code>YIELD.Request</code> (mirrored <code>INVOCATION.Request</code>)<a href="#section-2.1.2-12.15" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.16">
-              <code>INTERRUPT.Request</code><a href="#section-2.1.2-12.16" class="pilcrow">¶</a>
+              <code>INTERRUPT.Request</code> (mirrored <code>INVOCATION.Request</code>)<a href="#section-2.1.2-12.16" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.1.2-12.17">
-              <code>YIELD.Request</code><a href="#section-2.1.2-12.17" class="pilcrow">¶</a>
+              <code>ERROR.Request</code> (mirrored original request ID)<a href="#section-2.1.2-12.17" class="pilcrow">¶</a>
 </li>
           </ul>
 </section>
@@ -2427,7 +2427,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
           <h4 id="name-protocol-errors">
 <a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-protocol-errors" class="section-name selfRef">Protocol errors</a>
           </h4>
-<p id="section-2.3.3-1">WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3.3-1">WAMP implementations MUST abort sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
 <p id="section-2.3.3-2">Following scenarios have to be considered protocol errors:<a href="#section-2.3.3-2" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-2.3.3-3.1">Receiving <code>WELCOME</code> message, after session was established.<a href="#section-2.3.3-3.1" class="pilcrow">¶</a>
@@ -2456,18 +2456,20 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </li>
             <li class="compact" id="section-2.3.3-3.13">Receiving <code>INVOCATION</code> message, before session was established.<a href="#section-2.3.3-3.13" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-2.3.3-3.14">Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.<a href="#section-2.3.3-3.14" class="pilcrow">¶</a>
+            <li class="compact" id="section-2.3.3-3.14">Receiving message with non-<a href="#session_scope_id">sequential</a> <a href="#session_scope_ids">session scope</a> request ID, such as <code>SUBSCRIBE</code>, <code>UNSUBSCRIBE</code>, <code>PUBLISH</code>, <code>REGISTER</code>, <code>UNREGISTER</code>, <code>CALL</code> and <code>YIELD</code>.<a href="#section-2.3.3-3.14" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-2.3.3-3.15">Catching error during message encoding/decoding.<a href="#section-2.3.3-3.15" class="pilcrow">¶</a>
+            <li class="compact" id="section-2.3.3-3.15">Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.<a href="#section-2.3.3-3.15" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-2.3.3-3.16">Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second <code>HELLO</code> within the lifetime of a session).<a href="#section-2.3.3-3.16" class="pilcrow">¶</a>
+            <li class="compact" id="section-2.3.3-3.16">Catching error during message encoding/decoding.<a href="#section-2.3.3-3.16" class="pilcrow">¶</a>
+</li>
+            <li class="compact" id="section-2.3.3-3.17">Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second <code>HELLO</code> within the lifetime of a session).<a href="#section-2.3.3-3.17" class="pilcrow">¶</a>
 </li>
           </ul>
 <p id="section-2.3.3-4">In all such cases WAMP implementations:<a href="#section-2.3.3-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-2.3.3-5">
 <li id="section-2.3.3-5.1">MUST send an <code>ABORT</code> message to the offending peer, having reason <code>wamp.error.protocol_violation</code> and optional attributes in ABORT.Details such as a human readable error message.<a href="#section-2.3.3-5.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-2.3.3-5.2">MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,<a href="#section-2.3.3-5.2" class="pilcrow">¶</a>
+            <li id="section-2.3.3-5.2">MUST abort the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,<a href="#section-2.3.3-5.2" class="pilcrow">¶</a>
 </li>
             <li id="section-2.3.3-5.3">SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)<a href="#section-2.3.3-5.3" class="pilcrow">¶</a>
 </li>
@@ -12523,35 +12525,35 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
 <dl class="references">
 <dt id="RFC3629">[RFC3629]</dt>
       <dd>
-<span class="refAuthor">Yergeau, F.</span> and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"UTF-8, a transformation format of ISO 10646"</span>, <span class="seriesInfo">STD 63</span>, <span class="seriesInfo">RFC 3629</span>, <span class="seriesInfo">DOI 10.17487/RFC3629</span>, <time datetime="2003-11" class="refDate">November 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3629">https://www.rfc-editor.org/info/rfc3629</a>&gt;</span>. </dd>
+<span class="refAuthor">Yergeau, F.</span>, <span class="refTitle">"UTF-8, a transformation format of ISO 10646"</span>, <span class="seriesInfo">STD 63</span>, <span class="seriesInfo">RFC 3629</span>, <span class="seriesInfo">DOI 10.17487/RFC3629</span>, <time datetime="2003-11" class="refDate">November 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3629">https://www.rfc-editor.org/info/rfc3629</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3986">[RFC3986]</dt>
       <dd>
-<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, <span class="refAuthor">Masinter, L.</span>, and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3986">https://www.rfc-editor.org/info/rfc3986</a>&gt;</span>. </dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3986">https://www.rfc-editor.org/info/rfc3986</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4122">[RFC4122]</dt>
       <dd>
-<span class="refAuthor">Leach, P.</span>, <span class="refAuthor">Mealling, M.</span>, <span class="refAuthor">Salz, R.</span>, and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"A Universally Unique IDentifier (UUID) URN Namespace"</span>, <span class="seriesInfo">RFC 4122</span>, <span class="seriesInfo">DOI 10.17487/RFC4122</span>, <time datetime="2005-07" class="refDate">July 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4122">https://www.rfc-editor.org/info/rfc4122</a>&gt;</span>. </dd>
+<span class="refAuthor">Leach, P.</span>, <span class="refAuthor">Mealling, M.</span>, and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"A Universally Unique IDentifier (UUID) URN Namespace"</span>, <span class="seriesInfo">RFC 4122</span>, <span class="seriesInfo">DOI 10.17487/RFC4122</span>, <time datetime="2005-07" class="refDate">July 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4122">https://www.rfc-editor.org/info/rfc4122</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4648">[RFC4648]</dt>
       <dd>
-<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4648">https://www.rfc-editor.org/info/rfc4648</a>&gt;</span>. </dd>
+<span class="refAuthor">Josefsson, S.</span>, <span class="refTitle">"The Base16, Base32, and Base64 Data Encodings"</span>, <span class="seriesInfo">RFC 4648</span>, <span class="seriesInfo">DOI 10.17487/RFC4648</span>, <time datetime="2006-10" class="refDate">October 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4648">https://www.rfc-editor.org/info/rfc4648</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6455">[RFC6455]</dt>
       <dd>
-<span class="refAuthor">Fette, I.</span>, <span class="refAuthor">Melnikov, A.</span>, and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"The WebSocket Protocol"</span>, <span class="seriesInfo">RFC 6455</span>, <span class="seriesInfo">DOI 10.17487/RFC6455</span>, <time datetime="2011-12" class="refDate">December 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6455">https://www.rfc-editor.org/info/rfc6455</a>&gt;</span>. </dd>
+<span class="refAuthor">Fette, I.</span> and <span class="refAuthor">A. Melnikov</span>, <span class="refTitle">"The WebSocket Protocol"</span>, <span class="seriesInfo">RFC 6455</span>, <span class="seriesInfo">DOI 10.17487/RFC6455</span>, <time datetime="2011-12" class="refDate">December 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6455">https://www.rfc-editor.org/info/rfc6455</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7159">[RFC7159]</dt>
       <dd>
-<span class="refAuthor">Bray, T., Ed.</span> and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">RFC 7159</span>, <span class="seriesInfo">DOI 10.17487/RFC7159</span>, <time datetime="2014-03" class="refDate">March 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7159">https://www.rfc-editor.org/info/rfc7159</a>&gt;</span>. </dd>
+<span class="refAuthor">Bray, T., Ed.</span>, <span class="refTitle">"The JavaScript Object Notation (JSON) Data Interchange Format"</span>, <span class="seriesInfo">RFC 7159</span>, <span class="seriesInfo">DOI 10.17487/RFC7159</span>, <time datetime="2014-03" class="refDate">March 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7159">https://www.rfc-editor.org/info/rfc7159</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8032">[RFC8032]</dt>
       <dd>
-<span class="refAuthor">Josefsson, S.</span>, <span class="refAuthor">Liusvaara, I.</span>, and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"Edwards-Curve Digital Signature Algorithm (EdDSA)"</span>, <span class="seriesInfo">RFC 8032</span>, <span class="seriesInfo">DOI 10.17487/RFC8032</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8032">https://www.rfc-editor.org/info/rfc8032</a>&gt;</span>. </dd>
+<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">I. Liusvaara</span>, <span class="refTitle">"Edwards-Curve Digital Signature Algorithm (EdDSA)"</span>, <span class="seriesInfo">RFC 8032</span>, <span class="seriesInfo">DOI 10.17487/RFC8032</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8032">https://www.rfc-editor.org/info/rfc8032</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8949">[RFC8949]</dt>
     <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refAuthor">Hoffman, P.</span>, and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8949">https://www.rfc-editor.org/info/rfc8949</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">P. Hoffman</span>, <span class="refTitle">"Concise Binary Object Representation (CBOR)"</span>, <span class="seriesInfo">STD 94</span>, <span class="seriesInfo">RFC 8949</span>, <span class="seriesInfo">DOI 10.17487/RFC8949</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8949">https://www.rfc-editor.org/info/rfc8949</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -12562,7 +12564,7 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
 <dl class="references">
 <dt id="RFC2119">[RFC2119]</dt>
     <dd>
-<span class="refAuthor">Bradner, S.</span> and <span class="refAuthor">RFC Publisher</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>

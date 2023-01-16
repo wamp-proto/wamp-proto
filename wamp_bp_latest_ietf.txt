@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                             7 January 2023
-Expires: 11 July 2023
+Intended status: Experimental                            16 January 2023
+Expires: 20 July 2023
 
 
                            WAMP Basic Profile
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 July 2023.
+   This Internet-Draft will expire on 20 July 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Table of Contents
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 1]
+Oberstein                 Expires 20 July 2023                  [Page 1]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -109,7 +109,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 2]
+Oberstein                 Expires 20 July 2023                  [Page 2]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -165,7 +165,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 3]
+Oberstein                 Expires 20 July 2023                  [Page 3]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -221,7 +221,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 4]
+Oberstein                 Expires 20 July 2023                  [Page 4]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -277,7 +277,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 5]
+Oberstein                 Expires 20 July 2023                  [Page 5]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -333,7 +333,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 6]
+Oberstein                 Expires 20 July 2023                  [Page 6]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -389,7 +389,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 7]
+Oberstein                 Expires 20 July 2023                  [Page 7]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -445,7 +445,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 8]
+Oberstein                 Expires 20 July 2023                  [Page 8]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -501,7 +501,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                  [Page 9]
+Oberstein                 Expires 20 July 2023                  [Page 9]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -557,7 +557,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 10]
+Oberstein                 Expires 20 July 2023                 [Page 10]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -613,7 +613,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 11]
+Oberstein                 Expires 20 July 2023                 [Page 11]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -649,6 +649,7 @@ Internet-Draft                   WAMP-BP                    January 2023
       router implementation
    *  IDs in the _session scope_ MUST be incremented by 1 beginning with
       1 (for each direction - _Client-to-Router_ and _Router-to-Client_)
+      {#session_scope_id}
 
    |  The reason to choose the specific lower bound as 1 rather than 0
    |  is that 0 is the null-like (falsy) value for many programming
@@ -668,8 +669,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-
-Oberstein                 Expires 11 July 2023                 [Page 12]
+Oberstein                 Expires 20 July 2023                 [Page 12]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -687,25 +687,25 @@ Internet-Draft                   WAMP-BP                    January 2023
    *  UNREGISTER.Registration
    *  INVOCATION.Registration
 
-   *Session Scope IDs*
+   *Session Scope IDs* {#session_scope_ids}
 
-   *  ERROR.Request
-   *  PUBLISH.Request
-   *  PUBLISHED.Request
    *  SUBSCRIBE.Request
-   *  SUBSCRIBED.Request
+   *  SUBSCRIBED.Request (mirrored SUBSCRIBE.Request)
    *  UNSUBSCRIBE.Request
-   *  UNSUBSCRIBED.Request
-   *  CALL.Request
-   *  CANCEL.Request
-   *  RESULT.Request
+   *  UNSUBSCRIBED.Request (mirrored UNSUBSCRIBE.Request)
+   *  PUBLISH.Request
+   *  PUBLISHED.Request (mirrored PUBLISH.Request)
    *  REGISTER.Request
-   *  REGISTERED.Request
+   *  REGISTERED.Request (mirrored REGISTER.Request)
    *  UNREGISTER.Request
-   *  UNREGISTERED.Request
+   *  UNREGISTERED.Request (mirrored UNREGISTER.Request)
+   *  CALL.Request
+   *  RESULT.Request (mirrored CALL.Request)
+   *  CANCEL.Request (mirrored CALL.Request)
    *  INVOCATION.Request
-   *  INTERRUPT.Request
-   *  YIELD.Request
+   *  YIELD.Request (mirrored INVOCATION.Request)
+   *  INTERRUPT.Request (mirrored INVOCATION.Request)
+   *  ERROR.Request (mirrored original request ID)
 
 2.2.  Serializers
 
@@ -725,7 +725,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 13]
+Oberstein                 Expires 20 July 2023                 [Page 13]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -781,7 +781,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 14]
+Oberstein                 Expires 20 July 2023                 [Page 14]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -837,7 +837,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 15]
+Oberstein                 Expires 20 July 2023                 [Page 15]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -893,7 +893,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 16]
+Oberstein                 Expires 20 July 2023                 [Page 16]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -938,7 +938,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 2.3.3.  Protocol errors
 
-   WAMP implementations MUST close sessions (disposing all of their
+   WAMP implementations MUST abort sessions (disposing all of their
    resources such as subscriptions and registrations) on protocol errors
    caused by offending peers.
 
@@ -949,7 +949,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 17]
+Oberstein                 Expires 20 July 2023                 [Page 17]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -965,6 +965,9 @@ Internet-Draft                   WAMP-BP                    January 2023
    *  Receiving REGISTERED message, before session was established.
    *  Receiving UNREGISTERED message, before session was established.
    *  Receiving INVOCATION message, before session was established.
+   *  Receiving message with non-sequential (#session_scope_id) session
+      scope (#session_scope_ids) request ID, such as SUBSCRIBE,
+      UNSUBSCRIBE, PUBLISH, REGISTER, UNREGISTER, CALL and YIELD.
    *  Receiving protocol incompatible message, such as empty array,
       invalid WAMP message type id, etc.
    *  Catching error during message encoding/decoding.
@@ -977,7 +980,7 @@ Internet-Draft                   WAMP-BP                    January 2023
    1.  MUST send an ABORT message to the offending peer, having reason
        wamp.error.protocol_violation and optional attributes in
        ABORT.Details such as a human readable error message.
-   2.  MUST close the WAMP session by disposing any allocated
+   2.  MUST abort the WAMP session by disposing any allocated
        subscriptions/registrations for that particular client and
        without waiting for or processing any messages subsequently
        received from the peer,
@@ -999,17 +1002,16 @@ Internet-Draft                   WAMP-BP                    January 2023
    *  id: an integer ID as defined in IDs (#ids)
    *  integer: a non-negative integer
    *  string: a Unicode string, including the empty string
-   *  bool: a boolean value (true or false) - integers MUST NOT be used
-      instead of boolean value
 
 
 
-
-Oberstein                 Expires 11 July 2023                 [Page 18]
+Oberstein                 Expires 20 July 2023                 [Page 18]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
 
+   *  bool: a boolean value (true or false) - integers MUST NOT be used
+      instead of boolean value
    *  dict: a dictionary (map) where keys MUST be strings, keys MUST be
       unique and serialization order is undefined (left to the
       serializer being used)
@@ -1059,9 +1061,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-
-
-Oberstein                 Expires 11 July 2023                 [Page 19]
+Oberstein                 Expires 20 July 2023                 [Page 19]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 20]
+Oberstein                 Expires 20 July 2023                 [Page 20]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1173,7 +1173,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 21]
+Oberstein                 Expires 20 July 2023                 [Page 21]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1229,7 +1229,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 22]
+Oberstein                 Expires 20 July 2023                 [Page 22]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1285,7 +1285,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 23]
+Oberstein                 Expires 20 July 2023                 [Page 23]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1341,7 +1341,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 24]
+Oberstein                 Expires 20 July 2023                 [Page 24]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1397,7 +1397,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 25]
+Oberstein                 Expires 20 July 2023                 [Page 25]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1453,7 +1453,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 26]
+Oberstein                 Expires 20 July 2023                 [Page 26]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1509,7 +1509,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 27]
+Oberstein                 Expires 20 July 2023                 [Page 27]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1565,7 +1565,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 28]
+Oberstein                 Expires 20 July 2023                 [Page 28]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1621,7 +1621,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 29]
+Oberstein                 Expires 20 July 2023                 [Page 29]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1677,7 +1677,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 30]
+Oberstein                 Expires 20 July 2023                 [Page 30]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1733,7 +1733,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 31]
+Oberstein                 Expires 20 July 2023                 [Page 31]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1789,7 +1789,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 32]
+Oberstein                 Expires 20 July 2023                 [Page 32]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1845,7 +1845,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 33]
+Oberstein                 Expires 20 July 2023                 [Page 33]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1901,7 +1901,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 34]
+Oberstein                 Expires 20 July 2023                 [Page 34]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -1957,7 +1957,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 35]
+Oberstein                 Expires 20 July 2023                 [Page 35]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2013,7 +2013,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 36]
+Oberstein                 Expires 20 July 2023                 [Page 36]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2069,7 +2069,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 37]
+Oberstein                 Expires 20 July 2023                 [Page 37]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2125,7 +2125,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 38]
+Oberstein                 Expires 20 July 2023                 [Page 38]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2181,7 +2181,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 39]
+Oberstein                 Expires 20 July 2023                 [Page 39]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2237,7 +2237,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 40]
+Oberstein                 Expires 20 July 2023                 [Page 40]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2293,7 +2293,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 41]
+Oberstein                 Expires 20 July 2023                 [Page 41]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2349,7 +2349,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 42]
+Oberstein                 Expires 20 July 2023                 [Page 42]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2405,7 +2405,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 43]
+Oberstein                 Expires 20 July 2023                 [Page 43]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2461,7 +2461,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 44]
+Oberstein                 Expires 20 July 2023                 [Page 44]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2517,7 +2517,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 45]
+Oberstein                 Expires 20 July 2023                 [Page 45]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2573,7 +2573,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 46]
+Oberstein                 Expires 20 July 2023                 [Page 46]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2629,7 +2629,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 47]
+Oberstein                 Expires 20 July 2023                 [Page 47]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2685,7 +2685,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 48]
+Oberstein                 Expires 20 July 2023                 [Page 48]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2741,7 +2741,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 49]
+Oberstein                 Expires 20 July 2023                 [Page 49]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2797,7 +2797,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 50]
+Oberstein                 Expires 20 July 2023                 [Page 50]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2853,7 +2853,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 51]
+Oberstein                 Expires 20 July 2023                 [Page 51]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2909,7 +2909,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 52]
+Oberstein                 Expires 20 July 2023                 [Page 52]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -2965,7 +2965,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 53]
+Oberstein                 Expires 20 July 2023                 [Page 53]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -3021,7 +3021,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 54]
+Oberstein                 Expires 20 July 2023                 [Page 54]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -3077,7 +3077,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 55]
+Oberstein                 Expires 20 July 2023                 [Page 55]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -3133,7 +3133,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 56]
+Oberstein                 Expires 20 July 2023                 [Page 56]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -3189,7 +3189,7 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 57]
+Oberstein                 Expires 20 July 2023                 [Page 57]
 
 Internet-Draft                   WAMP-BP                    January 2023
 
@@ -3204,34 +3204,32 @@ Internet-Draft                   WAMP-BP                    January 2023
 
 12.  Normative References
 
-   [RFC3629]  Yergeau, F. and RFC Publisher, "UTF-8, a transformation
-              format of ISO 10646", STD 63, RFC 3629,
-              DOI 10.17487/RFC3629, November 2003,
-              <https://www.rfc-editor.org/info/rfc3629>.
+   [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
+              10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
+              2003, <https://www.rfc-editor.org/info/rfc3629>.
 
-   [RFC3986]  Berners-Lee, T., Fielding, R., Masinter, L., and RFC
-              Publisher, "Uniform Resource Identifier (URI): Generic
-              Syntax", STD 66, RFC 3986, DOI 10.17487/RFC3986, January
-              2005, <https://www.rfc-editor.org/info/rfc3986>.
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/info/rfc3986>.
 
-   [RFC6455]  Fette, I., Melnikov, A., and RFC Publisher, "The WebSocket
-              Protocol", RFC 6455, DOI 10.17487/RFC6455, December 2011,
+   [RFC6455]  Fette, I. and A. Melnikov, "The WebSocket Protocol",
+              RFC 6455, DOI 10.17487/RFC6455, December 2011,
               <https://www.rfc-editor.org/info/rfc6455>.
 
-   [RFC7159]  Bray, T., Ed. and RFC Publisher, "The JavaScript Object
-              Notation (JSON) Data Interchange Format", RFC 7159,
-              DOI 10.17487/RFC7159, March 2014,
-              <https://www.rfc-editor.org/info/rfc7159>.
+   [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
+              Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
+              2014, <https://www.rfc-editor.org/info/rfc7159>.
 
-   [RFC8949]  Bormann, C., Hoffman, P., and RFC Publisher, "Concise
-              Binary Object Representation (CBOR)", STD 94, RFC 8949,
+   [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
+              Representation (CBOR)", STD 94, RFC 8949,
               DOI 10.17487/RFC8949, December 2020,
               <https://www.rfc-editor.org/info/rfc8949>.
 
 13.  Informative References
 
-   [RFC2119]  Bradner, S. and RFC Publisher, "Key words for use in RFCs
-              to Indicate Requirement Levels", BCP 14, RFC 2119,
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
@@ -3245,4 +3243,6 @@ Author's Address
 
 
 
-Oberstein                 Expires 11 July 2023                 [Page 58]
+
+
+Oberstein                 Expires 20 July 2023                 [Page 58]
