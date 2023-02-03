@@ -53,6 +53,7 @@ p5-Net-WAMP_        Perl 5                              A WAMP implementation in
 ruby_wamp_client_   Ruby                                A WAMP client for Ruby
 rx-wamp_            JavaScript                          A `RxJS <https://github.com/Reactive-Extensions/RxJS>`_ wrapper library for WAMP. Built on AutobahnJS, running in the browser and NodeJS.
 Thruway_            PHP                                 Thruway is a WAMP library built in PHP that provides both Client and Router roles.
+SWamp-Client_       PHP                                 A Wamp client written in PHP using extension Swoole / Open Swoole
 Turnpike_           Go                                  A Go implementation of WAMP V2
 Spell_              Elixir/Erlang                       Spell is a WAMP library built using Elixir, running on the Erlang VM.
 Swamp_              Swift                               WAMP client library in pure Swift using Starscream and SwiftyJSON.
@@ -162,3 +163,4 @@ wick_               Go                                  CLI tool to make WAMP RP
 .. _wamp-cli: https://github.com/johngeorgewright/wamp-cli
 .. _wamp_async: https://github.com/elast0ny/wamp_async
 .. _wick: https://github.com/codebasepk/wick
+.. _SWamp-Client: https://github.com/cydrickn/swamp-client
