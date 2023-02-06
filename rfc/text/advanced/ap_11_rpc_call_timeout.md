@@ -17,7 +17,7 @@ The error message that is returned to the *Caller* MUST use `wamp.error.timeout`
 
 **Callee-Initiated Timeouts**
 
-If the *Callee* supports Call Timeouts, the *Dealer* MAY propagate the `CALL.Options.timeout|integer` option via the `INVOCATION` message and allow the *Callee* to handle the timeout logic. If the operations times out, the *Callee* MUST return an `ERROR` message with `wamp.error.timeout` as the reason URI.
+If the *Callee* supports Call Timeouts, the *Dealer* MAY propagate the `CALL.Options.timeout|integer` option via the `INVOCATION` message and allow the *Callee* to handle the timeout logic. If the operation times out, the *Callee* MUST return an `ERROR` message with `wamp.error.timeout` as the reason URI.
 
 The decision by *Dealers* to propagate timeouts to *Callees* supporting this feature MAY be determined by router configuration.
 
