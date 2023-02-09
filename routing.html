@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Message Routing in WAMP &mdash; Web Application Messaging Protocol version 2 documentation</title>
@@ -15,9 +15,6 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="static/documentation_options.js"></script>
-        <script src="static/jquery.js"></script>
-        <script src="static/underscore.js"></script>
-        <script src="static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="static/doctools.js"></script>
         <script src="static/sphinx_highlight.js"></script>
         <script src="static/js/custom.js"></script>
@@ -35,12 +32,16 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> Web Application Messaging Protocol
-            <img src="static/wamp_logo_white.png" class="logo" alt="Logo"/>
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Web Application Messaging Protocol
+              <img src="static/wamp_logo_white.png" class="logo" alt="Logo"/>
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -78,7 +79,7 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
       <li class="breadcrumb-item active">Message Routing in WAMP</li>
       <li class="wy-breadcrumbs-aside">
               <!-- User defined GitHub URL -->
@@ -92,7 +93,7 @@
              
   <section id="message-routing-in-wamp">
 <span id="routing"></span><h1>Message Routing in WAMP<a class="headerlink" href="#message-routing-in-wamp" title="Permalink to this heading">¶</a></h1>
-<div class="contents local topic" id="contents">
+<nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loosely-coupled" id="id6">Loosely coupled</a></p></li>
 <li><p><a class="reference internal" href="#component-based" id="id7">Component based</a></p></li>
@@ -100,7 +101,7 @@
 <li><p><a class="reference internal" href="#language-independent" id="id9">Language independent</a></p></li>
 <li><p><a class="reference internal" href="#network-spanning" id="id10">Network spanning</a></p></li>
 </ul>
-</div>
+</nav>
 <hr class="docutils" />
 <p>WAMP provides <a class="reference internal" href="#unified-application-routing">Unified Application Routing</a> in an open <a class="reference internal" href="#websocket-protocol">WebSocket protocol</a>
 that works with <a class="reference internal" href="#different">different</a> languages.</p>
@@ -121,7 +122,7 @@ WebSocket, JSON and URIs.</p>
 a major step forward in practice that allows developers to create more powerful
 applications with less complexity and in less time.</p>
 <section id="loosely-coupled">
-<span id="unified-application-routing"></span><h2><a class="toc-backref" href="#id6">Loosely coupled</a><a class="headerlink" href="#loosely-coupled" title="Permalink to this heading">¶</a></h2>
+<span id="unified-application-routing"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Loosely coupled</a><a class="headerlink" href="#loosely-coupled" title="Permalink to this heading">¶</a></h2>
 <p>WAMP provides what we call <strong>unified Application Routing</strong> for application
 communication:</p>
 <ul class="simple">
@@ -190,7 +191,7 @@ the procedure resides, and how to reach it.</p>
 RPC and still benefit from loose coupling.</p>
 </section>
 <section id="component-based">
-<h2><a class="toc-backref" href="#id7">Component based</a><a class="headerlink" href="#component-based" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Component based</a><a class="headerlink" href="#component-based" title="Permalink to this heading">¶</a></h2>
 <p><strong>Brokers, Dealers and Routers</strong></p>
 <p>What if you combine a Broker (for Publish &amp; Subscribe) and a Dealer (for
 routed Remote Procedure Calls)?</p>
@@ -233,7 +234,7 @@ match the messaging patterns, Pub/Sub and RPC, which WAMP provides.”</p>
 communication needs.</strong></p>
 </section>
 <section id="real-time">
-<span id="websocket-protocol"></span><h2><a class="toc-backref" href="#id8">Real-time</a><a class="headerlink" href="#real-time" title="Permalink to this heading">¶</a></h2>
+<span id="websocket-protocol"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Real-time</a><a class="headerlink" href="#real-time" title="Permalink to this heading">¶</a></h2>
 <p><a class="reference external" href="http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/">WebSocket</a> is a
 new Web protocol that overcomes limitations of HTTP when bidirectional,
 real-time communication is required.</p>
@@ -255,7 +256,7 @@ reliable transport.</p>
 <p><strong>Hence: WAMP runs on the Web and anywhere else.</strong></p>
 </section>
 <section id="language-independent">
-<span id="different"></span><h2><a class="toc-backref" href="#id9">Language independent</a><a class="headerlink" href="#language-independent" title="Permalink to this heading">¶</a></h2>
+<span id="different"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Language independent</a><a class="headerlink" href="#language-independent" title="Permalink to this heading">¶</a></h2>
 <p>WAMP was designed with first-class support for <a class="reference external" href="/implementations.html">different languages</a> in
 mind (*). Nothing in WAMP is specific to a single programming language. As
 soon as a programming language has a WAMP implementation, it can talk to
@@ -288,7 +289,7 @@ written in your “standard” language.</p>
 language.</strong></p>
 </section>
 <section id="network-spanning">
-<h2><a class="toc-backref" href="#id10">Network spanning</a><a class="headerlink" href="#network-spanning" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Network spanning</a><a class="headerlink" href="#network-spanning" title="Permalink to this heading">¶</a></h2>
 <p>Write me.</p>
 </section>
 </section>
