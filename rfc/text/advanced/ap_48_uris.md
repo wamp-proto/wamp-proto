@@ -2,7 +2,17 @@
 
 WAMP pre-defines the following error URIs for the **Advanced Profile**. WAMP peers SHOULD only use the defined error messages.
 
-A *Dealer* or *Callee* canceled a call previously issued
+A *Router* requires authentication, but *Client* does not provide authentication information in *HELLO* message
+
+{align="left"}
+        wamp.error.authentication_required
+
+A *Router* requires authentication, but *Client* didn't provide valid authentication information in *CHALLENGE* message
+
+{align="left"}
+        wamp.error.authentication_failure
+
+A *Dealer* or *Callee* canceled a call previously issued
 
 {align="left"}
         wamp.error.canceled
