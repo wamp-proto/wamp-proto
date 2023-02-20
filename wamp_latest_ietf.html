@@ -26,7 +26,7 @@
     setuptools 58.1.0
     six 1.16.0
     wcwidth 0.2.6
-    weasyprint 57.2
+    weasyprint 58.0
 -->
 <link href="./.build/wamp.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 13 August 2023</td>
+<td class="center">Expires 24 August 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-02-09" class="published">9 February 2023</time>
+<time datetime="2023-02-20" class="published">20 February 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-08-13">13 August 2023</time></dd>
+<dd class="expires"><time datetime="2023-08-24">24 August 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1253,7 +1253,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 13 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -7028,32 +7028,31 @@ as not supporting progressive calls.<a href="#section-11.2-43" class="pilcrow">�
         <h3 id="name-call-timeouts">
 <a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-call-timeouts" class="section-name selfRef">Call Timeouts</a>
         </h3>
-<p id="section-11.3-1">A <em>Caller</em> might want to issue a call and provide a <em>timeout</em> after which the call will finish.<a href="#section-11.3-1" class="pilcrow">¶</a></p>
-<p id="section-11.3-2">A <em>timeout</em> allows for <strong>automatic</strong> cancellation of a call after a specified time either at the <em>Callee</em> or at the <em>Dealer</em>.<a href="#section-11.3-2" class="pilcrow">¶</a></p>
-<p id="section-11.3-3">A <em>Caller</em> specifies a timeout by providing<a href="#section-11.3-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.3-4">
+<p id="section-11.3-1">The Call Timeouts feature allows for <strong>automatic</strong> cancellation of a remote procedure call by the <em>Dealer</em> or <em>Callee</em> after a specified time duration.<a href="#section-11.3-1" class="pilcrow">¶</a></p>
+<p id="section-11.3-2">A <em>Caller</em> specifies a timeout by providing<a href="#section-11.3-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.3-3">
 <pre>    CALL.Options.timeout|integer
-</pre><a href="#section-11.3-4" class="pilcrow">¶</a>
+</pre><a href="#section-11.3-3" class="pilcrow">¶</a>
 </div>
-<p id="section-11.3-5">in ms. A timeout value of <code>0</code> deactivates automatic call timeout. This is also the default value.<a href="#section-11.3-5" class="pilcrow">¶</a></p>
-<p id="section-11.3-6">The timeout option is a companion to, but slightly different from the <code>CANCEL</code> and <code>INTERRUPT</code> messages that allow a <em>Caller</em> and <em>Dealer</em> to <strong>actively</strong> cancel a call or invocation.<a href="#section-11.3-6" class="pilcrow">¶</a></p>
-<p id="section-11.3-7">In fact, a timeout timer might run at three places:<a href="#section-11.3-7" class="pilcrow">¶</a></p>
-<ul class="compact">
-<li class="compact" id="section-11.3-8.1">
-            <em>Caller</em><a href="#section-11.3-8.1" class="pilcrow">¶</a>
-</li>
-          <li class="compact" id="section-11.3-8.2">
-            <em>Dealer</em><a href="#section-11.3-8.2" class="pilcrow">¶</a>
-</li>
-          <li class="compact" id="section-11.3-8.3">
-            <em>Callee</em><a href="#section-11.3-8.3" class="pilcrow">¶</a>
-</li>
-        </ul>
-<p id="section-11.3-9"><strong>Feature Announcement</strong><a href="#section-11.3-9" class="pilcrow">¶</a></p>
-<p id="section-11.3-10">Support for this feature MUST be announced by <em>Callers</em> (<code>role := "caller"</code>), <em>Callees</em> (<code>role := "callee"</code>) and <em>Dealers</em> (<code>role := "dealer"</code>) via<a href="#section-11.3-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.3-11">
+<p id="section-11.3-4">in milliseconds. Automatic call timeouts are deactivated if there is no <code>timeout</code> option, or if its value is <code>0</code>.<a href="#section-11.3-4" class="pilcrow">¶</a></p>
+<p id="section-11.3-5"><strong>Dealer-Initiated Timeouts</strong><a href="#section-11.3-5" class="pilcrow">¶</a></p>
+<p id="section-11.3-6">If the <em>Callee</em> does not support Call Timeouts, a <em>Dealer</em> supporting this feature MUST start a timeout timer upon receiving a <code>CALL</code> message with a <code>timeout</code> option. The message flow for call timeouts is identical to Call Canceling, except that there is no <code>CANCEL</code> message that originates from the <em>Caller</em>. The cancellation mode is implicitly <code>killnowait</code> if the <em>Callee</em> supports call cancellation, otherwise the cancellation mode is <code>skip</code>.<a href="#section-11.3-6" class="pilcrow">¶</a></p>
+<p id="section-11.3-7">The error message that is returned to the <em>Caller</em> MUST use <code>wamp.error.timeout</code> as the reason URI.<a href="#section-11.3-7" class="pilcrow">¶</a></p>
+<p id="section-11.3-8"><strong>Callee-Initiated Timeouts</strong><a href="#section-11.3-8" class="pilcrow">¶</a></p>
+<p id="section-11.3-9">If the <em>Callee</em> supports Call Timeouts, the <em>Dealer</em> MAY propagate the <code>CALL.Options.timeout|integer</code> option via the <code>INVOCATION</code> message and allow the <em>Callee</em> to handle the timeout logic. If the operation times out, the <em>Callee</em> MUST return an <code>ERROR</code> message with <code>wamp.error.timeout</code> as the reason URI.<a href="#section-11.3-9" class="pilcrow">¶</a></p>
+<p id="section-11.3-10">The decision by <em>Dealers</em> to delegate timeouts to <em>Callees</em> supporting this feature MAY be determined by router configuration.<a href="#section-11.3-10" class="pilcrow">¶</a></p>
+<p id="section-11.3-11"><strong>Caller-Initiated Timeouts</strong><a href="#section-11.3-11" class="pilcrow">¶</a></p>
+<p id="section-11.3-12"><em>Callers</em> may run their own timeout timer and send a <code>CANCEL</code> message upon timeout. This is permitted if the <em>Dealer</em> supports Call Canceling and is not considered to be a usage of the Call Timeouts feature.<a href="#section-11.3-12" class="pilcrow">¶</a></p>
+<p id="section-11.3-13"><strong>Feature Announcement</strong><a href="#section-11.3-13" class="pilcrow">¶</a></p>
+<p id="section-11.3-14">Support for this feature MUST be announced by <em>Dealers</em> (<code>role := "dealer"</code>) and MAY be announced by <em>Callees</em> (<code>role := "callee"</code>) via<a href="#section-11.3-14" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.3-15">
 <pre>    HELLO.Details.roles.&lt;role&gt;.features.call_timeout|bool := true
-</pre><a href="#section-11.3-11" class="pilcrow">¶</a>
+</pre><a href="#section-11.3-15" class="pilcrow">¶</a>
+</div>
+<p id="section-11.3-16">If a <em>Callee</em> does not support Call Timeouts, it may optionally announce support for Call Cancellation via<a href="#section-11.3-16" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.3-17">
+<pre>    HELLO.Details.roles.&lt;role&gt;.features.call_canceling|bool := true
+</pre><a href="#section-11.3-17" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -12413,35 +12412,40 @@ calling <code>xbr.pool.buy_key</code>, and calling <code>wamp.r2r.submit_traffic
 <pre>    wamp.error.canceled
 </pre><a href="#section-18-3" class="pilcrow">¶</a>
 </div>
-<p id="section-18-4">A <em>Peer</em> requested an interaction with an option that was disallowed by the <em>Router</em><a href="#section-18-4" class="pilcrow">¶</a></p>
+<p id="section-18-4">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> terminated a call that timed out<a href="#section-18-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-18-5">
-<pre>    wamp.error.option_not_allowed
+<pre>    wamp.error.timeout
 </pre><a href="#section-18-5" class="pilcrow">¶</a>
 </div>
-<p id="section-18-6">A <em>Router</em> rejected client request to disclose its identity<a href="#section-18-6" class="pilcrow">¶</a></p>
+<p id="section-18-6">A <em>Peer</em> requested an interaction with an option that was disallowed by the <em>Router</em><a href="#section-18-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-18-7">
-<pre>    wamp.error.option_disallowed.disclose_me
+<pre>    wamp.error.option_not_allowed
 </pre><a href="#section-18-7" class="pilcrow">¶</a>
 </div>
-<p id="section-18-8">A <em>Router</em> encountered a network failure<a href="#section-18-8" class="pilcrow">¶</a></p>
+<p id="section-18-8">A <em>Router</em> rejected client request to disclose its identity<a href="#section-18-8" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-18-9">
-<pre>    wamp.error.network_failure
+<pre>    wamp.error.option_disallowed.disclose_me
 </pre><a href="#section-18-9" class="pilcrow">¶</a>
 </div>
-<p id="section-18-10">A <em>Callee</em> is not able to handle an invocation for a <em>call</em> and intends for the <em>Router</em> to re-route the <em>call</em> to another fitting <em>Callee</em>. For details, refer to <a href="ap_rpc_call_rerouting.md">RPC Call Rerouting</a><a href="#section-18-10" class="pilcrow">¶</a></p>
+<p id="section-18-10">A <em>Router</em> encountered a network failure<a href="#section-18-10" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-18-11">
-<pre>    wamp.error.unavailable
+<pre>    wamp.error.network_failure
 </pre><a href="#section-18-11" class="pilcrow">¶</a>
 </div>
-<p id="section-18-12">A <em>Dealer</em> could not perform a call, since a procedure with the given URI is registered, but all available registrations have responded with <code>wamp.error.unavailable</code><a href="#section-18-12" class="pilcrow">¶</a></p>
+<p id="section-18-12">A <em>Callee</em> is not able to handle an invocation for a <em>call</em> and intends for the <em>Router</em> to re-route the <em>call</em> to another fitting <em>Callee</em>. For details, refer to <a href="ap_rpc_call_rerouting.md">RPC Call Rerouting</a><a href="#section-18-12" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-18-13">
-<pre>    wamp.error.no_available_callee
+<pre>    wamp.error.unavailable
 </pre><a href="#section-18-13" class="pilcrow">¶</a>
 </div>
-<p id="section-18-14">A <em>Dealer</em> received a <code>CALL</code> message with advanced features that cannot be processed by the <em>Callee</em><a href="#section-18-14" class="pilcrow">¶</a></p>
+<p id="section-18-14">A <em>Dealer</em> could not perform a call, since a procedure with the given URI is registered, but all available registrations have responded with <code>wamp.error.unavailable</code><a href="#section-18-14" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-18-15">
-<pre>    wamp.error.feature_not_supported
+<pre>    wamp.error.no_available_callee
 </pre><a href="#section-18-15" class="pilcrow">¶</a>
+</div>
+<p id="section-18-16">A <em>Dealer</em> received a <code>CALL</code> message with advanced features that cannot be processed by the <em>Callee</em><a href="#section-18-16" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18-17">
+<pre>    wamp.error.feature_not_supported
+</pre><a href="#section-18-17" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
