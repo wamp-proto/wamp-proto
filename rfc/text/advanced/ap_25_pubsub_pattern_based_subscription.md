@@ -25,19 +25,18 @@ Every subscription instance, based on a topic URI and some options, has a unique
 subscribers of the same subscription are given the same subscription ID.
 
 {align="left"}
-                                +----------+            +------------+         +----------+
-                                |          |            |   Exact    |         |Subscriber|
-                                |          |---Event--->|Subscription|----+--->|   peer   |
-                                |          |            +------------+    |    +----------+
-   +----------+                 |          |            +------------+    |    +----------+
-   |Publisher |                 |  Broker  |            |  Wildcard  |    +--->|Subscriber|
-   |   peer   |--Publication--->|          |---Event--->|Subscription|----+--->|   peer   |
-   +----------+                 |          |            +------------+    |    +----------+
-                                |          |            +------------+    |    +----------+
-                                |          |            |   Prefix   |    +--->|Subscriber|
-                                |          |---Event--->|Subscription|-------->|   peer   |
-                                +----------+            +------------+         +----------+
-
+                                 +----------+          +------------+        +----------+
+                                 |          |          |   Exact    |        |Subscriber|
+                                 |          |--Event-->|Subscription|---+--->|   peer   |
+                                 |          |          +------------+   |    +----------+
+     +----------+                |          |          +------------+   |    +----------+
+     |Publisher |                |  Broker  |          |  Wildcard  |   +--->|Subscriber|
+     |   peer   |--Publication-->|          |--Event-->|Subscription|---+--->|   peer   |
+     +----------+                |          |          +------------+   |    +----------+
+                                 |          |          +------------+   |    +----------+
+                                 |          |          |   Prefix   |   +--->|Subscriber|
+                                 |          |--Event-->|Subscription|------->|   peer   |
+                                 +----------+          +------------+        +----------+
 
 If the *Broker* and the *Subscriber* support **pattern-based subscriptions**, this matching can happen by
 

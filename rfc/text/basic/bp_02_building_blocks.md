@@ -97,7 +97,7 @@ These are identified in WAMP using IDs that are integers between (inclusive) **1
 
 * IDs in the *global scope* MUST be drawn *randomly* from a *uniform distribution* over the complete range [1, 2^53]
 * IDs in the *router scope* CAN be chosen freely by the specific router implementation
-* IDs in the *session scope* MUST be incremented by 1 beginning with 1 (for each direction - *Client-to-Router* and *Router-to-Client*)
+* IDs in the *session scope* MUST be incremented by 1 beginning with 1 (for each direction - *Client-to-Router* and *Router-to-Client*) {#session_scope_id}
 
 > The reason to choose the specific lower bound as 1 rather than 0 is that 0 is the null-like (falsy) value for many programming languages.
 > The reason to choose the specific upper bound is that 2^53 is the largest integer such that this integer and *all* (positive) smaller integers can be represented exactly in IEEE-754 doubles. Some languages (e.g. JavaScript) use doubles as their sole number type. Most languages do have signed and unsigned 64-bit integer types that both can hold any value from the specified range.
@@ -122,25 +122,25 @@ The following is a complete list of usage of IDs in the three categories for all
 * `INVOCATION.Registration`
 
 
-**Session Scope IDs**
+**Session Scope IDs** {#session_scope_ids}
 
-* `ERROR.Request`
-* `PUBLISH.Request`
-* `PUBLISHED.Request`
 * `SUBSCRIBE.Request`
-* `SUBSCRIBED.Request`
+* `SUBSCRIBED.Request` (mirrored `SUBSCRIBE.Request`)
 * `UNSUBSCRIBE.Request`
-* `UNSUBSCRIBED.Request`
-* `CALL.Request`
-* `CANCEL.Request`
-* `RESULT.Request`
+* `UNSUBSCRIBED.Request` (mirrored `UNSUBSCRIBE.Request`)
+* `PUBLISH.Request`
+* `PUBLISHED.Request` (mirrored `PUBLISH.Request`)
 * `REGISTER.Request`
-* `REGISTERED.Request`
+* `REGISTERED.Request` (mirrored `REGISTER.Request`)
 * `UNREGISTER.Request`
-* `UNREGISTERED.Request`
+* `UNREGISTERED.Request` (mirrored `UNREGISTER.Request`)
+* `CALL.Request`
+* `RESULT.Request` (mirrored `CALL.Request`)
+* `CANCEL.Request` (mirrored `CALL.Request`)
 * `INVOCATION.Request`
-* `INTERRUPT.Request`
-* `YIELD.Request`
+* `YIELD.Request` (mirrored `INVOCATION.Request`)
+* `INTERRUPT.Request` (mirrored `INVOCATION.Request`)
+* `ERROR.Request` (mirrored original request ID)
 
 
 ## Serializers
@@ -262,7 +262,7 @@ The diagram below illustrates the full transport connection and session lifecycl
 
 ### Protocol errors {#protocol_errors}
 
-WAMP implementations MUST close sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
+WAMP implementations MUST abort sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
 
 Following scenarios have to be considered protocol errors:
 
@@ -279,6 +279,7 @@ Following scenarios have to be considered protocol errors:
  - Receiving `REGISTERED` message, before session was established.
  - Receiving `UNREGISTERED` message, before session was established.
  - Receiving `INVOCATION` message, before session was established.
+ - Receiving message with non-[sequential](#session_scope_id) [session scope](#session_scope_ids) request ID, such as `SUBSCRIBE`, `UNSUBSCRIBE`, `PUBLISH`, `REGISTER`, `UNREGISTER`, `CALL` and `YIELD`.
  - Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.
  - Catching error during message encoding/decoding.
  - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second `HELLO` within the lifetime of a session).
@@ -286,5 +287,5 @@ Following scenarios have to be considered protocol errors:
 In all such cases WAMP implementations:
 
 1. MUST send an `ABORT` message to the offending peer, having reason `wamp.error.protocol_violation` and optional attributes in ABORT.Details such as a human readable error message.
-2. MUST close the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
+2. MUST abort the WAMP session by disposing any allocated subscriptions/registrations for that particular client and without waiting for or processing any messages subsequently received from the peer,
 3. SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)
