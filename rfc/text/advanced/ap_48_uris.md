@@ -12,6 +12,11 @@ A *Dealer* or *Callee* canceled a call previously issued
 {align="left"}
         wamp.error.canceled
 
+A *Dealer* or *Callee* terminated a call that timed out
+
+{align="left"}
+        wamp.error.timeout
+
 A *Peer* requested an interaction with an option that was disallowed by the *Router*
 
 {align="left"}
