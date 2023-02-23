@@ -259,3 +259,15 @@ to be matched pairs.
 
 Because they are part of the same call operation, the request ID is the same in all `CALL`,
 `INVOCATION`, `YIELD`, and `ERROR` messages in the above exchange.
+
+
+**Stickiness of Progressive Call Options**
+
+Except for `progress`, items in the `Options` dictionary of the initiating progressive `CALL` shall be effective for
+the entirety of the progressive call request. Except for `progress`, all options in subsequent progressive calls
+(within the same overall request) shall be ignored by the *Dealer*. Except for `progress`, items in the `Details`
+dictionary of the corresponding `INVOCATION` message shall be based on the initiating progressive `CALL` only.
+  
+For example, if `disclose_me=true` was specified in the initiating progressive call, all subsequent progressive calls
+(within the same request) shall be considered by the *Dealer* to have `disclose_me=true` as well. That is, all
+`INVOCATION` messages associated with the overall request shall contain caller identify information.
