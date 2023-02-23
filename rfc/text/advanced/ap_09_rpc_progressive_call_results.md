@@ -339,3 +339,8 @@ Note: Any `ERROR` returned by the *Callee*, in response to the `INTERRUPT`, is i
 A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
 
 A *Callee* that supports progressive results, but does not support call canceling is considered by the *Dealer* to not support progressive results.
+
+
+**Timeouts**
+        
+When the *Call Timeouts* feature is used in combination with Progressive Call Results, the `CALL.Options.timeout|int` option shall represent the time limit between the initial call and the first result, and between results thereafter.
