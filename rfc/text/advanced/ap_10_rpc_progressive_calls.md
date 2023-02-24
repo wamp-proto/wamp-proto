@@ -274,7 +274,7 @@ For example, if `disclose_me=true` was specified in the initiating progressive c
 
 Note that any option (besides `progress`) can be omitted altogether in subsequent progressive calls. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (*Caller*) only needs to keep uploading more data thereafter.
 
-For reference, the list of options that only take effect on the initial progressive call includes:
+For reference, here is a list of options that take effect upon the initial progressive call (and for the duration of the entire request):
 
 - `CALL.Options.disclose_me|bool`
 - `CALL.Options.ppt_cipher|string`
