@@ -261,13 +261,28 @@ Because they are part of the same call operation, the request ID is the same in 
 `INVOCATION`, `YIELD`, and `ERROR` messages in the above exchange.
 
 
-**Stickiness of Progressive Call Options**
+**Establishment of Options in Progressive Calls**
 
 Except for `progress`, items in the `Options` dictionary of the initiating progressive `CALL` shall be effective for
-the entirety of the progressive call request. Except for `progress`, all options in subsequent progressive calls
-(within the same overall request) shall be ignored by the *Dealer*. Except for `progress`, items in the `Details`
-dictionary of the corresponding `INVOCATION` message shall be based on the initiating progressive `CALL` only.
+the entirety of the progressive call request. Only the `progress` option shall be considered by the *Dealer* in subsequent progressive calls
+(within the same overall request). Except for `progress`, items in the `Details`
+dictionary of corresponding `INVOCATION` messages shall be based on the initiating progressive `CALL` only.
   
 For example, if `disclose_me=true` was specified in the initiating progressive call, all subsequent progressive calls
-(within the same request) shall be considered by the *Dealer* to have `disclose_me=true` as well. That is, all
+(within the same request) shall be considered by the *Dealer* to implictly have `disclose_me=true` as well. That is, all
 `INVOCATION` messages associated with the overall request shall contain caller identify information.
+
+Note that any option (besides `progress`) can be omitted altogether in subsequent progressive calls. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (*Caller*) only needs to keep uploading more data thereafter.
+
+For reference, the list of options that only take effect on the initial progressive call includes:
+
+- `CALL.Options.disclose_me|bool`
+- `CALL.Options.ppt_cipher|string`
+- `CALL.Options.ppt_keyid|string`
+- `CALL.Options.ppt_scheme|string`
+- `CALL.Options.ppt_serializer|string`
+- `CALL.Options.receive_progress|bool`
+- `CALL.Options.rkey`
+- `CALL.Options.runmode|string`
+- `CALL.Options.sticky|bool`
+- `CALL.Options.timeout|integer`
