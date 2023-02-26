@@ -32,11 +32,6 @@ A *Callee* is not able to handle an invocation for a *call* and intends for the 
 {align="left"}
         wamp.error.unavailable
 
-A *Dealer* could not perform a call, since a procedure with the given URI is registered, but all available registrations have responded with `wamp.error.unavailable`
-
-{align="left"}
-        wamp.error.no_available_callee
-
 A *Dealer* received a `CALL` message with advanced features that cannot be processed by the *Callee*
 
 {align="left"}
