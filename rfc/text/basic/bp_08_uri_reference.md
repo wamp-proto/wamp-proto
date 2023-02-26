@@ -43,6 +43,11 @@ A call failed since the given argument types or values are not acceptable to the
 {align="left"}
         wamp.error.invalid_argument
 
+A Dealer received a `CALL` message for which there is no available Callee to process.
+
+{align="left"}
+        wamp.error.no_available_callee
+
 **Session Close**
 
 The Peer is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
