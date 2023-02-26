@@ -115,6 +115,17 @@ If the *Callee* supports progressive calls, the *Dealer* shall forward the *Call
 A call invocation MUST *always* end in a *normal* `CALL` without the `"progress": true` option, or explicitly 
 set `"progress": false` which is the default.
 
+**Request Id Verification**
+
+When the *Progressive Calls* feature is supported, a *Caller* MAY use a prior request ID in a `CALL` message to
+reference an already active progressive call. However, if a `CALL` request ID refers to an active request that
+is not a progressive call, then that shall be considered a protocol violation.
+
+When checking `CALL` request IDs, if a request with the given ID is no longer active, then it shall NOT be
+considered a protocol violation. This is necessary to cope with the race condition of a *Caller* sending a
+subsequent progressive `CALL` while a *Dealer* concurrently sends an `ERROR` or final `RESULT` back to the *Caller*.
+To avoid having to store the history of past requests, the *Dealer* doesn't need to check that the expired request
+ID belonged to an actual call.
 
 **Progressive Calls and Shared Registration**
 
