@@ -435,3 +435,8 @@ If the original call already failed at the Dealer **before** the call would have
 
 {align="left"}
         [8, 48, 7814135, {}, "wamp.error.no_such_procedure"]
+
+
+## Callee Leaving
+
+When the last available *Callee* registered to an active procedure call leaves after a *Dealer* receives a `CALL`, but before that *Dealer* receives a `YIELD` or `ERROR` from the *Callee*, the *Dealer* shall send an `ERROR` message back to the *Caller* with URI `wamp.error.no_available_callee`.
