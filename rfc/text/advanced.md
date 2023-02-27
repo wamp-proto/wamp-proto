@@ -70,6 +70,8 @@
 
 {{advanced/ap_36_authentication_dynamic.md}}
 
+{{advanced/ap_52_authorization.md}}
+
 {{advanced/ap_49_security_features.md}}
 
 {{advanced/ap_50_payload_passthru_mode.md}}
