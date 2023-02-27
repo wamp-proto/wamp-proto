@@ -34,7 +34,7 @@ The authentication of the *Client* failed technically at run-time, and the *Clie
 {align="left"}
         wamp.error.authentication_failed
 
-The *Client* did not authenticate (at all) and a successful (non-anonymous) authentication is required.
+The *Client* did not provide the required, non-anonymous, authentication information.
 
 {align="left"}
         wamp.error.authentication_required
