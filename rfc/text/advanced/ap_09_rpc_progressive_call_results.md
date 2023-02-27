@@ -291,7 +291,7 @@ Even if a *Caller* has indicated its expectation to receive progressive results 
 
 **Progressive Call Result Cancellation**
 
-Upon receiving a `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), if the original *Caller* is no longer available (has left the realm), then the *Dealer* will send an `INTERRUPT` to the *Callee*.  The `INTERRUPT` will have `Options.mode` set to `"killnowait"` to indicate to the client that no response should be sent to the `INTERRUPT`. This `INTERRUPT` in only sent in response to a progressive `YIELD` (`Details.progress == true`), and is not sent in response to a normal or final `YIELD`.
+Upon receiving a `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), if the original *Caller* is no longer available (has left the realm), then the *Dealer* will send an `INTERRUPT` to the *Callee*.  The `INTERRUPT` will have `Options.mode` set to `"killnowait"` to indicate to the client that no response should be sent to the `INTERRUPT`. This `INTERRUPT` is only sent in response to a progressive `YIELD` (`Details.progress == true`), and is not sent in response to a normal or final `YIELD`.
 ```
 [INTERRUPT, INVOCATION.Request|id, Options|dict]
 ```
