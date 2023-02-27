@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                           22 February 2023
-Expires: 26 August 2023
+Intended status: Experimental                           27 February 2023
+Expires: 31 August 2023
 
 
                          WAMP Advanced Profile
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 August 2023.
+   This Internet-Draft will expire on 31 August 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Table of Contents
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 1]
+Oberstein                Expires 31 August 2023                 [Page 1]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -71,86 +71,86 @@ Internet-Draft                   WAMP-AP                   February 2023
        2.3.2.  Procedures  . . . . . . . . . . . . . . . . . . . . .  26
    3.  Advanced RPC  . . . . . . . . . . . . . . . . . . . . . . . .  29
      3.1.  Progressive Call Results  . . . . . . . . . . . . . . . .  29
-     3.2.  Progressive Calls . . . . . . . . . . . . . . . . . . . .  36
-     3.3.  Call Timeouts . . . . . . . . . . . . . . . . . . . . . .  42
-     3.4.  Call Canceling  . . . . . . . . . . . . . . . . . . . . .  44
-     3.5.  Call Re-Routing . . . . . . . . . . . . . . . . . . . . .  47
-     3.6.  Caller Identification . . . . . . . . . . . . . . . . . .  48
-     3.7.  Call Trust Levels . . . . . . . . . . . . . . . . . . . .  50
-     3.8.  Pattern-based Registrations . . . . . . . . . . . . . . .  50
-       3.8.1.  Prefix Matching . . . . . . . . . . . . . . . . . . .  51
-       3.8.2.  Wildcard Matching . . . . . . . . . . . . . . . . . .  52
-       3.8.3.  Design Aspects  . . . . . . . . . . . . . . . . . . .  52
-     3.9.  Shared Registration . . . . . . . . . . . . . . . . . . .  55
-       3.9.1.  Load Balancing  . . . . . . . . . . . . . . . . . . .  56
-       3.9.2.  Hot Stand-By  . . . . . . . . . . . . . . . . . . . .  56
-     3.10. Sharded Registration  . . . . . . . . . . . . . . . . . .  56
-       3.10.1.  "All" Calls  . . . . . . . . . . . . . . . . . . . .  57
-       3.10.2.  "Partitioned" Calls  . . . . . . . . . . . . . . . .  57
-     3.11. Registration Revocation . . . . . . . . . . . . . . . . .  57
-   4.  Advanced PubSub . . . . . . . . . . . . . . . . . . . . . . .  58
-     4.1.  Subscriber Black- and Whitelisting  . . . . . . . . . . .  58
-     4.2.  Publisher Exclusion . . . . . . . . . . . . . . . . . . .  62
-     4.3.  Publisher Identification  . . . . . . . . . . . . . . . .  63
-     4.4.  Publication Trust Levels  . . . . . . . . . . . . . . . .  64
-     4.5.  Pattern-based Subscription  . . . . . . . . . . . . . . .  65
-       4.5.1.  Prefix Matching . . . . . . . . . . . . . . . . . . .  66
-       4.5.2.  Wildcard Matching . . . . . . . . . . . . . . . . . .  66
-       4.5.3.  Design Aspects  . . . . . . . . . . . . . . . . . . .  67
-     4.6.  Sharded Subscription  . . . . . . . . . . . . . . . . . .  68
-     4.7.  Event History . . . . . . . . . . . . . . . . . . . . . .  69
-     4.8.  Event Retention . . . . . . . . . . . . . . . . . . . . .  73
-     4.9.  Subscription Revocation . . . . . . . . . . . . . . . . .  74
-     4.10. Session Testament . . . . . . . . . . . . . . . . . . . .  75
-   5.  Authentication Methods  . . . . . . . . . . . . . . . . . . .  78
-     5.1.  Ticket-based Authentication . . . . . . . . . . . . . . .  80
-     5.2.  Challenge Response Authentication . . . . . . . . . . . .  82
-     5.3.  Salted Challenge Response Authentication  . . . . . . . .  86
+     3.2.  Progressive Calls . . . . . . . . . . . . . . . . . . . .  37
+     3.3.  Call Timeouts . . . . . . . . . . . . . . . . . . . . . .  44
+     3.4.  Call Canceling  . . . . . . . . . . . . . . . . . . . . .  45
+     3.5.  Call Re-Routing . . . . . . . . . . . . . . . . . . . . .  48
+     3.6.  Caller Identification . . . . . . . . . . . . . . . . . .  49
+     3.7.  Call Trust Levels . . . . . . . . . . . . . . . . . . . .  51
+     3.8.  Pattern-based Registrations . . . . . . . . . . . . . . .  51
+       3.8.1.  Prefix Matching . . . . . . . . . . . . . . . . . . .  52
+       3.8.2.  Wildcard Matching . . . . . . . . . . . . . . . . . .  53
+       3.8.3.  Design Aspects  . . . . . . . . . . . . . . . . . . .  53
+     3.9.  Shared Registration . . . . . . . . . . . . . . . . . . .  56
+       3.9.1.  Load Balancing  . . . . . . . . . . . . . . . . . . .  57
+       3.9.2.  Hot Stand-By  . . . . . . . . . . . . . . . . . . . .  57
+     3.10. Sharded Registration  . . . . . . . . . . . . . . . . . .  57
+       3.10.1.  "All" Calls  . . . . . . . . . . . . . . . . . . . .  58
+       3.10.2.  "Partitioned" Calls  . . . . . . . . . . . . . . . .  58
+     3.11. Registration Revocation . . . . . . . . . . . . . . . . .  58
+   4.  Advanced PubSub . . . . . . . . . . . . . . . . . . . . . . .  59
+     4.1.  Subscriber Black- and Whitelisting  . . . . . . . . . . .  59
+     4.2.  Publisher Exclusion . . . . . . . . . . . . . . . . . . .  63
+     4.3.  Publisher Identification  . . . . . . . . . . . . . . . .  64
+     4.4.  Publication Trust Levels  . . . . . . . . . . . . . . . .  65
+     4.5.  Pattern-based Subscription  . . . . . . . . . . . . . . .  66
+       4.5.1.  Prefix Matching . . . . . . . . . . . . . . . . . . .  67
+       4.5.2.  Wildcard Matching . . . . . . . . . . . . . . . . . .  67
+       4.5.3.  Design Aspects  . . . . . . . . . . . . . . . . . . .  68
+     4.6.  Sharded Subscription  . . . . . . . . . . . . . . . . . .  69
+     4.7.  Event History . . . . . . . . . . . . . . . . . . . . . .  70
+     4.8.  Event Retention . . . . . . . . . . . . . . . . . . . . .  74
+     4.9.  Subscription Revocation . . . . . . . . . . . . . . . . .  75
+     4.10. Session Testament . . . . . . . . . . . . . . . . . . . .  76
+   5.  Authentication Methods  . . . . . . . . . . . . . . . . . . .  79
+     5.1.  Ticket-based Authentication . . . . . . . . . . . . . . .  81
+     5.2.  Challenge Response Authentication . . . . . . . . . . . .  83
+     5.3.  Salted Challenge Response Authentication  . . . . . . . .  87
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 2]
+Oberstein                Expires 31 August 2023                 [Page 2]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
 
-     5.4.  Cryptosign-based Authentication . . . . . . . . . . . . .  99
-       5.4.1.  Client Authentication . . . . . . . . . . . . . . . . 101
-       5.4.2.  TLS Channel Binding . . . . . . . . . . . . . . . . . 106
-       5.4.3.  Router Authentication . . . . . . . . . . . . . . . . 108
-       5.4.4.  Trustroots and Certificates . . . . . . . . . . . . . 108
-       5.4.5.  Remote Attestation  . . . . . . . . . . . . . . . . . 117
-       5.4.6.  Example Message Exchanges . . . . . . . . . . . . . . 120
-     5.5.  Dynamic Authentication API  . . . . . . . . . . . . . . . 128
-   6.  Advanced Security Features  . . . . . . . . . . . . . . . . . 128
-     6.1.  Payload Passthru Mode . . . . . . . . . . . . . . . . . . 128
-     6.2.  Payload End-to-End Encryption . . . . . . . . . . . . . . 139
-   7.  Advanced Transports and Serializers . . . . . . . . . . . . . 139
-     7.1.  RawSocket Transport . . . . . . . . . . . . . . . . . . . 140
-     7.2.  Message Batching  . . . . . . . . . . . . . . . . . . . . 146
-     7.3.  HTTP Longpoll Transport . . . . . . . . . . . . . . . . . 147
-     7.4.  Binary support in JSON  . . . . . . . . . . . . . . . . . 150
-     7.5.  Multiplexed Transport . . . . . . . . . . . . . . . . . . 152
-   8.  WAMP Interfaces . . . . . . . . . . . . . . . . . . . . . . . 153
-     8.1.  WAMP IDL  . . . . . . . . . . . . . . . . . . . . . . . . 154
-       8.1.1.  Application Payload Typing  . . . . . . . . . . . . . 154
-       8.1.2.  WAMP IDL Attributes . . . . . . . . . . . . . . . . . 157
-       8.1.3.  WAMP Service Declaration  . . . . . . . . . . . . . . 161
-     8.2.  Interface Catalogs  . . . . . . . . . . . . . . . . . . . 163
-       8.2.1.  Catalog Archive File  . . . . . . . . . . . . . . . . 163
-       8.2.2.  Catalog Metadata  . . . . . . . . . . . . . . . . . . 164
-       8.2.3.  Catalog Sharing and Publication . . . . . . . . . . . 166
-     8.3.  Interface Reflection  . . . . . . . . . . . . . . . . . . 167
-   9.  Router-to-Router Links  . . . . . . . . . . . . . . . . . . . 168
-   10. Advanced Profile URIs . . . . . . . . . . . . . . . . . . . . 169
-   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 170
-   12. Conformance Requirements  . . . . . . . . . . . . . . . . . . 170
-     12.1.  Terminology and Other Conventions  . . . . . . . . . . . 170
-   13. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 171
-   14. Normative References  . . . . . . . . . . . . . . . . . . . . 171
-   15. Informative References  . . . . . . . . . . . . . . . . . . . 171
-   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 172
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 172
+     5.4.  Cryptosign-based Authentication . . . . . . . . . . . . . 100
+       5.4.1.  Client Authentication . . . . . . . . . . . . . . . . 102
+       5.4.2.  TLS Channel Binding . . . . . . . . . . . . . . . . . 107
+       5.4.3.  Router Authentication . . . . . . . . . . . . . . . . 109
+       5.4.4.  Trustroots and Certificates . . . . . . . . . . . . . 109
+       5.4.5.  Remote Attestation  . . . . . . . . . . . . . . . . . 118
+       5.4.6.  Example Message Exchanges . . . . . . . . . . . . . . 121
+     5.5.  Dynamic Authentication API  . . . . . . . . . . . . . . . 129
+   6.  Advanced Security Features  . . . . . . . . . . . . . . . . . 129
+     6.1.  Payload Passthru Mode . . . . . . . . . . . . . . . . . . 129
+     6.2.  Payload End-to-End Encryption . . . . . . . . . . . . . . 140
+   7.  Advanced Transports and Serializers . . . . . . . . . . . . . 140
+     7.1.  RawSocket Transport . . . . . . . . . . . . . . . . . . . 141
+     7.2.  Message Batching  . . . . . . . . . . . . . . . . . . . . 147
+     7.3.  HTTP Longpoll Transport . . . . . . . . . . . . . . . . . 148
+     7.4.  Binary support in JSON  . . . . . . . . . . . . . . . . . 151
+     7.5.  Multiplexed Transport . . . . . . . . . . . . . . . . . . 153
+   8.  WAMP Interfaces . . . . . . . . . . . . . . . . . . . . . . . 154
+     8.1.  WAMP IDL  . . . . . . . . . . . . . . . . . . . . . . . . 155
+       8.1.1.  Application Payload Typing  . . . . . . . . . . . . . 155
+       8.1.2.  WAMP IDL Attributes . . . . . . . . . . . . . . . . . 158
+       8.1.3.  WAMP Service Declaration  . . . . . . . . . . . . . . 162
+     8.2.  Interface Catalogs  . . . . . . . . . . . . . . . . . . . 164
+       8.2.1.  Catalog Archive File  . . . . . . . . . . . . . . . . 164
+       8.2.2.  Catalog Metadata  . . . . . . . . . . . . . . . . . . 165
+       8.2.3.  Catalog Sharing and Publication . . . . . . . . . . . 167
+     8.3.  Interface Reflection  . . . . . . . . . . . . . . . . . . 168
+   9.  Router-to-Router Links  . . . . . . . . . . . . . . . . . . . 169
+   10. Advanced Profile URIs . . . . . . . . . . . . . . . . . . . . 170
+   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 171
+   12. Conformance Requirements  . . . . . . . . . . . . . . . . . . 171
+     12.1.  Terminology and Other Conventions  . . . . . . . . . . . 171
+   13. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 172
+   14. Normative References  . . . . . . . . . . . . . . . . . . . . 172
+   15. Informative References  . . . . . . . . . . . . . . . . . . . 172
+   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 173
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 173
 
 1.  WAMP Advanced Profile
 
@@ -165,7 +165,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 3]
+Oberstein                Expires 31 August 2023                 [Page 3]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -221,7 +221,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 4]
+Oberstein                Expires 31 August 2023                 [Page 4]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -277,7 +277,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 5]
+Oberstein                Expires 31 August 2023                 [Page 5]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -333,7 +333,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 6]
+Oberstein                Expires 31 August 2023                 [Page 6]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -389,7 +389,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 7]
+Oberstein                Expires 31 August 2023                 [Page 7]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -445,7 +445,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 8]
+Oberstein                Expires 31 August 2023                 [Page 8]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -501,7 +501,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                 [Page 9]
+Oberstein                Expires 31 August 2023                 [Page 9]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -557,7 +557,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 10]
+Oberstein                Expires 31 August 2023                [Page 10]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -613,7 +613,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 11]
+Oberstein                Expires 31 August 2023                [Page 11]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -669,7 +669,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 12]
+Oberstein                Expires 31 August 2023                [Page 12]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -725,7 +725,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 13]
+Oberstein                Expires 31 August 2023                [Page 13]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -781,7 +781,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 14]
+Oberstein                Expires 31 August 2023                [Page 14]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -837,7 +837,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 15]
+Oberstein                Expires 31 August 2023                [Page 15]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -893,7 +893,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 16]
+Oberstein                Expires 31 August 2023                [Page 16]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -949,7 +949,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 17]
+Oberstein                Expires 31 August 2023                [Page 17]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1005,7 +1005,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 18]
+Oberstein                Expires 31 August 2023                [Page 18]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 19]
+Oberstein                Expires 31 August 2023                [Page 19]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 20]
+Oberstein                Expires 31 August 2023                [Page 20]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1173,7 +1173,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 21]
+Oberstein                Expires 31 August 2023                [Page 21]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1229,7 +1229,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 22]
+Oberstein                Expires 31 August 2023                [Page 22]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1285,7 +1285,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 23]
+Oberstein                Expires 31 August 2023                [Page 23]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1341,7 +1341,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 24]
+Oberstein                Expires 31 August 2023                [Page 24]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1397,7 +1397,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 25]
+Oberstein                Expires 31 August 2023                [Page 25]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1453,7 +1453,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 26]
+Oberstein                Expires 31 August 2023                [Page 26]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1509,7 +1509,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 27]
+Oberstein                Expires 31 August 2023                [Page 27]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1565,7 +1565,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 28]
+Oberstein                Expires 31 August 2023                [Page 28]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1621,7 +1621,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 29]
+Oberstein                Expires 31 August 2023                [Page 29]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1677,7 +1677,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 30]
+Oberstein                Expires 31 August 2023                [Page 30]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1733,7 +1733,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 31]
+Oberstein                Expires 31 August 2023                [Page 31]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1789,7 +1789,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 32]
+Oberstein                Expires 31 August 2023                [Page 32]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1845,7 +1845,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 33]
+Oberstein                Expires 31 August 2023                [Page 33]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1901,7 +1901,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 34]
+Oberstein                Expires 31 August 2023                [Page 34]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -1957,7 +1957,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 35]
+Oberstein                Expires 31 August 2023                [Page 35]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2004,19 +2004,39 @@ Internet-Draft                   WAMP-AP                   February 2023
    call canceling is considered by the _Dealer_ to not support
    progressive results.
 
+   *Timeouts*
+
+   When the _Call Timeouts_ feature is used in combination with
+   Progressive Call Results, the CALL.Options.timeout|integer option
+   shall represent the time limit between the initial call and the first
+   result, and between results thereafter.
+
+
+
+Oberstein                Expires 31 August 2023                [Page 36]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
+   For Dealer-initiated timeouts, this corresponds to - the time between
+   receipt of the CALL message and receipt of the first YIELD message,
+   and, - the time between received YIELD messages thereafter.
+
+   For Callee-initiated timeouts, this corresponds to - the time between
+   receipt of the INVOCATION message and acquisition of the first
+   result, and, - the time between acquisition of successive results
+   thereafter.
+
+   Note that for progressive results, the timeout value does _not_
+   correspond to the duration of the complete call from initiation to
+   the final result.  The rationale for this is that it would be
+   unfeasible to compute a reasonable timeout value for a call having a
+   non-deterministic number of progressive results.
+
 3.2.  Progressive Calls
 
    A _Caller_ may issue a progressive call.  This can be useful in a few
    cases:
-
-
-
-
-
-Oberstein                Expires 26 August 2023                [Page 36]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
    *  Payload is too big to send it whole in one request, e.g.,
       uploading a file.
@@ -2045,6 +2065,15 @@ Internet-Draft                   WAMP-AP                   February 2023
 
        HELLO.Details.roles.callee.features.call_cancelling|bool := true
 
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 37]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
    The following cases, where a _Caller_ sends a CALL message with
    progress := true, MUST be treated as _protocol errors_ with the
    underlying WAMP sessions being aborted:
@@ -2064,15 +2093,6 @@ Internet-Draft                   WAMP-AP                   February 2023
 
    The message flow for a progressive call when a _Callee_ waits for all
    chunks before processing and sending a single result:
-
-
-
-
-
-Oberstein                Expires 26 August 2023                [Page 37]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
     ,------.                  ,------.                 ,------.
     |Caller|                  |Dealer|                 |Callee|
@@ -2102,6 +2122,14 @@ Internet-Draft                   WAMP-AP                   February 2023
     |Caller|                  |Dealer|                 |Callee|
     `------'                  `------'                 `------'
 
+
+
+
+Oberstein                Expires 31 August 2023                [Page 38]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
    As a progressive call chunks are part of the same overall call, the
    _Caller_ must send the same Request|id for every CALL and the
    _Dealer_ must also use the same Request|id with every INVOCATION to
@@ -2113,22 +2141,6 @@ Internet-Draft                   WAMP-AP                   February 2023
        CALL.Options.progress|bool := true
 
    _Example._ Caller-to-Dealer CALL
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein                Expires 26 August 2023                [Page 38]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
        [
            48,
@@ -2164,6 +2176,16 @@ Internet-Draft                   WAMP-AP                   February 2023
 
    *Progressive Calls and Shared Registration*
 
+
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 39]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
    RPCs can have a multiple registrations (see Shared Registration
    feature) with different <invocation_policies>.  In this case,
    progressive CALL messages can be routed to different _Callees_, which
@@ -2178,13 +2200,6 @@ Internet-Draft                   WAMP-AP                   February 2023
 
    If binding all ongoing progressive calls to the same _Callee_ is not
    required, the _Caller_ can set the sticky option to false.
-
-
-
-Oberstein                Expires 26 August 2023                [Page 39]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
    If CALL.Options.sticky is not specified, it is treated like true, so
    all progressive calls go to the same _Callee_.
@@ -2213,6 +2228,20 @@ Internet-Draft                   WAMP-AP                   February 2023
 
    The message flow for cancelling progressive calls involves:
 
+
+
+
+
+
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 40]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
     ,------.            ,------.                 ,------.
     |Caller|            |Dealer|                 |Callee|
     `--+---'            `--+---'                 `--+---'
@@ -2234,13 +2263,6 @@ Internet-Draft                   WAMP-AP                   February 2023
                         ,--+---.                 ,--+---.
                         |Dealer|                 |Callee|
                         `------'                 `------'
-
-
-
-Oberstein                Expires 26 August 2023                [Page 40]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
    Note: Any ERROR returned by the _Callee_, in response to an
    INTERRUPT, is ignored (same as in regular call canceling when
@@ -2267,6 +2289,15 @@ Internet-Draft                   WAMP-AP                   February 2023
    chunks.  Efficient two-way streams between a _Caller_ and _Callee_
    can be implemented this way.
 
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 41]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
    The following message flow illustrates a progressive call when a
    _Callee_ starts sending progressive call results immediately.  Note
    that YIELD messages don't need to be matched with CALL/INVOCATION
@@ -2290,14 +2321,6 @@ Internet-Draft                   WAMP-AP                   February 2023
        |                         |                        |
        |    CALL (progress)      |                        |
        |------------------------>|                        |
-
-
-
-Oberstein                Expires 26 August 2023                [Page 41]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
-
        |                         | INVOCATION (progress)  |
        |                         |----------------------->|
        |                         |                        |
@@ -2323,6 +2346,14 @@ Internet-Draft                   WAMP-AP                   February 2023
        |------------------------>|                        |
        |                         |   INVOCATION (final)   |
        |                         |----------------------->|
+
+
+
+Oberstein                Expires 31 August 2023                [Page 42]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
        |                         |                        |
        |                         | YIELD (final) or ERROR |
        |                         |<-----------------------|
@@ -2337,6 +2368,51 @@ Internet-Draft                   WAMP-AP                   February 2023
    the same in all CALL, INVOCATION, YIELD, and ERROR messages in the
    above exchange.
 
+   *Freezing of Options in Progressive Calls*
+
+   Except for progress, items in the Options dictionary of the
+   *initiating* progressive CALL shall be effective for the entirety of
+   the progressive call request.  Only the progress option shall be
+   considered by the _Dealer_ in subsequent progressive calls (within
+   the same overall request).  Except for progress, items in the Details
+   dictionary of corresponding INVOCATION messages shall be based on the
+   initiating progressive CALL only.
+
+   For example, if disclose_me=true was specified in the initiating
+   progressive call, all subsequent progressive calls (within the same
+   request) shall be considered by the _Dealer_ to implictly have
+   disclose_me=true as well.  That is, all INVOCATION messages
+   associated with the overall request shall contain caller identify
+   information.
+
+   Note that any option (besides progress) can be omitted altogether in
+   subsequent progressive calls.  Not having to repeat (and not being
+   able to change) options is more in tune with the concept of a media
+   stream where options are set up initially, and the source (_Caller_)
+   only needs to keep uploading more data thereafter.
+
+   For reference, here is a list of options that are frozen upon the
+   initial progressive call:
+
+   *  CALL.Options.disclose_me|bool
+   *  CALL.Options.ppt_cipher|string
+   *  CALL.Options.ppt_keyid|string
+   *  CALL.Options.ppt_scheme|string
+   *  CALL.Options.ppt_serializer|string
+   *  CALL.Options.receive_progress|bool
+   *  CALL.Options.rkey
+   *  CALL.Options.runmode|string
+
+
+
+Oberstein                Expires 31 August 2023                [Page 43]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
+   *  CALL.Options.sticky|bool
+   *  CALL.Options.timeout|integer
+
 3.3.  Call Timeouts
 
    The Call Timeouts feature allows for *automatic* cancellation of a
@@ -2346,13 +2422,6 @@ Internet-Draft                   WAMP-AP                   February 2023
    A _Caller_ specifies a timeout by providing
 
        CALL.Options.timeout|integer
-
-
-
-Oberstein                Expires 26 August 2023                [Page 42]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
    in milliseconds.  Automatic call timeouts are deactivated if there is
    no timeout option, or if its value is 0.
@@ -2390,6 +2459,13 @@ Internet-Draft                   WAMP-AP                   February 2023
 
    *Feature Announcement*
 
+
+
+Oberstein                Expires 31 August 2023                [Page 44]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
    Support for this feature MUST be announced by _Dealers_ (role :=
    "dealer") and MAY be announced by _Callees_ (role := "callee") via
 
@@ -2399,16 +2475,6 @@ Internet-Draft                   WAMP-AP                   February 2023
    announce support for Call Cancellation via
 
        HELLO.Details.roles.<role>.features.call_canceling|bool := true
-
-
-
-
-
-
-Oberstein                Expires 26 August 2023                [Page 43]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
 3.4.  Call Canceling
 
@@ -2446,6 +2512,16 @@ Internet-Draft                   WAMP-AP                   February 2023
       call.  In this case the caller may receive RESULT or ERROR
       depending whether the callee finishes processing the invocation or
       the interrupt first.
+
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 45]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
    *  *killnowait*: The pending call is canceled and ERROR is sent
       immediately back to the caller.  INTERRUPT is sent to the callee
       and any response to the invocation or interrupt from the callee is
@@ -2456,15 +2532,6 @@ Internet-Draft                   WAMP-AP                   February 2023
 
    Message flow during call canceling when  (U+00A0)_Callee_ supports
    this feature and  (U+00A0)mode is kill
-
-
-
-
-
-Oberstein                Expires 26 August 2023                [Page 44]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
        ,------.          ,------.          ,------.
        |Caller|          |Dealer|          |Callee|
@@ -2506,18 +2573,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-Oberstein                Expires 26 August 2023                [Page 45]
+Oberstein                Expires 31 August 2023                [Page 46]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2573,7 +2629,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 46]
+Oberstein                Expires 31 August 2023                [Page 47]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2629,7 +2685,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 47]
+Oberstein                Expires 31 August 2023                [Page 48]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2685,7 +2741,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 48]
+Oberstein                Expires 31 August 2023                [Page 49]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2741,7 +2797,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 49]
+Oberstein                Expires 31 August 2023                [Page 50]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2797,7 +2853,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 50]
+Oberstein                Expires 31 August 2023                [Page 51]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2853,7 +2909,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 51]
+Oberstein                Expires 31 August 2023                [Page 52]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2909,7 +2965,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 52]
+Oberstein                Expires 31 August 2023                [Page 53]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -2965,7 +3021,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 53]
+Oberstein                Expires 31 August 2023                [Page 54]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3021,7 +3077,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 54]
+Oberstein                Expires 31 August 2023                [Page 55]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3077,7 +3133,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 55]
+Oberstein                Expires 31 August 2023                [Page 56]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3133,7 +3189,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 56]
+Oberstein                Expires 31 August 2023                [Page 57]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3189,7 +3245,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 57]
+Oberstein                Expires 31 August 2023                [Page 58]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3245,7 +3301,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 58]
+Oberstein                Expires 31 August 2023                [Page 59]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3301,7 +3357,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 59]
+Oberstein                Expires 31 August 2023                [Page 60]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3357,7 +3413,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 60]
+Oberstein                Expires 31 August 2023                [Page 61]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3413,7 +3469,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 61]
+Oberstein                Expires 31 August 2023                [Page 62]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3469,7 +3525,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 62]
+Oberstein                Expires 31 August 2023                [Page 63]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3525,7 +3581,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 63]
+Oberstein                Expires 31 August 2023                [Page 64]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3581,7 +3637,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 64]
+Oberstein                Expires 31 August 2023                [Page 65]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3637,7 +3693,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 65]
+Oberstein                Expires 31 August 2023                [Page 66]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3693,7 +3749,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 66]
+Oberstein                Expires 31 August 2023                [Page 67]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3749,7 +3805,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 67]
+Oberstein                Expires 31 August 2023                [Page 68]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3805,7 +3861,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 68]
+Oberstein                Expires 31 August 2023                [Page 69]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3861,7 +3917,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 69]
+Oberstein                Expires 31 August 2023                [Page 70]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3917,7 +3973,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 70]
+Oberstein                Expires 31 August 2023                [Page 71]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -3973,7 +4029,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 71]
+Oberstein                Expires 31 August 2023                [Page 72]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4029,7 +4085,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 72]
+Oberstein                Expires 31 August 2023                [Page 73]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4085,7 +4141,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 73]
+Oberstein                Expires 31 August 2023                [Page 74]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4141,7 +4197,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 74]
+Oberstein                Expires 31 August 2023                [Page 75]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4197,7 +4253,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 75]
+Oberstein                Expires 31 August 2023                [Page 76]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4253,7 +4309,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 76]
+Oberstein                Expires 31 August 2023                [Page 77]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4309,7 +4365,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 77]
+Oberstein                Expires 31 August 2023                [Page 78]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4365,7 +4421,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 78]
+Oberstein                Expires 31 August 2023                [Page 79]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4421,7 +4477,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 79]
+Oberstein                Expires 31 August 2023                [Page 80]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4477,7 +4533,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 80]
+Oberstein                Expires 31 August 2023                [Page 81]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4533,7 +4589,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 81]
+Oberstein                Expires 31 August 2023                [Page 82]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4589,7 +4645,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 82]
+Oberstein                Expires 31 August 2023                [Page 83]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4645,7 +4701,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 83]
+Oberstein                Expires 31 August 2023                [Page 84]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4701,7 +4757,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 84]
+Oberstein                Expires 31 August 2023                [Page 85]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4757,7 +4813,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 85]
+Oberstein                Expires 31 August 2023                [Page 86]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4813,7 +4869,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 86]
+Oberstein                Expires 31 August 2023                [Page 87]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4869,7 +4925,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 87]
+Oberstein                Expires 31 August 2023                [Page 88]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4925,7 +4981,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 88]
+Oberstein                Expires 31 August 2023                [Page 89]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -4981,7 +5037,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 89]
+Oberstein                Expires 31 August 2023                [Page 90]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5037,7 +5093,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 90]
+Oberstein                Expires 31 August 2023                [Page 91]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5093,7 +5149,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 91]
+Oberstein                Expires 31 August 2023                [Page 92]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5149,7 +5205,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 92]
+Oberstein                Expires 31 August 2023                [Page 93]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5205,7 +5261,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 93]
+Oberstein                Expires 31 August 2023                [Page 94]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5261,7 +5317,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 94]
+Oberstein                Expires 31 August 2023                [Page 95]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5317,7 +5373,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 95]
+Oberstein                Expires 31 August 2023                [Page 96]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5373,7 +5429,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 96]
+Oberstein                Expires 31 August 2023                [Page 97]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5429,7 +5485,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 97]
+Oberstein                Expires 31 August 2023                [Page 98]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5485,7 +5541,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 98]
+Oberstein                Expires 31 August 2023                [Page 99]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5541,7 +5597,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023                [Page 99]
+Oberstein                Expires 31 August 2023               [Page 100]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5597,7 +5653,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 100]
+Oberstein                Expires 31 August 2023               [Page 101]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5653,7 +5709,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 101]
+Oberstein                Expires 31 August 2023               [Page 102]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5709,7 +5765,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 102]
+Oberstein                Expires 31 August 2023               [Page 103]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5765,7 +5821,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 103]
+Oberstein                Expires 31 August 2023               [Page 104]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5821,7 +5877,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 104]
+Oberstein                Expires 31 August 2023               [Page 105]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5877,7 +5933,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 105]
+Oberstein                Expires 31 August 2023               [Page 106]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5933,7 +5989,7 @@ test_vectors_1 = [
 
 
 
-Oberstein                Expires 26 August 2023               [Page 106]
+Oberstein                Expires 31 August 2023               [Page 107]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -5989,7 +6045,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 107]
+Oberstein                Expires 31 August 2023               [Page 108]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6045,7 +6101,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 108]
+Oberstein                Expires 31 August 2023               [Page 109]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6101,7 +6157,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 109]
+Oberstein                Expires 31 August 2023               [Page 110]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6157,7 +6213,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 110]
+Oberstein                Expires 31 August 2023               [Page 111]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6213,7 +6269,7 @@ optional hierarchical chain of intermediate certificates
 
 
 
-Oberstein                Expires 26 August 2023               [Page 111]
+Oberstein                Expires 31 August 2023               [Page 112]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6269,7 +6325,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 112]
+Oberstein                Expires 31 August 2023               [Page 113]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6325,7 +6381,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 113]
+Oberstein                Expires 31 August 2023               [Page 114]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6381,7 +6437,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 114]
+Oberstein                Expires 31 August 2023               [Page 115]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6437,7 +6493,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 115]
+Oberstein                Expires 31 August 2023               [Page 116]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6493,7 +6549,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 116]
+Oberstein                Expires 31 August 2023               [Page 117]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6549,7 +6605,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 117]
+Oberstein                Expires 31 August 2023               [Page 118]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6605,7 +6661,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 118]
+Oberstein                Expires 31 August 2023               [Page 119]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6661,7 +6717,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 119]
+Oberstein                Expires 31 August 2023               [Page 120]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6717,7 +6773,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 26 August 2023               [Page 120]
+Oberstein                Expires 31 August 2023               [Page 121]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6773,7 +6829,7 @@ WAMP-Receive(3735119691078036, client01@example.com) <<
 
 
 
-Oberstein                Expires 26 August 2023               [Page 121]
+Oberstein                Expires 31 August 2023               [Page 122]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6829,7 +6885,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 26 August 2023               [Page 122]
+Oberstein                Expires 31 August 2023               [Page 123]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6885,7 +6941,7 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 26 August 2023               [Page 123]
+Oberstein                Expires 31 August 2023               [Page 124]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6941,7 +6997,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 26 August 2023               [Page 124]
+Oberstein                Expires 31 August 2023               [Page 125]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -6997,7 +7053,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 125]
+Oberstein                Expires 31 August 2023               [Page 126]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7053,7 +7109,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 126]
+Oberstein                Expires 31 August 2023               [Page 127]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7109,7 +7165,7 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 26 August 2023               [Page 127]
+Oberstein                Expires 31 August 2023               [Page 128]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7165,7 +7221,7 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
 
 
 
-Oberstein                Expires 26 August 2023               [Page 128]
+Oberstein                Expires 31 August 2023               [Page 129]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7221,7 +7277,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 129]
+Oberstein                Expires 31 August 2023               [Page 130]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7277,7 +7333,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 130]
+Oberstein                Expires 31 August 2023               [Page 131]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7333,7 +7389,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 131]
+Oberstein                Expires 31 August 2023               [Page 132]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7389,7 +7445,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 132]
+Oberstein                Expires 31 August 2023               [Page 133]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7445,7 +7501,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 133]
+Oberstein                Expires 31 August 2023               [Page 134]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7501,7 +7557,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 134]
+Oberstein                Expires 31 August 2023               [Page 135]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7557,7 +7613,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 135]
+Oberstein                Expires 31 August 2023               [Page 136]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7613,7 +7669,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 136]
+Oberstein                Expires 31 August 2023               [Page 137]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7669,7 +7725,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 137]
+Oberstein                Expires 31 August 2023               [Page 138]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7725,7 +7781,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 138]
+Oberstein                Expires 31 August 2023               [Page 139]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7781,7 +7837,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 139]
+Oberstein                Expires 31 August 2023               [Page 140]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7837,7 +7893,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 140]
+Oberstein                Expires 31 August 2023               [Page 141]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7893,7 +7949,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 141]
+Oberstein                Expires 31 August 2023               [Page 142]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -7949,7 +8005,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 142]
+Oberstein                Expires 31 August 2023               [Page 143]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8005,7 +8061,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 143]
+Oberstein                Expires 31 August 2023               [Page 144]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8061,7 +8117,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 144]
+Oberstein                Expires 31 August 2023               [Page 145]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8117,7 +8173,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 145]
+Oberstein                Expires 31 August 2023               [Page 146]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8173,7 +8229,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 146]
+Oberstein                Expires 31 August 2023               [Page 147]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8229,7 +8285,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 147]
+Oberstein                Expires 31 August 2023               [Page 148]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8285,7 +8341,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 148]
+Oberstein                Expires 31 August 2023               [Page 149]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8341,7 +8397,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 149]
+Oberstein                Expires 31 August 2023               [Page 150]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8397,7 +8453,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 150]
+Oberstein                Expires 31 August 2023               [Page 151]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8453,7 +8509,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 151]
+Oberstein                Expires 31 August 2023               [Page 152]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8509,7 +8565,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 152]
+Oberstein                Expires 31 August 2023               [Page 153]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8565,7 +8621,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 153]
+Oberstein                Expires 31 August 2023               [Page 154]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8621,7 +8677,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 154]
+Oberstein                Expires 31 August 2023               [Page 155]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8677,7 +8733,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 155]
+Oberstein                Expires 31 August 2023               [Page 156]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8733,7 +8789,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 156]
+Oberstein                Expires 31 August 2023               [Page 157]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8789,7 +8845,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 157]
+Oberstein                Expires 31 August 2023               [Page 158]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8845,7 +8901,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 158]
+Oberstein                Expires 31 August 2023               [Page 159]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8901,7 +8957,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 159]
+Oberstein                Expires 31 August 2023               [Page 160]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -8957,7 +9013,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 160]
+Oberstein                Expires 31 August 2023               [Page 161]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9013,7 +9069,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 161]
+Oberstein                Expires 31 August 2023               [Page 162]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9069,7 +9125,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 162]
+Oberstein                Expires 31 August 2023               [Page 163]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9125,7 +9181,7 @@ flatc -o ./schema --binary --schema --bfbs-comments --bfbs-builtins ./src
 
 
 
-Oberstein                Expires 26 August 2023               [Page 163]
+Oberstein                Expires 31 August 2023               [Page 164]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9181,7 +9237,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 164]
+Oberstein                Expires 31 August 2023               [Page 165]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9237,7 +9293,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 165]
+Oberstein                Expires 31 August 2023               [Page 166]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9293,7 +9349,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 166]
+Oberstein                Expires 31 August 2023               [Page 167]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9349,7 +9405,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 167]
+Oberstein                Expires 31 August 2023               [Page 168]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9405,7 +9461,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 168]
+Oberstein                Expires 31 August 2023               [Page 169]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9461,7 +9517,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 169]
+Oberstein                Expires 31 August 2023               [Page 170]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9517,7 +9573,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 170]
+Oberstein                Expires 31 August 2023               [Page 171]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9573,7 +9629,7 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 
 
-Oberstein                Expires 26 August 2023               [Page 171]
+Oberstein                Expires 31 August 2023               [Page 172]
 
 Internet-Draft                   WAMP-AP                   February 2023
 
@@ -9629,4 +9685,4 @@ Author's Address
 
 
 
-Oberstein                Expires 26 August 2023               [Page 172]
+Oberstein                Expires 31 August 2023               [Page 173]

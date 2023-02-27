@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 26 August 2023</td>
+<td class="center">Expires 31 August 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-02-22" class="published">22 February 2023</time>
+<time datetime="2023-02-27" class="published">27 February 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-08-26">26 August 2023</time></dd>
+<dd class="expires"><time datetime="2023-08-31">31 August 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1253,7 +1253,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 31 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3510,6 +3510,15 @@ results or event payloads is contained in<a href="#section-2.3-6" class="pilcrow
 <p id="section-3.1-64"><strong>Ignoring Requests for Progressive Call Results</strong><a href="#section-3.1-64" class="pilcrow">¶</a></p>
 <p id="section-3.1-65">A <em>Callee</em> that does not support progressive results SHOULD ignore any <code>INVOCATION.Details.receive_progress</code> flag.<a href="#section-3.1-65" class="pilcrow">¶</a></p>
 <p id="section-3.1-66">A <em>Callee</em> that supports progressive results, but does not support call canceling is considered by the <em>Dealer</em> to not support progressive results.<a href="#section-3.1-66" class="pilcrow">¶</a></p>
+<p id="section-3.1-67"><strong>Timeouts</strong><a href="#section-3.1-67" class="pilcrow">¶</a></p>
+<p id="section-3.1-68">When the <em>Call Timeouts</em> feature is used in combination with Progressive Call Results, the <code>CALL.Options.timeout|integer</code> option shall represent the time limit between the initial call and the first result, and between results thereafter.<a href="#section-3.1-68" class="pilcrow">¶</a></p>
+<p id="section-3.1-69">For Dealer-initiated timeouts, this corresponds to
+- the time between receipt of the <code>CALL</code> message and receipt of the first <code>YIELD</code> message, and,
+- the time between received <code>YIELD</code> messages thereafter.<a href="#section-3.1-69" class="pilcrow">¶</a></p>
+<p id="section-3.1-70">For Callee-initiated timeouts, this corresponds to
+- the time between receipt of the <code>INVOCATION</code> message and acquisition of the first result, and,
+- the time between acquisition of successive results thereafter.<a href="#section-3.1-70" class="pilcrow">¶</a></p>
+<p id="section-3.1-71">Note that for progressive results, the timeout value does <em>not</em> correspond to the duration of the complete call from initiation to the final result. The rationale for this is that it would be unfeasible to compute a reasonable timeout value for a call having a non-deterministic number of progressive results.<a href="#section-3.1-71" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rpc-progressive-calls">
@@ -3751,6 +3760,48 @@ to be matched pairs.<a href="#section-3.2-45" class="pilcrow">¶</a></p>
 </div>
 <p id="section-3.2-47">Because they are part of the same call operation, the request ID is the same in all <code>CALL</code>,
 <code>INVOCATION</code>, <code>YIELD</code>, and <code>ERROR</code> messages in the above exchange.<a href="#section-3.2-47" class="pilcrow">¶</a></p>
+<p id="section-3.2-48"><strong>Freezing of Options in Progressive Calls</strong><a href="#section-3.2-48" class="pilcrow">¶</a></p>
+<p id="section-3.2-49">Except for <code>progress</code>, items in the <code>Options</code> dictionary of the <strong>initiating</strong> progressive <code>CALL</code> shall be effective for
+the entirety of the progressive call request. Only the <code>progress</code> option shall be considered by the <em>Dealer</em> in subsequent progressive calls
+(within the same overall request). Except for <code>progress</code>, items in the <code>Details</code>
+dictionary of corresponding <code>INVOCATION</code> messages shall be based on the initiating progressive <code>CALL</code> only.<a href="#section-3.2-49" class="pilcrow">¶</a></p>
+<p id="section-3.2-50">For example, if <code>disclose_me=true</code> was specified in the initiating progressive call, all subsequent progressive calls
+(within the same request) shall be considered by the <em>Dealer</em> to implictly have <code>disclose_me=true</code> as well. That is, all
+<code>INVOCATION</code> messages associated with the overall request shall contain caller identify information.<a href="#section-3.2-50" class="pilcrow">¶</a></p>
+<p id="section-3.2-51">Note that any option (besides <code>progress</code>) can be omitted altogether in subsequent progressive calls. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (<em>Caller</em>) only needs to keep uploading more data thereafter.<a href="#section-3.2-51" class="pilcrow">¶</a></p>
+<p id="section-3.2-52">For reference, here is a list of options that are frozen upon the initial progressive call:<a href="#section-3.2-52" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-3.2-53.1">
+            <code>CALL.Options.disclose_me|bool</code><a href="#section-3.2-53.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.2">
+            <code>CALL.Options.ppt_cipher|string</code><a href="#section-3.2-53.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.3">
+            <code>CALL.Options.ppt_keyid|string</code><a href="#section-3.2-53.3" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.4">
+            <code>CALL.Options.ppt_scheme|string</code><a href="#section-3.2-53.4" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.5">
+            <code>CALL.Options.ppt_serializer|string</code><a href="#section-3.2-53.5" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.6">
+            <code>CALL.Options.receive_progress|bool</code><a href="#section-3.2-53.6" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.7">
+            <code>CALL.Options.rkey</code><a href="#section-3.2-53.7" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.8">
+            <code>CALL.Options.runmode|string</code><a href="#section-3.2-53.8" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.9">
+            <code>CALL.Options.sticky|bool</code><a href="#section-3.2-53.9" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-3.2-53.10">
+            <code>CALL.Options.timeout|integer</code><a href="#section-3.2-53.10" class="pilcrow">¶</a>
+</li>
+        </ul>
 </section>
 </div>
 <div id="rpc-call-timeout">
