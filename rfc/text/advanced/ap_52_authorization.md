@@ -25,7 +25,7 @@ _for_ that *Session* running _in_ that *Client*.
 
 The triple `(realm, authrole, authid)` is called *Principal*, and the *Session* is authenticated under that *Principal*.
 
-At any moment, there can be zero, one or many *Session*s with different `sessionid|int`s authenticated under the _same_ *Principal*.
+At any moment, there can be zero, one, or many *Session*s with different *session ids* authenticated under the _same_ *Principal*.
 
 *Session*s MAY be required to *Authorize* to perform a specific *Action* on an URI or URI pattern in a *Realm*.
 
