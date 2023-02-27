@@ -29,7 +29,7 @@ The authentication as presented by the *Client* is denied (e.g. "wrong password"
 {align="left"}
         wamp.error.authentication_denied
 
-The authentication of the *Client* failed technically at run-time, and the *Client* is therefor rejected ("fail secure operation").
+The *Client* authentication was rejected due to a technical runtime failure ("fail secure" operation).
 
 {align="left"}
         wamp.error.authentication_failed
