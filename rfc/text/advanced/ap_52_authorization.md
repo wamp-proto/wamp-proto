@@ -23,7 +23,7 @@ and * `authid|string`
 
 _for_ that *Session* running _in_ that *Client*.
 
-The triple `(realm, authrole, authid)` is called *Principal*, and the *Session* is authenticated under that *Principal*.
+The triple `(realm, authrole, authid)` is called *Principal*, and a *Session* is authenticated under that *Principal*.
 
 At any moment, there can be zero, one, or many *Session*s with different *session ids* authenticated under the _same_ *Principal*.
 
