@@ -16,7 +16,7 @@
 
 {{advanced/ap_09_rpc_progressive_call_results.md}}
 
-{{advanced/ap_10_rpc_progressive_calls.md}}
+{{advanced/ap_10_rpc_progressive_call_arguments.md}}
 
 {{advanced/ap_11_rpc_call_timeout.md}}
 
