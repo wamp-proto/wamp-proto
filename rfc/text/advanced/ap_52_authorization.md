@@ -7,7 +7,7 @@ WAMP allows user services to integrate seamlessly while enabling *Clients* to pe
 * **subscribe** to topics using fully qualified URIs or URI patterns in order to receive events
 * **publish** events to (fully qualified) URIs
 
-Doing so requires *Clients* to have an open *Session* to the same shared *Realm*.
+Performing these actions requires *Clients* to have an open *Session* to the same shared *Realm*.
 
 A *Session* is established originating from a *Client* to a *Router*.
 
