@@ -14,7 +14,7 @@ The *Client* attempted to authenticate for a non-existing *Realm* (`realm|string
 {align="left"}
         wamp.error.no_such_realm
 
-The *Client* attempted to authenticate for a *Role* (`authrole|string`) that does not (or no longer) exists.
+The *Client* attempted to authenticate for a non-existing *Role* (`authrole|string`).
 
 {align="left"}
         wamp.error.no_such_role
