@@ -291,7 +291,7 @@ Even if a *Caller* has indicated its expectation to receive progressive results 
 
 **Progressive Call Result Cancellation**
 
-Upon receiving a `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), if the original *Caller* is no longer available (has left the realm), then the *Dealer* will send an `INTERRUPT` to the *Callee*.  The `INTERRUPT` will have `Options.mode` set to `"killnowait"` to indicate to the client that no response should be sent to the `INTERRUPT`. This `INTERRUPT` in only sent in response to a progressive `YIELD` (`Details.progress == true`), and is not sent in response to a normal or final `YIELD`.
+Upon receiving a `YIELD` message from a *Callee* with `YIELD.Options.progress == true` (for a call that is still ongoing), if the original *Caller* is no longer available (has left the realm), then the *Dealer* will send an `INTERRUPT` to the *Callee*.  The `INTERRUPT` will have `Options.mode` set to `"killnowait"` to indicate to the client that no response should be sent to the `INTERRUPT`. This `INTERRUPT` is only sent in response to a progressive `YIELD` (`Details.progress == true`), and is not sent in response to a normal or final `YIELD`.
 ```
 [INTERRUPT, INVOCATION.Request|id, Options|dict]
 ```
@@ -342,7 +342,7 @@ A *Callee* that supports progressive results, but does not support call cancelin
 
 
 **Timeouts**
-        
+
 When the *Call Timeouts* feature is used in combination with Progressive Call Results, the `CALL.Options.timeout|integer` option shall represent the time limit between the initial call and the first result, and between results thereafter.
 
 For Dealer-initiated timeouts, this corresponds to
@@ -352,5 +352,5 @@ For Dealer-initiated timeouts, this corresponds to
 For Callee-initiated timeouts, this corresponds to
 - the time between receipt of the `INVOCATION` message and acquisition of the first result, and,
 - the time between acquisition of successive results thereafter.
-        
+
 Note that for progressive results, the timeout value does _not_ correspond to the duration of the complete call from initiation to the final result. The rationale for this is that it would be unfeasible to compute a reasonable timeout value for a call having a non-deterministic number of progressive results.
