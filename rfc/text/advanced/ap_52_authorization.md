@@ -33,4 +33,4 @@ This distinction between *Authentication* and *Authorization* follows the establ
 
 - **A**uthentication: Establishes who it is (**"subject"**)
 - **A**uthorization: Decides within a *Realm* whether an *Action* (**"operation"**) on an URI or URI pattern (**"object"**) is allowed for the requesting *Principal* (**"subject"**)
-- **A**ccounting: Record for a *Realm* what *Action* (**"operation"**) on what URI or URI pattern (**"object"**) was requested by which *Principal* (**"subject"**), and was it allowed or denied?
+- **A**ccounting: Records, for a *Realm*, what *Action* (**"operation"**) on what URI or URI pattern (**"object"**) was requested by which *Principal* (**"subject"**), and whether it was allowed or denied
