@@ -18,10 +18,10 @@ A *Session* is established between a *Client* to a *Router*, and is initiated by
 When the *Session* authenticates to a *Router* successfully, the *Router* will have established the
 
 * `realm|string`,
-* `authrole|string`,
-and * `authid|string`
+* `authrole|string`, and
+* `authid|string`
 
-_for_ that *Session* running _in_ that *Client*.
+for that *Session* running in the *Client*.
 
 The triple `(realm, authrole, authid)` is called *Principal*, and a *Session* is authenticated under that *Principal*.
 
