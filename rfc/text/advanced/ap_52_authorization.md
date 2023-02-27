@@ -17,7 +17,7 @@ A *Session* is established between a *Client* to a *Router*, and is initiated by
 
 When the *Session* authenticates to a *Router* successfully, the *Router* will have established the
 
-* `realm|string`
+* `realm|string`,
 * `authrole|string`
 * `authid|string`
 
