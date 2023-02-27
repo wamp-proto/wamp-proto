@@ -46,7 +46,7 @@ The *Principal* is not authorized to perform such *Action*.
 {align="left"}
         wamp.error.authorization_denied
 
-Authorization of the *Principal* for the *Action* could not be determined as it failed technically at run-time, and the *Action* is therefor rejected ("fail secure operation").
+Authorization of the *Principal* to perform the given *Action* was rejected due to a technical runtime failure ("fail secure" operation).
 
 {align="left"}
         wamp.error.authorization_failed
