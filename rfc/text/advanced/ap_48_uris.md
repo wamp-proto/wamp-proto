@@ -2,6 +2,62 @@
 
 WAMP pre-defines the following error URIs for the **Advanced Profile**. WAMP peers SHOULD only use the defined error messages.
 
+## Authentication
+
+No authentication method the *Client* offered is accepted.
+
+{align="left"}
+        wamp.error.no_matching_auth_method
+
+The *Client* attempted to authenticate for a non-existing *Realm* (`realm|string`).
+
+{align="left"}
+        wamp.error.no_such_realm
+
+The *Client* attempted to authenticate for a non-existing *Role* (`authrole|string`).
+
+{align="left"}
+        wamp.error.no_such_role
+
+The *Client* authenticated for a non-existing *Principal* (`authid|string`).
+
+{align="left"}
+        wamp.error.no_such_principal
+
+The authentication as presented by the *Client* is denied (e.g. "wrong password").
+
+{align="left"}
+        wamp.error.authentication_denied
+
+The *Client* authentication was rejected due to a technical runtime failure ("fail secure" operation).
+
+{align="left"}
+        wamp.error.authentication_failed
+
+The *Client* did not provide the required, non-anonymous, authentication information.
+
+{align="left"}
+        wamp.error.authentication_required
+
+## Authorization
+
+The *Principal* is not authorized to perform such *Action*.
+
+{align="left"}
+        wamp.error.authorization_denied
+
+Authorization of the *Principal* to perform the given *Action* was rejected due to a technical runtime failure ("fail secure" operation).
+
+{align="left"}
+        wamp.error.authorization_failed
+
+Authorization of the *Principal* is required to perform the given *Action*. This can be used for capability-based access control.
+
+{align="left"}
+        wamp.error.authorization_required
+
+## Remote Procedure Calls
+
 A *Dealer* or *Callee* canceled a call previously issued
 
 {align="left"}
