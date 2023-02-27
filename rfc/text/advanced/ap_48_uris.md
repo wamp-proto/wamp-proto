@@ -19,7 +19,7 @@ The *Client* attempted to authenticate for a non-existing *Role* (`authrole|stri
 {align="left"}
         wamp.error.no_such_role
 
-The *Client* authenticated for a *Principal* (`authid|string`) that does not (or no longer) exists.
+The *Client* authenticated for a non-existing *Principal* (`authid|string`).
 
 {align="left"}
         wamp.error.no_such_principal
