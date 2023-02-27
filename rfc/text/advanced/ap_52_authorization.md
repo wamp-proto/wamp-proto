@@ -1,6 +1,6 @@
 ## Authorization {#authorization}
 
-WAMP allows user services integrate seamlessly and enables *Clients* to perform *Actions*, namely
+WAMP allows user services to integrate seamlessly while enabling *Clients* to perform *Actions*, namely, to
 
 * **register** procedures on fully qualified URIs or URI patterns receiving invocations
 * **call** procedures on (fully qualified) URIs
