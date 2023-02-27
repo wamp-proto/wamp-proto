@@ -32,5 +32,5 @@ At any moment, there can be zero, one, or many *Session*s with different *sessio
 This distinction between *Authentication* and *Authorization* follows the established practice called "AAA":
 
 - **A**uthentication: Establishes who it is (**"subject"**)
-- **A**uthorization: Decide in a *Realm* whether *Action* (**"operation"**) on URI or URI pattern (**"object"**) is allowed for the requesting *Principal* (**"subject"**)?
+- **A**uthorization: Decides within a *Realm* whether an *Action* (**"operation"**) on an URI or URI pattern (**"object"**) is allowed for the requesting *Principal* (**"subject"**)
 - **A**ccounting: Record for a *Realm* what *Action* (**"operation"**) on what URI or URI pattern (**"object"**) was requested by which *Principal* (**"subject"**), and was it allowed or denied?
