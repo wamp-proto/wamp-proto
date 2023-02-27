@@ -154,18 +154,6 @@ After the transport and a session have been established, any application compone
 Note that Peers might implement more than one role: e.g. a Peer might act as Caller, Publisher and Subscriber at the same time. Another Peer might act as both a Broker and a Dealer.
 
 
-### Router Implementation Specifics
-
-This specification only deals with the protocol level. Specific WAMP Broker and Dealer implementations may differ in aspects such as support for:
-
-* router networks (clustering and federation),
-* authentication and authorization schemes,
-* message persistence, and,
-* management and monitoring.
-
-The definition and documentation of such Router features is outside the scope of this document.
-
-
 ### Relationship to WebSocket
 
 WAMP uses WebSocket as its default transport binding, and is a registered WebSocket subprotocol.
