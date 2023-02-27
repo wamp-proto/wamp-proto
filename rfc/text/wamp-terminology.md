@@ -39,7 +39,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Credentials*                      | Any authentication information and secrets used during *Authentication*                                |
 | *Authorization*                    | Decides about permission for a given *Action* on an URI or URI pattern by a *Principal*                |
 | *Access Control*                   | Policy for selective restriction of access by *Action*s on URIs or URI patterns and *Principal*s       |
-| *Role-based Access Control (RBCA)* | An *Access Control* policy based on *Realm* (`realm`), *Role* (`authrole`) of *Principal* and *Action* |
+| *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Role* (`authrole`) of *Principal* and *Action* |
 | *Discretionary Access Control*     | *FIXME*                                                                                                |
 | *Mandatory Access Control*         | *FIXME*                                                                                                |
 | *Capability-based Access Control*  | *FIXME*                                                                                                |
