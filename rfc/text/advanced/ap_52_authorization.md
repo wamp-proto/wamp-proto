@@ -19,7 +19,7 @@ When the *Session* authenticates to a *Router* successfully, the *Router* will h
 
 * `realm|string`,
 * `authrole|string`,
-* `authid|string`
+and * `authid|string`
 
 _for_ that *Session* running _in_ that *Client*.
 
