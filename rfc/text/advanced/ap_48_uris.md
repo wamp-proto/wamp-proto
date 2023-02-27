@@ -9,7 +9,7 @@ No authentication method the *Client* offered is accepted.
 {align="left"}
         wamp.error.no_auth_method
 
-The *Client* attempted to authenticate for a *Realm* (`realm|string`) that does not (or no longer) exists.
+The *Client* attempted to authenticate for a non-existing *Realm* (`realm|string`).
 
 {align="left"}
         wamp.error.no_such_realm
