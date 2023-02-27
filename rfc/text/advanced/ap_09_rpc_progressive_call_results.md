@@ -71,7 +71,7 @@ A *Caller* indicates its willingness to receive progressive results by setting
     ]
 ```
 
-If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
+If the *Callee* supports Progressive Call Results, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
 
 {align="left"}
         INVOCATION.Details.receive_progress|bool := true
@@ -300,7 +300,7 @@ Options:
 INTERRUPT.Options.mode|string == "killnowait"
 ```
 
-Progressive call result cancellation closes an important safety gap: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up *Callees* streaming results to dead *Callers*. This can overload the router and further degrade network connectivity.
+Progressive Call Result cancellation closes an important safety gap: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up *Callees* streaming results to dead *Callers*. This can overload the router and further degrade network connectivity.
 
 The message flow for progressive results cancellation involves:
 
@@ -342,7 +342,7 @@ A *Callee* that supports progressive results, but does not support call cancelin
 
 
 **Timeouts**
-        
+
 When the *Call Timeouts* feature is used in combination with Progressive Call Results, the `CALL.Options.timeout|integer` option shall represent the time limit between the initial call and the first result, and between results thereafter.
 
 For Dealer-initiated timeouts, this corresponds to
@@ -352,5 +352,5 @@ For Dealer-initiated timeouts, this corresponds to
 For Callee-initiated timeouts, this corresponds to
 - the time between receipt of the `INVOCATION` message and acquisition of the first result, and,
 - the time between acquisition of successive results thereafter.
-        
+
 Note that for progressive results, the timeout value does _not_ correspond to the duration of the complete call from initiation to the final result. The rationale for this is that it would be unfeasible to compute a reasonable timeout value for a call having a non-deterministic number of progressive results.
