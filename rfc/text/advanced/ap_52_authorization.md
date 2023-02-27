@@ -11,7 +11,7 @@ Performing these actions requires *Clients* to have an open *Session* to the sam
 
 A *Session* is established between a *Client* to a *Router*, and is initiated by a *Client*.
 
-*Session*s MAY be required to *Authenticate* to a *Router* on a *Realm*.
+*Session*s MAY be required to *Authenticate* access to a *Realm* hosted by a *Router*.
 
 *Authentication* lets the *Router* verify the identity of a *Session* often as a prerequisite to allowing access to resources in a *Realm*.
 
