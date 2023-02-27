@@ -143,14 +143,17 @@ Internet-Draft                   WAMP-AP                   February 2023
      8.3.  Interface Reflection  . . . . . . . . . . . . . . . . . . 168
    9.  Router-to-Router Links  . . . . . . . . . . . . . . . . . . . 169
    10. Advanced Profile URIs . . . . . . . . . . . . . . . . . . . . 170
-   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 171
-   12. Conformance Requirements  . . . . . . . . . . . . . . . . . . 171
-     12.1.  Terminology and Other Conventions  . . . . . . . . . . . 171
-   13. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 172
-   14. Normative References  . . . . . . . . . . . . . . . . . . . . 172
-   15. Informative References  . . . . . . . . . . . . . . . . . . . 172
-   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 173
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 173
+     10.1.  Authentication . . . . . . . . . . . . . . . . . . . . . 170
+     10.2.  Authorization  . . . . . . . . . . . . . . . . . . . . . 171
+     10.3.  Remote Procedure Calls . . . . . . . . . . . . . . . . . 171
+   11. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 172
+   12. Conformance Requirements  . . . . . . . . . . . . . . . . . . 172
+     12.1.  Terminology and Other Conventions  . . . . . . . . . . . 173
+   13. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 173
+   14. Normative References  . . . . . . . . . . . . . . . . . . . . 173
+   15. Informative References  . . . . . . . . . . . . . . . . . . . 173
+   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 174
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 174
 
 1.  WAMP Advanced Profile
 
@@ -159,9 +162,6 @@ Internet-Draft                   WAMP-AP                   February 2023
    they MAY implement any subset of features from the Advanced Profile.
    Implementers SHOULD implement the maximum of features possible
    considering the aims of an implementation.
-
-
-
 
 
 
@@ -9488,6 +9488,69 @@ Internet-Draft                   WAMP-AP                   February 2023
    WAMP pre-defines the following error URIs for the *Advanced Profile*.
    WAMP peers SHOULD only use the defined error messages.
 
+10.1.  Authentication
+
+   No authentication method the _Client_ offered is accepted.
+
+       wamp.error.no_matching_auth_method
+
+   The _Client_ attempted to authenticate for a non-existing _Realm_
+   (realm|string).
+
+       wamp.error.no_such_realm
+
+   The _Client_ attempted to authenticate for a non-existing _Role_
+   (authrole|string).
+
+       wamp.error.no_such_role
+
+   The _Client_ authenticated for a non-existing _Principal_
+   (authid|string).
+
+       wamp.error.no_such_principal
+
+   The authentication as presented by the _Client_ is denied (e.g.
+   "wrong password").
+
+       wamp.error.authentication_denied
+
+
+
+
+Oberstein                Expires 31 August 2023               [Page 170]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
+   The _Client_ authentication was rejected due to a technical runtime
+   failure ("fail secure" operation).
+
+       wamp.error.authentication_failed
+
+   The _Client_ did not provide the required, non-anonymous,
+   authentication information.
+
+       wamp.error.authentication_required
+
+10.2.  Authorization
+
+   The _Principal_ is not authorized to perform such _Action_.
+
+       wamp.error.authorization_denied
+
+   Authorization of the _Principal_ to perform the given _Action_ was
+   rejected due to a technical runtime failure ("fail secure"
+   operation).
+
+       wamp.error.authorization_failed
+
+   Authorization of the _Principal_ is required to perform the given
+   _Action_. This can be used for capability-based access control.
+
+       wamp.error.authorization_required
+
+10.3.  Remote Procedure Calls
+
    A _Dealer_ or  (U+00A0)_Callee_ canceled a call previously issued
 
        wamp.error.canceled
@@ -9507,20 +9570,20 @@ Internet-Draft                   WAMP-AP                   February 2023
 
    A _Router_ encountered a network failure
 
+
+
+
+Oberstein                Expires 31 August 2023               [Page 171]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
        wamp.error.network_failure
 
    A _Callee_ is not able to handle an invocation for a _call_ and
    intends for the _Router_ to re-route the _call_ to another fitting
    _Callee_. For details, refer to RPC Call Rerouting
    (ap_rpc_call_rerouting.md)
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 170]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
        wamp.error.unavailable
 
@@ -9561,22 +9624,21 @@ Internet-Draft                   WAMP-AP                   February 2023
    be implemented in any manner, so long as the end result is
    equivalent.
 
+
+
+
+
+
+Oberstein                Expires 31 August 2023               [Page 172]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
 12.1.  Terminology and Other Conventions
 
    Key terms such as named algorithms or definitions are indicated like
    _this_ when they first occur, and are capitalized throughout the
    text.
-
-
-
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 171]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
 13.  Contributors
 
@@ -9620,19 +9682,18 @@ Internet-Draft                   WAMP-AP                   February 2023
 
 15.  Informative References
 
+
+
+
+Oberstein                Expires 31 August 2023               [Page 173]
+
+Internet-Draft                   WAMP-AP                   February 2023
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
-
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 172]
-
-Internet-Draft                   WAMP-AP                   February 2023
-
 
 Index
 
@@ -9680,9 +9741,4 @@ Author's Address
 
 
 
-
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 173]
+Oberstein                Expires 31 August 2023               [Page 174]

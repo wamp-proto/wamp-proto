@@ -65,47 +65,47 @@ Internet-Draft                   WAMP-BP                   February 2023
        1.4.2.  Language Agnostic . . . . . . . . . . . . . . . . . .   9
        1.4.3.  Symmetric Messaging . . . . . . . . . . . . . . . . .   9
        1.4.4.  Peers with multiple Roles . . . . . . . . . . . . . .   9
-       1.4.5.  Router Implementation Specifics . . . . . . . . . . .   9
-       1.4.6.  Relationship to WebSocket . . . . . . . . . . . . . .   9
-   2.  Building Blocks . . . . . . . . . . . . . . . . . . . . . . .  10
-     2.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .  10
+       1.4.5.  Relationship to WebSocket . . . . . . . . . . . . . .   9
+   2.  Building Blocks . . . . . . . . . . . . . . . . . . . . . . .   9
+     2.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .   9
        2.1.1.  URIs  . . . . . . . . . . . . . . . . . . . . . . . .  10
        2.1.2.  IDs . . . . . . . . . . . . . . . . . . . . . . . . .  12
      2.2.  Serializers . . . . . . . . . . . . . . . . . . . . . . .  13
      2.3.  Transports  . . . . . . . . . . . . . . . . . . . . . . .  14
-       2.3.1.  WebSocket Transport . . . . . . . . . . . . . . . . .  15
-       2.3.2.  Transport and Session Lifetime  . . . . . . . . . . .  16
-       2.3.3.  Protocol errors . . . . . . . . . . . . . . . . . . .  17
-   3.  Messages  . . . . . . . . . . . . . . . . . . . . . . . . . .  18
-     3.1.  Extensibility . . . . . . . . . . . . . . . . . . . . . .  19
-     3.2.  No Polymorphism . . . . . . . . . . . . . . . . . . . . .  19
-     3.3.  Structure . . . . . . . . . . . . . . . . . . . . . . . .  19
-     3.4.  Message Definitions . . . . . . . . . . . . . . . . . . .  20
-       3.4.1.  Session Lifecycle . . . . . . . . . . . . . . . . . .  20
-       3.4.2.  Publish & Subscribe . . . . . . . . . . . . . . . . .  21
-       3.4.3.  Routed Remote Procedure Calls . . . . . . . . . . . .  22
-     3.5.  Message Codes and Direction . . . . . . . . . . . . . . .  24
-     3.6.  Extension Messages  . . . . . . . . . . . . . . . . . . .  25
-     3.7.  Empty Arguments and Keyword Arguments . . . . . . . . . .  25
-   4.  Sessions  . . . . . . . . . . . . . . . . . . . . . . . . . .  26
-     4.1.  Session Establishment . . . . . . . . . . . . . . . . . .  28
-       4.1.1.  HELLO . . . . . . . . . . . . . . . . . . . . . . . .  28
-       4.1.2.  WELCOME . . . . . . . . . . . . . . . . . . . . . . .  31
-       4.1.3.  ABORT . . . . . . . . . . . . . . . . . . . . . . . .  32
-     4.2.  Session Closing . . . . . . . . . . . . . . . . . . . . .  33
-       4.2.1.  GOODBYE . . . . . . . . . . . . . . . . . . . . . . .  33
-   5.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  35
-     5.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  35
-       5.1.1.  SUBSCRIBE . . . . . . . . . . . . . . . . . . . . . .  36
-       5.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  36
-       5.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  37
-       5.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  37
-       5.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  38
-       5.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  38
-     5.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  38
-       5.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  39
-       5.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  40
-       5.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  40
+       2.3.1.  WebSocket Transport . . . . . . . . . . . . . . . . .  14
+       2.3.2.  Transport and Session Lifetime  . . . . . . . . . . .  15
+       2.3.3.  Protocol errors . . . . . . . . . . . . . . . . . . .  16
+   3.  Messages  . . . . . . . . . . . . . . . . . . . . . . . . . .  17
+     3.1.  Extensibility . . . . . . . . . . . . . . . . . . . . . .  18
+     3.2.  No Polymorphism . . . . . . . . . . . . . . . . . . . . .  18
+     3.3.  Structure . . . . . . . . . . . . . . . . . . . . . . . .  18
+     3.4.  Message Definitions . . . . . . . . . . . . . . . . . . .  19
+       3.4.1.  Session Lifecycle . . . . . . . . . . . . . . . . . .  19
+       3.4.2.  Publish & Subscribe . . . . . . . . . . . . . . . . .  20
+       3.4.3.  Routed Remote Procedure Calls . . . . . . . . . . . .  21
+     3.5.  Message Codes and Direction . . . . . . . . . . . . . . .  23
+     3.6.  Extension Messages  . . . . . . . . . . . . . . . . . . .  24
+     3.7.  Empty Arguments and Keyword Arguments . . . . . . . . . .  24
+   4.  Sessions  . . . . . . . . . . . . . . . . . . . . . . . . . .  25
+     4.1.  Session Establishment . . . . . . . . . . . . . . . . . .  27
+       4.1.1.  HELLO . . . . . . . . . . . . . . . . . . . . . . . .  27
+       4.1.2.  WELCOME . . . . . . . . . . . . . . . . . . . . . . .  30
+       4.1.3.  ABORT . . . . . . . . . . . . . . . . . . . . . . . .  31
+     4.2.  Session Closing . . . . . . . . . . . . . . . . . . . . .  32
+       4.2.1.  GOODBYE . . . . . . . . . . . . . . . . . . . . . . .  32
+   5.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  34
+     5.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  34
+       5.1.1.  SUBSCRIBE . . . . . . . . . . . . . . . . . . . . . .  35
+       5.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  35
+       5.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  36
+       5.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  36
+       5.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  37
+       5.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  37
+     5.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  37
+       5.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  38
+       5.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  39
+       5.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  39
+       5.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  40
 
 
 
@@ -114,36 +114,35 @@ Oberstein                Expires 31 August 2023                 [Page 2]
 Internet-Draft                   WAMP-BP                   February 2023
 
 
-       5.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  41
-   6.  Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  42
-     6.1.  Registering and Unregistering . . . . . . . . . . . . . .  42
-       6.1.1.  REGISTER  . . . . . . . . . . . . . . . . . . . . . .  43
-       6.1.2.  REGISTERED  . . . . . . . . . . . . . . . . . . . . .  44
-       6.1.3.  Register ERROR  . . . . . . . . . . . . . . . . . . .  44
-       6.1.4.  UNREGISTER  . . . . . . . . . . . . . . . . . . . . .  44
-       6.1.5.  UNREGISTERED  . . . . . . . . . . . . . . . . . . . .  45
-       6.1.6.  Unregister ERROR  . . . . . . . . . . . . . . . . . .  45
-     6.2.  Calling and Invocations . . . . . . . . . . . . . . . . .  45
-       6.2.1.  CALL  . . . . . . . . . . . . . . . . . . . . . . . .  46
-       6.2.2.  INVOCATION  . . . . . . . . . . . . . . . . . . . . .  47
-       6.2.3.  YIELD . . . . . . . . . . . . . . . . . . . . . . . .  48
-       6.2.4.  RESULT  . . . . . . . . . . . . . . . . . . . . . . .  49
-       6.2.5.  Invocation ERROR  . . . . . . . . . . . . . . . . . .  50
-       6.2.6.  Call ERROR  . . . . . . . . . . . . . . . . . . . . .  51
-   7.  Security Model  . . . . . . . . . . . . . . . . . . . . . . .  51
-     7.1.  Ordering Guarantees . . . . . . . . . . . . . . . . . . .  52
-     7.2.  Transport Encryption and Integrity  . . . . . . . . . . .  53
-     7.3.  Router Authentication . . . . . . . . . . . . . . . . . .  53
-     7.4.  Client Authentication . . . . . . . . . . . . . . . . . .  54
-     7.5.  Routers are trusted . . . . . . . . . . . . . . . . . . .  54
-   8.  Basic Profile URIs  . . . . . . . . . . . . . . . . . . . . .  54
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  57
-   10. Conformance Requirements  . . . . . . . . . . . . . . . . . .  57
-     10.1.  Terminology and Other Conventions  . . . . . . . . . . .  57
-   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  57
-   12. Normative References  . . . . . . . . . . . . . . . . . . . .  58
-   13. Informative References  . . . . . . . . . . . . . . . . . . .  58
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  58
+   6.  Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  41
+     6.1.  Registering and Unregistering . . . . . . . . . . . . . .  41
+       6.1.1.  REGISTER  . . . . . . . . . . . . . . . . . . . . . .  42
+       6.1.2.  REGISTERED  . . . . . . . . . . . . . . . . . . . . .  43
+       6.1.3.  Register ERROR  . . . . . . . . . . . . . . . . . . .  43
+       6.1.4.  UNREGISTER  . . . . . . . . . . . . . . . . . . . . .  43
+       6.1.5.  UNREGISTERED  . . . . . . . . . . . . . . . . . . . .  44
+       6.1.6.  Unregister ERROR  . . . . . . . . . . . . . . . . . .  44
+     6.2.  Calling and Invocations . . . . . . . . . . . . . . . . .  44
+       6.2.1.  CALL  . . . . . . . . . . . . . . . . . . . . . . . .  45
+       6.2.2.  INVOCATION  . . . . . . . . . . . . . . . . . . . . .  46
+       6.2.3.  YIELD . . . . . . . . . . . . . . . . . . . . . . . .  47
+       6.2.4.  RESULT  . . . . . . . . . . . . . . . . . . . . . . .  48
+       6.2.5.  Invocation ERROR  . . . . . . . . . . . . . . . . . .  49
+       6.2.6.  Call ERROR  . . . . . . . . . . . . . . . . . . . . .  50
+   7.  Security Model  . . . . . . . . . . . . . . . . . . . . . . .  50
+     7.1.  Ordering Guarantees . . . . . . . . . . . . . . . . . . .  51
+     7.2.  Transport Encryption and Integrity  . . . . . . . . . . .  52
+     7.3.  Router Authentication . . . . . . . . . . . . . . . . . .  52
+     7.4.  Client Authentication . . . . . . . . . . . . . . . . . .  53
+     7.5.  Routers are trusted . . . . . . . . . . . . . . . . . . .  53
+   8.  Basic Profile URIs  . . . . . . . . . . . . . . . . . . . . .  53
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  56
+   10. Conformance Requirements  . . . . . . . . . . . . . . . . . .  56
+     10.1.  Terminology and Other Conventions  . . . . . . . . . . .  56
+   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  56
+   12. Normative References  . . . . . . . . . . . . . . . . . . . .  57
+   13. Informative References  . . . . . . . . . . . . . . . . . . .  57
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  57
 
 1.  WAMP Basic Profile
 
@@ -160,6 +159,7 @@ Internet-Draft                   WAMP-BP                   February 2023
    This document first describes a Basic Profile for WAMP in its
    entirety, before describing an Advanced Profile which extends the
    basic functionality of WAMP.
+
 
 
 
@@ -477,34 +477,10 @@ Internet-Draft                   WAMP-BP                   February 2023
    act as Caller, Publisher and Subscriber at the same time.  Another
    Peer might act as both a Broker and a Dealer.
 
-1.4.5.  Router Implementation Specifics
-
-   This specification only deals with the protocol level.  Specific WAMP
-   Broker and Dealer implementations may differ in aspects such as
-   support for:
-
-   *  router networks (clustering and federation),
-   *  authentication and authorization schemes,
-   *  message persistence, and,
-   *  management and monitoring.
-
-   The definition and documentation of such Router features is outside
-   the scope of this document.
-
-1.4.6.  Relationship to WebSocket
+1.4.5.  Relationship to WebSocket
 
    WAMP uses WebSocket as its default transport binding, and is a
    registered WebSocket subprotocol.
-
-
-
-
-
-
-Oberstein                Expires 31 August 2023                 [Page 9]
-
-Internet-Draft                   WAMP-BP                   February 2023
-
 
 2.  Building Blocks
 
@@ -519,6 +495,16 @@ Internet-Draft                   WAMP-BP                   February 2023
    concrete bindings.
 
 2.1.  Identifiers
+
+
+
+
+
+
+Oberstein                Expires 31 August 2023                 [Page 9]
+
+Internet-Draft                   WAMP-BP                   February 2023
+
 
 2.1.1.  URIs
 
@@ -555,13 +541,6 @@ Internet-Draft                   WAMP-BP                   February 2023
    first ., the tail part after the last .) MUST NOT contain a ., # or
    whitespace characters and MUST NOT be empty (zero-length strings).
 
-
-
-Oberstein                Expires 31 August 2023                [Page 10]
-
-Internet-Draft                   WAMP-BP                   February 2023
-
-
    The restriction not to allow . in component strings is due to the
    fact that . is used to separate components, and WAMP associates
    semantics with resource hierarchies, such as in pattern-based
@@ -575,6 +554,13 @@ Internet-Draft                   WAMP-BP                   February 2023
    As an example, the following regular expression could be used in
    Python to check URIs according to the above rules, when *NO empty URI
    components are allowed*:
+
+
+
+Oberstein                Expires 31 August 2023                [Page 10]
+
+Internet-Draft                   WAMP-BP                   February 2023
+
 
    pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
 
@@ -610,14 +596,6 @@ Internet-Draft                   WAMP-BP                   February 2023
    implementations to map topics, procedures and errors to the language
    environment in a completely transparent way.
 
-
-
-
-Oberstein                Expires 31 August 2023                [Page 11]
-
-Internet-Draft                   WAMP-BP                   February 2023
-
-
    *Reserved URIs*
 
    Further, application URIs MUST NOT use wamp as a first URI component,
@@ -628,6 +606,17 @@ Internet-Draft                   WAMP-BP                   February 2023
 
    *  wamp.error.not_authorized
    *  wamp.error.procedure_already_exists
+
+
+
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 11]
+
+Internet-Draft                   WAMP-BP                   February 2023
+
 
 2.1.2.  IDs
 
@@ -667,13 +656,6 @@ Internet-Draft                   WAMP-BP                   February 2023
 
    *Global Scope IDs*
 
-
-
-Oberstein                Expires 31 August 2023                [Page 12]
-
-Internet-Draft                   WAMP-BP                   February 2023
-
-
    *  WELCOME.Session
    *  PUBLISHED.Publication
    *  EVENT.Publication
@@ -684,6 +666,14 @@ Internet-Draft                   WAMP-BP                   February 2023
    *  SUBSCRIBED.Subscription
    *  REGISTERED.Registration
    *  UNSUBSCRIBE.Subscription
+
+
+
+Oberstein                Expires 31 August 2023                [Page 12]
+
+Internet-Draft                   WAMP-BP                   February 2023
+
+
    *  UNREGISTER.Registration
    *  INVOCATION.Registration
 
@@ -721,15 +711,6 @@ Internet-Draft                   WAMP-BP                   February 2023
    *  list
    *  dict (with string keys)
 
-
-
-
-
-Oberstein                Expires 31 August 2023                [Page 13]
-
-Internet-Draft                   WAMP-BP                   February 2023
-
-
    |  WAMP _itself_ only uses the above types, e.g. it does not use the
    |  JSON data types number (non-integer) and null.  The _application
    |  payloads_ transmitted by WAMP (e.g. in call arguments or event
@@ -741,6 +722,13 @@ Internet-Draft                   WAMP-BP                   February 2023
    at least one serialization format).  Routers SHOULD implement more
    than one serialization format, enabling components using different
    kinds of serializations to connect to each other.
+
+
+
+Oberstein                Expires 31 August 2023                [Page 13]
+
+Internet-Draft                   WAMP-BP                   February 2023
+
 
    The WAMP Basic Profile defines the following bindings for message
    serialization:
@@ -777,15 +765,6 @@ Internet-Draft                   WAMP-BP                   February 2023
    3.  ordered
    4.  bidirectional (full-duplex)
 
-
-
-
-
-Oberstein                Expires 31 August 2023                [Page 14]
-
-Internet-Draft                   WAMP-BP                   February 2023
-
-
    There is no required transport or set of transports for WAMP
    implementations (but each implementation MUST, of course, implement
    at least one transport).  Routers SHOULD implement more than one
@@ -795,6 +774,17 @@ Internet-Draft                   WAMP-BP                   February 2023
 2.3.1.  WebSocket Transport
 
    The default transport binding for WAMP is WebSocket ([RFC6455]).
+
+
+
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 14]
+
+Internet-Draft                   WAMP-BP                   February 2023
+
 
    In the Basic Profile, WAMP messages are transmitted as WebSocket
    messages: each WAMP message is transmitted as a separate WebSocket
@@ -827,21 +817,6 @@ Internet-Draft                   WAMP-BP                   February 2023
    |  identifiers for additional serialization formats with the official
    |  WebSocket subprotocol registry.
 
-
-
-
-
-
-
-
-
-
-
-Oberstein                Expires 31 August 2023                [Page 15]
-
-Internet-Draft                   WAMP-BP                   February 2023
-
-
 2.3.2.  Transport and Session Lifetime
 
    WAMP implementations MAY choose to tie the lifetime of the underlying
@@ -862,38 +837,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein                Expires 31 August 2023                [Page 16]
+Oberstein                Expires 31 August 2023                [Page 15]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -949,7 +893,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 17]
+Oberstein                Expires 31 August 2023                [Page 16]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1005,7 +949,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 18]
+Oberstein                Expires 31 August 2023                [Page 17]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1061,7 +1005,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 19]
+Oberstein                Expires 31 August 2023                [Page 18]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1117,7 +1061,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 20]
+Oberstein                Expires 31 August 2023                [Page 19]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1173,7 +1117,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 21]
+Oberstein                Expires 31 August 2023                [Page 20]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1229,7 +1173,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 22]
+Oberstein                Expires 31 August 2023                [Page 21]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1285,7 +1229,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 23]
+Oberstein                Expires 31 August 2023                [Page 22]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1341,7 +1285,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 24]
+Oberstein                Expires 31 August 2023                [Page 23]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1397,7 +1341,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 25]
+Oberstein                Expires 31 August 2023                [Page 24]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1453,7 +1397,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 26]
+Oberstein                Expires 31 August 2023                [Page 25]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1509,7 +1453,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 27]
+Oberstein                Expires 31 August 2023                [Page 26]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1565,7 +1509,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 28]
+Oberstein                Expires 31 August 2023                [Page 27]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1621,7 +1565,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 29]
+Oberstein                Expires 31 August 2023                [Page 28]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1677,7 +1621,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 30]
+Oberstein                Expires 31 August 2023                [Page 29]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1733,7 +1677,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 31]
+Oberstein                Expires 31 August 2023                [Page 30]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1789,7 +1733,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 32]
+Oberstein                Expires 31 August 2023                [Page 31]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1845,7 +1789,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 33]
+Oberstein                Expires 31 August 2023                [Page 32]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1901,7 +1845,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 34]
+Oberstein                Expires 31 August 2023                [Page 33]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -1957,7 +1901,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 35]
+Oberstein                Expires 31 August 2023                [Page 34]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2013,7 +1957,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 36]
+Oberstein                Expires 31 August 2023                [Page 35]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2069,7 +2013,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 37]
+Oberstein                Expires 31 August 2023                [Page 36]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2125,7 +2069,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 38]
+Oberstein                Expires 31 August 2023                [Page 37]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2181,7 +2125,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 39]
+Oberstein                Expires 31 August 2023                [Page 38]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2237,7 +2181,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 40]
+Oberstein                Expires 31 August 2023                [Page 39]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2293,7 +2237,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 41]
+Oberstein                Expires 31 August 2023                [Page 40]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2349,7 +2293,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 42]
+Oberstein                Expires 31 August 2023                [Page 41]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2405,7 +2349,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 43]
+Oberstein                Expires 31 August 2023                [Page 42]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2461,7 +2405,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 44]
+Oberstein                Expires 31 August 2023                [Page 43]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2517,7 +2461,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 45]
+Oberstein                Expires 31 August 2023                [Page 44]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2573,7 +2517,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 46]
+Oberstein                Expires 31 August 2023                [Page 45]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2629,7 +2573,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 47]
+Oberstein                Expires 31 August 2023                [Page 46]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2685,7 +2629,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 48]
+Oberstein                Expires 31 August 2023                [Page 47]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2741,7 +2685,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 49]
+Oberstein                Expires 31 August 2023                [Page 48]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2797,7 +2741,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 50]
+Oberstein                Expires 31 August 2023                [Page 49]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2853,7 +2797,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 51]
+Oberstein                Expires 31 August 2023                [Page 50]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2909,7 +2853,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 52]
+Oberstein                Expires 31 August 2023                [Page 51]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -2965,7 +2909,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 53]
+Oberstein                Expires 31 August 2023                [Page 52]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -3021,7 +2965,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 54]
+Oberstein                Expires 31 August 2023                [Page 53]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -3077,7 +3021,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 55]
+Oberstein                Expires 31 August 2023                [Page 54]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -3133,7 +3077,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 56]
+Oberstein                Expires 31 August 2023                [Page 55]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -3189,7 +3133,7 @@ Internet-Draft                   WAMP-BP                   February 2023
 
 
 
-Oberstein                Expires 31 August 2023                [Page 57]
+Oberstein                Expires 31 August 2023                [Page 56]
 
 Internet-Draft                   WAMP-BP                   February 2023
 
@@ -3245,4 +3189,4 @@ Author's Address
 
 
 
-Oberstein                Expires 31 August 2023                [Page 58]
+Oberstein                Expires 31 August 2023                [Page 57]

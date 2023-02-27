@@ -65,8 +65,7 @@ Internet-Draft                    WAMP                     February 2023
        1.4.2.  Language Agnostic . . . . . . . . . . . . . . . . . .  10
        1.4.3.  Symmetric Messaging . . . . . . . . . . . . . . . . .  10
        1.4.4.  Peers with multiple Roles . . . . . . . . . . . . . .  11
-       1.4.5.  Router Implementation Specifics . . . . . . . . . . .  11
-       1.4.6.  Relationship to WebSocket . . . . . . . . . . . . . .  11
+       1.4.5.  Relationship to WebSocket . . . . . . . . . . . . . .  11
    2.  Building Blocks . . . . . . . . . . . . . . . . . . . . . . .  11
      2.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .  11
        2.1.1.  URIs  . . . . . . . . . . . . . . . . . . . . . . . .  11
@@ -106,6 +105,7 @@ Internet-Draft                    WAMP                     February 2023
        5.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  40
        5.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  41
        5.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  41
+       5.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  42
 
 
 
@@ -114,7 +114,6 @@ Oberstein                Expires 31 August 2023                 [Page 2]
 Internet-Draft                    WAMP                     February 2023
 
 
-       5.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  42
    6.  Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  43
      6.1.  Registering and Unregistering . . . . . . . . . . . . . .  43
        6.1.1.  REGISTER  . . . . . . . . . . . . . . . . . . . . . .  44
@@ -162,6 +161,7 @@ Internet-Draft                    WAMP                     February 2023
      11.5.  Call Re-Routing  . . . . . . . . . . . . . . . . . . . . 102
      11.6.  Caller Identification  . . . . . . . . . . . . . . . . . 103
      11.7.  Call Trust Levels  . . . . . . . . . . . . . . . . . . . 105
+     11.8.  Pattern-based Registrations  . . . . . . . . . . . . . . 105
 
 
 
@@ -170,7 +170,6 @@ Oberstein                Expires 31 August 2023                 [Page 3]
 Internet-Draft                    WAMP                     February 2023
 
 
-     11.8.  Pattern-based Registrations  . . . . . . . . . . . . . . 105
        11.8.1.  Prefix Matching  . . . . . . . . . . . . . . . . . . 106
        11.8.2.  Wildcard Matching  . . . . . . . . . . . . . . . . . 107
        11.8.3.  Design Aspects . . . . . . . . . . . . . . . . . . . 107
@@ -218,6 +217,7 @@ Internet-Draft                    WAMP                     February 2023
      15.5.  Multiplexed Transport  . . . . . . . . . . . . . . . . . 207
    16. WAMP Interfaces . . . . . . . . . . . . . . . . . . . . . . . 208
      16.1.  WAMP IDL . . . . . . . . . . . . . . . . . . . . . . . . 209
+       16.1.1.  Application Payload Typing . . . . . . . . . . . . . 209
 
 
 
@@ -226,7 +226,6 @@ Oberstein                Expires 31 August 2023                 [Page 4]
 Internet-Draft                    WAMP                     February 2023
 
 
-       16.1.1.  Application Payload Typing . . . . . . . . . . . . . 209
        16.1.2.  WAMP IDL Attributes  . . . . . . . . . . . . . . . . 212
        16.1.3.  WAMP Service Declaration . . . . . . . . . . . . . . 216
      16.2.  Interface Catalogs . . . . . . . . . . . . . . . . . . . 218
@@ -236,14 +235,17 @@ Internet-Draft                    WAMP                     February 2023
      16.3.  Interface Reflection . . . . . . . . . . . . . . . . . . 222
    17. Router-to-Router Links  . . . . . . . . . . . . . . . . . . . 223
    18. Advanced Profile URIs . . . . . . . . . . . . . . . . . . . . 224
-   19. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 225
-   20. Conformance Requirements  . . . . . . . . . . . . . . . . . . 225
-     20.1.  Terminology and Other Conventions  . . . . . . . . . . . 225
-   21. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 226
-   22. Normative References  . . . . . . . . . . . . . . . . . . . . 226
-   23. Informative References  . . . . . . . . . . . . . . . . . . . 227
-   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 227
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 227
+     18.1.  Authentication . . . . . . . . . . . . . . . . . . . . . 224
+     18.2.  Authorization  . . . . . . . . . . . . . . . . . . . . . 225
+     18.3.  Remote Procedure Calls . . . . . . . . . . . . . . . . . 225
+   19. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 226
+   20. Conformance Requirements  . . . . . . . . . . . . . . . . . . 226
+     20.1.  Terminology and Other Conventions  . . . . . . . . . . . 227
+   21. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 227
+   22. Normative References  . . . . . . . . . . . . . . . . . . . . 227
+   23. Informative References  . . . . . . . . . . . . . . . . . . . 228
+   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 228
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 228
 
 1.  WAMP Basic Profile
 
@@ -270,9 +272,7 @@ Internet-Draft                    WAMP                     February 2023
    resource constraints and functionality requirements, then implement
    an optimal feature set for the circumstances.
 
-   Advanced Profile features are announced during session establishment,
-   so that different implementations can adjust their interactions to
-   fit the commonly supported feature set.
+
 
 
 
@@ -281,6 +281,10 @@ Oberstein                Expires 31 August 2023                 [Page 5]
 
 Internet-Draft                    WAMP                     February 2023
 
+
+   Advanced Profile features are announced during session establishment,
+   so that different implementations can adjust their interactions to
+   fit the commonly supported feature set.
 
 1.2.  Introduction
 
@@ -326,10 +330,6 @@ Internet-Draft                    WAMP                     February 2023
    traditional client-server RPCs in that the router serves as an
    intermediary between the Caller and the Callee.
 
-   The decoupling in routed RPCs arises from the fact that the Caller is
-   no longer required to have knowledge of the Callee; it merely needs
-   to know the identifier of the procedure it wants to call.  There is
-   also no longer a need for a direct connection between the caller and
 
 
 
@@ -338,6 +338,10 @@ Oberstein                Expires 31 August 2023                 [Page 6]
 Internet-Draft                    WAMP                     February 2023
 
 
+   The decoupling in routed RPCs arises from the fact that the Caller is
+   no longer required to have knowledge of the Callee; it merely needs
+   to know the identifier of the procedure it wants to call.  There is
+   also no longer a need for a direct connection between the caller and
    the callee, since all traffic is routed.  This enables the calling of
    procedures in components which are not reachable externally (e.g. on
    a NATted connection) but which can establish an outgoing connection
@@ -383,10 +387,6 @@ Internet-Draft                    WAMP                     February 2023
    *  Publisher
    *  Subscriber
 
-   and a Router MAY implement either or both of the Roles:
-
-   *  Dealer
-
 
 
 Oberstein                Expires 31 August 2023                 [Page 7]
@@ -394,6 +394,9 @@ Oberstein                Expires 31 August 2023                 [Page 7]
 Internet-Draft                    WAMP                     February 2023
 
 
+   and a Router MAY implement either or both of the Roles:
+
+   *  Dealer
    *  Broker
 
    |  This document describes WAMP as in client-to-router communication.
@@ -438,10 +441,7 @@ Internet-Draft                    WAMP                     February 2023
    any payload for the event.  Subscribers of the topic will receive the
    event together with the event payload.
 
-   Subscribers subscribe to topics they are interested in with Brokers.
-   Publishers initiate publication first at Brokers.  Brokers route
-   events incoming from Publishers to Subscribers that are subscribed to
-   respective topics.
+
 
 
 
@@ -449,6 +449,11 @@ Oberstein                Expires 31 August 2023                 [Page 8]
 
 Internet-Draft                    WAMP                     February 2023
 
+
+   Subscribers subscribe to topics they are interested in with Brokers.
+   Publishers initiate publication first at Brokers.  Brokers route
+   events incoming from Publishers to Subscribers that are subscribed to
+   respective topics.
 
    The Publisher and Subscriber will usually run application code, while
    the Broker works as a generic router for events decoupling Publishers
@@ -491,11 +496,6 @@ Internet-Draft                    WAMP                     February 2023
    Several interoperable, independent implementations were released, and
    feedback from the implementers and users was collected.
 
-   The second version of the protocol, which this RFC covers, integrates
-   this feedback.  Routed Remote Procedure Calls are one outcome of
-   this, where the initial version of the protocol only allowed the
-   calling of procedures provided by the router.  Another, related
-   outcome was the strict separation of routing and application logic.
 
 
 
@@ -505,6 +505,12 @@ Oberstein                Expires 31 August 2023                 [Page 9]
 
 Internet-Draft                    WAMP                     February 2023
 
+
+   The second version of the protocol, which this RFC covers, integrates
+   this feedback.  Routed Remote Procedure Calls are one outcome of
+   this, where the initial version of the protocol only allowed the
+   calling of procedures provided by the router.  Another, related
+   outcome was the strict separation of routing and application logic.
 
    While WAMP was originally developed to use WebSocket as a transport,
    with JSON for serialization, experience in the field revealed that
@@ -548,12 +554,6 @@ Internet-Draft                    WAMP                     February 2023
    sessions by attaching to Realms on Routers, WAMP itself is designed
    to be fully symmetric for application components.
 
-   After the transport and a session have been established, any
-   application component may act as Caller, Callee, Publisher and
-   Subscriber at the same time.  And Routers provide the fabric on top
-   of which WAMP runs a symmetric application messaging service.
-
-
 
 
 
@@ -562,27 +562,18 @@ Oberstein                Expires 31 August 2023                [Page 10]
 Internet-Draft                    WAMP                     February 2023
 
 
+   After the transport and a session have been established, any
+   application component may act as Caller, Callee, Publisher and
+   Subscriber at the same time.  And Routers provide the fabric on top
+   of which WAMP runs a symmetric application messaging service.
+
 1.4.4.  Peers with multiple Roles
 
    Note that Peers might implement more than one role: e.g. a Peer might
    act as Caller, Publisher and Subscriber at the same time.  Another
    Peer might act as both a Broker and a Dealer.
 
-1.4.5.  Router Implementation Specifics
-
-   This specification only deals with the protocol level.  Specific WAMP
-   Broker and Dealer implementations may differ in aspects such as
-   support for:
-
-   *  router networks (clustering and federation),
-   *  authentication and authorization schemes,
-   *  message persistence, and,
-   *  management and monitoring.
-
-   The definition and documentation of such Router features is outside
-   the scope of this document.
-
-1.4.6.  Relationship to WebSocket
+1.4.5.  Relationship to WebSocket
 
    WAMP uses WebSocket as its default transport binding, and is a
    registered WebSocket subprotocol.
@@ -609,15 +600,6 @@ Internet-Draft                    WAMP                     February 2023
    2.  Procedures
    3.  Errors
 
-
-
-
-
-Oberstein                Expires 31 August 2023                [Page 11]
-
-Internet-Draft                    WAMP                     February 2023
-
-
    These are identified in WAMP using Uniform Resource Identifiers
    (URIs) [RFC3986] that MUST be Unicode strings.
 
@@ -628,6 +610,14 @@ Internet-Draft                    WAMP                     February 2023
 
    *  com.myapp.mytopic1
    *  com.myapp.myprocedure1
+
+
+
+Oberstein                Expires 31 August 2023                [Page 11]
+
+Internet-Draft                    WAMP                     February 2023
+
+
    *  com.myapp.myerror1
 
    The URIs are understood to form a single, global, hierarchical
@@ -667,13 +657,6 @@ Internet-Draft                    WAMP                     February 2023
 
    pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
 
-
-
-Oberstein                Expires 31 August 2023                [Page 12]
-
-Internet-Draft                    WAMP                     February 2023
-
-
    *Strict URIs*
 
    While the above rules MUST be followed, following a stricter URI rule
@@ -683,6 +666,13 @@ Internet-Draft                    WAMP                     February 2023
    As an example, the following regular expression could be used in
    Python to check URIs according to the above rules, when *NO empty URI
    components are allowed*:
+
+
+
+Oberstein                Expires 31 August 2023                [Page 12]
+
+Internet-Draft                    WAMP                     February 2023
+
 
    pattern = re.compile(r"^([0-9a-z_]+\.)*([0-9a-z_]+)$")
 
@@ -722,14 +712,6 @@ Internet-Draft                    WAMP                     February 2023
    4.  Registrations (_router scope_)
    5.  Requests (_session scope_)
 
-
-
-
-Oberstein                Expires 31 August 2023                [Page 13]
-
-Internet-Draft                    WAMP                     February 2023
-
-
    These are identified in WAMP using IDs that are integers between
    (inclusive) *1* and *2^53* (9007199254740992):
 
@@ -740,6 +722,13 @@ Internet-Draft                    WAMP                     February 2023
    *  IDs in the _session scope_ MUST be incremented by 1 beginning with
       1 (for each direction - _Client-to-Router_ and _Router-to-Client_)
       {#session_scope_id}
+
+
+
+Oberstein                Expires 31 August 2023                [Page 13]
+
+Internet-Draft                    WAMP                     February 2023
+
 
    |  The reason to choose the specific lower bound as 1 rather than 0
    |  is that 0 is the null-like (falsy) value for many programming
@@ -778,14 +767,6 @@ Internet-Draft                    WAMP                     February 2023
    *  UNSUBSCRIBED.Request (mirrored UNSUBSCRIBE.Request)
    *  PUBLISH.Request
    *  PUBLISHED.Request (mirrored PUBLISH.Request)
-
-
-
-Oberstein                Expires 31 August 2023                [Page 14]
-
-Internet-Draft                    WAMP                     February 2023
-
-
    *  REGISTER.Request
    *  REGISTERED.Request (mirrored REGISTER.Request)
    *  UNREGISTER.Request
@@ -797,6 +778,13 @@ Internet-Draft                    WAMP                     February 2023
    *  YIELD.Request (mirrored INVOCATION.Request)
    *  INTERRUPT.Request (mirrored INVOCATION.Request)
    *  ERROR.Request (mirrored original request ID)
+
+
+
+Oberstein                Expires 31 August 2023                [Page 14]
+
+Internet-Draft                    WAMP                     February 2023
+
 
 2.2.  Serializers
 
@@ -834,14 +822,6 @@ Internet-Draft                    WAMP                     February 2023
    Other bindings for serialization may be defined in the WAMP Advanced
    Profile.
 
-
-
-
-Oberstein                Expires 31 August 2023                [Page 15]
-
-Internet-Draft                    WAMP                     February 2023
-
-
    With JSON serialization, each WAMP message is serialized according to
    the JSON specification as described in [RFC7159].
 
@@ -854,6 +834,13 @@ Internet-Draft                    WAMP                     February 2023
 
    Version 5 or later of MessagePack MUST BE used, since this version is
    able to differentiate between strings and binary values.
+
+
+
+Oberstein                Expires 31 August 2023                [Page 15]
+
+Internet-Draft                    WAMP                     February 2023
+
 
    With CBOR serialization, each WAMP message is serialized according to
    the CBOR specification as described in [RFC8949].
@@ -890,14 +877,6 @@ Internet-Draft                    WAMP                     February 2023
    WAMP uses the following WebSocket subprotocol identifiers (for
    unbatched modes):
 
-
-
-
-Oberstein                Expires 31 August 2023                [Page 16]
-
-Internet-Draft                    WAMP                     February 2023
-
-
    *  wamp.2.json
    *  wamp.2.msgpack
    *  wamp.2.cbor
@@ -910,6 +889,14 @@ Internet-Draft                    WAMP                     February 2023
 
    With wamp.2.cbor, _all_ WebSocket messages MUST BE of type *binary*
    and use the CBOR message serialization.
+
+
+
+
+Oberstein                Expires 31 August 2023                [Page 16]
+
+Internet-Draft                    WAMP                     February 2023
+
 
    |  To avoid incompatibilities merely due to naming conflicts with
    |  WebSocket subprotocol identifiers, implementers SHOULD register
@@ -928,6 +915,19 @@ Internet-Draft                    WAMP                     February 2023
    The diagram below illustrates the full transport connection and
    session lifecycle for an implementation which uses WebSocket over TCP
    as the transport and allows the re-use of a transport connection.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -12512,6 +12512,69 @@ Internet-Draft                    WAMP                     February 2023
    WAMP pre-defines the following error URIs for the *Advanced Profile*.
    WAMP peers SHOULD only use the defined error messages.
 
+18.1.  Authentication
+
+   No authentication method the _Client_ offered is accepted.
+
+       wamp.error.no_matching_auth_method
+
+   The _Client_ attempted to authenticate for a non-existing _Realm_
+   (realm|string).
+
+       wamp.error.no_such_realm
+
+   The _Client_ attempted to authenticate for a non-existing _Role_
+   (authrole|string).
+
+       wamp.error.no_such_role
+
+   The _Client_ authenticated for a non-existing _Principal_
+   (authid|string).
+
+       wamp.error.no_such_principal
+
+   The authentication as presented by the _Client_ is denied (e.g.
+   "wrong password").
+
+       wamp.error.authentication_denied
+
+
+
+
+Oberstein                Expires 31 August 2023               [Page 224]
+
+Internet-Draft                    WAMP                     February 2023
+
+
+   The _Client_ authentication was rejected due to a technical runtime
+   failure ("fail secure" operation).
+
+       wamp.error.authentication_failed
+
+   The _Client_ did not provide the required, non-anonymous,
+   authentication information.
+
+       wamp.error.authentication_required
+
+18.2.  Authorization
+
+   The _Principal_ is not authorized to perform such _Action_.
+
+       wamp.error.authorization_denied
+
+   Authorization of the _Principal_ to perform the given _Action_ was
+   rejected due to a technical runtime failure ("fail secure"
+   operation).
+
+       wamp.error.authorization_failed
+
+   Authorization of the _Principal_ is required to perform the given
+   _Action_. This can be used for capability-based access control.
+
+       wamp.error.authorization_required
+
+18.3.  Remote Procedure Calls
+
    A _Dealer_ or  (U+00A0)_Callee_ canceled a call previously issued
 
        wamp.error.canceled
@@ -12531,20 +12594,20 @@ Internet-Draft                    WAMP                     February 2023
 
    A _Router_ encountered a network failure
 
+
+
+
+Oberstein                Expires 31 August 2023               [Page 225]
+
+Internet-Draft                    WAMP                     February 2023
+
+
        wamp.error.network_failure
 
    A _Callee_ is not able to handle an invocation for a _call_ and
    intends for the _Router_ to re-route the _call_ to another fitting
    _Callee_. For details, refer to RPC Call Rerouting
    (ap_rpc_call_rerouting.md)
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 224]
-
-Internet-Draft                    WAMP                     February 2023
-
 
        wamp.error.unavailable
 
@@ -12585,22 +12648,21 @@ Internet-Draft                    WAMP                     February 2023
    be implemented in any manner, so long as the end result is
    equivalent.
 
+
+
+
+
+
+Oberstein                Expires 31 August 2023               [Page 226]
+
+Internet-Draft                    WAMP                     February 2023
+
+
 20.1.  Terminology and Other Conventions
 
    Key terms such as named algorithms or definitions are indicated like
    _this_ when they first occur, and are capitalized throughout the
    text.
-
-
-
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 225]
-
-Internet-Draft                    WAMP                     February 2023
-
 
 21.  Contributors
 
@@ -12642,6 +12704,16 @@ Internet-Draft                    WAMP                     February 2023
               DOI 10.17487/RFC4122, July 2005,
               <https://www.rfc-editor.org/info/rfc4122>.
 
+
+
+
+
+
+Oberstein                Expires 31 August 2023               [Page 227]
+
+Internet-Draft                    WAMP                     February 2023
+
+
    [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
               Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
               <https://www.rfc-editor.org/info/rfc4648>.
@@ -12649,14 +12721,6 @@ Internet-Draft                    WAMP                     February 2023
    [RFC6455]  Fette, I. and A. Melnikov, "The WebSocket Protocol",
               RFC 6455, DOI 10.17487/RFC6455, December 2011,
               <https://www.rfc-editor.org/info/rfc6455>.
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 226]
-
-Internet-Draft                    WAMP                     February 2023
-
 
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
@@ -12701,12 +12765,4 @@ Author's Address
 
 
 
-
-
-
-
-
-
-
-
-Oberstein                Expires 31 August 2023               [Page 227]
+Oberstein                Expires 31 August 2023               [Page 228]

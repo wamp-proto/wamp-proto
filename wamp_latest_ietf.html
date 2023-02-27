@@ -1324,10 +1324,7 @@ li > p:last-of-type:only-child {
                     <p id="section-toc.1-1.1.2.4.2.4.1"><a href="#section-1.4.4" class="auto internal xref">1.4.4</a>.  <a href="#name-peers-with-multiple-roles" class="internal xref">Peers with multiple Roles</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.5">
-                    <p id="section-toc.1-1.1.2.4.2.5.1"><a href="#section-1.4.5" class="auto internal xref">1.4.5</a>.  <a href="#name-router-implementation-speci" class="internal xref">Router Implementation Specifics</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.4.2.6">
-                    <p id="section-toc.1-1.1.2.4.2.6.1"><a href="#section-1.4.6" class="auto internal xref">1.4.6</a>.  <a href="#name-relationship-to-websocket" class="internal xref">Relationship to WebSocket</a></p>
+                    <p id="section-toc.1-1.1.2.4.2.5.1"><a href="#section-1.4.5" class="auto internal xref">1.4.5</a>.  <a href="#name-relationship-to-websocket" class="internal xref">Relationship to WebSocket</a></p>
 </li>
                 </ul>
 </li>
@@ -1835,6 +1832,17 @@ li > p:last-of-type:only-child {
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
             <p id="section-toc.1-1.18.1"><a href="#section-18" class="auto internal xref">18</a>. <a href="#name-advanced-profile-uris" class="internal xref">Advanced Profile URIs</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18.2.1">
+                <p id="section-toc.1-1.18.2.1.1"><a href="#section-18.1" class="auto internal xref">18.1</a>.  <a href="#name-authentication" class="internal xref">Authentication</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18.2.2">
+                <p id="section-toc.1-1.18.2.2.1"><a href="#section-18.2" class="auto internal xref">18.2</a>.  <a href="#name-authorization" class="internal xref">Authorization</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18.2.3">
+                <p id="section-toc.1-1.18.2.3.1"><a href="#section-18.3" class="auto internal xref">18.3</a>.  <a href="#name-remote-procedure-calls-3" class="internal xref">Remote Procedure Calls</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.19">
             <p id="section-toc.1-1.19.1"><a href="#section-19" class="auto internal xref">19</a>. <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
@@ -2040,31 +2048,12 @@ The Callee will execute the procedure using the supplied arguments to the call a
 <p id="section-1.4.4-1">Note that Peers might implement more than one role: e.g. a Peer might act as Caller, Publisher and Subscriber at the same time. Another Peer might act as both a Broker and a Dealer.<a href="#section-1.4.4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="router-implementation-specifics">
-<section id="section-1.4.5">
-          <h4 id="name-router-implementation-speci">
-<a href="#section-1.4.5" class="section-number selfRef">1.4.5. </a><a href="#name-router-implementation-speci" class="section-name selfRef">Router Implementation Specifics</a>
-          </h4>
-<p id="section-1.4.5-1">This specification only deals with the protocol level. Specific WAMP Broker and Dealer implementations may differ in aspects such as support for:<a href="#section-1.4.5-1" class="pilcrow">¶</a></p>
-<ul class="compact">
-<li class="compact" id="section-1.4.5-2.1">router networks (clustering and federation),<a href="#section-1.4.5-2.1" class="pilcrow">¶</a>
-</li>
-            <li class="compact" id="section-1.4.5-2.2">authentication and authorization schemes,<a href="#section-1.4.5-2.2" class="pilcrow">¶</a>
-</li>
-            <li class="compact" id="section-1.4.5-2.3">message persistence, and,<a href="#section-1.4.5-2.3" class="pilcrow">¶</a>
-</li>
-            <li class="compact" id="section-1.4.5-2.4">management and monitoring.<a href="#section-1.4.5-2.4" class="pilcrow">¶</a>
-</li>
-          </ul>
-<p id="section-1.4.5-3">The definition and documentation of such Router features is outside the scope of this document.<a href="#section-1.4.5-3" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="relationship-to-websocket">
-<section id="section-1.4.6">
+<section id="section-1.4.5">
           <h4 id="name-relationship-to-websocket">
-<a href="#section-1.4.6" class="section-number selfRef">1.4.6. </a><a href="#name-relationship-to-websocket" class="section-name selfRef">Relationship to WebSocket</a>
+<a href="#section-1.4.5" class="section-number selfRef">1.4.5. </a><a href="#name-relationship-to-websocket" class="section-name selfRef">Relationship to WebSocket</a>
           </h4>
-<p id="section-1.4.6-1">WAMP uses WebSocket as its default transport binding, and is a registered WebSocket subprotocol.<a href="#section-1.4.6-1" class="pilcrow">¶</a></p>
+<p id="section-1.4.5-1">WAMP uses WebSocket as its default transport binding, and is a registered WebSocket subprotocol.<a href="#section-1.4.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -12466,45 +12455,116 @@ calling <code>xbr.pool.buy_key</code>, and calling <code>wamp.r2r.submit_traffic
 <a href="#section-18" class="section-number selfRef">18. </a><a href="#name-advanced-profile-uris" class="section-name selfRef">Advanced Profile URIs</a>
       </h2>
 <p id="section-18-1">WAMP pre-defines the following error URIs for the <strong>Advanced Profile</strong>. WAMP peers SHOULD only use the defined error messages.<a href="#section-18-1" class="pilcrow">¶</a></p>
-<p id="section-18-2">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> canceled a call previously issued<a href="#section-18-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-3">
+<div id="authentication">
+<section id="section-18.1">
+        <h3 id="name-authentication">
+<a href="#section-18.1" class="section-number selfRef">18.1. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
+        </h3>
+<p id="section-18.1-1">No authentication method the <em>Client</em> offered is accepted.<a href="#section-18.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.1-2">
+<pre>    wamp.error.no_matching_auth_method
+</pre><a href="#section-18.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-18.1-3">The <em>Client</em> attempted to authenticate for a non-existing <em>Realm</em> (<code>realm|string</code>).<a href="#section-18.1-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.1-4">
+<pre>    wamp.error.no_such_realm
+</pre><a href="#section-18.1-4" class="pilcrow">¶</a>
+</div>
+<p id="section-18.1-5">The <em>Client</em> attempted to authenticate for a non-existing <em>Role</em> (<code>authrole|string</code>).<a href="#section-18.1-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.1-6">
+<pre>    wamp.error.no_such_role
+</pre><a href="#section-18.1-6" class="pilcrow">¶</a>
+</div>
+<p id="section-18.1-7">The <em>Client</em> authenticated for a non-existing <em>Principal</em> (<code>authid|string</code>).<a href="#section-18.1-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.1-8">
+<pre>    wamp.error.no_such_principal
+</pre><a href="#section-18.1-8" class="pilcrow">¶</a>
+</div>
+<p id="section-18.1-9">The authentication as presented by the <em>Client</em> is denied (e.g. "wrong password").<a href="#section-18.1-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.1-10">
+<pre>    wamp.error.authentication_denied
+</pre><a href="#section-18.1-10" class="pilcrow">¶</a>
+</div>
+<p id="section-18.1-11">The <em>Client</em> authentication was rejected due to a technical runtime failure ("fail secure" operation).<a href="#section-18.1-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.1-12">
+<pre>    wamp.error.authentication_failed
+</pre><a href="#section-18.1-12" class="pilcrow">¶</a>
+</div>
+<p id="section-18.1-13">The <em>Client</em> did not provide the required, non-anonymous, authentication information.<a href="#section-18.1-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.1-14">
+<pre>    wamp.error.authentication_required
+</pre><a href="#section-18.1-14" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="authorization">
+<section id="section-18.2">
+        <h3 id="name-authorization">
+<a href="#section-18.2" class="section-number selfRef">18.2. </a><a href="#name-authorization" class="section-name selfRef">Authorization</a>
+        </h3>
+<p id="section-18.2-1">The <em>Principal</em> is not authorized to perform such <em>Action</em>.<a href="#section-18.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.2-2">
+<pre>    wamp.error.authorization_denied
+</pre><a href="#section-18.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-18.2-3">Authorization of the <em>Principal</em> to perform the given <em>Action</em> was rejected due to a technical runtime failure ("fail secure" operation).<a href="#section-18.2-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.2-4">
+<pre>    wamp.error.authorization_failed
+</pre><a href="#section-18.2-4" class="pilcrow">¶</a>
+</div>
+<p id="section-18.2-5">Authorization of the <em>Principal</em> is required to perform the given <em>Action</em>. This can be used for capability-based access control.<a href="#section-18.2-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.2-6">
+<pre>    wamp.error.authorization_required
+</pre><a href="#section-18.2-6" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="remote-procedure-calls-2">
+<section id="section-18.3">
+        <h3 id="name-remote-procedure-calls-3">
+<a href="#section-18.3" class="section-number selfRef">18.3. </a><a href="#name-remote-procedure-calls-3" class="section-name selfRef">Remote Procedure Calls</a>
+        </h3>
+<p id="section-18.3-1">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> canceled a call previously issued<a href="#section-18.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-2">
 <pre>    wamp.error.canceled
-</pre><a href="#section-18-3" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-18-4">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> terminated a call that timed out<a href="#section-18-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-5">
+<p id="section-18.3-3">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> terminated a call that timed out<a href="#section-18.3-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-4">
 <pre>    wamp.error.timeout
-</pre><a href="#section-18-5" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-4" class="pilcrow">¶</a>
 </div>
-<p id="section-18-6">A <em>Peer</em> requested an interaction with an option that was disallowed by the <em>Router</em><a href="#section-18-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-7">
+<p id="section-18.3-5">A <em>Peer</em> requested an interaction with an option that was disallowed by the <em>Router</em><a href="#section-18.3-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-6">
 <pre>    wamp.error.option_not_allowed
-</pre><a href="#section-18-7" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-6" class="pilcrow">¶</a>
 </div>
-<p id="section-18-8">A <em>Router</em> rejected client request to disclose its identity<a href="#section-18-8" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-9">
+<p id="section-18.3-7">A <em>Router</em> rejected client request to disclose its identity<a href="#section-18.3-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-8">
 <pre>    wamp.error.option_disallowed.disclose_me
-</pre><a href="#section-18-9" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-8" class="pilcrow">¶</a>
 </div>
-<p id="section-18-10">A <em>Router</em> encountered a network failure<a href="#section-18-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-11">
+<p id="section-18.3-9">A <em>Router</em> encountered a network failure<a href="#section-18.3-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-10">
 <pre>    wamp.error.network_failure
-</pre><a href="#section-18-11" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-10" class="pilcrow">¶</a>
 </div>
-<p id="section-18-12">A <em>Callee</em> is not able to handle an invocation for a <em>call</em> and intends for the <em>Router</em> to re-route the <em>call</em> to another fitting <em>Callee</em>. For details, refer to <a href="ap_rpc_call_rerouting.md">RPC Call Rerouting</a><a href="#section-18-12" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-13">
+<p id="section-18.3-11">A <em>Callee</em> is not able to handle an invocation for a <em>call</em> and intends for the <em>Router</em> to re-route the <em>call</em> to another fitting <em>Callee</em>. For details, refer to <a href="ap_rpc_call_rerouting.md">RPC Call Rerouting</a><a href="#section-18.3-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-12">
 <pre>    wamp.error.unavailable
-</pre><a href="#section-18-13" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-12" class="pilcrow">¶</a>
 </div>
-<p id="section-18-14">A <em>Dealer</em> could not perform a call, since a procedure with the given URI is registered, but all available registrations have responded with <code>wamp.error.unavailable</code><a href="#section-18-14" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-15">
+<p id="section-18.3-13">A <em>Dealer</em> could not perform a call, since a procedure with the given URI is registered, but all available registrations have responded with <code>wamp.error.unavailable</code><a href="#section-18.3-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-14">
 <pre>    wamp.error.no_available_callee
-</pre><a href="#section-18-15" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-14" class="pilcrow">¶</a>
 </div>
-<p id="section-18-16">A <em>Dealer</em> received a <code>CALL</code> message with advanced features that cannot be processed by the <em>Callee</em><a href="#section-18-16" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-18-17">
+<p id="section-18.3-15">A <em>Dealer</em> received a <code>CALL</code> message with advanced features that cannot be processed by the <em>Callee</em><a href="#section-18.3-15" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-18.3-16">
 <pre>    wamp.error.feature_not_supported
-</pre><a href="#section-18-17" class="pilcrow">¶</a>
+</pre><a href="#section-18.3-16" class="pilcrow">¶</a>
+</div>
+</section>
 </div>
 </section>
 </div>
