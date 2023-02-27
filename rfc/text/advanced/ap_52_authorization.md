@@ -3,7 +3,7 @@
 WAMP allows user services to integrate seamlessly while enabling *Clients* to perform *Actions*, namely, to
 
 * **register** procedures using fully qualified URIs or URI patterns in order to receive invocations
-* **call** procedures on (fully qualified) URIs
+* **call** procedures at (fully qualified) URIs
 * **subscribe** to topics on fully qualified URIs or URI patterns receiving events
 * **publish** events to (fully qualified) URIs
 
