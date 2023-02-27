@@ -51,7 +51,7 @@ Authorization of the *Principal* to perform the given *Action* was rejected due 
 {align="left"}
         wamp.error.authorization_failed
 
-Authorization of the *Principal* is required for each individual execution of the *Action*. This can be used for capability-based access control.
+Authorization of the *Principal* is required to perform the given *Action*. This can be used for capability-based access control.
 
 {align="left"}
         wamp.error.authorization_required
