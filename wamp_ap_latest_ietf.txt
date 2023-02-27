@@ -1936,7 +1936,7 @@ Internet-Draft                   WAMP-AP                   February 2023
    then the _Dealer_ will send an INTERRUPT to the _Callee_.  The
    INTERRUPT will have Options.mode set to "killnowait" to indicate to
    the client that no response should be sent to the INTERRUPT.  This
-   INTERRUPT in only sent in response to a progressive YIELD
+   INTERRUPT is only sent in response to a progressive YIELD
    (Details.progress == true), and is not sent in response to a normal
    or final YIELD.
 
