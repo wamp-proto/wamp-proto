@@ -22,11 +22,17 @@ both formally (open protocol and open source) as well as practically (switching 
 | *User*                            | A user runs *Client*s or *Router*s which implement WAMP                                                 |
 | *Client*                          | A program run by a *User* with application code using WAMP for application level communication          |
 | *Router*                          | A program run by a *User* with middleware code using WAMP to provide application routing services       |
+| *Broker*                          | *FIXME*                                                                                                 |
+| *Dealer*                          | *FIXME*                                                                                                 |
 | *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed, provide or use both roles                   |
 | *Realm*                           | Isolated WAMP URI namespace, routing and administrative domain, optionally protected by **AA**          |
 | *Transport*                       | A message-based, reliable, ordered, bidirectional (full-duplex) channel over which *Peers* communicate  |
 | *Connection*                      | An underlying entity (if any) carrying the *Transport*, e.g. a network connection, pipe, queue or such  |
 | *Session*                         | Transient conversation between a *Client* and a *Router* on a *Realm* over a *Transport*                |
+| *Message*                         | *FIXME*                                                                                                 |
+| *Serializer*                      | *FIXME*                                                                                                 |
+| *Feature*                         | *FIXME*                                                                                                 |
+| *URI (Pattern)*                   | *FIXME*                                                                                                 |
 
 
 ### Authentication and Authorization (AA)
@@ -44,7 +50,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Mandatory Access Control*         | *FIXME*                                                                                                |
 | *Capability-based Access Control*  | *FIXME*                                                                                                |
 | *Subject*                          | The originating *Session* of an *Action* in the context of *Authorization*                             |
-| *Object*                           | The target of an *Action* in the context of *Authorization*, an URI or URI pattern                     |
+| *Object*                           | The target of an *Action* in the context of *Authorization*, a (fully qualified) URI or URI pattern    |
 | *Action*                           | One of the four WAMP core operations **register**, **call**, **subscribe** and **publish**             |
 
 
@@ -53,7 +59,7 @@ both formally (open protocol and open source) as well as practically (switching 
 {align="left"}
 | Term             | Definition                                                                                                                    |
 |------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| *Caller*         | A *Caller* is a *Session* that **calls** with application payloads a (fully qualidifed) *Procedure* for call routing          |
+| *Caller*         | A *Caller* is a *Session* that **calls** with application payloads a (fully qualified) *Procedure* for call routing           |
 | *Callee*         | A *Callee* is a *Session* that **yields** application payloads from a *Procedure* by answering invocations on matching calls  |
 | *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                                   |
 | *Registration*   | A *Registration* (in a *Router*) results from a *Callee* successfully **registering** of a *Procedure* for call routing       |
