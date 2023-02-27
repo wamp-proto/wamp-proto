@@ -17,16 +17,16 @@ both formally (open protocol and open source) as well as practically (switching 
 ### Fundamental
 
 {align="left"}
-| Term                              | Definition                                                                                            |
-|-----------------------------------|-------------------------------------------------------------------------------------------------------|
-| *User*                            | A user runs *Client*s or *Router*s which implement WAMP                                               |
-| *Client*                          | A program run by a *User* with application code using WAMP for application level communication        |
-| *Router*                          | A program run by a *User* with middleware code using WAMP to provide application routing services     |
-| *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed and use both roles                         |
-| *Realm*                           | Isolated WAMP URI namespace, routing and administrative domain, optionally protected by **AA**        |
-| *Transport*                       | The bidirectional, ordered, full duplex message channel over which *Peers* communicate                |
-| *Connection*                      | When a *Client* is using a *Transport* over a network, the underlying network connection              |
-| *Session*                         | Transient conversation between a *Client* and a *Router* on a *Realm* over a *Transport*              |
+| Term                              | Definition                                                                                             |
+|-----------------------------------|--------------------------------------------------------------------------------------------------------|
+| *User*                            | A user runs *Client*s or *Router*s which implement WAMP                                                |
+| *Client*                          | A program run by a *User* with application code using WAMP for application level communication         |
+| *Router*                          | A program run by a *User* with middleware code using WAMP to provide application routing services      |
+| *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed, provide or use both roles                  |
+| *Realm*                           | Isolated WAMP URI namespace, routing and administrative domain, optionally protected by **AA**         |
+| *Transport*                       | A message-based, reliable, ordered, bidirectional (full-duplex) channel over which *Peers* communicate |
+| *Connection*                      | An underlying entity (if any) carrying the *Transport*, e.g. a network connection, pipe, queue or such |
+| *Session*                         | Transient conversation between a *Client* and a *Router* on a *Realm* over a *Transport*               |
 
 
 ### Authentication and Authorization (AA)
