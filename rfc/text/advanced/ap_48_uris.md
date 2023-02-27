@@ -29,7 +29,7 @@ The authentication as presented by the *Client* is denied (e.g. "wrong password"
 {align="left"}
         wamp.error.authentication_denied
 
-The authentication of the *Client* failed technically, and the *Client* is therefor rejected ("fail secure").
+The authentication of the *Client* failed technically at run-time, and the *Client* is therefor rejected ("fail secure operation").
 
 {align="left"}
         wamp.error.authentication_failed
@@ -41,17 +41,17 @@ The *Client* did not authenticate (at all) and a successful (non-anonymous) auth
 
 ## Authorization
 
-The *Client* is not authorized to perform such action.
+The *Principal* is not authorized to perform such *Action*.
 
 {align="left"}
         wamp.error.authorization_denied
 
-Authorization of the *Client* for the action could not be determined as it failed technically.
+Authorization of the *Principal* for the *Action* could not be determined as it failed technically at run-time, and the *Action* is therefor rejected ("fail secure operation").
 
 {align="left"}
         wamp.error.authorization_failed
 
-Authorization by the *Client* ("capability") is required for each single action.
+Authorization of the *Principal* is required for each individual execution of the *Action*. This can be used for capability-based access control.
 
 {align="left"}
         wamp.error.authorization_required
