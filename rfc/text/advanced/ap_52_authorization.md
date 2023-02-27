@@ -13,7 +13,7 @@ A *Session* is established between a *Client* to a *Router*, and is initiated by
 
 *Session*s MAY be required to *Authenticate* access to a *Realm* hosted by a *Router*.
 
-*Authentication* lets the *Router* verify the identity of a *Session* often as a prerequisite to allowing access to resources in a *Realm*.
+*Authentication* is the sequence of operations that allow a *Router* to verify the identity of a *Session*, often as a prerequisite to allowing access to resources within a *Realm*.
 
 When the *Session* authenticates to a *Router* successfully, the *Router* will have established
 
