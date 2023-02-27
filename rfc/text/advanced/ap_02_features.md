@@ -5,20 +5,20 @@ Support for advanced features must be announced by the peers which implement the
 **Advanced RPC Features**
 
 {align="left"}
-| Feature                                                    | Status | P | B | S | Cr | D | Ce|
-|------------------------------------------------------------|--------|---|---|---|----|---|---|
-| [Progressive Call Results](#rpc-progressive-call-results)  | stable |   |   |   | X  | X | X |
-| [Progressive Calls](#rpc-progressive-calls)                | alpha  |   |   |   | X  | X | X |
-| [Call Timeout](#rpc-call-timeout)                          | alpha  |   |   |   | X  | X | X |
-| [Call Canceling](#rpc-call-canceling)                      | alpha  |   |   |   | X  | X | X |
-| [Caller Identification](#rpc-call-identification)          | stable |   |   |   | X  | X | X |
-| [Call Trustlevels](#rpc-call-trust-levels)                 | alpha  |   |   |   |    | X | X |
-| [Registration Meta API](#rpc-reg-metapi)                   | beta   |   |   |   |    | X |   |
-| [Pattern-based Registration](#rpc-pattern-reg)             | stable |   |   |   |    | X | X |
-| [Shared Registration](#rpc-shared-registration)            | beta   |   |   |   |    | X | X |
-| [Sharded Registration](##rpc-sharded-registration)         | alpha  |   |   |   |    | X | X |
-| [Registration Revocation](#rpc-registration-revocation)    | alpha  |   |   |   |    | X | X |
-| [(Interface) Procedure Reflection](#interface-reflection)  | sketch |   |   |   |    | X |   |
+| Feature                                                       | Status | P | B | S | Cr | D | Ce|
+|---------------------------------------------------------------|--------|---|---|---|----|---|---|
+| [Progressive Call Results](#rpc-progressive-call-results)     | stable |   |   |   | X  | X | X |
+| [Progressive Call Arguments](#rpc-progressive-call-arguments) | alpha  |   |   |   | X  | X | X |
+| [Call Timeout](#rpc-call-timeout)                             | alpha  |   |   |   | X  | X | X |
+| [Call Canceling](#rpc-call-canceling)                         | alpha  |   |   |   | X  | X | X |
+| [Caller Identification](#rpc-call-identification)             | stable |   |   |   | X  | X | X |
+| [Call Trustlevels](#rpc-call-trust-levels)                    | alpha  |   |   |   |    | X | X |
+| [Registration Meta API](#rpc-reg-metapi)                      | beta   |   |   |   |    | X |   |
+| [Pattern-based Registration](#rpc-pattern-reg)                | stable |   |   |   |    | X | X |
+| [Shared Registration](#rpc-shared-registration)               | beta   |   |   |   |    | X | X |
+| [Sharded Registration](##rpc-sharded-registration)            | alpha  |   |   |   |    | X | X |
+| [Registration Revocation](#rpc-registration-revocation)       | alpha  |   |   |   |    | X | X |
+| [(Interface) Procedure Reflection](#interface-reflection)     | sketch |   |   |   |    | X |   |
 
 
 **Advanced PubSub Features**
