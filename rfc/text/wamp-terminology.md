@@ -19,11 +19,11 @@ both formally (open protocol and open source) as well as practically (switching 
 {align="left"}
 | Term                              | Definition                                                                                            |
 |-----------------------------------|-------------------------------------------------------------------------------------------------------|
-| *User                             | A user runs *Client*s or *Router*s which implement WAMP                                               |
+| *User*                            | A user runs *Client*s or *Router*s which implement WAMP                                               |
 | *Client*                          | A program run by a *User* with application code using WAMP for application level communication        |
 | *Router*                          | A program run by a *User* with middleware code using WAMP to provide application routing services     |
 | *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed and use both roles                         |
-| *Realm*                           | Isolated WAMP routing and administrative domain, optionally protected by **AA**                       |
+| *Realm*                           | Isolated WAMP URI namespace, routing and administrative domain, optionally protected by **AA**        |
 | *Transport*                       | The bidirectional, ordered, full duplex message channel over which *Peers* communicate                |
 | *Connection*                      | When a *Client* is using a *Transport* over a network, the underlying network connection              |
 | *Session*                         | Transient conversation between a *Client* and a *Router* on a *Realm* over a *Transport*              |
@@ -51,24 +51,24 @@ both formally (open protocol and open source) as well as practically (switching 
 ### Remote Procedure Calls
 
 {align="left"}
-| Term             | Definition                                                                                                             |
-|------------------|------------------------------------------------------------------------------------------------------------------------|
-| *Caller*         | A *Caller* is a *Session* that initiates *Call*s by sending `CALL`s and receives `RESULT`(s) (or `ERROR`)              |
-| *Callee*         | A *Callee* is a *Session* that answers *Call*s by receiving `INVOCATION`s and replies with `YIELD`(s) (or `ERROR`)     |
-| *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                            |
-| *Registration*   | A *Registration* (in a *Router*) results from a *Callee* successfully registering of a *Procedure* for call routing    |
-| *Call*           | A *Call* (in a *Router*) results from a *Caller** successfully calling of a *Procedure* for call routing               |
-| *Invocation*     | An *Invocation** with application payload is received by *Callee*s for matching *Registration*s they registered for    |
+| Term             | Definition                                                                                                                    |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| *Caller*         | A *Caller* is a *Session* that **calls** with application payloads a (fully qualidifed) *Procedure* for call routing          |
+| *Callee*         | A *Callee* is a *Session* that **yields** application payloads from a *Procedure** by answering invocations on matching calls |
+| *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                                   |
+| *Registration*   | A *Registration* (in a *Router*) results from a *Callee* successfully **registering** of a *Procedure* for call routing       |
+| *Call*           | A *Call* (in a *Router*) results from a *Caller* successfully **calling** of a *Procedure* for call routing                   |
+| *Invocation*     | An *Invocation** with application payload is received by *Callee*s for matching *Registration*s they registered for           |
 
 
 ### Publish and Subscribe
 
 {align="left"}
-| Term             | Definition                                                                                                             |
-|------------------|------------------------------------------------------------------------------------------------------------------------|
-| *Publisher*      | A *Publisher* is a *Session* that publishes application payloads to a (fully qualified) *Topic* for event routing      |
-| *Subscriber*     | A *Subscriber* is a *Session* that subscribes to a *Topic* to receive application payloads on matching events          |
-| *Topic*          | A *Topic* is an URI or URI pattern that can be subscribed to for event routing by *Subscriber*s                        |
-| *Subscription*   | A *Subscription* (in a *Router*) results from a *Subscriber* successfully subscribing to a *Topic* for event routing   |
-| *Publication*    | A *Publication* (in a *Router*) results from a *Publisher* successfully publishing to a *Topic* for event routing      |
-| *Event*          | An *Event* with application payload is received by *Subscriber*s for matching *Subscription*s they subscribed to       |
+| Term             | Definition                                                                                                                    |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| *Publisher*      | A *Publisher* is a *Session* that **publishes** application payloads to a (fully qualified) *Topic* for event routing         |
+| *Subscriber*     | A *Subscriber* is a *Session* that **subscribes** to a *Topic* to receive application payloads on matching events             |
+| *Topic*          | A *Topic* is an URI or URI pattern that can be subscribed to for event routing by *Subscriber*s                               |
+| *Subscription*   | A *Subscription* (in a *Router*) results from a *Subscriber* successfully **subscribing** to a *Topic* for event routing      |
+| *Publication*    | A *Publication* (in a *Router*) results from a *Publisher* successfully **publishing** to a *Topic* for event routing         |
+| *Event*          | An *Event* with application payload is received by *Subscriber*s for matching *Subscription*s they subscribed to              |
