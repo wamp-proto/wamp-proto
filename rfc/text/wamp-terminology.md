@@ -49,22 +49,22 @@ both formally (open protocol and open source) as well as practically (switching 
 
 
 {align="left"}
-| Term                              | Definition                                                                                            |
-|-----------------------------------|-------------------------------------------------------------------------------------------------------|
-| *Caller*                          |                                                                                                       |
-| *Callee*                          |                                                                                                       |
-| *Procedure*                       |                                                                                                       |
-| *Registration*                    |                                                                                                       |
-| *Call*                            |                                                                                                       |
-| *Invocation*                      |                                                                                                       |
+| Term             | Definition                                                                                                             |
+|------------------|------------------------------------------------------------------------------------------------------------------------|
+| *Caller*         | A *Caller* is a *Session* that initiates *Call*s by sending `CALL`s and receives `RESULT`(s) (or `ERROR`)              |
+| *Callee*         | A *Callee* is a *Session* that answers *Call*s by receiving `INVOCATION`s and replies with `YIELD`(s) (or `ERROR`)     |
+| *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                            |
+| *Registration*   | A *Registration* in a *Router* results from a *Callee* successfully registering of a *Procedure* for call routing      |
+| *Call*           |                                                                                                                        |
+| *Invocation*     |                                                                                                                        |
 
 
 {align="left"}
-| Term                              | Definition                                                                                            |
-|-----------------------------------|-------------------------------------------------------------------------------------------------------|
-| *Publisher*                       |                                                                                                       |
-| *Subscriber*                      |                                                                                                       |
-| *Topic*                           |                                                                                                       |
-| *Subscription*                    |                                                                                                       |
-| *Publication*                     |                                                                                                       |
-| *Event*                           |                                                                                                       |
+| Term             | Definition                                                                                                             |
+|------------------|------------------------------------------------------------------------------------------------------------------------|
+| *Publisher*      | A *Publisher* is a *Session* that publishes application payloads to a (fully qualified) *Topic* for event routing      |
+| *Subscriber*     | A *Subscriber* is a *Session* that subscribes to a *Topic* to receive application payloads on matching events          |
+| *Topic*          | A *Topic* is an URI or URI pattern that can be subscribed for event routing by *Subscriber*s                           |
+| *Subscription*   | A *Subscription* in a *Router* results from a *Subscriber* successfully subscribing to a *Topic* for event routing     |
+| *Publication*    | A *Publication* in a *Router* results from a *Publisher* successfully publishing to a *Topic* for event routing        |
+| *Event*          | An *Event* with application payload is received by *Subscriber*s for matching *Subscription*s they subscribed to       |
