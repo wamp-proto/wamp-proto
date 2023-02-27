@@ -7,7 +7,7 @@ WAMP pre-defines the following error URIs for the **Advanced Profile**. WAMP pee
 No authentication method the *Client* offered is accepted.
 
 {align="left"}
-        wamp.error.no_auth_method
+        wamp.error.no_matching_auth_method
 
 The *Client* attempted to authenticate for a non-existing *Realm* (`realm|string`).
 
