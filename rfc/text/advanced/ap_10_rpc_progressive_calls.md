@@ -272,5 +272,4 @@ For reference, here is a list of options that are frozen upon the initial progre
 - `CALL.Options.receive_progress|bool`
 - `CALL.Options.rkey`
 - `CALL.Options.runmode|string`
-- `CALL.Options.sticky|bool`
 - `CALL.Options.timeout|integer`
