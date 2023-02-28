@@ -119,7 +119,7 @@ set `"progress": false` which is the default.
 **Progressive Calls and Shared Registration**
 
 RPCs can have a multiple registrations (see `Shared Registration` feature) with different `<invocation_policies>`.
-In this case, progressive `CALL` messages can be routed to different *Callees*, which can lead to unexpected results.
+However, allowing progressive CALL messages to be routed to different Callees would lead to unexpected results.
 To prevent this the *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all 
 subsequent `progressive` calls to the same *Callee*.
 
