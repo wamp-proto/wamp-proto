@@ -120,8 +120,20 @@ set `"progress": false` which is the default.
 
 RPCs can have a multiple registrations (see `Shared Registration` feature) with different `<invocation_policies>`.
 In this case, progressive `CALL` messages can be routed to different *Callees*, which can lead to unexpected results.
-To prevent this the *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all 
+To bind `INVOCATION` messages to the same *Callee*, the *Caller* can specify the `sticky` option during `CALL`
+
+{align="left"}
+        CALL.Options.sticky|bool := true
+
+
+In this case, the *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all 
 subsequent `progressive` calls to the same *Callee*.
+
+If binding all ongoing `progressive` calls to the same *Callee* is not required, the *Caller* can set the `sticky` option to `false`. 
+
+If `CALL.Options.sticky` is not specified, it is treated like `true`, so all `progressive`
+calls go to the same *Callee*.
+
 
 **Progressive Call Cancellation**
 
