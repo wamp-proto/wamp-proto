@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 31 August 2023</td>
+<td class="center">Expires 1 September 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-02-27" class="published">27 February 2023</time>
+<time datetime="2023-02-28" class="published">28 February 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-08-31">31 August 2023</time></dd>
+<dd class="expires"><time datetime="2023-09-01">1 September 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1253,7 +1253,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1494,6 +1494,9 @@ li > p:last-of-type:only-child {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.5">
                 <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="auto internal xref">5.5</a>.  <a href="#name-dynamic-authentication-api" class="internal xref">Dynamic Authentication API</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.6">
+                <p id="section-toc.1-1.5.2.6.1"><a href="#section-5.6" class="auto internal xref">5.6</a>.  <a href="#name-authorization" class="internal xref">Authorization</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
@@ -1573,7 +1576,7 @@ li > p:last-of-type:only-child {
                 <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-authentication" class="internal xref">Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-authorization" class="internal xref">Authorization</a></p>
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-authorization-2" class="internal xref">Authorization</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
                 <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-remote-procedure-calls" class="internal xref">Remote Procedure Calls</a></p>
@@ -7399,6 +7402,60 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) &lt;&l
 <p id="section-5.5-1">Write me.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="authorization">
+<section id="section-5.6">
+        <h3 id="name-authorization">
+<a href="#section-5.6" class="section-number selfRef">5.6. </a><a href="#name-authorization" class="section-name selfRef">Authorization</a>
+        </h3>
+<p id="section-5.6-1">WAMP allows user services to integrate seamlessly while enabling <em>Clients</em> to perform <em>Actions</em>, namely, to<a href="#section-5.6-1" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.6-2.1">
+            <strong>register</strong> procedures using fully qualified URIs or URI patterns in order to receive invocations<a href="#section-5.6-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.6-2.2">
+            <strong>call</strong> procedures at (fully qualified) URIs<a href="#section-5.6-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.6-2.3">
+            <strong>subscribe</strong> to topics using fully qualified URIs or URI patterns in order to receive events<a href="#section-5.6-2.3" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.6-2.4">
+            <strong>publish</strong> events to (fully qualified) URIs<a href="#section-5.6-2.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-5.6-3">Performing these actions requires <em>Clients</em> to have an open <em>Session</em> to the same shared <em>Realm</em>.<a href="#section-5.6-3" class="pilcrow">¶</a></p>
+<p id="section-5.6-4">A <em>Session</em> is established between a <em>Client</em> to a <em>Router</em>, and is initiated by a <em>Client</em>.<a href="#section-5.6-4" class="pilcrow">¶</a></p>
+<p id="section-5.6-5">*Session*s MAY be required to <em>Authenticate</em> access to a <em>Realm</em> hosted by a <em>Router</em>.<a href="#section-5.6-5" class="pilcrow">¶</a></p>
+<p id="section-5.6-6"><em>Authentication</em> is the sequence of operations that allow a <em>Router</em> to verify the identity of a <em>Session</em>, often as a prerequisite to allowing access to resources within a <em>Realm</em>.<a href="#section-5.6-6" class="pilcrow">¶</a></p>
+<p id="section-5.6-7">When the <em>Session</em> authenticates to a <em>Router</em> successfully, the <em>Router</em> will have established the<a href="#section-5.6-7" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.6-8.1">
+            <code>realm|string</code>,<a href="#section-5.6-8.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.6-8.2">
+            <code>authrole|string</code>, and<a href="#section-5.6-8.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.6-8.3">
+            <code>authid|string</code><a href="#section-5.6-8.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-5.6-9">for that <em>Session</em> running in the <em>Client</em>.<a href="#section-5.6-9" class="pilcrow">¶</a></p>
+<p id="section-5.6-10">The triple <code>(realm, authrole, authid)</code> is called <em>Principal</em>, and a <em>Session</em> is authenticated under that <em>Principal</em>.<a href="#section-5.6-10" class="pilcrow">¶</a></p>
+<p id="section-5.6-11">At any moment, there can be zero, one, or many *Session*s with different <em>session ids</em> authenticated under the <em>same</em> <em>Principal</em>.<a href="#section-5.6-11" class="pilcrow">¶</a></p>
+<p id="section-5.6-12">*Session*s MAY be required to <em>Authorize</em> in order to perform a specific <em>Action</em> on an URI <span class="unicode">— (U+2014)</span> or an URI pattern <span class="unicode">— (U+2014)</span> within a <em>Realm</em>.<a href="#section-5.6-12" class="pilcrow">¶</a></p>
+<p id="section-5.6-13">This distinction between <em>Authentication</em> and <em>Authorization</em> follows the established practice called "AAA":<a href="#section-5.6-13" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-5.6-14.1">
+            <strong>A</strong>uthentication: Establishes who it is (<strong>"subject"</strong>)<a href="#section-5.6-14.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.6-14.2">
+            <strong>A</strong>uthorization: Decides within a <em>Realm</em> whether an <em>Action</em> (<strong>"operation"</strong>) on an URI or URI pattern (<strong>"object"</strong>) is allowed for the requesting <em>Principal</em> (<strong>"subject"</strong>)<a href="#section-5.6-14.2" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-5.6-14.3">
+            <strong>A</strong>ccounting: Records, for a <em>Realm</em>, what <em>Action</em> (<strong>"operation"</strong>) on what URI or URI pattern (<strong>"object"</strong>) was requested by which <em>Principal</em> (<strong>"subject"</strong>), and whether it was allowed or denied<a href="#section-5.6-14.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+</section>
+</div>
 </section>
 </div>
 <div id="advanced-security-features">
@@ -9241,10 +9298,10 @@ calling <code>xbr.pool.buy_key</code>, and calling <code>wamp.r2r.submit_traffic
 </div>
 </section>
 </div>
-<div id="authorization">
+<div id="authorization-1">
 <section id="section-10.2">
-        <h3 id="name-authorization">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-authorization" class="section-name selfRef">Authorization</a>
+        <h3 id="name-authorization-2">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-authorization-2" class="section-name selfRef">Authorization</a>
         </h3>
 <p id="section-10.2-1">The <em>Principal</em> is not authorized to perform such <em>Action</em>.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-10.2-2">
