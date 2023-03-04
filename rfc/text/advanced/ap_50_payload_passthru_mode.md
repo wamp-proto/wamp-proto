@@ -250,7 +250,7 @@ This will allow maintaining a single interface for client applications, regardle
 *Example.* Caller-to-Dealer progressive `CALL` with encryption and key ID.
 
 Note that nothing prevents the use of `Payload Passthru Mode` with other features such as,
-for example, `Progressive Call Results` or `Progressive Call Arguments`.
+for example, `Progressive Call Results` or `Progressive Call Invocations`.
 
 {align="left"}
 ```json
