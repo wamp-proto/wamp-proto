@@ -9,7 +9,7 @@ This is to support the overarching goal of WAMP to free application developers f
 building distributed applications, both at the network level, and when choosing (or switching) the WAMP
 implementations used.
 
-Our goal is to maximize **User Choice and Experience** for developers of WAMP based applications,
+Our goal is to maximize **user choice and experience** when developing WAMP-based applications,
 both formally (open protocol and open source) as well as practically (switching costs).
 
 
