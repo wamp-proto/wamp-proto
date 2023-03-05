@@ -20,7 +20,7 @@ both formally (open protocol and open source) as well as practically (switching 
 |-----------------------------------|---------------------------------------------------------------------------------------------------------|
 | *User*                            | A person (or organization) running a WAMP *Client* or *Router* |
 | *Client*                          | A program run by a *User*, with application code using WAMP for application level communications        |
-| *Router*                          | A program run by a *User* with middleware code using WAMP to provide application routing services       |
+| *Router*                          | A program run by a *User*, with middleware code using WAMP to provide application routing services      |
 | *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed, provide or use both roles                   |
 | *Realm*                           | Isolated WAMP URI namespace, routing and administrative domain, optionally protected by **AA**          |
 | *Transport*                       | A message-based, reliable, ordered, bidirectional (full-duplex) channel over which *Peers* communicate  |
