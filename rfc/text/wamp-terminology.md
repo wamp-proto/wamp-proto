@@ -71,5 +71,5 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Subscriber*     | A *Subscriber* is a *Session* that **subscribes** to a *Topic* to receive application payloads on matching events             |
 | *Topic*          | A *Topic* is an URI or URI pattern that can be subscribed to for event routing by *Subscriber*s                               |
 | *Subscription*   | A *Router* record resulting from a *Subscriber* successfully **subscribing** to a *Topic* for event routing      |
-| *Publication*    | A *Publication* (in a *Router*) results from a *Publisher* successfully **publishing** to a *Topic* for event routing         |
+| *Publication*    | A transient Router record resulting from a *Publisher* successfully **publishing** to a *Topic* for event routing         |
 | *Event*          | An *Event* with application payload is received by *Subscriber*s for matching *Subscription*s they subscribed to              |
