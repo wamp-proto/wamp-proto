@@ -40,7 +40,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Credentials*                      | The authentication information and secrets used during *Authentication*                                                        |
 | *Authorization*                    | A decision on permitting a *Principal* to perform a given *Action* on an *URI or URI pattern* |
 | *Access Control*                   | Policy for selective restriction of *Action*s on *URIs or URI patterns* performed by *Principal*s                             |
-| *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Role* (`authrole`) of *Principal*, *URI or URI pattern* and *Action*   |
+| *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Principal*'s *Role* (`authrole`), *URI or URI pattern*, and *Action*   |
 | *Discretionary Access Control*     | An *Access Control* policy controlled by *Users* and enforced by *Routers*                                                     |
 | *Mandatory Access Control*         | An *Access Control* policy controlled by *Router Administrators* or *Realm Owners* and enforced by *Routers*                   |
 | *Capability-based Access Control*  | An *Access Control* policy where *Caller*s, *Callee*s, *Publisher*s, *Subscriber*s directly share capabilities with each other |
