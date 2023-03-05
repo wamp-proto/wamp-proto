@@ -72,4 +72,4 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Topic*          | A *Topic* is an URI or URI pattern that can be subscribed to for event routing by *Subscriber*s                               |
 | *Subscription*   | A *Router* record resulting from a *Subscriber* successfully **subscribing** to a *Topic* for event routing      |
 | *Publication*    | A transient Router record resulting from a *Publisher* successfully **publishing** to a *Topic* for event routing         |
-| *Event*          | An *Event* with application payload is received by *Subscriber*s for matching *Subscription*s they subscribed to              |
+| *Event*          | A publication that is routed to a *Subscribers* having matching *Subscriptions* to the published *Topic*.              |
