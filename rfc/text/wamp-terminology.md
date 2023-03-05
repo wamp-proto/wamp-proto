@@ -38,7 +38,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Authentication*                   | Establishes the identity of a *Session* within a *Realm*                                                                           |
 | *Principal*                        | Once authenticated, *Session*s identify under a *Principal*                                                                    |
 | *Credentials*                      | The authentication information and secrets used during *Authentication*                                                        |
-| *Authorization*                    | Decides about permission for a given *Action* on an *URI or URI pattern* by a *Principal*                                      |
+| *Authorization*                    | A decision on permitting a *Principal* to perform a given *Action* on an *URI or URI pattern* |
 | *Access Control*                   | Policy for selective restriction of access by *Action*s on *URIs or URI patterns* and *Principal*s                             |
 | *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Role* (`authrole`) of *Principal*, *URI or URI pattern* and *Action*   |
 | *Discretionary Access Control*     | An *Access Control* policy controlled by *Users* and enforced by *Routers*                                                     |
