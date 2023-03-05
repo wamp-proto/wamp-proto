@@ -4,7 +4,7 @@ This chapter contains a list of technical terms used in this specification, alon
 
 Implementations SHOULD use terms as defined here in their public interfaces and documentation,
 and SHOULD NOT reinvent or reinterpret terms. Users SHOULD be able to transfer their WAMP knowledge
-in the context of one implementation when starting to use another implementation.
+from one implementation to another.
 This is to support the overarching goal of WAMP to free application developers from restrictions when
 building distributed applications, both at the network level, and when choosing or switching the WAMP client
 libraries or routers used.
