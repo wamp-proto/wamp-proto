@@ -46,7 +46,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Capability-based Access Control*  | An *Access Control* policy where *Caller*s, *Callee*s, *Publisher*s, *Subscriber*s directly share capabilities with each other |
 | *Subject*                          | The originating *Session* of an *Action* in the context of *Authorization*                                                     |
 | *Object*                           | A (fully qualified) *URI or URI pattern* representing the target of an *Action* in the context of *Authorization*                          |
-| *Action*                           | One of the four WAMP core operations **register**, **call**, **subscribe** and **publish**                                     |
+| *Action*                           | One of the four core WAMP operations: **register**, **call**, **subscribe**, and **publish**                                     |
 
 
 ### Remote Procedure Calls
