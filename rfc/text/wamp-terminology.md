@@ -1,7 +1,6 @@
 ## Terminology {#terminology}
 
 This chapter contains a list of technical terms used in this specification, along with their respective meanings.
-as used in this specification.
 
 Implementations SHOULD use terms as defined here in their public interfaces and documentation,
 and SHOULD NOT reinvent or reinterpret terms. Users SHOULD be able to transfer their knowledge gained on WAMP
