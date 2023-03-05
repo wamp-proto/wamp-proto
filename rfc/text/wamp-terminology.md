@@ -42,7 +42,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Access Control*                   | Policy for selective restriction of *Action*s on *URIs or URI patterns* performed by *Principal*s                             |
 | *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Principal*'s *Role* (`authrole`), *URI or URI pattern*, and *Action*   |
 | *Discretionary Access Control*     | An *Access Control* policy controlled by *Users* and enforced by *Routers*                                                     |
-| *Mandatory Access Control*         | An *Access Control* policy controlled by *Router Administrators* or *Realm Owners* and enforced by *Routers*                   |
+| *Mandatory Access Control*         | An *Access Control* policy controlled by *Router Administrators* or *Realm Owners*, and enforced by *Routers*                  |
 | *Capability-based Access Control*  | An *Access Control* policy where *Caller*s, *Callee*s, *Publisher*s, *Subscriber*s directly share capabilities with each other |
 | *Subject*                          | The originating *Session* of an *Action* in the context of *Authorization*                                                     |
 | *Object*                           | The target of an *Action* in the context of *Authorization*, a (fully qualified) *URI or URI pattern*                          |
