@@ -36,7 +36,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | Term                               | Definition                                                                                                                     |
 |------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
 | *Authentication*                   | Establishes the identity of a *Session* within a *Realm*                                                                           |
-| *Principal*                        | Once authenticated, *Session*s identify under a *Principal*                                                                    |
+| *Principal*                        | The authenticated entity associated with a *Session* |
 | *Credentials*                      | The authentication information and secrets used during *Authentication*                                                        |
 | *Authorization*                    | A decision on permitting a *Principal* to perform a given *Action* on an *URI or URI pattern* |
 | *Access Control*                   | Policy for selective restriction of *Action*s on *URIs or URI patterns* performed by *Principal*s                             |
