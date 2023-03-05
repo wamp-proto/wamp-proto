@@ -22,36 +22,32 @@ both formally (open protocol and open source) as well as practically (switching 
 | *User*                            | A user runs *Client*s or *Router*s which implement WAMP                                                 |
 | *Client*                          | A program run by a *User* with application code using WAMP for application level communication          |
 | *Router*                          | A program run by a *User* with middleware code using WAMP to provide application routing services       |
-| *Broker*                          | *FIXME*                                                                                                 |
-| *Dealer*                          | *FIXME*                                                                                                 |
 | *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed, provide or use both roles                   |
 | *Realm*                           | Isolated WAMP URI namespace, routing and administrative domain, optionally protected by **AA**          |
 | *Transport*                       | A message-based, reliable, ordered, bidirectional (full-duplex) channel over which *Peers* communicate  |
 | *Connection*                      | An underlying entity (if any) carrying the *Transport*, e.g. a network connection, pipe, queue or such  |
 | *Session*                         | Transient conversation between a *Client* and a *Router* on a *Realm* over a *Transport*                |
-| *Message*                         | *FIXME*                                                                                                 |
-| *Serializer*                      | *FIXME*                                                                                                 |
-| *Feature*                         | *FIXME*                                                                                                 |
-| *URI (Pattern)*                   | *FIXME*                                                                                                 |
+| *Message*                         | Indivisible unit of information transmitted between peers                                               |
+| *Serializer*                      | A *Serializer* encodes WAMP messages with application payloads into bytes strings for transport         |
 
 
 ### Authentication and Authorization (AA)
 
 {align="left"}
-| Term                               | Definition                                                                                             |
-|------------------------------------|--------------------------------------------------------------------------------------------------------|
-| *Authentication*                   | Establishes the identity of a *Session* on a *Realm*                                                   |
-| *Principal*                        | Once authenticated, *Session*s identify under a *Principal*                                            |
-| *Credentials*                      | Any authentication information and secrets used during *Authentication*                                |
-| *Authorization*                    | Decides about permission for a given *Action* on an URI or URI pattern by a *Principal*                |
-| *Access Control*                   | Policy for selective restriction of access by *Action*s on URIs or URI patterns and *Principal*s       |
-| *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Role* (`authrole`) of *Principal* and *Action* |
-| *Discretionary Access Control*     | *FIXME*                                                                                                |
-| *Mandatory Access Control*         | *FIXME*                                                                                                |
-| *Capability-based Access Control*  | *FIXME*                                                                                                |
-| *Subject*                          | The originating *Session* of an *Action* in the context of *Authorization*                             |
-| *Object*                           | The target of an *Action* in the context of *Authorization*, a (fully qualified) URI or URI pattern    |
-| *Action*                           | One of the four WAMP core operations **register**, **call**, **subscribe** and **publish**             |
+| Term                               | Definition                                                                                                                     |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| *Authentication*                   | Establishes the identity of a *Session* on a *Realm*                                                                           |
+| *Principal*                        | Once authenticated, *Session*s identify under a *Principal*                                                                    |
+| *Credentials*                      | Any authentication information and secrets used during *Authentication*                                                        |
+| *Authorization*                    | Decides about permission for a given *Action* on an *URI or URI pattern* by a *Principal*                                      |
+| *Access Control*                   | Policy for selective restriction of access by *Action*s on *URIs or URI patterns* and *Principal*s                             |
+| *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Role* (`authrole`) of *Principal*, *URI or URI pattern* and *Action*   |
+| *Discretionary Access Control*     | An *Access Control* policy controlled by *Users* and enforced by *Routers*                                                     |
+| *Mandatory Access Control*         | An *Access Control* policy controlled by *Router Administrators* or *Realm Owners* and enforced by *Routers*                   |
+| *Capability-based Access Control*  | An *Access Control* policy where *Caller*s, *Callee*s, *Publisher*s, *Subscriber*s directly share capabilities with each other |
+| *Subject*                          | The originating *Session* of an *Action* in the context of *Authorization*                                                     |
+| *Object*                           | The target of an *Action* in the context of *Authorization*, a (fully qualified) *URI or URI pattern*                          |
+| *Action*                           | One of the four WAMP core operations **register**, **call**, **subscribe** and **publish**                                     |
 
 
 ### Remote Procedure Calls
