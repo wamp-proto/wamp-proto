@@ -154,7 +154,7 @@ In cases where progressive call invocations are used to stream data from a *Call
 the *Caller* may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
 consumption for the *Dealer* and *Callee*, due to the need to store temporary metadata about ongoing calls.
 
-The message flow for cancelling progressive calls with progressive call invocations involves:
+The message flow for cancelling calls with progressive call invocations involves:
 
 {align="left"}
      ,------.            ,------.                 ,------.
