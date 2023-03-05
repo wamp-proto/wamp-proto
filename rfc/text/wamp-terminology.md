@@ -58,7 +58,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Callee*         | A *Callee* is a *Session* that **yields** application payloads from a *Procedure* by answering invocations on matching calls  |
 | *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                                   |
 | *Registration*   | A *Registration* (in a *Router*) results from a *Callee* successfully **registering** of a *Procedure* for call routing       |
-| *Call*           | A *Call* (in a *Router*) results from a *Caller* successfully **calling** of a *Procedure* for call routing                   |
+| *Call*           | A transient *Router* record resulting from a *Caller* successfully **calling** a *Procedure* for call routing |
 | *Invocation*     | An *Invocation* with application payload is received by *Callee*s for matching *Registration*s they registered for            |
 
 
