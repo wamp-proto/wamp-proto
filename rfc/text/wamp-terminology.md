@@ -7,7 +7,7 @@ and SHOULD NOT reinvent or reinterpret terms. Users SHOULD be able to transfer t
 from one implementation to another.
 This is to support the overarching goal of WAMP to free application developers from restrictions when
 building distributed applications, both at the network level, and when choosing (or switching) the WAMP
-libraries or routers used.
+implementations used.
 
 Our goal is to maximize **User Choice and Experience** for developers of WAMP based applications,
 both formally (open protocol and open source) as well as practically (switching costs).
