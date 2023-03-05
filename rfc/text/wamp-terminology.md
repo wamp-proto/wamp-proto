@@ -59,7 +59,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                                   |
 | *Registration*   | A *Registration* (in a *Router*) results from a *Callee* successfully **registering** of a *Procedure* for call routing       |
 | *Call*           | A transient *Router* record resulting from a *Caller* successfully **calling** a *Procedure* for call routing |
-| *Invocation*     | An *Invocation* with application payload is received by *Callee*s for matching *Registration*s they registered for            |
+| *Invocation*     | A call request and payload that are routed to a *Callee* having a matching *Registration* for the called *Procedure*            |
 
 
 ### Publish and Subscribe
