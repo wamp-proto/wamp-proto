@@ -54,7 +54,7 @@ both formally (open protocol and open source) as well as practically (switching 
 {align="left"}
 | Term             | Definition                                                                                                                    |
 |------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| *Caller*         | A *Caller* is a *Session* that **calls** with application payloads a (fully qualified) *Procedure* for call routing           |
+| *Caller*         | A *Caller* is a *Session* that **calls**, with application payloads, a (fully qualified) *Procedure* for call routing |
 | *Callee*         | A *Callee* is a *Session* that **yields** application payloads from a *Procedure* by answering invocations on matching calls  |
 | *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                                   |
 | *Registration*   | A *Registration* (in a *Router*) results from a *Callee* successfully **registering** of a *Procedure* for call routing       |
