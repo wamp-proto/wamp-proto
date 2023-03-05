@@ -6,7 +6,7 @@ Implementations SHOULD use terms as defined here in their public interfaces and 
 and SHOULD NOT reinvent or reinterpret terms. Users SHOULD be able to transfer their WAMP knowledge
 from one implementation to another.
 This is to support the overarching goal of WAMP to free application developers from restrictions when
-building distributed applications, both at the network level, and when choosing or switching the WAMP client
+building distributed applications, both at the network level, and when choosing (or switching) the WAMP
 libraries or routers used.
 
 Our goal is to maximize **User Choice and Experience** for developers of WAMP based applications,
