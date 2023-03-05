@@ -27,7 +27,7 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Connection*                      | An underlying entity (if any) carrying the *Transport*, e.g. a network connection, pipe, queue or such  |
 | *Session*                         | Transient conversation between a *Client* and a *Router*, within a *Realm* and over a *Transport*                |
 | *Message*                         | Indivisible unit of information transmitted between peers                                               |
-| *Serializer*                      | A *Serializer* encodes WAMP messages with application payloads into bytes strings for transport         |
+| *Serializer*                      | Encodes WAMP messages, with application payloads, into byte strings for transport         |
 
 
 ### Authentication and Authorization (AA)
