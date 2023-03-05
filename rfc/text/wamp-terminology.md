@@ -1,6 +1,6 @@
 ## Terminology {#terminology}
 
-This chapter collects the terminology *as used in WAMP*, the group of specialized words and respective meanings
+This chapter contains a list of technical terms used in this specification, along with their respective meanings.
 as used in this specification.
 
 Implementations SHOULD use terms as defined here in their public interfaces and documentation,
