@@ -5211,22 +5211,11 @@ Internet-Draft                    WAMP                        March 2023
 
 
    RPCs can have a multiple registrations (see Shared Registration
-   feature) with different <invocation_policies>.  In this case,
-   progressive CALL messages can be routed to different _Callees_, which
-   can lead to unexpected results.  To bind INVOCATION messages to the
-   same _Callee_, the _Caller_ can specify the sticky option during CALL
-
-       CALL.Options.sticky|bool := true
-
-   In this case, the _Dealer_ must make a first INVOCATION based on
-   <invocation_policy> and then route all subsequent progressive calls
-   to the same _Callee_.
-
-   If binding all ongoing progressive calls to the same _Callee_ is not
-   required, the _Caller_ can set the sticky option to false.
-
-   If CALL.Options.sticky is not specified, it is treated like true, so
-   all progressive calls go to the same _Callee_.
+   feature) with different <invocation_policies>.  However, allowing
+   progressive CALL messages to be routed to different _Callees_ would
+   lead to unexpected results.  To prevent this the _Dealer_ must make a
+   first INVOCATION based on <invocation_policy> and then route all
+   subsequent progressive calls to the same _Callee_.
 
    *Progressive Call Cancellation*
 
@@ -5251,6 +5240,17 @@ Internet-Draft                    WAMP                        March 2023
    metadata about ongoing calls.
 
    The message flow for cancelling progressive calls involves:
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -5434,7 +5434,6 @@ Oberstein               Expires 7 September 2023               [Page 97]
 Internet-Draft                    WAMP                        March 2023
 
 
-   *  CALL.Options.sticky|bool
    *  CALL.Options.timeout|integer
 
 11.3.  Call Timeouts
@@ -5482,6 +5481,7 @@ Internet-Draft                    WAMP                        March 2023
    feature.
 
    *Feature Announcement*
+
 
 
 
