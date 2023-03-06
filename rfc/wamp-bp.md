@@ -31,6 +31,8 @@ organization = "typedef int GmbH"
 
 {{text/basic.md}}
 
+{{text/terminology.md}}
+
 {{text/backmatter.md}}
 
 {backmatter}
