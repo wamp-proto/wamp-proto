@@ -16,37 +16,37 @@ both formally (open protocol and open source) as well as practically (switching 
 ### Fundamental
 
 {align="left"}
-| Term                              | Definition                                                                                              |
-|-----------------------------------|---------------------------------------------------------------------------------------------------------|
-| *User*                            | A person (or organization) running a WAMP *Client* or *Router* |
-| *Client*                          | A program run by a *User*, with application code using WAMP for application-level communications       |
-| *Router*                          | A program run by a *User*, with middleware code using WAMP to provide application routing services      |
-| *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed, provide or use both roles                   |
-| *Realm*                           | Isolated WAMP URI namespace serving as a routing and administrative domain, optionally protected by **AA**          |
-| *Transport*                       | A message-based, reliable, ordered, bidirectional (full-duplex) channel over which *Peers* communicate  |
-| *Connection*                      | An underlying entity (if any) carrying the *Transport*, e.g. a network connection, pipe, queue or such  |
-| *Session*                         | Transient conversation between a *Client* and a *Router*, within a *Realm* and over a *Transport*                |
-| *Message*                         | Indivisible unit of information transmitted between peers                                               |
-| *Serializer*                      | Encodes WAMP messages, with application payloads, into byte strings for transport         |
+| Term                              | Definition                                                                                                 |
+|-----------------------------------|------------------------------------------------------------------------------------------------------------|
+| *User*                            | A person (or organization) running a WAMP *Client* or *Router*                                             |
+| *Client*                          | A program run by a *User*, with application code using WAMP for application-level communications           |
+| *Router*                          | A program run by a *User*, with middleware code using WAMP to provide application routing services         |
+| *Peer*                            | A WAMP *Client* or *Router*. An implementation might embed, provide or use both roles                      |
+| *Realm*                           | Isolated WAMP URI namespace serving as a routing and administrative domain, optionally protected by **AA** |
+| *Transport*                       | A message-based, reliable, ordered, bidirectional (full-duplex) channel over which *Peers* communicate     |
+| *Connection*                      | An underlying entity (if any) carrying the *Transport*, e.g. a network connection, pipe, queue or such     |
+| *Session*                         | Transient conversation between a *Client* and a *Router*, within a *Realm* and over a *Transport*          |
+| *Message*                         | Indivisible unit of information transmitted between peers                                                  |
+| *Serializer*                      | Encodes WAMP messages, with application payloads, into byte strings for transport                          |
 
 
 ### Authentication and Authorization (AA)
 
 {align="left"}
-| Term                               | Definition                                                                                                                     |
-|------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| *Authentication*                   | Establishes the identity of a *Session* within a *Realm*                                                                           |
-| *Principal*                        | The authenticated entity associated with a *Session* |
-| *Credentials*                      | The authentication information and secrets used during *Authentication*                                                        |
-| *Authorization*                    | A decision on permitting a *Principal* to perform a given *Action* on an *URI or URI pattern* |
-| *Access Control*                   | Policy for selective restriction of *Action*s on *URIs or URI patterns* performed by *Principal*s                             |
+| Term                               | Definition                                                                                                |
+|------------------------------------|-----------------------------------------------------------------------------------------------------------|
+| *Authentication*                   | Establishes the identity of a *Session* within a *Realm*                                                  |
+| *Principal*                        | A *Principal* (`authid`) is any *User* that can be authenticated under a *Realm* (`realm`) and runs in the security context of a *Role* (`authrole`) within that *Realm*. |
+| *Credentials*                      | The authentication information and secrets used during                                                    |
+| *Authorization*                    | A decision on permitting a *Principal* to perform a given *Action* on an *URI or URI pattern*             |
+| *Access Control*                   | Policy for selective restriction of *Action*s on *URIs or URI patterns* performed by *Principal*s         |
 | *Role-based Access Control (RBAC)* | An *Access Control* policy based on *Realm* (`realm`), *Principal*'s *Role* (`authrole`), *URI or URI pattern*, and *Action*   |
-| *Discretionary Access Control*     | An *Access Control* policy controlled by *Users* and enforced by *Routers*                                                     |
-| *Mandatory Access Control*         | An *Access Control* policy controlled by *Router Administrators* or *Realm Owners*, and enforced by *Routers*                  |
+| *Discretionary Access Control*     | An *Access Control* policy controlled by *Users* and enforced by *Routers*                                |
+| *Mandatory Access Control*         | An *Access Control* policy controlled by *Router Administrators* or *Realm Owners*, and enforced by *Routers* |
 | *Capability-based Access Control*  | An *Access Control* policy where *Caller*s, *Callee*s, *Publisher*s, *Subscriber*s directly share capabilities with each other |
-| *Subject*                          | The originating *Session* of an *Action* in the context of *Authorization*                                                     |
-| *Object*                           | A (fully qualified) *URI or URI pattern* representing the target of an *Action* in the context of *Authorization*                          |
-| *Action*                           | One of the four core WAMP operations: **register**, **call**, **subscribe**, and **publish**                                     |
+| *Subject*                          | The originating *Session* of an *Action* in the context of *Authorization*                                |
+| *Object*                           | A (fully qualified) *URI or URI pattern* representing the target of an *Action* in the context of *Authorization* |
+| *Action*                           | One of the four core WAMP operations: **register**, **call**, **subscribe**, and **publish**              |
 
 
 ### Remote Procedure Calls
@@ -54,12 +54,12 @@ both formally (open protocol and open source) as well as practically (switching 
 {align="left"}
 | Term             | Definition                                                                                                                    |
 |------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| *Caller*         | A *Caller* is a *Session* that **calls**, with application payloads, a (fully qualified) *Procedure* for call routing |
-| *Callee*         | A *Callee* is a *Session* that responds to *Procedure* call invocations by **yielding** back application result payloads  |
+| *Caller*         | A *Caller* is a *Session* that **calls**, with application payloads, a (fully qualified) *Procedure* for call routing         |
+| *Callee*         | A *Callee* is a *Session* that responds to *Procedure* call invocations by **yielding** back application result payloads      |
 | *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callee*s                                   |
-| *Registration*   | A *Router* record resulting from a *Callee* successfully **registering** a *Procedure* for call routing       |
-| *Call*           | A transient *Router* record resulting from a *Caller* successfully **calling** a *Procedure* for call routing |
-| *Invocation*     | A call request and payload that are routed to a *Callee* having a matching *Registration* for the called *Procedure*            |
+| *Registration*   | A *Router* record resulting from a *Callee* successfully **registering** a *Procedure* for call routing                       |
+| *Call*           | A transient *Router* record resulting from a *Caller* successfully **calling** a *Procedure* for call routing                 |
+| *Invocation*     | A call request and payload that are routed to a *Callee* having a matching *Registration* for the called *Procedure*          |
 
 
 ### Publish and Subscribe
@@ -70,6 +70,6 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Publisher*      | A *Publisher* is a *Session* that **publishes** application payloads to a (fully qualified) *Topic* for event routing         |
 | *Subscriber*     | A *Subscriber* is a *Session* that **subscribes** to a *Topic* to receive application payloads on matching events             |
 | *Topic*          | A *Topic* is an URI or URI pattern that can be subscribed to for event routing by *Subscriber*s                               |
-| *Subscription*   | A *Router* record resulting from a *Subscriber* successfully **subscribing** to a *Topic* for event routing      |
-| *Publication*    | A transient *Router* record resulting from a *Publisher* successfully **publishing** to a *Topic* for event routing         |
-| *Event*          | A publication that is routed to *Subscribers* having matching *Subscriptions* to the published *Topic*.              |
+| *Subscription*   | A *Router* record resulting from a *Subscriber* successfully **subscribing** to a *Topic* for event routing                   |
+| *Publication*    | A transient *Router* record resulting from a *Publisher* successfully **publishing** to a *Topic* for event routing           |
+| *Event*          | A publication that is routed to *Subscribers* having matching *Subscriptions* to the published *Topic*.                       |
