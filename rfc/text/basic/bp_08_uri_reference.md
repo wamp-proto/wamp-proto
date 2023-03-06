@@ -43,6 +43,11 @@ A call failed since the given argument types or values are not acceptable to the
 {align="left"}
         wamp.error.invalid_argument
 
+A message could not be delivered due to transport payload size limits.
+
+{align="left"}
+        wamp.error.payload_size_exceeded
+
 **Session Close**
 
 The Peer is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
