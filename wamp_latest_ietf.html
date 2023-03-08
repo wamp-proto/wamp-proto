@@ -26,7 +26,7 @@
     setuptools 58.1.0
     six 1.16.0
     wcwidth 0.2.6
-    weasyprint 58.0
+    weasyprint 58.1
 -->
 <link href="./.build/wamp.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 7 September 2023</td>
+<td class="center">Expires 9 September 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-03-06" class="published">6 March 2023</time>
+<time datetime="2023-03-08" class="published">8 March 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-09-07">7 September 2023</time></dd>
+<dd class="expires"><time datetime="2023-09-09">9 September 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1253,7 +1253,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 9 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -6911,28 +6911,36 @@ for every <code>CALL</code> and the <em>Dealer</em> must also use the same <code
 set <code>"progress": false</code> which is the default.<a href="#section-11.2-24" class="pilcrow">¶</a></p>
 <p id="section-11.2-25"><strong>Progressive Calls and Shared Registration</strong><a href="#section-11.2-25" class="pilcrow">¶</a></p>
 <p id="section-11.2-26">RPCs can have a multiple registrations (see <code>Shared Registration</code> feature) with different <code>&lt;invocation_policies&gt;</code>.
-However, allowing progressive <code>CALL</code> messages to be routed to different <em>Callees</em> would lead to unexpected results.
-To prevent this the <em>Dealer</em> must make a first <code>INVOCATION</code> based on <code>&lt;invocation_policy&gt;</code> and then route all
-subsequent <code>progressive</code> calls to the same <em>Callee</em>.<a href="#section-11.2-26" class="pilcrow">¶</a></p>
-<p id="section-11.2-27"><strong>Progressive Call Cancellation</strong><a href="#section-11.2-27" class="pilcrow">¶</a></p>
-<p id="section-11.2-28">If the original <em>Caller</em> is no longer available for some reason (has left the realm), then the <em>Dealer</em> shall send
+In this case, progressive <code>CALL</code> messages can be routed to different <em>Callees</em>, which can lead to unexpected results.
+To bind <code>INVOCATION</code> messages to the same <em>Callee</em>, the <em>Caller</em> can specify the <code>sticky</code> option during <code>CALL</code><a href="#section-11.2-26" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-27">
+<pre>    CALL.Options.sticky|bool := true
+</pre><a href="#section-11.2-27" class="pilcrow">¶</a>
+</div>
+<p id="section-11.2-28">In this case, the <em>Dealer</em> must make a first <code>INVOCATION</code> based on <code>&lt;invocation_policy&gt;</code> and then route all
+subsequent <code>progressive</code> calls to the same <em>Callee</em>.<a href="#section-11.2-28" class="pilcrow">¶</a></p>
+<p id="section-11.2-29">If binding all ongoing <code>progressive</code> calls to the same <em>Callee</em> is not required, the <em>Caller</em> can set the <code>sticky</code> option to <code>false</code>.<a href="#section-11.2-29" class="pilcrow">¶</a></p>
+<p id="section-11.2-30">If <code>CALL.Options.sticky</code> is not specified, it is treated like <code>true</code>, so all <code>progressive</code>
+calls go to the same <em>Callee</em>.<a href="#section-11.2-30" class="pilcrow">¶</a></p>
+<p id="section-11.2-31"><strong>Progressive Call Cancellation</strong><a href="#section-11.2-31" class="pilcrow">¶</a></p>
+<p id="section-11.2-32">If the original <em>Caller</em> is no longer available for some reason (has left the realm), then the <em>Dealer</em> shall send
 an <code>INTERRUPT</code> to the <em>Callee</em>. The <code>INTERRUPT</code> MUST have <code>Options.mode</code> set to <code>"killnowait"</code> to indicate to the
-client that no response should be sent to the <code>INTERRUPT</code>.<a href="#section-11.2-28" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-29">
+client that no response should be sent to the <code>INTERRUPT</code>.<a href="#section-11.2-32" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-33">
 <pre>[INTERRUPT, INVOCATION.Request|id, Options|dict]
-</pre><a href="#section-11.2-29" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-33" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-30">Options:<a href="#section-11.2-30" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-31">
+<p id="section-11.2-34">Options:<a href="#section-11.2-34" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-35">
 <pre>INTERRUPT.Options.mode|string == "killnowait"
-</pre><a href="#section-11.2-31" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-35" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-32">Progressive call cancellation, like in progressive calls, closes an important safety gap:
+<p id="section-11.2-36">Progressive call cancellation, like in progressive calls, closes an important safety gap:
 In cases where progressive calls are used to stream data from a <em>Caller</em>, and network connectivity is unreliable,
 the <em>Caller</em> may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
-consumption for the <em>Dealer</em> and <em>Callee</em>, due to the need to store temporary metadata about ongoing calls.<a href="#section-11.2-32" class="pilcrow">¶</a></p>
-<p id="section-11.2-33">The message flow for cancelling progressive calls involves:<a href="#section-11.2-33" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-34">
+consumption for the <em>Dealer</em> and <em>Callee</em>, due to the need to store temporary metadata about ongoing calls.<a href="#section-11.2-36" class="pilcrow">¶</a></p>
+<p id="section-11.2-37">The message flow for cancelling progressive calls involves:<a href="#section-11.2-37" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-38">
 <pre> ,------.            ,------.                 ,------.
  |Caller|            |Dealer|                 |Callee|
  `--+---'            `--+---'                 `--+---'
@@ -6954,25 +6962,25 @@ consumption for the <em>Dealer</em> and <em>Callee</em>, due to the need to stor
                      ,--+---.                 ,--+---.
                      |Dealer|                 |Callee|
                      `------'                 `------'
-</pre><a href="#section-11.2-34" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-38" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-35">Note: Any <code>ERROR</code> returned by the <em>Callee</em>, in response to an <code>INTERRUPT</code>, is ignored (same as in regular call
-canceling when mode="killnowait"). It is therefore not necessary for the <em>Callee</em> to send an <code>ERROR</code> message.<a href="#section-11.2-35" class="pilcrow">¶</a></p>
-<p id="section-11.2-36"><strong>Ignoring Progressive Call Requests</strong><a href="#section-11.2-36" class="pilcrow">¶</a></p>
-<p id="section-11.2-37">Unlike some other advanced features, a <em>Callee</em> cannot be unaware of progressive call requests.
+<p id="section-11.2-39">Note: Any <code>ERROR</code> returned by the <em>Callee</em>, in response to an <code>INTERRUPT</code>, is ignored (same as in regular call
+canceling when mode="killnowait"). It is therefore not necessary for the <em>Callee</em> to send an <code>ERROR</code> message.<a href="#section-11.2-39" class="pilcrow">¶</a></p>
+<p id="section-11.2-40"><strong>Ignoring Progressive Call Requests</strong><a href="#section-11.2-40" class="pilcrow">¶</a></p>
+<p id="section-11.2-41">Unlike some other advanced features, a <em>Callee</em> cannot be unaware of progressive call requests.
 Therefore, if a <em>Callee</em> doesn't support this feature, the <em>Dealer</em> MUST respond to the <em>Caller</em> with an
-<code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-37" class="pilcrow">¶</a></p>
-<p id="section-11.2-38">A <em>Callee</em> that supports progressive calls, but does not support call canceling, shall be considered by the <em>Dealer</em>
-as not supporting progressive calls.<a href="#section-11.2-38" class="pilcrow">¶</a></p>
-<p id="section-11.2-39"><strong>Progressive Calls with Progressive Call Results</strong><a href="#section-11.2-39" class="pilcrow">¶</a></p>
-<p id="section-11.2-40">Progressive calls may be used in conjunction with <em>Progressive Call Results</em> if the <em>Caller</em>, <em>Dealer</em>, and <em>Callee</em> all
+<code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-41" class="pilcrow">¶</a></p>
+<p id="section-11.2-42">A <em>Callee</em> that supports progressive calls, but does not support call canceling, shall be considered by the <em>Dealer</em>
+as not supporting progressive calls.<a href="#section-11.2-42" class="pilcrow">¶</a></p>
+<p id="section-11.2-43"><strong>Progressive Calls with Progressive Call Results</strong><a href="#section-11.2-43" class="pilcrow">¶</a></p>
+<p id="section-11.2-44">Progressive calls may be used in conjunction with <em>Progressive Call Results</em> if the <em>Caller</em>, <em>Dealer</em>, and <em>Callee</em> all
 support both features. This allows the <em>Callee</em> to start sending partial results back to the <em>Caller</em> after receiving
-one or more initial payload chunks. Efficient two-way streams between a <em>Caller</em> and <em>Callee</em> can be implemented this way.<a href="#section-11.2-40" class="pilcrow">¶</a></p>
-<p id="section-11.2-41">The following message flow illustrates a progressive call when a <em>Callee</em> starts sending progressive call
+one or more initial payload chunks. Efficient two-way streams between a <em>Caller</em> and <em>Callee</em> can be implemented this way.<a href="#section-11.2-44" class="pilcrow">¶</a></p>
+<p id="section-11.2-45">The following message flow illustrates a progressive call when a <em>Callee</em> starts sending progressive call
 results immediately. Note that <code>YIELD</code> messages don't need to be matched with <code>CALL</code>/<code>INVOCATION</code> messages.
 For example, the <em>caller</em> can send a few <code>CALL</code> messages before starting to receive <code>RESULT</code> messages; they do not need
-to be matched pairs.<a href="#section-11.2-41" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-42">
+to be matched pairs.<a href="#section-11.2-45" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-46">
 <pre> ,------.                  ,------.                 ,------.
  |Caller|                  |Dealer|                 |Callee|
  `--+---'                  `--+---'                 `--+---'
@@ -7023,47 +7031,50 @@ to be matched pairs.<a href="#section-11.2-41" class="pilcrow">¶</a></p>
  ,--+---.                  ,--+---.                 ,--+---.
  |Caller|                  |Dealer|                 |Callee|
  `------'                  `------'                 `------'
-</pre><a href="#section-11.2-42" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-46" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-43">Because they are part of the same call operation, the request ID is the same in all <code>CALL</code>,
-<code>INVOCATION</code>, <code>YIELD</code>, and <code>ERROR</code> messages in the above exchange.<a href="#section-11.2-43" class="pilcrow">¶</a></p>
-<p id="section-11.2-44"><strong>Freezing of Options in Progressive Calls</strong><a href="#section-11.2-44" class="pilcrow">¶</a></p>
-<p id="section-11.2-45">Except for <code>progress</code>, items in the <code>Options</code> dictionary of the <strong>initiating</strong> progressive <code>CALL</code> shall be effective for
+<p id="section-11.2-47">Because they are part of the same call operation, the request ID is the same in all <code>CALL</code>,
+<code>INVOCATION</code>, <code>YIELD</code>, and <code>ERROR</code> messages in the above exchange.<a href="#section-11.2-47" class="pilcrow">¶</a></p>
+<p id="section-11.2-48"><strong>Freezing of Options in Progressive Calls</strong><a href="#section-11.2-48" class="pilcrow">¶</a></p>
+<p id="section-11.2-49">Except for <code>progress</code>, items in the <code>Options</code> dictionary of the <strong>initiating</strong> progressive <code>CALL</code> shall be effective for
 the entirety of the progressive call request. Only the <code>progress</code> option shall be considered by the <em>Dealer</em> in subsequent progressive calls
 (within the same overall request). Except for <code>progress</code>, items in the <code>Details</code>
-dictionary of corresponding <code>INVOCATION</code> messages shall be based on the initiating progressive <code>CALL</code> only.<a href="#section-11.2-45" class="pilcrow">¶</a></p>
-<p id="section-11.2-46">For example, if <code>disclose_me=true</code> was specified in the initiating progressive call, all subsequent progressive calls
+dictionary of corresponding <code>INVOCATION</code> messages shall be based on the initiating progressive <code>CALL</code> only.<a href="#section-11.2-49" class="pilcrow">¶</a></p>
+<p id="section-11.2-50">For example, if <code>disclose_me=true</code> was specified in the initiating progressive call, all subsequent progressive calls
 (within the same request) shall be considered by the <em>Dealer</em> to implictly have <code>disclose_me=true</code> as well. That is, all
-<code>INVOCATION</code> messages associated with the overall request shall contain caller identify information.<a href="#section-11.2-46" class="pilcrow">¶</a></p>
-<p id="section-11.2-47">Note that any option (besides <code>progress</code>) can be omitted altogether in subsequent progressive calls. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (<em>Caller</em>) only needs to keep uploading more data thereafter.<a href="#section-11.2-47" class="pilcrow">¶</a></p>
-<p id="section-11.2-48">For reference, here is a list of options that are frozen upon the initial progressive call:<a href="#section-11.2-48" class="pilcrow">¶</a></p>
+<code>INVOCATION</code> messages associated with the overall request shall contain caller identify information.<a href="#section-11.2-50" class="pilcrow">¶</a></p>
+<p id="section-11.2-51">Note that any option (besides <code>progress</code>) can be omitted altogether in subsequent progressive calls. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (<em>Caller</em>) only needs to keep uploading more data thereafter.<a href="#section-11.2-51" class="pilcrow">¶</a></p>
+<p id="section-11.2-52">For reference, here is a list of options that are frozen upon the initial progressive call:<a href="#section-11.2-52" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-11.2-49.1">
-            <code>CALL.Options.disclose_me|bool</code><a href="#section-11.2-49.1" class="pilcrow">¶</a>
+<li class="compact" id="section-11.2-53.1">
+            <code>CALL.Options.disclose_me|bool</code><a href="#section-11.2-53.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.2">
-            <code>CALL.Options.ppt_cipher|string</code><a href="#section-11.2-49.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.2">
+            <code>CALL.Options.ppt_cipher|string</code><a href="#section-11.2-53.2" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.3">
-            <code>CALL.Options.ppt_keyid|string</code><a href="#section-11.2-49.3" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.3">
+            <code>CALL.Options.ppt_keyid|string</code><a href="#section-11.2-53.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.4">
-            <code>CALL.Options.ppt_scheme|string</code><a href="#section-11.2-49.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.4">
+            <code>CALL.Options.ppt_scheme|string</code><a href="#section-11.2-53.4" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.5">
-            <code>CALL.Options.ppt_serializer|string</code><a href="#section-11.2-49.5" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.5">
+            <code>CALL.Options.ppt_serializer|string</code><a href="#section-11.2-53.5" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.6">
-            <code>CALL.Options.receive_progress|bool</code><a href="#section-11.2-49.6" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.6">
+            <code>CALL.Options.receive_progress|bool</code><a href="#section-11.2-53.6" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.7">
-            <code>CALL.Options.rkey</code><a href="#section-11.2-49.7" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.7">
+            <code>CALL.Options.rkey</code><a href="#section-11.2-53.7" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.8">
-            <code>CALL.Options.runmode|string</code><a href="#section-11.2-49.8" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.8">
+            <code>CALL.Options.runmode|string</code><a href="#section-11.2-53.8" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-49.9">
-            <code>CALL.Options.timeout|integer</code><a href="#section-11.2-49.9" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-53.9">
+            <code>CALL.Options.sticky|bool</code><a href="#section-11.2-53.9" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-11.2-53.10">
+            <code>CALL.Options.timeout|integer</code><a href="#section-11.2-53.10" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
