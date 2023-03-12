@@ -75,14 +75,16 @@ The possible values for `SERIALIZER` are:
         0: illegal
         1: JSON
         2: MessagePack
-        3 - 15: reserved for future serializers
+        3: CBOR
+        4 - 15: reserved for future serializers
 
 Here is a Python program that prints all (currently) permissible values for the *second octet*:
 
 ```python
 SERMAP = {
     1: 'json',
-    2: 'messagepack'
+    2: 'msgpack',
+    3: 'cbor',
 }
 
 # map serializer / max. msg length to RawSocket handshake
