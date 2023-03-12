@@ -197,7 +197,7 @@ for i in range(256):
 
 **Serialization**
 
-To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON or MessagePack).
+To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON, MessagePack or CBOR).
 
 The length of the serialized messages in octets MUST NOT exceed the maximum requested by the *Peer*.
 
