@@ -138,7 +138,7 @@ Options:
 INTERRUPT.Options.mode|string == "killnowait"
 ```
 
-Progressive call cancellation, like in progressive call invocations, closes an important safety gap:
+Progressive call cancellation, like in progressive call invocations, addresses a potential security vulnerability:
 In cases where progressive call invocations are used to stream data from a *Caller*, and network connectivity is unreliable,
 the *Caller* may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
 consumption for the *Dealer* and *Callee*, due to the need to store temporary metadata about ongoing calls.
