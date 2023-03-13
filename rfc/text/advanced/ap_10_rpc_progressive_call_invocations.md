@@ -1,6 +1,6 @@
 ## Progressive Call Invocations {#rpc-progressive-call-invocations}
 
-A *Caller* may issue a progressive call with progressive call invocations. This can be useful in a few cases:
+A *Caller* may issue a progressive call having progressive invocations. This can be useful in a few cases:
 
 * Payload is too big to send it whole in one request, e.g., uploading a file.
 * Long-term data transfer that needs to be consumed early, such as a media stream.
