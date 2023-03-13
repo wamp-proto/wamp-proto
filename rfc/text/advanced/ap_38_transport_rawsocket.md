@@ -76,7 +76,9 @@ The possible values for `SERIALIZER` are:
         1: JSON
         2: MessagePack
         3: CBOR
-        4 - 15: reserved for future serializers
+        4: UBJSON
+        5: FlatBuffers
+        6 - 15: reserved for future serializers
 
 Here is a Python program that prints all (currently) permissible values for the *second octet*:
 
@@ -85,6 +87,8 @@ SERMAP = {
     1: 'json',
     2: 'msgpack',
     3: 'cbor',
+    4: 'ubjson',
+    5: 'flatbuffers',
 }
 
 # map serializer / max. msg length to RawSocket handshake
@@ -197,7 +201,7 @@ for i in range(256):
 
 **Serialization**
 
-To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON, MessagePack or CBOR).
+To send a WAMP message, the message is serialized according to the WAMP serializer agreed in the handshake (e.g. JSON, MessagePack, CBOR, UBJSON or FlatBuffers).
 
 The length of the serialized messages in octets MUST NOT exceed the maximum requested by the *Peer*.
 
