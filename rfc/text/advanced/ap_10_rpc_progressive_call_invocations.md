@@ -8,7 +8,7 @@ A *Caller* may issue a progressive call having progressive invocations. This can
   initiate data structures for a new call, etc.
 
 In such cases, a procedure implemented by a *Callee* and registered at a *Dealer* may be made to receive progressive call invocations,
-where the *Callee* waits after receiving the entire set of payload chunks before sending the result.
+where the *Callee* may start processing the incoming data without awaiting the entire set of payload chunks.
 
 
 **Feature Announcement**
