@@ -25,6 +25,12 @@ In addition, *Callees* MUST announce support of the _Call Cancelling_ feature vi
 {align="left"}
         HELLO.Details.roles.callee.features.call_cancelling|bool := true
 
+
+As a consequence, *Dealers* MUST also announce support of the _Call Cancelling_ feature via
+
+{align="left"}
+        WELCOME.Details.roles.dealer.features.call_cancelling|bool := true
+
 The following cases, where a *Caller* sends a `CALL` message with `progress := true`, MUST be treated as *protocol errors*
 with the underlying WAMP sessions being aborted:
 
