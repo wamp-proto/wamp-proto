@@ -51,7 +51,7 @@ final          | The section does not require any more attention.
 |   Features                        |               |               | [advanced/ap_features.md](text/advanced/ap_features.md) |  |
 |   Adv. RPC Features               | -             |               | -
 |     Progressive Call Results      | beta          |               | [advanced/ap_rpc_progressive_call_results.md](text/advanced/ap_rpc_progressive_call_results.md) | https://github.com/wamp-proto/wamp-proto/issues/199 |
-|     Progressive Calls             | sketch        |               | [advanced/ap_rpc_progressive_calls.md](text/advanced/ap_rpc_progressive_calls.md) | https://github.com/wamp-proto/wamp-proto/issues/167 |
+|     Progressive Call Invocations  | alpha         |               | [advanced/ap_rpc_progressive_call_invocations.md](text/advanced/ap_rpc_progressive_call_invocations.md) | https://github.com/wamp-proto/wamp-proto/issues/167 |
 |     Call Timeouts                 | alpha         |               | [advanced/ap_rpc_call_timeout.md](text/advanced/ap_rpc_call_timeout.md) | https://github.com/wamp-proto/wamp-proto/issues/155 |
 |     Call Cancelling               | alpha         |               | [advanced/ap_rpc_call_canceling.md](text/advanced/ap_rpc_call_canceling.md) | https://github.com/wamp-proto/wamp-proto/issues/160, https://github.com/wamp-proto/wamp-proto/issues/156, https://github.com/wamp-proto/wamp-proto/issues/141, https://github.com/wamp-proto/wamp-proto/issues/140 |
 |     Caller Identification         | alpha         |               | [advanced/ap_rpc_caller_identification.md](text/advanced/ap_rpc_caller_identification.md) | https://github.com/crossbario/crossbar/issues/283, https://github.com/wamp-proto/wamp-proto/issues/57 |

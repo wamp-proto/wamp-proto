@@ -71,7 +71,7 @@ A *Caller* indicates its willingness to receive progressive results by setting
     ]
 ```
 
-If the *Callee* supports progressive calls, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
+If the *Callee* supports Progressive Call Results, the *Dealer* will forward the *Caller's* willingness to receive progressive results by setting
 
 {align="left"}
         INVOCATION.Details.receive_progress|bool := true
@@ -300,7 +300,7 @@ Options:
 INTERRUPT.Options.mode|string == "killnowait"
 ```
 
-Progressive call result cancellation closes an important safety gap: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up *Callees* streaming results to dead *Callers*. This can overload the router and further degrade network connectivity.
+Cancellation of Progressive Call Results addresses a potential security vulnerability: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* may often get disconnected in the middle of receiving such progressive results. Without the mandated cancellation behavior, recurring connect-call-disconnect cycles by a *Caller* would result in a rapidly growing backlog of unprocessed streaming results, overloading the router and further degrading network connectivity.
 
 The message flow for progressive results cancellation involves:
 
