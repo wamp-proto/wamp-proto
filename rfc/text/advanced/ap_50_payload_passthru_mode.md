@@ -5,13 +5,13 @@ payload data is presented in some specific format that can not be simply recogni
 
 Here are some use cases:
 
-* Using WAMP via gateways to other technologies like MQTT Brokers or AMQP Queues. So the actual payload 
-  is, for example, MQTT message that should be delivered to a WAMP topic as is. 
+* Using WAMP via gateways to other technologies like MQTT Brokers or AMQP Queues. So the actual payload
+  is, for example, MQTT message that should be delivered to a WAMP topic as is.
 * Sensitive user data that should be delivered to a target *Callee* without any possibility of unveiling it in transit.
 
 The above use cases can be fulfilled with the `Payload Passthru Mode` feature. This feature allows:
 
-* Specifying additional attributes within `CALL`, `PUBLISH`, `EVENT`, `YIELD`, `RESULT` messages 
+* Specifying additional attributes within `CALL`, `PUBLISH`, `EVENT`, `YIELD`, `RESULT` messages
   to signal the *Router* to skip payload inspection/conversion.
 * The forwarding of these additional attributes via `INVOCATION` and `ERROR` messages
 * Encrypting and decrypting payload using cryptographic algorithms.
@@ -20,7 +20,7 @@ The above use cases can be fulfilled with the `Payload Passthru Mode` feature. T
 **Feature Announcement**
 
 Support for this advanced feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`),
-*Dealers* (`role := "dealer"`), *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`) 
+*Dealers* (`role := "dealer"`), *Publishers* (`role := "publisher"`), *Subscribers* (`role := "subscriber"`)
 and *Brokers* (`role := "broker"`) via
 
 {align="left"}
@@ -38,16 +38,16 @@ Cases where a *Caller* sends a `CALL` message with `payload passthru` to a *Deal
 connections must be aborted with the `wamp.error.protocol_violation` error reason.
 
 Cases where a *Caller* sends a `CALL` message with `payload passthru` to a *Dealer* that supports this feature,
-which then must be routed to a *Callee* which doesn't support `payload passthru`, MUST be treated as 
-*APPLICATION ERRORS* and the *Dealer* MUST respond to the *Caller* with a `wamp.error.feature_not_supported` 
+which then must be routed to a *Callee* which doesn't support `payload passthru`, MUST be treated as
+*APPLICATION ERRORS* and the *Dealer* MUST respond to the *Caller* with a `wamp.error.feature_not_supported`
 error message.
 
 Cases where a *Publisher* sends a `PUBLISH` message with `payload passthru`, without announcing it during `HELLO`
 handshake, MUST be treated as *PROTOCOL ERRORS* and the underlying WAMP connections must be aborted with
 the `wamp.error.protocol_violation` error reason.
 
-Cases where a *Publisher* sends a `PUBLISH` message with `payload passthru` to a *Broker*, with the latter not 
-announcing `payload passthru` support during the `WELCOME` handshake, MUST be treated as *PROTOCOL ERRORS* and 
+Cases where a *Publisher* sends a `PUBLISH` message with `payload passthru` to a *Broker*, with the latter not
+announcing `payload passthru` support during the `WELCOME` handshake, MUST be treated as *PROTOCOL ERRORS* and
 the underlying WAMP connections must be aborted with the `wamp.error.protocol_violation` error reason.
 
 Cases where a *Publisher* sends a `PUBLISH` message with `payload passthru` to a *Broker* that supports this feature,
@@ -59,18 +59,18 @@ handshake MUST be treated as *PROTOCOL ERRORS* and the underlying WAMP connectio
 the `wamp.error.protocol_violation` error reason.
 
 Cases where a *Callee* sends a `YIELD` message with `payload passthru` to a *Dealer*, with the latter not announcing
-`payload passthru` support during the `WELCOME` handshake, MUST be treated as *PROTOCOL ERRORS* and the 
+`payload passthru` support during the `WELCOME` handshake, MUST be treated as *PROTOCOL ERRORS* and the
 underlying WAMP connections must be aborted with the `wamp.error.protocol_violation` error reason.
 
 Cases where a *Callee* sends a `YIELD` message with `payload passthru` to a *Dealer* that supports this feature,
 which then must be routed to the *Caller* which doesn't support `payload passthru`, MUST be treated as
-*APPLICATION ERRORS* and the *Dealer* MUST respond to the *Callee* with a `wamp.error.feature_not_supported` 
+*APPLICATION ERRORS* and the *Dealer* MUST respond to the *Callee* with a `wamp.error.feature_not_supported`
 error message.
 
 **Message Attributes**
 
-To use payload passthru mode, the options for `CALL`, `PUBLISH` and `YIELD` messages MUST be extended with additional 
-attributes. These additional attributes must be forwarded via `INVOCATION`, `EVENT` and `RESULT` messages, respectively, 
+To use payload passthru mode, the options for `CALL`, `PUBLISH` and `YIELD` messages MUST be extended with additional
+attributes. These additional attributes must be forwarded via `INVOCATION`, `EVENT` and `RESULT` messages, respectively,
 as well as `ERROR` messages in the case of failures.
 
 {align="left"}
@@ -119,10 +119,10 @@ as well as `ERROR` messages in the case of failures.
 **ppt_scheme Attribute**
 
 The `ppt_scheme` identifies the Payload Schema. It is a required string attribute. For End-2-End Encryption flow
-this attribute can contain the name or identifier of a key management provider that is known to the target peer, 
-so it can be used with help of additional `ppt_*` attributes to obtain information about encryption keys. 
-For gateways and external schemas this can contain the name of related technology. The one predefined is `mqtt`. 
-Others may be introduced later. A *Router* can recognize that `Payload Passthru Mode` is in use by checking 
+this attribute can contain the name or identifier of a key management provider that is known to the target peer,
+so it can be used with help of additional `ppt_*` attributes to obtain information about encryption keys.
+For gateways and external schemas this can contain the name of related technology. The one predefined is `mqtt`.
+Others may be introduced later. A *Router* can recognize that `Payload Passthru Mode` is in use by checking
 the existence and non-empty value of this attribute within the options of `CALL`, `PUBLISH` and `YIELD` messages.
 
 **ppt_serializer Attribute**
@@ -130,19 +130,19 @@ the existence and non-empty value of this attribute within the options of `CALL`
 The `ppt_serializer` attribute is optional. It specifies what serializer was used to encode the payload.
 It can be a `native` value to indicate that the incoming data is tunneling through other technologies
 specified by the `ppt_scheme`, or it can be ordinary `json`, `msgpack`, `cbor`, `flatbuffers` data serializers.
-For some predefined `ppt_scheme` schemas this option may be omitted as schema defines the concrete serializer. 
+For some predefined `ppt_scheme` schemas this option may be omitted as schema defines the concrete serializer.
 See predefined schemas below.
 
 **ppt_cipher Attribute**
 
-The `ppt_cipher` attribute is optional. It is required if the payload is encrypted. This attribute specifies the 
+The `ppt_cipher` attribute is optional. It is required if the payload is encrypted. This attribute specifies the
 cryptographic algorithm that was used to encrypt the payload. It can be `xsalsa20poly1305`, `aes256gcm` for now.
 
 **ppt_keyid Attribute**
 
-The `ppt_keyid` attribute is optional. This attribute can contain the encryption key id that was used to encrypt 
-the payload. The `ppt_keyid` attribute is a string type. The value can be a hex-encoded string, URI, DNS name, 
-Ethereum address, UUID identifier - any meaningful value which allows the target peer to choose a private key 
+The `ppt_keyid` attribute is optional. This attribute can contain the encryption key id that was used to encrypt
+the payload. The `ppt_keyid` attribute is a string type. The value can be a hex-encoded string, URI, DNS name,
+Ethereum address, UUID identifier - any meaningful value which allows the target peer to choose a private key
 without guessing. The format of the value may depend on the `ppt_scheme` attribute.
 
 **ppt_ Predefined Schemes**
@@ -192,25 +192,25 @@ checksum according to EIP55.
 
 
 When `Payload Passthru Mode` is used for gateways to other technologies, such as MQTT Brokers, then
-the `ppt_serializer` attribute may be set to the `native` value. This means that the payload is not to be modified 
-by WAMP peers, nor serialized in any manner, and is delivered as-is from the originating peer. Another possible case 
-is when the `ppt_serializer` attribute is set to any valid serializer, for example `msgpack`. In this case the 
-originating WAMP client peer first applies `ppt_serializer` to serialize the payload (without encryption), then 
-the resulting binary payload is embedded in the WAMP message, the latter having possibly a different serializer 
+the `ppt_serializer` attribute may be set to the `native` value. This means that the payload is not to be modified
+by WAMP peers, nor serialized in any manner, and is delivered as-is from the originating peer. Another possible case
+is when the `ppt_serializer` attribute is set to any valid serializer, for example `msgpack`. In this case the
+originating WAMP client peer first applies `ppt_serializer` to serialize the payload (without encryption), then
+the resulting binary payload is embedded in the WAMP message, the latter having possibly a different serializer
 depending on the one chosen during WAMP Session establishment.
 
 **Important Note Regarding JSON Serialization**
 
-With `Payload Passthru Mode`, payloads are treated as binary. To send these binary payloads, the WAMP session 
-serializer MUST support byte arrays. Most serialization formats known to WAMP support byte arrays, but JSON does 
-not support them natively. To use `Payload Passthru Mode` with a JSON serializer, WAMP peers MUST perform the special 
-[Binary serialization in JSON](#binary-support-in-json). This conversion may have unacceptable overhead, so it is 
-generally advised to use WAMP session serializers with native byte array support, for example, 
+With `Payload Passthru Mode`, payloads are treated as binary. To send these binary payloads, the WAMP session
+serializer MUST support byte arrays. Most serialization formats known to WAMP support byte arrays, but JSON does
+not support them natively. To use `Payload Passthru Mode` with a JSON serializer, WAMP peers MUST perform the special
+[Binary serialization in JSON](#binary-support-in-json). This conversion may have unacceptable overhead, so it is
+generally advised to use WAMP session serializers with native byte array support, for example,
 `MessagePack`, `CBOR`, or `FlatBuffers`.
 
 **Message Structure**
 
-When `Payload Passthru Mode` is in use, the message payload MUST be sent as one binary item within 
+When `Payload Passthru Mode` is in use, the message payload MUST be sent as one binary item within
 `Arguments|list`, while `ArgumentsKw|dict` MUST be absent or empty.
 
 Since many WAMP messages assume the possibility of simultaneous use of `Arguments|list` and `ArgumentsKw|dict`,
@@ -249,8 +249,8 @@ This will allow maintaining a single interface for client applications, regardle
 
 *Example.* Caller-to-Dealer progressive `CALL` with encryption and key ID.
 
-Note that nothing prevents the use of `Payload Passthru Mode` with other features such as, 
-for example, `Progressive Calls`.
+Note that nothing prevents the use of `Payload Passthru Mode` with other features such as,
+for example, `Progressive Call Results` or `Progressive Call Invocations`.
 
 {align="left"}
 ```json
@@ -269,7 +269,7 @@ for example, `Progressive Calls`.
     ]
 ```
 
-*Example.* Caller-to-Dealer `CALL` with MQTT payload. Specifying `"ppt_serializer": "native"` means that 
+*Example.* Caller-to-Dealer `CALL` with MQTT payload. Specifying `"ppt_serializer": "native"` means that
 the original MQTT message payload is passed as WAMP payload message as is, without any transcoding.
 
 {align="left"}
@@ -287,8 +287,8 @@ the original MQTT message payload is passed as WAMP payload message as is, witho
 ```
 
 *Example.* Caller-to-Dealer `CALL` with MQTT payload. Specifying `"ppt_scheme": "mqtt"` simply indicates that
-the original source of payload data is received from a related system. Specifying `"ppt_serializer": "json"` 
-means that the original MQTT message payload was parsed and encoded with the `json` serializer before 
+the original source of payload data is received from a related system. Specifying `"ppt_serializer": "json"`
+means that the original MQTT message payload was parsed and encoded with the `json` serializer before
 embedding it into WAMP message.
 
 {align="left"}
@@ -470,7 +470,7 @@ Nothing prevents the use of `Payload Passthru Mode` with other features such as,
 
 **About Supported Serializers and Cryptographic Ciphers**
 
-WAMP serves as infrastructure for delivering messages between peers. Regardless of what encryption algorithm 
-and serializer were chosen for `Payload Passthru Mode`, a *Router* shall not inspect and analyze the `ppt_` options 
-and payload of encrypted messages. The application is responsible for choosing serializers and 
+WAMP serves as infrastructure for delivering messages between peers. Regardless of what encryption algorithm
+and serializer were chosen for `Payload Passthru Mode`, a *Router* shall not inspect and analyze the `ppt_` options
+and payload of encrypted messages. The application is responsible for choosing serializers and
 ciphers known to every peer involved in message processing.
