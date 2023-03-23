@@ -1,6 +1,6 @@
 ## Progressive Call Invocations {#rpc-progressive-call-invocations}
 
-A *Caller* may issue a progressive call having progressive invocations. This can be useful in a few cases:
+A *Caller* may issue a call having progressive invocations. This can be useful in a few cases:
 
 * Payload is too big to send it whole in one request, e.g., uploading a file.
 * Long-term data transfer that needs to be consumed early, such as a media stream.
@@ -126,7 +126,7 @@ set `"progress": false` which is the default.
 
 RPCs can have a multiple registrations (see `Shared Registration` feature) with different `<invocation_policies>`.
 However, allowing progressive `CALL` messages to be routed to different *Callees* would lead to unexpected results.
-To prevent this the *Dealer* must make a first `INVOCATION` based on `<invocation_policy>` and then route all
+To prevent this the *Dealer* MUST make a first `INVOCATION` based on `<invocation_policy>` and then route all
 subsequent `progressive` calls to the same *Callee*.
 
 
@@ -193,7 +193,7 @@ as not supporting progressive call invocations.
 
 *Progressive Call Invocations* may be used in conjunction with *Progressive Call Results* if the *Caller*, *Dealer*, and *Callee* all support both features. This allows the *Callee* to start sending partial results back to the *Caller* after receiving one or more initial payload chunks. Efficient two-way streams between a *Caller* and *Callee* can be implemented this way.
 
-The following message flow illustrates a progressive call using progressive call invocations when a *Callee* starts sending progressive call
+The following message flow illustrates a call using progressive call invocations when a *Callee* starts sending progressive call
 results immediately. Note that `YIELD` messages don't need to be matched with `CALL`/`INVOCATION` messages.
 For example, the *caller* can send a few `CALL` messages before starting to receive `RESULT` messages; they do not need
 to be matched pairs.
