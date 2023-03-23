@@ -6,11 +6,11 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>The Web Application Messaging Protocol</title>
 <meta content="Tobias Oberstein" name="author">
-<meta content="xml2rfc 3.16.0" name="generator">
+<meta content="xml2rfc 3.17.0" name="generator">
 <meta content="WebSocket, WAMP, real-time, RPC, PubSub" name="keyword">
 <meta content="WAMP" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.16.0
+  xml2rfc 3.17.0
     Python 3.9.16
     appdirs 1.4.4
     ConfigArgParse 1.5.3
@@ -252,7 +252,8 @@ a[href]:hover {
   background-color: #f2f2f2;
 }
 figcaption a[href],
-a[href].selfRef {
+a[href].selfRef,
+.iref + a[href].internal {
   color: #222;
 }
 /* XXX probably not this:
@@ -1205,7 +1206,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 14 September 2023</td>
+<td class="center">Expires 24 September 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1219,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-03-13" class="published">13 March 2023</time>
+<time datetime="2023-03-23" class="published">23 March 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-09-14">14 September 2023</time></dd>
+<dd class="expires"><time datetime="2023-09-24">24 September 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1253,7 +1254,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1616,7 +1617,7 @@ li > p:last-of-type:only-child {
                 <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-progressive-call-results" class="internal xref">Progressive Call Results</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-progressive-calls" class="internal xref">Progressive Calls</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-progressive-call-invocation" class="internal xref">Progressive Call Invocations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
                 <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-call-timeouts" class="internal xref">Call Timeouts</a></p>
@@ -4919,7 +4920,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">
-                <a href="#rpc-progressive-calls">Progressive Calls</a>
+                <a href="#rpc-progressive-call-invocations">Progressive Call Invocations</a>
 </td>
               <td class="text-left" rowspan="1" colspan="1">alpha</td>
               <td class="text-left" rowspan="1" colspan="1"></td>
@@ -6558,7 +6559,7 @@ results or event payloads is contained in<a href="#section-10.3-6" class="pilcro
     ]
 </pre><a href="#section-11.1-12" class="pilcrow">¶</a>
 </div>
-<p id="section-11.1-13">If the <em>Callee</em> supports progressive calls, the <em>Dealer</em> will forward the <em>Caller's</em> willingness to receive progressive results by setting<a href="#section-11.1-13" class="pilcrow">¶</a></p>
+<p id="section-11.1-13">If the <em>Callee</em> supports Progressive Call Results, the <em>Dealer</em> will forward the <em>Caller's</em> willingness to receive progressive results by setting<a href="#section-11.1-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-11.1-14">
 <pre>    INVOCATION.Details.receive_progress|bool := true
 </pre><a href="#section-11.1-14" class="pilcrow">¶</a>
@@ -6751,7 +6752,7 @@ results or event payloads is contained in<a href="#section-10.3-6" class="pilcro
 <pre>INTERRUPT.Options.mode|string == "killnowait"
 </pre><a href="#section-11.1-59" class="pilcrow">¶</a>
 </div>
-<p id="section-11.1-60">Progressive call result cancellation closes an important safety gap: In cases where progressive results are used to stream data to <em>Callers</em>, and network connectivity is unreliable, <em>Callers</em> my often get disconnected in the middle of receiving progressive results. Recurring connect, call, disconnect cycles can quickly build up <em>Callees</em> streaming results to dead <em>Callers</em>. This can overload the router and further degrade network connectivity.<a href="#section-11.1-60" class="pilcrow">¶</a></p>
+<p id="section-11.1-60">Cancellation of Progressive Call Results addresses a potential security vulnerability: In cases where progressive results are used to stream data to <em>Callers</em>, and network connectivity is unreliable, <em>Callers</em> may often get disconnected in the middle of receiving such progressive results. Without the mandated cancellation behavior, recurring connect-call-disconnect cycles by a <em>Caller</em> would result in a rapidly growing backlog of unprocessed streaming results, overloading the router and further degrading network connectivity.<a href="#section-11.1-60" class="pilcrow">¶</a></p>
 <p id="section-11.1-61">The message flow for progressive results cancellation involves:<a href="#section-11.1-61" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-11.1-62">
 <pre> ,------.           ,------.          ,------.
@@ -6796,12 +6797,12 @@ results or event payloads is contained in<a href="#section-10.3-6" class="pilcro
 <p id="section-11.1-71">Note that for progressive results, the timeout value does <em>not</em> correspond to the duration of the complete call from initiation to the final result. The rationale for this is that it would be unfeasible to compute a reasonable timeout value for a call having a non-deterministic number of progressive results.<a href="#section-11.1-71" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="rpc-progressive-calls">
+<div id="rpc-progressive-call-invocations">
 <section id="section-11.2">
-        <h3 id="name-progressive-calls">
-<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-progressive-calls" class="section-name selfRef">Progressive Calls</a>
+        <h3 id="name-progressive-call-invocation">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-progressive-call-invocation" class="section-name selfRef">Progressive Call Invocations</a>
         </h3>
-<p id="section-11.2-1">A <em>Caller</em> may issue a progressive call. This can be useful in a few cases:<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-1">A <em>Caller</em> may issue a call having progressive invocations. This can be useful in a few cases:<a href="#section-11.2-1" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-11.2-2.1">Payload is too big to send it whole in one request, e.g., uploading a file.<a href="#section-11.2-2.1" class="pilcrow">¶</a>
 </li>
@@ -6811,35 +6812,40 @@ results or event payloads is contained in<a href="#section-10.3-6" class="pilcro
 initiate data structures for a new call, etc.<a href="#section-11.2-2.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-11.2-3">In such cases, a procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may be made to receive progressive calls,
-where the <em>Callee</em> waits after receiving the entire set of payload chunks before sending the result.<a href="#section-11.2-3" class="pilcrow">¶</a></p>
+<p id="section-11.2-3">In such cases, a procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may be made to receive progressive call invocations,
+where the <em>Callee</em> may start processing the<span class="unicode">  (U+00A0)</span>incoming data without awaiting the entire set of payload chunks.<a href="#section-11.2-3" class="pilcrow">¶</a></p>
 <p id="section-11.2-4"><strong>Feature Announcement</strong><a href="#section-11.2-4" class="pilcrow">¶</a></p>
 <p id="section-11.2-5">Support for this advanced feature MUST be announced by <em>Callers</em> (<code>role := "caller"</code>), <em>Callees</em> (<code>role := "callee"</code>)
 and <em>Dealers</em> (<code>role := "dealer"</code>) via<a href="#section-11.2-5" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-11.2-6">
-<pre>    HELLO.Details.roles.&lt;role&gt;.features.progressive_calls|bool := true
+<pre>    HELLO.Details.roles.&lt;role&gt;.features.progressive_call_invocations|bool := true
 </pre><a href="#section-11.2-6" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-7">Progressive Calls can work only if all three peers support and announce this feature.
+<p id="section-11.2-7">Progressive call invocations can work only if all three peers support and announce this feature.
 In addition, <em>Callees</em> MUST announce support of the <em>Call Cancelling</em> feature via<a href="#section-11.2-7" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-11.2-8">
 <pre>    HELLO.Details.roles.callee.features.call_cancelling|bool := true
 </pre><a href="#section-11.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-9">The following cases, where a <em>Caller</em> sends a <code>CALL</code> message with <code>progress := true</code>, MUST be treated as <em>protocol errors</em>
-with the underlying WAMP sessions being aborted:<a href="#section-11.2-9" class="pilcrow">¶</a></p>
+<p id="section-11.2-9">As a consequence, <em>Dealers</em> MUST also announce support of the <em>Call Cancelling</em> feature via<a href="#section-11.2-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-10">
+<pre>    WELCOME.Details.roles.dealer.features.call_cancelling|bool := true
+</pre><a href="#section-11.2-10" class="pilcrow">¶</a>
+</div>
+<p id="section-11.2-11">The following cases, where a <em>Caller</em> sends a <code>CALL</code> message with <code>progress := true</code>, MUST be treated as <em>protocol errors</em>
+with the underlying WAMP sessions being aborted:<a href="#section-11.2-11" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-11.2-10.1">The <em>Caller</em> did not announce the progressive calls feature during the <code>HELLO</code> handshake.<a href="#section-11.2-10.1" class="pilcrow">¶</a>
+<li class="compact" id="section-11.2-12.1">The <em>Caller</em> did not announce the progressive call invocations feature during the <code>HELLO</code> handshake.<a href="#section-11.2-12.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-10.2">The <em>Dealer</em> did not announce the progressive calls feature during the <code>HELLO</code> handshake.<a href="#section-11.2-10.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-12.2">The <em>Dealer</em> did not announce the progressive call invocations feature during the <code>HELLO</code> handshake.<a href="#section-11.2-12.2" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-11.2-11">Otherwise, in cases where the <em>Caller</em> sends a <code>CALL</code> message with <code>progress := true</code> but the <em>Callee</em> does not support
-progressive calls or call cancelling, the call MUST be treated as an <em>application error</em> with the <em>Dealer</em> responding
-to the <em>Caller</em> with the <code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-11" class="pilcrow">¶</a></p>
-<p id="section-11.2-12"><strong>Message Flow</strong><a href="#section-11.2-12" class="pilcrow">¶</a></p>
-<p id="section-11.2-13">The message flow for a progressive call when a <em>Callee</em> waits for all chunks before processing and sending a single result:<a href="#section-11.2-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-14">
+<p id="section-11.2-13">Otherwise, in cases where the <em>Caller</em> sends a <code>CALL</code> message with <code>progress := true</code> but the <em>Callee</em> does not support
+progressive call invocations or call cancelling, the call MUST be treated as an <em>application error</em> with the <em>Dealer</em> responding
+to the <em>Caller</em> with the <code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-13" class="pilcrow">¶</a></p>
+<p id="section-11.2-14"><strong>Message Flow</strong><a href="#section-11.2-14" class="pilcrow">¶</a></p>
+<p id="section-11.2-15">The message flow for a progressive call when a <em>Callee</em> waits for all chunks before processing and sending a single result:<a href="#section-11.2-15" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-16">
 <pre> ,------.                  ,------.                 ,------.
  |Caller|                  |Dealer|                 |Callee|
  `--+---'                  `--+---'                 `--+---'
@@ -6867,17 +6873,17 @@ to the <em>Caller</em> with the <code>wamp.error.feature_not_supported</code> er
  ,--+---.                  ,--+---.                 ,--+---.
  |Caller|                  |Dealer|                 |Callee|
  `------'                  `------'                 `------'
-</pre><a href="#section-11.2-14" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-16" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-15">As a <code>progressive</code> call chunks are part of the same overall call, the <em>Caller</em> must send the same <code>Request|id</code>
-for every <code>CALL</code> and the <em>Dealer</em> must also use the same <code>Request|id</code> with every <code>INVOCATION</code> to the <em>Callee</em>.<a href="#section-11.2-15" class="pilcrow">¶</a></p>
-<p id="section-11.2-16">A <em>Caller</em> indicates its willingness to issue a progressive call by setting<a href="#section-11.2-16" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-17">
+<p id="section-11.2-17">As a <code>progressive</code> call chunks are part of the same overall call, the <em>Caller</em> must send the same <code>Request|id</code>
+for every <code>CALL</code> and the <em>Dealer</em> must also use the same <code>Request|id</code> with every <code>INVOCATION</code> to the <em>Callee</em>.<a href="#section-11.2-17" class="pilcrow">¶</a></p>
+<p id="section-11.2-18">A <em>Caller</em> indicates its willingness to issue a progressive call by setting<a href="#section-11.2-18" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-19">
 <pre>    CALL.Options.progress|bool := true
-</pre><a href="#section-11.2-17" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-19" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-18"><em>Example.</em> Caller-to-Dealer <code>CALL</code><a href="#section-11.2-18" class="pilcrow">¶</a></p>
-<div class="lang-json sourcecode" id="section-11.2-19">
+<p id="section-11.2-20"><em>Example.</em> Caller-to-Dealer <code>CALL</code><a href="#section-11.2-20" class="pilcrow">¶</a></p>
+<div class="lang-json sourcecode" id="section-11.2-21">
 <pre>    [
         48,
         77245,
@@ -6887,15 +6893,15 @@ for every <code>CALL</code> and the <em>Dealer</em> must also use the same <code
         "com.myapp.get_country_by_coords",
         [50.450001, 30.523333]
     ]
-</pre><a href="#section-11.2-19" class="pilcrow">¶</a>
-</div>
-<p id="section-11.2-20">If the <em>Callee</em> supports progressive calls, the <em>Dealer</em> shall forward the <em>Caller's</em> willingness to send progressive calls by setting<a href="#section-11.2-20" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-21">
-<pre>    INVOCATION.Details.progress|bool := true
 </pre><a href="#section-11.2-21" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-22"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code><a href="#section-11.2-22" class="pilcrow">¶</a></p>
-<div class="lang-json sourcecode" id="section-11.2-23">
+<p id="section-11.2-22">If the <em>Callee</em> supports progressive call invocations, the <em>Dealer</em> shall forward the <em>Caller's</em> willingness to send progressive call invocations by setting<a href="#section-11.2-22" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-23">
+<pre>    INVOCATION.Details.progress|bool := true
+</pre><a href="#section-11.2-23" class="pilcrow">¶</a>
+</div>
+<p id="section-11.2-24"><em>Example.</em> Dealer-to-Callee <code>INVOCATION</code><a href="#section-11.2-24" class="pilcrow">¶</a></p>
+<div class="lang-json sourcecode" id="section-11.2-25">
 <pre>    [
         68,
         35224,
@@ -6905,42 +6911,34 @@ for every <code>CALL</code> and the <em>Dealer</em> must also use the same <code
         },
         [50.450001, 30.523333]
     ]
-</pre><a href="#section-11.2-23" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-25" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-24">A call invocation MUST <em>always</em> end in a <em>normal</em> <code>CALL</code> without the <code>"progress": true</code> option, or explicitly
-set <code>"progress": false</code> which is the default.<a href="#section-11.2-24" class="pilcrow">¶</a></p>
-<p id="section-11.2-25"><strong>Progressive Calls and Shared Registration</strong><a href="#section-11.2-25" class="pilcrow">¶</a></p>
-<p id="section-11.2-26">RPCs can have a multiple registrations (see <code>Shared Registration</code> feature) with different <code>&lt;invocation_policies&gt;</code>.
-In this case, progressive <code>CALL</code> messages can be routed to different <em>Callees</em>, which can lead to unexpected results.
-To bind <code>INVOCATION</code> messages to the same <em>Callee</em>, the <em>Caller</em> can specify the <code>sticky</code> option during <code>CALL</code><a href="#section-11.2-26" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-27">
-<pre>    CALL.Options.sticky|bool := true
-</pre><a href="#section-11.2-27" class="pilcrow">¶</a>
-</div>
-<p id="section-11.2-28">In this case, the <em>Dealer</em> must make a first <code>INVOCATION</code> based on <code>&lt;invocation_policy&gt;</code> and then route all
+<p id="section-11.2-26">A call invocation MUST <em>always</em> end in a <em>normal</em> <code>CALL</code> without the <code>"progress": true</code> option, or explicitly
+set <code>"progress": false</code> which is the default.<a href="#section-11.2-26" class="pilcrow">¶</a></p>
+<p id="section-11.2-27"><strong>Progressive Call Invocations and Shared Registration</strong><a href="#section-11.2-27" class="pilcrow">¶</a></p>
+<p id="section-11.2-28">RPCs can have a multiple registrations (see <code>Shared Registration</code> feature) with different <code>&lt;invocation_policies&gt;</code>.
+However, allowing progressive <code>CALL</code> messages to be routed to different <em>Callees</em> would lead to unexpected results.
+To prevent this the <em>Dealer</em> MUST make a first <code>INVOCATION</code> based on <code>&lt;invocation_policy&gt;</code> and then route all
 subsequent <code>progressive</code> calls to the same <em>Callee</em>.<a href="#section-11.2-28" class="pilcrow">¶</a></p>
-<p id="section-11.2-29">If binding all ongoing <code>progressive</code> calls to the same <em>Callee</em> is not required, the <em>Caller</em> can set the <code>sticky</code> option to <code>false</code>.<a href="#section-11.2-29" class="pilcrow">¶</a></p>
-<p id="section-11.2-30">If <code>CALL.Options.sticky</code> is not specified, it is treated like <code>true</code>, so all <code>progressive</code>
-calls go to the same <em>Callee</em>.<a href="#section-11.2-30" class="pilcrow">¶</a></p>
-<p id="section-11.2-31"><strong>Progressive Call Cancellation</strong><a href="#section-11.2-31" class="pilcrow">¶</a></p>
-<p id="section-11.2-32">If the original <em>Caller</em> is no longer available for some reason (has left the realm), then the <em>Dealer</em> shall send
+<p id="section-11.2-29"><strong>Progressive Call Cancellation</strong><a href="#section-11.2-29" class="pilcrow">¶</a></p>
+<p id="section-11.2-30">If the original <em>Caller</em> is no longer available for some reason (has left the realm), then the <em>Dealer</em> shall send
 an <code>INTERRUPT</code> to the <em>Callee</em>. The <code>INTERRUPT</code> MUST have <code>Options.mode</code> set to <code>"killnowait"</code> to indicate to the
-client that no response should be sent to the <code>INTERRUPT</code>.<a href="#section-11.2-32" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-33">
+client that no response should be sent to the <code>INTERRUPT</code>.<a href="#section-11.2-30" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-31">
 <pre>[INTERRUPT, INVOCATION.Request|id, Options|dict]
+</pre><a href="#section-11.2-31" class="pilcrow">¶</a>
+</div>
+<p id="section-11.2-32">Options:<a href="#section-11.2-32" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-33">
+<pre>INTERRUPT.Options.mode|string == "killnowait"
 </pre><a href="#section-11.2-33" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-34">Options:<a href="#section-11.2-34" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-35">
-<pre>INTERRUPT.Options.mode|string == "killnowait"
-</pre><a href="#section-11.2-35" class="pilcrow">¶</a>
-</div>
-<p id="section-11.2-36">Progressive call cancellation, like in progressive calls, closes an important safety gap:
-In cases where progressive calls are used to stream data from a <em>Caller</em>, and network connectivity is unreliable,
+<p id="section-11.2-34">Progressive call cancellation, like in progressive call invocations, addresses a potential security vulnerability:
+In cases where progressive call invocations are used to stream data from a <em>Caller</em>, and network connectivity is unreliable,
 the <em>Caller</em> may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
-consumption for the <em>Dealer</em> and <em>Callee</em>, due to the need to store temporary metadata about ongoing calls.<a href="#section-11.2-36" class="pilcrow">¶</a></p>
-<p id="section-11.2-37">The message flow for cancelling progressive calls involves:<a href="#section-11.2-37" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-38">
+consumption for the <em>Dealer</em> and <em>Callee</em>, due to the need to store temporary metadata about ongoing calls.<a href="#section-11.2-34" class="pilcrow">¶</a></p>
+<p id="section-11.2-35">The message flow for cancelling calls with progressive call invocations involves:<a href="#section-11.2-35" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-36">
 <pre> ,------.            ,------.                 ,------.
  |Caller|            |Dealer|                 |Callee|
  `--+---'            `--+---'                 `--+---'
@@ -6962,25 +6960,23 @@ consumption for the <em>Dealer</em> and <em>Callee</em>, due to the need to stor
                      ,--+---.                 ,--+---.
                      |Dealer|                 |Callee|
                      `------'                 `------'
-</pre><a href="#section-11.2-38" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-36" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-39">Note: Any <code>ERROR</code> returned by the <em>Callee</em>, in response to an <code>INTERRUPT</code>, is ignored (same as in regular call
-canceling when mode="killnowait"). It is therefore not necessary for the <em>Callee</em> to send an <code>ERROR</code> message.<a href="#section-11.2-39" class="pilcrow">¶</a></p>
-<p id="section-11.2-40"><strong>Ignoring Progressive Call Requests</strong><a href="#section-11.2-40" class="pilcrow">¶</a></p>
-<p id="section-11.2-41">Unlike some other advanced features, a <em>Callee</em> cannot be unaware of progressive call requests.
+<p id="section-11.2-37">Note: Any <code>ERROR</code> returned by the <em>Callee</em>, in response to an <code>INTERRUPT</code>, is ignored (same as in regular call
+canceling when mode="killnowait"). It is therefore not necessary for the <em>Callee</em> to send an <code>ERROR</code> message.<a href="#section-11.2-37" class="pilcrow">¶</a></p>
+<p id="section-11.2-38"><strong>Ignoring Progressive Call Invocations</strong><a href="#section-11.2-38" class="pilcrow">¶</a></p>
+<p id="section-11.2-39">Unlike some other advanced features, a <em>Callee</em> cannot be unaware of progressive call invocations.
 Therefore, if a <em>Callee</em> doesn't support this feature, the <em>Dealer</em> MUST respond to the <em>Caller</em> with an
-<code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-41" class="pilcrow">¶</a></p>
-<p id="section-11.2-42">A <em>Callee</em> that supports progressive calls, but does not support call canceling, shall be considered by the <em>Dealer</em>
-as not supporting progressive calls.<a href="#section-11.2-42" class="pilcrow">¶</a></p>
-<p id="section-11.2-43"><strong>Progressive Calls with Progressive Call Results</strong><a href="#section-11.2-43" class="pilcrow">¶</a></p>
-<p id="section-11.2-44">Progressive calls may be used in conjunction with <em>Progressive Call Results</em> if the <em>Caller</em>, <em>Dealer</em>, and <em>Callee</em> all
-support both features. This allows the <em>Callee</em> to start sending partial results back to the <em>Caller</em> after receiving
-one or more initial payload chunks. Efficient two-way streams between a <em>Caller</em> and <em>Callee</em> can be implemented this way.<a href="#section-11.2-44" class="pilcrow">¶</a></p>
-<p id="section-11.2-45">The following message flow illustrates a progressive call when a <em>Callee</em> starts sending progressive call
+<code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-39" class="pilcrow">¶</a></p>
+<p id="section-11.2-40">A <em>Callee</em> that supports progressive call invocations, but does not support call canceling, shall be considered by the <em>Dealer</em>
+as not supporting progressive call invocations.<a href="#section-11.2-40" class="pilcrow">¶</a></p>
+<p id="section-11.2-41"><strong>Progressive Call Invocations with Progressive Call Results</strong><a href="#section-11.2-41" class="pilcrow">¶</a></p>
+<p id="section-11.2-42"><em>Progressive Call Invocations</em> may be used in conjunction with <em>Progressive Call Results</em> if the <em>Caller</em>, <em>Dealer</em>, and <em>Callee</em> all support both features. This allows the <em>Callee</em> to start sending partial results back to the <em>Caller</em> after receiving one or more initial payload chunks. Efficient two-way streams between a <em>Caller</em> and <em>Callee</em> can be implemented this way.<a href="#section-11.2-42" class="pilcrow">¶</a></p>
+<p id="section-11.2-43">The following message flow illustrates a call using progressive call invocations when a <em>Callee</em> starts sending progressive call
 results immediately. Note that <code>YIELD</code> messages don't need to be matched with <code>CALL</code>/<code>INVOCATION</code> messages.
 For example, the <em>caller</em> can send a few <code>CALL</code> messages before starting to receive <code>RESULT</code> messages; they do not need
-to be matched pairs.<a href="#section-11.2-45" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-46">
+to be matched pairs.<a href="#section-11.2-43" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-44">
 <pre> ,------.                  ,------.                 ,------.
  |Caller|                  |Dealer|                 |Callee|
  `--+---'                  `--+---'                 `--+---'
@@ -7031,50 +7027,47 @@ to be matched pairs.<a href="#section-11.2-45" class="pilcrow">¶</a></p>
  ,--+---.                  ,--+---.                 ,--+---.
  |Caller|                  |Dealer|                 |Callee|
  `------'                  `------'                 `------'
-</pre><a href="#section-11.2-46" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-44" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-47">Because they are part of the same call operation, the request ID is the same in all <code>CALL</code>,
-<code>INVOCATION</code>, <code>YIELD</code>, and <code>ERROR</code> messages in the above exchange.<a href="#section-11.2-47" class="pilcrow">¶</a></p>
-<p id="section-11.2-48"><strong>Freezing of Options in Progressive Calls</strong><a href="#section-11.2-48" class="pilcrow">¶</a></p>
-<p id="section-11.2-49">Except for <code>progress</code>, items in the <code>Options</code> dictionary of the <strong>initiating</strong> progressive <code>CALL</code> shall be effective for
-the entirety of the progressive call request. Only the <code>progress</code> option shall be considered by the <em>Dealer</em> in subsequent progressive calls
+<p id="section-11.2-45">Because they are part of the same call operation, the request ID is the same in all <code>CALL</code>,
+<code>INVOCATION</code>, <code>YIELD</code>, and <code>ERROR</code> messages in the above exchange.<a href="#section-11.2-45" class="pilcrow">¶</a></p>
+<p id="section-11.2-46"><strong>Freezing of Options in Progressive Call Invocations</strong><a href="#section-11.2-46" class="pilcrow">¶</a></p>
+<p id="section-11.2-47">Except for <code>progress</code>, items in the <code>Options</code> dictionary of the <strong>initiating</strong> progressive <code>CALL</code> shall be effective for
+the entirety of the progressive call request. Only the <code>progress</code> option shall be considered by the <em>Dealer</em> in subsequent progressive call invocations
 (within the same overall request). Except for <code>progress</code>, items in the <code>Details</code>
-dictionary of corresponding <code>INVOCATION</code> messages shall be based on the initiating progressive <code>CALL</code> only.<a href="#section-11.2-49" class="pilcrow">¶</a></p>
-<p id="section-11.2-50">For example, if <code>disclose_me=true</code> was specified in the initiating progressive call, all subsequent progressive calls
-(within the same request) shall be considered by the <em>Dealer</em> to implictly have <code>disclose_me=true</code> as well. That is, all
-<code>INVOCATION</code> messages associated with the overall request shall contain caller identify information.<a href="#section-11.2-50" class="pilcrow">¶</a></p>
-<p id="section-11.2-51">Note that any option (besides <code>progress</code>) can be omitted altogether in subsequent progressive calls. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (<em>Caller</em>) only needs to keep uploading more data thereafter.<a href="#section-11.2-51" class="pilcrow">¶</a></p>
-<p id="section-11.2-52">For reference, here is a list of options that are frozen upon the initial progressive call:<a href="#section-11.2-52" class="pilcrow">¶</a></p>
+dictionary of corresponding <code>INVOCATION</code> messages shall be based on the initiating progressive <code>CALL</code> only.<a href="#section-11.2-47" class="pilcrow">¶</a></p>
+<p id="section-11.2-48">For example, if <code>disclose_me=true</code> was specified in the initiating progressive call, all subsequent progressive call invocations
+(within the same call) shall be considered by the <em>Dealer</em> to implictly have <code>disclose_me=true</code> as well. That is, all
+<code>INVOCATION</code> messages associated with the overall request shall contain caller identify information.<a href="#section-11.2-48" class="pilcrow">¶</a></p>
+<p id="section-11.2-49">Note that any option (besides <code>progress</code>) can be omitted altogether in subsequent progressive call invocations. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (<em>Caller</em>) only needs to keep uploading more data thereafter.<a href="#section-11.2-49" class="pilcrow">¶</a></p>
+<p id="section-11.2-50">For reference, here is a list of options that are frozen upon the initial progressive call invocations:<a href="#section-11.2-50" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-11.2-53.1">
-            <code>CALL.Options.disclose_me|bool</code><a href="#section-11.2-53.1" class="pilcrow">¶</a>
+<li class="compact" id="section-11.2-51.1">
+            <code>CALL.Options.disclose_me|bool</code><a href="#section-11.2-51.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.2">
-            <code>CALL.Options.ppt_cipher|string</code><a href="#section-11.2-53.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.2">
+            <code>CALL.Options.ppt_cipher|string</code><a href="#section-11.2-51.2" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.3">
-            <code>CALL.Options.ppt_keyid|string</code><a href="#section-11.2-53.3" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.3">
+            <code>CALL.Options.ppt_keyid|string</code><a href="#section-11.2-51.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.4">
-            <code>CALL.Options.ppt_scheme|string</code><a href="#section-11.2-53.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.4">
+            <code>CALL.Options.ppt_scheme|string</code><a href="#section-11.2-51.4" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.5">
-            <code>CALL.Options.ppt_serializer|string</code><a href="#section-11.2-53.5" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.5">
+            <code>CALL.Options.ppt_serializer|string</code><a href="#section-11.2-51.5" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.6">
-            <code>CALL.Options.receive_progress|bool</code><a href="#section-11.2-53.6" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.6">
+            <code>CALL.Options.receive_progress|bool</code><a href="#section-11.2-51.6" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.7">
-            <code>CALL.Options.rkey</code><a href="#section-11.2-53.7" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.7">
+            <code>CALL.Options.rkey</code><a href="#section-11.2-51.7" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.8">
-            <code>CALL.Options.runmode|string</code><a href="#section-11.2-53.8" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.8">
+            <code>CALL.Options.runmode|string</code><a href="#section-11.2-51.8" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-53.9">
-            <code>CALL.Options.sticky|bool</code><a href="#section-11.2-53.9" class="pilcrow">¶</a>
-</li>
-          <li class="compact" id="section-11.2-53.10">
-            <code>CALL.Options.timeout|integer</code><a href="#section-11.2-53.10" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-51.9">
+            <code>CALL.Options.timeout|integer</code><a href="#section-11.2-51.9" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
@@ -11013,7 +11006,7 @@ transmit as a single element within <code>Arguments|list</code>.<a href="#sectio
 </div>
 <p id="section-14.1-51"><em>Example.</em> Caller-to-Dealer progressive <code>CALL</code> with encryption and key ID.<a href="#section-14.1-51" class="pilcrow">¶</a></p>
 <p id="section-14.1-52">Note that nothing prevents the use of <code>Payload Passthru Mode</code> with other features such as,
-for example, <code>Progressive Calls</code>.<a href="#section-14.1-52" class="pilcrow">¶</a></p>
+for example, <code>Progressive Call Results</code> or <code>Progressive Call Invocations</code>.<a href="#section-14.1-52" class="pilcrow">¶</a></p>
 <div class="lang-json sourcecode" id="section-14.1-53">
 <pre>    [
         48,
