@@ -435,3 +435,28 @@ If the original call already failed at the Dealer **before** the call would have
 
 {align="left"}
         [8, 48, 7814135, {}, "wamp.error.no_such_procedure"]
+
+## Caller Leaving During RPC Invocation
+
+If, after the *Dealer* sends an INVOCATION but before it receives a YIELD or ERROR message, the *Dealer* detects the original *Caller* leaving or disconnecting, then the *Dealer* shall send an INTERRUPT to the *Callee* if both the *Dealer* and *Callee* support the [*Call Canceling*](#rpc-call-canceling) advanced feature. That INTERRUPT message MUST have `Options.mode` set to `"killnowait"` to indicate to the *Callee* that no response should be sent for the INTERRUPT.
+
+{align="left"}
+        ,------.          ,------.          ,------.
+        |Caller|          |Dealer|          |Callee|
+        `--+---'          `--+---'          `--+---'
+           |       CALL      |                 |
+           | ---------------->                 |
+           |                 |    INVOCATION   |
+           |                 | ---------------->
+           |                 |                 |
+           |     GOODBYE     |                 |
+           | ---------------->                 |
+           |                 |                 |
+           |                 |    INTERRUPT    |
+           |                 | ---------------->
+           |                 |                 |
+        ,--+---.          ,--+---.          ,--+---.
+        |Caller|          |Dealer|          |Callee|
+        `------'          `------'          `------'
+
+If either the *Dealer* or the *Callee* does not support the *Call Canceling* feature, then an INTERRUPT message shall NOT sent in this scenario. Whether or not call canceling is supported, the *Dealer* shall be prepared to discard a YIELD or ERROR response associated with that defunct call request.
