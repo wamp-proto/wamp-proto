@@ -163,6 +163,30 @@ the *Caller* may often get disconnected in the middle of sending progressive dat
 consumption for the *Dealer* and *Callee*, due to the need to store temporary metadata about ongoing calls.
 
 
+**Callee Leaving**
+
+The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a call with progressive invocations shall be the same as in a basic, non-progressive call. That is, the *Dealer* sends an ERROR message to the *Caller* with the `wamp.error.canceled` URI. See [Callee Leaving During an RPC Invocation] (#rpc-callee-leaving) under the Basic Profile.
+
+{align="left"}
+     ,------.           ,------.                ,------.
+     |Caller|           |Dealer|                |Callee|
+     `--+---'           `--+---'                `--+---'
+        |  CALL (progress) |                       |
+        | ----------------->                       |
+        |                  | INVOCATION (progress) |
+        |                  | ---------------------->
+        |                  |                       |
+        |                  |                       |
+        |                  |        GOODBYE        |
+        |                  |<--------------------- |
+        |      ERROR       |                       |
+        | <--------------- |                       |
+        |                  |                       |
+     ,--+---.           ,--+---.                ,--+---.
+     |Caller|           |Dealer|                |Callee|
+     `------'           `------'                `------'
+
+
 **Ignoring Progressive Call Invocations**
 
 Unlike some other advanced features, a *Callee* cannot be unaware of progressive call invocations.
