@@ -316,6 +316,35 @@ The *Dealer*'s behavior for when a *Caller* leaves or disconnects during a progr
 Such cancellation of Progressive Call Results addresses a potential security vulnerability: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* may often get disconnected in the middle of receiving such progressive results. Without the mandated cancellation behavior, recurring connect-call-disconnect cycles by a *Caller* would result in a rapidly growing backlog of unprocessed streaming results, overloading the router and further degrading network connectivity.
 
 
+**Callee Leaving**
+
+The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a progressive results call shall be the same as in a basic, non-progressive call. That is, the *Dealer* sends an ERROR message to the *Caller* with the `wamp.error.canceled` URI. See [Callee Leaving During an RPC Invocation] (#rpc-callee-leaving) under the Basic Profile.
+
+{align="left"}
+     ,------.           ,------.          ,------.
+     |Caller|           |Dealer|          |Callee|
+     `--+---'           `--+---'          `--+---'
+        |        CALL      |                 |
+        | ----------------->                 |
+        |                  |    INVOCATION   |
+        |                  | ---------------->
+        |                  |                 |
+        |                  | YIELD (progress)|
+        |                  | <----------------
+        |                  |                 |
+        | RESULT (progress)|                 |
+        | <----------------|                 |
+        |                  |     GOODBYE     |
+        |                  |<--------------- |
+        |                  |                 |
+        |      ERROR       |                 |
+        | <--------------- |                 |
+        |                  |                 |
+     ,--+---.           ,--+---.          ,--+---.
+     |Caller|           |Dealer|          |Callee|
+     `------'           `------'          `------'
+
+
 **Ignoring Requests for Progressive Call Results**
 
 A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
