@@ -130,26 +130,9 @@ To prevent this the *Dealer* MUST make a first `INVOCATION` based on `<invocatio
 subsequent `progressive` calls to the same *Callee*.
 
 
-**Progressive Call Cancellation**
+**Caller Leaving**
 
-If the original *Caller* is no longer available for some reason (has left the realm), then the *Dealer* shall send
-an `INTERRUPT` to the *Callee*. The `INTERRUPT` MUST have `Options.mode` set to `"killnowait"` to indicate to the
-client that no response should be sent to the `INTERRUPT`.
-
-```
-[INTERRUPT, INVOCATION.Request|id, Options|dict]
-```
-Options:
-```
-INTERRUPT.Options.mode|string == "killnowait"
-```
-
-Progressive call cancellation, like in progressive call invocations, addresses a potential security vulnerability:
-In cases where progressive call invocations are used to stream data from a *Caller*, and network connectivity is unreliable,
-the *Caller* may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
-consumption for the *Dealer* and *Callee*, due to the need to store temporary metadata about ongoing calls.
-
-The message flow for cancelling calls with progressive call invocations involves:
+The *Dealer*'s behavior for when a *Caller* leaves or disconnects during a call with progressive invocations shall be the same as in a basic, non-progressive call. That is, the *Dealer* sends an INTERRUPT to the *Callee* with `mode="killnowait"`. See [Caller Leaving During RPC Invocation] (#rpc-caller-leaving) under the Basic Profile.
 
 {align="left"}
      ,------.            ,------.                 ,------.
@@ -174,9 +157,10 @@ The message flow for cancelling calls with progressive call invocations involves
                          |Dealer|                 |Callee|
                          `------'                 `------'
 
-
-Note: Any `ERROR` returned by the *Callee*, in response to an `INTERRUPT`, is ignored (same as in regular call
-canceling when mode="killnowait"). It is therefore not necessary for the *Callee* to send an `ERROR` message.
+Progressive call cancellation, like in progressive call invocations, addresses a potential security vulnerability:
+In cases where progressive call invocations are used to stream data from a *Caller*, and network connectivity is unreliable,
+the *Caller* may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
+consumption for the *Dealer* and *Callee*, due to the need to store temporary metadata about ongoing calls.
 
 
 **Ignoring Progressive Call Invocations**
