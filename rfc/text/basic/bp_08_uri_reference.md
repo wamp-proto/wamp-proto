@@ -43,6 +43,11 @@ A call failed since the given argument types or values are not acceptable to the
 {align="left"}
         wamp.error.invalid_argument
 
+A *Dealer* or *Callee* canceled a call previously issued
+
+{align="left"}
+        wamp.error.canceled
+
 A message could not be delivered due to transport payload size limits.
 
 {align="left"}

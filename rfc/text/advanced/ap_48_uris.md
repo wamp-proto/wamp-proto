@@ -58,11 +58,6 @@ Authorization of the *Principal* is required to perform the given *Action*. This
 
 ## Remote Procedure Calls
 
-A *Dealer* or *Callee* canceled a call previously issued
-
-{align="left"}
-        wamp.error.canceled
-
 A *Dealer* or *Callee* terminated a call that timed out
 
 {align="left"}
