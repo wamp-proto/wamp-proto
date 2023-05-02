@@ -312,8 +312,11 @@ The *Dealer*'s behavior for when a *Caller* leaves or disconnects during a progr
      `------'              |    INTERRUPT    |
       (gone)               | ---------------->
                            |                 |
+                        ,--+---.          ,--+---.
+                        |Dealer|          |Callee|
+                        `------'          `------'
 
-Such cancellation of Progressive Call Results addresses a potential security vulnerability: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* may often get disconnected in the middle of receiving such progressive results. Without the mandated cancellation behavior, recurring connect-call-disconnect cycles by a *Caller* would result in a rapidly growing backlog of unprocessed streaming results, overloading the router and further degrading network connectivity.
+Such cancellation when the caller leaves addresses a potential security vulnerability: In cases where progressive results are used to stream data to *Callers*, and network connectivity is unreliable, *Callers* may often get disconnected in the middle of receiving such progressive results. Without the mandated cancellation behavior, recurring connect-call-disconnect cycles by a *Caller* would result in a rapidly growing backlog of unprocessed streaming results, overloading the router and further degrading network connectivity.
 
 
 **Callee Leaving**
