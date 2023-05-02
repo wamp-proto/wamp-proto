@@ -449,16 +449,16 @@ If, after the *Dealer* sends an INVOCATION but before it receives a YIELD or ERR
            | ---------------->                 |
            |                 |    INVOCATION   |
            |                 | ---------------->
-           |                 |                 |
-           |     GOODBYE     |                 |
-           | ---------------->                 |
-           |                 |                 |
-           |                 |    INTERRUPT    |
-           |                 | ---------------->
-           |                 |                 |
-        ,--+---.          ,--+---.          ,--+---.
-        |Caller|          |Dealer|          |Callee|
-        `------'          `------'          `------'
+        ,--+---.             |                 |
+        |Caller|             |                 |
+        `------'             |                 |
+         (gone)              |                 |
+                             |    INTERRUPT    |
+                             | ---------------->
+                             |                 |
+                          ,--+---.          ,--+---.
+                          |Dealer|          |Callee|
+                          `------'          `------'
 
 If either the *Dealer* or the *Callee* does not support the *Call Canceling* feature, then an INTERRUPT message shall NOT sent in this scenario. Whether or not call canceling is supported, the *Dealer* shall be prepared to discard a YIELD or ERROR response associated with that defunct call request.
 
@@ -476,12 +476,12 @@ After sending an INVOCATION message, if a *Dealer* detects that the *Callee* has
            |                 |    INVOCATION   |
            |                 | ---------------->
            |                 |                 |
-           |                 |     GOODBYE     |
-           |                 |<--------------- |
-           |                 |                 |
-           |      ERROR      |                 |
-           |<--------------- |                 |
-           |                 |                 |
-        ,--+---.          ,--+---.          ,--+---.
-        |Caller|          |Dealer|          |Callee|
-        `------'          `------'          `------'
+           |                 |              ,--+---.
+           |                 |              |Callee|
+           |                 |              `------'
+           |      ERROR      |               (gone)
+           |<--------------- |
+           |                 |
+        ,--+---.          ,--+---.
+        |Caller|          |Dealer|
+        `------'          `------'

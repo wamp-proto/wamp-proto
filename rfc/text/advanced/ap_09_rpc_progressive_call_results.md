@@ -337,15 +337,15 @@ The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a progr
         |                  |                 |
         | RESULT (progress)|                 |
         | <----------------|                 |
-        |                  |     GOODBYE     |
-        |                  |<--------------- |
-        |                  |                 |
-        |      ERROR       |                 |
-        | <--------------- |                 |
-        |                  |                 |
-     ,--+---.           ,--+---.          ,--+---.
-     |Caller|           |Dealer|          |Callee|
-     `------'           `------'          `------'
+        |                  |              ,--+---.
+        |                  |              |Callee|
+        |                  |              `------'
+        |      ERROR       |               (gone)
+        | <--------------- |
+        |                  |
+     ,--+---.           ,--+---.
+     |Caller|           |Dealer|
+     `------'           `------'
 
 
 **Ignoring Requests for Progressive Call Results**
