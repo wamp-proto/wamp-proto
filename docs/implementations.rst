@@ -122,7 +122,7 @@ wick_               Go                                  CLI tool to make WAMP RP
 .. _AutobahnPython: https://github.com/crossbario/autobahn-python
 .. _awre: https://github.com/bwegh/awre
 .. _Backbone.wamp: https://github.com/darrrk/backbone.wamp
-.. _Bondy: https://gitlab.com/leapsight/bondy
+.. _Bondy: https://bondy.io
 .. _Bonefish: https://github.com/tplgy/bonefish
 .. _Cargotube: https://github.com/CargoTube/cargotube
 .. _connectanum: https://www.connectanum.com/
