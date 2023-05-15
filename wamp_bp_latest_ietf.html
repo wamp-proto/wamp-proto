@@ -24,7 +24,7 @@
     setuptools 58.1.0
     six 1.16.0
     wcwidth 0.2.6
-    weasyprint 58.1
+    weasyprint 59.0
 -->
 <link href="./.build/wamp-bp.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1203,7 +1203,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 11 November 2023</td>
+<td class="center">Expires 16 November 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1216,12 +1216,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-05-10" class="published">10 May 2023</time>
+<time datetime="2023-05-15" class="published">15 May 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-11-11">11 November 2023</time></dd>
+<dd class="expires"><time datetime="2023-11-16">16 November 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1251,7 +1251,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 11 November 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 16 November 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1518,6 +1518,12 @@ li > p:last-of-type:only-child {
                     <p id="section-toc.1-1.6.2.2.2.6.1"><a href="#section-6.2.6" class="auto internal xref">6.2.6</a>.  <a href="#name-call-error" class="internal xref">Call ERROR</a></p>
 </li>
                 </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
+                <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-caller-leaving-during-an-rp" class="internal xref">Caller Leaving During an RPC Invocation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.4">
+                <p id="section-toc.1-1.6.2.4.1"><a href="#section-6.4" class="auto internal xref">6.4</a>.  <a href="#name-callee-leaving-during-an-rp" class="internal xref">Callee Leaving During an RPC Invocation</a></p>
 </li>
             </ul>
 </li>
@@ -4393,6 +4399,63 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </div>
 </section>
 </div>
+<div id="rpc-caller-leaving">
+<section id="section-6.3">
+        <h3 id="name-caller-leaving-during-an-rp">
+<a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-caller-leaving-during-an-rp" class="section-name selfRef">Caller Leaving During an RPC Invocation</a>
+        </h3>
+<p id="section-6.3-1">If, after the <em>Dealer</em> sends an INVOCATION but before it receives a YIELD or ERROR response, the <em>Dealer</em> detects the original <em>Caller</em> leaving or disconnecting, then the <em>Dealer</em> shall send an INTERRUPT to the <em>Callee</em> if both the <em>Dealer</em> and <em>Callee</em> support the <em><a href="#rpc-call-canceling">Call Canceling</a></em> advanced feature. That INTERRUPT message MUST have <code>Options.mode</code> set to <code>"killnowait"</code> to indicate to the <em>Callee</em> that no response should be sent for the INTERRUPT.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.3-2">
+<pre>    ,------.          ,------.          ,------.
+    |Caller|          |Dealer|          |Callee|
+    `--+---'          `--+---'          `--+---'
+       |       CALL      |                 |
+       | ----------------&gt;                 |
+       |                 |    INVOCATION   |
+       |                 | ----------------&gt;
+    ,--+---.             |                 |
+    |Caller|             |                 |
+    `------'             |                 |
+     (gone)              |                 |
+                         |    INTERRUPT    |
+                         | ----------------&gt;
+                         |                 |
+                      ,--+---.          ,--+---.
+                      |Dealer|          |Callee|
+                      `------'          `------'
+</pre><a href="#section-6.3-2" class="pilcrow">¶</a>
+</div>
+<p id="section-6.3-3">If either the <em>Dealer</em> or the <em>Callee</em> does not support the <em>Call Canceling</em> feature, then an INTERRUPT message shall NOT sent in this scenario. Whether or not call canceling is supported, the <em>Dealer</em> shall be prepared to discard a YIELD or ERROR response associated with that defunct call request.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="rpc-callee-leaving">
+<section id="section-6.4">
+        <h3 id="name-callee-leaving-during-an-rp">
+<a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-callee-leaving-during-an-rp" class="section-name selfRef">Callee Leaving During an RPC Invocation</a>
+        </h3>
+<p id="section-6.4-1">After sending an INVOCATION message, if a <em>Dealer</em> detects that the <em>Callee</em> has left/disconnected without sending a final YIELD or ERROR response, then the <em>Dealer</em> SHALL return an ERROR message back to the Caller with a <code>wamp.error.cancelled</code> URI. The <em>Dealer</em> MAY provide additional information via the ERROR payload arguments to clarify that the cancellation is due to the <em>Callee</em> leaving before the call could be completed.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.4-2">
+<pre>    ,------.          ,------.          ,------.
+    |Caller|          |Dealer|          |Callee|
+    `--+---'          `--+---'          `--+---'
+       |       CALL      |                 |
+       | ----------------&gt;                 |
+       |                 |    INVOCATION   |
+       |                 | ----------------&gt;
+       |                 |                 |
+       |                 |              ,--+---.
+       |                 |              |Callee|
+       |                 |              `------'
+       |      ERROR      |               (gone)
+       |&lt;--------------- |
+       |                 |
+    ,--+---.          ,--+---.
+    |Caller|          |Dealer|
+    `------'          `------'
+</pre><a href="#section-6.4-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="security-model">
@@ -4519,52 +4582,57 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <pre>    wamp.error.invalid_argument
 </pre><a href="#section-8-17" class="pilcrow">¶</a>
 </div>
-<p id="section-8-18">A message could not be delivered due to transport payload size limits.<a href="#section-8-18" class="pilcrow">¶</a></p>
+<p id="section-8-18">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> canceled a call previously issued<a href="#section-8-18" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8-19">
-<pre>    wamp.error.payload_size_exceeded
+<pre>    wamp.error.canceled
 </pre><a href="#section-8-19" class="pilcrow">¶</a>
 </div>
-<p id="section-8-20"><strong>Session Close</strong><a href="#section-8-20" class="pilcrow">¶</a></p>
-<p id="section-8-21">The Peer is shutting down completely - used as a <code>GOODBYE</code> (or <code>ABORT</code>) reason.<a href="#section-8-21" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-8-22">
-<pre>    wamp.close.system_shutdown
-</pre><a href="#section-8-22" class="pilcrow">¶</a>
+<p id="section-8-20">A message could not be delivered due to transport payload size limits.<a href="#section-8-20" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-8-21">
+<pre>    wamp.error.payload_size_exceeded
+</pre><a href="#section-8-21" class="pilcrow">¶</a>
 </div>
-<p id="section-8-23">The Peer want to leave the realm - used as a <code>GOODBYE</code> reason.<a href="#section-8-23" class="pilcrow">¶</a></p>
+<p id="section-8-22"><strong>Session Close</strong><a href="#section-8-22" class="pilcrow">¶</a></p>
+<p id="section-8-23">The Peer is shutting down completely - used as a <code>GOODBYE</code> (or <code>ABORT</code>) reason.<a href="#section-8-23" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8-24">
-<pre>    wamp.close.close_realm
+<pre>    wamp.close.system_shutdown
 </pre><a href="#section-8-24" class="pilcrow">¶</a>
 </div>
-<p id="section-8-25">A Peer acknowledges ending of a session - used as a <code>GOODBYE</code> reply reason.<a href="#section-8-25" class="pilcrow">¶</a></p>
+<p id="section-8-25">The Peer want to leave the realm - used as a <code>GOODBYE</code> reason.<a href="#section-8-25" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8-26">
-<pre>    wamp.close.goodbye_and_out
+<pre>    wamp.close.close_realm
 </pre><a href="#section-8-26" class="pilcrow">¶</a>
 </div>
-<p id="section-8-27">A Peer received invalid WAMP protocol message (e.g. <code>HELLO</code> message after session was already established) - used as a <code>ABORT</code> reply reason.<a href="#section-8-27" class="pilcrow">¶</a></p>
+<p id="section-8-27">A Peer acknowledges ending of a session - used as a <code>GOODBYE</code> reply reason.<a href="#section-8-27" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8-28">
-<pre>    wamp.error.protocol_violation
+<pre>    wamp.close.goodbye_and_out
 </pre><a href="#section-8-28" class="pilcrow">¶</a>
 </div>
-<p id="section-8-29"><strong>Authorization</strong><a href="#section-8-29" class="pilcrow">¶</a></p>
-<p id="section-8-30">A join, call, register, publish or subscribe failed, since the Peer is not authorized to perform the operation.<a href="#section-8-30" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-8-31">
-<pre>    wamp.error.not_authorized
-</pre><a href="#section-8-31" class="pilcrow">¶</a>
+<p id="section-8-29">A Peer received invalid WAMP protocol message (e.g. <code>HELLO</code> message after session was already established) - used as a <code>ABORT</code> reply reason.<a href="#section-8-29" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-8-30">
+<pre>    wamp.error.protocol_violation
+</pre><a href="#section-8-30" class="pilcrow">¶</a>
 </div>
-<p id="section-8-32">A Dealer or Broker could not determine if the Peer is authorized to perform a join, call, register, publish or subscribe, since the authorization operation <em>itself</em> failed. E.g. a custom authorizer did run into an error.<a href="#section-8-32" class="pilcrow">¶</a></p>
+<p id="section-8-31"><strong>Authorization</strong><a href="#section-8-31" class="pilcrow">¶</a></p>
+<p id="section-8-32">A join, call, register, publish or subscribe failed, since the Peer is not authorized to perform the operation.<a href="#section-8-32" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8-33">
-<pre>    wamp.error.authorization_failed
+<pre>    wamp.error.not_authorized
 </pre><a href="#section-8-33" class="pilcrow">¶</a>
 </div>
-<p id="section-8-34">Peer wanted to join a non-existing realm (and the Router did not allow to auto-create the realm).<a href="#section-8-34" class="pilcrow">¶</a></p>
+<p id="section-8-34">A Dealer or Broker could not determine if the Peer is authorized to perform a join, call, register, publish or subscribe, since the authorization operation <em>itself</em> failed. E.g. a custom authorizer did run into an error.<a href="#section-8-34" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8-35">
-<pre>    wamp.error.no_such_realm
+<pre>    wamp.error.authorization_failed
 </pre><a href="#section-8-35" class="pilcrow">¶</a>
 </div>
-<p id="section-8-36">A Peer was to be authenticated under a Role that does not (or no longer) exists on the Router. For example, the Peer was successfully authenticated, but the Role configured does not exists - hence there is some misconfiguration in the Router.<a href="#section-8-36" class="pilcrow">¶</a></p>
+<p id="section-8-36">Peer wanted to join a non-existing realm (and the Router did not allow to auto-create the realm).<a href="#section-8-36" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8-37">
-<pre>    wamp.error.no_such_role
+<pre>    wamp.error.no_such_realm
 </pre><a href="#section-8-37" class="pilcrow">¶</a>
+</div>
+<p id="section-8-38">A Peer was to be authenticated under a Role that does not (or no longer) exists on the Router. For example, the Peer was successfully authenticated, but the Role configured does not exists - hence there is some misconfiguration in the Router.<a href="#section-8-38" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-8-39">
+<pre>    wamp.error.no_such_role
+</pre><a href="#section-8-39" class="pilcrow">¶</a>
 </div>
 </section>
 </div>

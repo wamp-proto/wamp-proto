@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                                10 May 2023
-Expires: 11 November 2023
+Intended status: Experimental                                15 May 2023
+Expires: 16 November 2023
 
 
                            WAMP Basic Profile
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 November 2023.
+   This Internet-Draft will expire on 16 November 2023.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Table of Contents
 
 
 
-Oberstein               Expires 11 November 2023                [Page 1]
+Oberstein               Expires 16 November 2023                [Page 1]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -109,7 +109,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023                [Page 2]
+Oberstein               Expires 16 November 2023                [Page 2]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -129,20 +129,22 @@ Internet-Draft                   WAMP-BP                        May 2023
        6.2.4.  RESULT  . . . . . . . . . . . . . . . . . . . . . . .  48
        6.2.5.  Invocation ERROR  . . . . . . . . . . . . . . . . . .  49
        6.2.6.  Call ERROR  . . . . . . . . . . . . . . . . . . . . .  50
-   7.  Security Model  . . . . . . . . . . . . . . . . . . . . . . .  50
-     7.1.  Ordering Guarantees . . . . . . . . . . . . . . . . . . .  51
-     7.2.  Transport Encryption and Integrity  . . . . . . . . . . .  52
-     7.3.  Router Authentication . . . . . . . . . . . . . . . . . .  52
-     7.4.  Client Authentication . . . . . . . . . . . . . . . . . .  53
-     7.5.  Routers are trusted . . . . . . . . . . . . . . . . . . .  53
-   8.  Basic Profile URIs  . . . . . . . . . . . . . . . . . . . . .  53
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  56
-   10. Conformance Requirements  . . . . . . . . . . . . . . . . . .  56
-     10.1.  Terminology and Other Conventions  . . . . . . . . . . .  56
-   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  56
-   12. Normative References  . . . . . . . . . . . . . . . . . . . .  57
-   13. Informative References  . . . . . . . . . . . . . . . . . . .  57
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  57
+     6.3.  Caller Leaving During an RPC Invocation . . . . . . . . .  51
+     6.4.  Callee Leaving During an RPC Invocation . . . . . . . . .  51
+   7.  Security Model  . . . . . . . . . . . . . . . . . . . . . . .  52
+     7.1.  Ordering Guarantees . . . . . . . . . . . . . . . . . . .  52
+     7.2.  Transport Encryption and Integrity  . . . . . . . . . . .  53
+     7.3.  Router Authentication . . . . . . . . . . . . . . . . . .  54
+     7.4.  Client Authentication . . . . . . . . . . . . . . . . . .  54
+     7.5.  Routers are trusted . . . . . . . . . . . . . . . . . . .  55
+   8.  Basic Profile URIs  . . . . . . . . . . . . . . . . . . . . .  55
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  57
+   10. Conformance Requirements  . . . . . . . . . . . . . . . . . .  57
+     10.1.  Terminology and Other Conventions  . . . . . . . . . . .  58
+   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  58
+   12. Normative References  . . . . . . . . . . . . . . . . . . . .  58
+   13. Informative References  . . . . . . . . . . . . . . . . . . .  59
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  59
 
 1.  WAMP Basic Profile
 
@@ -163,9 +165,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-
-
-Oberstein               Expires 11 November 2023                [Page 3]
+Oberstein               Expires 16 November 2023                [Page 3]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -221,7 +221,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023                [Page 4]
+Oberstein               Expires 16 November 2023                [Page 4]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -277,7 +277,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023                [Page 5]
+Oberstein               Expires 16 November 2023                [Page 5]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -333,7 +333,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023                [Page 6]
+Oberstein               Expires 16 November 2023                [Page 6]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -389,7 +389,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023                [Page 7]
+Oberstein               Expires 16 November 2023                [Page 7]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -445,7 +445,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023                [Page 8]
+Oberstein               Expires 16 November 2023                [Page 8]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -501,7 +501,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023                [Page 9]
+Oberstein               Expires 16 November 2023                [Page 9]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -557,7 +557,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 10]
+Oberstein               Expires 16 November 2023               [Page 10]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -613,7 +613,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 11]
+Oberstein               Expires 16 November 2023               [Page 11]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -669,7 +669,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 12]
+Oberstein               Expires 16 November 2023               [Page 12]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -725,7 +725,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 13]
+Oberstein               Expires 16 November 2023               [Page 13]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -781,7 +781,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 14]
+Oberstein               Expires 16 November 2023               [Page 14]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -837,7 +837,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 15]
+Oberstein               Expires 16 November 2023               [Page 15]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -893,7 +893,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 16]
+Oberstein               Expires 16 November 2023               [Page 16]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -949,7 +949,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 17]
+Oberstein               Expires 16 November 2023               [Page 17]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1005,7 +1005,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 18]
+Oberstein               Expires 16 November 2023               [Page 18]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1061,7 +1061,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 19]
+Oberstein               Expires 16 November 2023               [Page 19]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1117,7 +1117,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 20]
+Oberstein               Expires 16 November 2023               [Page 20]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1173,7 +1173,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 21]
+Oberstein               Expires 16 November 2023               [Page 21]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1229,7 +1229,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 22]
+Oberstein               Expires 16 November 2023               [Page 22]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1285,7 +1285,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 23]
+Oberstein               Expires 16 November 2023               [Page 23]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1341,7 +1341,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 24]
+Oberstein               Expires 16 November 2023               [Page 24]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1397,7 +1397,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 25]
+Oberstein               Expires 16 November 2023               [Page 25]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1453,7 +1453,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 26]
+Oberstein               Expires 16 November 2023               [Page 26]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1509,7 +1509,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 27]
+Oberstein               Expires 16 November 2023               [Page 27]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1565,7 +1565,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 28]
+Oberstein               Expires 16 November 2023               [Page 28]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1621,7 +1621,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 29]
+Oberstein               Expires 16 November 2023               [Page 29]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1677,7 +1677,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 30]
+Oberstein               Expires 16 November 2023               [Page 30]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1733,7 +1733,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 31]
+Oberstein               Expires 16 November 2023               [Page 31]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1789,7 +1789,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 32]
+Oberstein               Expires 16 November 2023               [Page 32]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1845,7 +1845,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 33]
+Oberstein               Expires 16 November 2023               [Page 33]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1901,7 +1901,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 34]
+Oberstein               Expires 16 November 2023               [Page 34]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -1957,7 +1957,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 35]
+Oberstein               Expires 16 November 2023               [Page 35]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2013,7 +2013,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 36]
+Oberstein               Expires 16 November 2023               [Page 36]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2069,7 +2069,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 37]
+Oberstein               Expires 16 November 2023               [Page 37]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2125,7 +2125,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 38]
+Oberstein               Expires 16 November 2023               [Page 38]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2181,7 +2181,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 39]
+Oberstein               Expires 16 November 2023               [Page 39]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2237,7 +2237,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 40]
+Oberstein               Expires 16 November 2023               [Page 40]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2293,7 +2293,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 41]
+Oberstein               Expires 16 November 2023               [Page 41]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2349,7 +2349,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 42]
+Oberstein               Expires 16 November 2023               [Page 42]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2405,7 +2405,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 43]
+Oberstein               Expires 16 November 2023               [Page 43]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2461,7 +2461,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 44]
+Oberstein               Expires 16 November 2023               [Page 44]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2517,7 +2517,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 45]
+Oberstein               Expires 16 November 2023               [Page 45]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2573,7 +2573,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 46]
+Oberstein               Expires 16 November 2023               [Page 46]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2629,7 +2629,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 47]
+Oberstein               Expires 16 November 2023               [Page 47]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2685,7 +2685,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 48]
+Oberstein               Expires 16 November 2023               [Page 48]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2741,7 +2741,7 @@ Internet-Draft                   WAMP-BP                        May 2023
 
 
 
-Oberstein               Expires 11 November 2023               [Page 49]
+Oberstein               Expires 16 November 2023               [Page 49]
 
 Internet-Draft                   WAMP-BP                        May 2023
 
@@ -2788,19 +2788,99 @@ Internet-Draft                   WAMP-BP                        May 2023
 
        [8, 48, 7814135, {}, "wamp.error.no_such_procedure"]
 
+
+
+
+
+
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 50]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
+
+6.3.  Caller Leaving During an RPC Invocation
+
+   If, after the _Dealer_ sends an INVOCATION but before it receives a
+   YIELD or ERROR response, the _Dealer_ detects the original _Caller_
+   leaving or disconnecting, then the _Dealer_ shall send an INTERRUPT
+   to the _Callee_ if both the _Dealer_ and _Callee_ support the _Call
+   Canceling (#rpc-call-canceling)_ advanced feature.  That INTERRUPT
+   message MUST have Options.mode set to "killnowait" to indicate to the
+   _Callee_ that no response should be sent for the INTERRUPT.
+
+       ,------.          ,------.          ,------.
+       |Caller|          |Dealer|          |Callee|
+       `--+---'          `--+---'          `--+---'
+          |       CALL      |                 |
+          | ---------------->                 |
+          |                 |    INVOCATION   |
+          |                 | ---------------->
+       ,--+---.             |                 |
+       |Caller|             |                 |
+       `------'             |                 |
+        (gone)              |                 |
+                            |    INTERRUPT    |
+                            | ---------------->
+                            |                 |
+                         ,--+---.          ,--+---.
+                         |Dealer|          |Callee|
+                         `------'          `------'
+
+   If either the _Dealer_ or the _Callee_ does not support the _Call
+   Canceling_ feature, then an INTERRUPT message shall NOT sent in this
+   scenario.  Whether or not call canceling is supported, the _Dealer_
+   shall be prepared to discard a YIELD or ERROR response associated
+   with that defunct call request.
+
+6.4.  Callee Leaving During an RPC Invocation
+
+   After sending an INVOCATION message, if a _Dealer_ detects that the
+   _Callee_ has left/disconnected without sending a final YIELD or ERROR
+   response, then the _Dealer_ SHALL return an ERROR message back to the
+   Caller with a wamp.error.cancelled URI.  The _Dealer_ MAY provide
+   additional information via the ERROR payload arguments to clarify
+   that the cancellation is due to the _Callee_ leaving before the call
+   could be completed.
+
+
+
+
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 51]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
+
+       ,------.          ,------.          ,------.
+       |Caller|          |Dealer|          |Callee|
+       `--+---'          `--+---'          `--+---'
+          |       CALL      |                 |
+          | ---------------->                 |
+          |                 |    INVOCATION   |
+          |                 | ---------------->
+          |                 |                 |
+          |                 |              ,--+---.
+          |                 |              |Callee|
+          |                 |              `------'
+          |      ERROR      |               (gone)
+          |<--------------- |
+          |                 |
+       ,--+---.          ,--+---.
+       |Caller|          |Dealer|
+       `------'          `------'
+
 7.  Security Model
 
    The following discusses the security model for the Basic Profile.
    Any changes or extensions to this for the Advanced Profile are
    discussed further on as part of the Advanced Profile definition.
-
-
-
-
-Oberstein               Expires 11 November 2023               [Page 50]
-
-Internet-Draft                   WAMP-BP                        May 2023
-
 
    All WAMP implementations, in particular Routers MUST support the
    following ordering guarantees.
@@ -2823,6 +2903,16 @@ Internet-Draft                   WAMP-BP                        May 2023
 
    In other words, WAMP guarantees ordering of events between any given
    _pair_ of Publisher and Subscriber.
+
+
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 52]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
 
    Further, if _Subscriber A_ subscribes to *Topic 1*, the SUBSCRIBED
    message will be sent by the _Broker_ to _Subscriber A_ before any
@@ -2848,16 +2938,6 @@ Internet-Draft                   WAMP-BP                        May 2023
    In other words, WAMP guarantees ordering of invocations between any
    given _pair_ of Caller and Callee.
 
-
-
-
-
-
-Oberstein               Expires 11 November 2023               [Page 51]
-
-Internet-Draft                   WAMP-BP                        May 2023
-
-
    There are no guarantees on the order of call results and errors in
    relation to _different_ calls, since the execution of calls upon
    different invocations of endpoints in Callees are running
@@ -2879,6 +2959,16 @@ Internet-Draft                   WAMP-BP                        May 2023
    WAMP transports may provide (optional) transport-level encryption and
    integrity verification.  If so, encryption and integrity is point-to-
    point: between a Client and the Router it is connected to.
+
+
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 53]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
 
    Transport-level encryption and integrity is solely at the transport-
    level and transparent to WAMP.  WAMP itself deliberately does not
@@ -2907,13 +2997,6 @@ Internet-Draft                   WAMP-BP                        May 2023
 
    The verification of the Router server certificate can happen
 
-
-
-Oberstein               Expires 11 November 2023               [Page 52]
-
-Internet-Draft                   WAMP-BP                        May 2023
-
-
    1.  against a certificate trust database that comes with the Clients
        operating system
    2.  against an issuing certificate/key hard-wired into the Client
@@ -2934,6 +3017,14 @@ Internet-Draft                   WAMP-BP                        May 2023
 
    When running over TLS, a Router MAY authenticate a Client at the
    transport level by doing a _client certificate based authentication_.
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 54]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
 
 7.5.  Routers are trusted
 
@@ -2963,13 +3054,6 @@ Internet-Draft                   WAMP-BP                        May 2023
    WAMP pre-defines the following error URIs for the *Basic Profile*.
    WAMP peers SHOULD only use the defined error messages.
 
-
-
-Oberstein               Expires 11 November 2023               [Page 53]
-
-Internet-Draft                   WAMP-BP                        May 2023
-
-
    *Incorrect URIs*
 
    When a Peer provides an incorrect URI for any URI-based attribute of
@@ -2989,6 +3073,14 @@ Internet-Draft                   WAMP-BP                        May 2023
    registered under the given URI.
 
        wamp.error.no_such_procedure
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 55]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
 
    A procedure could not be registered, since a procedure with the given
    URI is already registered.
@@ -3013,18 +3105,14 @@ Internet-Draft                   WAMP-BP                        May 2023
 
        wamp.error.invalid_argument
 
+   A _Dealer_ or  (U+00A0)_Callee_ canceled a call previously issued
+
+       wamp.error.canceled
+
    A message could not be delivered due to transport payload size
    limits.
 
        wamp.error.payload_size_exceeded
-
-
-
-
-Oberstein               Expires 11 November 2023               [Page 54]
-
-Internet-Draft                   WAMP-BP                        May 2023
-
 
    *Session Close*
 
@@ -3041,6 +3129,14 @@ Internet-Draft                   WAMP-BP                        May 2023
    reason.
 
        wamp.close.goodbye_and_out
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 56]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
 
    A Peer received invalid WAMP protocol message (e.g.  HELLO message
    after session was already established) - used as a ABORT reply
@@ -3074,14 +3170,6 @@ Internet-Draft                   WAMP-BP                        May 2023
 
        wamp.error.no_such_role
 
-
-
-
-Oberstein               Expires 11 November 2023               [Page 55]
-
-Internet-Draft                   WAMP-BP                        May 2023
-
-
 9.  IANA Considerations
 
    WAMP uses the Subprotocol Identifier wamp registered with the
@@ -3098,6 +3186,13 @@ Internet-Draft                   WAMP-BP                        May 2023
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in RFC 2119 [RFC2119].
+
+
+
+Oberstein               Expires 16 November 2023               [Page 57]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
 
    Requirements phrased in the imperative as part of algorithms (such as
    "strip any leading space characters" or "return false and abort these
@@ -3130,14 +3225,6 @@ Internet-Draft                   WAMP-BP                        May 2023
    *  Johan 't Hart
    *  Josh Soref
    *  Konstantin Burkalev
-
-
-
-Oberstein               Expires 11 November 2023               [Page 56]
-
-Internet-Draft                   WAMP-BP                        May 2023
-
-
    *  Pahaz Blinov
    *  Paolo Angioletti
    *  Roberto Requena
@@ -3151,6 +3238,17 @@ Internet-Draft                   WAMP-BP                        May 2023
    [RFC3629]  Yergeau, F., "UTF-8, a transformation format of ISO
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
               2003, <https://www.rfc-editor.org/info/rfc3629>.
+
+
+
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 58]
+
+Internet-Draft                   WAMP-BP                        May 2023
+
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
@@ -3189,4 +3287,18 @@ Author's Address
 
 
 
-Oberstein               Expires 11 November 2023               [Page 57]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein               Expires 16 November 2023               [Page 59]
