@@ -2,6 +2,13 @@
 
 WAMP pre-defines the following error URIs for the **Advanced Profile**. WAMP peers SHOULD only use the defined error messages.
 
+## Session Close
+
+The *Client* session has been forcefully terminated by the *Router* - used as a `GOODBYE` (or `ABORT`) reason.
+
+{align="left"}
+        wamp.close.killed
+
 ## Authentication
 
 No authentication method the *Client* offered is accepted.
