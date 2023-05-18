@@ -158,7 +158,7 @@ Kill a single session identified by session ID.
 
 The caller of this meta procedure may only specify session IDs other than its own session.  Specifying the caller's own session will result in a `wamp.error.no_such_session` since no _other_ session with that ID exists.
 
-The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.killed` and the message is omitted from the `GOODBYE` sent to the closed session.
 
 **Positional arguments**
 
@@ -180,7 +180,7 @@ Kill all currently connected sessions that have the specified `authid`.
 
 If the caller's own session has the specified `authid`, the caller's session is excluded from the closed sessions.
 
-The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.killed` and the message is omitted from the `GOODBYE` sent to the closed session.
 
 **Positional arguments**
 
@@ -206,7 +206,7 @@ Kill all currently connected sessions that have the specified `authrole`.
 
 If the caller's own session has the specified `authrole`, the caller's session is excluded from the closed sessions.
 
-The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.killed` and the message is omitted from the `GOODBYE` sent to the closed session.
 
 **Positional arguments**
 
@@ -232,7 +232,7 @@ Kill all currently connected sessions in the caller's realm.
 
 The caller's own session is excluded from the closed sessions.  Closing all sessions in the realm will not generate session meta events or testament events, since no subscribers would remain to receive these events.
 
-The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.normal` and the message is omitted from the `GOODBYE` sent to the closed session.
+The keyword arguments are optional, and if not provided the reason defaults to `wamp.close.killed` and the message is omitted from the `GOODBYE` sent to the closed session.
 
 **Keyword arguments**
 
