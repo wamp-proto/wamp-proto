@@ -1203,7 +1203,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 16 November 2023</td>
+<td class="center">Expires 19 November 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1216,12 +1216,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-05-15" class="published">15 May 2023</time>
+<time datetime="2023-05-18" class="published">18 May 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-11-16">16 November 2023</time></dd>
+<dd class="expires"><time datetime="2023-11-19">19 November 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1251,7 +1251,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 16 November 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 November 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1571,13 +1571,16 @@ li > p:last-of-type:only-child {
             <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-advanced-profile-uris" class="internal xref">Advanced Profile URIs</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
-                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-authentication" class="internal xref">Authentication</a></p>
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-session-close" class="internal xref">Session Close</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
-                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-authorization-2" class="internal xref">Authorization</a></p>
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-authentication" class="internal xref">Authentication</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-remote-procedure-calls" class="internal xref">Remote Procedure Calls</a></p>
+                <p id="section-toc.1-1.10.2.3.1"><a href="#section-10.3" class="auto internal xref">10.3</a>.  <a href="#name-authorization-2" class="internal xref">Authorization</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4">
+                <p id="section-toc.1-1.10.2.4.1"><a href="#section-10.4" class="auto internal xref">10.4</a>.  <a href="#name-remote-procedure-calls" class="internal xref">Remote Procedure Calls</a></p>
 </li>
             </ul>
 </li>
@@ -2389,7 +2392,7 @@ results or event payloads is contained in<a href="#section-2.1-4" class="pilcrow
             </h5>
 <p id="section-2.1.2.4-1">Kill a single session identified by session ID.<a href="#section-2.1.2.4-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.4-2">The caller of this meta procedure may only specify session IDs other than its own session.  Specifying the caller's own session will result in a <code>wamp.error.no_such_session</code> since no <em>other</em> session with that ID exists.<a href="#section-2.1.2.4-2" class="pilcrow">¶</a></p>
-<p id="section-2.1.2.4-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.normal</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.4-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.2.4-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.killed</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.4-3" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.4-4"><strong>Positional arguments</strong><a href="#section-2.1.2.4-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-2.1.2.4-5">
 <li id="section-2.1.2.4-5.1">
@@ -2423,7 +2426,7 @@ results or event payloads is contained in<a href="#section-2.1-4" class="pilcrow
             </h5>
 <p id="section-2.1.2.5-1">Kill all currently connected sessions that have the specified <code>authid</code>.<a href="#section-2.1.2.5-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.5-2">If the caller's own session has the specified <code>authid</code>, the caller's session is excluded from the closed sessions.<a href="#section-2.1.2.5-2" class="pilcrow">¶</a></p>
-<p id="section-2.1.2.5-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.normal</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.5-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.2.5-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.killed</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.5-3" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.5-4"><strong>Positional arguments</strong><a href="#section-2.1.2.5-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-2.1.2.5-5">
 <li id="section-2.1.2.5-5.1">
@@ -2460,7 +2463,7 @@ results or event payloads is contained in<a href="#section-2.1-4" class="pilcrow
             </h5>
 <p id="section-2.1.2.6-1">Kill all currently connected sessions that have the specified <code>authrole</code>.<a href="#section-2.1.2.6-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.6-2">If the caller's own session has the specified <code>authrole</code>, the caller's session is excluded from the closed sessions.<a href="#section-2.1.2.6-2" class="pilcrow">¶</a></p>
-<p id="section-2.1.2.6-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.normal</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.6-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.2.6-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.killed</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.6-3" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.6-4"><strong>Positional arguments</strong><a href="#section-2.1.2.6-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-2.1.2.6-5">
 <li id="section-2.1.2.6-5.1">
@@ -2497,7 +2500,7 @@ results or event payloads is contained in<a href="#section-2.1-4" class="pilcrow
             </h5>
 <p id="section-2.1.2.7-1">Kill all currently connected sessions in the caller's realm.<a href="#section-2.1.2.7-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.7-2">The caller's own session is excluded from the closed sessions.  Closing all sessions in the realm will not generate session meta events or testament events, since no subscribers would remain to receive these events.<a href="#section-2.1.2.7-2" class="pilcrow">¶</a></p>
-<p id="section-2.1.2.7-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.normal</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.7-3" class="pilcrow">¶</a></p>
+<p id="section-2.1.2.7-3">The keyword arguments are optional, and if not provided the reason defaults to <code>wamp.close.killed</code> and the message is omitted from the <code>GOODBYE</code> sent to the closed session.<a href="#section-2.1.2.7-3" class="pilcrow">¶</a></p>
 <p id="section-2.1.2.7-4"><strong>Keyword arguments</strong><a href="#section-2.1.2.7-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-2.1.2.7-5">
 <li id="section-2.1.2.7-5.1">
@@ -9272,109 +9275,121 @@ calling <code>xbr.pool.buy_key</code>, and calling <code>wamp.r2r.submit_traffic
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-advanced-profile-uris" class="section-name selfRef">Advanced Profile URIs</a>
       </h2>
 <p id="section-10-1">WAMP pre-defines the following error URIs for the <strong>Advanced Profile</strong>. WAMP peers SHOULD only use the defined error messages.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<div id="authentication">
+<div id="session-close">
 <section id="section-10.1">
-        <h3 id="name-authentication">
-<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
+        <h3 id="name-session-close">
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-session-close" class="section-name selfRef">Session Close</a>
         </h3>
-<p id="section-10.1-1">No authentication method the <em>Client</em> offered is accepted.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
+<p id="section-10.1-1">The <em>Client</em> session has been forcefully terminated by the <em>Router</em> - used as a <code>GOODBYE</code> (or <code>ABORT</code>) reason.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-10.1-2">
-<pre>    wamp.error.no_matching_auth_method
+<pre>    wamp.close.killed
 </pre><a href="#section-10.1-2" class="pilcrow">¶</a>
 </div>
-<p id="section-10.1-3">The <em>Client</em> attempted to authenticate for a non-existing <em>Realm</em> (<code>realm|string</code>).<a href="#section-10.1-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.1-4">
+</section>
+</div>
+<div id="authentication">
+<section id="section-10.2">
+        <h3 id="name-authentication">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
+        </h3>
+<p id="section-10.2-1">No authentication method the <em>Client</em> offered is accepted.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.2-2">
+<pre>    wamp.error.no_matching_auth_method
+</pre><a href="#section-10.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-10.2-3">The <em>Client</em> attempted to authenticate for a non-existing <em>Realm</em> (<code>realm|string</code>).<a href="#section-10.2-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.2-4">
 <pre>    wamp.error.no_such_realm
-</pre><a href="#section-10.1-4" class="pilcrow">¶</a>
+</pre><a href="#section-10.2-4" class="pilcrow">¶</a>
 </div>
-<p id="section-10.1-5">The <em>Client</em> attempted to authenticate for a non-existing <em>Role</em> (<code>authrole|string</code>).<a href="#section-10.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.1-6">
+<p id="section-10.2-5">The <em>Client</em> attempted to authenticate for a non-existing <em>Role</em> (<code>authrole|string</code>).<a href="#section-10.2-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.2-6">
 <pre>    wamp.error.no_such_role
-</pre><a href="#section-10.1-6" class="pilcrow">¶</a>
+</pre><a href="#section-10.2-6" class="pilcrow">¶</a>
 </div>
-<p id="section-10.1-7">The <em>Client</em> authenticated for a non-existing <em>Principal</em> (<code>authid|string</code>).<a href="#section-10.1-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.1-8">
+<p id="section-10.2-7">The <em>Client</em> authenticated for a non-existing <em>Principal</em> (<code>authid|string</code>).<a href="#section-10.2-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.2-8">
 <pre>    wamp.error.no_such_principal
-</pre><a href="#section-10.1-8" class="pilcrow">¶</a>
+</pre><a href="#section-10.2-8" class="pilcrow">¶</a>
 </div>
-<p id="section-10.1-9">The authentication as presented by the <em>Client</em> is denied (e.g. "wrong password").<a href="#section-10.1-9" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.1-10">
+<p id="section-10.2-9">The authentication as presented by the <em>Client</em> is denied (e.g. "wrong password").<a href="#section-10.2-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.2-10">
 <pre>    wamp.error.authentication_denied
-</pre><a href="#section-10.1-10" class="pilcrow">¶</a>
+</pre><a href="#section-10.2-10" class="pilcrow">¶</a>
 </div>
-<p id="section-10.1-11">The <em>Client</em> authentication was rejected due to a technical runtime failure ("fail secure" operation).<a href="#section-10.1-11" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.1-12">
+<p id="section-10.2-11">The <em>Client</em> authentication was rejected due to a technical runtime failure ("fail secure" operation).<a href="#section-10.2-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.2-12">
 <pre>    wamp.error.authentication_failed
-</pre><a href="#section-10.1-12" class="pilcrow">¶</a>
+</pre><a href="#section-10.2-12" class="pilcrow">¶</a>
 </div>
-<p id="section-10.1-13">The <em>Client</em> did not provide the required, non-anonymous, authentication information.<a href="#section-10.1-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.1-14">
+<p id="section-10.2-13">The <em>Client</em> did not provide the required, non-anonymous, authentication information.<a href="#section-10.2-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.2-14">
 <pre>    wamp.error.authentication_required
-</pre><a href="#section-10.1-14" class="pilcrow">¶</a>
+</pre><a href="#section-10.2-14" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="authorization-1">
-<section id="section-10.2">
+<section id="section-10.3">
         <h3 id="name-authorization-2">
-<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-authorization-2" class="section-name selfRef">Authorization</a>
+<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-authorization-2" class="section-name selfRef">Authorization</a>
         </h3>
-<p id="section-10.2-1">The <em>Principal</em> is not authorized to perform such <em>Action</em>.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.2-2">
+<p id="section-10.3-1">The <em>Principal</em> is not authorized to perform such <em>Action</em>.<a href="#section-10.3-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.3-2">
 <pre>    wamp.error.authorization_denied
-</pre><a href="#section-10.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-10.3-2" class="pilcrow">¶</a>
 </div>
-<p id="section-10.2-3">Authorization of the <em>Principal</em> to perform the given <em>Action</em> was rejected due to a technical runtime failure ("fail secure" operation).<a href="#section-10.2-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.2-4">
+<p id="section-10.3-3">Authorization of the <em>Principal</em> to perform the given <em>Action</em> was rejected due to a technical runtime failure ("fail secure" operation).<a href="#section-10.3-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.3-4">
 <pre>    wamp.error.authorization_failed
-</pre><a href="#section-10.2-4" class="pilcrow">¶</a>
+</pre><a href="#section-10.3-4" class="pilcrow">¶</a>
 </div>
-<p id="section-10.2-5">Authorization of the <em>Principal</em> is required to perform the given <em>Action</em>. This can be used for capability-based access control.<a href="#section-10.2-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.2-6">
+<p id="section-10.3-5">Authorization of the <em>Principal</em> is required to perform the given <em>Action</em>. This can be used for capability-based access control.<a href="#section-10.3-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.3-6">
 <pre>    wamp.error.authorization_required
-</pre><a href="#section-10.2-6" class="pilcrow">¶</a>
+</pre><a href="#section-10.3-6" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="remote-procedure-calls">
-<section id="section-10.3">
+<section id="section-10.4">
         <h3 id="name-remote-procedure-calls">
-<a href="#section-10.3" class="section-number selfRef">10.3. </a><a href="#name-remote-procedure-calls" class="section-name selfRef">Remote Procedure Calls</a>
+<a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-remote-procedure-calls" class="section-name selfRef">Remote Procedure Calls</a>
         </h3>
-<p id="section-10.3-1">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> terminated a call that timed out<a href="#section-10.3-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.3-2">
+<p id="section-10.4-1">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> terminated a call that timed out<a href="#section-10.4-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.4-2">
 <pre>    wamp.error.timeout
-</pre><a href="#section-10.3-2" class="pilcrow">¶</a>
+</pre><a href="#section-10.4-2" class="pilcrow">¶</a>
 </div>
-<p id="section-10.3-3">A <em>Peer</em> requested an interaction with an option that was disallowed by the <em>Router</em><a href="#section-10.3-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.3-4">
+<p id="section-10.4-3">A <em>Peer</em> requested an interaction with an option that was disallowed by the <em>Router</em><a href="#section-10.4-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.4-4">
 <pre>    wamp.error.option_not_allowed
-</pre><a href="#section-10.3-4" class="pilcrow">¶</a>
+</pre><a href="#section-10.4-4" class="pilcrow">¶</a>
 </div>
-<p id="section-10.3-5">A <em>Router</em> rejected client request to disclose its identity<a href="#section-10.3-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.3-6">
+<p id="section-10.4-5">A <em>Router</em> rejected client request to disclose its identity<a href="#section-10.4-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.4-6">
 <pre>    wamp.error.option_disallowed.disclose_me
-</pre><a href="#section-10.3-6" class="pilcrow">¶</a>
+</pre><a href="#section-10.4-6" class="pilcrow">¶</a>
 </div>
-<p id="section-10.3-7">A <em>Router</em> encountered a network failure<a href="#section-10.3-7" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.3-8">
+<p id="section-10.4-7">A <em>Router</em> encountered a network failure<a href="#section-10.4-7" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.4-8">
 <pre>    wamp.error.network_failure
-</pre><a href="#section-10.3-8" class="pilcrow">¶</a>
+</pre><a href="#section-10.4-8" class="pilcrow">¶</a>
 </div>
-<p id="section-10.3-9">A <em>Callee</em> is not able to handle an invocation for a <em>call</em> and intends for the <em>Router</em> to re-route the <em>call</em> to another fitting <em>Callee</em>. For details, refer to <a href="ap_rpc_call_rerouting.md">RPC Call Rerouting</a><a href="#section-10.3-9" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.3-10">
+<p id="section-10.4-9">A <em>Callee</em> is not able to handle an invocation for a <em>call</em> and intends for the <em>Router</em> to re-route the <em>call</em> to another fitting <em>Callee</em>. For details, refer to <a href="ap_rpc_call_rerouting.md">RPC Call Rerouting</a><a href="#section-10.4-9" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.4-10">
 <pre>    wamp.error.unavailable
-</pre><a href="#section-10.3-10" class="pilcrow">¶</a>
+</pre><a href="#section-10.4-10" class="pilcrow">¶</a>
 </div>
-<p id="section-10.3-11">A <em>Dealer</em> could not perform a call, since a procedure with the given URI is registered, but all available registrations have responded with <code>wamp.error.unavailable</code><a href="#section-10.3-11" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.3-12">
+<p id="section-10.4-11">A <em>Dealer</em> could not perform a call, since a procedure with the given URI is registered, but all available registrations have responded with <code>wamp.error.unavailable</code><a href="#section-10.4-11" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.4-12">
 <pre>    wamp.error.no_available_callee
-</pre><a href="#section-10.3-12" class="pilcrow">¶</a>
+</pre><a href="#section-10.4-12" class="pilcrow">¶</a>
 </div>
-<p id="section-10.3-13">A <em>Dealer</em> received a <code>CALL</code> message with advanced features that cannot be processed by the <em>Callee</em><a href="#section-10.3-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-10.3-14">
+<p id="section-10.4-13">A <em>Dealer</em> received a <code>CALL</code> message with advanced features that cannot be processed by the <em>Callee</em><a href="#section-10.4-13" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-10.4-14">
 <pre>    wamp.error.feature_not_supported
-</pre><a href="#section-10.3-14" class="pilcrow">¶</a>
+</pre><a href="#section-10.4-14" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
