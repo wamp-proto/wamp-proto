@@ -187,6 +187,57 @@ The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a call 
      `------'           `------'
 
 
+**Continuations on Completed Calls**
+
+A call with progressive invocations is considered completed by the *Dealer* when the latter receives a correlated YIELD or ERROR message from the *Callee*, or when the *Callee* leaves the realm.
+
+Due to network delays, a *Caller* may be unaware that the call is completed by time it sends a progressive CALL continuation.
+
+When a *Dealer* receives a CALL under the following conditions:
+
+- the *Dealer* supports Progressive Call Invocations,
+- the CALL request ID does not correspond to a new call request, and,
+- the CALL request ID does not match any RPC invocation in progress,
+
+then it MUST ignore and discard that CALL message without any further correlated response to the *Caller*. The rationale for this is that the *Caller* will eventually receive a correlated RESULT or ERROR message from the previous call completion and will be able to handle the call completion accordingly.
+
+The sequence diagram below illustrates this sitation, where the Network actor models network delay.
+
+{align="left"}
+     ,------.     ,-------.      ,------.      ,------.
+     |Caller|     |Network|      |Dealer|      |Callee|
+     `--+---'     `---+---'      `--+---'      `--+---'
+        |  CALL #123  |             |             |
+        | (progress)  |             |             |
+        | ------------>  CALL #123  |             |
+        |             | (progress)  |             |
+        |             | ------------>  INVOCATION |
+        |             |             |  (progress) |
+        |             |             | ------------>
+        |  CALL #123  |             |             |
+        | (progress)  |             |    ERROR    |
+        | ------------>             | <-----------|
+        |             |    ERROR    |             |
+        |             | <-----------|             |
+        |             | ,---------. |             |
+        |             | |  Call   | |             |
+        |             | |Completed| |             |
+        |             | `---------' |             |
+        |             |             |             |
+        |             |  CALL #123  |             |
+        |             | (progress)  |             |
+        |             | ------------>             |
+        |             | ,---------. |             |
+        |             | | Ignored | |             |
+        |             | `---------' |             |
+        |    ERROR    |             |             |
+        | <-----------|             |             |
+        |             |             |             |
+     ,--+---.     ,---+---.      ,--+---.    ,--+---.
+     |Caller|     |Network|      |Dealer|    |Dealer|
+     `------'     `-------'      `------'    `------'
+
+
 **Ignoring Progressive Call Invocations**
 
 Unlike some other advanced features, a *Callee* cannot be unaware of progressive call invocations.
