@@ -189,9 +189,9 @@ The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a call 
 
 **Continuations on Completed Calls**
 
-A call with progressive invocations is considered completed by the *Dealer* when the latter receives a correlated YIELD or ERROR message from the *Callee*, or when the *Callee* leaves the realm.
+A call with progressive invocations is considered completed by the *Dealer* when the latter receives a correlated final YIELD or ERROR message from the *Callee*, or when the *Callee* leaves the realm.
 
-Due to network delays, a *Caller* may be unaware that the call is completed by time it sends a progressive CALL continuation.
+Due to network delays, the *Caller* may be unaware that the call is completed by time it sends another progressive CALL continuation.
 
 When a *Dealer* receives a CALL under the following conditions:
 
@@ -234,8 +234,52 @@ The sequence diagram below illustrates this sitation, where the Network actor mo
         | <-----------|             |             |
         |             |             |             |
      ,--+---.     ,---+---.      ,--+---.    ,--+---.
-     |Caller|     |Network|      |Dealer|    |Dealer|
+     |Caller|     |Network|      |Dealer|    |Callee|
      `------'     `-------'      `------'    `------'
+
+From the *Callee*'s perspective, a call with progressive invocations is considered completed when the *Callee* sends a correlated final YIELD or ERROR message.
+
+Due to network delays, the *Dealer* may be unaware that the call is completed by time it sends another progressive INVOCATION.
+
+When a *Callee* receives an INVOCATION under the following conditions:
+
+- the *Callee* supports Progressive Call Invocations,
+- the INVOCATION request ID does not correspond to a new call request, and,
+- the INVOCATION request ID does not match any RPC invocation in progress,
+
+then it MUST ignore and discard that INVOCATION message without any further correlated response to the *Dealer*. The rationale for this is that the *Caller* will eventually receive a correlated RESULT or ERROR message from the previous call completion and will be able to handle the call completion accordingly.
+
+The sequence diagram below illustrates this sitation, where the Network actor models network delay.
+
+{align="left"}
+     ,------.     ,------.        ,-------.         ,------.
+     |Caller|     |Dealer|        |Network|         |Callee|
+     `--+---'     `--+---'        `---+---'         `--+---'
+        | CALL #123  |                |                |
+        | (progres)  |                |                |
+        | ----------->                |                |
+        |            | INVOCATION #42 |                |
+        |            | (progress)     |                |
+        |            | --------------->                |
+        |            |                | INVOCATION #42 |
+        |            |                | (progress)     |
+        |            |                | --------------->
+        | CALL #123  |                |                |
+        | (progress) |                |     ERROR      |
+        | ----------->                | <--------------|
+        |            | INVOCATION #42 |                |
+        |            | (progress)     |                |
+        |            | --------------->                |
+        |            |                | INVOCATION #42 |
+        |            |                | (progress)     |
+        |            |     ERROR      | --------------->
+        |            | <--------------|   ,-------.    |
+        |    ERROR   |                |   |Ignored|    |
+        | <----------|                |   `---+---'    |
+        |            |                |                |
+     ,--+---.     ,--+---.        ,---+---.       ,--+---.
+     |Caller|     |Dealer|        |Network|       |Callee|
+     `------'     `------'        `-------'       `------'
 
 
 **Ignoring Progressive Call Invocations**
