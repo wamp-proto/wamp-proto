@@ -247,7 +247,7 @@ When a *Callee* receives an INVOCATION under the following conditions:
 - the INVOCATION request ID does not correspond to a new call request, and,
 - the INVOCATION request ID does not match any RPC invocation in progress,
 
-then it MUST ignore and discard that INVOCATION message without any further correlated response to the *Dealer*. The rationale for this is that the *Caller* will eventually receive a correlated RESULT or ERROR message from the previous call completion and will be able to handle the call completion accordingly.
+then it MUST ignore and discard that INVOCATION message without any further correlated response to the *Dealer*. The rationale for this is that the *Dealer* will eventually receive a correlated YIELD or ERROR message from the *Callee* and then send a correlated RESULT or ERROR message to the *Caller*, thus the *Caller* and the *Dealer* will both be able to handle the call completion accordingly.
 
 The sequence diagram below illustrates this sitation, where the Network actor models network delay.
 
