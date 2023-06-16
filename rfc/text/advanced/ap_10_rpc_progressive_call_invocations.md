@@ -282,6 +282,25 @@ The sequence diagram below illustrates this sitation, where the Network actor mo
      `------'     `------'        `-------'       `------'
 
 
+**Non-sequential CALL Request IDs**
+
+When sending a CALL that continues a progressive call invocation, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, the requirement for CALL request IDs to be sequential session scope is waived (see [Protocol Violations](#protocol_errors)). Only those CALL messages which initiate a new RPC shall be required to have a sequential session scope request ID. A Router MAY choose to remember request IDs of previously completed progressive invocations calls for verification purposes, but this is not required.
+
+For example, this sequence of CALL messages received by a Router is considered valid in terms of protocol violation detection:
+
+1. `[CALL, 1, {"progress":true}, "foo"]`
+2. `[CALL, 2, {}, "bar"]`
+3. `[CALL, 1, {}, "foo"]`
+
+Because a Router is not expected to remember every completed request, a CALL may even use the request ID of a previously **completed** non-CALL request, and it would not be considered a protocol violation. In this case, the Router shall simply discard the CALL message, as already discussed in the previous section.
+
+However, if the Router receives a CALL for a _new_ RPC that skips the next expected request ID, then that shall be considered a protocol violation:
+
+1. `[CALL, 1, {"progress":true}, "foo"]`
+2. `[CALL, 2, {}, "bar"]`
+3. `[CALL, 4, {}, "baz"]` (protocol violation, request ID 3 expected)
+
+
 **Ignoring Progressive Call Invocations**
 
 Unlike some other advanced features, a *Callee* cannot be unaware of progressive call invocations.
