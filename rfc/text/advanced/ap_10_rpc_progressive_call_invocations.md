@@ -284,7 +284,7 @@ The sequence diagram below illustrates this sitation, where the Network actor mo
 
 **Verification of CALL Request IDs**
 
-When sending a CALL that continues a progressive call invocation, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, request IDs from CALL messages may not appear monotonic. For example:
+When sending a CALL that continues a progressive call invocation, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, request IDs from CALL messages may not appear sequential. For example:
 
 1. `[CALL, 1, {"progress":true}, "foo"]`
 2. `[CALL, 2, {}, "bar"]`
