@@ -282,23 +282,35 @@ The sequence diagram below illustrates this sitation, where the Network actor mo
      `------'     `------'        `-------'       `------'
 
 
-**Non-sequential CALL Request IDs**
+**Verification of CALL Request IDs**
 
-When sending a CALL that continues a progressive call invocation, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, the requirement for CALL request IDs to be sequential session scope is waived (see [Protocol Violations](#protocol_errors)). Only those CALL messages which initiate a new RPC shall be required to have a sequential session scope request ID. A Router MAY choose to remember request IDs of previously completed progressive invocations calls for verification purposes, but this is not required.
-
-For example, this sequence of CALL messages received by a Router is considered valid in terms of protocol violation detection:
+When sending a CALL that continues a progressive call invocation, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, request IDs from CALL messages may not appear monotonic. For example:
 
 1. `[CALL, 1, {"progress":true}, "foo"]`
 2. `[CALL, 2, {}, "bar"]`
-3. `[CALL, 1, {}, "foo"]`
+3. `[CALL, 1, {}, "foo"]` (OK, continues CALL request #1)
 
-Because a Router is not expected to remember every completed request, a CALL may even use the request ID of a previously **completed** non-CALL request, and it would not be considered a protocol violation. In this case, the Router shall simply discard the CALL message, as already discussed in the previous section.
-
-However, if the Router receives a CALL for a _new_ RPC that skips the next expected request ID, then that shall be considered a protocol violation:
+The requirement for CALL request IDs to be sequential session scope (see [Protocol Violations](#protocol_errors)) must therefore only apply to **new** RPC transactions:
 
 1. `[CALL, 1, {"progress":true}, "foo"]`
 2. `[CALL, 2, {}, "bar"]`
 3. `[CALL, 4, {}, "baz"]` (protocol violation, request ID 3 expected)
+
+Let us define *watermark* as the maximum valid request ID of all received CALL messages during a router's run time.
+
+Let us also define *continuation candiate* as a CALL with a request ID that is equal to or less than the watermark.
+
+When a *Dealer* receives a CALL with a request ID that is exactly one above the watermark, then it shall be considered a new RPC transaction, and the requirement for sequential session scope IDs is verified.
+
+When a *Dealer* receives a CALL with a request ID that is greater than one above the watermark, then this corresponds to a gap in the session scope ID sequence and MUST be treated as a protocol violation.
+
+When a *Dealer* receives a CALL with a request ID that is equal to or less than the watermark, then it is considered as a _continuation candidate_ for a progressive invocation.
+
+As discussed in the previous section, a *Caller* may be unaware that a progressive invocation is completed while sending a CALL continuation for that progressive invocation. Therefore, the *Dealer* cannot simply just check against invocations in progress when verifying the validity of continuation candidates. It must also consider past progressive invocations that have been completed.
+
+In order to validate the request ID of CALLs classified as progressive invocation continuations, it is suggested that a *Dealer* maintain a table of request IDs of completed progressive invocations, where each entry is kept for a limited *grace period*. When a *Dealer* receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation.
+
+Due to resource constraints, it may not be desireable to implement such a grace period table, so routers MAY instead discard continuation candidates with request IDs that cannot be found in the list of active progressive invocations.
 
 
 **Ignoring Progressive Call Invocations**
