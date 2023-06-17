@@ -308,10 +308,39 @@ When a *Dealer* receives a CALL with a request ID that is equal to or less than 
 
 As discussed in the previous section, a *Caller* may be unaware that a progressive invocation is completed while sending a CALL continuation for that progressive invocation. Therefore, the *Dealer* cannot simply just check against invocations in progress when verifying the validity of continuation candidates. It must also consider past progressive invocations that have been completed.
 
-In order to validate the request ID of CALLs classified as progressive invocation continuations, it is suggested that a *Dealer* maintain a table of request IDs of completed progressive invocations, where each entry is kept for a limited *grace period*. When a *Dealer* receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation.
+In order to validate the request ID of continuation candidates, it is suggested that a *Dealer* maintain a table of request IDs of completed progressive invocations, where each entry is kept for a limited *grace period*. When a *Dealer* receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation.
 
 Due to resource constraints, it may not be desireable to implement such a grace period table, so routers MAY instead discard continuation candidates with request IDs that cannot be found in the list of active progressive invocations.
 
+The following pseudocode summarizes the algorithm for verifying CALL request IDs when progressive call invocations are enabled:
+
+```
+if (request_id == watermark + 1)
+    watermark = watermak + 1
+    initiate_new_call()
+else if (request_id > watermark + 1)
+    // Gap in request IDs
+    abort_session("wamp.error.protocol_violation")
+else
+    // Continuation candidate
+    if (active_call_records.contains(request_id, procedure_uri))
+        record = active_call_records.at(request_id)
+        if (record.is_progressive_invocation_call())
+            continue_call()
+        else
+            abort_session("wamp.error.protocol_violation")
+        endif
+    else if (strict_request_id_verification_enabled)
+        if (grace_period_table.contains(request_id, procedure_uri))
+            discard_call()
+        else
+            abort_session("wamp.error.protocol_violation")
+        endif
+    else
+        discard_call()
+    endif
+endif
+```
 
 **Ignoring Progressive Call Invocations**
 
