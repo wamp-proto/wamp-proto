@@ -65,7 +65,7 @@ WampSyncClient_     PHP                                 Synchronous (blocking) P
 wamprx.js_          TypeScript                          Simple WAMP TypeScript client-side implementation (of course also usable in JavaScript). It heavily relies on RxJS.
 WampSharp_          C#                                  C# implementation of WAMP: both client and router roles, both JSON and `MessagePack <http://msgpack.org/>`_ support.
 wampy_              Python                              Python implementation for classic blocking Python applications.
-wampy.js_           JavaScript                          WAMP JavaScript client for browsers and node.js using callbacks. See `here <https://github.com/KSDaemon/wampy.js#quick-comparison-to-other-libs>`_ for comparison to AutobahnJS.
+wampy.js_           JavaScript                          Feature-rich lightweight WAMP Javascript implementation for browsers and node.js.
 wamp_async_         Rust                                Rust client library. It features ergonomic async API
 ==================  ==================================  =====================
 
@@ -109,7 +109,8 @@ The following table lists WAMP compliant utilities.
 ==================  ==================================  =====================
 Name                Language/Run-time                   Description
 ==================  ==================================  =====================
-wamp-cli_           JavaScript, NodeJS                  A CLI tool to help building applications with WAMP
+wamp-cli_           JavaScript, NodeJS                  CLI tool to help building applications with WAMP
+wampy.js_           JavaScript, NodeJS                  CLI tool built on top of Wampy.js library and exposes almost the same API to Command line charged with rich shell auto completion, description and examples. You can use it for testing WAMP API during development, debugging, or just exploring the new APIs.
 wick_               Go                                  CLI tool to make WAMP RPCs and PubSub. Useful for developing WAMP Components and their testing.
 ==================  ==================================  =====================
 
