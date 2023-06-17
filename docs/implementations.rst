@@ -109,7 +109,8 @@ The following table lists WAMP compliant utilities.
 ==================  ==================================  =====================
 Name                Language/Run-time                   Description
 ==================  ==================================  =====================
-wamp-cli_           JavaScript, NodeJS                  A CLI tool to help building applications with WAMP
+wamp-cli_           JavaScript, NodeJS                  CLI tool to help building applications with WAMP
+wampy_              JavaScript, NodeJS                  CLI tool built on top of Wampy.js library and exposes almost the same API to Command line charged with rich shell auto completion, description and examples. You can use it for testing WAMP API during development, debugging, or just exploring the new APIs.
 wick_               Go                                  CLI tool to make WAMP RPCs and PubSub. Useful for developing WAMP Components and their testing.
 ==================  ==================================  =====================
 
