@@ -2,11 +2,11 @@
 
 # Predefined URIs
 
-WAMP predefines the following URIs in the *advanced profile*. For URIs, used in *basic profile*, please, see appendix in basic profile specification.
+WAMP predefines the following URIs in the *advanced profile*. For URIs, used in *basic profile*, please, see appendix in basic profile specification.
 
 ## Predefined Errors
 
-*Dealer* or *Callee* canceled a call previously issued
+*Dealer* or *Callee* canceled a call previously issued
 
     wamp.error.canceled
 

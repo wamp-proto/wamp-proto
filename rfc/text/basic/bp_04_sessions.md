@@ -225,7 +225,7 @@ where
 
 No response to an `ABORT` message is expected.
 
-There are few scenarios, when `ABORT` is used:
+There are few scenarios, when `ABORT` is used:
 
 * During session opening, if peer decided to abort connect.
 
@@ -249,7 +249,7 @@ There are few scenarios, when `ABORT` is used:
         [3, {"message": "The realm does not exist."},
             "wamp.error.no_such_realm"]
 
-* After session is opened, when protocol violation happens (see "Protocol errors" section).
+* After session is opened, when protocol violation happens (see "Protocol errors" section).
 
 *Examples*
 
@@ -333,6 +333,6 @@ and the other peer replies
 
 **Difference between ABORT and GOODBYE**
 
-The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
+The differences between `ABORT` and `GOODBYE` messages is that `ABORT` is never replied to by a Peer, whereas `GOODBYE` must be replied to by the receiving Peer.
 
 > Though `ABORT` and `GOODBYE` are structurally identical, using different message types serves to reduce overloaded meaning of messages and simplify message handling code.
