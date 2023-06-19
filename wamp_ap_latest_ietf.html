@@ -1203,7 +1203,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 19 December 2023</td>
+<td class="center">Expires 21 December 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1216,12 +1216,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-06-17" class="published">17 June 2023</time>
+<time datetime="2023-06-19" class="published">19 June 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-12-19">19 December 2023</time></dd>
+<dd class="expires"><time datetime="2023-12-21">21 December 2023</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1251,7 +1251,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 19 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 21 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3564,7 +3564,7 @@ initiate data structures for a new call, etc.<a href="#section-3.2-2.3" class="p
 </li>
         </ul>
 <p id="section-3.2-3">In such cases, a procedure implemented by a <em>Callee</em> and registered at a <em>Dealer</em> may be made to receive progressive call invocations,
-where the <em>Callee</em> may start processing the<span class="unicode">  (U+00A0)</span>incoming data without awaiting the entire set of payload chunks.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+where the <em>Callee</em> may start processing the incoming data without awaiting the entire set of payload chunks.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4"><strong>Feature Announcement</strong><a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.2-5">Support for this advanced feature MUST be announced by <em>Callers</em> (<code>role := "caller"</code>), <em>Callees</em> (<code>role := "callee"</code>)
 and <em>Dealers</em> (<code>role := "dealer"</code>) via<a href="#section-3.2-5" class="pilcrow">¶</a></p>
@@ -3982,7 +3982,7 @@ dictionary of corresponding <code>INVOCATION</code> messages shall be based on t
             <code>ERROR</code><a href="#section-3.4-7.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-3.4-8">A call may be canceled at the <em>Callee</em> or<span class="unicode">  (U+00A0)</span>at<span class="unicode">  (U+00A0)</span>the<span class="unicode">  (U+00A0)</span><em>Dealer</em> side. Cancellation behaves differently depending on the mode:<a href="#section-3.4-8" class="pilcrow">¶</a></p>
+<p id="section-3.4-8">A call may be canceled at the <em>Callee</em> or at the <em>Dealer</em> side. Cancellation behaves differently depending on the mode:<a href="#section-3.4-8" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-3.4-9.1">
             <strong>skip</strong>: The pending call is canceled and <code>ERROR</code> is sent immediately back to the caller. No <code>INTERRUPT</code> is sent to the callee and the result is discarded when received.<a href="#section-3.4-9.1" class="pilcrow">¶</a>
@@ -3995,7 +3995,7 @@ dictionary of corresponding <code>INVOCATION</code> messages shall be based on t
 </li>
         </ul>
 <p id="section-3.4-10">If the callee does not support call canceling, then behavior is <strong>skip</strong>.<a href="#section-3.4-10" class="pilcrow">¶</a></p>
-<p id="section-3.4-11">Message flow during call canceling when<span class="unicode">  (U+00A0)</span><em>Callee</em> supports this feature and<span class="unicode">  (U+00A0)</span>mode is <code>kill</code><a href="#section-3.4-11" class="pilcrow">¶</a></p>
+<p id="section-3.4-11">Message flow during call canceling when <em>Callee</em> supports this feature and mode is <code>kill</code><a href="#section-3.4-11" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.4-12">
 <pre>    ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
@@ -4022,7 +4022,7 @@ dictionary of corresponding <code>INVOCATION</code> messages shall be based on t
     `------'          `------'          `------'
 </pre><a href="#section-3.4-12" class="pilcrow">¶</a>
 </div>
-<p id="section-3.4-13">Message flow during call canceling when<span class="unicode">  (U+00A0)</span><em>Callee</em> does not support this feature or<span class="unicode">  (U+00A0)</span>mode is <code>skip</code><a href="#section-3.4-13" class="pilcrow">¶</a></p>
+<p id="section-3.4-13">Message flow during call canceling when <em>Callee</em> does not support this feature or mode is <code>skip</code><a href="#section-3.4-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.4-14">
 <pre>    ,------.          ,------.            ,------.
     |Caller|          |Dealer|            |Callee|
@@ -4049,7 +4049,7 @@ dictionary of corresponding <code>INVOCATION</code> messages shall be based on t
     `------'          `------'            `------'
 </pre><a href="#section-3.4-14" class="pilcrow">¶</a>
 </div>
-<p id="section-3.4-15">Message flow during call canceling when<span class="unicode">  (U+00A0)</span><em>Callee</em> supports this feature and<span class="unicode">  (U+00A0)</span>mode is <code>killnowait</code><a href="#section-3.4-15" class="pilcrow">¶</a></p>
+<p id="section-3.4-15">Message flow during call canceling when <em>Callee</em> supports this feature and mode is <code>killnowait</code><a href="#section-3.4-15" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.4-16">
 <pre>    ,------.          ,------.          ,------.
     |Caller|          |Dealer|          |Callee|
@@ -4373,14 +4373,14 @@ dictionary of corresponding <code>INVOCATION</code> messages shall be based on t
 <p id="section-3.8.3-2">Since each <em>Callee</em>'s' registrations "stands on its own", there is no <em>set semantics</em> implied by pattern-based registrations.<a href="#section-3.8.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.8.3-3">E.g. a <em>Callee</em> cannot register to a broad pattern, and then unregister from a subset of that broad pattern to form a more complex registration. Each registration is separate.<a href="#section-3.8.3-3" class="pilcrow">¶</a></p>
 <p id="section-3.8.3-4"><strong>Calls matching multiple registrations</strong><a href="#section-3.8.3-4" class="pilcrow">¶</a></p>
-<p id="section-3.8.3-5">There can be situations, when<span class="unicode">  (U+00A0)</span>some call URI matches more then one registration. In<span class="unicode">  (U+00A0)</span>this case a call is routed to one and<span class="unicode">  (U+00A0)</span>only one best matched RPC registration, or<span class="unicode">  (U+00A0)</span>fails with ERROR <code>wamp.error.no_such_procedure</code>.<a href="#section-3.8.3-5" class="pilcrow">¶</a></p>
-<p id="section-3.8.3-6">The following algorithm MUST be applied to<span class="unicode">  (U+00A0)</span>find a single RPC registration to<span class="unicode">  (U+00A0)</span>which a call is routed:<a href="#section-3.8.3-6" class="pilcrow">¶</a></p>
+<p id="section-3.8.3-5">There can be situations, when some call URI matches more then one registration. In this case a call is routed to one and only one best matched RPC registration, or fails with ERROR <code>wamp.error.no_such_procedure</code>.<a href="#section-3.8.3-5" class="pilcrow">¶</a></p>
+<p id="section-3.8.3-6">The following algorithm MUST be applied to find a single RPC registration to which a call is routed:<a href="#section-3.8.3-6" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="compact type-1" id="section-3.8.3-7">
-<li id="section-3.8.3-7.1">Check for<span class="unicode">  (U+00A0)</span>exact matching registration. If this match exists<span class="unicode"> — (U+00A0 U+2014)</span> use it.<a href="#section-3.8.3-7.1" class="pilcrow">¶</a>
+<li id="section-3.8.3-7.1">Check for exact matching registration. If this match exists <span class="unicode">— (U+2014)</span> use it.<a href="#section-3.8.3-7.1" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.8.3-7.2">If there are prefix-based registrations,<span class="unicode">  (U+00A0)</span>find the registration with the longest prefix match. Longest means it has more URI components matched, e.g. for<span class="unicode">  (U+00A0)</span>call URI <code>a1.b2.c3.d4</code> registration <code>a1.b2.c3</code> has higher priority than registration <code>a1.b2</code>. If this match exists<span class="unicode"> — (U+00A0 U+2014)</span> use it.<a href="#section-3.8.3-7.2" class="pilcrow">¶</a>
+            <li id="section-3.8.3-7.2">If there are prefix-based registrations, find the registration with the longest prefix match. Longest means it has more URI components matched, e.g. for call URI <code>a1.b2.c3.d4</code> registration <code>a1.b2.c3</code> has higher priority than registration <code>a1.b2</code>. If this match exists <span class="unicode">— (U+2014)</span> use it.<a href="#section-3.8.3-7.2" class="pilcrow">¶</a>
 </li>
-            <li id="section-3.8.3-7.3">If there are wildcard-based registrations, find the registration with the longest portion of<span class="unicode">  (U+00A0)</span>URI components matched before each wildcard. E.g. for<span class="unicode">  (U+00A0)</span>call URI <code>a1.b2.c3.d4</code> registration <code>a1.b2..d4</code> has higher priority than registration <code>a1...d4</code>, see below for more complex examples. If this match exists<span class="unicode"> — (U+00A0 U+2014)</span> use it.<a href="#section-3.8.3-7.3" class="pilcrow">¶</a>
+            <li id="section-3.8.3-7.3">If there are wildcard-based registrations, find the registration with the longest portion of URI components matched before each wildcard. E.g. for call URI <code>a1.b2.c3.d4</code> registration <code>a1.b2..d4</code> has higher priority than registration <code>a1...d4</code>, see below for more complex examples. If this match exists <span class="unicode">— (U+2014)</span> use it.<a href="#section-3.8.3-7.3" class="pilcrow">¶</a>
 </li>
             <li id="section-3.8.3-7.4">If there is no exact match, no prefix match, and no wildcard match, then <em>Dealer</em> MUST return ERROR <code>wamp.error.no_such_procedure</code>.<a href="#section-3.8.3-7.4" class="pilcrow">¶</a>
 </li>
@@ -4411,7 +4411,7 @@ Call request RPC URI: 'a1.b2.c33.d4.e5' →
     select longest one. Use RPC 5
 Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' →
     no exact match, no prefix match, 2 wildcard matches (6,7),
-    both having equal first portions (a1.b2), but RPC 6 has longer
+    both having equal first portions (a1.b2), but RPC 6 has longer
     second portion (d4.e5). Use RPC 6
 Call request RPC URI: 'a2.b2.c2.d2.e2' →
     no exact match, no prefix match, no wildcard match.
@@ -9449,7 +9449,7 @@ calling <code>xbr.pool.buy_key</code>, and calling <code>wamp.r2r.submit_traffic
         <h3 id="name-remote-procedure-calls">
 <a href="#section-10.4" class="section-number selfRef">10.4. </a><a href="#name-remote-procedure-calls" class="section-name selfRef">Remote Procedure Calls</a>
         </h3>
-<p id="section-10.4-1">A <em>Dealer</em> or<span class="unicode">  (U+00A0)</span><em>Callee</em> terminated a call that timed out<a href="#section-10.4-1" class="pilcrow">¶</a></p>
+<p id="section-10.4-1">A <em>Dealer</em> or <em>Callee</em> terminated a call that timed out<a href="#section-10.4-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-10.4-2">
 <pre>    wamp.error.timeout
 </pre><a href="#section-10.4-2" class="pilcrow">¶</a>

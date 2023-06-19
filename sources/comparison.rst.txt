@@ -278,11 +278,11 @@ well (polling when no change occured).
    :name: rest
 
 `REST <http://en.wikipedia.org/wiki/Representational_State_Transfer>`__
-is neither a library, nor protocol or framework. It's a software
-architecture style. REST stands for "Representational State Transfer"
-and assumes that data should be transfered over network in one
-of the standard formats like HTML, XML or JSON and follows an
-architecture based on 6 limitations:
+is neither a library, nor protocol or framework. It's a software
+architecture style. REST stands for "Representational State Transfer"
+and assumes that data should be transfered over network in one
+of the standard formats like HTML, XML or JSON and follows an
+architecture based on 6 limitations:
 
 -  Uniform Interface
 -  Stateless
@@ -291,18 +291,18 @@ architecture based on 6 limitations:
 -  Layered System
 -  Code on Demand (optional)
 
-In a World Wide Web, RESTful systems use URL for an information unit
-address, and http status codes
-for corresponding \ `CRUD <http://en.wikipedia.org/wiki/Create,_read,_update_and_delete>`__
+In a World Wide Web, RESTful systems use URL for an information unit
+address, and http status codes
+for corresponding \ `CRUD <http://en.wikipedia.org/wiki/Create,_read,_update_and_delete>`__
 operations.
 
-It is difficult to compare the WAMP protocol and a software architecture
-paradigm. They both are multilayered and can use different data
-presentation format. But one of the clearest difference is that WAMP is
+It is difficult to compare the WAMP protocol and a software architecture
+paradigm. They both are multilayered and can use different data
+presentation format. But one of the clearest difference is that WAMP is
 bidirectional, while REST pattern is not. In RESTful applications only
-client acts as initiator for data manipulations, and there is no options
-about how server can send data to client. In contrast to this, WAMP
-workflow allows data to be transfered to and form server.
+client acts as initiator for data manipulations, and there is no options
+about how server can send data to client. In contrast to this, WAMP
+workflow allows data to be transfered to and form server.
 
 Another difference is that REST deliberately uses URLs from the HTTP
 scheme which serve a dual function of **identifying** and **addressing**
@@ -312,11 +312,11 @@ means, the implementation of the procedure can reside anywhere - it's
 location is only known to the WAMP router. This provides location
 transparency for WAMP application components.
 
-There is no problem to use WAMP and REST together. For example, you can
+There is no problem to use WAMP and REST together. For example, you can
 make basic CRUD-operations over HTTP using GET/POST/PUT/DELETE methods,
-and in parallel, use WAMP PubSub service for notifications about
-changes, and WAMP RPC's for making some explicit business logic
-operations (like sending SMS, or batch picture resizing and so on).
+and in parallel, use WAMP PubSub service for notifications about
+changes, and WAMP RPC's for making some explicit business logic
+operations (like sending SMS, or batch picture resizing and so on).
 
 
 .. rubric:: SOAP
@@ -358,18 +358,18 @@ independent addressing and routing right into the protocol.
    :name: socketio
 
 `socket.io <http://socket.io/>`__ is a client-server PubSub service
-implementation written in JavaScript. It uses node.js on server side,
-browser counter part and own communication protocol. Socket.IO uses
-WebSocket under the hood, when it's possible, but also has a polyfill as
+implementation written in JavaScript. It uses node.js on server side,
+browser counter part and own communication protocol. Socket.IO uses
+WebSocket under the hood, when it's possible, but also has a polyfill as
 fallback.
 
-Comparing to WAMP, library allows you to subscribe to different topics,
-has a broadcast messages and message namespaces, which works like
-a realms in WAMP. Binary data transfer is possible, but that needs
+Comparing to WAMP, library allows you to subscribe to different topics,
+has a broadcast messages and message namespaces, which works like
+a realms in WAMP. Binary data transfer is possible, but that needs
 additional modules on both sides
 (`socket.io-stream <https://github.com/nkzawa/socket.io-stream>`__)
-and additional amount of work for developers. They need to program
-that explicitly.
+and additional amount of work for developers. They need to program
+that explicitly.
 
 Socket.IO does not provide remote procedure calls.
 
