@@ -65,7 +65,7 @@ Authorization of the *Principal* is required to perform the given *Action*. This
 
 ## Remote Procedure Calls
 
-A *Dealer* or *Callee* terminated a call that timed out
+A *Dealer* or *Callee* terminated a call that timed out
 
 {align="left"}
         wamp.error.timeout
