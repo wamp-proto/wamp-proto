@@ -284,7 +284,7 @@ The sequence diagram below illustrates this sitation, where the Network actor mo
 
 **Verification of CALL Request IDs**
 
-When sending a CALL that continues a progressive call invocation, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, request IDs from CALL messages may not appear sequential. For example:
+When sending a CALL that continues a progressive call, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, request IDs from CALL messages may not appear sequential. For example:
 
 1. `[CALL, 1, {"progress":true}, "foo"]`
 2. `[CALL, 2, {}, "bar"]`
@@ -296,21 +296,21 @@ The requirement for CALL request IDs to be sequential session scope (see [Protoc
 2. `[CALL, 2, {}, "bar"]`
 3. `[CALL, 4, {}, "baz"]` (protocol violation, request ID 3 expected)
 
-Let us define *watermark* as the maximum valid request ID of all received CALL messages during a router's run time.
+Let us define *watermark* as the maximum valid request ID of all received CALL messages during a *Dealer*'s run time.
 
 Let us also define *continuation candiate* as a CALL with a request ID that is equal to or less than the watermark.
 
 When a *Dealer* receives a CALL with a request ID that is exactly one above the watermark, then it shall be considered a new RPC transaction, and the requirement for sequential session scope IDs is verified.
 
-When a *Dealer* receives a CALL with a request ID that is greater than one above the watermark, then this corresponds to a gap in the session scope ID sequence and MUST be treated as a protocol violation.
+When a *Dealer* receives a CALL with a request ID that is greater than one above the watermark, then this corresponds to a gap in the session scope ID sequence and MUST always be treated as a protocol violation.
 
 When a *Dealer* receives a CALL with a request ID that is equal to or less than the watermark, then it is considered as a _continuation candidate_ for a progressive invocation.
 
-As discussed in the previous section, a *Caller* may be unaware that a progressive invocation is completed while sending a CALL continuation for that progressive invocation. Therefore, the *Dealer* cannot simply just check against invocations in progress when verifying the validity of continuation candidates. It must also consider past progressive invocations that have been completed.
+As discussed in the previous section, a *Caller* may be unaware that a progressive invocation transfer is completed while sending a CALL continuation for that progressive invocation. Therefore, the *Dealer* cannot simply just check against progressive transfers in progress when verifying the validity of continuation candidates. It must also consider past progressive transfers that have been completed.
 
-In order to validate the request ID of continuation candidates, it is suggested that a *Dealer* maintain a table of request IDs of completed progressive invocations, where each entry is kept for a limited *grace period*. When a *Dealer* receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation.
+In order to validate the request ID of continuation candidates, it is suggested that a *Dealer* maintain a table of request IDs of completed progressive invocation transfers, where each entry is kept for a limited *grace period*. When a *Dealer* receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation.
 
-Due to resource constraints, it may not be desireable to implement such a grace period table, so routers MAY instead discard continuation candidates with request IDs that cannot be found in the list of active progressive invocations.
+Due to resource constraints, it may not be desireable to implement such a grace period table, so *Dealers* MAY instead discard continuation candidates with request IDs that cannot be found in the list of active progressive invocations.
 
 The following pseudocode summarizes the algorithm for verifying CALL request IDs when progressive call invocations are enabled:
 
