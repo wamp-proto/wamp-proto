@@ -298,19 +298,19 @@ The requirement for CALL request IDs to be sequential session scope (see [Protoc
 
 Let us define *watermark* as the maximum valid request ID of all received CALL messages during a *Dealer*'s run time.
 
-Let us also define *continuation candiate* as a CALL with a request ID that is equal to or less than the watermark.
+Let us also define *continuation candiate* as a CALL with a request ID that is equal to or less than the *watermark*.
 
 When a *Dealer* receives a CALL with a request ID that is exactly one above the watermark, then it shall be considered a new RPC transaction, and the requirement for sequential session scope IDs is verified.
 
 When a *Dealer* receives a CALL with a request ID that is greater than one above the watermark, then this corresponds to a gap in the session scope ID sequence and MUST always be treated as a protocol violation.
 
-When a *Dealer* receives a CALL with a request ID that is equal to or less than the watermark, then it is considered as a _continuation candidate_ for a progressive invocation.
+When a *Dealer* receives a CALL with a request ID that is equal to or less than the watermark, then it is considered as a _continuation candidate_ for a progressive invocation transfer.
 
 As discussed in the previous section, a *Caller* may be unaware that a progressive invocation transfer is completed while sending a CALL continuation for that progressive invocation. Therefore, the *Dealer* cannot simply just check against progressive transfers in progress when verifying the validity of continuation candidates. It must also consider past progressive transfers that have been completed.
 
-In order to validate the request ID of continuation candidates, it is suggested that a *Dealer* maintain a table of request IDs of completed progressive invocation transfers, where each entry is kept for a limited *grace period*. When a *Dealer* receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation. Care must be taken to choose the grace period: too short and data races can occur with slow networks, too long and memory usage of the table may become excessive when frequent progressive call invocations are made.
+In order to validate the request ID of continuation candidates, it is suggested that a *Dealer* maintain a table of request IDs of completed progressive invocation transfers, where each entry is kept for a limited *grace period*. When a *Dealer* receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation. Care must be taken in choosing the grace period: too short and data races can occur with slow networks, too long and memory usage of the table may become excessive when frequent progressive calls are made.
 
-Due to resource constraints, it may not be desireable to implement such a grace period table, so *Dealers* MAY instead discard continuation candidates with request IDs that cannot be found in the list of active progressive invocations.
+Due to resource constraints, it may not be desireable to implement such a grace period table, so *Dealers* MAY instead discard continuation candidates with request IDs that cannot be found in the list of active progressive invocation transfers.
 
 The following pseudocode summarizes the algorithm for verifying CALL request IDs when progressive call invocations are enabled:
 
