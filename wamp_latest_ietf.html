@@ -6,18 +6,18 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>The Web Application Messaging Protocol</title>
 <meta content="Tobias Oberstein" name="author">
-<meta content="xml2rfc 3.17.3" name="generator">
+<meta content="xml2rfc 3.17.4" name="generator">
 <meta content="WebSocket, WAMP, real-time, RPC, PubSub" name="keyword">
 <meta content="WAMP" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.3
+  xml2rfc 3.17.4
     Python 3.9.17
-    appdirs 1.4.4
-    ConfigArgParse 1.5.3
+    ConfigArgParse 1.5.5
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.2
+    lxml 4.9.3
+    platformdirs 3.8.0
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
@@ -1199,11 +1199,11 @@ li > p:last-of-type:only-child {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WAMP</td>
-<td class="right">June 2023</td>
+<td class="right">July 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 21 December 2023</td>
+<td class="center">Expires 6 January 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1216,12 +1216,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-06-19" class="published">19 June 2023</time>
+<time datetime="2023-07-05" class="published">5 July 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-12-21">21 December 2023</time></dd>
+<dd class="expires"><time datetime="2024-01-06">6 January 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1251,7 +1251,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1355,7 +1355,7 @@ li > p:last-of-type:only-child {
                     <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="auto internal xref">2.3.2</a>.  <a href="#name-transport-and-session-lifet" class="internal xref">Transport and Session Lifetime</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.3">
-                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="auto internal xref">2.3.3</a>.  <a href="#name-protocol-errors" class="internal xref">Protocol errors</a></p>
+                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="auto internal xref">2.3.3</a>.  <a href="#name-protocol-errors" class="internal xref">Protocol Errors</a></p>
 </li>
                 </ul>
 </li>
@@ -2424,7 +2424,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <div id="protocol_errors">
 <section id="section-2.3.3">
           <h4 id="name-protocol-errors">
-<a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-protocol-errors" class="section-name selfRef">Protocol errors</a>
+<a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-protocol-errors" class="section-name selfRef">Protocol Errors</a>
           </h4>
 <p id="section-2.3.3-1">WAMP implementations MUST abort sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
 <p id="section-2.3.3-2">Following scenarios have to be considered protocol errors:<a href="#section-2.3.3-2" class="pilcrow">¶</a></p>
@@ -2455,7 +2455,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </li>
             <li class="compact" id="section-2.3.3-3.13">Receiving <code>INVOCATION</code> message, before session was established.<a href="#section-2.3.3-3.13" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-2.3.3-3.14">Receiving message with non-<a href="#session_scope_id">sequential</a> <a href="#session_scope_ids">session scope</a> request ID, such as <code>SUBSCRIBE</code>, <code>UNSUBSCRIBE</code>, <code>PUBLISH</code>, <code>REGISTER</code>, <code>UNREGISTER</code>, <code>CALL</code> and <code>YIELD</code>.<a href="#section-2.3.3-3.14" class="pilcrow">¶</a>
+            <li class="compact" id="section-2.3.3-3.14">Receiving message with non-<a href="#session_scope_id">sequential</a> <a href="#session_scope_ids">session scope</a> request ID, such as <code>SUBSCRIBE</code>, <code>UNSUBSCRIBE</code>, <code>PUBLISH</code>, <code>REGISTER</code>, <code>UNREGISTER</code>, and <code>CALL</code>. Note that there are exeptions for <code>CALL</code> when the <em>Progressive Call Invocations</em> advanced feature is enabled. See the <em>Progressive Call Invocations</em> section in the advanced profile for details.<a href="#section-2.3.3-3.14" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.3.3-3.15">Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.<a href="#section-2.3.3-3.15" class="pilcrow">¶</a>
 </li>
@@ -7145,19 +7145,81 @@ consumption for the <em>Dealer</em> and <em>Callee</em>, due to the need to stor
  `------'     `------'        `-------'       `------'
 </pre><a href="#section-11.2-50" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-51"><strong>Ignoring Progressive Call Invocations</strong><a href="#section-11.2-51" class="pilcrow">¶</a></p>
-<p id="section-11.2-52">Unlike some other advanced features, a <em>Callee</em> cannot be unaware of progressive call invocations.
+<p id="section-11.2-51"><strong>Verification of CALL Request IDs</strong><a href="#section-11.2-51" class="pilcrow">¶</a></p>
+<p id="section-11.2-52">When sending a CALL that continues a progressive call, its request ID is the same as the CALL that initiated the progressive call invocation. Therefore, when progressive call invocations are enabled, request IDs from CALL messages may not appear sequential. For example:<a href="#section-11.2-52" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-11.2-53">
+<li id="section-11.2-53.1">
+            <code>[CALL, 1, {"progress":true}, "foo"]</code><a href="#section-11.2-53.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-11.2-53.2">
+            <code>[CALL, 2, {}, "bar"]</code><a href="#section-11.2-53.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-11.2-53.3">
+            <code>[CALL, 1, {}, "foo"]</code> (OK, continues CALL request #1)<a href="#section-11.2-53.3" class="pilcrow">¶</a>
+</li>
+        </ol>
+<p id="section-11.2-54">The requirement for CALL request IDs to be sequential session scope (see <a href="#protocol_errors">Protocol Violations</a>) must therefore only apply to <strong>new</strong> RPC transactions:<a href="#section-11.2-54" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="compact type-1" id="section-11.2-55">
+<li id="section-11.2-55.1">
+            <code>[CALL, 1, {"progress":true}, "foo"]</code><a href="#section-11.2-55.1" class="pilcrow">¶</a>
+</li>
+          <li id="section-11.2-55.2">
+            <code>[CALL, 2, {}, "bar"]</code><a href="#section-11.2-55.2" class="pilcrow">¶</a>
+</li>
+          <li id="section-11.2-55.3">
+            <code>[CALL, 4, {}, "baz"]</code> (protocol violation, request ID 3 expected)<a href="#section-11.2-55.3" class="pilcrow">¶</a>
+</li>
+        </ol>
+<p id="section-11.2-56">Let us define <em>watermark</em> as the maximum valid request ID of all received CALL messages during a <em>Dealer</em>'s run time.<a href="#section-11.2-56" class="pilcrow">¶</a></p>
+<p id="section-11.2-57">Let us also define <em>continuation candiate</em> as a CALL with a request ID that is equal to or less than the <em>watermark</em>.<a href="#section-11.2-57" class="pilcrow">¶</a></p>
+<p id="section-11.2-58">When a <em>Dealer</em> receives a CALL with a request ID that is exactly one above the watermark, then it shall be considered a new RPC transaction, and the requirement for sequential session scope IDs is verified.<a href="#section-11.2-58" class="pilcrow">¶</a></p>
+<p id="section-11.2-59">When a <em>Dealer</em> receives a CALL with a request ID that is greater than one above the watermark, then this corresponds to a gap in the session scope ID sequence and MUST always be treated as a protocol violation.<a href="#section-11.2-59" class="pilcrow">¶</a></p>
+<p id="section-11.2-60">When a <em>Dealer</em> receives a CALL with a request ID that is equal to or less than the watermark, then it is considered as a <em>continuation candidate</em> for a progressive invocation transfer.<a href="#section-11.2-60" class="pilcrow">¶</a></p>
+<p id="section-11.2-61">As discussed in the previous section, a <em>Caller</em> may be unaware that a progressive invocation transfer is completed while sending a CALL continuation for that progressive invocation. Therefore, the <em>Dealer</em> cannot simply just check against progressive transfers in progress when verifying the validity of continuation candidates. It must also consider past progressive transfers that have been completed.<a href="#section-11.2-61" class="pilcrow">¶</a></p>
+<p id="section-11.2-62">In order to validate the request ID of continuation candidates, it is suggested that a <em>Dealer</em> maintain a table of request IDs of completed progressive invocation transfers, where each entry is kept for a limited <em>grace period</em>. When a <em>Dealer</em> receives a continuation candidate with a request ID that is not in that table, nor in the list of active progressive invocations, then it is considered a protocol violation. Care must be taken in choosing the grace period: too short and data races can occur with slow networks, too long and memory usage of the table may become excessive when frequent progressive calls are made.<a href="#section-11.2-62" class="pilcrow">¶</a></p>
+<p id="section-11.2-63">Due to resource constraints, it may not be desireable to implement such a grace period table, so <em>Dealers</em> MAY instead discard continuation candidates with request IDs that cannot be found in the list of active progressive invocation transfers.<a href="#section-11.2-63" class="pilcrow">¶</a></p>
+<p id="section-11.2-64">The following pseudocode summarizes the algorithm for verifying CALL request IDs when progressive call invocations are enabled:<a href="#section-11.2-64" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-65">
+<pre>if (request_id == watermark + 1)
+    watermark = watermak + 1
+    initiate_new_call()
+else if (request_id &gt; watermark + 1)
+    // Gap in request IDs
+    abort_session("wamp.error.protocol_violation")
+else
+    // Continuation candidate
+    if (active_call_records.contains(request_id, procedure_uri))
+        record = active_call_records.at(request_id)
+        if (record.is_progressive_invocation_call())
+            continue_call()
+        else
+            abort_session("wamp.error.protocol_violation")
+        endif
+    else if (strict_request_id_verification_enabled)
+        if (grace_period_table.contains(request_id, procedure_uri))
+            discard_call()
+        else
+            abort_session("wamp.error.protocol_violation")
+        endif
+    else
+        discard_call()
+    endif
+endif
+</pre><a href="#section-11.2-65" class="pilcrow">¶</a>
+</div>
+<p id="section-11.2-66"><strong>Ignoring Progressive Call Invocations</strong><a href="#section-11.2-66" class="pilcrow">¶</a></p>
+<p id="section-11.2-67">Unlike some other advanced features, a <em>Callee</em> cannot be unaware of progressive call invocations.
 Therefore, if a <em>Callee</em> doesn't support this feature, the <em>Dealer</em> MUST respond to the <em>Caller</em> with an
-<code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-52" class="pilcrow">¶</a></p>
-<p id="section-11.2-53">A <em>Callee</em> that supports progressive call invocations, but does not support call canceling, shall be considered by the <em>Dealer</em>
-as not supporting progressive call invocations.<a href="#section-11.2-53" class="pilcrow">¶</a></p>
-<p id="section-11.2-54"><strong>Progressive Call Invocations with Progressive Call Results</strong><a href="#section-11.2-54" class="pilcrow">¶</a></p>
-<p id="section-11.2-55"><em>Progressive Call Invocations</em> may be used in conjunction with <em>Progressive Call Results</em> if the <em>Caller</em>, <em>Dealer</em>, and <em>Callee</em> all support both features. This allows the <em>Callee</em> to start sending partial results back to the <em>Caller</em> after receiving one or more initial payload chunks. Efficient two-way streams between a <em>Caller</em> and <em>Callee</em> can be implemented this way.<a href="#section-11.2-55" class="pilcrow">¶</a></p>
-<p id="section-11.2-56">The following message flow illustrates a call using progressive call invocations when a <em>Callee</em> starts sending progressive call
+<code>wamp.error.feature_not_supported</code> error message.<a href="#section-11.2-67" class="pilcrow">¶</a></p>
+<p id="section-11.2-68">A <em>Callee</em> that supports progressive call invocations, but does not support call canceling, shall be considered by the <em>Dealer</em>
+as not supporting progressive call invocations.<a href="#section-11.2-68" class="pilcrow">¶</a></p>
+<p id="section-11.2-69"><strong>Progressive Call Invocations with Progressive Call Results</strong><a href="#section-11.2-69" class="pilcrow">¶</a></p>
+<p id="section-11.2-70"><em>Progressive Call Invocations</em> may be used in conjunction with <em>Progressive Call Results</em> if the <em>Caller</em>, <em>Dealer</em>, and <em>Callee</em> all support both features. This allows the <em>Callee</em> to start sending partial results back to the <em>Caller</em> after receiving one or more initial payload chunks. Efficient two-way streams between a <em>Caller</em> and <em>Callee</em> can be implemented this way.<a href="#section-11.2-70" class="pilcrow">¶</a></p>
+<p id="section-11.2-71">The following message flow illustrates a call using progressive call invocations when a <em>Callee</em> starts sending progressive call
 results immediately. Note that <code>YIELD</code> messages don't need to be matched with <code>CALL</code>/<code>INVOCATION</code> messages.
 For example, the <em>caller</em> can send a few <code>CALL</code> messages before starting to receive <code>RESULT</code> messages; they do not need
-to be matched pairs.<a href="#section-11.2-56" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.2-57">
+to be matched pairs.<a href="#section-11.2-71" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.2-72">
 <pre> ,------.                  ,------.                 ,------.
  |Caller|                  |Dealer|                 |Callee|
  `--+---'                  `--+---'                 `--+---'
@@ -7208,47 +7270,47 @@ to be matched pairs.<a href="#section-11.2-56" class="pilcrow">¶</a></p>
  ,--+---.                  ,--+---.                 ,--+---.
  |Caller|                  |Dealer|                 |Callee|
  `------'                  `------'                 `------'
-</pre><a href="#section-11.2-57" class="pilcrow">¶</a>
+</pre><a href="#section-11.2-72" class="pilcrow">¶</a>
 </div>
-<p id="section-11.2-58">Because they are part of the same call operation, the request ID is the same in all <code>CALL</code>,
-<code>INVOCATION</code>, <code>YIELD</code>, and <code>ERROR</code> messages in the above exchange.<a href="#section-11.2-58" class="pilcrow">¶</a></p>
-<p id="section-11.2-59"><strong>Freezing of Options in Progressive Call Invocations</strong><a href="#section-11.2-59" class="pilcrow">¶</a></p>
-<p id="section-11.2-60">Except for <code>progress</code>, items in the <code>Options</code> dictionary of the <strong>initiating</strong> progressive <code>CALL</code> shall be effective for
+<p id="section-11.2-73">Because they are part of the same call operation, the request ID is the same in all <code>CALL</code>,
+<code>INVOCATION</code>, <code>YIELD</code>, and <code>ERROR</code> messages in the above exchange.<a href="#section-11.2-73" class="pilcrow">¶</a></p>
+<p id="section-11.2-74"><strong>Freezing of Options in Progressive Call Invocations</strong><a href="#section-11.2-74" class="pilcrow">¶</a></p>
+<p id="section-11.2-75">Except for <code>progress</code>, items in the <code>Options</code> dictionary of the <strong>initiating</strong> progressive <code>CALL</code> shall be effective for
 the entirety of the progressive call request. Only the <code>progress</code> option shall be considered by the <em>Dealer</em> in subsequent progressive call invocations
 (within the same overall request). Except for <code>progress</code>, items in the <code>Details</code>
-dictionary of corresponding <code>INVOCATION</code> messages shall be based on the initiating progressive <code>CALL</code> only.<a href="#section-11.2-60" class="pilcrow">¶</a></p>
-<p id="section-11.2-61">For example, if <code>disclose_me=true</code> was specified in the initiating progressive call, all subsequent progressive call invocations
+dictionary of corresponding <code>INVOCATION</code> messages shall be based on the initiating progressive <code>CALL</code> only.<a href="#section-11.2-75" class="pilcrow">¶</a></p>
+<p id="section-11.2-76">For example, if <code>disclose_me=true</code> was specified in the initiating progressive call, all subsequent progressive call invocations
 (within the same call) shall be considered by the <em>Dealer</em> to implictly have <code>disclose_me=true</code> as well. That is, all
-<code>INVOCATION</code> messages associated with the overall request shall contain caller identify information.<a href="#section-11.2-61" class="pilcrow">¶</a></p>
-<p id="section-11.2-62">Note that any option (besides <code>progress</code>) can be omitted altogether in subsequent progressive call invocations. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (<em>Caller</em>) only needs to keep uploading more data thereafter.<a href="#section-11.2-62" class="pilcrow">¶</a></p>
-<p id="section-11.2-63">For reference, here is a list of options that are frozen upon the initial progressive call invocations:<a href="#section-11.2-63" class="pilcrow">¶</a></p>
+<code>INVOCATION</code> messages associated with the overall request shall contain caller identify information.<a href="#section-11.2-76" class="pilcrow">¶</a></p>
+<p id="section-11.2-77">Note that any option (besides <code>progress</code>) can be omitted altogether in subsequent progressive call invocations. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (<em>Caller</em>) only needs to keep uploading more data thereafter.<a href="#section-11.2-77" class="pilcrow">¶</a></p>
+<p id="section-11.2-78">For reference, here is a list of options that are frozen upon the initial progressive call invocations:<a href="#section-11.2-78" class="pilcrow">¶</a></p>
 <ul class="compact">
-<li class="compact" id="section-11.2-64.1">
-            <code>CALL.Options.disclose_me|bool</code><a href="#section-11.2-64.1" class="pilcrow">¶</a>
+<li class="compact" id="section-11.2-79.1">
+            <code>CALL.Options.disclose_me|bool</code><a href="#section-11.2-79.1" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.2">
-            <code>CALL.Options.ppt_cipher|string</code><a href="#section-11.2-64.2" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.2">
+            <code>CALL.Options.ppt_cipher|string</code><a href="#section-11.2-79.2" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.3">
-            <code>CALL.Options.ppt_keyid|string</code><a href="#section-11.2-64.3" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.3">
+            <code>CALL.Options.ppt_keyid|string</code><a href="#section-11.2-79.3" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.4">
-            <code>CALL.Options.ppt_scheme|string</code><a href="#section-11.2-64.4" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.4">
+            <code>CALL.Options.ppt_scheme|string</code><a href="#section-11.2-79.4" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.5">
-            <code>CALL.Options.ppt_serializer|string</code><a href="#section-11.2-64.5" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.5">
+            <code>CALL.Options.ppt_serializer|string</code><a href="#section-11.2-79.5" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.6">
-            <code>CALL.Options.receive_progress|bool</code><a href="#section-11.2-64.6" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.6">
+            <code>CALL.Options.receive_progress|bool</code><a href="#section-11.2-79.6" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.7">
-            <code>CALL.Options.rkey</code><a href="#section-11.2-64.7" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.7">
+            <code>CALL.Options.rkey</code><a href="#section-11.2-79.7" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.8">
-            <code>CALL.Options.runmode|string</code><a href="#section-11.2-64.8" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.8">
+            <code>CALL.Options.runmode|string</code><a href="#section-11.2-79.8" class="pilcrow">¶</a>
 </li>
-          <li class="compact" id="section-11.2-64.9">
-            <code>CALL.Options.timeout|integer</code><a href="#section-11.2-64.9" class="pilcrow">¶</a>
+          <li class="compact" id="section-11.2-79.9">
+            <code>CALL.Options.timeout|integer</code><a href="#section-11.2-79.9" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>

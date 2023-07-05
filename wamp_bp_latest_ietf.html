@@ -6,18 +6,18 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>WAMP Basic Profile</title>
 <meta content="Tobias Oberstein" name="author">
-<meta content="xml2rfc 3.17.3" name="generator">
+<meta content="xml2rfc 3.17.4" name="generator">
 <meta content="WebSocket, WAMP, real-time, RPC, PubSub" name="keyword">
 <meta content="WAMP" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.3
+  xml2rfc 3.17.4
     Python 3.9.17
-    appdirs 1.4.4
-    ConfigArgParse 1.5.3
+    ConfigArgParse 1.5.5
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.2
+    lxml 4.9.3
+    platformdirs 3.8.0
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
@@ -1199,11 +1199,11 @@ li > p:last-of-type:only-child {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WAMP-BP</td>
-<td class="right">June 2023</td>
+<td class="right">July 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 21 December 2023</td>
+<td class="center">Expires 6 January 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1216,12 +1216,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-06-19" class="published">19 June 2023</time>
+<time datetime="2023-07-05" class="published">5 July 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-12-21">21 December 2023</time></dd>
+<dd class="expires"><time datetime="2024-01-06">6 January 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1251,7 +1251,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 December 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1355,7 +1355,7 @@ li > p:last-of-type:only-child {
                     <p id="section-toc.1-1.2.2.3.2.2.1"><a href="#section-2.3.2" class="auto internal xref">2.3.2</a>.  <a href="#name-transport-and-session-lifet" class="internal xref">Transport and Session Lifetime</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3.2.3">
-                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="auto internal xref">2.3.3</a>.  <a href="#name-protocol-errors" class="internal xref">Protocol errors</a></p>
+                    <p id="section-toc.1-1.2.2.3.2.3.1"><a href="#section-2.3.3" class="auto internal xref">2.3.3</a>.  <a href="#name-protocol-errors" class="internal xref">Protocol Errors</a></p>
 </li>
                 </ul>
 </li>
@@ -2117,7 +2117,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <div id="protocol_errors">
 <section id="section-2.3.3">
           <h4 id="name-protocol-errors">
-<a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-protocol-errors" class="section-name selfRef">Protocol errors</a>
+<a href="#section-2.3.3" class="section-number selfRef">2.3.3. </a><a href="#name-protocol-errors" class="section-name selfRef">Protocol Errors</a>
           </h4>
 <p id="section-2.3.3-1">WAMP implementations MUST abort sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.<a href="#section-2.3.3-1" class="pilcrow">¶</a></p>
 <p id="section-2.3.3-2">Following scenarios have to be considered protocol errors:<a href="#section-2.3.3-2" class="pilcrow">¶</a></p>
@@ -2148,7 +2148,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 </li>
             <li class="compact" id="section-2.3.3-3.13">Receiving <code>INVOCATION</code> message, before session was established.<a href="#section-2.3.3-3.13" class="pilcrow">¶</a>
 </li>
-            <li class="compact" id="section-2.3.3-3.14">Receiving message with non-<a href="#session_scope_id">sequential</a> <a href="#session_scope_ids">session scope</a> request ID, such as <code>SUBSCRIBE</code>, <code>UNSUBSCRIBE</code>, <code>PUBLISH</code>, <code>REGISTER</code>, <code>UNREGISTER</code>, <code>CALL</code> and <code>YIELD</code>.<a href="#section-2.3.3-3.14" class="pilcrow">¶</a>
+            <li class="compact" id="section-2.3.3-3.14">Receiving message with non-<a href="#session_scope_id">sequential</a> <a href="#session_scope_ids">session scope</a> request ID, such as <code>SUBSCRIBE</code>, <code>UNSUBSCRIBE</code>, <code>PUBLISH</code>, <code>REGISTER</code>, <code>UNREGISTER</code>, and <code>CALL</code>. Note that there are exeptions for <code>CALL</code> when the <em>Progressive Call Invocations</em> advanced feature is enabled. See the <em>Progressive Call Invocations</em> section in the advanced profile for details.<a href="#section-2.3.3-3.14" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-2.3.3-3.15">Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.<a href="#section-2.3.3-3.15" class="pilcrow">¶</a>
 </li>
