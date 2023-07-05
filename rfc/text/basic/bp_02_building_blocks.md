@@ -260,7 +260,7 @@ The diagram below illustrates the full transport connection and session lifecycl
         `------'                                    `------'
 
 
-### Protocol errors {#protocol_errors}
+### Protocol Errors {#protocol_errors}
 
 WAMP implementations MUST abort sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
 
@@ -279,7 +279,7 @@ Following scenarios have to be considered protocol errors:
  - Receiving `REGISTERED` message, before session was established.
  - Receiving `UNREGISTERED` message, before session was established.
  - Receiving `INVOCATION` message, before session was established.
- - Receiving message with non-[sequential](#session_scope_id) [session scope](#session_scope_ids) request ID, such as `SUBSCRIBE`, `UNSUBSCRIBE`, `PUBLISH`, `REGISTER`, `UNREGISTER`, `CALL` and `YIELD`.
+ - Receiving message with non-[sequential](#session_scope_id) [session scope](#session_scope_ids) request ID, such as `SUBSCRIBE`, `UNSUBSCRIBE`, `PUBLISH`, `REGISTER`, `UNREGISTER`, and `CALL`. Note that there are exeptions for `CALL` when the _Progressive Call Invocations_ advanced feature is enabled. See the _Progressive Call Invocations_ section in the advanced profile for details.
  - Receiving protocol incompatible message, such as empty array, invalid WAMP message type id, etc.
  - Catching error during message encoding/decoding.
  - Any other exceptional scenario explicitly defined in any relevant section of this specification below (such as receiving a second `HELLO` within the lifetime of a session).
