@@ -19,7 +19,9 @@ The error message that is returned to the *Caller* MUST use `wamp.error.timeout`
 
 If the *Callee* supports Call Timeouts, the *Dealer* MAY propagate the `CALL.Options.timeout|integer` option via the `INVOCATION` message and allow the *Callee* to handle the timeout logic. If the operation times out, the *Callee* MUST return an `ERROR` message with `wamp.error.timeout` as the reason URI.
 
-The decision by *Dealers* to delegate timeouts to *Callees* supporting this feature MAY be determined by router configuration.
+*Callees* wanting to handle the timeout logic MAY specify this intention via the `REGISTER.Options.forward_timeout|boolean` option. The *Dealer*, upon receiving a CALL with the `timeout` option set, checks if the matching RPC registration had the `forward_timeout` option set, then accordingly either forwards the timeout value or handles the timeout logic locally without forwarding the timeout value.
+
+*Dealers* MAY choose to override the `REGISTER.Options.forward_timeout|boolean` option based on router configuration. For example, if a *Dealer* is resource-constrained and does not wish to maintain a queue of pending call timeouts, it may decide to always forward the CALL timeout option to *Callees*.
 
 **Caller-Initiated Timeouts**
 
