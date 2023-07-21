@@ -20,6 +20,17 @@ If above call is issued by a *Caller* with WAMP session ID `3335656`, the *Deale
 
 Note that a *Dealer* MAY disclose the identity of a *Caller* even without the *Caller* having explicitly requested to do so when the *Dealer* configuration (for the called procedure) is setup to do so.
 
+**Identity Information**
+
+When *Caller* disclosure is allowed for a particular CALL message, the
+corresponding `INVOCATION` message MUST contain an
+`INVOCATION.Details.caller|integer` property set to the *Caller*'s session ID.
+
+The following additional properties MAY also be included::
+
+- `INVOCATION.Details.caller_authid|string`
+- `INVOCATION.Details.caller_authrole|string`
+
 **Feature Announcement**
 
 Support for this feature MUST be announced by *Callers* (`role := "caller"`), *Callees* (`role := "callee"`) and *Dealers* (`role := "dealer"`) via
