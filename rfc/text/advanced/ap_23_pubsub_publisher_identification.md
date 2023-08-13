@@ -28,6 +28,15 @@ Note that a *Broker* may deny a *Publisher's* request to disclose its identity:
 
 A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is set up to do so.
 
+**Additional Identity Information**
+
+When publisher disclosure is allowed for a particular PUBLISH message, the
+corresponding `EVENT` message MAY also contain the following additional
+properties in its `Details` dictionary:
+
+- `EVENT.Details.publisher_authid|string`
+- `EVENT.Details.publisher_authrole|string`
+
 **Feature Announcement**
 
 Support for this feature MUST be announced by *Publishers* (`role := "publisher"`), *Brokers* (`role := "broker"`) and *Subscribers* (`role := "subscriber"`) via
