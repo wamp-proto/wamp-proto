@@ -6,20 +6,20 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>The Web Application Messaging Protocol</title>
 <meta content="Tobias Oberstein" name="author">
-<meta content="xml2rfc 3.17.4" name="generator">
+<meta content="xml2rfc 3.18.0" name="generator">
 <meta content="WebSocket, WAMP, real-time, RPC, PubSub" name="keyword">
 <meta content="WAMP" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.4
+  xml2rfc 3.18.0
     Python 3.9.17
-    ConfigArgParse 1.5.5
+    ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.9.1
+    platformdirs 3.10.0
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
     setuptools 58.1.0
     six 1.16.0
@@ -71,6 +71,7 @@ body {
   font-family: var(--font-sans);
   line-height: 1.6;
   scroll-behavior: smooth;
+  overflow-wrap: break-word;
 }
 .ears {
   display: none;
@@ -639,7 +640,6 @@ hr.addr {
 /* pagination */
 @media print {
   body {
-
     width: 100%;
   }
   p {
@@ -1199,11 +1199,11 @@ li > p:last-of-type:only-child {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WAMP</td>
-<td class="right">July 2023</td>
+<td class="right">August 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 18 January 2024</td>
+<td class="center">Expires 14 February 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1216,12 +1216,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-07-17" class="published">17 July 2023</time>
+<time datetime="2023-08-13" class="published">13 August 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-01-18">18 January 2024</time></dd>
+<dd class="expires"><time datetime="2024-02-14">14 February 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1251,7 +1251,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 January 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 14 February 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -7581,32 +7581,45 @@ dictionary of corresponding <code>INVOCATION</code> messages shall be based on t
 </pre><a href="#section-11.6-7" class="pilcrow">¶</a>
 </div>
 <p id="section-11.6-8">Note that a <em>Dealer</em> MAY disclose the identity of a <em>Caller</em> even without the <em>Caller</em> having explicitly requested to do so when the <em>Dealer</em> configuration (for the called procedure) is setup to do so.<a href="#section-11.6-8" class="pilcrow">¶</a></p>
-<p id="section-11.6-9"><strong>Feature Announcement</strong><a href="#section-11.6-9" class="pilcrow">¶</a></p>
-<p id="section-11.6-10">Support for this feature MUST be announced by <em>Callers</em> (<code>role := "caller"</code>), <em>Callees</em> (<code>role := "callee"</code>) and <em>Dealers</em> (<code>role := "dealer"</code>) via<a href="#section-11.6-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.6-11">
+<p id="section-11.6-9"><strong>Identity Information</strong><a href="#section-11.6-9" class="pilcrow">¶</a></p>
+<p id="section-11.6-10">When <em>Caller</em> disclosure is allowed for a particular CALL message, the
+corresponding <code>INVOCATION</code> message MUST contain an
+<code>INVOCATION.Details.caller|integer</code> property set to the <em>Caller</em>'s session ID.<a href="#section-11.6-10" class="pilcrow">¶</a></p>
+<p id="section-11.6-11">The following additional properties MAY also be included::<a href="#section-11.6-11" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-11.6-12.1">
+            <code>INVOCATION.Details.caller_authid|string</code><a href="#section-11.6-12.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-11.6-12.2">
+            <code>INVOCATION.Details.caller_authrole|string</code><a href="#section-11.6-12.2" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-11.6-13"><strong>Feature Announcement</strong><a href="#section-11.6-13" class="pilcrow">¶</a></p>
+<p id="section-11.6-14">Support for this feature MUST be announced by <em>Callers</em> (<code>role := "caller"</code>), <em>Callees</em> (<code>role := "callee"</code>) and <em>Dealers</em> (<code>role := "dealer"</code>) via<a href="#section-11.6-14" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.6-15">
 <pre>    HELLO.Details.roles.&lt;role&gt;.features.
          caller_identification|bool := true
-</pre><a href="#section-11.6-11" class="pilcrow">¶</a>
-</div>
-<p id="section-11.6-12"><strong>Request Identification</strong><a href="#section-11.6-12" class="pilcrow">¶</a></p>
-<p id="section-11.6-13">A <em>Dealer</em> MAY deny a <em>Caller's</em> request to disclose its identity:<a href="#section-11.6-13" class="pilcrow">¶</a></p>
-<p id="section-11.6-14"><em>Example</em><a href="#section-11.6-14" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.6-15">
-<pre>    [8, 7814135, "wamp.error.disclose_me.not_allowed"]
 </pre><a href="#section-11.6-15" class="pilcrow">¶</a>
 </div>
-<p id="section-11.6-16">A <em>Callee</em> MAY <strong>request</strong> the disclosure of caller identity via<a href="#section-11.6-16" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-11.6-17">
-<pre>    REGISTER.Options.disclose_caller|bool := true
-</pre><a href="#section-11.6-17" class="pilcrow">¶</a>
-</div>
+<p id="section-11.6-16"><strong>Request Identification</strong><a href="#section-11.6-16" class="pilcrow">¶</a></p>
+<p id="section-11.6-17">A <em>Dealer</em> MAY deny a <em>Caller's</em> request to disclose its identity:<a href="#section-11.6-17" class="pilcrow">¶</a></p>
 <p id="section-11.6-18"><em>Example</em><a href="#section-11.6-18" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-11.6-19">
-<pre>    [64, 927639114088448, {"disclose_caller":true},
-        "com.maypp.add2"]
+<pre>    [8, 7814135, "wamp.error.disclose_me.not_allowed"]
 </pre><a href="#section-11.6-19" class="pilcrow">¶</a>
 </div>
-<p id="section-11.6-20">With the above registration, the registered procedure is called with the caller's sessionID as part of the call details object.<a href="#section-11.6-20" class="pilcrow">¶</a></p>
+<p id="section-11.6-20">A <em>Callee</em> MAY <strong>request</strong> the disclosure of caller identity via<a href="#section-11.6-20" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.6-21">
+<pre>    REGISTER.Options.disclose_caller|bool := true
+</pre><a href="#section-11.6-21" class="pilcrow">¶</a>
+</div>
+<p id="section-11.6-22"><em>Example</em><a href="#section-11.6-22" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-11.6-23">
+<pre>    [64, 927639114088448, {"disclose_caller":true},
+        "com.maypp.add2"]
+</pre><a href="#section-11.6-23" class="pilcrow">¶</a>
+</div>
+<p id="section-11.6-24">With the above registration, the registered procedure is called with the caller's sessionID as part of the call details object.<a href="#section-11.6-24" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="rpc-call-trust-levels">
@@ -8181,12 +8194,24 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 </pre><a href="#section-12.3-10" class="pilcrow">¶</a>
 </div>
 <p id="section-12.3-11">A <em>Broker</em> may also (automatically) disclose the identity of a <em>Publisher</em> even without the <em>Publisher</em> having explicitly requested to do so when the <em>Broker</em> configuration (for the publication topic) is set up to do so.<a href="#section-12.3-11" class="pilcrow">¶</a></p>
-<p id="section-12.3-12"><strong>Feature Announcement</strong><a href="#section-12.3-12" class="pilcrow">¶</a></p>
-<p id="section-12.3-13">Support for this feature MUST be announced by <em>Publishers</em> (<code>role := "publisher"</code>), <em>Brokers</em> (<code>role := "broker"</code>) and <em>Subscribers</em> (<code>role := "subscriber"</code>) via<a href="#section-12.3-13" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-12.3-14">
+<p id="section-12.3-12"><strong>Additional Identity Information</strong><a href="#section-12.3-12" class="pilcrow">¶</a></p>
+<p id="section-12.3-13">When publisher disclosure is allowed for a particular PUBLISH message, the
+corresponding <code>EVENT</code> message MAY also contain the following additional
+properties in its <code>Details</code> dictionary:<a href="#section-12.3-13" class="pilcrow">¶</a></p>
+<ul class="compact">
+<li class="compact" id="section-12.3-14.1">
+            <code>EVENT.Details.publisher_authid|string</code><a href="#section-12.3-14.1" class="pilcrow">¶</a>
+</li>
+          <li class="compact" id="section-12.3-14.2">
+            <code>EVENT.Details.publisher_authrole|string</code><a href="#section-12.3-14.2" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-12.3-15"><strong>Feature Announcement</strong><a href="#section-12.3-15" class="pilcrow">¶</a></p>
+<p id="section-12.3-16">Support for this feature MUST be announced by <em>Publishers</em> (<code>role := "publisher"</code>), <em>Brokers</em> (<code>role := "broker"</code>) and <em>Subscribers</em> (<code>role := "subscriber"</code>) via<a href="#section-12.3-16" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-12.3-17">
 <pre>    HELLO.Details.roles.&lt;role&gt;.features.
         publisher_identification|bool := true
-</pre><a href="#section-12.3-14" class="pilcrow">¶</a>
+</pre><a href="#section-12.3-17" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
