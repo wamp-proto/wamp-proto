@@ -75,6 +75,10 @@ Sent by a Peer*to abort the opening of a WAMP session. No response is expected.
 {align="left"}
         [ABORT, Details|dict, Reason|uri]
 
+        [ABORT, Details|dict, Reason|uri, Arguments|list]
+
+        [ABORT, Details|dict, Reason|uri, Arguments|list, ArgumentsKw|dict]
+
 #### GOODBYE
 
 Sent by a Peer to close a previously opened WAMP session. Must be echo'ed by the receiving Peer.
