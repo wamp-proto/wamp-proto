@@ -14,12 +14,12 @@
     <script src="static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="static/documentation_options.js"></script>
-        <script src="static/doctools.js"></script>
-        <script src="static/sphinx_highlight.js"></script>
-        <script src="static/js/custom.js"></script>
-        <script src="static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
-        <script src="static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js"></script>
+        <script src="static/documentation_options.js?v=df7f5f1a"></script>
+        <script src="static/doctools.js?v=888ff710"></script>
+        <script src="static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="static/js/custom.js?v=bf22cb0c"></script>
+        <script src="static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=ffc8af2d"></script>
+        <script src="static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
     <script src="static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -92,7 +92,7 @@
            <div itemprop="articleBody">
              
   <section id="message-routing-in-wamp">
-<span id="routing"></span><h1>Message Routing in WAMP<a class="headerlink" href="#message-routing-in-wamp" title="Permalink to this heading">¶</a></h1>
+<span id="routing"></span><h1>Message Routing in WAMP<a class="headerlink" href="#message-routing-in-wamp" title="Link to this heading">¶</a></h1>
 <nav class="contents local" id="contents">
 <ul class="simple">
 <li><p><a class="reference internal" href="#loosely-coupled" id="id6">Loosely coupled</a></p></li>
@@ -122,7 +122,7 @@ WebSocket, JSON and URIs.</p>
 a major step forward in practice that allows developers to create more powerful
 applications with less complexity and in less time.</p>
 <section id="loosely-coupled">
-<span id="unified-application-routing"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Loosely coupled</a><a class="headerlink" href="#loosely-coupled" title="Permalink to this heading">¶</a></h2>
+<span id="unified-application-routing"></span><h2><a class="toc-backref" href="#id6" role="doc-backlink">Loosely coupled</a><a class="headerlink" href="#loosely-coupled" title="Link to this heading">¶</a></h2>
 <p>WAMP provides what we call <strong>unified Application Routing</strong> for application
 communication:</p>
 <ul class="simple">
@@ -137,7 +137,7 @@ remote procedure call goes directly from the <em>Caller</em> to the <em>Callee</
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="images/unified_routing_rpc_client_server.svg"><img alt="Remote procedure calls in the **Client-Server** model" src="images/unified_routing_rpc_client_server.svg" width="50%" /></a>
 <figcaption>
-<p><span class="caption-text">Remote procedure calls in the <strong>Client-Server</strong> model</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Remote procedure calls in the <strong>Client-Server</strong> model</span><a class="headerlink" href="#id1" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>In the client-server model, a <em>Caller</em> needs to have knowledge about where
@@ -155,7 +155,7 @@ via an intermediary usually called <em>Broker</em>:</p>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="images/unified_routing_pubsub_broker.svg"><img alt="A Broker decouples *Publishers* and *Subscribers*" src="images/unified_routing_pubsub_broker.svg" width="50%" /></a>
 <figcaption>
-<p><span class="caption-text">A Broker decouples <em>Publishers</em> and <em>Subscribers</em></span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">A Broker decouples <em>Publishers</em> and <em>Subscribers</em></span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>A <em>Broker</em> keeps a book of subscriptions: who is currently subscribed on
@@ -172,7 +172,7 @@ introducing an intermediary - the <em>Dealer</em>:</p>
 <figure class="align-center" id="id3">
 <a class="reference internal image-reference" href="images/unified_routing_rpc_dealer.svg"><img alt="Remote procedure calls in the **Dealer** model" src="images/unified_routing_rpc_dealer.svg" width="50%" /></a>
 <figcaption>
-<p><span class="caption-text">Remote procedure calls in the <strong>Dealer</strong> model</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">Remote procedure calls in the <strong>Dealer</strong> model</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Similar to a <em>Broker’s</em> role with PubSub, the <em>Dealer</em> is responsible for
@@ -191,7 +191,7 @@ the procedure resides, and how to reach it.</p>
 RPC and still benefit from loose coupling.</p>
 </section>
 <section id="component-based">
-<h2><a class="toc-backref" href="#id7" role="doc-backlink">Component based</a><a class="headerlink" href="#component-based" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id7" role="doc-backlink">Component based</a><a class="headerlink" href="#component-based" title="Link to this heading">¶</a></h2>
 <p><strong>Brokers, Dealers and Routers</strong></p>
 <p>What if you combine a Broker (for Publish &amp; Subscribe) and a Dealer (for
 routed Remote Procedure Calls)?</p>
@@ -199,7 +199,7 @@ routed Remote Procedure Calls)?</p>
 <figure class="align-center" id="id4">
 <a class="reference internal image-reference" href="images/unified_routing_broker_dealer.svg"><img alt="A **Router** combines a Broker and a Dealer" src="images/unified_routing_broker_dealer.svg" width="70%" /></a>
 <figcaption>
-<p><span class="caption-text">A <strong>Router</strong> combines a Broker and a Dealer</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">A <strong>Router</strong> combines a Broker and a Dealer</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>A <em>Router</em> is capable of routing both calls and events, and hence can support
@@ -215,7 +215,7 @@ backend talk to each other in real-time:</p>
 <figure class="align-center" id="id5">
 <a class="reference internal image-reference" href="images/unified_routing_wamp_iot.svg"><img alt="WAMP in an IoT application" src="images/unified_routing_wamp_iot.svg" width="80%" /></a>
 <figcaption>
-<p><span class="caption-text">WAMP in an IoT application</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+<p><span class="caption-text">WAMP in an IoT application</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Switching on a light on the device from the browser-based UI is naturally done
@@ -234,7 +234,7 @@ match the messaging patterns, Pub/Sub and RPC, which WAMP provides.”</p>
 communication needs.</strong></p>
 </section>
 <section id="real-time">
-<span id="websocket-protocol"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Real-time</a><a class="headerlink" href="#real-time" title="Permalink to this heading">¶</a></h2>
+<span id="websocket-protocol"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Real-time</a><a class="headerlink" href="#real-time" title="Link to this heading">¶</a></h2>
 <p><a class="reference external" href="http://crossbario.com/blog/Websocket-Why-What-Can-I-Use-It/">WebSocket</a> is a
 new Web protocol that overcomes limitations of HTTP when bidirectional,
 real-time communication is required.</p>
@@ -256,7 +256,7 @@ reliable transport.</p>
 <p><strong>Hence: WAMP runs on the Web and anywhere else.</strong></p>
 </section>
 <section id="language-independent">
-<span id="different"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Language independent</a><a class="headerlink" href="#language-independent" title="Permalink to this heading">¶</a></h2>
+<span id="different"></span><h2><a class="toc-backref" href="#id9" role="doc-backlink">Language independent</a><a class="headerlink" href="#language-independent" title="Link to this heading">¶</a></h2>
 <p>WAMP was designed with first-class support for <a class="reference external" href="/implementations.html">different languages</a> in
 mind (*). Nothing in WAMP is specific to a single programming language. As
 soon as a programming language has a WAMP implementation, it can talk to
@@ -289,7 +289,7 @@ written in your “standard” language.</p>
 language.</strong></p>
 </section>
 <section id="network-spanning">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Network spanning</a><a class="headerlink" href="#network-spanning" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Network spanning</a><a class="headerlink" href="#network-spanning" title="Link to this heading">¶</a></h2>
 <p>Write me.</p>
 </section>
 </section>

@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                             13 August 2023
-Expires: 14 February 2024
+Intended status: Experimental                            24 October 2023
+Expires: 26 April 2024
 
 
                            WAMP Basic Profile
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 February 2024.
+   This Internet-Draft will expire on 26 April 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Table of Contents
 
 
 
-Oberstein               Expires 14 February 2024                [Page 1]
+Oberstein                 Expires 26 April 2024                 [Page 1]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
        1.3.3.  Publish & Subscribe . . . . . . . . . . . . . . . . .   7
@@ -96,22 +96,22 @@ Internet-Draft                   WAMP-BP                     August 2023
    5.  Publish and Subscribe . . . . . . . . . . . . . . . . . . . .  34
      5.1.  Subscribing and Unsubscribing . . . . . . . . . . . . . .  34
        5.1.1.  SUBSCRIBE . . . . . . . . . . . . . . . . . . . . . .  35
-       5.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  35
+       5.1.2.  SUBSCRIBED  . . . . . . . . . . . . . . . . . . . . .  36
        5.1.3.  Subscribe ERROR . . . . . . . . . . . . . . . . . . .  36
-       5.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  36
+       5.1.4.  UNSUBSCRIBE . . . . . . . . . . . . . . . . . . . . .  37
        5.1.5.  UNSUBSCRIBED  . . . . . . . . . . . . . . . . . . . .  37
        5.1.6.  Unsubscribe ERROR . . . . . . . . . . . . . . . . . .  37
-     5.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  37
+     5.2.  Publishing and Events . . . . . . . . . . . . . . . . . .  38
        5.2.1.  PUBLISH . . . . . . . . . . . . . . . . . . . . . . .  38
        5.2.2.  PUBLISHED . . . . . . . . . . . . . . . . . . . . . .  39
-       5.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  39
+       5.2.3.  Publish ERROR . . . . . . . . . . . . . . . . . . . .  40
        5.2.4.  EVENT . . . . . . . . . . . . . . . . . . . . . . . .  40
 
 
 
-Oberstein               Expires 14 February 2024                [Page 2]
+Oberstein                 Expires 26 April 2024                 [Page 2]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    6.  Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  41
@@ -165,9 +165,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024                [Page 3]
+Oberstein                 Expires 26 April 2024                 [Page 3]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    The separation into Basic and Advanced Profiles is intended to extend
@@ -221,9 +221,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024                [Page 4]
+Oberstein                 Expires 26 April 2024                 [Page 4]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    Routed Remote Procedure Calls (RPCs) rely on the same sort of
@@ -277,9 +277,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024                [Page 5]
+Oberstein                 Expires 26 April 2024                 [Page 5]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 1.3.2.  Peers and Roles
@@ -333,9 +333,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024                [Page 6]
+Oberstein                 Expires 26 April 2024                 [Page 6]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 1.3.3.  Publish & Subscribe
@@ -389,9 +389,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024                [Page 7]
+Oberstein                 Expires 26 April 2024                 [Page 7]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 1.4.  Design Aspects
@@ -445,9 +445,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024                [Page 8]
+Oberstein                 Expires 26 April 2024                 [Page 8]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 1.4.2.  Language Agnostic
@@ -501,9 +501,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024                [Page 9]
+Oberstein                 Expires 26 April 2024                 [Page 9]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 2.1.1.  URIs
@@ -557,9 +557,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 10]
+Oberstein                 Expires 26 April 2024                [Page 10]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
@@ -613,9 +613,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 11]
+Oberstein                 Expires 26 April 2024                [Page 11]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 2.1.2.  IDs
@@ -669,9 +669,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 12]
+Oberstein                 Expires 26 April 2024                [Page 12]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    *  UNREGISTER.Registration
@@ -725,9 +725,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 13]
+Oberstein                 Expires 26 April 2024                [Page 13]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    The WAMP Basic Profile defines the following bindings for message
@@ -781,9 +781,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 14]
+Oberstein                 Expires 26 April 2024                [Page 14]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    In the Basic Profile, WAMP messages are transmitted as WebSocket
@@ -837,9 +837,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 15]
+Oberstein                 Expires 26 April 2024                [Page 15]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
        ,------.                                    ,------.
@@ -893,9 +893,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 16]
+Oberstein                 Expires 26 April 2024                [Page 16]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    *  Receiving CHALLENGE message, after session was established.
@@ -949,9 +949,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 17]
+Oberstein                 Expires 26 April 2024                [Page 17]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    *  id: an integer ID as defined in IDs (#ids)
@@ -1005,9 +1005,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 18]
+Oberstein                 Expires 26 April 2024                [Page 18]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    and performance.
@@ -1046,7 +1046,11 @@ Internet-Draft                   WAMP-BP                     August 2023
    Sent by a Peer*to abort the opening of a WAMP session.  No response
    is expected.
 
-       [ABORT, Details|dict, Reason|uri]
+     [ABORT, Details|dict, Reason|uri]
+
+     [ABORT, Details|dict, Reason|uri, Arguments|list]
+
+     [ABORT, Details|dict, Reason|uri, Arguments|list, ArgumentsKw|dict]
 
 3.4.1.4.  GOODBYE
 
@@ -1057,13 +1061,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 19]
+Oberstein                 Expires 26 April 2024                [Page 19]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 3.4.1.5.  ERROR
@@ -1117,9 +1117,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 20]
+Oberstein                 Expires 26 April 2024                [Page 20]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 3.4.2.5.  UNSUBSCRIBE
@@ -1173,9 +1173,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 21]
+Oberstein                 Expires 26 April 2024                [Page 21]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 3.4.3.2.  RESULT
@@ -1229,9 +1229,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 22]
+Oberstein                 Expires 26 April 2024                [Page 22]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 3.4.3.8.  YIELD
@@ -1285,9 +1285,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 23]
+Oberstein                 Expires 26 April 2024                [Page 23]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    | 35  | UNSUBSCRIBED |      | Tx   | Rx   |      |       |        |
@@ -1341,9 +1341,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 24]
+Oberstein                 Expires 26 April 2024                [Page 24]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    E.g. a CALL message
@@ -1397,9 +1397,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 25]
+Oberstein                 Expires 26 April 2024                [Page 25]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
                             +--------------+                           
@@ -1453,9 +1453,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 26]
+Oberstein                 Expires 26 April 2024                [Page 26]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    +====+==============================================================+
@@ -1509,9 +1509,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 27]
+Oberstein                 Expires 26 April 2024                [Page 27]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    *  Realm is a string identifying the realm this session should attach
@@ -1565,9 +1565,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 28]
+Oberstein                 Expires 26 April 2024                [Page 28]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    A Client can support any combination of the above roles but must
@@ -1621,9 +1621,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 29]
+Oberstein                 Expires 26 April 2024                [Page 29]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
        [2, 9129137332, {
@@ -1677,9 +1677,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 30]
+Oberstein                 Expires 26 April 2024                [Page 30]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    The <role>|dict is a dictionary describing features supported by the
@@ -1702,7 +1702,11 @@ Internet-Draft                   WAMP-BP                     August 2023
    Both the Router and the Client may abort a WAMP session by sending an
    ABORT message.
 
-       [ABORT, Details|dict, Reason|uri]
+     [ABORT, Details|dict, Reason|uri]
+
+     [ABORT, Details|dict, Reason|uri, Arguments|list]
+
+     [ABORT, Details|dict, Reason|uri, Arguments|list, ArgumentsKw|dict]
 
    where
 
@@ -1715,6 +1719,24 @@ Internet-Draft                   WAMP-BP                     August 2023
    There are few scenarios, when ABORT is used:
 
    *  During session opening, if peer decided to abort connect.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 31]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
 
        ,------.          ,------.
        |Client|          |Router|
@@ -1729,14 +1751,6 @@ Internet-Draft                   WAMP-BP                     August 2023
        `------'          `------'
 
    _Example_
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 31]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
        [3, {"message": "The realm does not exist."},
            "wamp.error.no_such_realm"]
@@ -1772,27 +1786,17 @@ Internet-Draft                   WAMP-BP                     August 2023
 
    where
 
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 32]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
    *  Reason MUST be a URI.
    *  Details MUST be a dictionary that allows to provide additional,
       optional closing information (see below).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 32]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
        ,------.          ,------.
        |Client|          |Router|
@@ -1837,18 +1841,18 @@ Internet-Draft                   WAMP-BP                     August 2023
 
    *Difference between ABORT and GOODBYE*
 
+
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 33]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
    The differences between ABORT and GOODBYE messages is that ABORT is
    never replied to by a Peer, whereas GOODBYE must be replied to by the
    receiving Peer.
-
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 33]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
    |  Though ABORT and GOODBYE are structurally identical, using
    |  different message types serves to reduce overloaded meaning of
@@ -1895,16 +1899,15 @@ Internet-Draft                   WAMP-BP                     August 2023
        |Publisher|          |Broker|             |Subscriber|
        `---------'          `------'             `----------'
 
+
+
+Oberstein                 Expires 26 April 2024                [Page 34]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
    A Subscriber may subscribe to zero, one or more topics, and a
    Publisher publishes to topics without knowledge of subscribers.
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 34]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
    Upon subscribing to a topic via the SUBSCRIBE message, a Subscriber
    will receive any future events published to the respective topic by
@@ -1948,19 +1951,23 @@ Internet-Draft                   WAMP-BP                     August 2023
    A Broker, receiving a SUBSCRIBE message, can fullfill or reject the
    subscription, so it answers with SUBSCRIBED or ERROR messages.
 
+
+
+
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 35]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
 5.1.2.  SUBSCRIBED
 
    If the Broker is able to fulfill and allow the subscription, it
    answers by sending a SUBSCRIBED message to the Subscriber
 
        [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
-
-
-
-Oberstein               Expires 14 February 2024               [Page 35]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
    where
 
@@ -2002,6 +2009,15 @@ Internet-Draft                   WAMP-BP                     August 2023
 
        [8, 32, 713845233, {}, "wamp.error.not_authorized"]
 
+
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 36]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
 5.1.4.  UNSUBSCRIBE
 
    When a Subscriber is no longer interested in receiving events for a
@@ -2010,13 +2026,6 @@ Internet-Draft                   WAMP-BP                     August 2023
        [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
    where
-
-
-
-Oberstein               Expires 14 February 2024               [Page 36]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
    *  Request is a sequential ID in the _session scope_, incremented by
       the Subscriber and used to correlate the Broker's response with
@@ -2058,6 +2067,13 @@ Internet-Draft                   WAMP-BP                     August 2023
 
    _Example_
 
+
+
+Oberstein                 Expires 26 April 2024                [Page 37]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
        [8, 34, 85346237, {}, "wamp.error.no_such_subscription"]
 
 5.2.  Publishing and Events
@@ -2065,14 +2081,6 @@ Internet-Draft                   WAMP-BP                     August 2023
    The message flow between Publishers, a Broker and Subscribers for
    publishing to topics and dispatching events involves the following
    messages:
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 37]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
    1.  PUBLISH
    2.  PUBLISHED
@@ -2112,6 +2120,16 @@ Internet-Draft                   WAMP-BP                     August 2023
 
    where
 
+
+
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 38]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
    *  Request is a sequential ID in the _session scope_, incremented by
       the Publisher and used to correlate the Broker's response with the
       request.
@@ -2121,15 +2139,6 @@ Internet-Draft                   WAMP-BP                     August 2023
    *  Topic is the topic published to.
    *  Arguments is a list of application-level event payload elements.
       The list may be of zero length.
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 38]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
-
    *  ArgumentsKw is an optional dictionary containing application-level
       event payload, provided as keyword arguments.  The dictionary may
       be empty.
@@ -2169,6 +2178,14 @@ Internet-Draft                   WAMP-BP                     August 2023
    *  PUBLISH.Request is the ID from the original publication request.
    *  Publication is an ID chosen by the Broker for the publication.
 
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 39]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
    _Example_
 
        [17, 239714735, 4429313566]
@@ -2178,13 +2195,6 @@ Internet-Draft                   WAMP-BP                     August 2023
    When the request for publication cannot be fulfilled by the Broker,
    and PUBLISH.Options.acknowledge == true, the Broker sends back an
    ERROR message to the Publisher
-
-
-
-Oberstein               Expires 14 February 2024               [Page 39]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
        [ERROR, PUBLISH, PUBLISH.Request|id, Details|dict, Error|uri]
 
@@ -2224,6 +2234,14 @@ Internet-Draft                   WAMP-BP                     August 2023
 
    or
 
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 40]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
         PUBLISH.Arguments|list, PUBLISH.ArgumentsKw|dict]
 
@@ -2234,14 +2252,6 @@ Internet-Draft                   WAMP-BP                     August 2023
       originally handed out by the Broker to the Subscribe*.
    *  PUBLISHED.Publication is the ID of the publication of the
       published event.
-
-
-
-Oberstein               Expires 14 February 2024               [Page 40]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
-
    *  Details is a dictionary that allows the Broker to provide
       additional event details in a extensible way.  This is described
       further below.
@@ -2283,19 +2293,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-
-
-
-
-
-
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 41]
+Oberstein                 Expires 26 April 2024                [Page 41]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
        ,------.          ,------.               ,------.
@@ -2349,9 +2349,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 42]
+Oberstein                 Expires 26 April 2024                [Page 42]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 6.1.2.  REGISTERED
@@ -2405,9 +2405,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 43]
+Oberstein                 Expires 26 April 2024                [Page 43]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    _Example_
@@ -2461,9 +2461,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 44]
+Oberstein                 Expires 26 April 2024                [Page 44]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
        ,------.          ,------.          ,------.
@@ -2517,9 +2517,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 45]
+Oberstein                 Expires 26 April 2024                [Page 45]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    *  Arguments is a list of positional call arguments (each of
@@ -2573,9 +2573,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 46]
+Oberstein                 Expires 26 April 2024                [Page 46]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    *  Details is a dictionary that allows to provide additional
@@ -2629,9 +2629,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 47]
+Oberstein                 Expires 26 April 2024                [Page 47]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    _Example_
@@ -2685,9 +2685,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 48]
+Oberstein                 Expires 26 April 2024                [Page 48]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    _Example_
@@ -2741,9 +2741,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 49]
+Oberstein                 Expires 26 April 2024                [Page 49]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 6.2.6.  Call ERROR
@@ -2797,9 +2797,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 50]
+Oberstein                 Expires 26 April 2024                [Page 50]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 6.3.  Caller Leaving During an RPC Invocation
@@ -2853,9 +2853,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 51]
+Oberstein                 Expires 26 April 2024                [Page 51]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
        ,------.          ,------.          ,------.
@@ -2909,9 +2909,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 52]
+Oberstein                 Expires 26 April 2024                [Page 52]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    Further, if _Subscriber A_ subscribes to *Topic 1*, the SUBSCRIBED
@@ -2965,9 +2965,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 53]
+Oberstein                 Expires 26 April 2024                [Page 53]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    Transport-level encryption and integrity is solely at the transport-
@@ -3021,9 +3021,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 54]
+Oberstein                 Expires 26 April 2024                [Page 54]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
 7.5.  Routers are trusted
@@ -3077,9 +3077,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 55]
+Oberstein                 Expires 26 April 2024                [Page 55]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    A procedure could not be registered, since a procedure with the given
@@ -3133,14 +3133,15 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-Oberstein               Expires 14 February 2024               [Page 56]
+Oberstein                 Expires 26 April 2024                [Page 56]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    A Peer received invalid WAMP protocol message (e.g.  HELLO message
    after session was already established) - used as a ABORT reply
-   reason.
+   reason.  More detailed information may be provided by using the
+   Arguments|list or ArgumentsKw|dict.
 
        wamp.error.protocol_violation
 
@@ -3183,16 +3184,19 @@ Internet-Draft                   WAMP-BP                     August 2023
    normative, as are all sections explicitly marked non-normative.
    Everything else in this specification is normative.
 
+
+
+
+
+
+Oberstein                 Expires 26 April 2024                [Page 57]
+
+Internet-Draft                   WAMP-BP                    October 2023
+
+
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in RFC 2119 [RFC2119].
-
-
-
-Oberstein               Expires 14 February 2024               [Page 57]
-
-Internet-Draft                   WAMP-BP                     August 2023
-
 
    Requirements phrased in the imperative as part of algorithms (such as
    "strip any leading space characters" or "return false and abort these
@@ -3241,13 +3245,9 @@ Internet-Draft                   WAMP-BP                     August 2023
 
 
 
-
-
-
-
-Oberstein               Expires 14 February 2024               [Page 58]
+Oberstein                 Expires 26 April 2024                [Page 58]
 
-Internet-Draft                   WAMP-BP                     August 2023
+Internet-Draft                   WAMP-BP                    October 2023
 
 
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
@@ -3301,4 +3301,4 @@ Author's Address
 
 
 
-Oberstein               Expires 14 February 2024               [Page 59]
+Oberstein                 Expires 26 April 2024                [Page 59]
