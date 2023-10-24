@@ -218,6 +218,10 @@ Both the Router and the Client may abort a WAMP session by sending an `ABORT` me
 {align="left"}
         [ABORT, Details|dict, Reason|uri]
 
+        [ABORT, Details|dict, Reason|uri, Arguments|list]
+
+        [ABORT, Details|dict, Reason|uri, Arguments|list, ArgumentsKw|dict]
+
 where
 
 * `Reason` MUST be a URI.
