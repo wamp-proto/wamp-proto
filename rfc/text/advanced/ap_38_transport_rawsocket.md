@@ -63,9 +63,9 @@ The possible values for `LENGTH` are:
          0: 2**9 octets
          1: 2**10 octets
         ...
-        15: 2**24 octets
+        15: 2**24 - 1 octets
 
-This means a *Client* can choose the maximum message length between **512** and **16M** octets.
+This means a *Client* can choose the maximum message length between **512** and **16M-1** octets.
 
 The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
 
@@ -117,7 +117,10 @@ for i in range(256):
     ser_id = i & 0x0f
     if ser_id != 0:
         ser = SERMAP.get(ser_id, 'currently undefined')
-        maxlen = 2 ** ((i >> 4) + 9)
+        lenbits = i >> 4
+        maxlen = 2 ** (lenbits + 9)
+        if lenbits == 15
+            maxlen -= 1
         print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
     else:
         print("fail the connection: illegal serializer value")
@@ -192,7 +195,10 @@ for i in range(256):
         # verify the serializer is the one we requested!
         # if not, fail the connection!
         ser = SERMAP.get(ser_id, 'currently undefined')
-        maxlen = 2 ** ((i >> 4) + 9)
+        lenbits = i >> 4
+        maxlen = 2 ** (lenbits + 9)
+        if lenbits == 15
+            maxlen -= 1
         print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
     else:
         err = i >> 4
