@@ -63,9 +63,10 @@ The possible values for `LENGTH` are:
          0: 2**9 octets
          1: 2**10 octets
         ...
+        14: 2**23 octets
         15: 2**24 - 1 octets
 
-This means a *Client* can choose the maximum message length between **512** and **16M-1** octets.
+This means a *Client* can choose the maximum message length between **512** and **16M-1** octets. In the case where the `LENGTH` field is 15, 1 must be subtracted from the 16M octet length because otherwise it would not fit in the 24 bits allotted to frame length in the message frame header (see the Framing subsection below).
 
 The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
 
