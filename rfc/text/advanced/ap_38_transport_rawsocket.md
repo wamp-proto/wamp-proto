@@ -64,9 +64,9 @@ The possible values for `LENGTH` are:
          1: 2**10 octets
         ...
         14: 2**23 octets
-        15: 2**24 - 1 octets
+        15: 2**24 octets
 
-This means a *Client* can choose the maximum message length between **512** and **16M-1** octets. In the case where the `LENGTH` field is 15, 1 must be subtracted from the 16M octet length because otherwise it would not fit in the 24 bits allotted to frame length in the message frame header (see the Framing subsection below).
+This means a *Client* can choose the maximum message length between **512** and **16M** octets.
 
 The `SERIALIZER` value is used by the *Client* to request a specific serializer to be used. When the handshake completes successfully, the *Client* and *Router* will use the serializer requested by the *Client*.
 
@@ -228,16 +228,32 @@ The serialized octets for a message to be sent are prefixed with exactly 4 octet
 {align="left"}
         MSB                                 LSB
         31                                    0
-        RRRR RTTT LLLL LLLL LLLL LLLL LLLL LLLL
+        RRRR XTTT LLLL LLLL LLLL LLLL LLLL LLLL
 
-The *first octet* has the following structure
+The *three least significant octets* constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
+
+The *most significant octet* has the following structure
 
 {align="left"}
         MSB   LSB
         7       0
-        RRRR RTTT
+        RRRR XTTT
 
-The five bits `RRRRR` are reserved for future use and MUST be all zeros for now.
+The four bits `RRRR` are reserved for future use and MUST be all zeros for now.
+
+`X` is an extra (25th) bit used to encode the message payload length. This bit is only set when the payload length is exactly 16M octets, with the 24 remaining `L` bits cleared:
+
+{align="left"}
+        MSB                                 LSB
+        31                                    0
+        RRRR 1TTT 0000 0000 0000 0000 0000 0000
+
+When the payload length is 16M-1 octets, the prefix would be:
+
+{align="left"}
+        MSB                                 LSB
+        31                                    0
+        RRRR 0TTT 1111 1111 1111 1111 1111 1111
 
 The three bits `TTT` encode the type of the transport message:
 
@@ -246,8 +262,6 @@ The three bits `TTT` encode the type of the transport message:
         1: PING
         2: PONG
         3-7: reserved
-
-The *three remaining octets* constitute an unsigned 24 bit integer that provides the length of transport message payload following, excluding the 4 octets that constitute the prefix.
 
 For a regular WAMP message (`TTT == 0`), the length is the length of the serialized WAMP message: the number of octets after serialization (excluding the 4 octets of the prefix).
 
