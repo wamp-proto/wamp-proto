@@ -118,10 +118,7 @@ for i in range(256):
     ser_id = i & 0x0f
     if ser_id != 0:
         ser = SERMAP.get(ser_id, 'currently undefined')
-        lenbits = i >> 4
-        maxlen = 2 ** (lenbits + 9)
-        if lenbits == 15
-            maxlen -= 1
+        maxlen = 2 ** ((i >> 4) + 9)
         print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
     else:
         print("fail the connection: illegal serializer value")
@@ -196,10 +193,7 @@ for i in range(256):
         # verify the serializer is the one we requested!
         # if not, fail the connection!
         ser = SERMAP.get(ser_id, 'currently undefined')
-        lenbits = i >> 4
-        maxlen = 2 ** (lenbits + 9)
-        if lenbits == 15
-            maxlen -= 1
+        maxlen = 2 ** ((i >> 4) + 9)
         print("{:02x} => serializer: {}, maxlen: {}".format(i, ser, maxlen))
     else:
         err = i >> 4
