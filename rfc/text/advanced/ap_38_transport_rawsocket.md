@@ -242,7 +242,7 @@ The four bits `RRRR` are reserved for future use and MUST be all zeros for now.
         31                                    0
         RRRR 1TTT 0000 0000 0000 0000 0000 0000
 
-When the payload length is 16M-1 octets, the prefix would be:
+When the payload length is 16M-1 octets, for example, the prefix would be:
 
 {align="left"}
         MSB                                 LSB
