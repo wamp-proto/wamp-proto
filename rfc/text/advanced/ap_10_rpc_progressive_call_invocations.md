@@ -428,7 +428,14 @@ For example, if `disclose_me=true` was specified in the initiating progressive c
 (within the same call) shall be considered by the *Dealer* to implictly have `disclose_me=true` as well. That is, all
 `INVOCATION` messages associated with the overall request shall contain caller identify information.
 
-Note that any option (besides `progress`) can be omitted altogether in subsequent progressive call invocations. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (*Caller*) only needs to keep uploading more data thereafter.
+Any option besides `progress` SHOULD be omitted altogether by the *Caller* in subsequent progressive call invocations. Not having to repeat (and not being able to change) options is more in tune with the concept of a media stream where options are set up initially, and the source (*Caller*) only needs to keep uploading more data thereafter.
+
+In subsequent call invocations:
+
+- *Dealers* and *Callees* MUST ignore any option except for `progress`
+- *Dealers* SHOULD NOT propagate any option passed by the *Caller*, except for `progress`
+
+*Dealers* and *Callees* are responsible for remembering the options of the initiating progressive `CALL`.
 
 For reference, here is a list of options that are frozen upon the initial progressive call invocations:
 
