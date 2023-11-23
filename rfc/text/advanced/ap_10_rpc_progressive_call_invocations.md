@@ -448,3 +448,5 @@ For reference, here is a list of options that are frozen upon the initial progre
 - `CALL.Options.rkey`
 - `CALL.Options.runmode|string`
 - `CALL.Options.timeout|integer`
+
+These rules concerning progressive call invocation options also apply to custom options that are not part of this specification.
