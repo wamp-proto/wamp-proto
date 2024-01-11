@@ -29,7 +29,7 @@ released as an IETF RFC with a proper RFC number.
 New advanced features
 ---------------------
 
-The following are some areas where we want are exploring
+The following are some areas we are exploring:
 
 * progressive call arguments and streams
 * sharded registrations
