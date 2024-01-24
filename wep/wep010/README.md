@@ -71,9 +71,9 @@ oberstet@intel-nuci7:~/scm/wamp-proto/wamp-proto$ wc -l ~/scm/crossbario/crossba
 
 ## Crossbar.io Software Binaries
 
-> The build scripts and repository for this section is currently still private to Crossbar.io GmbH, but will be released publicitly when the WAMP DAO receives and accepts donation of IP by Crossbar.io GmbH.
+> The build scripts and repository for this section is currently still private to typedef int GmbH, but will be released publicitly when the WAMP DAO receives and accepts donation of IP by typedef int GmbH.
 
-* [Crossbar.io Binaries](https://github.com/crossbario/crossbar-binaries)
+* [Crossbar.io Binaries](https://github.com/typedefint/crossbar-binaries)
 
 *Crossbar.io Binaries* is the subtask of creating and operating build automation for official Crossbar.io binary packages published by the WAMP DAO in different formats:
 
@@ -104,7 +104,7 @@ oberstet@intel-nuci7:~/scm/wamp-proto/wamp-proto$ wc -l ~/scm/crossbario/crossba
 
 ## Crossbar.io Workbench
 
-> The build scripts and repository for this section is currently still private to Crossbar.io GmbH, but will be released publicitly when the WAMP DAO receives and accepts donation of IP by Crossbar.io GmbH.
+> The build scripts and repository for this section is currently still private to typedef int GmbH, but will be released publicitly when the WAMP DAO receives and accepts donation of IP by typedef int GmbH.
 
 * [Crossbar.io Workbench](https://github.com/crossbario/crossbar-workbench)
 
