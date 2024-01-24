@@ -37,12 +37,12 @@ RTD_BUILD = os.environ.get('READTHEDOCS', None) == 'True'
 # -- Project information -----------------------------------------------------
 
 project = 'Web Application Messaging Protocol'
-author = 'Crossbar.io Technologies GmbH'
+author = 'typedef int GmbH'
 this_year = u'{0}'.format(time.strftime('%Y'))
 if this_year != u'2012':
-    copyright = u'2012-{0}, Crossbar.io Technologies GmbH'.format(this_year)
+    copyright = u'2012-{0}, typedef int GmbH'.format(this_year)
 else:
-    copyright = u'2012, Crossbar.io Technologies GmbH'
+    copyright = u'2012, typedef int GmbH'
 
 # The short X.Y version
 version = 'version 2'
