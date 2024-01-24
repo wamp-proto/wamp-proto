@@ -8,11 +8,12 @@ Impressum
 Verantwortlich im Sinne §5 Telemediengesetz:
 
 =================   =============================================
-Firma               Crossbar.io GmbH
-Adresse             Waldstrasse 18, D-91054 Erlangen, Deutschland
-Email               contact (at) crossbario.com
-UStId               DE309012368
-HRB                 HRB 15870, Amtsgericht Fürth (04.11.2016)
+Firma               typedef int GmbH
+Adresse             Am Weihersbach 13 91074 Herzogenaurach (Deutschland)
+Email               contact at typedefint dot eu
+UStId               DE352186154
+HRB                 HRB 19476, Amtsgericht Fürth (Deutschland)
+UStID               DE352186154
 Geschäftsführer     Tobias Oberstein
 =================   =============================================
 

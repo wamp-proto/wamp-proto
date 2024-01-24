@@ -230,7 +230,7 @@ base principles of the trademark policy, see the following question.
   website, these are all, naturally, entirely unproblematic uses.
 | For any use of the word mark which could imply a direct endorsement,
   or other official connection with the WAMP project, or when in doubt,
-  please get in contact with Crossbar.io GmbH. The same goes for any use
+  please get in contact with typedef int GmbH. The same goes for any use
   of the design mark (i.e. the WAMP logo at the top of the project
   page).
 | We will take a look as quickly as possible, and try to arrange a
