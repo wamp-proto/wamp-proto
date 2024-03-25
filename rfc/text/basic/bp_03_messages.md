@@ -258,7 +258,7 @@ Reserved codes may be used to identify additional message types in future standa
 |------|----------------|------------|---------|------------|---------|---------|-------|
 |  1   | `HELLO`        | Tx         | Rx      | Tx         | Tx      | Rx      | Tx    |
 |  2   | `WELCOME`      | Rx         | Tx      | Rx         | Rx      | Tx      | Rx    |
-|  3   | `ABORT`        | Rx         | TxRx    | Rx         | Rx      | TxRx    | Rx    |
+|  3   | `ABORT`        | TxRx       | TxRx    | TxRx       | TxRx    | TxRx    | TxRx  |
 |  6   | `GOODBYE`      | TxRx       | TxRx    | TxRx       | TxRx    | TxRx    | TxRx  |
 |      |                |            |         |            |         |         |       |
 |  8   | `ERROR`        | Rx         | Tx      | Rx         | Rx      | TxRx    | TxRx  |
