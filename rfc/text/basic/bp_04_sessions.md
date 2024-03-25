@@ -191,7 +191,7 @@ In the WAMP Basic Profile without session authentication, a `WELCOME` message MU
 
 **Router: Role and Feature Announcement**
 
-Similar to a Client announcing Roles and Features supported in the ``HELLO` message, a Router announces its supported Roles and Features in the `WELCOME` message.
+Similar to a Client announcing Roles and Features supported in the `HELLO` message, a Router announces its supported Roles and Features in the `WELCOME` message.
 
 A Router MUST announce the roles it supports via `Welcome.Details.roles|dict`, with a key mapping to a `Welcome.Details.roles.<role>|dict` where `<role>` can be:
 
