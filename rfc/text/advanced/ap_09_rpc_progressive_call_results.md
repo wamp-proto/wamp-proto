@@ -321,7 +321,7 @@ Such cancellation when the caller leaves addresses a potential security vulnerab
 
 **Callee Leaving**
 
-The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a progressive results call shall be the same as in a basic, non-progressive call. That is, the *Dealer* sends an ERROR message to the *Caller* with the `wamp.error.canceled` URI. See [Callee Leaving During an RPC Invocation] (#rpc-callee-leaving) under the Basic Profile.
+The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a progressive results call shall be the same as in a basic, non-progressive call. That is, the *Dealer* sends an ERROR message to the *Caller* with the `wamp.error.cancelled` URI. See [Callee Leaving During an RPC Invocation] (#rpc-callee-leaving) under the Basic Profile.
 
 {align="left"}
      ,------.           ,------.          ,------.

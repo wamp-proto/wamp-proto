@@ -165,7 +165,7 @@ consumption for the *Dealer* and *Callee*, due to the need to store temporary me
 
 **Callee Leaving**
 
-The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a call with progressive invocations shall be the same as in a basic, non-progressive call. That is, the *Dealer* sends an ERROR message to the *Caller* with the `wamp.error.canceled` URI. See [Callee Leaving During an RPC Invocation] (#rpc-callee-leaving) under the Basic Profile.
+The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a call with progressive invocations shall be the same as in a basic, non-progressive call. That is, the *Dealer* sends an ERROR message to the *Caller* with the `wamp.error.cancelled` URI. See [Callee Leaving During an RPC Invocation] (#rpc-callee-leaving) under the Basic Profile.
 
 {align="left"}
      ,------.           ,------.                ,------.
