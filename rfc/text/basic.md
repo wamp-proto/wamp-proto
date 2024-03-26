@@ -1,6 +1,10 @@
-{{basic/bp_01_introduction.md}}
+{{base/base_01_abstract.md}}
 
-{{basic/bp_02_building_blocks.md}}
+{{base/base_02_introduction.md}}
+
+{{base/base_03_building_blocks.md}}
+
+{{base/base_04_messages.md}}
 
 {{basic/bp_03_messages.md}}
 
