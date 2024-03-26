@@ -1209,7 +1209,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 26 September 2024</td>
+<td class="center">Expires 27 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1222,12 +1222,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-03-25" class="published">25 March 2024</time>
+<time datetime="2024-03-26" class="published">26 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-09-26">26 September 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-27">27 September 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1257,7 +1257,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1587,6 +1587,23 @@ li > p:last-of-type:only-child {
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.4">
                 <p id="section-toc.1-1.10.2.4.1"><a href="#section-10.4" class="auto internal xref">10.4</a>.  <a href="#name-remote-procedure-calls" class="internal xref">Remote Procedure Calls</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5">
+                <p id="section-toc.1-1.10.2.5.1"><a href="#section-10.5" class="auto internal xref">10.5</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5.2.1">
+                    <p id="section-toc.1-1.10.2.5.2.1.1"><a href="#section-10.5.1" class="auto internal xref">10.5.1</a>.  <a href="#name-fundamental" class="internal xref">Fundamental</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5.2.2">
+                    <p id="section-toc.1-1.10.2.5.2.2.1"><a href="#section-10.5.2" class="auto internal xref">10.5.2</a>.  <a href="#name-authentication-and-authoriz" class="internal xref">Authentication and Authorization (AA)</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5.2.3">
+                    <p id="section-toc.1-1.10.2.5.2.3.1"><a href="#section-10.5.3" class="auto internal xref">10.5.3</a>.  <a href="#name-remote-procedure-calls-2" class="internal xref">Remote Procedure Calls</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.5.2.4">
+                    <p id="section-toc.1-1.10.2.5.2.4.1"><a href="#section-10.5.4" class="auto internal xref">10.5.4</a>.  <a href="#name-publish-and-subscribe" class="internal xref">Publish and Subscribe</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -9603,6 +9620,310 @@ calling <code>xbr.pool.buy_key</code>, and calling <code>wamp.r2r.submit_traffic
 <div class="alignLeft art-text artwork" id="section-10.4-14">
 <pre>    wamp.error.feature_not_supported
 </pre><a href="#section-10.4-14" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="terminology">
+<section id="section-10.5">
+        <h3 id="name-terminology">
+<a href="#section-10.5" class="section-number selfRef">10.5. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<p id="section-10.5-1">This chapter contains a list of technical terms used in this specification, along with their respective meanings.<a href="#section-10.5-1" class="pilcrow">¶</a></p>
+<p id="section-10.5-2">Implementations SHOULD use terms as defined here in their public interfaces and documentation,
+and SHOULD NOT reinvent or reinterpret terms. Users SHOULD be able to transfer their WAMP knowledge
+from one implementation to another.
+This is to support the overarching goal of WAMP to free application developers from restrictions when
+building distributed applications, both at the network level, and when choosing (or switching) the WAMP
+implementations used.<a href="#section-10.5-2" class="pilcrow">¶</a></p>
+<p id="section-10.5-3">Our goal is to maximize <strong>user choice and experience</strong> when developing WAMP-based applications,
+both formally (open protocol and open source) as well as practically (switching costs).<a href="#section-10.5-3" class="pilcrow">¶</a></p>
+<div id="fundamental">
+<section id="section-10.5.1">
+          <h4 id="name-fundamental">
+<a href="#section-10.5.1" class="section-number selfRef">10.5.1. </a><a href="#name-fundamental" class="section-name selfRef">Fundamental</a>
+          </h4>
+<table class="left" id="table-17">
+            <caption><a href="#table-17" class="selfRef">Table 17</a></caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">Term</th>
+                <th class="text-left" rowspan="1" colspan="1">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>User</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A person (or organization) running a WAMP <em>Client</em> or <em>Router</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Client</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A program run by a <em>User</em>, with application code using WAMP for application-level communications</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Router</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A program run by a <em>User</em>, with middleware code using WAMP to provide application routing services</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Peer</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A WAMP <em>Client</em> or <em>Router</em>. An implementation might embed, provide or use both roles</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Realm</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">Isolated WAMP URI namespace serving as a routing and administrative domain, optionally protected by <strong>AA</strong>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Transport</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A message-based, reliable, ordered, bidirectional (full-duplex) channel over which <em>Peers</em> communicate</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Connection</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">An underlying entity (if any) carrying the <em>Transport</em>, e.g. a network connection, pipe, queue or such</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Session</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">Transient conversation between a <em>Client</em> and a <em>Router</em>, within a <em>Realm</em> and over a <em>Transport</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Message</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">Indivisible unit of information transmitted between peers</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Serializer</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">Encodes WAMP messages, with application payloads, into byte strings for transport</td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+<div id="authentication-and-authorization-aa">
+<section id="section-10.5.2">
+          <h4 id="name-authentication-and-authoriz">
+<a href="#section-10.5.2" class="section-number selfRef">10.5.2. </a><a href="#name-authentication-and-authoriz" class="section-name selfRef">Authentication and Authorization (AA)</a>
+          </h4>
+<table class="left" id="table-18">
+            <caption><a href="#table-18" class="selfRef">Table 18</a></caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">Term</th>
+                <th class="text-left" rowspan="1" colspan="1">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Authentication</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">Establishes the identity of a <em>Session</em> within a <em>Realm</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Principal</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Principal</em> (<code>authid</code>) is any <em>User</em> that can be authenticated under a <em>Realm</em> (<code>realm</code>) and runs in the security context of a <em>Role</em> (<code>authrole</code>) within that <em>Realm</em>.</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Credentials</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">The authentication information and secrets used during</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Authorization</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A decision on permitting a <em>Principal</em> to perform a given <em>Action</em> on an <em>URI or URI pattern</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Access Control</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">Policy for selective restriction of *Action*s on <em>URIs or URI patterns</em> performed by *Principal*s</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Role-based Access Control (RBAC)</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">An <em>Access Control</em> policy based on <em>Realm</em> (<code>realm</code>), <em>Principal</em>'s <em>Role</em> (<code>authrole</code>), <em>URI or URI pattern</em>, and <em>Action</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Discretionary Access Control</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">An <em>Access Control</em> policy controlled by <em>Users</em> and enforced by <em>Routers</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Mandatory Access Control</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">An <em>Access Control</em> policy controlled by <em>Router Administrators</em> or <em>Realm Owners</em>, and enforced by <em>Routers</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Capability-based Access Control</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">An <em>Access Control</em> policy where *Caller*s, *Callee*s, *Publisher*s, *Subscriber*s directly share capabilities with each other</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Subject</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">The originating <em>Session</em> of an <em>Action</em> in the context of <em>Authorization</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Object</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A (fully qualified) <em>URI or URI pattern</em> representing the target of an <em>Action</em> in the context of <em>Authorization</em>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Action</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">One of the four core WAMP operations: <strong>register</strong>, <strong>call</strong>, <strong>subscribe</strong>, and <strong>publish</strong>
+</td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+<div id="remote-procedure-calls-1">
+<section id="section-10.5.3">
+          <h4 id="name-remote-procedure-calls-2">
+<a href="#section-10.5.3" class="section-number selfRef">10.5.3. </a><a href="#name-remote-procedure-calls-2" class="section-name selfRef">Remote Procedure Calls</a>
+          </h4>
+<table class="left" id="table-19">
+            <caption><a href="#table-19" class="selfRef">Table 19</a></caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">Term</th>
+                <th class="text-left" rowspan="1" colspan="1">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Caller</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Caller</em> is a <em>Session</em> that <strong>calls</strong>, with application payloads, a (fully qualified) <em>Procedure</em> for call routing</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Callee</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Callee</em> is a <em>Session</em> that responds to <em>Procedure</em> call invocations by <strong>yielding</strong> back application result payloads</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Procedure</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Procedure</em> is an URI or URI pattern that can be registered for call routing by *Callee*s</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Registration</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Router</em> record resulting from a <em>Callee</em> successfully <strong>registering</strong> a <em>Procedure</em> for call routing</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Call</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A transient <em>Router</em> record resulting from a <em>Caller</em> successfully <strong>calling</strong> a <em>Procedure</em> for call routing</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Invocation</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A call request and payload that are routed to a <em>Callee</em> having a matching <em>Registration</em> for the called <em>Procedure</em>
+</td>
+              </tr>
+            </tbody>
+          </table>
+</section>
+</div>
+<div id="publish-and-subscribe">
+<section id="section-10.5.4">
+          <h4 id="name-publish-and-subscribe">
+<a href="#section-10.5.4" class="section-number selfRef">10.5.4. </a><a href="#name-publish-and-subscribe" class="section-name selfRef">Publish and Subscribe</a>
+          </h4>
+<table class="left" id="table-20">
+            <caption><a href="#table-20" class="selfRef">Table 20</a></caption>
+<thead>
+              <tr>
+                <th class="text-left" rowspan="1" colspan="1">Term</th>
+                <th class="text-left" rowspan="1" colspan="1">Definition</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Publisher</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Publisher</em> is a <em>Session</em> that <strong>publishes</strong> application payloads to a (fully qualified) <em>Topic</em> for event routing</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Subscriber</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Subscriber</em> is a <em>Session</em> that <strong>subscribes</strong> to a <em>Topic</em> to receive application payloads on matching events</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Topic</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Topic</em> is an URI or URI pattern that can be subscribed to for event routing by *Subscriber*s</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Subscription</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Router</em> record resulting from a <em>Subscriber</em> successfully <strong>subscribing</strong> to a <em>Topic</em> for event routing</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Publication</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A transient <em>Router</em> record resulting from a <em>Publisher</em> successfully <strong>publishing</strong> to a <em>Topic</em> for event routing</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <em>Event</em>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">A publication that is routed to <em>Subscribers</em> having matching <em>Subscriptions</em> to the published <em>Topic</em>.</td>
+              </tr>
+            </tbody>
+          </table>
+</section>
 </div>
 </section>
 </div>

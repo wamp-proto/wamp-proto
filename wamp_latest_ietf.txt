@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                              25 March 2024
-Expires: 26 September 2024
+Intended status: Experimental                              26 March 2024
+Expires: 27 September 2024
 
 
                  The Web Application Messaging Protocol
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 September 2024.
+   This Internet-Draft will expire on 27 September 2024.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Table of Contents
 
 
 
-Oberstein               Expires 26 September 2024               [Page 1]
+Oberstein               Expires 27 September 2024               [Page 1]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -109,7 +109,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 2]
+Oberstein               Expires 27 September 2024               [Page 2]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -165,7 +165,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 3]
+Oberstein               Expires 27 September 2024               [Page 3]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -221,7 +221,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 4]
+Oberstein               Expires 27 September 2024               [Page 4]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -242,14 +242,19 @@ Internet-Draft                    WAMP                        March 2024
      18.2.  Authentication . . . . . . . . . . . . . . . . . . . . . 233
      18.3.  Authorization  . . . . . . . . . . . . . . . . . . . . . 234
      18.4.  Remote Procedure Calls . . . . . . . . . . . . . . . . . 234
-   19. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 235
-   20. Conformance Requirements  . . . . . . . . . . . . . . . . . . 235
-     20.1.  Terminology and Other Conventions  . . . . . . . . . . . 236
-   21. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 236
-   22. Normative References  . . . . . . . . . . . . . . . . . . . . 236
-   23. Informative References  . . . . . . . . . . . . . . . . . . . 237
-   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 237
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 237
+     18.5.  Terminology  . . . . . . . . . . . . . . . . . . . . . . 235
+       18.5.1.  Fundamental  . . . . . . . . . . . . . . . . . . . . 235
+       18.5.2.  Authentication and Authorization (AA)  . . . . . . . 236
+       18.5.3.  Remote Procedure Calls . . . . . . . . . . . . . . . 237
+       18.5.4.  Publish and Subscribe  . . . . . . . . . . . . . . . 238
+   19. IANA Considerations . . . . . . . . . . . . . . . . . . . . . 239
+   20. Conformance Requirements  . . . . . . . . . . . . . . . . . . 239
+     20.1.  Terminology and Other Conventions  . . . . . . . . . . . 239
+   21. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 239
+   22. Normative References  . . . . . . . . . . . . . . . . . . . . 240
+   23. Informative References  . . . . . . . . . . . . . . . . . . . 241
+   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 241
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 241
 
 1.  WAMP Basic Profile
 
@@ -272,12 +277,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-
-
-
-
-
-Oberstein               Expires 26 September 2024               [Page 5]
+Oberstein               Expires 27 September 2024               [Page 5]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -333,7 +333,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 6]
+Oberstein               Expires 27 September 2024               [Page 6]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -389,7 +389,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 7]
+Oberstein               Expires 27 September 2024               [Page 7]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -445,7 +445,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 8]
+Oberstein               Expires 27 September 2024               [Page 8]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -501,7 +501,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 9]
+Oberstein               Expires 27 September 2024               [Page 9]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -557,7 +557,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 10]
+Oberstein               Expires 27 September 2024              [Page 10]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -613,7 +613,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 11]
+Oberstein               Expires 27 September 2024              [Page 11]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -669,7 +669,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 12]
+Oberstein               Expires 27 September 2024              [Page 12]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -725,7 +725,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 13]
+Oberstein               Expires 27 September 2024              [Page 13]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -781,7 +781,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 14]
+Oberstein               Expires 27 September 2024              [Page 14]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -837,7 +837,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 15]
+Oberstein               Expires 27 September 2024              [Page 15]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -893,7 +893,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 16]
+Oberstein               Expires 27 September 2024              [Page 16]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -949,7 +949,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 17]
+Oberstein               Expires 27 September 2024              [Page 17]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 18]
+Oberstein               Expires 27 September 2024              [Page 18]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 19]
+Oberstein               Expires 27 September 2024              [Page 19]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 20]
+Oberstein               Expires 27 September 2024              [Page 20]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 21]
+Oberstein               Expires 27 September 2024              [Page 21]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 22]
+Oberstein               Expires 27 September 2024              [Page 22]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 23]
+Oberstein               Expires 27 September 2024              [Page 23]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 24]
+Oberstein               Expires 27 September 2024              [Page 24]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 25]
+Oberstein               Expires 27 September 2024              [Page 25]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1453,7 +1453,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 26]
+Oberstein               Expires 27 September 2024              [Page 26]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 27]
+Oberstein               Expires 27 September 2024              [Page 27]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 28]
+Oberstein               Expires 27 September 2024              [Page 28]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 29]
+Oberstein               Expires 27 September 2024              [Page 29]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1677,7 +1677,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 30]
+Oberstein               Expires 27 September 2024              [Page 30]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1733,7 +1733,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 31]
+Oberstein               Expires 27 September 2024              [Page 31]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1789,7 +1789,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 32]
+Oberstein               Expires 27 September 2024              [Page 32]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1845,7 +1845,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 33]
+Oberstein               Expires 27 September 2024              [Page 33]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1901,7 +1901,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 34]
+Oberstein               Expires 27 September 2024              [Page 34]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -1957,7 +1957,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 35]
+Oberstein               Expires 27 September 2024              [Page 35]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2013,7 +2013,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 36]
+Oberstein               Expires 27 September 2024              [Page 36]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2069,7 +2069,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 37]
+Oberstein               Expires 27 September 2024              [Page 37]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2125,7 +2125,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 38]
+Oberstein               Expires 27 September 2024              [Page 38]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2181,7 +2181,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 39]
+Oberstein               Expires 27 September 2024              [Page 39]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2237,7 +2237,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 40]
+Oberstein               Expires 27 September 2024              [Page 40]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2293,7 +2293,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 41]
+Oberstein               Expires 27 September 2024              [Page 41]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2349,7 +2349,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 42]
+Oberstein               Expires 27 September 2024              [Page 42]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2405,7 +2405,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 43]
+Oberstein               Expires 27 September 2024              [Page 43]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2461,7 +2461,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 44]
+Oberstein               Expires 27 September 2024              [Page 44]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2517,7 +2517,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 45]
+Oberstein               Expires 27 September 2024              [Page 45]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2573,7 +2573,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 46]
+Oberstein               Expires 27 September 2024              [Page 46]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2629,7 +2629,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 47]
+Oberstein               Expires 27 September 2024              [Page 47]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2685,7 +2685,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 48]
+Oberstein               Expires 27 September 2024              [Page 48]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2741,7 +2741,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 49]
+Oberstein               Expires 27 September 2024              [Page 49]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2797,7 +2797,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 50]
+Oberstein               Expires 27 September 2024              [Page 50]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2853,7 +2853,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 51]
+Oberstein               Expires 27 September 2024              [Page 51]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2909,7 +2909,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 52]
+Oberstein               Expires 27 September 2024              [Page 52]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -2965,7 +2965,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 53]
+Oberstein               Expires 27 September 2024              [Page 53]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3021,7 +3021,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 54]
+Oberstein               Expires 27 September 2024              [Page 54]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3077,7 +3077,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 55]
+Oberstein               Expires 27 September 2024              [Page 55]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3133,7 +3133,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 56]
+Oberstein               Expires 27 September 2024              [Page 56]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3189,7 +3189,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 57]
+Oberstein               Expires 27 September 2024              [Page 57]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3245,7 +3245,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 58]
+Oberstein               Expires 27 September 2024              [Page 58]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3301,7 +3301,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 59]
+Oberstein               Expires 27 September 2024              [Page 59]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3357,7 +3357,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 60]
+Oberstein               Expires 27 September 2024              [Page 60]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3413,7 +3413,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 61]
+Oberstein               Expires 27 September 2024              [Page 61]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3469,7 +3469,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 62]
+Oberstein               Expires 27 September 2024              [Page 62]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3525,7 +3525,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 63]
+Oberstein               Expires 27 September 2024              [Page 63]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3581,7 +3581,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 64]
+Oberstein               Expires 27 September 2024              [Page 64]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3637,7 +3637,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 65]
+Oberstein               Expires 27 September 2024              [Page 65]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3693,7 +3693,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 66]
+Oberstein               Expires 27 September 2024              [Page 66]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3749,7 +3749,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 67]
+Oberstein               Expires 27 September 2024              [Page 67]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3805,7 +3805,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 68]
+Oberstein               Expires 27 September 2024              [Page 68]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3861,7 +3861,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 69]
+Oberstein               Expires 27 September 2024              [Page 69]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3917,7 +3917,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 70]
+Oberstein               Expires 27 September 2024              [Page 70]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -3973,7 +3973,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 71]
+Oberstein               Expires 27 September 2024              [Page 71]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4029,7 +4029,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 72]
+Oberstein               Expires 27 September 2024              [Page 72]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4085,7 +4085,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 73]
+Oberstein               Expires 27 September 2024              [Page 73]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4141,7 +4141,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 74]
+Oberstein               Expires 27 September 2024              [Page 74]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4197,7 +4197,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 75]
+Oberstein               Expires 27 September 2024              [Page 75]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4253,7 +4253,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 76]
+Oberstein               Expires 27 September 2024              [Page 76]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4309,7 +4309,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 77]
+Oberstein               Expires 27 September 2024              [Page 77]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4365,7 +4365,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 78]
+Oberstein               Expires 27 September 2024              [Page 78]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4421,7 +4421,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 79]
+Oberstein               Expires 27 September 2024              [Page 79]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4477,7 +4477,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 80]
+Oberstein               Expires 27 September 2024              [Page 80]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4533,7 +4533,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 81]
+Oberstein               Expires 27 September 2024              [Page 81]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4589,7 +4589,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 82]
+Oberstein               Expires 27 September 2024              [Page 82]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4645,7 +4645,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 83]
+Oberstein               Expires 27 September 2024              [Page 83]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4701,7 +4701,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 84]
+Oberstein               Expires 27 September 2024              [Page 84]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4757,7 +4757,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 85]
+Oberstein               Expires 27 September 2024              [Page 85]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4813,7 +4813,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 86]
+Oberstein               Expires 27 September 2024              [Page 86]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4869,7 +4869,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 87]
+Oberstein               Expires 27 September 2024              [Page 87]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4925,7 +4925,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 88]
+Oberstein               Expires 27 September 2024              [Page 88]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -4981,7 +4981,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 89]
+Oberstein               Expires 27 September 2024              [Page 89]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5037,7 +5037,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 90]
+Oberstein               Expires 27 September 2024              [Page 90]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5093,7 +5093,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 91]
+Oberstein               Expires 27 September 2024              [Page 91]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5149,7 +5149,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 92]
+Oberstein               Expires 27 September 2024              [Page 92]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5205,7 +5205,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 93]
+Oberstein               Expires 27 September 2024              [Page 93]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5261,7 +5261,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 94]
+Oberstein               Expires 27 September 2024              [Page 94]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5317,7 +5317,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 95]
+Oberstein               Expires 27 September 2024              [Page 95]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5373,7 +5373,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 96]
+Oberstein               Expires 27 September 2024              [Page 96]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5429,7 +5429,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 97]
+Oberstein               Expires 27 September 2024              [Page 97]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5485,7 +5485,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 98]
+Oberstein               Expires 27 September 2024              [Page 98]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5541,7 +5541,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 99]
+Oberstein               Expires 27 September 2024              [Page 99]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5597,7 +5597,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 100]
+Oberstein               Expires 27 September 2024             [Page 100]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5653,7 +5653,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 101]
+Oberstein               Expires 27 September 2024             [Page 101]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5709,7 +5709,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 102]
+Oberstein               Expires 27 September 2024             [Page 102]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5765,7 +5765,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 103]
+Oberstein               Expires 27 September 2024             [Page 103]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5821,7 +5821,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 104]
+Oberstein               Expires 27 September 2024             [Page 104]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5877,7 +5877,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 105]
+Oberstein               Expires 27 September 2024             [Page 105]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5933,7 +5933,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 106]
+Oberstein               Expires 27 September 2024             [Page 106]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -5989,7 +5989,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 107]
+Oberstein               Expires 27 September 2024             [Page 107]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6045,7 +6045,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 108]
+Oberstein               Expires 27 September 2024             [Page 108]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6101,7 +6101,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 109]
+Oberstein               Expires 27 September 2024             [Page 109]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6157,7 +6157,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 110]
+Oberstein               Expires 27 September 2024             [Page 110]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6213,7 +6213,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 111]
+Oberstein               Expires 27 September 2024             [Page 111]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6269,7 +6269,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 112]
+Oberstein               Expires 27 September 2024             [Page 112]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6325,7 +6325,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 113]
+Oberstein               Expires 27 September 2024             [Page 113]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6381,7 +6381,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 114]
+Oberstein               Expires 27 September 2024             [Page 114]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6437,7 +6437,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 115]
+Oberstein               Expires 27 September 2024             [Page 115]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6493,7 +6493,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 116]
+Oberstein               Expires 27 September 2024             [Page 116]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6549,7 +6549,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 117]
+Oberstein               Expires 27 September 2024             [Page 117]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6605,7 +6605,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 118]
+Oberstein               Expires 27 September 2024             [Page 118]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6661,7 +6661,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 119]
+Oberstein               Expires 27 September 2024             [Page 119]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6717,7 +6717,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 120]
+Oberstein               Expires 27 September 2024             [Page 120]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6773,7 +6773,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 121]
+Oberstein               Expires 27 September 2024             [Page 121]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6829,7 +6829,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 122]
+Oberstein               Expires 27 September 2024             [Page 122]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6885,7 +6885,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 123]
+Oberstein               Expires 27 September 2024             [Page 123]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6941,7 +6941,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 124]
+Oberstein               Expires 27 September 2024             [Page 124]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -6997,7 +6997,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 125]
+Oberstein               Expires 27 September 2024             [Page 125]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7053,7 +7053,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 126]
+Oberstein               Expires 27 September 2024             [Page 126]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7109,7 +7109,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 127]
+Oberstein               Expires 27 September 2024             [Page 127]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7165,7 +7165,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 128]
+Oberstein               Expires 27 September 2024             [Page 128]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7221,7 +7221,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 129]
+Oberstein               Expires 27 September 2024             [Page 129]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7277,7 +7277,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 130]
+Oberstein               Expires 27 September 2024             [Page 130]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7333,7 +7333,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 131]
+Oberstein               Expires 27 September 2024             [Page 131]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7389,7 +7389,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 132]
+Oberstein               Expires 27 September 2024             [Page 132]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7445,7 +7445,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 133]
+Oberstein               Expires 27 September 2024             [Page 133]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7501,7 +7501,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 134]
+Oberstein               Expires 27 September 2024             [Page 134]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7557,7 +7557,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 135]
+Oberstein               Expires 27 September 2024             [Page 135]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7613,7 +7613,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 136]
+Oberstein               Expires 27 September 2024             [Page 136]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7669,7 +7669,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 137]
+Oberstein               Expires 27 September 2024             [Page 137]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7725,7 +7725,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 138]
+Oberstein               Expires 27 September 2024             [Page 138]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7781,7 +7781,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 139]
+Oberstein               Expires 27 September 2024             [Page 139]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7837,7 +7837,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 140]
+Oberstein               Expires 27 September 2024             [Page 140]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7893,7 +7893,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 141]
+Oberstein               Expires 27 September 2024             [Page 141]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -7949,7 +7949,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 142]
+Oberstein               Expires 27 September 2024             [Page 142]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8005,7 +8005,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 143]
+Oberstein               Expires 27 September 2024             [Page 143]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8061,7 +8061,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 144]
+Oberstein               Expires 27 September 2024             [Page 144]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8117,7 +8117,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 145]
+Oberstein               Expires 27 September 2024             [Page 145]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8173,7 +8173,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 146]
+Oberstein               Expires 27 September 2024             [Page 146]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8229,7 +8229,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 147]
+Oberstein               Expires 27 September 2024             [Page 147]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8285,7 +8285,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 148]
+Oberstein               Expires 27 September 2024             [Page 148]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8341,7 +8341,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 149]
+Oberstein               Expires 27 September 2024             [Page 149]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8397,7 +8397,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 150]
+Oberstein               Expires 27 September 2024             [Page 150]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8453,7 +8453,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 151]
+Oberstein               Expires 27 September 2024             [Page 151]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8509,7 +8509,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 152]
+Oberstein               Expires 27 September 2024             [Page 152]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8565,7 +8565,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 153]
+Oberstein               Expires 27 September 2024             [Page 153]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8621,7 +8621,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 154]
+Oberstein               Expires 27 September 2024             [Page 154]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8677,7 +8677,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 155]
+Oberstein               Expires 27 September 2024             [Page 155]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8733,7 +8733,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 156]
+Oberstein               Expires 27 September 2024             [Page 156]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8789,7 +8789,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 157]
+Oberstein               Expires 27 September 2024             [Page 157]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8845,7 +8845,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 158]
+Oberstein               Expires 27 September 2024             [Page 158]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8901,7 +8901,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 159]
+Oberstein               Expires 27 September 2024             [Page 159]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -8957,7 +8957,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 160]
+Oberstein               Expires 27 September 2024             [Page 160]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9013,7 +9013,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 161]
+Oberstein               Expires 27 September 2024             [Page 161]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9069,7 +9069,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 162]
+Oberstein               Expires 27 September 2024             [Page 162]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9125,7 +9125,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 163]
+Oberstein               Expires 27 September 2024             [Page 163]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9181,7 +9181,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 164]
+Oberstein               Expires 27 September 2024             [Page 164]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9237,7 +9237,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 165]
+Oberstein               Expires 27 September 2024             [Page 165]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9293,7 +9293,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 166]
+Oberstein               Expires 27 September 2024             [Page 166]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9349,7 +9349,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 167]
+Oberstein               Expires 27 September 2024             [Page 167]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9405,7 +9405,7 @@ test_vectors_1 = [
 
 
 
-Oberstein               Expires 26 September 2024             [Page 168]
+Oberstein               Expires 27 September 2024             [Page 168]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9461,7 +9461,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 169]
+Oberstein               Expires 27 September 2024             [Page 169]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9517,7 +9517,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 170]
+Oberstein               Expires 27 September 2024             [Page 170]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9573,7 +9573,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 171]
+Oberstein               Expires 27 September 2024             [Page 171]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9629,7 +9629,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 172]
+Oberstein               Expires 27 September 2024             [Page 172]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9685,7 +9685,7 @@ optional hierarchical chain of intermediate certificates
 
 
 
-Oberstein               Expires 26 September 2024             [Page 173]
+Oberstein               Expires 27 September 2024             [Page 173]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9741,7 +9741,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 174]
+Oberstein               Expires 27 September 2024             [Page 174]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9797,7 +9797,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 175]
+Oberstein               Expires 27 September 2024             [Page 175]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9853,7 +9853,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 176]
+Oberstein               Expires 27 September 2024             [Page 176]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9909,7 +9909,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 177]
+Oberstein               Expires 27 September 2024             [Page 177]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -9965,7 +9965,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 178]
+Oberstein               Expires 27 September 2024             [Page 178]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10021,7 +10021,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 179]
+Oberstein               Expires 27 September 2024             [Page 179]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10077,7 +10077,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 180]
+Oberstein               Expires 27 September 2024             [Page 180]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10133,7 +10133,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 181]
+Oberstein               Expires 27 September 2024             [Page 181]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10189,7 +10189,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein               Expires 26 September 2024             [Page 182]
+Oberstein               Expires 27 September 2024             [Page 182]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10245,7 +10245,7 @@ WAMP-Receive(3735119691078036, client01@example.com) <<
 
 
 
-Oberstein               Expires 26 September 2024             [Page 183]
+Oberstein               Expires 27 September 2024             [Page 183]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10301,7 +10301,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein               Expires 26 September 2024             [Page 184]
+Oberstein               Expires 27 September 2024             [Page 184]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10357,7 +10357,7 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein               Expires 26 September 2024             [Page 185]
+Oberstein               Expires 27 September 2024             [Page 185]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10413,7 +10413,7 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein               Expires 26 September 2024             [Page 186]
+Oberstein               Expires 27 September 2024             [Page 186]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10469,7 +10469,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 187]
+Oberstein               Expires 27 September 2024             [Page 187]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10525,7 +10525,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 188]
+Oberstein               Expires 27 September 2024             [Page 188]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10581,7 +10581,7 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein               Expires 26 September 2024             [Page 189]
+Oberstein               Expires 27 September 2024             [Page 189]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10637,7 +10637,7 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
 
 
 
-Oberstein               Expires 26 September 2024             [Page 190]
+Oberstein               Expires 27 September 2024             [Page 190]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10693,7 +10693,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 191]
+Oberstein               Expires 27 September 2024             [Page 191]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10749,7 +10749,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 192]
+Oberstein               Expires 27 September 2024             [Page 192]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10805,7 +10805,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 193]
+Oberstein               Expires 27 September 2024             [Page 193]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10861,7 +10861,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 194]
+Oberstein               Expires 27 September 2024             [Page 194]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10917,7 +10917,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 195]
+Oberstein               Expires 27 September 2024             [Page 195]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -10973,7 +10973,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 196]
+Oberstein               Expires 27 September 2024             [Page 196]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11029,7 +11029,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 197]
+Oberstein               Expires 27 September 2024             [Page 197]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11085,7 +11085,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 198]
+Oberstein               Expires 27 September 2024             [Page 198]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11141,7 +11141,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 199]
+Oberstein               Expires 27 September 2024             [Page 199]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11197,7 +11197,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 200]
+Oberstein               Expires 27 September 2024             [Page 200]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11253,7 +11253,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 201]
+Oberstein               Expires 27 September 2024             [Page 201]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11309,7 +11309,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 202]
+Oberstein               Expires 27 September 2024             [Page 202]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11365,7 +11365,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 203]
+Oberstein               Expires 27 September 2024             [Page 203]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11421,7 +11421,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 204]
+Oberstein               Expires 27 September 2024             [Page 204]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11477,7 +11477,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 205]
+Oberstein               Expires 27 September 2024             [Page 205]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11533,7 +11533,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 206]
+Oberstein               Expires 27 September 2024             [Page 206]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11589,7 +11589,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 207]
+Oberstein               Expires 27 September 2024             [Page 207]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11645,7 +11645,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 208]
+Oberstein               Expires 27 September 2024             [Page 208]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11701,7 +11701,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 209]
+Oberstein               Expires 27 September 2024             [Page 209]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11757,7 +11757,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 210]
+Oberstein               Expires 27 September 2024             [Page 210]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11813,7 +11813,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 211]
+Oberstein               Expires 27 September 2024             [Page 211]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11869,7 +11869,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 212]
+Oberstein               Expires 27 September 2024             [Page 212]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11925,7 +11925,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 213]
+Oberstein               Expires 27 September 2024             [Page 213]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -11981,7 +11981,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 214]
+Oberstein               Expires 27 September 2024             [Page 214]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12037,7 +12037,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 215]
+Oberstein               Expires 27 September 2024             [Page 215]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12093,7 +12093,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 216]
+Oberstein               Expires 27 September 2024             [Page 216]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12149,7 +12149,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 217]
+Oberstein               Expires 27 September 2024             [Page 217]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12205,7 +12205,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 218]
+Oberstein               Expires 27 September 2024             [Page 218]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12261,7 +12261,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 219]
+Oberstein               Expires 27 September 2024             [Page 219]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12317,7 +12317,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 220]
+Oberstein               Expires 27 September 2024             [Page 220]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12373,7 +12373,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 221]
+Oberstein               Expires 27 September 2024             [Page 221]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12429,7 +12429,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 222]
+Oberstein               Expires 27 September 2024             [Page 222]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12485,7 +12485,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 223]
+Oberstein               Expires 27 September 2024             [Page 223]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12541,7 +12541,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 224]
+Oberstein               Expires 27 September 2024             [Page 224]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12597,7 +12597,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 225]
+Oberstein               Expires 27 September 2024             [Page 225]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12653,7 +12653,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 226]
+Oberstein               Expires 27 September 2024             [Page 226]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12709,7 +12709,7 @@ flatc -o ./schema --binary --schema --bfbs-comments --bfbs-builtins ./src
 
 
 
-Oberstein               Expires 26 September 2024             [Page 227]
+Oberstein               Expires 27 September 2024             [Page 227]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12765,7 +12765,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 228]
+Oberstein               Expires 27 September 2024             [Page 228]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12821,7 +12821,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 229]
+Oberstein               Expires 27 September 2024             [Page 229]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12877,7 +12877,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 230]
+Oberstein               Expires 27 September 2024             [Page 230]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12933,7 +12933,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 231]
+Oberstein               Expires 27 September 2024             [Page 231]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -12989,7 +12989,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 232]
+Oberstein               Expires 27 September 2024             [Page 232]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -13045,7 +13045,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 233]
+Oberstein               Expires 27 September 2024             [Page 233]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -13101,7 +13101,7 @@ Internet-Draft                    WAMP                        March 2024
 
 
 
-Oberstein               Expires 26 September 2024             [Page 234]
+Oberstein               Expires 27 September 2024             [Page 234]
 
 Internet-Draft                    WAMP                        March 2024
 
@@ -13127,6 +13127,215 @@ Internet-Draft                    WAMP                        March 2024
    be processed by the _Callee_
 
        wamp.error.feature_not_supported
+
+18.5.  Terminology
+
+   This chapter contains a list of technical terms used in this
+   specification, along with their respective meanings.
+
+   Implementations SHOULD use terms as defined here in their public
+   interfaces and documentation, and SHOULD NOT reinvent or reinterpret
+   terms.  Users SHOULD be able to transfer their WAMP knowledge from
+   one implementation to another.  This is to support the overarching
+   goal of WAMP to free application developers from restrictions when
+   building distributed applications, both at the network level, and
+   when choosing (or switching) the WAMP implementations used.
+
+   Our goal is to maximize *user choice and experience* when developing
+   WAMP-based applications, both formally (open protocol and open
+   source) as well as practically (switching costs).
+
+18.5.1.  Fundamental
+
+   +==============+====================================================+
+   | Term         | Definition                                         |
+   +==============+====================================================+
+   | _User_       | A person (or organization) running a WAMP          |
+   |              | _Client_ or _Router_                               |
+   +--------------+----------------------------------------------------+
+   | _Client_     | A program run by a _User_, with application code   |
+
+
+
+Oberstein               Expires 27 September 2024             [Page 235]
+
+Internet-Draft                    WAMP                        March 2024
+
+
+   |              | using WAMP for application-level communications    |
+   +--------------+----------------------------------------------------+
+   | _Router_     | A program run by a _User_, with middleware code    |
+   |              | using WAMP to provide application routing          |
+   |              | services                                           |
+   +--------------+----------------------------------------------------+
+   | _Peer_       | A WAMP _Client_ or _Router_. An implementation     |
+   |              | might embed, provide or use both roles             |
+   +--------------+----------------------------------------------------+
+   | _Realm_      | Isolated WAMP URI namespace serving as a routing   |
+   |              | and administrative domain, optionally protected    |
+   |              | by *AA*                                            |
+   +--------------+----------------------------------------------------+
+   | _Transport_  | A message-based, reliable, ordered,                |
+   |              | bidirectional (full-duplex) channel over which     |
+   |              | _Peers_ communicate                                |
+   +--------------+----------------------------------------------------+
+   | _Connection_ | An underlying entity (if any) carrying the         |
+   |              | _Transport_, e.g. a network connection, pipe,      |
+   |              | queue or such                                      |
+   +--------------+----------------------------------------------------+
+   | _Session_    | Transient conversation between a _Client_ and a    |
+   |              | _Router_, within a _Realm_ and over a              |
+   |              | _Transport_                                        |
+   +--------------+----------------------------------------------------+
+   | _Message_    | Indivisible unit of information transmitted        |
+   |              | between peers                                      |
+   +--------------+----------------------------------------------------+
+   | _Serializer_ | Encodes WAMP messages, with application            |
+   |              | payloads, into byte strings for transport          |
+   +--------------+----------------------------------------------------+
+
+                                  Table 19
+
+18.5.2.  Authentication and Authorization (AA)
+
+   +===================+=============================================+
+   | Term              | Definition                                  |
+   +===================+=============================================+
+   | _Authentication_  | Establishes the identity of a _Session_     |
+   |                   | within a _Realm_                            |
+   +-------------------+---------------------------------------------+
+   | _Principal_       | A _Principal_ (authid) is any _User_ that   |
+   |                   | can be authenticated under a _Realm_        |
+   |                   | (realm) and runs in the security context of |
+   |                   | a _Role_ (authrole) within that _Realm_.    |
+   +-------------------+---------------------------------------------+
+   | _Credentials_     | The authentication information and secrets  |
+
+
+
+Oberstein               Expires 27 September 2024             [Page 236]
+
+Internet-Draft                    WAMP                        March 2024
+
+
+   |                   | used during                                 |
+   +-------------------+---------------------------------------------+
+   | _Authorization_   | A decision on permitting a _Principal_ to   |
+   |                   | perform a given _Action_ on an _URI or URI  |
+   |                   | pattern_                                    |
+   +-------------------+---------------------------------------------+
+   | _Access Control_  | Policy for selective restriction of         |
+   |                   | *Action*s on _URIs or URI patterns_         |
+   |                   | performed by *Principal*s                   |
+   +-------------------+---------------------------------------------+
+   | _Role-based       | An _Access Control_ policy based on _Realm_ |
+   | Access Control    | (realm), _Principal_'s _Role_ (authrole),   |
+   | (RBAC)_           | _URI or URI pattern_, and _Action_          |
+   +-------------------+---------------------------------------------+
+   | _Discretionary    | An _Access Control_ policy controlled by    |
+   | Access Control_   | _Users_ and enforced by _Routers_           |
+   +-------------------+---------------------------------------------+
+   | _Mandatory Access | An _Access Control_ policy controlled by    |
+   | Control_          | _Router Administrators_ or _Realm Owners_,  |
+   |                   | and enforced by _Routers_                   |
+   +-------------------+---------------------------------------------+
+   | _Capability-based | An _Access Control_ policy where *Caller*s, |
+   | Access Control_   | *Callee*s, *Publisher*s, *Subscriber*s      |
+   |                   | directly share capabilities with each other |
+   +-------------------+---------------------------------------------+
+   | _Subject_         | The originating _Session_ of an _Action_ in |
+   |                   | the context of _Authorization_              |
+   +-------------------+---------------------------------------------+
+   | _Object_          | A (fully qualified) _URI or URI pattern_    |
+   |                   | representing the target of an _Action_ in   |
+   |                   | the context of _Authorization_              |
+   +-------------------+---------------------------------------------+
+   | _Action_          | One of the four core WAMP operations:       |
+   |                   | *register*, *call*, *subscribe*, and        |
+   |                   | *publish*                                   |
+   +-------------------+---------------------------------------------+
+
+                                 Table 20
+
+18.5.3.  Remote Procedure Calls
+
+   +================+============================================+
+   | Term           | Definition                                 |
+   +================+============================================+
+   | _Caller_       | A _Caller_ is a _Session_ that *calls*,    |
+   |                | with application payloads, a (fully        |
+   |                | qualified) _Procedure_ for call routing    |
+   +----------------+--------------------------------------------+
+
+
+
+Oberstein               Expires 27 September 2024             [Page 237]
+
+Internet-Draft                    WAMP                        March 2024
+
+
+   | _Callee_       | A _Callee_ is a _Session_ that responds to |
+   |                | _Procedure_ call invocations by *yielding* |
+   |                | back application result payloads           |
+   +----------------+--------------------------------------------+
+   | _Procedure_    | A _Procedure_ is an URI or URI pattern     |
+   |                | that can be registered for call routing by |
+   |                | *Callee*s                                  |
+   +----------------+--------------------------------------------+
+   | _Registration_ | A _Router_ record resulting from a         |
+   |                | _Callee_ successfully *registering* a      |
+   |                | _Procedure_ for call routing               |
+   +----------------+--------------------------------------------+
+   | _Call_         | A transient _Router_ record resulting from |
+   |                | a _Caller_ successfully *calling* a        |
+   |                | _Procedure_ for call routing               |
+   +----------------+--------------------------------------------+
+   | _Invocation_   | A call request and payload that are routed |
+   |                | to a _Callee_ having a matching            |
+   |                | _Registration_ for the called _Procedure_  |
+   +----------------+--------------------------------------------+
+
+                               Table 21
+
+18.5.4.  Publish and Subscribe
+
+   +================+=============================================+
+   | Term           | Definition                                  |
+   +================+=============================================+
+   | _Publisher_    | A _Publisher_ is a _Session_ that           |
+   |                | *publishes* application payloads to a       |
+   |                | (fully qualified) _Topic_ for event routing |
+   +----------------+---------------------------------------------+
+   | _Subscriber_   | A _Subscriber_ is a _Session_ that          |
+   |                | *subscribes* to a _Topic_ to receive        |
+   |                | application payloads on matching events     |
+   +----------------+---------------------------------------------+
+   | _Topic_        | A _Topic_ is an URI or URI pattern that can |
+   |                | be subscribed to for event routing by       |
+   |                | *Subscriber*s                               |
+   +----------------+---------------------------------------------+
+   | _Subscription_ | A _Router_ record resulting from a          |
+   |                | _Subscriber_ successfully *subscribing* to  |
+   |                | a _Topic_ for event routing                 |
+   +----------------+---------------------------------------------+
+   | _Publication_  | A transient _Router_ record resulting from  |
+   |                | a _Publisher_ successfully *publishing* to  |
+   |                | a _Topic_ for event routing                 |
+   +----------------+---------------------------------------------+
+
+
+
+Oberstein               Expires 27 September 2024             [Page 238]
+
+Internet-Draft                    WAMP                        March 2024
+
+
+   | _Event_        | A publication that is routed to             |
+   |                | _Subscribers_ having matching               |
+   |                | _Subscriptions_ to the published _Topic_.   |
+   +----------------+---------------------------------------------+
+
+                               Table 22
 
 19.  IANA Considerations
 
@@ -13154,14 +13363,6 @@ Internet-Draft                    WAMP                        March 2024
    be implemented in any manner, so long as the end result is
    equivalent.
 
-
-
-
-Oberstein               Expires 26 September 2024             [Page 235]
-
-Internet-Draft                    WAMP                        March 2024
-
-
 20.1.  Terminology and Other Conventions
 
    Key terms such as named algorithms or definitions are indicated like
@@ -13177,6 +13378,14 @@ Internet-Draft                    WAMP                        March 2024
    *  Alexander Goedde
    *  Amber Brown
    *  Andrew Gillis
+
+
+
+Oberstein               Expires 27 September 2024             [Page 239]
+
+Internet-Draft                    WAMP                        March 2024
+
+
    *  David Chappelle
    *  Elvis Stansvik
    *  Emile Cormier
@@ -13208,16 +13417,6 @@ Internet-Draft                    WAMP                        March 2024
               DOI 10.17487/RFC4122, July 2005,
               <https://www.rfc-editor.org/info/rfc4122>.
 
-
-
-
-
-
-Oberstein               Expires 26 September 2024             [Page 236]
-
-Internet-Draft                    WAMP                        March 2024
-
-
    [RFC4648]  Josefsson, S., "The Base16, Base32, and Base64 Data
               Encodings", RFC 4648, DOI 10.17487/RFC4648, October 2006,
               <https://www.rfc-editor.org/info/rfc4648>.
@@ -13234,6 +13433,14 @@ Internet-Draft                    WAMP                        March 2024
               Signature Algorithm (EdDSA)", RFC 8032,
               DOI 10.17487/RFC8032, January 2017,
               <https://www.rfc-editor.org/info/rfc8032>.
+
+
+
+
+Oberstein               Expires 27 September 2024             [Page 240]
+
+Internet-Draft                    WAMP                        March 2024
+
 
    [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", STD 94, RFC 8949,
@@ -13269,4 +13476,21 @@ Author's Address
 
 
 
-Oberstein               Expires 26 September 2024             [Page 237]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein               Expires 27 September 2024             [Page 241]

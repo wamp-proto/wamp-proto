@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                              25 March 2024
-Expires: 26 September 2024
+Intended status: Experimental                              26 March 2024
+Expires: 27 September 2024
 
 
                            WAMP Basic Profile
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 September 2024.
+   This Internet-Draft will expire on 27 September 2024.
 
 Copyright Notice
 
@@ -45,7 +45,7 @@ Copyright Notice
 Table of Contents
 
    1.  WAMP Basic Profile  . . . . . . . . . . . . . . . . . . . . .   3
-     1.1.  Basic vs Advanced Profile . . . . . . . . . . . . . . . .   3
+     1.1.  Basic vs Advanced Profile . . . . . . . . . . . . . . . .   4
      1.2.  Introduction  . . . . . . . . . . . . . . . . . . . . . .   4
      1.3.  Protocol Overview . . . . . . . . . . . . . . . . . . . .   5
        1.3.1.  Realms, Sessions and Transports . . . . . . . . . . .   5
@@ -53,7 +53,7 @@ Table of Contents
 
 
 
-Oberstein               Expires 26 September 2024               [Page 1]
+Oberstein               Expires 27 September 2024               [Page 1]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -67,7 +67,7 @@ Internet-Draft                   WAMP-BP                      March 2024
        1.4.4.  Peers with multiple Roles . . . . . . . . . . . . . .   9
        1.4.5.  Relationship to WebSocket . . . . . . . . . . . . . .   9
    2.  Building Blocks . . . . . . . . . . . . . . . . . . . . . . .   9
-     2.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .   9
+     2.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .  10
        2.1.1.  URIs  . . . . . . . . . . . . . . . . . . . . . . . .  10
        2.1.2.  IDs . . . . . . . . . . . . . . . . . . . . . . . . .  12
      2.2.  Serializers . . . . . . . . . . . . . . . . . . . . . . .  13
@@ -109,7 +109,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024               [Page 2]
+Oberstein               Expires 27 September 2024               [Page 2]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -138,13 +138,18 @@ Internet-Draft                   WAMP-BP                      March 2024
      7.4.  Client Authentication . . . . . . . . . . . . . . . . . .  54
      7.5.  Routers are trusted . . . . . . . . . . . . . . . . . . .  55
    8.  Basic Profile URIs  . . . . . . . . . . . . . . . . . . . . .  55
-   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  57
-   10. Conformance Requirements  . . . . . . . . . . . . . . . . . .  57
-     10.1.  Terminology and Other Conventions  . . . . . . . . . . .  58
-   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  58
-   12. Normative References  . . . . . . . . . . . . . . . . . . . .  58
-   13. Informative References  . . . . . . . . . . . . . . . . . . .  59
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  59
+     8.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .  57
+       8.1.1.  Fundamental . . . . . . . . . . . . . . . . . . . . .  58
+       8.1.2.  Authentication and Authorization (AA) . . . . . . . .  59
+       8.1.3.  Remote Procedure Calls  . . . . . . . . . . . . . . .  60
+       8.1.4.  Publish and Subscribe . . . . . . . . . . . . . . . .  60
+   9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  61
+   10. Conformance Requirements  . . . . . . . . . . . . . . . . . .  61
+     10.1.  Terminology and Other Conventions  . . . . . . . . . . .  62
+   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  62
+   12. Normative References  . . . . . . . . . . . . . . . . . . . .  62
+   13. Informative References  . . . . . . . . . . . . . . . . . . .  63
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  63
 
 1.  WAMP Basic Profile
 
@@ -156,19 +161,20 @@ Internet-Draft                   WAMP-BP                      March 2024
    be transmitted via any other protocol that allows for ordered,
    reliable, bi-directional, and message-oriented communications.
 
+
+
+
+
+Oberstein               Expires 27 September 2024               [Page 3]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
+
 1.1.  Basic vs Advanced Profile
 
    This document first describes a Basic Profile for WAMP in its
    entirety, before describing an Advanced Profile which extends the
    basic functionality of WAMP.
-
-
-
-
-Oberstein               Expires 26 September 2024               [Page 3]
-
-Internet-Draft                   WAMP-BP                      March 2024
-
 
    The separation into Basic and Advanced Profiles is intended to extend
    the reach of the protocol.  It allows implementations to start out
@@ -211,20 +217,20 @@ Internet-Draft                   WAMP-BP                      March 2024
    WAMP provides two messaging patterns: _Publish & Subscribe_ and
    _routed Remote Procedure Calls_.
 
+
+
+
+
+Oberstein               Expires 27 September 2024               [Page 4]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
+
    Publish & Subscribe (PubSub) is an established messaging pattern
    where a component, the _Subscriber_, informs the router that it wants
    to receive information on a topic (i.e., it subscribes to a topic).
    Another component, a _Publisher_, can then publish to this topic, and
    the router distributes events to all Subscribers.
-
-
-
-
-
-Oberstein               Expires 26 September 2024               [Page 4]
-
-Internet-Draft                   WAMP-BP                      March 2024
-
 
    Routed Remote Procedure Calls (RPCs) rely on the same sort of
    decoupling that is used by the Publish & Subscribe pattern.  A
@@ -269,18 +275,16 @@ Internet-Draft                   WAMP-BP                      March 2024
    WAMP can run over any Transport which is message-based,
    bidirectional, reliable and ordered.
 
-   The default transport for WAMP is WebSocket [RFC6455], where WAMP is
-   an officially registered (http://www.iana.org/assignments/websocket/
-   websocket.xml) subprotocol.
 
 
-
-
-
-Oberstein               Expires 26 September 2024               [Page 5]
+Oberstein               Expires 27 September 2024               [Page 5]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
+
+   The default transport for WAMP is WebSocket [RFC6455], where WAMP is
+   an officially registered (http://www.iana.org/assignments/websocket/
+   websocket.xml) subprotocol.
 
 1.3.2.  Peers and Roles
 
@@ -322,21 +326,23 @@ Internet-Draft                   WAMP-BP                      March 2024
    implementations are required to implement the Basic Profile, at
    minimum.
 
+
+
+
+
+
+
+
+Oberstein               Expires 27 September 2024               [Page 6]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
+
    The _WAMP Advanced Profile_ defines additions to the Basic Profile
    which greatly extend the utility of WAMP in real-world applications.
    WAMP implementations may support any subset of the Advanced Profile
    features.  They are required to announce those supported features
    during session establishment.
-
-
-
-
-
-
-Oberstein               Expires 26 September 2024               [Page 6]
-
-Internet-Draft                   WAMP-BP                      March 2024
-
 
 1.3.3.  Publish & Subscribe
 
@@ -379,20 +385,18 @@ Internet-Draft                   WAMP-BP                      March 2024
    incoming from Callers to Callees implementing the procedure called,
    and route call results back from Callees to Callers.
 
-   The Caller and Callee will usually run application code, while the
-   Dealer works as a generic router for remote procedure calls
-   decoupling Callers and Callees.
 
 
 
 
-
-
-
-Oberstein               Expires 26 September 2024               [Page 7]
+Oberstein               Expires 27 September 2024               [Page 7]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
+
+   The Caller and Callee will usually run application code, while the
+   Dealer works as a generic router for remote procedure calls
+   decoupling Callers and Callees.
 
 1.4.  Design Aspects
 
@@ -436,19 +440,19 @@ Internet-Draft                   WAMP-BP                      March 2024
    implementations without affecting the application and to distribute
    and deploy application components flexibly.
 
-   |  Note that a *program* that implements, for instance, the Dealer
-   |  role might at the same time implement, say, a built-in Callee.  It
-   |  is the Dealer and Broker that are generic, not the program.
 
 
 
 
 
-
-Oberstein               Expires 26 September 2024               [Page 8]
+Oberstein               Expires 27 September 2024               [Page 8]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
+
+   |  Note that a *program* that implements, for instance, the Dealer
+   |  role might at the same time implement, say, a built-in Callee.  It
+   |  is the Dealer and Broker that are generic, not the program.
 
 1.4.2.  Language Agnostic
 
@@ -494,17 +498,15 @@ Internet-Draft                   WAMP-BP                      March 2024
    requirements, which allows to run WAMP variants with different
    concrete bindings.
 
-2.1.  Identifiers
 
 
 
-
-
-
-Oberstein               Expires 26 September 2024               [Page 9]
+Oberstein               Expires 27 September 2024               [Page 9]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
+
+2.1.  Identifiers
 
 2.1.1.  URIs
 
@@ -551,16 +553,18 @@ Internet-Draft                   WAMP-BP                      March 2024
    Profile.  The character # is not allowed since this is reserved for
    internal use by Dealers and Brokers.
 
-   As an example, the following regular expression could be used in
-   Python to check URIs according to the above rules, when *NO empty URI
-   components are allowed*:
 
 
 
-Oberstein               Expires 26 September 2024              [Page 10]
+
+Oberstein               Expires 27 September 2024              [Page 10]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
+
+   As an example, the following regular expression could be used in
+   Python to check URIs according to the above rules, when *NO empty URI
+   components are allowed*:
 
    pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
 
@@ -609,11 +613,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-
-
-
-
-Oberstein               Expires 26 September 2024              [Page 11]
+Oberstein               Expires 27 September 2024              [Page 11]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -669,7 +669,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 12]
+Oberstein               Expires 27 September 2024              [Page 12]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -725,7 +725,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 13]
+Oberstein               Expires 27 September 2024              [Page 13]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -781,7 +781,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 14]
+Oberstein               Expires 27 September 2024              [Page 14]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -837,7 +837,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 15]
+Oberstein               Expires 27 September 2024              [Page 15]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -893,7 +893,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 16]
+Oberstein               Expires 27 September 2024              [Page 16]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -949,7 +949,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 17]
+Oberstein               Expires 27 September 2024              [Page 17]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 18]
+Oberstein               Expires 27 September 2024              [Page 18]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 19]
+Oberstein               Expires 27 September 2024              [Page 19]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 20]
+Oberstein               Expires 27 September 2024              [Page 20]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 21]
+Oberstein               Expires 27 September 2024              [Page 21]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 22]
+Oberstein               Expires 27 September 2024              [Page 22]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 23]
+Oberstein               Expires 27 September 2024              [Page 23]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 24]
+Oberstein               Expires 27 September 2024              [Page 24]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 25]
+Oberstein               Expires 27 September 2024              [Page 25]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1453,7 +1453,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 26]
+Oberstein               Expires 27 September 2024              [Page 26]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 27]
+Oberstein               Expires 27 September 2024              [Page 27]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 28]
+Oberstein               Expires 27 September 2024              [Page 28]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 29]
+Oberstein               Expires 27 September 2024              [Page 29]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1677,7 +1677,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 30]
+Oberstein               Expires 27 September 2024              [Page 30]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1733,7 +1733,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 31]
+Oberstein               Expires 27 September 2024              [Page 31]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1789,7 +1789,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 32]
+Oberstein               Expires 27 September 2024              [Page 32]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1845,7 +1845,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 33]
+Oberstein               Expires 27 September 2024              [Page 33]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1901,7 +1901,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 34]
+Oberstein               Expires 27 September 2024              [Page 34]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -1957,7 +1957,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 35]
+Oberstein               Expires 27 September 2024              [Page 35]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2013,7 +2013,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 36]
+Oberstein               Expires 27 September 2024              [Page 36]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2069,7 +2069,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 37]
+Oberstein               Expires 27 September 2024              [Page 37]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2125,7 +2125,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 38]
+Oberstein               Expires 27 September 2024              [Page 38]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2181,7 +2181,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 39]
+Oberstein               Expires 27 September 2024              [Page 39]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2237,7 +2237,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 40]
+Oberstein               Expires 27 September 2024              [Page 40]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2293,7 +2293,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 41]
+Oberstein               Expires 27 September 2024              [Page 41]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2349,7 +2349,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 42]
+Oberstein               Expires 27 September 2024              [Page 42]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2405,7 +2405,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 43]
+Oberstein               Expires 27 September 2024              [Page 43]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2461,7 +2461,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 44]
+Oberstein               Expires 27 September 2024              [Page 44]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2517,7 +2517,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 45]
+Oberstein               Expires 27 September 2024              [Page 45]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2573,7 +2573,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 46]
+Oberstein               Expires 27 September 2024              [Page 46]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2629,7 +2629,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 47]
+Oberstein               Expires 27 September 2024              [Page 47]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2685,7 +2685,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 48]
+Oberstein               Expires 27 September 2024              [Page 48]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2741,7 +2741,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 49]
+Oberstein               Expires 27 September 2024              [Page 49]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2797,7 +2797,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 50]
+Oberstein               Expires 27 September 2024              [Page 50]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2853,7 +2853,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 51]
+Oberstein               Expires 27 September 2024              [Page 51]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2909,7 +2909,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 52]
+Oberstein               Expires 27 September 2024              [Page 52]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -2965,7 +2965,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 53]
+Oberstein               Expires 27 September 2024              [Page 53]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -3021,7 +3021,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 54]
+Oberstein               Expires 27 September 2024              [Page 54]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -3077,7 +3077,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 55]
+Oberstein               Expires 27 September 2024              [Page 55]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -3133,7 +3133,7 @@ Internet-Draft                   WAMP-BP                      March 2024
 
 
 
-Oberstein               Expires 26 September 2024              [Page 56]
+Oberstein               Expires 27 September 2024              [Page 56]
 
 Internet-Draft                   WAMP-BP                      March 2024
 
@@ -3171,6 +3171,218 @@ Internet-Draft                   WAMP-BP                      March 2024
 
        wamp.error.no_such_role
 
+8.1.  Terminology
+
+   This chapter contains a list of technical terms used in this
+   specification, along with their respective meanings.
+
+   Implementations SHOULD use terms as defined here in their public
+   interfaces and documentation, and SHOULD NOT reinvent or reinterpret
+   terms.  Users SHOULD be able to transfer their WAMP knowledge from
+   one implementation to another.  This is to support the overarching
+   goal of WAMP to free application developers from restrictions when
+   building distributed applications, both at the network level, and
+   when choosing (or switching) the WAMP implementations used.
+
+
+
+
+
+
+Oberstein               Expires 27 September 2024              [Page 57]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
+
+   Our goal is to maximize *user choice and experience* when developing
+   WAMP-based applications, both formally (open protocol and open
+   source) as well as practically (switching costs).
+
+8.1.1.  Fundamental
+
+   +==============+====================================================+
+   | Term         | Definition                                         |
+   +==============+====================================================+
+   | _User_       | A person (or organization) running a WAMP          |
+   |              | _Client_ or _Router_                               |
+   +--------------+----------------------------------------------------+
+   | _Client_     | A program run by a _User_, with application code   |
+   |              | using WAMP for application-level communications    |
+   +--------------+----------------------------------------------------+
+   | _Router_     | A program run by a _User_, with middleware code    |
+   |              | using WAMP to provide application routing          |
+   |              | services                                           |
+   +--------------+----------------------------------------------------+
+   | _Peer_       | A WAMP _Client_ or _Router_. An implementation     |
+   |              | might embed, provide or use both roles             |
+   +--------------+----------------------------------------------------+
+   | _Realm_      | Isolated WAMP URI namespace serving as a routing   |
+   |              | and administrative domain, optionally protected    |
+   |              | by *AA*                                            |
+   +--------------+----------------------------------------------------+
+   | _Transport_  | A message-based, reliable, ordered,                |
+   |              | bidirectional (full-duplex) channel over which     |
+   |              | _Peers_ communicate                                |
+   +--------------+----------------------------------------------------+
+   | _Connection_ | An underlying entity (if any) carrying the         |
+   |              | _Transport_, e.g. a network connection, pipe,      |
+   |              | queue or such                                      |
+   +--------------+----------------------------------------------------+
+   | _Session_    | Transient conversation between a _Client_ and a    |
+   |              | _Router_, within a _Realm_ and over a              |
+   |              | _Transport_                                        |
+   +--------------+----------------------------------------------------+
+   | _Message_    | Indivisible unit of information transmitted        |
+   |              | between peers                                      |
+   +--------------+----------------------------------------------------+
+   | _Serializer_ | Encodes WAMP messages, with application            |
+   |              | payloads, into byte strings for transport          |
+   +--------------+----------------------------------------------------+
+
+                                  Table 3
+
+
+
+
+
+Oberstein               Expires 27 September 2024              [Page 58]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
+
+8.1.2.  Authentication and Authorization (AA)
+
+   +===================+=============================================+
+   | Term              | Definition                                  |
+   +===================+=============================================+
+   | _Authentication_  | Establishes the identity of a _Session_     |
+   |                   | within a _Realm_                            |
+   +-------------------+---------------------------------------------+
+   | _Principal_       | A _Principal_ (authid) is any _User_ that   |
+   |                   | can be authenticated under a _Realm_        |
+   |                   | (realm) and runs in the security context of |
+   |                   | a _Role_ (authrole) within that _Realm_.    |
+   +-------------------+---------------------------------------------+
+   | _Credentials_     | The authentication information and secrets  |
+   |                   | used during                                 |
+   +-------------------+---------------------------------------------+
+   | _Authorization_   | A decision on permitting a _Principal_ to   |
+   |                   | perform a given _Action_ on an _URI or URI  |
+   |                   | pattern_                                    |
+   +-------------------+---------------------------------------------+
+   | _Access Control_  | Policy for selective restriction of         |
+   |                   | *Action*s on _URIs or URI patterns_         |
+   |                   | performed by *Principal*s                   |
+   +-------------------+---------------------------------------------+
+   | _Role-based       | An _Access Control_ policy based on _Realm_ |
+   | Access Control    | (realm), _Principal_'s _Role_ (authrole),   |
+   | (RBAC)_           | _URI or URI pattern_, and _Action_          |
+   +-------------------+---------------------------------------------+
+   | _Discretionary    | An _Access Control_ policy controlled by    |
+   | Access Control_   | _Users_ and enforced by _Routers_           |
+   +-------------------+---------------------------------------------+
+   | _Mandatory Access | An _Access Control_ policy controlled by    |
+   | Control_          | _Router Administrators_ or _Realm Owners_,  |
+   |                   | and enforced by _Routers_                   |
+   +-------------------+---------------------------------------------+
+   | _Capability-based | An _Access Control_ policy where *Caller*s, |
+   | Access Control_   | *Callee*s, *Publisher*s, *Subscriber*s      |
+   |                   | directly share capabilities with each other |
+   +-------------------+---------------------------------------------+
+   | _Subject_         | The originating _Session_ of an _Action_ in |
+   |                   | the context of _Authorization_              |
+   +-------------------+---------------------------------------------+
+   | _Object_          | A (fully qualified) _URI or URI pattern_    |
+   |                   | representing the target of an _Action_ in   |
+   |                   | the context of _Authorization_              |
+   +-------------------+---------------------------------------------+
+   | _Action_          | One of the four core WAMP operations:       |
+   |                   | *register*, *call*, *subscribe*, and        |
+
+
+
+Oberstein               Expires 27 September 2024              [Page 59]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
+
+   |                   | *publish*                                   |
+   +-------------------+---------------------------------------------+
+
+                                 Table 4
+
+8.1.3.  Remote Procedure Calls
+
+   +================+============================================+
+   | Term           | Definition                                 |
+   +================+============================================+
+   | _Caller_       | A _Caller_ is a _Session_ that *calls*,    |
+   |                | with application payloads, a (fully        |
+   |                | qualified) _Procedure_ for call routing    |
+   +----------------+--------------------------------------------+
+   | _Callee_       | A _Callee_ is a _Session_ that responds to |
+   |                | _Procedure_ call invocations by *yielding* |
+   |                | back application result payloads           |
+   +----------------+--------------------------------------------+
+   | _Procedure_    | A _Procedure_ is an URI or URI pattern     |
+   |                | that can be registered for call routing by |
+   |                | *Callee*s                                  |
+   +----------------+--------------------------------------------+
+   | _Registration_ | A _Router_ record resulting from a         |
+   |                | _Callee_ successfully *registering* a      |
+   |                | _Procedure_ for call routing               |
+   +----------------+--------------------------------------------+
+   | _Call_         | A transient _Router_ record resulting from |
+   |                | a _Caller_ successfully *calling* a        |
+   |                | _Procedure_ for call routing               |
+   +----------------+--------------------------------------------+
+   | _Invocation_   | A call request and payload that are routed |
+   |                | to a _Callee_ having a matching            |
+   |                | _Registration_ for the called _Procedure_  |
+   +----------------+--------------------------------------------+
+
+                               Table 5
+
+8.1.4.  Publish and Subscribe
+
+   +================+=============================================+
+   | Term           | Definition                                  |
+   +================+=============================================+
+   | _Publisher_    | A _Publisher_ is a _Session_ that           |
+   |                | *publishes* application payloads to a       |
+   |                | (fully qualified) _Topic_ for event routing |
+   +----------------+---------------------------------------------+
+   | _Subscriber_   | A _Subscriber_ is a _Session_ that          |
+   |                | *subscribes* to a _Topic_ to receive        |
+
+
+
+Oberstein               Expires 27 September 2024              [Page 60]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
+
+   |                | application payloads on matching events     |
+   +----------------+---------------------------------------------+
+   | _Topic_        | A _Topic_ is an URI or URI pattern that can |
+   |                | be subscribed to for event routing by       |
+   |                | *Subscriber*s                               |
+   +----------------+---------------------------------------------+
+   | _Subscription_ | A _Router_ record resulting from a          |
+   |                | _Subscriber_ successfully *subscribing* to  |
+   |                | a _Topic_ for event routing                 |
+   +----------------+---------------------------------------------+
+   | _Publication_  | A transient _Router_ record resulting from  |
+   |                | a _Publisher_ successfully *publishing* to  |
+   |                | a _Topic_ for event routing                 |
+   +----------------+---------------------------------------------+
+   | _Event_        | A publication that is routed to             |
+   |                | _Subscribers_ having matching               |
+   |                | _Subscriptions_ to the published _Topic_.   |
+   +----------------+---------------------------------------------+
+
+                               Table 6
+
 9.  IANA Considerations
 
    WAMP uses the Subprotocol Identifier wamp registered with the
@@ -3184,16 +3396,6 @@ Internet-Draft                   WAMP-BP                      March 2024
    normative, as are all sections explicitly marked non-normative.
    Everything else in this specification is normative.
 
-
-
-
-
-
-Oberstein               Expires 26 September 2024              [Page 57]
-
-Internet-Draft                   WAMP-BP                      March 2024
-
-
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in RFC 2119 [RFC2119].
@@ -3206,6 +3408,15 @@ Internet-Draft                   WAMP-BP                      March 2024
    Conformance requirements phrased as algorithms or specific steps MAY
    be implemented in any manner, so long as the end result is
    equivalent.
+
+
+
+
+
+Oberstein               Expires 27 September 2024              [Page 61]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
 
 10.1.  Terminology and Other Conventions
 
@@ -3243,13 +3454,6 @@ Internet-Draft                   WAMP-BP                      March 2024
               10646", STD 63, RFC 3629, DOI 10.17487/RFC3629, November
               2003, <https://www.rfc-editor.org/info/rfc3629>.
 
-
-
-Oberstein               Expires 26 September 2024              [Page 58]
-
-Internet-Draft                   WAMP-BP                      March 2024
-
-
    [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
               Resource Identifier (URI): Generic Syntax", STD 66,
               RFC 3986, DOI 10.17487/RFC3986, January 2005,
@@ -3262,6 +3466,13 @@ Internet-Draft                   WAMP-BP                      March 2024
    [RFC7159]  Bray, T., Ed., "The JavaScript Object Notation (JSON) Data
               Interchange Format", RFC 7159, DOI 10.17487/RFC7159, March
               2014, <https://www.rfc-editor.org/info/rfc7159>.
+
+
+
+Oberstein               Expires 27 September 2024              [Page 62]
+
+Internet-Draft                   WAMP-BP                      March 2024
+
 
    [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
               Representation (CBOR)", STD 94, RFC 8949,
@@ -3301,4 +3512,17 @@ Author's Address
 
 
 
-Oberstein               Expires 26 September 2024              [Page 59]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Oberstein               Expires 27 September 2024              [Page 63]
