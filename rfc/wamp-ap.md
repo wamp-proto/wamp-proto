@@ -31,7 +31,7 @@ organization = "typedef int GmbH"
 
 {{text/advanced.md}}
 
-{{text/terminology.md}}
+{{text/wamp-terminology.md}}
 
 {{text/backmatter.md}}
 
