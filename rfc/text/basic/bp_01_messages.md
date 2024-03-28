@@ -137,12 +137,12 @@ Event dispatched by Broker to Subscribers for subscriptions the event was matchi
 Call as originally issued by the Caller to the Dealer.
 
 {align="left"}
-      [CALL, Request|id, Options|dict, Procedure|uri]
+        [CALL, Request|id, Options|dict, Procedure|uri]
 
-      [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
+        [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list]
 
-      [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
-          ArgumentsKw|dict]
+        [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
+            ArgumentsKw|dict]
 
 #### RESULT
 
@@ -219,33 +219,33 @@ Reserved codes may be used to identify additional message types in future standa
 "Tx" indicates the message is sent by the respective role, and "Rx" indicates the message is received by the respective role.
 
 {align="left"}
-| Code | Message        |  Publisher |  Broker | Subscriber |  Caller |  Dealer | Callee|
-|------|----------------|------------|---------|------------|---------|---------|-------|
-|  1   | `HELLO`        | Tx         | Rx      | Tx         | Tx      | Rx      | Tx    |
-|  2   | `WELCOME`      | Rx         | Tx      | Rx         | Rx      | Tx      | Rx    |
-|  3   | `ABORT`        | TxRx       | TxRx    | TxRx       | TxRx    | TxRx    | TxRx  |
-|  6   | `GOODBYE`      | TxRx       | TxRx    | TxRx       | TxRx    | TxRx    | TxRx  |
-|      |                |            |         |            |         |         |       |
-|  8   | `ERROR`        | Rx         | Tx      | Rx         | Rx      | TxRx    | TxRx  |
-|      |                |            |         |            |         |         |       |
-| 16   | `PUBLISH`      | Tx         | Rx      |            |         |         |       |
-| 17   | `PUBLISHED`    | Rx         | Tx      |            |         |         |       |
-|      |                |            |         |            |         |         |       |
-| 32   | `SUBSCRIBE`    |            | Rx      | Tx         |         |         |       |
-| 33   | `SUBSCRIBED`   |            | Tx      | Rx         |         |         |       |
-| 34   | `UNSUBSCRIBE`  |            | Rx      | Tx         |         |         |       |
-| 35   | `UNSUBSCRIBED` |            | Tx      | Rx         |         |         |       |
-| 36   | `EVENT`        |            | Tx      | Rx         |         |         |       |
-|      |                |            |         |            |         |         |       |
-| 48   | `CALL`         |            |         |            | Tx      | Rx      |       |
-| 50   | `RESULT`       |            |         |            | Rx      | Tx      |       |
-|      |                |            |         |            |         |         |       |
-| 64   | `REGISTER`     |            |         |            |         | Rx      | Tx    |
-| 65   | `REGISTERED`   |            |         |            |         | Tx      | Rx    |
-| 66   | `UNREGISTER`   |            |         |            |         | Rx      | Tx    |
-| 67   | `UNREGISTERED` |            |         |            |         | Tx      | Rx    |
-| 68   | `INVOCATION`   |            |         |            |         | Tx      | Rx    |
-| 70   | `YIELD`        |            |         |            |         | Rx      | Tx    |
+| Code | Message        | Publisher | Broker | Subscriber | Caller | Dealer | Callee |
+|------|----------------|-----------|--------|------------|--------|--------|--------|
+|  1   | `HELLO`        | Tx        | Rx     | Tx         | Tx     | Rx     | Tx     |
+|  2   | `WELCOME`      | Rx        | Tx     | Rx         | Rx     | Tx     | Rx     |
+|  3   | `ABORT`        | TxRx      | TxRx   | TxRx       | TxRx   | TxRx   | TxRx   |
+|  6   | `GOODBYE`      | TxRx      | TxRx   | TxRx       | TxRx   | TxRx   | TxRx   |
+|      |                |           |        |            |        |        |        |
+|  8   | `ERROR`        | Rx        | Tx     | Rx         | Rx     | TxRx   | TxRx   |
+|      |                |           |        |            |        |        |        |
+| 16   | `PUBLISH`      | Tx        | Rx     |            |        |        |        |
+| 17   | `PUBLISHED`    | Rx        | Tx     |            |        |        |        |
+|      |                |           |        |            |        |        |        |
+| 32   | `SUBSCRIBE`    |           | Rx     | Tx         |        |        |        |
+| 33   | `SUBSCRIBED`   |           | Tx     | Rx         |        |        |        |
+| 34   | `UNSUBSCRIBE`  |           | Rx     | Tx         |        |        |        |
+| 35   | `UNSUBSCRIBED` |           | Tx     | Rx         |        |        |        |
+| 36   | `EVENT`        |           | Tx     | Rx         |        |        |        |
+|      |                |           |        |            |        |        |        |
+| 48   | `CALL`         |           |        |            | Tx     | Rx     |        |
+| 50   | `RESULT`       |           |        |            | Rx     | Tx     |        |
+|      |                |           |        |            |        |        |        |
+| 64   | `REGISTER`     |           |        |            |        | Rx     | Tx     |
+| 65   | `REGISTERED`   |           |        |            |        | Tx     | Rx     |
+| 66   | `UNREGISTER`   |           |        |            |        | Rx     | Tx     |
+| 67   | `UNREGISTERED` |           |        |            |        | Tx     | Rx     |
+| 68   | `INVOCATION`   |           |        |            |        | Tx     | Rx     |
+| 70   | `YIELD`        |           |        |            |        | Rx     | Tx     |
 
 
 ## Extension Messages
