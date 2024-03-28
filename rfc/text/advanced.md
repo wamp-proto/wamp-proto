@@ -4,13 +4,45 @@
 
 {{advanced/ap_03_messages.md}}
 
-{{advanced/ap_04_meta_api.md}}
+{{advanced/ap_53_sessions.md}}
 
-{{advanced/ap_05_meta_api_sessions.md}}
+{{advanced/ap_52_authorization.md}}
 
-{{advanced/ap_06_meta_api_registrations.md}}
+{{advanced/ap_31_authentication.md}}
 
-{{advanced/ap_07_meta_api_subscriptions.md}}
+{{advanced/ap_54_authentication_methods.md}}
+
+{{advanced/ap_32_authentication_ticket.md}}
+
+{{advanced/ap_33_authentication_cra.md}}
+
+{{advanced/ap_34_authentication_scram.md}}
+
+{{advanced/ap_35_authentication_cryptosign.md}}
+
+{{advanced/ap_36_authentication_dynamic.md}}
+
+{{advanced/ap_20_pubsub.md}}
+
+{{advanced/ap_21_pubsub_subscriber_blackwhite_listing.md}}
+
+{{advanced/ap_22_pubsub_publisher_exclusion.md}}
+
+{{advanced/ap_23_pubsub_publisher_identification.md}}
+
+{{advanced/ap_24_pubsub_publication_trustlevels.md}}
+
+{{advanced/ap_25_pubsub_pattern_based_subscription.md}}
+
+{{advanced/ap_26_pubsub_sharded_subscription.md}}
+
+{{advanced/ap_27_pubsub_event_history.md}}
+
+{{advanced/ap_28_pubsub_event_retention.md}}
+
+{{advanced/ap_29_pubsub_subscription_revocation.md}}
+
+{{advanced/ap_30_pubsub_testament.md}}
 
 {{advanced/ap_08_rpc.md}}
 
@@ -36,41 +68,13 @@
 
 {{advanced/ap_19_rpc_registration_revocation.md}}
 
-{{advanced/ap_20_pubsub.md}}
+{{advanced/ap_04_meta_api.md}}
 
-{{advanced/ap_21_pubsub_subscriber_blackwhite_listing.md}}
+{{advanced/ap_05_meta_api_sessions.md}}
 
-{{advanced/ap_22_pubsub_publisher_exclusion.md}}
+{{advanced/ap_06_meta_api_registrations.md}}
 
-{{advanced/ap_23_pubsub_publisher_identification.md}}
-
-{{advanced/ap_24_pubsub_publication_trustlevels.md}}
-
-{{advanced/ap_25_pubsub_pattern_based_subscription.md}}
-
-{{advanced/ap_26_pubsub_sharded_subscription.md}}
-
-{{advanced/ap_27_pubsub_event_history.md}}
-
-{{advanced/ap_28_pubsub_event_retention.md}}
-
-{{advanced/ap_29_pubsub_subscription_revocation.md}}
-
-{{advanced/ap_30_pubsub_testament.md}}
-
-{{advanced/ap_31_authentication.md}}
-
-{{advanced/ap_32_authentication_ticket.md}}
-
-{{advanced/ap_33_authentication_cra.md}}
-
-{{advanced/ap_34_authentication_scram.md}}
-
-{{advanced/ap_35_authentication_cryptosign.md}}
-
-{{advanced/ap_36_authentication_dynamic.md}}
-
-{{advanced/ap_52_authorization.md}}
+{{advanced/ap_07_meta_api_subscriptions.md}}
 
 {{advanced/ap_49_security_features.md}}
 

@@ -1,4 +1,4 @@
-## Cryptosign-based Authentication {#cryptosignauth}
+### Cryptosign-based Authentication {#cryptosignauth}
 
 *WAMP-Cryptosign* is a WAMP authentication method based on
 *public-private key cryptography*. Specifically, it is based on [Ed25519](https://ed25519.cr.yp.to/) digital signatures as described in [@!RFC8032].
@@ -53,7 +53,7 @@ Note that `sha256` refers to the SHA-2 algorithm, while `sha3-256` is a differen
 |  ecdsa       |  Data Signatures (Ethereum, WAMP-Cryptosign Certificates, WAMP-E2E)      |
 
 
-### Client Authentication {#clientauth}
+#### Client Authentication {#clientauth}
 
 A *Client* is authenticated to a *Router* by:
 
@@ -74,7 +74,7 @@ A *Router* is optionally (see [Router Authentication](#name-router-authenticatio
 Again, in this case, the *Router* includes a trustroot and certificate for the client to verify.
 
 
-#### Computing the Signature
+##### Computing the Signature
 
 The challenge sent by the router is a 32 bytes random value, encoded as a Hex string in `CHALLENGE.extra.challenge|string`.
 
@@ -85,7 +85,7 @@ When channel binding is active, the challenge MUST first be XOR'ed bytewise with
 The client MUST return the concatenation of the signature and the message signed (96 bytes) in the `AUTHENTICATE` message.
 
 
-#### Example Message Flow
+##### Example Message Flow
 
 A typical authentication begins with the client sending a `HELLO` message specifying the `cryptosign` method as (one of) the authentication methods:
 
@@ -207,7 +207,7 @@ When the authentication is successful, `WELCOME.Details.roles|dict` will announc
     }
 ```
 
-#### Test Vectors
+##### Test Vectors
 
 The following test vectors allow to verify an implementation of WAMP-Cryptosign signatures. You can use `channel_id`, `private_key` and `challenge` as input, and check the computed signature matches `signature`.
 
@@ -255,7 +255,7 @@ test_vectors_1 = [
 ]
 ```
 
-### TLS Channel Binding {#channelbinding}
+#### TLS Channel Binding {#channelbinding}
 
 *TLS Channel Binding* is an optional feature for WAMP-Cryptosign when running on top of TLS for link encryption.
 The use of "channel binding" to bind authentication at application layers to secure sessions at lower layers in the network stack protects against certain attack scenarios. For more background information, please see
@@ -302,7 +302,7 @@ The client MUST then locally fetch the `channel_id` from the underlying TLS conn
 sign `CHALLENGE.Extra.challenge XOR channel_id` using its private key.
 
 
-### Router Authentication {#routerauth}
+#### Router Authentication {#routerauth}
 
 With the basic *Client Authentication* mechanism in WAMP-Cryptosign, the router is able to authenticate
 the client, since to successfully sign `CHALLENGE.Extra.challenge` the client will need the
@@ -338,10 +338,10 @@ Further, *Router Authentication* can be combined with *TLS Channel Binding*, in 
 signed by the router will be `HELLO.Details.challenge XOR channel_id`.
 
 
-### Trustroots and Certificates {#trustrootcerts}
+#### Trustroots and Certificates {#trustrootcerts}
 
 
-#### Certificate Chains
+##### Certificate Chains
 
 A public-key certificate is a signed statement that is used to establish an association between an identity and a public key. This is called a machine identity. The entity that vouches for this association and signs the certificate is the issuer of the certificate and the identity whose public key is being vouched for is the subject of the certificate. In order to associate the identity and the public key, a chain of certificates is used. The certificate chain is also called the certification path or chain of trust.
 
@@ -448,7 +448,7 @@ optional hierarchical chain of intermediate certificates
 ```
 
 
-#### Certificate Types
+##### Certificate Types
 
 The certificate types `EIP712AuthorityCertificate` and `EIP712DelegateCertificate` follow [EIP712](https://eips.ethereum.org/EIPS/eip-712) and use Ethereum signatures.
 
@@ -543,7 +543,7 @@ Besides EIP712, other comparable approaches to specify cryptographically hashabl
 * [objecthash](https://github.com/benlaurie/objecthash): A way to cryptographically hash objects (in the JSON-ish sense) that works cross-language. And, therefore, cross-encoding.
 
 
-#### Capabilities
+##### Capabilities
 
 * **Bit 0**: `CAPABILITY_ROOT_CA`
 * **Bit 1**: `CAPABILITY_INTERMEDIATE_CA`
@@ -564,7 +564,7 @@ configured by the realm owner for:
 
 Permission for `CAPABILITY_ROOT_CA` is always `PRIVATE`.
 
-#### Certificate Chain Verification
+##### Certificate Chain Verification
 
 use of a specific method/mechanism, when it comes to establishing trust (i.e. certifying public keys).
 
@@ -596,7 +596,7 @@ the following Certificate Chain Rules (CCR) must be checked:
 12. **CCR-12**: The delegate certificate's signature must be valid and signed by the `delegate`.
 
 
-#### Trustroots {#trustroots}
+##### Trustroots {#trustroots}
 
 Certificate chains allow to verify a delegate certificate following the Issuers-Subjects up to a *Root CA*, which is a self-signed certificate (issuer and subject are identical). The *Root CA* represents the *Trustroot* of all involved delegates.
 
@@ -632,7 +632,7 @@ and fixed when the trustroot is created:
 With an *Open On-chain Trustroot*, new certificates can be added to a certificate chain freely
 and only requires a signature by the respective intermediate CA issuer.
 
-##### Standalone Trustroots
+###### Standalone Trustroots
 
 For a *Standalone Trustroot* the `trustroot` MUST be specified in `HELLO.Details.authextra.trustroot|string`
 
@@ -657,7 +657,7 @@ trustroot == 0xf766Dc789CF04CD18aE75af2c5fAf2DA6650Ff57
           == certificates[-1].subject
 ```
 
-##### On-chain Trustroots
+###### On-chain Trustroots
 
 For an *On-chain Trustroot* the `trustroot` MUST be specified in `HELLO.Details.authextra.trustroot|string`
 
@@ -677,7 +677,7 @@ When the `trustroot` is associated with an on-chain *Realm* that has `trustroot`
 *Realm CA*, this is called *On-chain CA with CA associated with On-chain Realm*.
 
 
-### Remote Attestation {#remoteattestation}
+#### Remote Attestation {#remoteattestation}
 
 Remote attestation is a method by which a host (WAMP client) authenticates its hardware and software configuration to a remote host (WAMP router). The goal of remote attestation is to enable a remote system (challenger) to determine the level of trust in the integrity of the platform of another system (attestator).
 
@@ -747,13 +747,13 @@ The following diagram illustrates *Remote Attestation* with WAMP-Cryptosign:
                             AUTHENTICATE.Extra.measurement
 ```
 
-### Example Message Exchanges {#examplemessageexchanges}
+#### Example Message Exchanges {#examplemessageexchanges}
 
 * [Example 1](#message-exchange-example1)
 * [Example 2](#message-exchange-example2)
 * [Example 3](#message-exchange-example3)
 
-#### Example 1 {#message-exchange-example1}
+##### Example 1 {#message-exchange-example1}
 
 * *with* router challenge
 * *without* TLS channel binding
@@ -848,7 +848,7 @@ WAMP-Receive(3735119691078036, client01@example.com) <<
 <<
 ```
 
-#### Example 2 {#message-exchange-example2}
+##### Example 2 {#message-exchange-example2}
 
 * *with* router challenge
 * *with* TLS channel binding
@@ -977,7 +977,7 @@ WAMP-Receive(7325966140445461, client01@example.com) <<
 <<
 ```
 
-#### Example 3 {#message-exchange-example3}
+##### Example 3 {#message-exchange-example3}
 
 * *with* router challenge
 * *with* TLS channel binding

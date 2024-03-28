@@ -1,1 +1,1 @@
-# Advanced PubSub {#adv-pubsub}
+# Advanced Publish and Subscribe {#adv-pubsub}
