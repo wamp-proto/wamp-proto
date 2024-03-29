@@ -72,19 +72,6 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Action*                           | One of the four core WAMP operations: **register**, **call**, **subscribe**, and **publish**              |
 
 
-### Remote Procedure Calls
-
-{align="left"}
-| Term             | Definition                                                                                                                    |
-|------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| *Caller*         | A *Caller* is a *Session* that **calls**, with application payloads, a (fully qualified) *Procedure* for call routing         |
-| *Callee*         | A *Callee* is a *Session* that responds to *Procedure* call invocations by **yielding** back application result payloads      |
-| *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callees*                                   |
-| *Registration*   | A *Router* record resulting from a *Callee* successfully **registering** a *Procedure* for call routing                       |
-| *Call*           | A transient *Router* record resulting from a *Caller* successfully **calling** a *Procedure* for call routing                 |
-| *Invocation*     | A call request and payload that are routed to a *Callee* having a matching *Registration* for the called *Procedure*          |
-
-
 ### Publish and Subscribe
 
 {align="left"}
@@ -96,6 +83,19 @@ both formally (open protocol and open source) as well as practically (switching 
 | *Subscription*   | A *Router* record resulting from a *Subscriber* successfully **subscribing** to a *Topic* for event routing                   |
 | *Publication*    | A transient *Router* record resulting from a *Publisher* successfully **publishing** to a *Topic* for event routing           |
 | *Event*          | A publication that is routed to *Subscribers* having matching *Subscriptions* to the published *Topic*.                       |
+
+
+### Remote Procedure Calls
+
+{align="left"}
+| Term             | Definition                                                                                                                    |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| *Caller*         | A *Caller* is a *Session* that **calls**, with application payloads, a (fully qualified) *Procedure* for call routing         |
+| *Callee*         | A *Callee* is a *Session* that responds to *Procedure* call invocations by **yielding** back application result payloads      |
+| *Procedure*      | A *Procedure* is an URI or URI pattern that can be registered for call routing by *Callees*                                   |
+| *Registration*   | A *Router* record resulting from a *Callee* successfully **registering** a *Procedure* for call routing                       |
+| *Call*           | A transient *Router* record resulting from a *Caller* successfully **calling** a *Procedure* for call routing                 |
+| *Invocation*     | A call request and payload that are routed to a *Callee* having a matching *Registration* for the called *Procedure*          |
 
 
 ## Protocol Overview
