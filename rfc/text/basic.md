@@ -1,19 +1,19 @@
-{{base/base_01_abstract.md}}
+{{base/base_01_bp_vs_ap.md}}
 
-{{base/base_02_introduction.md}}
+{{basic/bp_00_title.md}}
 
-{{base/base_03_building_blocks.md}}
+{{basic/bp_01_introduction.md}}
 
-{{base/base_04_messages.md}}
+{{basic/bp_02_building_blocks.md}}
 
-{{basic/bp_01_messages.md}}
+{{basic/bp_03_messages.md}}
 
-{{basic/bp_02_sessions.md}}
+{{basic/bp_04_sessions.md}}
 
-{{basic/bp_03_publish_subscribe.md}}
+{{basic/bp_05_publish_subscribe.md}}
 
-{{basic/bp_04_remote_procedure_call.md}}
+{{basic/bp_06_remote_procedure_call.md}}
 
-{{basic/bp_05_security_model.md}}
+{{basic/bp_07_security_model.md}}
 
-{{basic/bp_06_uri_reference.md}}
+{{basic/bp_08_uri_reference.md}}

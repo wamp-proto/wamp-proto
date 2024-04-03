@@ -1,8 +1,21 @@
-## Feature Announcement
+# Feature Announcement
 
 Support for advanced features must be announced by the peers which implement them. The following is a complete list of advanced features currently defined or proposed.
 
-**Advanced Session Features**
+
+The status of the respective AP feature is marked as follows:
+
+| Status | Description                                                                                                                                                                                              |
+|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| sketch | There is a rough description of an itch to scratch, but the feature use case isn't clear, and there is no protocol proposal at all.                                                                      |
+| alpha  | The feature use case is still fuzzy and/or the feature definition is unclear, but there is at least a protocol level proposal.                                                                           |
+| beta   | The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete and change. |
+| stable | The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperable implementations.                              |
+
+
+## Advanced Session Lifecycle
+
+{align="left"}
 | Feature                                       | Status |
 |-----------------------------------------------|--------|
 | [Challenge-response Authentication](#wampcra) | stable |
@@ -10,7 +23,7 @@ Support for advanced features must be announced by the peers which implement the
 | [Cryptosign authentication](#cryptosignauth)  | beta   |
 
 
-**Advanced PubSub Features**
+## Advanced PubSub Features
 
 {align="left"}
 | Feature                                                   | Status | Publisher | Broker | Subscriber |
@@ -26,7 +39,7 @@ Support for advanced features must be announced by the peers which implement the
 | [(Interface) Topic Reflection](#interface-reflection)     | sketch |           | X      |            |
 
 
-**Advanced RPC Features**
+## Advanced RPC Features
 
 {align="left"}
 | Feature                                                           | Status | Caller | Dealer | Callee |
@@ -45,7 +58,7 @@ Support for advanced features must be announced by the peers which implement the
 | [(Interface) Procedure Reflection](#interface-reflection)         | sketch |        | X      |        |
 
 
-**Other Advanced Features**
+## Other Advanced Features
 
 {align="left"}
 | Feature                                          | Status |
@@ -56,13 +69,3 @@ Support for advanced features must be announced by the peers which implement the
 | [Session Meta API](#session-metapi)              | beta   |
 | [Call Rerouting](#rpc-call-rerouting)            | sketch |
 | [Payload Passthru Mode](#payload-passthru-mode)  | sketch |
-
-
-The status of the respective AP feature is marked as follows:
-
-| Status | Description                                                                                                                                                                                              |
-|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| sketch | There is a rough description of an itch to scratch, but the feature use case isn't clear, and there is no protocol proposal at all.                                                                      |
-| alpha  | The feature use case is still fuzzy and/or the feature definition is unclear, but there is at least a protocol level proposal.                                                                           |
-| beta   | The feature use case is clearly defined and the feature definition in the spec is sufficient to write a prototype implementation. The feature definition and details may still be incomplete and change. |
-| stable | The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperable implementations.                              |

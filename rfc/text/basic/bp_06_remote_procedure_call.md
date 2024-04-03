@@ -1,6 +1,6 @@
 # Remote Procedure Calls
 
-All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles.
+All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Caller*, *Callee* and *Dealer*.
 
 ## Registering and Unregistering
 

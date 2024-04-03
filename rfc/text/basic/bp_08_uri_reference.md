@@ -3,7 +3,7 @@
 WAMP pre-defines the following error URIs for the **Basic Profile**. WAMP peers SHOULD only use the defined error messages.
 
 
-**Incorrect URIs**
+## Incorrect URIs
 
 When a Peer provides an incorrect URI for any URI-based attribute of a WAMP message (e.g. realm, topic), then the other Peer MUST respond with an `ERROR` message and give the following *Error URI*:
 
@@ -11,7 +11,7 @@ When a Peer provides an incorrect URI for any URI-based attribute of a WAMP mess
         wamp.error.invalid_uri
 
 
-**Interaction**
+## Interaction
 
 Peer provided an incorrect URI for any URI-based attribute of WAMP message, such as realm, topic or procedure
 
@@ -53,7 +53,7 @@ A message could not be delivered due to transport payload size limits.
 {align="left"}
         wamp.error.payload_size_exceeded
 
-**Session Close**
+## Session Close
 
 The Peer is shutting down completely - used as a `GOODBYE` (or `ABORT`) reason.
 
@@ -75,7 +75,7 @@ A Peer received invalid WAMP protocol message (e.g. `HELLO` message after sessio
 {align="left"}
         wamp.error.protocol_violation
 
-**Authorization**
+## Authorization
 
 A join, call, register, publish or subscribe failed, since the Peer is not authorized to perform the operation.
 
