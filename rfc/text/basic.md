@@ -1,7 +1,3 @@
-{{base/bp_vs_ap.md}}
-
-{{basic/title.md}}
-
 {{basic/introduction.md}}
 
 {{basic/building_blocks.md}}

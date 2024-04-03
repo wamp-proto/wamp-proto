@@ -1,4 +1,4 @@
-# Feature Announcement
+## Feature Announcement
 
 Support for advanced features must be announced by the peers which implement them. The following is a complete list of advanced features currently defined or proposed.
 
@@ -13,7 +13,7 @@ The status of the respective AP feature is marked as follows:
 | stable | The feature definition in the spec is complete and stable and the feature use case is field proven in real applications. There are multiple, interoperable implementations.                              |
 
 
-## Advanced Session Lifecycle
+### Advanced Session Lifecycle
 
 {align="left"}
 | Feature                                       | Status |
@@ -23,7 +23,7 @@ The status of the respective AP feature is marked as follows:
 | [Cryptosign authentication](#cryptosignauth)  | beta   |
 
 
-## Advanced PubSub Features
+### Advanced PubSub Features
 
 {align="left"}
 | Feature                                                   | Status | Publisher | Broker | Subscriber |
@@ -39,7 +39,7 @@ The status of the respective AP feature is marked as follows:
 | [(Interface) Topic Reflection](#interface-reflection)     | sketch |           | X      |            |
 
 
-## Advanced RPC Features
+### Advanced RPC Features
 
 {align="left"}
 | Feature                                                           | Status | Caller | Dealer | Callee |
@@ -58,7 +58,7 @@ The status of the respective AP feature is marked as follows:
 | [(Interface) Procedure Reflection](#interface-reflection)         | sketch |        | X      |        |
 
 
-## Other Advanced Features
+### Other Advanced Features
 
 {align="left"}
 | Feature                                          | Status |

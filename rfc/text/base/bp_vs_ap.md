@@ -1,4 +1,4 @@
-# Basic vs Advanced Profile
+## Basic vs Advanced Profile
 
 This document first describes a Basic Profile for WAMP in its entirety, before describing an Advanced Profile which extends the basic functionality of WAMP.
 
