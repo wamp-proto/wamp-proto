@@ -1,5 +1,7 @@
 # Introduction
 
+## WAMP In a Nutshell
+
 _This section is non-normative._
 
 The WebSocket protocol brings bi-directional real-time connections to the browser. It defines an API at the message level, requiring users who want to use WebSocket connections in their applications to define their own semantics on top of it.

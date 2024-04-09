@@ -1,4 +1,4 @@
-## Subscriptions Meta API {#pubsub-sub-metapi}
+### Subscriptions Meta API {#pubsub-sub-metapi}
 
 Within an application, it may be desirable for a publisher to know whether a publication to a specific topic currently makes sense, i.e. whether there are any subscribers who would receive an event based on the publication. It may also be desirable to keep a current count of subscribers to a topic to then be able to filter out any subscribers who are not supposed to receive an event.
 
@@ -58,7 +58,7 @@ Here is a `WELCOME` message from a *Router* with support for both the *Broker* a
 ```
 
 
-### Events
+#### Events
 
 A client can subscribe to the following session meta-events, which cover the lifecycle of a subscription:
 
@@ -72,7 +72,7 @@ A `wamp.subscription.on_subscribe` event MUST always be fired subsequent to a `w
 The WAMP subscription meta events shall be dispatched by the router to the same realm as the WAMP session which triggered the event.
 
 
-#### wamp.subscription.on_create
+##### wamp.subscription.on_create
 
 Fired when a subscription is created through a subscription request for a topic which was previously without subscribers. The event payload consists of positional arguments:
 
@@ -95,7 +95,7 @@ Fired when a subscription is created through a subscription request for a topic 
 See [Pattern-based Subscriptions](#pattern-based-subscriptions) for a description of `match_policy`.
 
 
-#### wamp.subscription.on_subscribe
+##### wamp.subscription.on_subscribe
 
 Fired when a session is added to a subscription.  The event payload consists of positional arguments:
 
@@ -103,7 +103,7 @@ Fired when a session is added to a subscription.  The event payload consists of 
 * `subscription|id`: ID of the subscription to which the session is being added.
 
 
-#### wamp.subscription.on_unsubscribe
+##### wamp.subscription.on_unsubscribe
 
 Fired when a session is removed from a subscription. The event payload consists of positional arguments:
 
@@ -111,7 +111,7 @@ Fired when a session is removed from a subscription. The event payload consists 
 * `subscription|id`: ID of the subscription from which the session is being removed.
 
 
-#### wamp.subscription.on_delete
+##### wamp.subscription.on_delete
 
 Fired when a subscription is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
 
@@ -120,7 +120,7 @@ Fired when a subscription is deleted after the last session attached to it has b
 
 
 
-### Procedures
+#### Procedures
 
 
 A client can actively retrieve information about subscriptions via the following meta-procedures:
@@ -133,7 +133,7 @@ A client can actively retrieve information about subscriptions via the following
 - `wamp.subscription.count_subscribers`: Obtains the number of sessions currently attached to the subscription.
 
 
-#### wamp.subscription.list
+##### wamp.subscription.list
 
 Retrieves subscription IDs listed according to match policies.
 
@@ -162,7 +162,7 @@ The result consists of one positional argument:
 See [Pattern-based Subscriptions](#pattern-based-subscriptions) for information on match policies.
 
 
-#### wamp.subscription.lookup
+##### wamp.subscription.lookup
 
 Obtains the subscription (if any) managing a topic, according to some match policy.
 
@@ -178,7 +178,7 @@ The result consists of one positional argument:
 - (Nullable) `subscription|id`: The ID of the subscription managing the topic, if found, or null.
 
 
-#### wamp.subscription.match
+##### wamp.subscription.match
 
 Retrieves a list of IDs of subscriptions matching a topic URI, irrespective of match policy.
 
@@ -193,7 +193,7 @@ The result consists of positional arguments:
 - (Nullable) `subscription_ids|list`: A list of all matching subscription IDs, or null.
 
 
-#### wamp.subscription.get
+##### wamp.subscription.get
 
 Retrieves information on a particular subscription.
 
@@ -227,7 +227,7 @@ The result consists of one positional argument:
 See [Pattern-based Subscriptions](#pattern-based-subscriptions) for information on match policies.
 
 
-#### wamp.subscription.list_subscribers
+##### wamp.subscription.list_subscribers
 
 Retrieves a list of session IDs for sessions currently attached to the subscription.
 
@@ -245,7 +245,7 @@ The result consists of positional arguments:
 - `wamp.error.no_such_subscription`: No subscription with the given ID exists on the router.
 
 
-#### wamp.subscription.count_subscribers
+##### wamp.subscription.count_subscribers
 
 Obtains the number of sessions currently attached to a subscription.
 

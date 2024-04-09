@@ -1,4 +1,4 @@
-## Call Canceling {#rpc-call-canceling}
+### Call Canceling {#rpc-call-canceling}
 
 A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
 

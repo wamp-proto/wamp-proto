@@ -1,4 +1,4 @@
-## Interface Catalogs {#interface-catalogs}
+### Interface Catalogs {#interface-catalogs}
 
 Collections of types defined in FlatBuffers IDL are bundled in *Interface Catalogs* which are just ZIP files with
 
@@ -10,7 +10,7 @@ and optionally
 * schema source files
 * image and documentation files
 
-### Catalog Archive File
+#### Catalog Archive File
 
 The contents of an `example.zip` interface catalog:
 
@@ -56,7 +56,7 @@ rpc_service IExample1 (
 }
 ```
 
-### Catalog Metadata
+#### Catalog Metadata
 
 The `catalog.yaml` file contains catalog metadata in [YAML Format](https://yaml.org/):
 
@@ -114,7 +114,7 @@ theme:
   logo: img/logo.png
 ```
 
-### Catalog Sharing and Publication
+#### Catalog Sharing and Publication
 
 **Archive File Preparation**
 

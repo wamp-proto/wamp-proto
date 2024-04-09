@@ -1,4 +1,4 @@
-## Shared Registration {#rpc-shared-registration}
+### Shared Registration {#rpc-shared-registration}
 
 Feature status: **alpha**
 
@@ -35,7 +35,7 @@ Support for this feature MUST be announced by *Callees* (`role := "callee"`) and
         HELLO.Details.roles.<role>.features.
             shared_registration|bool := true
 
-### Load Balancing
+#### Load Balancing
 
 For sets of registrations registered using either 'roundrobin' or 'random', load balancing is performed across calls to the URI.
 
@@ -43,6 +43,6 @@ For 'roundrobin', callees are picked subsequently from the list of registrations
 
 For 'random' a callee is picked randomly from the list of registrations for each call.
 
-### Hot Stand-By
+#### Hot Stand-By
 
 For sets of registrations registered using either 'first' or 'last', the first respectively last callee on the current list of registrations (ordered by the order of registration) is called.

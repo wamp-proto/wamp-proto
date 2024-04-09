@@ -1,4 +1,4 @@
-## Publisher Identification {#pubsub-pub-identification}
+### Publisher Identification {#pubsub-pub-identification}
 
 A *Publisher* may request the disclosure of its identity (its WAMP session ID) to receivers of a published event by setting
 

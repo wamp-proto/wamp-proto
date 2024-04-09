@@ -1,8 +1,8 @@
-# Remote Procedure Calls
+## Remote Procedure Calls
 
 All of the following features for Remote Procedure Calls are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Caller*, *Callee* and *Dealer*.
 
-## Registering and Unregistering
+### Registering and Unregistering
 
 The message flow between Callees and a Dealer for registering and unregistering endpoints to be called over RPC involves the following messages:
 
@@ -38,7 +38,7 @@ The message flow between Callees and a Dealer for registering and unregistering 
         `------'          `------'               `------'
 
 
-### REGISTER
+#### REGISTER
 
 A Callee announces the availability of an endpoint implementing a procedure with a Dealer by sending a `REGISTER` message:
 
@@ -56,7 +56,7 @@ where
 {align="left"}
         [64, 25349185, {}, "com.myapp.myprocedure1"]
 
-### REGISTERED
+#### REGISTERED
 
 If the Dealer is able to fulfill and allowing the registration, it answers by sending a `REGISTERED` message to the `Callee`:
 
@@ -73,7 +73,7 @@ where
 {align="left"}
         [65, 25349185, 2103333224]
 
-### Register ERROR
+#### Register ERROR
 
 When the request for registration cannot be fulfilled by the Dealer, the Dealer sends back an `ERROR` message to the Callee:
 
@@ -90,7 +90,7 @@ where
 {align="left"}
         [8, 64, 25349185, {}, "wamp.error.procedure_already_exists"]
 
-### UNREGISTER
+#### UNREGISTER
 
 When a Callee is no longer willing to provide an implementation of the registered procedure, it sends an `UNREGISTER` message to the Dealer:
 
@@ -107,7 +107,7 @@ where
 {align="left"}
         [66, 788923562, 2103333224]
 
-### UNREGISTERED
+#### UNREGISTERED
 
 Upon successful unregistration, the Dealer sends an `UNREGISTERED` message to the Callee:
 
@@ -123,7 +123,7 @@ where
 {align="left"}
         [67, 788923562]
 
-### Unregister ERROR
+#### Unregister ERROR
 
 When the unregistration request fails, the Dealer sends an `ERROR` message:
 
@@ -140,7 +140,7 @@ where
 {align="left"}
         [8, 66, 788923562, {}, "wamp.error.no_such_registration"]
 
-## Calling and Invocations
+### Calling and Invocations
 
 The message flow between Callers, a Dealer and Callees for calling procedures and invoking endpoints involves the following messages:
 
@@ -172,7 +172,7 @@ The message flow between Callers, a Dealer and Callees for calling procedures an
 
 The execution of remote procedure calls is asynchronous, and there may be more than one call outstanding. A call is called outstanding (from the point of view of the Caller), when a (final) result or error has not yet been received by the Caller.
 
-### CALL
+#### CALL
 
 When a Caller wishes to call a remote procedure, it sends a `CALL` message to a Dealer:
 
@@ -220,7 +220,7 @@ where
             {"firstname": "John", "surname": "Doe"}]
 
 
-### INVOCATION
+#### INVOCATION
 
 If the Dealer is able to fulfill (mediate) the call and it allows the call, it sends a `INVOCATION` message to the respective Callee implementing the procedure:
 
@@ -268,7 +268,7 @@ where
         [68, 6131533, 9823529, {}, ["johnny"], {"firstname": "John", "surname": "Doe"}]
 
 
-### YIELD
+#### YIELD
 
 If the Callee is able to successfully process and finish the execution of the call, it answers by sending a `YIELD` message to the Dealer:
 
@@ -314,7 +314,7 @@ where
         [70, 6131533, {}, [], {"userid": 123, "karma": 10}]
 
 
-### RESULT
+#### RESULT
 
 The Dealer will then send a `RESULT` message to the original Caller:
 
@@ -360,7 +360,7 @@ where
         [50, 7814135, {}, [], {"userid": 123, "karma": 10}]
 
 
-### Invocation ERROR
+#### Invocation ERROR
 
 
 If the Callee is unable to process or finish the execution of the call, or the application code implementing the procedure raises an exception or otherwise runs into an error, the Callee sends an `ERROR` message to the Dealer:
@@ -394,7 +394,7 @@ where
             ["Object is write protected."], {"severity": 3}]
 
 
-### Call ERROR
+#### Call ERROR
 
 The Dealer will then send a `ERROR` message to the original Caller:
 
@@ -437,7 +437,7 @@ If the original call already failed at the Dealer **before** the call would have
         [8, 48, 7814135, {}, "wamp.error.no_such_procedure"]
 
 
-## Caller Leaving During an RPC Invocation {#rpc-caller-leaving}
+### Caller Leaving During an RPC Invocation {#rpc-caller-leaving}
 
 If, after the *Dealer* sends an INVOCATION but before it receives a YIELD or ERROR response, the *Dealer* detects the original *Caller* leaving or disconnecting, then the *Dealer* shall send an INTERRUPT to the *Callee* if both the *Dealer* and *Callee* support the *[Call Canceling](#rpc-call-canceling)* advanced feature. That INTERRUPT message MUST have `Options.mode` set to `"killnowait"` to indicate to the *Callee* that no response should be sent for the INTERRUPT.
 
@@ -463,7 +463,7 @@ If, after the *Dealer* sends an INVOCATION but before it receives a YIELD or ERR
 If either the *Dealer* or the *Callee* does not support the *Call Canceling* feature, then an INTERRUPT message shall NOT sent in this scenario. Whether or not call canceling is supported, the *Dealer* shall be prepared to discard a YIELD or ERROR response associated with that defunct call request.
 
 
-## Callee Leaving During an RPC Invocation {#rpc-callee-leaving}
+### Callee Leaving During an RPC Invocation {#rpc-callee-leaving}
 
 After sending an INVOCATION message, if a *Dealer* detects that the *Callee* has left/disconnected without sending a final YIELD or ERROR response, then the *Dealer* SHALL return an ERROR message back to the Caller with a `wamp.error.cancelled` URI. The *Dealer* MAY provide additional information via the ERROR payload arguments to clarify that the cancellation is due to the *Callee* leaving before the call could be completed.
 

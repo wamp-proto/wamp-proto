@@ -1,4 +1,4 @@
-## Registration Meta API {#rpc-reg-metapi}
+### Registration Meta API {#rpc-reg-metapi}
 
 **Registration Meta Events** are fired when registrations are first created, when *Callees* are attached (removed) to (from) a registration, and when registrations are finally destroyed.
 
@@ -51,7 +51,7 @@ Here is a `WELCOME` message from a *Router* with support for both the *Broker* a
 ```
 
 
-### Events
+#### Events
 
 A client can subscribe to the following registration meta-events, which cover the lifecycle of a registration:
 
@@ -67,7 +67,7 @@ Similarly, the `wamp.registration.on_delete` event MUST be preceded by a `wamp.r
 **Registration Meta Events** MUST be dispatched by the router to the same realm as the WAMP session which triggered the event.
 
 
-#### wamp.registration.on_create
+##### wamp.registration.on_create
 
 Fired when a registration is created through a registration request for a URI which was previously without a registration. The event payload consists of positional arguments:
 
@@ -93,7 +93,7 @@ See [Pattern-based Registrations](pattern-based-registration.md) for a descripti
 > NOTE: invocation_policy IS NOT YET DESCRIBED IN THE ADVANCED SPEC
 
 
-#### wamp.registration.on_register
+##### wamp.registration.on_register
 
 Fired when a session is added to a registration. The event payload consists of positional arguments:
 
@@ -101,7 +101,7 @@ Fired when a session is added to a registration. The event payload consists of p
 * `registration|id`: The ID of the registration to which a session is being added.
 
 
-#### wamp.registration.on_unregister
+##### wamp.registration.on_unregister
 
 Fired when a session is removed from a subscription. The event payload consists of positional arguments:
 
@@ -109,7 +109,7 @@ Fired when a session is removed from a subscription. The event payload consists 
 * `registration|id`: The ID of the registration from which a session is being removed.
 
 
-#### wamp.registration.on_delete
+##### wamp.registration.on_delete
 
 Fired when a registration is deleted after the last session attached to it has been removed. The event payload consists of positional arguments:
 
@@ -117,7 +117,7 @@ Fired when a registration is deleted after the last session attached to it has b
 * `registration|id`: The ID of the registration being deleted.
 
 
-### Procedures
+#### Procedures
 
 A client can actively retrieve information about registrations via the following meta-procedures:
 
@@ -129,7 +129,7 @@ A client can actively retrieve information about registrations via the following
 * `wamp.registration.count_callees`: Obtains the number of sessions currently attached to the registration.
 
 
-#### wamp.registration.list
+##### wamp.registration.list
 
 Retrieves registration IDs listed according to match policies.
 
@@ -155,7 +155,7 @@ Retrieves registration IDs listed according to match policies.
 
 See [Pattern-based Registrations](pattern-based-registration.md) for a description of match policies.
 
-#### wamp.registration.lookup
+##### wamp.registration.lookup
 
 Obtains the registration (if any) managing a procedure, according to some match policy.
 
@@ -168,7 +168,7 @@ Obtains the registration (if any) managing a procedure, according to some match 
 
 * (Nullable) `registration|id`: The ID of the registration managing the procedure, if found, or null.
 
-#### wamp.registration.match
+##### wamp.registration.match
 
 Obtains the registration best matching a given procedure URI.
 
@@ -180,7 +180,7 @@ Obtains the registration best matching a given procedure URI.
 
 * (Nullable) `registration|id`: The ID of best matching registration, or null.
 
-#### wamp.registration.get
+##### wamp.registration.get
 
 Retrieves information on a particular registration.
 
@@ -214,7 +214,7 @@ See [Pattern-based Registrations](pattern-based-registration.md) for a descripti
 
 *NOTE: invocation_policy IS NOT YET DESCRIBED IN THE ADVANCED SPEC*
 
-#### wamp.registration.list_callees
+##### wamp.registration.list_callees
 
 Retrieves a list of session IDs for sessions currently attached to the registration.
 
@@ -230,7 +230,7 @@ Retrieves a list of session IDs for sessions currently attached to the registrat
 
 * `wamp.error.no_such_registration`: No registration with the given ID exists on the router.
 
-#### wamp.registration.count_callees
+##### wamp.registration.count_callees
 
 Obtains the number of sessions currently attached to a registration.
 

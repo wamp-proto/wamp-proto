@@ -1,4 +1,4 @@
-## Call Trust Levels {#rpc-call-trust-levels}
+### Call Trust Levels {#rpc-call-trust-levels}
 
 A *Dealer* may be configured to automatically assign *trust levels* to calls issued by *Callers* according to the *Dealer* configuration on a per-procedure basis and/or depending on the application defined role of the (authenticated) *Caller*.
 

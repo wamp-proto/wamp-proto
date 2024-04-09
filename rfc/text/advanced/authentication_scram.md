@@ -1,4 +1,4 @@
-### Salted Challenge Response Authentication {#wamp-scram}
+#### Salted Challenge Response Authentication {#wamp-scram}
 
 The WAMP Salted Challenge Response Authentication Mechanism ("WAMP-SCRAM"), is a password-based authentication method where the shared secret is neither transmitted nor stored as cleartext. WAMP-SCRAM is based on [RFC5802](https://tools.ietf.org/html/rfc5802) (_Salted Challenge Response Authentication Mechanism_) and [RFC7677](https://tools.ietf.org/html/rfc7677) (_SCRAM-SHA-256 and SCRAM-SHA-256-PLUS_).
 

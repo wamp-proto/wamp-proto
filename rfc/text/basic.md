@@ -1,6 +1,4 @@
-{{basic/introduction.md}}
-
-{{basic/building_blocks.md}}
+{{basic/title.md}}
 
 {{basic/messages.md}}
 
@@ -9,7 +7,5 @@
 {{basic/publish_subscribe.md}}
 
 {{basic/remote_procedure_call.md}}
-
-{{basic/security_model.md}}
 
 {{basic/uri_reference.md}}

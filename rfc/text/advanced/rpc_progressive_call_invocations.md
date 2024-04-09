@@ -1,4 +1,4 @@
-## Progressive Call Invocations {#rpc-progressive-call-invocations}
+### Progressive Call Invocations {#rpc-progressive-call-invocations}
 
 A *Caller* may issue a call having progressive invocations. This can be useful in a few cases:
 

@@ -1,8 +1,8 @@
-# Publish and Subscribe
+## Publish and Subscribe
 
 All of the following features for Publish & Subscribe are mandatory for WAMP Basic Profile implementations supporting the respective roles, i.e. *Publisher*, *Subscriber* and *Broker*.
 
-## Subscribing and Unsubscribing
+### Subscribing and Unsubscribing
 
 The message flow between Clients implementing the role of Subscriber and Routers implementing the role of Broker for subscribing and unsubscribing involves the following messages:
 
@@ -46,7 +46,7 @@ A subscription lasts for the duration of a session, unless a Subscriber opts out
 > A Subscriber may have more than one event handler attached to the same subscription. This can be implemented in different ways: a) a Subscriber can recognize itself that it is already subscribed and just attach another handler to the subscription for incoming events, b) or it can send a new `SUBSCRIBE` message to broker (as it would be first) and upon receiving a `SUBSCRIBED.Subscription|id` it already knows about, attach the handler to the existing subscription
 >
 
-### SUBSCRIBE
+#### SUBSCRIBE
 
 A Subscriber communicates its interest in a topic to a Broker by sending a `SUBSCRIBE` message:
 
@@ -66,7 +66,7 @@ where
 
 A Broker, receiving a `SUBSCRIBE` message, can fullfill or reject the subscription, so it answers with `SUBSCRIBED` or `ERROR` messages.
 
-### SUBSCRIBED
+#### SUBSCRIBED
 
 If the Broker is able to fulfill and allow the subscription, it answers by sending a `SUBSCRIBED` message to the Subscriber
 
@@ -87,7 +87,7 @@ where
 
 > In case of receiving a `SUBSCRIBE` message from the same Subscriber and to already subscribed topic, Broker should answer with `SUBSCRIBED` message, containing the existing `Subscription|id`.
 
-### Subscribe ERROR
+#### Subscribe ERROR
 
 When the request for subscription cannot be fulfilled by the Broker, the Broker sends back an `ERROR` message to the Subscriber
 
@@ -105,7 +105,7 @@ where
         [8, 32, 713845233, {}, "wamp.error.not_authorized"]
 
 
-### UNSUBSCRIBE
+#### UNSUBSCRIBE
 
 When a Subscriber is no longer interested in receiving events for a subscription it sends an `UNSUBSCRIBE` message
 
@@ -122,7 +122,7 @@ where
 {align="left"}
         [34, 85346237, 5512315355]
 
-### UNSUBSCRIBED
+#### UNSUBSCRIBED
 
 Upon successful unsubscription, the Broker sends an `UNSUBSCRIBED` message to the Subscriber
 
@@ -139,7 +139,7 @@ where
         [35, 85346237]
 
 
-### Unsubscribe ERROR
+#### Unsubscribe ERROR
 
 When the request fails, the Broker sends an `ERROR`
 
@@ -156,7 +156,7 @@ where
 {align="left"}
         [8, 34, 85346237, {}, "wamp.error.no_such_subscription"]
 
-## Publishing and Events
+### Publishing and Events
 
 The message flow between Publishers, a Broker and Subscribers for publishing to topics and dispatching events involves the following messages:
 
@@ -182,7 +182,7 @@ The message flow between Publishers, a Broker and Subscribers for publishing to 
         `---------'          `------'          `----------'
 
 
-### PUBLISH
+#### PUBLISH
 
 When a Publisher requests to publish an event to some topic, it sends a `PUBLISH` message to a Broker:
 
@@ -229,7 +229,7 @@ By default, publications are unacknowledged, and the Broker will not respond, wh
             "sizes": [23, 42, 7]}]
 
 
-### PUBLISHED
+#### PUBLISHED
 
 If the Broker is able to fulfill and allowing the publication, and `PUBLISH.Options.acknowledge == true`, the Broker replies by sending a `PUBLISHED` message to the Publisher:
 
@@ -247,7 +247,7 @@ where
         [17, 239714735, 4429313566]
 
 
-### Publish ERROR
+#### Publish ERROR
 
 When the request for publication cannot be fulfilled by the Broker, and `PUBLISH.Options.acknowledge == true`, the Broker sends back an `ERROR` message to the Publisher
 
@@ -265,7 +265,7 @@ where
         [8, 16, 239714735, {}, "wamp.error.not_authorized"]
 
 
-### EVENT
+#### EVENT
 
 When a publication is successful and a Broker dispatches the event, it determines a list of receivers for the event based on Subscribers for the topic published to and, possibly, other information in the event.
 

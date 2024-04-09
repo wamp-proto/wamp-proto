@@ -1,4 +1,4 @@
-### Ticket-based Authentication {#ticketauth}
+#### Ticket-based Authentication {#ticketauth}
 
 With *Ticket-based authentication*, the client needs to present the server an authentication "ticket" - some magic value to authenticate itself to the server.
 

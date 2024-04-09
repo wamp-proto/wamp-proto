@@ -1,4 +1,4 @@
-# Sessions
+## Sessions
 
 The message flow between Clients and Routers for opening and closing WAMP sessions involves the following messages:
 
@@ -70,9 +70,9 @@ The state transitions are listed in this table:
 | 14 | Received other / ignore                                       |
 
 
-## Session Establishment
+### Session Establishment
 
-### HELLO
+#### HELLO
 
 After the underlying transport has been established, the opening of a WAMP session is initiated by the Client sending a `HELLO` message to the Router
 
@@ -172,7 +172,7 @@ and
             }
         }]
 
-### WELCOME
+#### WELCOME
 
 A Router completes the opening of a WAMP session by sending a `WELCOME` reply message to the Client.
 
@@ -211,7 +211,7 @@ The `<role>|dict` is a dictionary describing features supported by the peer for 
            }
         }]
 
-### ABORT
+#### ABORT
 
 Both the Router and the Client may abort a WAMP session by sending an `ABORT` message.
 
@@ -271,9 +271,9 @@ There are few scenarios, when `ABORT` is used:
                 "Received WELCOME message after session was established."},
             "wamp.error.protocol_violation"]
 
-## Session Closing
+### Session Closing
 
-### GOODBYE
+#### GOODBYE
 
 A WAMP session starts its lifetime with the Router sending a `WELCOME` message to the Client and ends when the underlying transport disappears or when the WAMP session is closed explicitly by a `GOODBYE` message sent by one Peer and a `GOODBYE` message sent from the other Peer in response.
 

@@ -1,4 +1,4 @@
-## Building Blocks
+### Building Blocks
 
 WAMP is defined with respect to the following building blocks
 
@@ -8,9 +8,9 @@ WAMP is defined with respect to the following building blocks
 
 For each building block, WAMP only assumes a defined set of requirements, which allows to run WAMP variants with different concrete bindings.
 
-### Identifiers
+#### Identifiers
 
-#### URIs {#uris}
+##### URIs {#uris}
 
 WAMP needs to identify the following persistent resources:
 
@@ -83,7 +83,7 @@ Further, application URIs MUST NOT use `wamp` as a first URI component, since th
 * `wamp.error.procedure_already_exists`
 
 
-#### IDs {#ids}
+##### IDs {#ids}
 
 WAMP needs to identify the following ephemeral entities each in the scope noted:
 
@@ -142,7 +142,7 @@ The following is a complete list of usage of IDs in the three categories for all
 * `ERROR.Request` (mirrored original request ID)
 
 
-### Serializers
+#### Serializers
 
 WAMP is a message based protocol that requires serialization of messages to octet sequences to be sent out on the wire.
 
@@ -178,7 +178,7 @@ Version 5 or later of MessagePack MUST BE used, since this version is able to di
 With CBOR serialization, each WAMP message is serialized according to the CBOR specification as described in [@!RFC8949].
 
 
-### Transports
+#### Transports
 
 WAMP assumes a transport with the following characteristics:
 
@@ -190,7 +190,7 @@ WAMP assumes a transport with the following characteristics:
 There is no required transport or set of transports for WAMP implementations (but each implementation MUST, of course, implement at least one transport). Routers SHOULD implement more than one transport, enabling components using different kinds of transports to connect in an application.
 
 
-#### WebSocket Transport
+##### WebSocket Transport
 
 The default transport binding for WAMP is WebSocket ([@!RFC6455]).
 
@@ -213,7 +213,7 @@ With `wamp.2.cbor`, *all* WebSocket messages MUST BE of type **binary** and use 
 > To avoid incompatibilities merely due to naming conflicts with WebSocket subprotocol identifiers, implementers SHOULD register identifiers for additional serialization formats with the official WebSocket subprotocol registry.
 
 
-#### Transport and Session Lifetime
+##### Transport and Session Lifetime
 
 WAMP implementations MAY choose to tie the lifetime of the underlying transport connection for a WAMP connection to that of a WAMP session, i.e. establish a new transport-layer connection as part of each new session establishment. They MAY equally choose to allow re-use of a transport connection, allowing subsequent WAMP sessions to be established using the same transport connection.
 
@@ -259,7 +259,7 @@ The diagram below illustrates the full transport connection and session lifecycl
         `------'                                    `------'
 
 
-#### Protocol Errors {#protocol_errors}
+##### Protocol Errors {#protocol_errors}
 
 WAMP implementations MUST abort sessions (disposing all of their resources such as subscriptions and registrations) on protocol errors caused by offending peers.
 
@@ -290,7 +290,7 @@ In all such cases WAMP implementations:
 3. SHOULD also drop the WAMP connection at transport level (recommended to prevent denial of service attacks)
 
 
-### Messages {#messages}
+#### Messages {#messages}
 
 All WAMP messages are a `list` with a first element `MessageType` followed by one or more message type specific elements:
 
@@ -321,27 +321,27 @@ Here is an example message conforming to the above format
         [32, 713845233, {}, "com.myapp.mytopic1"]
 
 
-#### Extensibility
+##### Extensibility
 
 Some WAMP messages contain `Options|dict` or `Details|dict` elements. This allows for future extensibility and implementations that only provide subsets of functionality by ignoring unimplemented attributes. Keys in `Options` and `Details` MUST be of type `string` and MUST match the regular expression `[a-z][a-z0-9_]{2,}` for WAMP predefined keys. Implementations MAY use implementation-specific keys that MUST match the regular expression `_[a-z0-9_]{3,}`. Attributes unknown to an implementation MUST be ignored.
 
 
-#### No Polymorphism
+##### No Polymorphism
 
 For a given `MessageType` and number of message elements the expected types are uniquely defined. Hence there are no polymorphic messages in WAMP. This leads to a message parsing and validation control flow that is efficient, simple to implement and simple to code for rigorous message format checking.
 
 
-#### Structure
+##### Structure
 
 The application payload (that is call arguments, call results, event payload etc) is always at the end of the message element list. The rationale is: Brokers and Dealers have no need to inspect (parse) the application payload. Their business is call/event routing. Having the application payload at the end of the list allows Brokers and Dealers to skip parsing it altogether. This can improve efficiency and performance.
 
 
-#### Extension Messages
+##### Extension Messages
 
 WAMP uses type codes from the core range [0, 255]. Implementations MAY define and use implementation specific messages with message type codes from the extension message range [256, 1023]. For example, a router MAY implement router-to-router communication by using extension messages.
 
 
-#### Empty Arguments and Keyword Arguments
+##### Empty Arguments and Keyword Arguments
 
 Implementations SHOULD avoid sending empty `Arguments` lists.
 

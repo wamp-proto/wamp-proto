@@ -1,4 +1,4 @@
-## Publication Trust Levels {#pubsub-pub-trustlevels}
+### Publication Trust Levels {#pubsub-pub-trustlevels}
 
 A *Broker* may be configured to automatically assign *trust levels* to events published by *Publishers* according to the *Broker* configuration on a per-topic basis and/or depending on the application defined role of the (authenticated) *Publisher*.
 

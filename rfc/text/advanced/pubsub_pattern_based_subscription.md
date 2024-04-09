@@ -1,4 +1,4 @@
-## Pattern-based Subscription {#pattern-based-subscription}
+### Pattern-based Subscription {#pattern-based-subscription}
 
 By default, *Subscribers* subscribe to topics with **exact matching policy**. That is an event will only be 
 dispatched to a *Subscriber* by the *Broker* if the topic published to (`PUBLISH.Topic`) *exactly* matches the 
@@ -52,7 +52,7 @@ Support for this feature MUST be announced by *Subscribers* (`role := "subscribe
             pattern_based_subscription|bool := true
 
 
-### Prefix Matching
+#### Prefix Matching
 
 A *Subscriber* requests **prefix-matching policy** with a subscription request by setting
 
@@ -85,7 +85,7 @@ In the above example, events with `PUBLISH.Topic`
 will all apply for dispatching. An event with `PUBLISH.Topic` e.g. `com.myapp.topic.emerge` will not apply.
 
 
-### Wildcard Matching
+#### Wildcard Matching
 
 A *Subscriber* requests **wildcard-matching policy** with a subscription request by setting
 
@@ -122,7 +122,7 @@ will all apply for dispatching. Events with `PUBLISH.Topic`
 
 will not apply for dispatching.
 
-### Design Aspects
+#### Design Aspects
 
 **No set semantics**
 

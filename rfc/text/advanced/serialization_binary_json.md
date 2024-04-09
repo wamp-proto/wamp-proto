@@ -1,4 +1,4 @@
-## Binary support in JSON {#binary-support-in-json}
+### Binary support in JSON {#binary-support-in-json}
 
 Binary data follows a convention for conversion to JSON strings.
 
@@ -50,13 +50,13 @@ import os, base64, json, sys, binascii
 data_in = os.urandom(16)
 print("In:   {}".format(binascii.hexlify(data_in)))
 
-# encoding
+## encoding
 encoded = json.dumps('\0' + base64.b64encode(data_in).
                                     decode('ascii'))
 
 print("JSON: {}".format(encoded))
 
-# decoding
+## decoding
 decoded = json.loads(encoded)
 if type(decoded) == unicode:
    if decoded[0] == '\0':

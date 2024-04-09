@@ -1,4 +1,4 @@
-# Message Definitions
+## Message Definitions
 
 WAMP defines the following messages that are explained in detail in the following sections.
 
@@ -6,23 +6,23 @@ The messages concerning the WAMP session itself are mandatory for all Peers, i.e
 
 All other messages are mandatory per role, i.e. in an implementation that only provides a Client with the role of Publisher MUST additionally implement sending `PUBLISH` and receiving `PUBLISHED` and `ERROR` messages.
 
-## Session Lifecycle
+### Session Lifecycle
 
-### HELLO
+#### HELLO
 
 Sent by a Client to initiate opening of a WAMP session to a Router attaching to a Realm.
 
 {align="left"}
         [HELLO, Realm|uri, Details|dict]
 
-### WELCOME
+#### WELCOME
 
 Sent by a Router to accept a Client. The WAMP session is now open.
 
 {align="left"}
         [WELCOME, Session|id, Details|dict]
 
-### ABORT
+#### ABORT
 
 Sent by a Peer to abort the opening of a WAMP session. No response is expected.
 
@@ -33,14 +33,14 @@ Sent by a Peer to abort the opening of a WAMP session. No response is expected.
 
         [ABORT, Details|dict, Reason|uri, Arguments|list, ArgumentsKw|dict]
 
-### GOODBYE
+#### GOODBYE
 
 Sent by a Peer to close a previously opened WAMP session. Must be echo'ed by the receiving Peer.
 
 {align="left"}
         [GOODBYE, Details|dict, Reason|uri]
 
-### ERROR
+#### ERROR
 
 Error reply sent by a Peer as an error response to different kinds of requests.
 
@@ -54,9 +54,9 @@ Error reply sent by a Peer as an error response to different kinds of requests.
             Arguments|list, ArgumentsKw|dict]
 
 
-## Publish and Subscribe
+### Publish and Subscribe
 
-### PUBLISH
+#### PUBLISH
 
 Sent by a Publisher to a Broker to publish an event.
 
@@ -68,42 +68,42 @@ Sent by a Publisher to a Broker to publish an event.
         [PUBLISH, Request|id, Options|dict, Topic|uri, Arguments|list,
             ArgumentsKw|dict]
 
-### PUBLISHED
+#### PUBLISHED
 
 Acknowledge sent by a Broker to a Publisher for acknowledged publications.
 
 {align="left"}
         [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
-### SUBSCRIBE
+#### SUBSCRIBE
 
 Subscribe request sent by a Subscriber to a Broker to subscribe to a topic.
 
 {align="left"}
         [SUBSCRIBE, Request|id, Options|dict, Topic|uri]
 
-### SUBSCRIBED
+#### SUBSCRIBED
 
 Acknowledge sent by a Broker to a Subscriber to acknowledge a subscription.
 
 {align="left"}
         [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
 
-### UNSUBSCRIBE
+#### UNSUBSCRIBE
 
 Unsubscribe request sent by a Subscriber to a Broker to unsubscribe a subscription.
 
 {align="left"}
         [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id]
 
-### UNSUBSCRIBED
+#### UNSUBSCRIBED
 
 Acknowledge sent by a Broker to a Subscriber to acknowledge unsubscription.
 
 {align="left"}
         [UNSUBSCRIBED, UNSUBSCRIBE.Request|id]
 
-### EVENT
+#### EVENT
 
 Event dispatched by Broker to Subscribers for subscriptions the event was matching.
 
@@ -119,9 +119,9 @@ Event dispatched by Broker to Subscribers for subscriptions the event was matchi
 > An event is dispatched to a Subscriber for a given `Subscription|id` only once. On the other hand, a Subscriber that holds subscriptions with different `Subscription|id`s that all match a given event will receive the event on each matching subscription.
 >
 
-## Remote Procedure Calls
+### Remote Procedure Calls
 
-### CALL
+#### CALL
 
 Call as originally issued by the Caller to the Dealer.
 
@@ -133,7 +133,7 @@ Call as originally issued by the Caller to the Dealer.
         [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
             ArgumentsKw|dict]
 
-### RESULT
+#### RESULT
 
 Result of a call as returned by Dealer to Caller.
 
@@ -145,35 +145,35 @@ Result of a call as returned by Dealer to Caller.
         [RESULT, CALL.Request|id, Details|dict, YIELD.Arguments|list,
             YIELD.ArgumentsKw|dict]
 
-### REGISTER
+#### REGISTER
 
 A Callees request to register an endpoint at a Dealer.
 
 {align="left"}
         [REGISTER, Request|id, Options|dict, Procedure|uri]
 
-### REGISTERED
+#### REGISTERED
 
 Acknowledge sent by a Dealer to a Callee for successful registration.
 
 {align="left"}
         [REGISTERED, REGISTER.Request|id, Registration|id]
 
-### UNREGISTER
+#### UNREGISTER
 
 A Callees request to unregister a previously established registration.
 
 {align="left"}
         [UNREGISTER, Request|id, REGISTERED.Registration|id]
 
-### UNREGISTERED
+#### UNREGISTERED
 
 Acknowledge sent by a Dealer to a Callee for successful unregistration.
 
 {align="left"}
         [UNREGISTERED, UNREGISTER.Request|id]
 
-### INVOCATION
+#### INVOCATION
 
 Actual invocation of an endpoint sent by Dealer to a Callee.
 
@@ -186,7 +186,7 @@ Actual invocation of an endpoint sent by Dealer to a Callee.
         [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
             CALL.Arguments|list, CALL.ArgumentsKw|dict]
 
-### YIELD
+#### YIELD
 
 Actual yield from an endpoint sent by a Callee to Dealer.
 
@@ -198,7 +198,7 @@ Actual yield from an endpoint sent by a Callee to Dealer.
         [YIELD, INVOCATION.Request|id, Options|dict, Arguments|list, ArgumentsKw|dict]
 
 
-## Message Codes and Direction
+### Message Codes and Direction
 
 The following table lists the message type code for all messages defined in the WAMP basic profile and their direction between peer roles.
 

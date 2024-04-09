@@ -1,1 +1,1 @@
-## Authentication Methods {#auth-methods}
+### Authentication Methods {#auth-methods}

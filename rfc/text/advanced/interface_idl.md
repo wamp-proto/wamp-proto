@@ -1,6 +1,6 @@
-## WAMP IDL {#wamp-idl}
+### WAMP IDL {#wamp-idl}
 
-### Application Payload Typing
+#### Application Payload Typing
 
 To define the application payload `Arguments|list` and `ArgumentsKw|dict`, WAMP IDL reuses the [FlatBuffers IDL](https://google.github.io/flatbuffers/md__schemas.html), specifically, we map a pair of `Arguments|list` and `ArgumentsKw|dict` to a FlatBuffers Table with WAMP defined FlatBuffers *Attributes*.
 
@@ -100,7 +100,7 @@ table WampIds
 }
 ```
 
-### WAMP IDL Attributes
+#### WAMP IDL Attributes
 
 WAMP IDL uses *custom FlatBuffer attributes* to
 
@@ -249,7 +249,7 @@ The value of attribute `type` specifies a WAMP *Procedure*, and the call argumen
 The procedure will be registered under the WAMP URI `wamp.session.kill_by_authid` on the respective realm.
 
 
-### WAMP Service Declaration
+#### WAMP Service Declaration
 
 WAMP services include
 

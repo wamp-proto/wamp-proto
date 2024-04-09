@@ -1,4 +1,4 @@
-## Call Re-Routing {#rpc-call-rerouting}
+### Call Re-Routing {#rpc-call-rerouting}
 
 A _CALLEE_ might not be able to attend to a call. This may be due to a multitude of reasons including, but not limited to:
 

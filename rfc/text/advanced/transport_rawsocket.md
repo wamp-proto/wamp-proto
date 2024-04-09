@@ -1,4 +1,4 @@
-## RawSocket Transport {#rawsocket}
+### RawSocket Transport {#rawsocket}
 
 **WAMP-over-RawSocket** is an (alternative) transport for WAMP that uses length-prefixed, binary messages - a message framing different from WebSocket.
 
@@ -92,8 +92,8 @@ SERMAP = {
     5: 'flatbuffers',
 }
 
-# map serializer / max. msg length to RawSocket handshake
-# request or success reply (2nd octet)
+## map serializer / max. msg length to RawSocket handshake
+## request or success reply (2nd octet)
 for ser in SERMAP:
     for l in range(16):
         octet_2 = (l << 4) | ser
@@ -112,8 +112,8 @@ Here is an example of how a *Router* could parse the *second octet* in a *Client
 
 {align="left"}
 ```python
-# map RawSocket handshake request (2nd octet) to
-# serializer / max. msg length
+## map RawSocket handshake request (2nd octet) to
+## serializer / max. msg length
 for i in range(256):
     ser_id = i & 0x0f
     if ser_id != 0:
@@ -174,7 +174,7 @@ ERRMAP = {
     4: "maximum connection count reached"
 }
 
-# map error to RawSocket handshake error reply (2nd octet)
+## map error to RawSocket handshake error reply (2nd octet)
 for err in ERRMAP:
     octet_2 = err << 4
     print("error: {} => 0x{:02x}").format(ERRMAP[err], err)
@@ -186,7 +186,7 @@ Here is an example of how a *Client* might parse the *second octet* in a *Router
 
 {align="left"}
 ```python
-# map RawSocket handshake reply (2nd octet)
+## map RawSocket handshake reply (2nd octet)
 for i in range(256):
     ser_id = i & 0x0f
     if ser_id:

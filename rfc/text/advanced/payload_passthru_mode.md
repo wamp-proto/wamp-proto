@@ -1,4 +1,4 @@
-## Payload Passthru Mode {#payload-passthru-mode}
+### Payload Passthru Mode {#payload-passthru-mode}
 
 In some situations, you may want to reduce the access the router has to the information users transmit, or
 payload data is presented in some specific format that can not be simply recognized by WAMP router serializer.

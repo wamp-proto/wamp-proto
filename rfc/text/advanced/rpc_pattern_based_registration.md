@@ -1,4 +1,4 @@
-## Pattern-based Registrations {#rpc-pattern-reg}
+### Pattern-based Registrations {#rpc-pattern-reg}
 
 By default, *Callees* register procedures with **exact matching policy**. That is a call will only be routed to a *Callee* by the *Dealer* if the procedure called (`CALL.Procedure`) *exactly* matches the endpoint registered (`REGISTER.Procedure`).
 
@@ -18,7 +18,7 @@ Support for this feature MUST be announced by *Callees* (`role := "callee"`) and
             pattern_based_registration|bool := true
 
 
-### Prefix Matching
+#### Prefix Matching
 
 A *Callee* requests **prefix-matching policy** with a registration request by setting
 
@@ -56,7 +56,7 @@ will all apply for call routing. A call with one of the following `CALL.Procedur
 will not apply.
 
 
-### Wildcard Matching
+#### Wildcard Matching
 
 A *Callee* requests **wildcard-matching policy** with a registration request by setting
 
@@ -95,7 +95,7 @@ will not apply for call routing.
 When a single call matches more than one of a *Callees* registrations, the call MAY be routed for invocation on multiple registrations, depending on call settings.
 
 
-### Design Aspects
+#### Design Aspects
 
 **No set semantics**
 

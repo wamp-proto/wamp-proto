@@ -1,4 +1,4 @@
-## Event Retention
+### Event Retention
 
 Event Retention is where a particular topic has an event associated with it which is delivered upon an opting-in client subscribing to the topic.
 

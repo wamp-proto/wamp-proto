@@ -1,4 +1,4 @@
-## Sharded Subscription {#pubsub-sharded-subscription}
+### Sharded Subscription {#pubsub-sharded-subscription}
 
 Feature status: **alpha**
 

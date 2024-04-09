@@ -1,4 +1,4 @@
-## Subscription Revocation
+### Subscription Revocation
 
 Feature status: **alpha**
 

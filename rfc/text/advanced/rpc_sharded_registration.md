@@ -1,4 +1,4 @@
-## Sharded Registration {#rpc-sharded-registration}
+### Sharded Registration {#rpc-sharded-registration}
 
 Feature status: **sketch**
 
@@ -11,11 +11,11 @@ Support for this feature MUST be announced by *Callers* (`role := "caller"`), *C
 {align="left"}
     HELLO.Details.roles.<role>.features.sharded_registration|bool := true
 
-### "All" Calls
+#### "All" Calls
 
 Write me.
 
-### "Partitioned" Calls
+#### "Partitioned" Calls
 
 If `CALL.Options.runmode == "partition"`, then `CALL.Options.rkey` MUST be present.
 

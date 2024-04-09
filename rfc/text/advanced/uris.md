@@ -1,15 +1,15 @@
-# Advanced Profile URIs {#ap-uris}
+## Advanced Profile URIs {#ap-uris}
 
 WAMP pre-defines the following error URIs for the **Advanced Profile**. WAMP peers SHOULD only use the defined error messages.
 
-## Session Close
+### Session Close
 
 The *Client* session has been forcefully terminated by the *Router* - used as a `GOODBYE` (or `ABORT`) reason.
 
 {align="left"}
         wamp.close.killed
 
-## Authentication
+### Authentication
 
 No authentication method the *Client* offered is accepted.
 
@@ -46,7 +46,7 @@ The *Client* did not provide the required, non-anonymous, authentication informa
 {align="left"}
         wamp.error.authentication_required
 
-## Authorization
+### Authorization
 
 The *Principal* is not authorized to perform such *Action*.
 
@@ -63,7 +63,7 @@ Authorization of the *Principal* is required to perform the given *Action*. This
 {align="left"}
         wamp.error.authorization_required
 
-## Remote Procedure Calls
+### Remote Procedure Calls
 
 A *Dealer* or *Callee* terminated a call that timed out
 

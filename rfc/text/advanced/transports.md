@@ -1,4 +1,4 @@
-# Advanced Transports and Serializers {#adv-transports-serializers}
+## Advanced Transports and Serializers {#adv-transports-serializers}
 
 The only requirements that WAMP expects from a transport are: the transport must be message-based, bidirectional, reliable and ordered. This allows WAMP to run over different transports without any impact at the application layer.
 

@@ -1,4 +1,4 @@
-## Message Batching {#batchedwebsocket}
+### Message Batching {#batchedwebsocket}
 
 *WAMP-over-Batched-WebSocket* is a variant of WAMP-over-WebSocket where multiple WAMP messages are sent in one WebSocket message.
 

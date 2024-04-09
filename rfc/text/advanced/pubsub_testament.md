@@ -1,4 +1,4 @@
-## Session Testament
+### Session Testament
 
 When a WAMP client disconnects, or the WAMP session is destroyed, it may want to notify other subscribers or publish some fixed data.
 Since a client may disconnect uncleanly, this can't be done reliably by them.

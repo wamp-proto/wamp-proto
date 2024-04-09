@@ -1,4 +1,4 @@
-# WAMP Interfaces {#interfaces}
+## WAMP Interfaces {#interfaces}
 
 WAMP was designed with the goals of being easy to approach and use for application developers. Creating a procedure to expose some custom functionality should be possible in any supported programming language using that language's native elements, with the least amount of additional effort.
 

@@ -1,4 +1,4 @@
-## Call Timeouts {#rpc-call-timeout}
+### Call Timeouts {#rpc-call-timeout}
 
 The Call Timeouts feature allows for **automatic** cancellation of a remote procedure call by the *Dealer* or *Callee* after a specified time duration.
 
