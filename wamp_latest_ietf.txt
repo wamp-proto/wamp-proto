@@ -49,7 +49,7 @@ Table of Contents
      1.2.  Introduction  . . . . . . . . . . . . . . . . . . . . . .   6
      1.3.  Protocol Overview . . . . . . . . . . . . . . . . . . . .   7
        1.3.1.  Realms, Sessions and Transports . . . . . . . . . . .   7
-       1.3.2.  Peers and Roles . . . . . . . . . . . . . . . . . . .   8
+       1.3.2.  Peers and Roles . . . . . . . . . . . . . . . . . . .   7
 
 
 
@@ -58,18 +58,18 @@ Oberstein                Expires 15 October 2024                [Page 1]
 Internet-Draft                    WAMP                        April 2024
 
 
-       1.3.3.  Publish & Subscribe . . . . . . . . . . . . . . . . .   9
+       1.3.3.  Publish & Subscribe . . . . . . . . . . . . . . . . .   8
        1.3.4.  Remote Procedure Calls  . . . . . . . . . . . . . . .   9
-     1.4.  Design Aspects  . . . . . . . . . . . . . . . . . . . . .  10
+     1.4.  Design Aspects  . . . . . . . . . . . . . . . . . . . . .   9
        1.4.1.  Application Code  . . . . . . . . . . . . . . . . . .  10
-       1.4.2.  Language Agnostic . . . . . . . . . . . . . . . . . .  11
+       1.4.2.  Language Agnostic . . . . . . . . . . . . . . . . . .  10
        1.4.3.  Symmetric Messaging . . . . . . . . . . . . . . . . .  11
        1.4.4.  Peers with multiple Roles . . . . . . . . . . . . . .  11
        1.4.5.  Relationship to WebSocket . . . . . . . . . . . . . .  11
    2.  Building Blocks . . . . . . . . . . . . . . . . . . . . . . .  11
      2.1.  Identifiers . . . . . . . . . . . . . . . . . . . . . . .  11
-       2.1.1.  URIs  . . . . . . . . . . . . . . . . . . . . . . . .  12
-       2.1.2.  IDs . . . . . . . . . . . . . . . . . . . . . . . . .  14
+       2.1.1.  URIs  . . . . . . . . . . . . . . . . . . . . . . . .  11
+       2.1.2.  IDs . . . . . . . . . . . . . . . . . . . . . . . . .  13
      2.2.  Serializers . . . . . . . . . . . . . . . . . . . . . . .  15
      2.3.  Transports  . . . . . . . . . . . . . . . . . . . . . . .  16
        2.3.1.  WebSocket Transport . . . . . . . . . . . . . . . . .  16
@@ -253,7 +253,6 @@ Internet-Draft                    WAMP                        April 2024
    21. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 239
    22. Normative References  . . . . . . . . . . . . . . . . . . . . 240
    23. Informative References  . . . . . . . . . . . . . . . . . . . 241
-   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 241
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 241
 
 1.  WAMP Basic Profile
@@ -272,8 +271,9 @@ Internet-Draft                    WAMP                        April 2024
    entirety, before describing an Advanced Profile which extends the
    basic functionality of WAMP.
 
-
-
+   The separation into Basic and Advanced Profiles is intended to extend
+   the reach of the protocol.  It allows implementations to start out
+   with a minimal, yet operable and useful set of features, and to
 
 
 
@@ -282,9 +282,6 @@ Oberstein                Expires 15 October 2024                [Page 5]
 Internet-Draft                    WAMP                        April 2024
 
 
-   The separation into Basic and Advanced Profiles is intended to extend
-   the reach of the protocol.  It allows implementations to start out
-   with a minimal, yet operable and useful set of features, and to
    expand that set from there.  It also allows implementations that are
    tailored for resource-constrained environments, where larger feature
    sets would not be possible.  Here implementers can weigh between
@@ -329,7 +326,10 @@ Internet-Draft                    WAMP                        April 2024
    Another component, a _Publisher_, can then publish to this topic, and
    the router distributes events to all Subscribers.
 
-
+   Routed Remote Procedure Calls (RPCs) rely on the same sort of
+   decoupling that is used by the Publish & Subscribe pattern.  A
+   component, the _Callee_, announces to the router that it provides a
+   certain procedure, identified by a procedure name.  Other components,
 
 
 
@@ -338,10 +338,6 @@ Oberstein                Expires 15 October 2024                [Page 6]
 Internet-Draft                    WAMP                        April 2024
 
 
-   Routed Remote Procedure Calls (RPCs) rely on the same sort of
-   decoupling that is used by the Publish & Subscribe pattern.  A
-   component, the _Callee_, announces to the router that it provides a
-   certain procedure, identified by a procedure name.  Other components,
    _Callers_, can then call the procedure, with the router invoking the
    procedure on the Callee, receiving the procedure's result, and then
    forwarding this result back to the Caller.  Routed RPCs differ from
@@ -385,6 +381,10 @@ Internet-Draft                    WAMP                        April 2024
    an officially registered (http://www.iana.org/assignments/websocket/
    websocket.xml) subprotocol.
 
+1.3.2.  Peers and Roles
+
+   A WAMP Session connects two Peers, a Client and a Router.  Each WAMP
+   Peer MUST implement one role, and MAY implement more roles.
 
 
 
@@ -393,11 +393,6 @@ Oberstein                Expires 15 October 2024                [Page 7]
 
 Internet-Draft                    WAMP                        April 2024
 
-
-1.3.2.  Peers and Roles
-
-   A WAMP Session connects two Peers, a Client and a Router.  Each WAMP
-   Peer MUST implement one role, and MAY implement more roles.
 
    A Client MAY implement any combination of the Roles:
 
@@ -440,8 +435,13 @@ Internet-Draft                    WAMP                        April 2024
    features.  They are required to announce those supported features
    during session establishment.
 
+1.3.3.  Publish & Subscribe
 
+   The Publish & Subscribe ("PubSub") messaging pattern involves peers
+   of three different roles:
 
+   *  Subscriber (Client)
+   *  Publisher (Client)
 
 
 
@@ -450,13 +450,6 @@ Oberstein                Expires 15 October 2024                [Page 8]
 Internet-Draft                    WAMP                        April 2024
 
 
-1.3.3.  Publish & Subscribe
-
-   The Publish & Subscribe ("PubSub") messaging pattern involves peers
-   of three different roles:
-
-   *  Subscriber (Client)
-   *  Publisher (Client)
    *  Broker (Router)
 
    A Publisher publishes events to topics by providing the topic URI and
@@ -495,17 +488,6 @@ Internet-Draft                    WAMP                        April 2024
    Dealer works as a generic router for remote procedure calls
    decoupling Callers and Callees.
 
-
-
-
-
-
-
-Oberstein                Expires 15 October 2024                [Page 9]
-
-Internet-Draft                    WAMP                        April 2024
-
-
 1.4.  Design Aspects
 
    _This section is non-normative._
@@ -516,6 +498,14 @@ Internet-Draft                    WAMP                        April 2024
    An initial version of the protocol was publicly released in March
    2012.  The intent was to gain insight through implementation and use,
    and integrate these into a second version of the protocol, where
+
+
+
+Oberstein                Expires 15 October 2024                [Page 9]
+
+Internet-Draft                    WAMP                        April 2024
+
+
    there would be no regard for compatibility between the two versions.
    Several interoperable, independent implementations were released, and
    feedback from the implementers and users was collected.
@@ -552,6 +542,16 @@ Internet-Draft                    WAMP                        April 2024
    |  role might at the same time implement, say, a built-in Callee.  It
    |  is the Dealer and Broker that are generic, not the program.
 
+1.4.2.  Language Agnostic
+
+   WAMP is language agnostic, i.e. can be implemented in any programming
+   language.  At the level of arguments that may be part of a WAMP
+   message, WAMP takes a 'superset of all' approach.  WAMP
+   implementations may support features of the implementing language for
+   use in arguments, e.g. keyword arguments.
+
+
+
 
 
 
@@ -561,14 +561,6 @@ Oberstein                Expires 15 October 2024               [Page 10]
 
 Internet-Draft                    WAMP                        April 2024
 
-
-1.4.2.  Language Agnostic
-
-   WAMP is language agnostic, i.e. can be implemented in any programming
-   language.  At the level of arguments that may be part of a WAMP
-   message, WAMP takes a 'superset of all' approach.  WAMP
-   implementations may support features of the implementing language for
-   use in arguments, e.g. keyword arguments.
 
 1.4.3.  Symmetric Messaging
 
@@ -608,16 +600,6 @@ Internet-Draft                    WAMP                        April 2024
 
 2.1.  Identifiers
 
-
-
-
-
-
-Oberstein                Expires 15 October 2024               [Page 11]
-
-Internet-Draft                    WAMP                        April 2024
-
-
 2.1.1.  URIs
 
    WAMP needs to identify the following persistent resources:
@@ -628,6 +610,13 @@ Internet-Draft                    WAMP                        April 2024
 
    These are identified in WAMP using Uniform Resource Identifiers
    (URIs) [RFC3986] that MUST be Unicode strings.
+
+
+
+Oberstein                Expires 15 October 2024               [Page 11]
+
+Internet-Draft                    WAMP                        April 2024
+
 
    When using JSON as WAMP serialization format, URIs (as other strings)
    are transmitted in UTF-8 [RFC3629] encoding.
@@ -667,13 +656,6 @@ Internet-Draft                    WAMP                        April 2024
    Python to check URIs according to the above rules, when *NO empty URI
    components are allowed*:
 
-
-
-Oberstein                Expires 15 October 2024               [Page 12]
-
-Internet-Draft                    WAMP                        April 2024
-
-
    pattern = re.compile(r"^([^\s\.#]+\.)*([^\s\.#]+)$")
 
    When *empty URI components are allowed* (which is the case for
@@ -683,6 +665,14 @@ Internet-Draft                    WAMP                        April 2024
    pattern = re.compile(r"^(([^\s\.#]+\.)|\.)*([^\s\.#]+)?$")
 
    *Strict URIs*
+
+
+
+
+Oberstein                Expires 15 October 2024               [Page 12]
+
+Internet-Draft                    WAMP                        April 2024
+
 
    While the above rules MUST be followed, following a stricter URI rule
    is recommended: URI components SHOULD only contain lower-case
@@ -719,17 +709,6 @@ Internet-Draft                    WAMP                        April 2024
    *  wamp.error.not_authorized
    *  wamp.error.procedure_already_exists
 
-
-
-
-
-
-
-Oberstein                Expires 15 October 2024               [Page 13]
-
-Internet-Draft                    WAMP                        April 2024
-
-
 2.1.2.  IDs
 
    WAMP needs to identify the following ephemeral entities each in the
@@ -743,6 +722,13 @@ Internet-Draft                    WAMP                        April 2024
 
    These are identified in WAMP using IDs that are integers between
    (inclusive) *1* and *2^53* (9007199254740992):
+
+
+
+Oberstein                Expires 15 October 2024               [Page 13]
+
+Internet-Draft                    WAMP                        April 2024
+
 
    *  IDs in the _global scope_ MUST be drawn _randomly_ from a _uniform
       distribution_ over the complete range [1, 2^53]
@@ -778,14 +764,6 @@ Internet-Draft                    WAMP                        April 2024
    *  SUBSCRIBED.Subscription
    *  REGISTERED.Registration
    *  UNSUBSCRIBE.Subscription
-
-
-
-Oberstein                Expires 15 October 2024               [Page 14]
-
-Internet-Draft                    WAMP                        April 2024
-
-
    *  UNREGISTER.Registration
    *  INVOCATION.Registration
 
@@ -800,6 +778,14 @@ Internet-Draft                    WAMP                        April 2024
    *  REGISTER.Request
    *  REGISTERED.Request (mirrored REGISTER.Request)
    *  UNREGISTER.Request
+
+
+
+Oberstein                Expires 15 October 2024               [Page 14]
+
+Internet-Draft                    WAMP                        April 2024
+
+
    *  UNREGISTERED.Request (mirrored UNREGISTER.Request)
    *  CALL.Request
    *  RESULT.Request (mirrored CALL.Request)
@@ -835,13 +821,6 @@ Internet-Draft                    WAMP                        April 2024
    than one serialization format, enabling components using different
    kinds of serializations to connect to each other.
 
-
-
-Oberstein                Expires 15 October 2024               [Page 15]
-
-Internet-Draft                    WAMP                        April 2024
-
-
    The WAMP Basic Profile defines the following bindings for message
    serialization:
 
@@ -854,6 +833,14 @@ Internet-Draft                    WAMP                        April 2024
 
    With JSON serialization, each WAMP message is serialized according to
    the JSON specification as described in [RFC7159].
+
+
+
+
+Oberstein                Expires 15 October 2024               [Page 15]
+
+Internet-Draft                    WAMP                        April 2024
+
 
    Further, binary data follows a convention for conversion to JSON
    strings.  For details see the Appendix.
@@ -887,17 +874,6 @@ Internet-Draft                    WAMP                        April 2024
 
    The default transport binding for WAMP is WebSocket ([RFC6455]).
 
-
-
-
-
-
-
-Oberstein                Expires 15 October 2024               [Page 16]
-
-Internet-Draft                    WAMP                        April 2024
-
-
    In the Basic Profile, WAMP messages are transmitted as WebSocket
    messages: each WAMP message is transmitted as a separate WebSocket
    message (not WebSocket frame).  The Advanced Profile may define other
@@ -914,6 +890,13 @@ Internet-Draft                    WAMP                        April 2024
    *  wamp.2.json
    *  wamp.2.msgpack
    *  wamp.2.cbor
+
+
+
+Oberstein                Expires 15 October 2024               [Page 16]
+
+Internet-Draft                    WAMP                        April 2024
+
 
    With wamp.2.json, _all_ WebSocket messages MUST BE of type *text*
    (UTF8 encoded payload) and use the JSON message serialization.
@@ -941,6 +924,23 @@ Internet-Draft                    WAMP                        April 2024
    The diagram below illustrates the full transport connection and
    session lifecycle for an implementation which uses WebSocket over TCP
    as the transport and allows the re-use of a transport connection.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2361,7 +2361,7 @@ Internet-Draft                    WAMP                        April 2024
 
    *  SUBSCRIBED.Subscription is the ID for the subscription under which
       the Subscriber receives the event - the ID for the subscription
-      originally handed out by the Broker to the Subscribe*.
+      originally handed out by the Broker to the Subscribe.
    *  PUBLISHED.Publication is the ID of the publication of the
       published event.
    *  Details is a dictionary that allows the Broker to provide
@@ -6694,7 +6694,7 @@ Internet-Draft                    WAMP                        April 2024
    *Blacklisting*.
 
    A _Publisher_ may also explicitly define a *eligible* list of
-   *Subscribers** based on WAMP sessionid, authid or authrole.  This is
+   _Subscribers_ based on WAMP sessionid, authid or authrole.  This is
    referred to as *Whitelisting*.
 
    Use Cases include the following.
@@ -12997,7 +12997,7 @@ Internet-Draft                    WAMP                        April 2024
    3.  Retrieve the node's N1 own domain D_N1 given the node's address
        N1_adr.
    4.  Check D_N1 is in R_DR.
-   5.  Select a domain D from R_DR and get endpoint E for D.
+   5.  Select a domain D (!=D_N1) from R_DR and get endpoint E for D.
    6.  Connect to D and authenticate via WAMP-Cryptosign.
    7.  Verify connected node N2 by checking against D
    8.  Subscribe to wamp.r2r.traffic_payable
@@ -13225,8 +13225,8 @@ Internet-Draft                    WAMP                        April 2024
    |                   | pattern_                                    |
    +-------------------+---------------------------------------------+
    | _Access Control_  | Policy for selective restriction of         |
-   |                   | *Action*s on _URIs or URI patterns_         |
-   |                   | performed by *Principal*s                   |
+   |                   | _Actions_ on _URIs or URI patterns_         |
+   |                   | performed by _Principals_                   |
    +-------------------+---------------------------------------------+
    | _Role-based       | An _Access Control_ policy based on _Realm_ |
    | Access Control    | (realm), _Principal_'s _Role_ (authrole),   |
@@ -13239,8 +13239,8 @@ Internet-Draft                    WAMP                        April 2024
    | Control_          | _Router Administrators_ or _Realm Owners_,  |
    |                   | and enforced by _Routers_                   |
    +-------------------+---------------------------------------------+
-   | _Capability-based | An _Access Control_ policy where *Caller*s, |
-   | Access Control_   | *Callee*s, *Publisher*s, *Subscriber*s      |
+   | _Capability-based | An _Access Control_ policy where _Callers_, |
+   | Access Control_   | _Callees_, _Publishers_, _Subscribers_      |
    |                   | directly share capabilities with each other |
    +-------------------+---------------------------------------------+
    | _Subject_         | The originating _Session_ of an _Action_ in |
@@ -13280,7 +13280,7 @@ Internet-Draft                    WAMP                        April 2024
    +----------------+--------------------------------------------+
    | _Procedure_    | A _Procedure_ is an URI or URI pattern     |
    |                | that can be registered for call routing by |
-   |                | *Callee*s                                  |
+   |                | _Callees_                                  |
    +----------------+--------------------------------------------+
    | _Registration_ | A _Router_ record resulting from a         |
    |                | _Callee_ successfully *registering* a      |
@@ -13312,7 +13312,7 @@ Internet-Draft                    WAMP                        April 2024
    +----------------+---------------------------------------------+
    | _Topic_        | A _Topic_ is an URI or URI pattern that can |
    |                | be subscribed to for event routing by       |
-   |                | *Subscriber*s                               |
+   |                | _Subscribers_                               |
    +----------------+---------------------------------------------+
    | _Subscription_ | A _Router_ record resulting from a          |
    |                | _Subscriber_ successfully *subscribing* to  |
@@ -13454,19 +13454,19 @@ Internet-Draft                    WAMP                        April 2024
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-Index
-
-   =
-
-      =
-
-         =D_N1  Section 17, Paragraph 2, Item 5
-
 Author's Address
 
    Tobias Oberstein
    typedef int GmbH
    Email: tobias.oberstein@typedefint.eu
+
+
+
+
+
+
+
+
 
 
 

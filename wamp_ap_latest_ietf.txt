@@ -159,8 +159,8 @@ Internet-Draft                   WAMP-AP                      April 2024
    13. Contributors  . . . . . . . . . . . . . . . . . . . . . . . . 184
    14. Normative References  . . . . . . . . . . . . . . . . . . . . 185
    15. Informative References  . . . . . . . . . . . . . . . . . . . 185
-   Index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 185
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . . 185
+
 
 
 
@@ -3614,7 +3614,7 @@ Internet-Draft                   WAMP-AP                      April 2024
    *Blacklisting*.
 
    A _Publisher_ may also explicitly define a *eligible* list of
-   *Subscribers** based on WAMP sessionid, authid or authrole.  This is
+   _Subscribers_ based on WAMP sessionid, authid or authrole.  This is
    referred to as *Whitelisting*.
 
    Use Cases include the following.
@@ -9917,7 +9917,7 @@ Internet-Draft                   WAMP-AP                      April 2024
    3.  Retrieve the node's N1 own domain D_N1 given the node's address
        N1_adr.
    4.  Check D_N1 is in R_DR.
-   5.  Select a domain D from R_DR and get endpoint E for D.
+   5.  Select a domain D (!=D_N1) from R_DR and get endpoint E for D.
    6.  Connect to D and authenticate via WAMP-Cryptosign.
    7.  Verify connected node N2 by checking against D
    8.  Subscribe to wamp.r2r.traffic_payable
@@ -10145,8 +10145,8 @@ Internet-Draft                   WAMP-AP                      April 2024
    |                   | pattern_                                    |
    +-------------------+---------------------------------------------+
    | _Access Control_  | Policy for selective restriction of         |
-   |                   | *Action*s on _URIs or URI patterns_         |
-   |                   | performed by *Principal*s                   |
+   |                   | _Actions_ on _URIs or URI patterns_         |
+   |                   | performed by _Principals_                   |
    +-------------------+---------------------------------------------+
    | _Role-based       | An _Access Control_ policy based on _Realm_ |
    | Access Control    | (realm), _Principal_'s _Role_ (authrole),   |
@@ -10159,8 +10159,8 @@ Internet-Draft                   WAMP-AP                      April 2024
    | Control_          | _Router Administrators_ or _Realm Owners_,  |
    |                   | and enforced by _Routers_                   |
    +-------------------+---------------------------------------------+
-   | _Capability-based | An _Access Control_ policy where *Caller*s, |
-   | Access Control_   | *Callee*s, *Publisher*s, *Subscriber*s      |
+   | _Capability-based | An _Access Control_ policy where _Callers_, |
+   | Access Control_   | _Callees_, _Publishers_, _Subscribers_      |
    |                   | directly share capabilities with each other |
    +-------------------+---------------------------------------------+
    | _Subject_         | The originating _Session_ of an _Action_ in |
@@ -10200,7 +10200,7 @@ Internet-Draft                   WAMP-AP                      April 2024
    +----------------+--------------------------------------------+
    | _Procedure_    | A _Procedure_ is an URI or URI pattern     |
    |                | that can be registered for call routing by |
-   |                | *Callee*s                                  |
+   |                | _Callees_                                  |
    +----------------+--------------------------------------------+
    | _Registration_ | A _Router_ record resulting from a         |
    |                | _Callee_ successfully *registering* a      |
@@ -10232,7 +10232,7 @@ Internet-Draft                   WAMP-AP                      April 2024
    +----------------+---------------------------------------------+
    | _Topic_        | A _Topic_ is an URI or URI pattern that can |
    |                | be subscribed to for event routing by       |
-   |                | *Subscriber*s                               |
+   |                | _Subscribers_                               |
    +----------------+---------------------------------------------+
    | _Subscription_ | A _Router_ record resulting from a          |
    |                | _Subscriber_ successfully *subscribing* to  |
@@ -10344,23 +10344,7 @@ Internet-Draft                   WAMP-AP                      April 2024
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
 
-Index
-
-   =
-
-      =
-
-         =D_N1  Section 9, Paragraph 2, Item 5
-
 Author's Address
-
-
-
-
-Oberstein                Expires 15 October 2024              [Page 185]
-
-Internet-Draft                   WAMP-AP                      April 2024
-
 
    Tobias Oberstein
    typedef int GmbH
@@ -10373,44 +10357,4 @@ Internet-Draft                   WAMP-AP                      April 2024
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein                Expires 15 October 2024              [Page 186]
+Oberstein                Expires 15 October 2024              [Page 185]

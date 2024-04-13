@@ -1901,10 +1901,7 @@ li > p:last-of-type:only-child {
             <p id="section-toc.1-1.23.1"><a href="#section-23" class="auto internal xref">23</a>. <a href="#name-informative-references" class="internal xref">Informative References</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.24">
-            <p id="section-toc.1-1.24.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-index" class="internal xref">Index</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.25">
-            <p id="section-toc.1-1.25.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.24.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -4102,7 +4099,7 @@ The reason to choose the specific upper bound is that 2^53 is the largest intege
 <p id="section-5.2.4-10">where<a href="#section-5.2.4-10" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-5.2.4-11.1">
-              <code>SUBSCRIBED.Subscription</code> is the ID for the subscription under which the Subscriber receives the event - the ID for the subscription originally handed out by the Broker to the Subscribe*.<a href="#section-5.2.4-11.1" class="pilcrow">¶</a>
+              <code>SUBSCRIBED.Subscription</code> is the ID for the subscription under which the Subscriber receives the event - the ID for the subscription originally handed out by the Broker to the Subscribe.<a href="#section-5.2.4-11.1" class="pilcrow">¶</a>
 </li>
             <li class="compact" id="section-5.2.4-11.2">
               <code>PUBLISHED.Publication</code> is the ID of the publication of the published event.<a href="#section-5.2.4-11.2" class="pilcrow">¶</a>
@@ -8035,7 +8032,7 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 <p id="section-12.1-1"><strong>Subscriber Black- and Whitelisting</strong> is an advanced <em>Broker</em> feature where a <em>Publisher</em> is able to restrict the set of receivers of a published event.<a href="#section-12.1-1" class="pilcrow">¶</a></p>
 <p id="section-12.1-2">Under normal Publish &amp; Subscriber event dispatching, a <em>Broker</em> will dispatch a published event to all (authorized) <em>Subscribers</em> other than the <em>Publisher</em> itself. This set of receivers can be further reduced on a per-publication basis by the <em>Publisher</em> using <strong>Subscriber Black- and Whitelisting</strong>.<a href="#section-12.1-2" class="pilcrow">¶</a></p>
 <p id="section-12.1-3">The <em>Publisher</em> can explicitly <strong>exclude</strong> <em>Subscribers</em> based on WAMP <code>sessionid</code>, <code>authid</code> or <code>authrole</code>. This is referred to as <strong>Blacklisting</strong>.<a href="#section-12.1-3" class="pilcrow">¶</a></p>
-<p id="section-12.1-4">A <em>Publisher</em> may also explicitly define a <strong>eligible</strong> list of *Subscribers** based on WAMP <code>sessionid</code>, <code>authid</code> or <code>authrole</code>. This is referred to as <strong>Whitelisting</strong>.<a href="#section-12.1-4" class="pilcrow">¶</a></p>
+<p id="section-12.1-4">A <em>Publisher</em> may also explicitly define a <strong>eligible</strong> list of <em>Subscribers</em> based on WAMP <code>sessionid</code>, <code>authid</code> or <code>authrole</code>. This is referred to as <strong>Whitelisting</strong>.<a href="#section-12.1-4" class="pilcrow">¶</a></p>
 <p id="section-12.1-5">Use Cases include the following.<a href="#section-12.1-5" class="pilcrow">¶</a></p>
 <p id="section-12.1-6"><strong>Avoiding Callers from being self-notified</strong><a href="#section-12.1-6" class="pilcrow">¶</a></p>
 <p id="section-12.1-7">Consider an application that exposes a procedure to update a product price. The procedure might not only actually update the product price (e.g. in a backend database), but additionally publish an event with the updated product price, so that <strong>all</strong> application components get notified actively of the new price.<a href="#section-12.1-7" class="pilcrow">¶</a></p>
@@ -12823,7 +12820,7 @@ which obviously progresses.<a href="#section-16.2.3-2" class="pilcrow">¶</a></p
 </li>
         <li id="section-17-2.4">Check D_N1 is in R_DR.<a href="#section-17-2.4" class="pilcrow">¶</a>
 </li>
-        <li id="section-17-2.5">Select a domain D <span id="iref-d_n1-1" class="iref"></span> from R_DR and get endpoint E for D.<a href="#section-17-2.5" class="pilcrow">¶</a>
+        <li id="section-17-2.5">Select a domain D (!=D_N1) from R_DR and get endpoint E for D.<a href="#section-17-2.5" class="pilcrow">¶</a>
 </li>
         <li id="section-17-2.6">Connect to D and authenticate via WAMP-Cryptosign.<a href="#section-17-2.6" class="pilcrow">¶</a>
 </li>
@@ -13102,7 +13099,8 @@ both formally (open protocol and open source) as well as practically (switching 
                 <td class="text-left" rowspan="1" colspan="1">
                   <em>Access Control</em>
 </td>
-                <td class="text-left" rowspan="1" colspan="1">Policy for selective restriction of *Action*s on <em>URIs or URI patterns</em> performed by *Principal*s</td>
+                <td class="text-left" rowspan="1" colspan="1">Policy for selective restriction of <em>Actions</em> on <em>URIs or URI patterns</em> performed by <em>Principals</em>
+</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">
@@ -13129,7 +13127,7 @@ both formally (open protocol and open source) as well as practically (switching 
                 <td class="text-left" rowspan="1" colspan="1">
                   <em>Capability-based Access Control</em>
 </td>
-                <td class="text-left" rowspan="1" colspan="1">An <em>Access Control</em> policy where *Caller*s, *Callee*s, *Publisher*s, *Subscriber*s directly share capabilities with each other</td>
+                <td class="text-left" rowspan="1" colspan="1">An <em>Access Control</em> policy where <em>Callers</em>, <em>Callees</em>, <em>Publishers</em>, <em>Subscribers</em> directly share capabilities with each other</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">
@@ -13186,7 +13184,8 @@ both formally (open protocol and open source) as well as practically (switching 
                 <td class="text-left" rowspan="1" colspan="1">
                   <em>Procedure</em>
 </td>
-                <td class="text-left" rowspan="1" colspan="1">A <em>Procedure</em> is an URI or URI pattern that can be registered for call routing by *Callee*s</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Procedure</em> is an URI or URI pattern that can be registered for call routing by <em>Callees</em>
+</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">
@@ -13241,7 +13240,8 @@ both formally (open protocol and open source) as well as practically (switching 
                 <td class="text-left" rowspan="1" colspan="1">
                   <em>Topic</em>
 </td>
-                <td class="text-left" rowspan="1" colspan="1">A <em>Topic</em> is an URI or URI pattern that can be subscribed to for event routing by *Subscriber*s</td>
+                <td class="text-left" rowspan="1" colspan="1">A <em>Topic</em> is an URI or URI pattern that can be subscribed to for event routing by <em>Subscribers</em>
+</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">
@@ -13392,37 +13392,8 @@ this document are to be interpreted as described in RFC 2119 <span>[<a href="#RF
 <dd class="break"></dd>
 </dl>
 </section>
-<section id="appendix-A">
-      <h2 id="name-index">
-<a href="#name-index" class="section-name selfRef">Index</a>
-      </h2>
-<div id="rfc.index.index">
-<p id="appendix-A-1">
-        <a href="#rfc.index.u61" class="internal xref">=</a><a href="#appendix-A-1" class="pilcrow">¶</a></p>
-</div>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="appendix-A-2.1">
-          <div id="rfc.index.u61">
-<p id="appendix-A-2.1.1" class="keepWithNext">
-            <a href="#rfc.index.u61" class="internal xref">=</a><a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
-</div>
-<ul class="compact normal ulEmpty">
-<li class="compact normal ulEmpty" id="appendix-A-2.1.2.1">
-              <span class="break"></span><dl class="dlCompact dlParallel" id="appendix-A-2.1.2.1.1">
-                <dt id="appendix-A-2.1.2.1.1.1">=D_N1</dt>
-                <dd style="margin-left: 1.5em" id="appendix-A-2.1.2.1.1.2">
-                  <p id="appendix-A-2.1.2.1.1.2.1">
-                    <a href="#section-17-2.5" class="auto internal xref">Section 17, Paragraph 2, Item 5</a><a href="#appendix-A-2.1.2.1.1.2.1" class="pilcrow">¶</a></p>
-</dd>
-              <dd class="break"></dd>
-</dl>
-</li>
-          </ul>
-</li>
-      </ul>
-</section>
 <div id="authors-addresses">
-<section id="appendix-B">
+<section id="appendix-A">
       <h2 id="name-authors-address">
 <a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
       </h2>

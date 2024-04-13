@@ -2249,7 +2249,7 @@ Internet-Draft                   WAMP-BP                      April 2024
 
    *  SUBSCRIBED.Subscription is the ID for the subscription under which
       the Subscriber receives the event - the ID for the subscription
-      originally handed out by the Broker to the Subscribe*.
+      originally handed out by the Broker to the Subscribe.
    *  PUBLISHED.Publication is the ID of the publication of the
       published event.
    *  Details is a dictionary that allows the Broker to provide
@@ -3271,8 +3271,8 @@ Internet-Draft                   WAMP-BP                      April 2024
    |                   | pattern_                                    |
    +-------------------+---------------------------------------------+
    | _Access Control_  | Policy for selective restriction of         |
-   |                   | *Action*s on _URIs or URI patterns_         |
-   |                   | performed by *Principal*s                   |
+   |                   | _Actions_ on _URIs or URI patterns_         |
+   |                   | performed by _Principals_                   |
    +-------------------+---------------------------------------------+
    | _Role-based       | An _Access Control_ policy based on _Realm_ |
    | Access Control    | (realm), _Principal_'s _Role_ (authrole),   |
@@ -3285,8 +3285,8 @@ Internet-Draft                   WAMP-BP                      April 2024
    | Control_          | _Router Administrators_ or _Realm Owners_,  |
    |                   | and enforced by _Routers_                   |
    +-------------------+---------------------------------------------+
-   | _Capability-based | An _Access Control_ policy where *Caller*s, |
-   | Access Control_   | *Callee*s, *Publisher*s, *Subscriber*s      |
+   | _Capability-based | An _Access Control_ policy where _Callers_, |
+   | Access Control_   | _Callees_, _Publishers_, _Subscribers_      |
    |                   | directly share capabilities with each other |
    +-------------------+---------------------------------------------+
    | _Subject_         | The originating _Session_ of an _Action_ in |
@@ -3326,7 +3326,7 @@ Internet-Draft                   WAMP-BP                      April 2024
    +----------------+--------------------------------------------+
    | _Procedure_    | A _Procedure_ is an URI or URI pattern     |
    |                | that can be registered for call routing by |
-   |                | *Callee*s                                  |
+   |                | _Callees_                                  |
    +----------------+--------------------------------------------+
    | _Registration_ | A _Router_ record resulting from a         |
    |                | _Callee_ successfully *registering* a      |
@@ -3366,7 +3366,7 @@ Internet-Draft                   WAMP-BP                      April 2024
    +----------------+---------------------------------------------+
    | _Topic_        | A _Topic_ is an URI or URI pattern that can |
    |                | be subscribed to for event routing by       |
-   |                | *Subscriber*s                               |
+   |                | _Subscribers_                               |
    +----------------+---------------------------------------------+
    | _Subscription_ | A _Router_ record resulting from a          |
    |                | _Subscriber_ successfully *subscribing* to  |
