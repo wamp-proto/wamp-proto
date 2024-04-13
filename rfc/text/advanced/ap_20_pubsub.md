@@ -1,1 +1,0 @@
-# Advanced PubSub {#adv-pubsub}
