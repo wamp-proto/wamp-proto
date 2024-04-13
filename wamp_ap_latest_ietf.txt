@@ -226,44 +226,44 @@ Oberstein                Expires 15 October 2024                [Page 4]
 Internet-Draft                   WAMP-AP                      April 2024
 
 
-   +=====================================+========+=+=+=+====+===+====+
-   | Feature                             | Status |P|B|S| Cr | D | Ce |
-   +=====================================+========+=+=+=+====+===+====+
-   | Progressive Call Results (#rpc-     | stable | | | | X  | X | X  |
-   | progressive-call-results)           |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Progressive Call Invocations (#rpc- | alpha  | | | | X  | X | X  |
-   | progressive-call-invocations)       |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Call Timeout (#rpc-call-timeout)    | alpha  | | | | X  | X | X  |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Call Canceling (#rpc-call-          | alpha  | | | | X  | X | X  |
-   | canceling)                          |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Caller Identification (#rpc-call-   | stable | | | | X  | X | X  |
-   | identification)                     |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Call Trustlevels (#rpc-call-trust-  | alpha  | | | |    | X | X  |
-   | levels)                             |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Registration Meta API (#rpc-reg-    | beta   | | | |    | X |    |
-   | metapi)                             |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Pattern-based Registration (#rpc-   | stable | | | |    | X | X  |
-   | pattern-reg)                        |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Shared Registration (#rpc-shared-   | beta   | | | |    | X | X  |
-   | registration)                       |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Sharded Registration (##rpc-        | alpha  | | | |    | X | X  |
-   | sharded-registration)               |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | Registration Revocation (#rpc-      | alpha  | | | |    | X | X  |
-   | registration-revocation)            |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
-   | (Interface) Procedure Reflection    | sketch | | | |    | X |    |
-   | (#interface-reflection)             |        | | | |    |   |    |
-   +-------------------------------------+--------+-+-+-+----+---+----+
+   +=====================================+======+======+======+======+
+   | Feature                             |Status|Caller|Dealer|Callee|
+   +=====================================+======+======+======+======+
+   | Progressive Call Results (#rpc-     |stable|X     |X     |X     |
+   | progressive-call-results)           |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Progressive Call Invocations (#rpc- |alpha |X     |X     |X     |
+   | progressive-call-invocations)       |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Call Timeout (#rpc-call-timeout)    |alpha |X     |X     |X     |
+   +-------------------------------------+------+------+------+------+
+   | Call Canceling (#rpc-call-          |alpha |X     |X     |X     |
+   | canceling)                          |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Caller Identification (#rpc-call-   |stable|X     |X     |X     |
+   | identification)                     |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Call Trustlevels (#rpc-call-trust-  |alpha |      |X     |X     |
+   | levels)                             |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Registration Meta API (#rpc-reg-    |beta  |      |X     |      |
+   | metapi)                             |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Pattern-based Registration (#rpc-   |stable|      |X     |X     |
+   | pattern-reg)                        |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Shared Registration (#rpc-shared-   |beta  |      |X     |X     |
+   | registration)                       |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Sharded Registration (##rpc-        |alpha |      |X     |X     |
+   | sharded-registration)               |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | Registration Revocation (#rpc-      |alpha |      |X     |X     |
+   | registration-revocation)            |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
+   | (Interface) Procedure Reflection    |sketch|      |X     |      |
+   | (#interface-reflection)             |      |      |      |      |
+   +-------------------------------------+------+------+------+------+
 
                                  Table 1
 
@@ -282,36 +282,36 @@ Oberstein                Expires 15 October 2024                [Page 5]
 Internet-Draft                   WAMP-AP                      April 2024
 
 
-   +================================+========+=+===+===+====+===+====+
-   | Feature                        | Status |P| B | S | Cr | D | Ce |
-   +================================+========+=+===+===+====+===+====+
-   | Subscriber Blackwhite Listing  | stable |X| X |   |    |   |    |
-   | (#pubsub-bw-listing)           |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | Publisher Exclusion (#pubsub-  | stable |X| X |   |    |   |    |
-   | pub-exclusion)                 |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | Publisher Identification       | stable |X| X | X |    |   |    |
-   | (#pubsub-pub-identification)   |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | Publication Trustlevels        | alpha  | | X | X |    |   |    |
-   | (#pubsub-pub-trustlevels)      |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | Subscription Meta API          | beta   | | X |   |    |   |    |
-   | (#pubsub-sub-metapi)           |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | Pattern-based Subscription     | stable | | X | X |    |   |    |
-   | (#pattern-based-subscription)  |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | Sharded Subscription (#pubsub- | alpha  | | X | X |    |   |    |
-   | sharded-subscription)          |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | Event History (#pubsub-event-  | beta   | | X |   |    |   |    |
-   | history)                       |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
-   | (Interface) Topic Reflection   | sketch | | X |   |    |   |    |
-   | (#interface-reflection)        |        | |   |   |    |   |    |
-   +--------------------------------+--------+-+---+---+----+---+----+
+   +==============================+======+=========+======+==========+
+   |Feature                       |Status|Publisher|Broker|Subscriber|
+   +==============================+======+=========+======+==========+
+   |Subscriber Blackwhite Listing |stable|X        |X     |          |
+   |(#pubsub-bw-listing)          |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |Publisher Exclusion (#pubsub- |stable|X        |X     |          |
+   |pub-exclusion)                |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |Publisher Identification      |stable|X        |X     |X         |
+   |(#pubsub-pub-identification)  |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |Publication Trustlevels       |alpha |         |X     |X         |
+   |(#pubsub-pub-trustlevels)     |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |Subscription Meta API         |beta  |         |X     |          |
+   |(#pubsub-sub-metapi)          |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |Pattern-based Subscription    |stable|         |X     |X         |
+   |(#pattern-based-subscription) |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |Sharded Subscription (#pubsub-|alpha |         |X     |X         |
+   |sharded-subscription)         |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |Event History (#pubsub-event- |beta  |         |X     |          |
+   |history)                      |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
+   |(Interface) Topic Reflection  |sketch|         |X     |          |
+   |(#interface-reflection)       |      |         |      |          |
+   +------------------------------+------+---------+------+----------+
 
                                  Table 2
 
