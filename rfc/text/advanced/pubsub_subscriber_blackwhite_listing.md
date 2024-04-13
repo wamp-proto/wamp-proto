@@ -6,7 +6,7 @@ Under normal Publish & Subscriber event dispatching, a *Broker* will dispatch a 
 
 The *Publisher* can explicitly **exclude** *Subscribers* based on WAMP `sessionid`, `authid` or `authrole`. This is referred to as **Blacklisting**.
 
-A *Publisher* may also explicitly define a **eligible** list of *Subscribers** based on WAMP `sessionid`, `authid` or `authrole`. This is referred to as **Whitelisting**.
+A *Publisher* may also explicitly define a **eligible** list of *Subscribers* based on WAMP `sessionid`, `authid` or `authrole`. This is referred to as **Whitelisting**.
 
 Use Cases include the following.
 

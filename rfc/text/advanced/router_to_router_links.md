@@ -6,7 +6,7 @@ Write me.
 2. Retrieve list of Domains R_DR routing realm R_adr.
 3. Retrieve the node's N1 own domain D_N1 given the node's address N1_adr.
 4. Check D_N1 is in R_DR.
-5. Select a domain D (!=D_N1) from R_DR and get endpoint E for D.
+5. Select a domain D (\!=D_N1) from R_DR and get endpoint E for D.
 6. Connect to D and authenticate via WAMP-Cryptosign.
 7. Verify connected node N2 by checking against D
 8. Subscribe to `wamp.r2r.traffic_payable`
