@@ -24,7 +24,7 @@ Note that a *Broker* may deny a *Publisher's* request to disclose its identity:
 *Example*
 
 {align="left"}
-        [8, 239714735, {}, "wamp.error.option_disallowed.disclose_me"]
+        [8, 16, 239714735, {}, "wamp.error.option_disallowed.disclose_me"]
 
 A *Broker* may also (automatically) disclose the identity of a *Publisher* even without the *Publisher* having explicitly requested to do so when the *Broker* configuration (for the publication topic) is set up to do so.
 

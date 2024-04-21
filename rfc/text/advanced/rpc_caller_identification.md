@@ -46,7 +46,7 @@ A *Dealer* MAY deny a *Caller's* request to disclose its identity:
 *Example*
 
 {align="left"}
-        [8, 7814135, "wamp.error.disclose_me.not_allowed"]
+        [8, 48, 7814135, "wamp.error.disclose_me.not_allowed"]
 
 A *Callee* MAY **request** the disclosure of caller identity via
 
