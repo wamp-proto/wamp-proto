@@ -1212,7 +1212,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 15 October 2024</td>
+<td class="center">Expires 23 October 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1225,12 +1225,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-04-13" class="published">13 April 2024</time>
+<time datetime="2024-04-21" class="published">21 April 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-10-15">15 October 2024</time></dd>
+<dd class="expires"><time datetime="2024-10-23">23 October 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1260,7 +1260,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 15 October 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 October 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -4241,7 +4241,7 @@ corresponding <code>INVOCATION</code> message MUST contain an
 <p id="section-3.6-17">A <em>Dealer</em> MAY deny a <em>Caller's</em> request to disclose its identity:<a href="#section-3.6-17" class="pilcrow">¶</a></p>
 <p id="section-3.6-18"><em>Example</em><a href="#section-3.6-18" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-3.6-19">
-<pre>    [8, 7814135, "wamp.error.disclose_me.not_allowed"]
+<pre>    [8, 48, 7814135, "wamp.error.disclose_me.not_allowed"]
 </pre><a href="#section-3.6-19" class="pilcrow">¶</a>
 </div>
 <p id="section-3.6-20">A <em>Callee</em> MAY <strong>request</strong> the disclosure of caller identity via<a href="#section-3.6-20" class="pilcrow">¶</a></p>
@@ -4826,7 +4826,7 @@ To achieve this, the existing UNREGISTERED message is extended as described belo
 <p id="section-4.3-8">Note that a <em>Broker</em> may deny a <em>Publisher's</em> request to disclose its identity:<a href="#section-4.3-8" class="pilcrow">¶</a></p>
 <p id="section-4.3-9"><em>Example</em><a href="#section-4.3-9" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.3-10">
-<pre>    [8, 239714735, {}, "wamp.error.option_disallowed.disclose_me"]
+<pre>    [8, 16, 239714735, {}, "wamp.error.option_disallowed.disclose_me"]
 </pre><a href="#section-4.3-10" class="pilcrow">¶</a>
 </div>
 <p id="section-4.3-11">A <em>Broker</em> may also (automatically) disclose the identity of a <em>Publisher</em> even without the <em>Publisher</em> having explicitly requested to do so when the <em>Broker</em> configuration (for the publication topic) is set up to do so.<a href="#section-4.3-11" class="pilcrow">¶</a></p>
