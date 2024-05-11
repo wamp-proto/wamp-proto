@@ -27,7 +27,7 @@ The `AUTHENTICATE` message is used with certain Authentication Methods. A **Clie
 
 ### CANCEL
 
-The `CANCEL` message is used with the Call Canceling advanced feature. A *Caller* can cancel and issued call actively by sending a cancel message to the *Dealer*.
+The `CANCEL` message is used with the Call Canceling advanced feature. A *Caller* can cancel an issued call actively by sending a cancel message to the *Dealer*.
 
 {align="left"}
         [CANCEL, CALL.Request|id, Options|dict]
