@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                              21 April 2024
-Expires: 23 October 2024
+Intended status: Experimental                                11 May 2024
+Expires: 12 November 2024
 
 
                  The Web Application Messaging Protocol
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 October 2024.
+   This Internet-Draft will expire on 12 November 2024.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Table of Contents
 
 
 
-Oberstein                Expires 23 October 2024                [Page 1]
+Oberstein               Expires 12 November 2024                [Page 1]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        1.3.3.  Publish & Subscribe . . . . . . . . . . . . . . . . .   8
@@ -109,9 +109,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 2]
+Oberstein               Expires 12 November 2024                [Page 2]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    6.  Remote Procedure Calls  . . . . . . . . . . . . . . . . . . .  43
@@ -165,9 +165,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 3]
+Oberstein               Expires 12 November 2024                [Page 3]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
      11.7.  Call Trust Levels  . . . . . . . . . . . . . . . . . . . 112
@@ -221,9 +221,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 4]
+Oberstein               Expires 12 November 2024                [Page 4]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    16. WAMP Interfaces . . . . . . . . . . . . . . . . . . . . . . . 217
@@ -277,9 +277,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 5]
+Oberstein               Expires 12 November 2024                [Page 5]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    expand that set from there.  It also allows implementations that are
@@ -333,9 +333,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 6]
+Oberstein               Expires 12 November 2024                [Page 6]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Callers_, can then call the procedure, with the router invoking the
@@ -389,9 +389,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 7]
+Oberstein               Expires 12 November 2024                [Page 7]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A Client MAY implement any combination of the Roles:
@@ -445,9 +445,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 8]
+Oberstein               Expires 12 November 2024                [Page 8]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Broker (Router)
@@ -501,9 +501,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024                [Page 9]
+Oberstein               Expires 12 November 2024                [Page 9]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    there would be no regard for compatibility between the two versions.
@@ -557,9 +557,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 10]
+Oberstein               Expires 12 November 2024               [Page 10]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 1.4.3.  Symmetric Messaging
@@ -613,9 +613,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 11]
+Oberstein               Expires 12 November 2024               [Page 11]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    When using JSON as WAMP serialization format, URIs (as other strings)
@@ -669,9 +669,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 12]
+Oberstein               Expires 12 November 2024               [Page 12]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    While the above rules MUST be followed, following a stricter URI rule
@@ -725,9 +725,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 13]
+Oberstein               Expires 12 November 2024               [Page 13]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  IDs in the _global scope_ MUST be drawn _randomly_ from a _uniform
@@ -781,9 +781,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 14]
+Oberstein               Expires 12 November 2024               [Page 14]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  UNREGISTERED.Request (mirrored UNREGISTER.Request)
@@ -837,9 +837,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 15]
+Oberstein               Expires 12 November 2024               [Page 15]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Further, binary data follows a convention for conversion to JSON
@@ -893,9 +893,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 16]
+Oberstein               Expires 12 November 2024               [Page 16]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    With wamp.2.json, _all_ WebSocket messages MUST BE of type *text*
@@ -949,9 +949,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 17]
+Oberstein               Expires 12 November 2024               [Page 17]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        ,------.                                    ,------.
@@ -1005,9 +1005,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 18]
+Oberstein               Expires 12 November 2024               [Page 18]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Receiving CHALLENGE message, after session was established.
@@ -1061,9 +1061,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 19]
+Oberstein               Expires 12 November 2024               [Page 19]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  id: an integer ID as defined in IDs (#ids)
@@ -1117,9 +1117,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 20]
+Oberstein               Expires 12 November 2024               [Page 20]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    and performance.
@@ -1173,9 +1173,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 21]
+Oberstein               Expires 12 November 2024               [Page 21]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 3.4.1.5.  ERROR
@@ -1229,9 +1229,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 22]
+Oberstein               Expires 12 November 2024               [Page 22]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 3.4.2.5.  UNSUBSCRIBE
@@ -1285,9 +1285,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 23]
+Oberstein               Expires 12 November 2024               [Page 23]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 3.4.3.2.  RESULT
@@ -1341,9 +1341,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 24]
+Oberstein               Expires 12 November 2024               [Page 24]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 3.4.3.8.  YIELD
@@ -1397,9 +1397,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 25]
+Oberstein               Expires 12 November 2024               [Page 25]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    |35  |UNSUBSCRIBED|         |Tx    |Rx        |      |      |      |
@@ -1453,9 +1453,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 26]
+Oberstein               Expires 12 November 2024               [Page 26]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    E.g. a CALL message
@@ -1509,9 +1509,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 27]
+Oberstein               Expires 12 November 2024               [Page 27]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
                             +--------------+                           
@@ -1565,9 +1565,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 28]
+Oberstein               Expires 12 November 2024               [Page 28]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +====+==============================================================+
@@ -1621,9 +1621,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 29]
+Oberstein               Expires 12 November 2024               [Page 29]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Realm is a string identifying the realm this session should attach
@@ -1677,9 +1677,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 30]
+Oberstein               Expires 12 November 2024               [Page 30]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A Client can support any combination of the above roles but must
@@ -1733,9 +1733,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 31]
+Oberstein               Expires 12 November 2024               [Page 31]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [2, 9129137332, {
@@ -1789,9 +1789,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 32]
+Oberstein               Expires 12 November 2024               [Page 32]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The <role>|dict is a dictionary describing features supported by the
@@ -1845,9 +1845,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 33]
+Oberstein               Expires 12 November 2024               [Page 33]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        ,------.          ,------.
@@ -1901,9 +1901,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 34]
+Oberstein               Expires 12 November 2024               [Page 34]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Reason MUST be a URI.
@@ -1957,9 +1957,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 35]
+Oberstein               Expires 12 November 2024               [Page 35]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The differences between ABORT and GOODBYE messages is that ABORT is
@@ -2013,9 +2013,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 36]
+Oberstein               Expires 12 November 2024               [Page 36]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A Subscriber may subscribe to zero, one or more topics, and a
@@ -2069,9 +2069,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 37]
+Oberstein               Expires 12 November 2024               [Page 37]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 5.1.2.  SUBSCRIBED
@@ -2125,9 +2125,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 38]
+Oberstein               Expires 12 November 2024               [Page 38]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 5.1.4.  UNSUBSCRIBE
@@ -2181,9 +2181,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 39]
+Oberstein               Expires 12 November 2024               [Page 39]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [8, 34, 85346237, {}, "wamp.error.no_such_subscription"]
@@ -2237,9 +2237,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 40]
+Oberstein               Expires 12 November 2024               [Page 40]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Request is a sequential ID in the _session scope_, incremented by
@@ -2293,9 +2293,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 41]
+Oberstein               Expires 12 November 2024               [Page 41]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Example_
@@ -2349,9 +2349,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 42]
+Oberstein               Expires 12 November 2024               [Page 42]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     [EVENT, SUBSCRIBED.Subscription|id, PUBLISHED.Publication|id, Details|dict,
@@ -2405,9 +2405,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 43]
+Oberstein               Expires 12 November 2024               [Page 43]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        ,------.          ,------.               ,------.
@@ -2461,9 +2461,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 44]
+Oberstein               Expires 12 November 2024               [Page 44]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 6.1.2.  REGISTERED
@@ -2517,9 +2517,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 45]
+Oberstein               Expires 12 November 2024               [Page 45]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Example_
@@ -2573,9 +2573,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 46]
+Oberstein               Expires 12 November 2024               [Page 46]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        ,------.          ,------.          ,------.
@@ -2629,9 +2629,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 47]
+Oberstein               Expires 12 November 2024               [Page 47]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Arguments is a list of positional call arguments (each of
@@ -2685,9 +2685,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 48]
+Oberstein               Expires 12 November 2024               [Page 48]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Details is a dictionary that allows to provide additional
@@ -2741,9 +2741,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 49]
+Oberstein               Expires 12 November 2024               [Page 49]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Example_
@@ -2797,9 +2797,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 50]
+Oberstein               Expires 12 November 2024               [Page 50]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Example_
@@ -2853,9 +2853,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 51]
+Oberstein               Expires 12 November 2024               [Page 51]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 6.2.6.  Call ERROR
@@ -2909,9 +2909,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 52]
+Oberstein               Expires 12 November 2024               [Page 52]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 6.3.  Caller Leaving During an RPC Invocation
@@ -2965,9 +2965,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 53]
+Oberstein               Expires 12 November 2024               [Page 53]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        ,------.          ,------.          ,------.
@@ -3021,9 +3021,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 54]
+Oberstein               Expires 12 November 2024               [Page 54]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Further, if _Subscriber A_ subscribes to *Topic 1*, the SUBSCRIBED
@@ -3077,9 +3077,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 55]
+Oberstein               Expires 12 November 2024               [Page 55]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Transport-level encryption and integrity is solely at the transport-
@@ -3133,9 +3133,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 56]
+Oberstein               Expires 12 November 2024               [Page 56]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 7.5.  Routers are trusted
@@ -3189,9 +3189,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 57]
+Oberstein               Expires 12 November 2024               [Page 57]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A procedure could not be registered, since a procedure with the given
@@ -3245,9 +3245,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 58]
+Oberstein               Expires 12 November 2024               [Page 58]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A Peer received invalid WAMP protocol message (e.g.  HELLO message
@@ -3301,9 +3301,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 59]
+Oberstein               Expires 12 November 2024               [Page 59]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 9.1.  Feature Announcement
@@ -3357,9 +3357,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 60]
+Oberstein               Expires 12 November 2024               [Page 60]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Advanced PubSub Features*
@@ -3413,9 +3413,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 61]
+Oberstein               Expires 12 November 2024               [Page 61]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +=================================================+========+
@@ -3469,9 +3469,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 62]
+Oberstein               Expires 12 November 2024               [Page 62]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     +========+=======================================================+
@@ -3525,9 +3525,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 63]
+Oberstein               Expires 12 November 2024               [Page 63]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 9.2.1.  CHALLENGE
@@ -3549,7 +3549,7 @@ Internet-Draft                    WAMP                        April 2024
 9.2.3.  CANCEL
 
    The CANCEL message is used with the Call Canceling advanced feature.
-   A _Caller_ can cancel and issued call actively by sending a cancel
+   A _Caller_ can cancel an issued call actively by sending a cancel
    message to the _Dealer_.
 
        [CANCEL, CALL.Request|id, Options|dict]
@@ -3581,9 +3581,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 64]
+Oberstein               Expires 12 November 2024               [Page 64]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    |  Note that an implementation that only supports a _Broker_ or
@@ -3637,9 +3637,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 65]
+Oberstein               Expires 12 November 2024               [Page 65]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -3693,9 +3693,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 66]
+Oberstein               Expires 12 November 2024               [Page 66]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  authmethod|string - The authentication method that was used for
@@ -3749,9 +3749,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 67]
+Oberstein               Expires 12 November 2024               [Page 67]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Positional results*
@@ -3805,9 +3805,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 68]
+Oberstein               Expires 12 November 2024               [Page 68]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  wamp.error.no_such_session - No session with the given ID exists
@@ -3861,9 +3861,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 69]
+Oberstein               Expires 12 November 2024               [Page 69]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    1.  authid|string - The authentication ID identifying sessions to
@@ -3917,9 +3917,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 70]
+Oberstein               Expires 12 November 2024               [Page 70]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Errors*
@@ -3973,9 +3973,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 71]
+Oberstein               Expires 12 November 2024               [Page 71]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    |  Note that an implementation that only supports a _Broker_ or
@@ -4029,9 +4029,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 72]
+Oberstein               Expires 12 November 2024               [Page 72]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -4085,9 +4085,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 73]
+Oberstein               Expires 12 November 2024               [Page 73]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 10.2.1.1.  wamp.registration.on_create
@@ -4141,9 +4141,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 74]
+Oberstein               Expires 12 November 2024               [Page 74]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 10.2.1.4.  wamp.registration.on_delete
@@ -4197,9 +4197,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 75]
+Oberstein               Expires 12 November 2024               [Page 75]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        RegistrationLists :=
@@ -4253,9 +4253,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 76]
+Oberstein               Expires 12 November 2024               [Page 76]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  RegistrationDetails|dict: Details on the registration.
@@ -4309,9 +4309,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 77]
+Oberstein               Expires 12 November 2024               [Page 77]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  registration|id: The ID of the registration to get the number of
@@ -4365,9 +4365,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 78]
+Oberstein               Expires 12 November 2024               [Page 78]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    which uses FlatBuffers IDL to describe the API.  The method of using
@@ -4421,9 +4421,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 79]
+Oberstein               Expires 12 November 2024               [Page 79]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  wamp.subscription.on_unsubscribe: Fired when a session is removed
@@ -4477,9 +4477,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 80]
+Oberstein               Expires 12 November 2024               [Page 80]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 10.3.1.3.  wamp.subscription.on_unsubscribe
@@ -4533,9 +4533,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 81]
+Oberstein               Expires 12 November 2024               [Page 81]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  SubscriptionLists|dict: A dictionary with a list of subscription
@@ -4589,9 +4589,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 82]
+Oberstein               Expires 12 November 2024               [Page 82]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 10.3.2.4.  wamp.subscription.get
@@ -4645,9 +4645,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 83]
+Oberstein               Expires 12 November 2024               [Page 83]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  wamp.error.no_such_subscription: No subscription with the given ID
@@ -4701,9 +4701,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 84]
+Oberstein               Expires 12 November 2024               [Page 84]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Message Flow*
@@ -4757,9 +4757,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 85]
+Oberstein               Expires 12 November 2024               [Page 85]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -4813,9 +4813,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 86]
+Oberstein               Expires 12 November 2024               [Page 86]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -4869,9 +4869,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 87]
+Oberstein               Expires 12 November 2024               [Page 87]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -4925,9 +4925,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 88]
+Oberstein               Expires 12 November 2024               [Page 88]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Example._ Callee-to-Dealer YIELDs
@@ -4981,9 +4981,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 89]
+Oberstein               Expires 12 November 2024               [Page 89]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [70, 87683, {"progress": true}, ["partial 1", 10]]
@@ -5037,9 +5037,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 90]
+Oberstein               Expires 12 November 2024               [Page 90]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     ,------.           ,------.          ,------.
@@ -5093,9 +5093,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 91]
+Oberstein               Expires 12 November 2024               [Page 91]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     ,------.           ,------.          ,------.
@@ -5149,9 +5149,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 92]
+Oberstein               Expires 12 November 2024               [Page 92]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Note that for progressive results, the timeout value does _not_
@@ -5205,9 +5205,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 93]
+Oberstein               Expires 12 November 2024               [Page 93]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  The _Caller_ did not announce the progressive call invocations
@@ -5261,9 +5261,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 94]
+Oberstein               Expires 12 November 2024               [Page 94]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A _Caller_ indicates its willingness to issue a progressive call by
@@ -5317,9 +5317,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 95]
+Oberstein               Expires 12 November 2024               [Page 95]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Caller Leaving*
@@ -5373,9 +5373,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 96]
+Oberstein               Expires 12 November 2024               [Page 96]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     ,------.           ,------.                ,------.
@@ -5429,9 +5429,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 97]
+Oberstein               Expires 12 November 2024               [Page 97]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     ,------.     ,-------.      ,------.      ,------.
@@ -5485,9 +5485,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 98]
+Oberstein               Expires 12 November 2024               [Page 98]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    then it MUST ignore and discard that INVOCATION message without any
@@ -5541,9 +5541,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024               [Page 99]
+Oberstein               Expires 12 November 2024               [Page 99]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    2.  [CALL, 2, {}, "bar"]
@@ -5597,9 +5597,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 100]
+Oberstein               Expires 12 November 2024              [Page 100]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    In order to validate the request ID of continuation candidates, it is
@@ -5653,9 +5653,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 101]
+Oberstein               Expires 12 November 2024              [Page 101]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Unlike some other advanced features, a _Callee_ cannot be unaware of
@@ -5709,9 +5709,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 102]
+Oberstein               Expires 12 November 2024              [Page 102]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        |                         |    YIELD (progress)    |
@@ -5765,9 +5765,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 103]
+Oberstein               Expires 12 November 2024              [Page 103]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Any option besides progress SHOULD be omitted altogether by the
@@ -5821,9 +5821,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 104]
+Oberstein               Expires 12 November 2024              [Page 104]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    If the _Callee_ does not support Call Timeouts, a _Dealer_ supporting
@@ -5877,9 +5877,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 105]
+Oberstein               Expires 12 November 2024              [Page 105]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    If a _Callee_ does not support Call Timeouts, it may optionally
@@ -5933,9 +5933,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 106]
+Oberstein               Expires 12 November 2024              [Page 106]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Message flow during call canceling when _Callee_ supports this
@@ -5989,9 +5989,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 107]
+Oberstein               Expires 12 November 2024              [Page 107]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        ,------.          ,------.            ,------.
@@ -6045,9 +6045,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 108]
+Oberstein               Expires 12 November 2024              [Page 108]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A _Caller_ cancels a remote procedure call initiated (but not yet
@@ -6101,9 +6101,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 109]
+Oberstein               Expires 12 November 2024              [Page 109]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Support for this feature MUST be announced by _Callees_ (role :=
@@ -6157,9 +6157,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 110]
+Oberstein               Expires 12 November 2024              [Page 110]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        CALL.Options.disclose_me|bool := true
@@ -6213,9 +6213,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 111]
+Oberstein               Expires 12 November 2024              [Page 111]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A _Callee_ MAY *request* the disclosure of caller identity via
@@ -6269,9 +6269,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 112]
+Oberstein               Expires 12 November 2024              [Page 112]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A _Callee_ might want to register procedures based on a _pattern_.
@@ -6325,9 +6325,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 113]
+Oberstein               Expires 12 November 2024              [Page 113]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    will all apply for call routing.  A call with one of the following
@@ -6381,9 +6381,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 114]
+Oberstein               Expires 12 November 2024              [Page 114]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 11.8.3.  Design Aspects
@@ -6437,9 +6437,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 115]
+Oberstein               Expires 12 November 2024              [Page 115]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Registered RPCs:
@@ -6493,9 +6493,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 116]
+Oberstein               Expires 12 November 2024              [Page 116]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -6549,9 +6549,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 117]
+Oberstein               Expires 12 November 2024              [Page 117]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    With the other values, the *Dealer* MUST fail all subsequent attempts
@@ -6605,9 +6605,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 118]
+Oberstein               Expires 12 November 2024              [Page 118]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 11.10.1.  "All" Calls
@@ -6661,9 +6661,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 119]
+Oberstein               Expires 12 November 2024              [Page 119]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  Details.registration|bool MUST be a previously issued registration
@@ -6717,9 +6717,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 120]
+Oberstein               Expires 12 November 2024              [Page 120]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The product price update procedure can use
@@ -6773,9 +6773,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 121]
+Oberstein               Expires 12 November 2024              [Page 121]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    PUBLISH.Options.exclude is a list of integers with WAMP sessionids
@@ -6829,9 +6829,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 122]
+Oberstein               Expires 12 November 2024              [Page 122]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -6885,9 +6885,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 123]
+Oberstein               Expires 12 November 2024              [Page 123]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -6941,9 +6941,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 124]
+Oberstein               Expires 12 November 2024              [Page 124]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -6997,9 +6997,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 125]
+Oberstein               Expires 12 November 2024              [Page 125]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A _Broker_ may also (automatically) disclose the identity of a
@@ -7053,9 +7053,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 126]
+Oberstein               Expires 12 November 2024              [Page 126]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Support for this feature MUST be announced by _Subscribers_ (role :=
@@ -7109,9 +7109,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 127]
+Oberstein               Expires 12 November 2024              [Page 127]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
                              +----------+          +------------+        +----------+
@@ -7165,9 +7165,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 128]
+Oberstein               Expires 12 November 2024              [Page 128]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    In the above example, events with PUBLISH.Topic
@@ -7221,9 +7221,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 129]
+Oberstein               Expires 12 November 2024              [Page 129]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 12.5.3.  Design Aspects
@@ -7277,9 +7277,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 130]
+Oberstein               Expires 12 November 2024              [Page 130]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Support for this feature MUST be announced by _Publishers_ (role :=
@@ -7333,9 +7333,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 131]
+Oberstein               Expires 12 November 2024              [Page 131]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Subscriptions:
@@ -7389,9 +7389,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 132]
+Oberstein               Expires 12 November 2024              [Page 132]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
       -  limit.  Positive integer.  Optional.  Indicates the maximum
@@ -7445,9 +7445,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 133]
+Oberstein               Expires 12 November 2024              [Page 133]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The arguments payload field returned by the above RPC uses the same
@@ -7501,9 +7501,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 134]
+Oberstein               Expires 12 November 2024              [Page 134]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    TODO/FIXME: This part of Event History needs more discussion and
@@ -7557,9 +7557,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 135]
+Oberstein               Expires 12 November 2024              [Page 135]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    It can be used for topics that generally have single or very few
@@ -7613,9 +7613,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 136]
+Oberstein               Expires 12 November 2024              [Page 136]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 12.9.  Subscription Revocation
@@ -7669,9 +7669,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 137]
+Oberstein               Expires 12 November 2024              [Page 137]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 12.10.  Session Testament
@@ -7725,9 +7725,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 138]
+Oberstein               Expires 12 November 2024              [Page 138]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    1.  publish_options|dict - options for the event when it is published
@@ -7781,9 +7781,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 139]
+Oberstein               Expires 12 November 2024              [Page 139]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    When a _Session_ is going to be _destroyed_, the _Router_ will
@@ -7837,9 +7837,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 140]
+Oberstein               Expires 12 November 2024              [Page 140]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
         ,------.          ,------.
@@ -7893,9 +7893,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 141]
+Oberstein               Expires 12 November 2024              [Page 141]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Transport-level Authentication*
@@ -7949,9 +7949,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 142]
+Oberstein               Expires 12 November 2024              [Page 142]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [1, "realm1",
@@ -8005,9 +8005,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 143]
+Oberstein               Expires 12 November 2024              [Page 143]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    1.  authid|string: The authentication ID the client was (actually)
@@ -8061,9 +8061,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 144]
+Oberstein               Expires 12 November 2024              [Page 144]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    If the server is willing to let the client authenticate using WAMP-
@@ -8117,9 +8117,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 145]
+Oberstein               Expires 12 November 2024              [Page 145]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    If the authentication succeeds, the server will finally respond with
@@ -8173,9 +8173,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 146]
+Oberstein               Expires 12 November 2024              [Page 146]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    In this case, the secret is actually shared between the WAMP server
@@ -8229,9 +8229,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 147]
+Oberstein               Expires 12 November 2024              [Page 147]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 13.3.  Salted Challenge Response Authentication
@@ -8285,9 +8285,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 148]
+Oberstein               Expires 12 November 2024              [Page 148]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    1.  To simplify parsing, SCRAM attributes in the authentication
@@ -8341,9 +8341,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 149]
+Oberstein               Expires 12 November 2024              [Page 149]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Salts*
@@ -8397,9 +8397,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 150]
+Oberstein               Expires 12 November 2024              [Page 150]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The tls-unique channel binding type allows the WAMP layer to
@@ -8453,9 +8453,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 151]
+Oberstein               Expires 12 November 2024              [Page 151]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +========================================+==============+
@@ -8509,9 +8509,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 152]
+Oberstein               Expires 12 November 2024              [Page 152]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Upon receiving the HELLO message, the server MUST terminate the
@@ -8565,9 +8565,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 153]
+Oberstein               Expires 12 November 2024              [Page 153]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    5.  memory|integer: The memory cost factor to use for generating the
@@ -8621,9 +8621,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 154]
+Oberstein               Expires 12 November 2024              [Page 154]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  The ClientProof passed via the Signature|string argument is
@@ -8677,9 +8677,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 155]
+Oberstein               Expires 12 November 2024              [Page 155]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    If the authentication fails, the server SHALL respond with an ABORT
@@ -8733,9 +8733,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 156]
+Oberstein               Expires 12 November 2024              [Page 156]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Data Stored on the Server*
@@ -8789,9 +8789,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 157]
+Oberstein               Expires 12 November 2024              [Page 157]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    ClientFirstBare = "n=" + Escape(HELLO.Details.authid) + "," +
@@ -8845,9 +8845,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 158]
+Oberstein               Expires 12 November 2024              [Page 158]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *ServerSignature*
@@ -8901,9 +8901,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 159]
+Oberstein               Expires 12 November 2024              [Page 159]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Which KDF is used to hash the password during user registration is up
@@ -8957,9 +8957,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 160]
+Oberstein               Expires 12 November 2024              [Page 160]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  CHALLENGE.Details.salt as the cryptographic salt,
@@ -9013,9 +9013,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 161]
+Oberstein               Expires 12 November 2024              [Page 161]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Examples of complete authentication message exchanges can be found at
@@ -9069,9 +9069,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 162]
+Oberstein               Expires 12 November 2024              [Page 162]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +=========+=========================================================+
@@ -9125,9 +9125,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 163]
+Oberstein               Expires 12 November 2024              [Page 163]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    When no channel binding is active, the Ed25519 signature over the 32
@@ -9181,9 +9181,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 164]
+Oberstein               Expires 12 November 2024              [Page 164]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +===============+======+========+================================================================+
@@ -9237,9 +9237,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 165]
+Oberstein               Expires 12 November 2024              [Page 165]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    [4, "cryptosign", {
@@ -9293,9 +9293,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 166]
+Oberstein               Expires 12 November 2024              [Page 166]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    {"broker": {"features": {"event_retention": True,
@@ -9349,9 +9349,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 167]
+Oberstein               Expires 12 November 2024              [Page 167]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 test_vectors_1 = [
@@ -9405,9 +9405,9 @@ test_vectors_1 = [
 
 
 
-Oberstein                Expires 23 October 2024              [Page 168]
+Oberstein               Expires 12 November 2024              [Page 168]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  RFC5056: On the Use of Channel Bindings to Secure Channels
@@ -9461,9 +9461,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 169]
+Oberstein               Expires 12 November 2024              [Page 169]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The client MUST then locally fetch the channel_id from the underlying
@@ -9517,9 +9517,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 170]
+Oberstein               Expires 12 November 2024              [Page 170]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 13.4.4.1.  Certificate Chains
@@ -9573,9 +9573,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 171]
+Oberstein               Expires 12 November 2024              [Page 171]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    With 1., the user implicitly trusts the vendor, and all root CAs in
@@ -9629,9 +9629,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 172]
+Oberstein               Expires 12 November 2024              [Page 172]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
   |     +------------------------------+
@@ -9685,9 +9685,9 @@ optional hierarchical chain of intermediate certificates
 
 
 
-Oberstein                Expires 23 October 2024              [Page 173]
+Oberstein               Expires 12 November 2024              [Page 173]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    [
@@ -9741,9 +9741,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 174]
+Oberstein               Expires 12 November 2024              [Page 174]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    [
@@ -9797,9 +9797,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 175]
+Oberstein               Expires 12 November 2024              [Page 175]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Besides EIP712, other comparable approaches to specify
@@ -9853,9 +9853,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 176]
+Oberstein               Expires 12 November 2024              [Page 176]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 [
@@ -9909,9 +9909,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 177]
+Oberstein               Expires 12 November 2024              [Page 177]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Trustroots are identified by their Ethereum address, which is
@@ -9965,9 +9965,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 178]
+Oberstein               Expires 12 November 2024              [Page 178]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    and certificates MUST contain
@@ -10021,9 +10021,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 179]
+Oberstein               Expires 12 November 2024              [Page 179]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  perform security decisions based on security policy and
@@ -10077,9 +10077,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 180]
+Oberstein               Expires 12 November 2024              [Page 180]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        +------------------------------+
@@ -10133,9 +10133,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 181]
+Oberstein               Expires 12 November 2024              [Page 181]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 13.4.6.  Example Message Exchanges
@@ -10189,9 +10189,9 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 23 October 2024              [Page 182]
+Oberstein               Expires 12 November 2024              [Page 182]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     [5,
@@ -10245,9 +10245,9 @@ WAMP-Receive(3735119691078036, client01@example.com) <<
 
 
 
-Oberstein                Expires 23 October 2024              [Page 183]
+Oberstein               Expires 12 November 2024              [Page 183]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
     [6, {}, 'wamp.close.normal']
@@ -10301,9 +10301,9 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 23 October 2024              [Page 184]
+Oberstein               Expires 12 November 2024              [Page 184]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 >>
@@ -10357,9 +10357,9 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 23 October 2024              [Page 185]
+Oberstein               Expires 12 November 2024              [Page 185]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
  'resumed': False,
@@ -10413,9 +10413,9 @@ WAMP-Transmit(-, -) >>
 
 
 
-Oberstein                Expires 23 October 2024              [Page 186]
+Oberstein               Expires 12 November 2024              [Page 186]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
                                                    'delegate': '0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6',
@@ -10469,9 +10469,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 187]
+Oberstein               Expires 12 November 2024              [Page 187]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
                                                                                 {'name': 'meta',
@@ -10525,9 +10525,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 188]
+Oberstein               Expires 12 November 2024              [Page 188]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
                                         'shared_registration': True}},
@@ -10581,9 +10581,9 @@ WAMP-Receive(-, -) <<
 
 
 
-Oberstein                Expires 23 October 2024              [Page 189]
+Oberstein               Expires 12 November 2024              [Page 189]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
                                         'subscription_meta_api': True,
@@ -10637,9 +10637,9 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) <<
 
 
 
-Oberstein                Expires 23 October 2024              [Page 190]
+Oberstein               Expires 12 November 2024              [Page 190]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Session*s MAY be required to _Authenticate_ access to a _Realm_
@@ -10693,9 +10693,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 191]
+Oberstein               Expires 12 November 2024              [Page 191]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
 14.1.  Payload Passthru Mode
@@ -10749,9 +10749,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 192]
+Oberstein               Expires 12 November 2024              [Page 192]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Cases where a _Caller_ sends a CALL message with payload passthru to
@@ -10805,9 +10805,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 193]
+Oberstein               Expires 12 November 2024              [Page 193]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    To use payload passthru mode, the options for CALL, PUBLISH and YIELD
@@ -10861,9 +10861,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 194]
+Oberstein               Expires 12 November 2024              [Page 194]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The ppt_scheme identifies the Payload Schema.  It is a required
@@ -10917,9 +10917,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 195]
+Oberstein               Expires 12 November 2024              [Page 195]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +================+===========+=============================+
@@ -10973,9 +10973,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 196]
+Oberstein               Expires 12 November 2024              [Page 196]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +================+===========+==========+
@@ -11029,9 +11029,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 197]
+Oberstein               Expires 12 November 2024              [Page 197]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    {
@@ -11085,9 +11085,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 198]
+Oberstein               Expires 12 November 2024              [Page 198]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Example._ Caller-to-Dealer CALL with MQTT payload.  Specifying
@@ -11141,9 +11141,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 199]
+Oberstein               Expires 12 November 2024              [Page 199]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    _Example._ Dealer-to-Callee INVOCATION with MQTT payload
@@ -11197,9 +11197,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 200]
+Oberstein               Expires 12 November 2024              [Page 200]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -11253,9 +11253,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 201]
+Oberstein               Expires 12 November 2024              [Page 201]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        [
@@ -11309,9 +11309,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 202]
+Oberstein               Expires 12 November 2024              [Page 202]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Besides the WebSocket transport, the following WAMP transports are
@@ -11365,9 +11365,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 203]
+Oberstein               Expires 12 November 2024              [Page 203]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    the first octet sent out to (or received from) the wire is 0x11 and
@@ -11421,9 +11421,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 204]
+Oberstein               Expires 12 November 2024              [Page 204]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
         0: 2**9 octets
@@ -11477,9 +11477,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 205]
+Oberstein               Expires 12 November 2024              [Page 205]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    After a _Client_ has connected to a _Router_, the _Router_ will first
@@ -11533,9 +11533,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 206]
+Oberstein               Expires 12 November 2024              [Page 206]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    When the _Router_ is unable to speak the serializer requested by the
@@ -11589,9 +11589,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 207]
+Oberstein               Expires 12 November 2024              [Page 207]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    # map RawSocket handshake reply (2nd octet)
@@ -11645,9 +11645,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 208]
+Oberstein               Expires 12 November 2024              [Page 208]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The _most significant octet_ has the following structure
@@ -11701,9 +11701,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 209]
+Oberstein               Expires 12 November 2024              [Page 209]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    When the transport level message type indicates a regular WAMP
@@ -11757,9 +11757,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 210]
+Oberstein               Expires 12 November 2024              [Page 210]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    With batched transport, even if only a single WAMP message is to be
@@ -11813,9 +11813,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 211]
+Oberstein               Expires 12 November 2024              [Page 211]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    |  The request path with this and subsequently described HTTP/POST
@@ -11869,9 +11869,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 212]
+Oberstein               Expires 12 November 2024              [Page 212]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    |  Note: In unbatched mode, when there is more than one message
@@ -11925,9 +11925,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 213]
+Oberstein               Expires 12 November 2024              [Page 213]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Consider the byte array (hex representation):
@@ -11981,9 +11981,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 214]
+Oberstein               Expires 12 November 2024              [Page 214]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    import os, base64, json, sys, binascii
@@ -12037,9 +12037,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 215]
+Oberstein               Expires 12 November 2024              [Page 215]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    var data_in = new Uint8Array(new ArrayBuffer(16));
@@ -12093,9 +12093,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 216]
+Oberstein               Expires 12 November 2024              [Page 216]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    As an example, the proposed WebSocket extension "permessage-priority"
@@ -12149,9 +12149,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 217]
+Oberstein               Expires 12 November 2024              [Page 217]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Problems such above could be avoided when WAMP supported an _option_
@@ -12205,9 +12205,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 218]
+Oberstein               Expires 12 November 2024              [Page 218]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  PUBLISH.Arguments|list and PUBLISH.ArgumentsKw|dict
@@ -12261,9 +12261,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 219]
+Oberstein               Expires 12 November 2024              [Page 219]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Positional arguments* (args|list)
@@ -12317,9 +12317,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 220]
+Oberstein               Expires 12 November 2024              [Page 220]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    When successful, the procedure will return a list of WAMP session IDs
@@ -12373,9 +12373,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 221]
+Oberstein               Expires 12 November 2024              [Page 221]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  arg (default)
@@ -12429,9 +12429,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 222]
+Oberstein               Expires 12 November 2024              [Page 222]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *Type/Object UUIDs*
@@ -12485,9 +12485,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 223]
+Oberstein               Expires 12 November 2024              [Page 223]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    /// An unsigned integer with 160 bits.
@@ -12541,9 +12541,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 224]
+Oberstein               Expires 12 November 2024              [Page 224]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    The procedure will be registered under the WAMP URI
@@ -12597,9 +12597,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 225]
+Oberstein               Expires 12 November 2024              [Page 225]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  _Interfaces_
@@ -12653,9 +12653,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 226]
+Oberstein               Expires 12 November 2024              [Page 226]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Write me.
@@ -12709,9 +12709,9 @@ flatc -o ./schema --binary --schema --bfbs-comments --bfbs-builtins ./src
 
 
 
-Oberstein                Expires 23 October 2024              [Page 227]
+Oberstein               Expires 12 November 2024              [Page 227]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    rpc_service IExample1 (
@@ -12765,9 +12765,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 228]
+Oberstein               Expires 12 November 2024              [Page 228]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    +=============+===============================================+
@@ -12821,9 +12821,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 229]
+Oberstein               Expires 12 November 2024              [Page 229]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    name: example
@@ -12877,9 +12877,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 230]
+Oberstein               Expires 12 November 2024              [Page 230]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Removing all unwanted ZIP archive metadata can be achieved using
@@ -12933,9 +12933,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 231]
+Oberstein               Expires 12 November 2024              [Page 231]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    Predefined WAMP reflection procedures to _describe_ resources by
@@ -12989,9 +12989,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 232]
+Oberstein               Expires 12 November 2024              [Page 232]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    3.  Retrieve the node's N1 own domain D_N1 given the node's address
@@ -13045,9 +13045,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 233]
+Oberstein               Expires 12 November 2024              [Page 233]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
        wamp.error.no_such_principal
@@ -13101,9 +13101,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 234]
+Oberstein               Expires 12 November 2024              [Page 234]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    A _Router_ encountered a network failure
@@ -13157,9 +13157,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 235]
+Oberstein               Expires 12 November 2024              [Page 235]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    |              | using WAMP for application-level communications    |
@@ -13213,9 +13213,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 236]
+Oberstein               Expires 12 November 2024              [Page 236]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    |                   | used during                                 |
@@ -13269,9 +13269,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 237]
+Oberstein               Expires 12 November 2024              [Page 237]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    | _Callee_       | A _Callee_ is a _Session_ that responds to |
@@ -13325,9 +13325,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 238]
+Oberstein               Expires 12 November 2024              [Page 238]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    | _Event_        | A publication that is routed to             |
@@ -13381,9 +13381,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 239]
+Oberstein               Expires 12 November 2024              [Page 239]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    *  David Chappelle
@@ -13437,9 +13437,9 @@ Internet-Draft                    WAMP                        April 2024
 
 
 
-Oberstein                Expires 23 October 2024              [Page 240]
+Oberstein               Expires 12 November 2024              [Page 240]
 
-Internet-Draft                    WAMP                        April 2024
+Internet-Draft                    WAMP                          May 2024
 
 
    [RFC8949]  Bormann, C. and P. Hoffman, "Concise Binary Object
@@ -13493,4 +13493,4 @@ Author's Address
 
 
 
-Oberstein                Expires 23 October 2024              [Page 241]
+Oberstein               Expires 12 November 2024              [Page 241]
