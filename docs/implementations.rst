@@ -166,3 +166,4 @@ wick_               Go                                  CLI tool to make WAMP RP
 .. _wamp_async: https://github.com/elast0ny/wamp_async
 .. _wick: https://github.com/codebasepk/wick
 .. _Octamp: https://github.com/cydrickn/octamp-client
+.. _OctampWamp: https://github.com/octamp/wamp
