@@ -91,6 +91,7 @@ jawampa_            Java + RxJava, Netty                A Java WAMP implementati
 KWAMP_              Kotlin                              A Kotlin WAMP router (aims for basic profile).
 Nexus_              Go                                  Router implementation for Go. (also includes a client implementation)
 NighlifeRabbit_     JavaScript, NodeJS                  Router implementation for `NodeJS <http://nodejs.org/>`_, MIT licensed.
+OctampWamp_         PHP, OpenSwoole                     Octamp WAMP is Router implementation of WAMP Protocol using PHP and OpenSwoole that is scalable, it uses Redis Pub/Sub to connect with other server.
 Thruway_            PHP                                 Thruway is a WAMP library built in PHP that provides both Client and Router roles.
 Turnpike_           Go                                  turnpike is a WAMP v2 router implemented in Go.
 wamp2spring_        Java, Spring                        A Java implementation built on top of the Spring 5 WebSocket support.
@@ -165,3 +166,4 @@ wick_               Go                                  CLI tool to make WAMP RP
 .. _wamp_async: https://github.com/elast0ny/wamp_async
 .. _wick: https://github.com/codebasepk/wick
 .. _Octamp: https://github.com/cydrickn/octamp-client
+.. _OctampWamp: https://github.com/octamp/wamp
