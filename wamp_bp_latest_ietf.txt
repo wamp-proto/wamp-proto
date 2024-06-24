@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                               23 June 2024
-Expires: 25 December 2024
+Intended status: Experimental                               24 June 2024
+Expires: 26 December 2024
 
 
                            WAMP Basic Profile
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 December 2024.
+   This Internet-Draft will expire on 26 December 2024.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Table of Contents
 
 
 
-Oberstein               Expires 25 December 2024                [Page 1]
+Oberstein               Expires 26 December 2024                [Page 1]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -78,14 +78,14 @@ Internet-Draft                   WAMP-BP                       June 2024
    3.  Messages  . . . . . . . . . . . . . . . . . . . . . . . . . .  17
      3.1.  Extensibility . . . . . . . . . . . . . . . . . . . . . .  18
      3.2.  No Polymorphism . . . . . . . . . . . . . . . . . . . . .  18
-     3.3.  Structure . . . . . . . . . . . . . . . . . . . . . . . .  18
+     3.3.  Structure . . . . . . . . . . . . . . . . . . . . . . . .  19
      3.4.  Message Definitions . . . . . . . . . . . . . . . . . . .  19
        3.4.1.  Session Lifecycle . . . . . . . . . . . . . . . . . .  19
        3.4.2.  Publish & Subscribe . . . . . . . . . . . . . . . . .  20
        3.4.3.  Routed Remote Procedure Calls . . . . . . . . . . . .  21
      3.5.  Message Codes and Direction . . . . . . . . . . . . . . .  23
      3.6.  Extension Messages  . . . . . . . . . . . . . . . . . . .  24
-     3.7.  Empty Arguments and Keyword Arguments . . . . . . . . . .  24
+     3.7.  Empty Arguments and Keyword Arguments . . . . . . . . . .  25
    4.  Sessions  . . . . . . . . . . . . . . . . . . . . . . . . . .  25
      4.1.  Session Establishment . . . . . . . . . . . . . . . . . .  27
        4.1.1.  HELLO . . . . . . . . . . . . . . . . . . . . . . . .  27
@@ -109,7 +109,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 2]
+Oberstein               Expires 26 December 2024                [Page 2]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -165,7 +165,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 3]
+Oberstein               Expires 26 December 2024                [Page 3]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -221,7 +221,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 4]
+Oberstein               Expires 26 December 2024                [Page 4]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -277,7 +277,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 5]
+Oberstein               Expires 26 December 2024                [Page 5]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -333,7 +333,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 6]
+Oberstein               Expires 26 December 2024                [Page 6]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -389,7 +389,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 7]
+Oberstein               Expires 26 December 2024                [Page 7]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -445,7 +445,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 8]
+Oberstein               Expires 26 December 2024                [Page 8]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -501,7 +501,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024                [Page 9]
+Oberstein               Expires 26 December 2024                [Page 9]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -557,7 +557,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 10]
+Oberstein               Expires 26 December 2024               [Page 10]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -613,7 +613,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 11]
+Oberstein               Expires 26 December 2024               [Page 11]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -669,7 +669,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 12]
+Oberstein               Expires 26 December 2024               [Page 12]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -725,7 +725,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 13]
+Oberstein               Expires 26 December 2024               [Page 13]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -781,7 +781,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 14]
+Oberstein               Expires 26 December 2024               [Page 14]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -837,7 +837,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 15]
+Oberstein               Expires 26 December 2024               [Page 15]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -893,7 +893,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 16]
+Oberstein               Expires 26 December 2024               [Page 16]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -909,6 +909,7 @@ Internet-Draft                   WAMP-BP                       June 2024
    *  Receiving REGISTERED message, before session was established.
    *  Receiving UNREGISTERED message, before session was established.
    *  Receiving INVOCATION message, before session was established.
+   *  Receiving YIELD message with invalid INVOCATION.Request.
    *  Receiving message with non-sequential (#session_scope_id) session
       scope (#session_scope_ids) request ID, such as SUBSCRIBE,
       UNSUBSCRIBE, PUBLISH, REGISTER, UNREGISTER, and CALL.  Note that
@@ -945,15 +946,15 @@ Internet-Draft                   WAMP-BP                       June 2024
    The notation Element|type denotes a message element named Element of
    type type, where type is one of
 
-   *  uri: a string URI as defined in URIs (#uris)
 
 
 
-Oberstein               Expires 25 December 2024               [Page 17]
+Oberstein               Expires 26 December 2024               [Page 17]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
 
+   *  uri: a string URI as defined in URIs (#uris)
    *  id: an integer ID as defined in IDs (#ids)
    *  integer: a non-negative integer
    *  string: a Unicode string, including the empty string
@@ -994,6 +995,21 @@ Internet-Draft                   WAMP-BP                       June 2024
    that is efficient, simple to implement and simple to code for
    rigorous message format checking.
 
+
+
+
+
+
+
+
+
+
+
+Oberstein               Expires 26 December 2024               [Page 18]
+
+Internet-Draft                   WAMP-BP                       June 2024
+
+
 3.3.  Structure
 
    The application payload (that is call arguments, call results, event
@@ -1002,14 +1018,6 @@ Internet-Draft                   WAMP-BP                       June 2024
    application payload.  Their business is call/event routing.  Having
    the application payload at the end of the list allows Brokers and
    Dealers to skip parsing it altogether.  This can improve efficiency
-
-
-
-Oberstein               Expires 25 December 2024               [Page 18]
-
-Internet-Draft                   WAMP-BP                       June 2024
-
-
    and performance.
 
 3.4.  Message Definitions
@@ -1046,6 +1054,18 @@ Internet-Draft                   WAMP-BP                       June 2024
    Sent by a Peer*to abort the opening of a WAMP session.  No response
    is expected.
 
+
+
+
+
+
+
+
+Oberstein               Expires 26 December 2024               [Page 19]
+
+Internet-Draft                   WAMP-BP                       June 2024
+
+
      [ABORT, Details|dict, Reason|uri]
 
      [ABORT, Details|dict, Reason|uri, Arguments|list]
@@ -1058,13 +1078,6 @@ Internet-Draft                   WAMP-BP                       June 2024
    echo'ed by the receiving Peer.
 
        [GOODBYE, Details|dict, Reason|uri]
-
-
-
-Oberstein               Expires 25 December 2024               [Page 19]
-
-Internet-Draft                   WAMP-BP                       June 2024
-
 
 3.4.1.5.  ERROR
 
@@ -1099,6 +1112,16 @@ Internet-Draft                   WAMP-BP                       June 2024
 
        [PUBLISHED, PUBLISH.Request|id, Publication|id]
 
+
+
+
+
+
+Oberstein               Expires 26 December 2024               [Page 20]
+
+Internet-Draft                   WAMP-BP                       June 2024
+
+
 3.4.2.3.  SUBSCRIBE
 
    Subscribe request sent by a Subscriber to a Broker to subscribe to a
@@ -1112,15 +1135,6 @@ Internet-Draft                   WAMP-BP                       June 2024
    subscription.
 
        [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]
-
-
-
-
-
-Oberstein               Expires 25 December 2024               [Page 20]
-
-Internet-Draft                   WAMP-BP                       June 2024
-
 
 3.4.2.5.  UNSUBSCRIBE
 
@@ -1156,6 +1170,14 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 3.4.3.  Routed Remote Procedure Calls
 
+
+
+
+Oberstein               Expires 26 December 2024               [Page 21]
+
+Internet-Draft                   WAMP-BP                       June 2024
+
+
 3.4.3.1.  CALL
 
    Call as originally issued by the Caller to the Dealer.
@@ -1166,17 +1188,6 @@ Internet-Draft                   WAMP-BP                       June 2024
 
      [CALL, Request|id, Options|dict, Procedure|uri, Arguments|list,
          ArgumentsKw|dict]
-
-
-
-
-
-
-
-Oberstein               Expires 25 December 2024               [Page 21]
-
-Internet-Draft                   WAMP-BP                       June 2024
-
 
 3.4.3.2.  RESULT
 
@@ -1215,6 +1226,14 @@ Internet-Draft                   WAMP-BP                       June 2024
 
        [UNREGISTERED, UNREGISTER.Request|id]
 
+
+
+
+Oberstein               Expires 26 December 2024               [Page 22]
+
+Internet-Draft                   WAMP-BP                       June 2024
+
+
 3.4.3.7.  INVOCATION
 
    Actual invocation of an endpoint sent by Dealer to a Callee.
@@ -1226,13 +1245,6 @@ Internet-Draft                   WAMP-BP                       June 2024
 
       [INVOCATION, Request|id, REGISTERED.Registration|id, Details|dict,
           CALL.Arguments|list, CALL.ArgumentsKw|dict]
-
-
-
-Oberstein               Expires 25 December 2024               [Page 22]
-
-Internet-Draft                   WAMP-BP                       June 2024
-
 
 3.4.3.8.  YIELD
 
@@ -1270,6 +1282,14 @@ Internet-Draft                   WAMP-BP                       June 2024
    +----+------------+---------+------+----------+------+------+------+
    |8   |ERROR       |Rx       |Tx    |Rx        |Rx    |TxRx  |TxRx  |
    +----+------------+---------+------+----------+------+------+------+
+
+
+
+Oberstein               Expires 26 December 2024               [Page 23]
+
+Internet-Draft                   WAMP-BP                       June 2024
+
+
    +----+------------+---------+------+----------+------+------+------+
    |16  |PUBLISH     |Tx       |Rx    |          |      |      |      |
    +----+------------+---------+------+----------+------+------+------+
@@ -1282,14 +1302,6 @@ Internet-Draft                   WAMP-BP                       June 2024
    +----+------------+---------+------+----------+------+------+------+
    |34  |UNSUBSCRIBE |         |Rx    |Tx        |      |      |      |
    +----+------------+---------+------+----------+------+------+------+
-
-
-
-Oberstein               Expires 25 December 2024               [Page 23]
-
-Internet-Draft                   WAMP-BP                       June 2024
-
-
    |35  |UNSUBSCRIBED|         |Tx    |Rx        |      |      |      |
    +----+------------+---------+------+----------+------+------+------+
    |36  |EVENT       |         |Tx    |Rx        |      |      |      |
@@ -1323,6 +1335,17 @@ Internet-Draft                   WAMP-BP                       June 2024
    router MAY implement router-to-router communication by using
    extension messages.
 
+
+
+
+
+
+
+Oberstein               Expires 26 December 2024               [Page 24]
+
+Internet-Draft                   WAMP-BP                       June 2024
+
+
 3.7.  Empty Arguments and Keyword Arguments
 
    Implementations SHOULD avoid sending empty Arguments lists.
@@ -1338,13 +1361,6 @@ Internet-Draft                   WAMP-BP                       June 2024
    SHOULD be sent.
 
    Implementations SHOULD avoid sending empty ArgumentsKw dictionaries.
-
-
-
-Oberstein               Expires 25 December 2024               [Page 24]
-
-Internet-Draft                   WAMP-BP                       June 2024
-
 
    E.g. a CALL message
 
@@ -1381,23 +1397,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Oberstein               Expires 25 December 2024               [Page 25]
+Oberstein               Expires 26 December 2024               [Page 25]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1453,7 +1453,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 26]
+Oberstein               Expires 26 December 2024               [Page 26]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 27]
+Oberstein               Expires 26 December 2024               [Page 27]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 28]
+Oberstein               Expires 26 December 2024               [Page 28]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 29]
+Oberstein               Expires 26 December 2024               [Page 29]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1677,7 +1677,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 30]
+Oberstein               Expires 26 December 2024               [Page 30]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1733,7 +1733,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 31]
+Oberstein               Expires 26 December 2024               [Page 31]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1789,7 +1789,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 32]
+Oberstein               Expires 26 December 2024               [Page 32]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1845,7 +1845,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 33]
+Oberstein               Expires 26 December 2024               [Page 33]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1901,7 +1901,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 34]
+Oberstein               Expires 26 December 2024               [Page 34]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -1957,7 +1957,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 35]
+Oberstein               Expires 26 December 2024               [Page 35]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2013,7 +2013,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 36]
+Oberstein               Expires 26 December 2024               [Page 36]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2069,7 +2069,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 37]
+Oberstein               Expires 26 December 2024               [Page 37]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2125,7 +2125,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 38]
+Oberstein               Expires 26 December 2024               [Page 38]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2181,7 +2181,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 39]
+Oberstein               Expires 26 December 2024               [Page 39]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2237,7 +2237,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 40]
+Oberstein               Expires 26 December 2024               [Page 40]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2293,7 +2293,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 41]
+Oberstein               Expires 26 December 2024               [Page 41]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2349,7 +2349,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 42]
+Oberstein               Expires 26 December 2024               [Page 42]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2405,7 +2405,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 43]
+Oberstein               Expires 26 December 2024               [Page 43]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2461,7 +2461,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 44]
+Oberstein               Expires 26 December 2024               [Page 44]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2517,7 +2517,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 45]
+Oberstein               Expires 26 December 2024               [Page 45]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2573,7 +2573,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 46]
+Oberstein               Expires 26 December 2024               [Page 46]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2629,7 +2629,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 47]
+Oberstein               Expires 26 December 2024               [Page 47]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2685,7 +2685,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 48]
+Oberstein               Expires 26 December 2024               [Page 48]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2741,7 +2741,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 49]
+Oberstein               Expires 26 December 2024               [Page 49]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2797,7 +2797,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 50]
+Oberstein               Expires 26 December 2024               [Page 50]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2853,7 +2853,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 51]
+Oberstein               Expires 26 December 2024               [Page 51]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2909,7 +2909,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 52]
+Oberstein               Expires 26 December 2024               [Page 52]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -2965,7 +2965,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 53]
+Oberstein               Expires 26 December 2024               [Page 53]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3021,7 +3021,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 54]
+Oberstein               Expires 26 December 2024               [Page 54]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3077,7 +3077,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 55]
+Oberstein               Expires 26 December 2024               [Page 55]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3133,7 +3133,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 56]
+Oberstein               Expires 26 December 2024               [Page 56]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3189,7 +3189,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 57]
+Oberstein               Expires 26 December 2024               [Page 57]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3245,7 +3245,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 58]
+Oberstein               Expires 26 December 2024               [Page 58]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3301,7 +3301,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 59]
+Oberstein               Expires 26 December 2024               [Page 59]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3357,7 +3357,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 60]
+Oberstein               Expires 26 December 2024               [Page 60]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3413,7 +3413,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 61]
+Oberstein               Expires 26 December 2024               [Page 61]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3469,7 +3469,7 @@ Internet-Draft                   WAMP-BP                       June 2024
 
 
 
-Oberstein               Expires 25 December 2024               [Page 62]
+Oberstein               Expires 26 December 2024               [Page 62]
 
 Internet-Draft                   WAMP-BP                       June 2024
 
@@ -3525,4 +3525,4 @@ Author's Address
 
 
 
-Oberstein               Expires 25 December 2024               [Page 63]
+Oberstein               Expires 26 December 2024               [Page 63]
