@@ -6463,7 +6463,7 @@ Internet-Draft                    WAMP                         June 2024
        Use RPC 4
    Call request RPC URI: 'a1.b2.c33.d4.e5' →
        no exact match, no prefix match, 2 wildcard matches (4,5),
-       select longest one. Use RPC 5
+       but RPC 5 has longer first portion (a1.b2.c33). Use RPC 5
    Call request RPC URI: 'a1.b2.c88.d4.e5.f6.g7' →
        no exact match, no prefix match, 2 wildcard matches (6,7),
        both having equal first portions (a1.b2), but RPC 6 has longer
