@@ -40,6 +40,6 @@ and MAY be announced by *Callees* via
         HELLO.Details.roles.callee.features.call_timeout|bool := true
 
 If a *Callee* does not support Call Timeouts, it may optionally announce support for Call Cancellation via 
-        
+
 {align="left"}
         HELLO.Details.roles.<role>.features.call_canceling|bool := true
