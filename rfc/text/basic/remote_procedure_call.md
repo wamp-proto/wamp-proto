@@ -49,7 +49,7 @@ where
 
 * `Request` is a sequential ID in the _session scope_, incremented by the Callee and used to correlate the Dealer's response with the request.
 * `Options` is a dictionary that allows to provide additional registration request details in a extensible way. This is described further below.
-* `Procedure`is the procedure the Callee wants to register
+* `Procedure` is the procedure the Callee wants to register
 
 *Example*
 
@@ -66,7 +66,7 @@ If the Dealer is able to fulfill and allowing the registration, it answers by se
 where
 
 * `REGISTER.Request` is the ID from the original request.
-*  `Registration` is an ID chosen by the Dealer for the registration.
+* `Registration` is an ID chosen by the Dealer for the registration.
 
 *Example*
 

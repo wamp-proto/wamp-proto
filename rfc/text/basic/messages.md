@@ -70,7 +70,7 @@ Sent by a Router to accept a Client. The WAMP session is now open.
 
 #### ABORT
 
-Sent by a Peer*to abort the opening of a WAMP session. No response is expected.
+Sent by a Peer to abort the opening of a WAMP session. No response is expected.
 
 {align="left"}
         [ABORT, Details|dict, Reason|uri]
