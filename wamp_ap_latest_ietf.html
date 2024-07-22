@@ -6,11 +6,11 @@
 <meta content="initial-scale=1.0" name="viewport">
 <title>WAMP Advanced Profile</title>
 <meta content="Tobias Oberstein" name="author">
-<meta content="xml2rfc 3.21.0" name="generator">
+<meta content="xml2rfc 3.22.0" name="generator">
 <meta content="WebSocket, WAMP, real-time, RPC, PubSub" name="keyword">
 <meta content="WAMP" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.21.0
+  xml2rfc 3.22.0
     Python 3.9.19
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
@@ -22,7 +22,6 @@
     PyYAML 6.0.1
     requests 2.32.3
     setuptools 58.1.0
-    six 1.16.0
     wcwidth 0.2.13
     weasyprint 62.3
 -->
@@ -1077,7 +1076,7 @@ table {
 ol.type-a { list-style-type: lower-alpha; }
 ol.type-A { list-style-type: upper-alpha; }
 ol.type-i { list-style-type: lower-roman; }
-ol.type-I { list-style-type: lower-roman; }
+ol.type-I { list-style-type: upper-roman; }
 /* Apply the print table and row borders in general, on request from the RPC,
 and increase the contrast between border and odd row background slightly */
 table {
@@ -1208,11 +1207,11 @@ li > p:last-of-type:only-child {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">WAMP-AP</td>
-<td class="right">June 2024</td>
+<td class="right">July 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Oberstein</td>
-<td class="center">Expires 26 December 2024</td>
+<td class="center">Expires 23 January 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1225,12 +1224,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">WAMP</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-06-24" class="published">24 June 2024</time>
+<time datetime="2024-07-22" class="published">22 July 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Experimental</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-12-26">26 December 2024</time></dd>
+<dd class="expires"><time datetime="2025-01-23">23 January 2025</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1260,7 +1259,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 December 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 23 January 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -7583,7 +7582,7 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) &lt;&l
         </ul>
 <p id="section-5.6-3">Performing these actions requires <em>Clients</em> to have an open <em>Session</em> to the same shared <em>Realm</em>.<a href="#section-5.6-3" class="pilcrow">¶</a></p>
 <p id="section-5.6-4">A <em>Session</em> is established between a <em>Client</em> to a <em>Router</em>, and is initiated by a <em>Client</em>.<a href="#section-5.6-4" class="pilcrow">¶</a></p>
-<p id="section-5.6-5">*Session*s MAY be required to <em>Authenticate</em> access to a <em>Realm</em> hosted by a <em>Router</em>.<a href="#section-5.6-5" class="pilcrow">¶</a></p>
+<p id="section-5.6-5"><em>Sessions</em> MAY be required to <em>Authenticate</em> access to a <em>Realm</em> hosted by a <em>Router</em>.<a href="#section-5.6-5" class="pilcrow">¶</a></p>
 <p id="section-5.6-6"><em>Authentication</em> is the sequence of operations that allow a <em>Router</em> to verify the identity of a <em>Session</em>, often as a prerequisite to allowing access to resources within a <em>Realm</em>.<a href="#section-5.6-6" class="pilcrow">¶</a></p>
 <p id="section-5.6-7">When the <em>Session</em> authenticates to a <em>Router</em> successfully, the <em>Router</em> will have established the<a href="#section-5.6-7" class="pilcrow">¶</a></p>
 <ul class="compact">
@@ -7599,8 +7598,8 @@ WAMP-Receive(869996509191260, 0xf5173a6111B2A6B3C20fceD53B2A8405EC142bF6) &lt;&l
         </ul>
 <p id="section-5.6-9">for that <em>Session</em> running in the <em>Client</em>.<a href="#section-5.6-9" class="pilcrow">¶</a></p>
 <p id="section-5.6-10">The triple <code>(realm, authrole, authid)</code> is called <em>Principal</em>, and a <em>Session</em> is authenticated under that <em>Principal</em>.<a href="#section-5.6-10" class="pilcrow">¶</a></p>
-<p id="section-5.6-11">At any moment, there can be zero, one, or many *Session*s with different <em>session ids</em> authenticated under the <em>same</em> <em>Principal</em>.<a href="#section-5.6-11" class="pilcrow">¶</a></p>
-<p id="section-5.6-12">*Session*s MAY be required to <em>Authorize</em> in order to perform a specific <em>Action</em> on an URI <span class="unicode">— (U+2014)</span> or an URI pattern <span class="unicode">— (U+2014)</span> within a <em>Realm</em>.<a href="#section-5.6-12" class="pilcrow">¶</a></p>
+<p id="section-5.6-11">At any moment, there can be zero, one, or many <em>Sessions</em> with different <em>session ids</em> authenticated under the <em>same</em> <em>Principal</em>.<a href="#section-5.6-11" class="pilcrow">¶</a></p>
+<p id="section-5.6-12"><em>Sessions</em> MAY be required to <em>Authorize</em> in order to perform a specific <em>Action</em> on an URI - or an URI pattern - within a <em>Realm</em>.<a href="#section-5.6-12" class="pilcrow">¶</a></p>
 <p id="section-5.6-13">This distinction between <em>Authentication</em> and <em>Authorization</em> follows the established practice called "AAA":<a href="#section-5.6-13" class="pilcrow">¶</a></p>
 <ul class="compact">
 <li class="compact" id="section-5.6-14.1">
