@@ -21,7 +21,7 @@ The *Client* attempted to authenticate for a non-existing *Realm* (`realm|string
 {align="left"}
         wamp.error.no_such_realm
 
-The *Client* authenticated for a non-existing *Principal* (`authid|string`).
+The *Client* attempted to authenticate for a non-existing *Principal* (`realm|string` and `authid|string` composite).
 
 {align="left"}
         wamp.error.no_such_principal
