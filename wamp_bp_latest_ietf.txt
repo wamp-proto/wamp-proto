@@ -4,8 +4,8 @@
 
 BiDirectional or Server-Initiated HTTP                      T. Oberstein
 Internet-Draft                                          typedef int GmbH
-Intended status: Experimental                               22 July 2024
-Expires: 23 January 2025
+Intended status: Experimental                               23 July 2024
+Expires: 24 January 2025
 
 
                            WAMP Basic Profile
@@ -26,7 +26,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 January 2025.
+   This Internet-Draft will expire on 24 January 2025.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Table of Contents
 
 
 
-Oberstein                Expires 23 January 2025                [Page 1]
+Oberstein                Expires 24 January 2025                [Page 1]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -109,7 +109,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 2]
+Oberstein                Expires 24 January 2025                [Page 2]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -165,7 +165,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 3]
+Oberstein                Expires 24 January 2025                [Page 3]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -221,7 +221,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 4]
+Oberstein                Expires 24 January 2025                [Page 4]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -277,7 +277,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 5]
+Oberstein                Expires 24 January 2025                [Page 5]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -333,7 +333,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 6]
+Oberstein                Expires 24 January 2025                [Page 6]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -389,7 +389,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 7]
+Oberstein                Expires 24 January 2025                [Page 7]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -445,7 +445,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 8]
+Oberstein                Expires 24 January 2025                [Page 8]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -501,7 +501,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025                [Page 9]
+Oberstein                Expires 24 January 2025                [Page 9]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -557,7 +557,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 10]
+Oberstein                Expires 24 January 2025               [Page 10]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -613,7 +613,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 11]
+Oberstein                Expires 24 January 2025               [Page 11]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -669,7 +669,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 12]
+Oberstein                Expires 24 January 2025               [Page 12]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -725,7 +725,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 13]
+Oberstein                Expires 24 January 2025               [Page 13]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -781,7 +781,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 14]
+Oberstein                Expires 24 January 2025               [Page 14]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -837,7 +837,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 15]
+Oberstein                Expires 24 January 2025               [Page 15]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -893,7 +893,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 16]
+Oberstein                Expires 24 January 2025               [Page 16]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -949,7 +949,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 17]
+Oberstein                Expires 24 January 2025               [Page 17]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1005,7 +1005,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 18]
+Oberstein                Expires 24 January 2025               [Page 18]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1061,7 +1061,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 19]
+Oberstein                Expires 24 January 2025               [Page 19]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1117,7 +1117,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 20]
+Oberstein                Expires 24 January 2025               [Page 20]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1173,7 +1173,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 21]
+Oberstein                Expires 24 January 2025               [Page 21]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1229,7 +1229,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 22]
+Oberstein                Expires 24 January 2025               [Page 22]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1285,7 +1285,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 23]
+Oberstein                Expires 24 January 2025               [Page 23]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1341,7 +1341,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 24]
+Oberstein                Expires 24 January 2025               [Page 24]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1397,7 +1397,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 25]
+Oberstein                Expires 24 January 2025               [Page 25]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1453,7 +1453,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 26]
+Oberstein                Expires 24 January 2025               [Page 26]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1509,7 +1509,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 27]
+Oberstein                Expires 24 January 2025               [Page 27]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1565,7 +1565,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 28]
+Oberstein                Expires 24 January 2025               [Page 28]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1621,7 +1621,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 29]
+Oberstein                Expires 24 January 2025               [Page 29]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1677,7 +1677,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 30]
+Oberstein                Expires 24 January 2025               [Page 30]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1733,7 +1733,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 31]
+Oberstein                Expires 24 January 2025               [Page 31]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1789,7 +1789,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 32]
+Oberstein                Expires 24 January 2025               [Page 32]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1845,7 +1845,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 33]
+Oberstein                Expires 24 January 2025               [Page 33]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1901,7 +1901,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 34]
+Oberstein                Expires 24 January 2025               [Page 34]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -1957,7 +1957,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 35]
+Oberstein                Expires 24 January 2025               [Page 35]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2013,7 +2013,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 36]
+Oberstein                Expires 24 January 2025               [Page 36]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2069,7 +2069,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 37]
+Oberstein                Expires 24 January 2025               [Page 37]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2125,7 +2125,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 38]
+Oberstein                Expires 24 January 2025               [Page 38]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2181,7 +2181,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 39]
+Oberstein                Expires 24 January 2025               [Page 39]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2237,7 +2237,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 40]
+Oberstein                Expires 24 January 2025               [Page 40]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2293,7 +2293,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 41]
+Oberstein                Expires 24 January 2025               [Page 41]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2349,7 +2349,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 42]
+Oberstein                Expires 24 January 2025               [Page 42]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2405,7 +2405,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 43]
+Oberstein                Expires 24 January 2025               [Page 43]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2461,7 +2461,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 44]
+Oberstein                Expires 24 January 2025               [Page 44]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2517,7 +2517,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 45]
+Oberstein                Expires 24 January 2025               [Page 45]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2573,7 +2573,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 46]
+Oberstein                Expires 24 January 2025               [Page 46]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2629,7 +2629,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 47]
+Oberstein                Expires 24 January 2025               [Page 47]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2685,7 +2685,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 48]
+Oberstein                Expires 24 January 2025               [Page 48]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2741,7 +2741,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 49]
+Oberstein                Expires 24 January 2025               [Page 49]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2797,7 +2797,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 50]
+Oberstein                Expires 24 January 2025               [Page 50]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2853,7 +2853,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 51]
+Oberstein                Expires 24 January 2025               [Page 51]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2909,7 +2909,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 52]
+Oberstein                Expires 24 January 2025               [Page 52]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -2965,7 +2965,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 53]
+Oberstein                Expires 24 January 2025               [Page 53]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3021,7 +3021,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 54]
+Oberstein                Expires 24 January 2025               [Page 54]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3077,7 +3077,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 55]
+Oberstein                Expires 24 January 2025               [Page 55]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3133,7 +3133,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 56]
+Oberstein                Expires 24 January 2025               [Page 56]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3189,7 +3189,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 57]
+Oberstein                Expires 24 January 2025               [Page 57]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3245,7 +3245,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 58]
+Oberstein                Expires 24 January 2025               [Page 58]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3301,7 +3301,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 59]
+Oberstein                Expires 24 January 2025               [Page 59]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3357,7 +3357,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 60]
+Oberstein                Expires 24 January 2025               [Page 60]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3413,7 +3413,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 61]
+Oberstein                Expires 24 January 2025               [Page 61]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3469,7 +3469,7 @@ Internet-Draft                   WAMP-BP                       July 2024
 
 
 
-Oberstein                Expires 23 January 2025               [Page 62]
+Oberstein                Expires 24 January 2025               [Page 62]
 
 Internet-Draft                   WAMP-BP                       July 2024
 
@@ -3525,4 +3525,4 @@ Author's Address
 
 
 
-Oberstein                Expires 23 January 2025               [Page 63]
+Oberstein                Expires 24 January 2025               [Page 63]
