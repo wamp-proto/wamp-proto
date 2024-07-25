@@ -61,6 +61,7 @@ wampcc_             C++                                 A C++ WAMP library that 
 WAMP_POCO_          C++                                 A fork of AutobahnCpp that is using `POCO <http://pocoproject.org/>`_ instead of Boost.
 wamped_             C++                                 Intended for running on `ARM mbed OS <https://www.mbed.com/en/>`_. Experimental.
 WAMPexClient_       Elixir                              Elixir client library that implements the complete client Basic Profile and much of the Advanced Profile.
+wamplv_             LabVIEW / G                         A WAMP client written in National Instrument's `LabVIEW <https://en.wikipedia.org/wiki/LabVIEW>`_, also available as a `VIPM package <https://www.vipm.io/package/samangh_lib_wamplv_wamp_client/>`_.
 WampSyncClient_     PHP                                 Synchronous (blocking) PHP client implementing Caller and Publisher roles
 wamprx.js_          TypeScript                          Simple WAMP TypeScript client-side implementation (of course also usable in JavaScript). It heavily relies on RxJS.
 WampSharp_          C#                                  C# implementation of WAMP: both client and router roles, both JSON and `MessagePack <http://msgpack.org/>`_ support.
@@ -155,6 +156,7 @@ wick_               Go                                  CLI tool to make WAMP RP
 .. _WAMP_POCO: https://github.com/rafzi/WAMP_POCO
 .. _wamped: https://github.com/alvistar/wamped
 .. _WAMPexClient: https://gitlab.com/entropealabs/wampex_client
+.. _wamplv: https://github.com/samangh/wamplv
 .. _WampSyncClient: https://github.com/jszczypk/WampSyncClient
 .. _wamprt: https://github.com/Orange-OpenSource/wamp.rt
 .. _wamprx.js: https://github.com/Jopie64/wamprx.js
