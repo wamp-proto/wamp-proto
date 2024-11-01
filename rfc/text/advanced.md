@@ -20,7 +20,7 @@
 
 {{advanced/rpc_call_timeout.md}}
 
-{{advanced/rpc_call_canceling.md}}
+{{advanced/rpc_call_cancelling.md}}
 
 {{advanced/rpc_call_rerouting.md}}
 

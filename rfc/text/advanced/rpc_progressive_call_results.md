@@ -10,7 +10,7 @@ Support for this advanced feature MUST be announced by *Callers* (`role := "call
         HELLO.Details.roles.<role>.features.
              progressive_call_results|bool := true
 
-Additionally, *Callees* and *Dealers* MUST support Call Canceling, which is required for canceling progressive results if the original *Caller* leaves the realm. If a *Callee* supports Progressive Call Results, but not Call Canceling, then the *Dealer* disregards the *Callees* Progressive Call Results feature.
+Additionally, *Callees* and *Dealers* MUST support Call Cancelling, which is required for cancelling progressive results if the original *Caller* leaves the realm. If a *Callee* supports Progressive Call Results, but not Call Cancelling, then the *Dealer* disregards the *Callees* Progressive Call Results feature.
 
 **Message Flow**
 
@@ -352,7 +352,7 @@ The *Dealer*'s behavior for when a *Callee* leaves or disconnects during a progr
 
 A *Callee* that does not support progressive results SHOULD ignore any `INVOCATION.Details.receive_progress` flag.
 
-A *Callee* that supports progressive results, but does not support call canceling is considered by the *Dealer* to not support progressive results.
+A *Callee* that supports progressive results, but does not support call cancelling is considered by the *Dealer* to not support progressive results.
 
 
 **Timeouts**
