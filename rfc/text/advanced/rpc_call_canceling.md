@@ -1,4 +1,4 @@
-## Call Cancelling {#rpc-call-cancelling}
+## Call Canceling {#rpc-call-canceling}
 
 A *Caller* might want to actively cancel a call that was issued, but not has yet returned. An example where this is useful could be a user triggering a long running operation and later changing his mind or no longer willing to wait.
 
@@ -11,21 +11,21 @@ Support for this feature MUST be announced by *Callers* (`role := "caller"`), *C
 
 **Message Flow**
 
-The message flow between *Callers*, a *Dealer* and *Callees* for cancelling remote procedure calls involves the following messages:
+The message flow between *Callers*, a *Dealer* and *Callees* for canceling remote procedure calls involves the following messages:
 
  * `CANCEL`
  * `INTERRUPT`
  * `ERROR`
 
-A call may be cancelled at the *Callee* or at the *Dealer* side. Cancellation behaves differently depending on the mode:
+A call may be canceled at the *Callee* or at the *Dealer* side. Cancelation behaves differently depending on the mode:
 
-* **skip**: The pending call is cancelled and `ERROR` is sent immediately back to the caller. No `INTERRUPT` is sent to the callee and the result is discarded when received.
-* **kill**: `INTERRUPT` is sent to the callee, but `ERROR` is not returned to the caller until after the callee has responded to the cancelled call. In this case the caller may receive `RESULT` or `ERROR` depending whether the callee finishes processing the invocation or the interrupt first.
-* **killnowait**: The pending call is cancelled and `ERROR` is sent immediately back to the caller. `INTERRUPT` is sent to the callee and any response to the invocation or interrupt from the callee is discarded when received.
+* **skip**: The pending call is canceled and `ERROR` is sent immediately back to the caller. No `INTERRUPT` is sent to the callee and the result is discarded when received.
+* **kill**: `INTERRUPT` is sent to the callee, but `ERROR` is not returned to the caller until after the callee has responded to the canceled call. In this case the caller may receive `RESULT` or `ERROR` depending whether the callee finishes processing the invocation or the interrupt first.
+* **killnowait**: The pending call is canceled and `ERROR` is sent immediately back to the caller. `INTERRUPT` is sent to the callee and any response to the invocation or interrupt from the callee is discarded when received.
 
-If the callee does not support call cancelling, then behavior is **skip**.
+If the callee does not support call canceling, then behavior is **skip**.
 
-Message flow during call cancelling when *Callee* supports this feature and mode is `kill`
+Message flow during call canceling when *Callee* supports this feature and mode is `kill`
 
 {align="left"}
         ,------.          ,------.          ,------.
@@ -53,7 +53,7 @@ Message flow during call cancelling when *Callee* supports this feature and mode
         `------'          `------'          `------'
 
 
-Message flow during call cancelling when *Callee* does not support this feature or mode is `skip`
+Message flow during call canceling when *Callee* does not support this feature or mode is `skip`
 
 {align="left"}
         ,------.          ,------.            ,------.
@@ -81,7 +81,7 @@ Message flow during call cancelling when *Callee* does not support this feature 
         `------'          `------'            `------'
 
 
-Message flow during call cancelling when *Callee* supports this feature and mode is `killnowait`
+Message flow during call canceling when *Callee* supports this feature and mode is `killnowait`
 
 {align="left"}
         ,------.          ,------.          ,------.
