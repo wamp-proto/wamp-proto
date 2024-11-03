@@ -157,7 +157,7 @@ The *Dealer*'s behavior for when a *Caller* leaves or disconnects during a call 
                          |Dealer|                 |Callee|
                          `------'                 `------'
 
-As in progressive call results, such cancelation when the caller leaves addresses a potential security vulnerability:
+As in progressive call results, such cancellation when the caller leaves addresses a potential security vulnerability:
 In cases where progressive call invocations are used to stream data from a *Caller*, and network connectivity is unreliable,
 the *Caller* may often get disconnected in the middle of sending progressive data. This can lead to unneeded memory
 consumption for the *Dealer* and *Callee*, due to the need to store temporary metadata about ongoing calls.

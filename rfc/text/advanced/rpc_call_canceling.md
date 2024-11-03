@@ -17,7 +17,7 @@ The message flow between *Callers*, a *Dealer* and *Callees* for canceling remot
  * `INTERRUPT`
  * `ERROR`
 
-A call may be canceled at the *Callee* or at the *Dealer* side. Cancelation behaves differently depending on the mode:
+A call may be canceled at the *Callee* or at the *Dealer* side. Cancellation behaves differently depending on the mode:
 
 * **skip**: The pending call is canceled and `ERROR` is sent immediately back to the caller. No `INTERRUPT` is sent to the callee and the result is discarded when received.
 * **kill**: `INTERRUPT` is sent to the callee, but `ERROR` is not returned to the caller until after the callee has responded to the canceled call. In this case the caller may receive `RESULT` or `ERROR` depending whether the callee finishes processing the invocation or the interrupt first.
