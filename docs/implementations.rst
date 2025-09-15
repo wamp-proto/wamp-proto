@@ -68,6 +68,13 @@ WampSharp_          C#                                  C# implementation of WAM
 wampy_              Python                              Python implementation for classic blocking Python applications.
 wampy.js_           JavaScript                          Feature-rich lightweight WAMP Javascript implementation for browsers and node.js.
 wamp_async_         Rust                                Rust client library. It features ergonomic async API
+xconn-dart_         Dart, Flutter                       A Dart WAMP client library with full Flutter support, featuring async APIs and cross-platform compatibility.
+xconn-go_           Go                                  WAMP v2 Router and Client for Go.
+xconn-kotlin_       Kotlin                              WAMP client for Kotlin.
+xconn-python_       Python                              A Python WAMP client library with both synchronous and asynchronous support.
+xconn-rust_         Rust                                WAMP client in Rust. It includes two implementations one is sync and the other async.
+xconn-swift_        Swift                               A Swift WAMP client library designed for iOS and macOS, with async/await support.
+xconn-ts_           TypeScript                          A TypeScript WAMP client library built for both browser and Node.js environments.
 ==================  ==================================  =====================
 
 
@@ -100,6 +107,7 @@ wampcc_             C++                                 A C++ WAMP library that 
 wamprt_             JavaScript, NodeJS                  Router only implementation for `NodeJS <http://nodejs.org/>`_ created by `Orange <http://opensource.orange.com/home>`_.
 WampSharp_          C#                                  C# router implementation of WAMP v2, both JSON and `MessagePack <http://msgpack.org/>`_ support.
 Wiola_              Lua                                 Router implementation in `Lua <http://www.lua.org/>`_, using the power of Lua/Nginx, WebSocket and `Redis <http://redis.io/>`_ as cache store.
+xconn-go_            Go                                  WAMP v2 Router and Client for Go.
 ==================  ==================================  =====================
 
 
@@ -114,6 +122,7 @@ Name                Language/Run-time                   Description
 wamp-cli_           JavaScript, NodeJS                  CLI tool to help building applications with WAMP
 wampy.js_           JavaScript, NodeJS                  CLI tool built on top of Wampy.js library and exposes almost the same API to Command line charged with rich shell auto completion, description and examples. You can use it for testing WAMP API during development, debugging, or just exploring the new APIs.
 wick_               Go                                  CLI tool to make WAMP RPCs and PubSub. Useful for developing WAMP Components and their testing.
+wick-ui_            Dart, Flutter                       Web tool for testing WAMP APIs, Postman for WAMP.
 ==================  ==================================  =====================
 
 
@@ -169,3 +178,11 @@ wick_               Go                                  CLI tool to make WAMP RP
 .. _wick: https://github.com/codebasepk/wick
 .. _Octamp: https://github.com/cydrickn/octamp-client
 .. _OctampWamp: https://github.com/octamp/wamp
+.. _xconn-dart: https://github.com/xconnio/xconn-dart
+.. _xconn-go: https://github.com/xconnio/xconn-go
+.. _xconn-kotlin: https://github.com/xconnio/xconn-kotlin
+.. _xconn-python: https://github.com/xconnio/xconn-python
+.. _xconn-rust: https://github.com/xconnio/xconn-rust
+.. _xconn-swift: https://github.com/xconnio/xconn-swift
+.. _xconn-ts: https://github.com/xconnio/xconn-ts
+.. _wick-ui: https://github.com/xconnio/wick-ui
