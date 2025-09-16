@@ -9,20 +9,51 @@ jobs:
     name: Build spec and website
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v6
-        with:
-          python-version: '3.11'
-          cache: 'pip'
-      - run: export PATH=$PATH:$HOME/.local/bin
-      - run: export WAMP_BUILD_ID="$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})"
-      - run: sudo apt update
-      - run: sudo apt install -y xml2rfc libxml2-utils libenchant-2-2 enscript weasyprint libpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 python3-cffi python3-brotli libcairo2-dev
-      - run: pip install -r requirements.txt
-      - run: pip install 'weasyprint>=53.0'
-      - run: wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
-      - run: tar xvzf mmark_2.2.25_linux_amd64.tgz
-      - run: rm -f ./mmark*.tgz
-      - run: sudo cp ./mmark /usr/local/bin/
-      - run: make build
-      - run: find dist/ -name "wamp_*latest_ietf.*" -exec openssl sha256 {} \;
+      - name: Checkout Repo/Branch
+        uses: actions/checkout@v4
+
+      - name: Set Environment Variables
+        run: |
+          echo "PATH=$HOME/.local/bin/:$PATH" >> $GITHUB_ENV
+          echo "PATH=$HOME/.cargo/bin/:$PATH" >> $GITHUB_ENV
+          echo "WAMP_BUILD_ID=$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
+
+      - name: Install OS Packages
+        run: |
+          sudo apt update
+          sudo apt install -y libcairo2-dev libenchant-2-2 libharfbuzz0b libpango1.0-dev libpangoft2-1.0-0 libxml2-utils
+          sudo apt install -y enscript mmark weasyprint
+
+      - name: Setup Toolchain I (Just, UV)
+        run: |
+          # Install Just direct-from-upstream (see: https://just.systems/man/en/pre-built-binaries.html)
+          curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --tag 1.42.3 --force --to $HOME/.local/bin/
+          which just
+          just --version
+
+          # Install UV direct-from-upstream (see: https://docs.astral.sh/uv/getting-started/installation/#standalone-installer)
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          which uv
+          uv --version
+
+      - name: Setup Toolchain II (Python venv, Python dependencies)
+        run: |
+          # Now use Just to set up the Python venv
+          just create
+
+          # Install tools (Python dependencies)
+          just install
+
+      - name: Build Spec and Website
+        run: |
+          echo "START: Building with WAMP_BUILD_ID=$(WAMP_BUILD_ID)"
+          echo "==============================================================="
+          echo ""
+
+          # build Sphinx-based website; build spec (RFC) in HTML, TXT and PDF
+          just build
+
+          echo ""
+          echo "COMPLETED: Building with WAMP_BUILD_ID=$(WAMP_BUILD_ID)"
+          echo "==============================================================="
+          find dist/ -name "wamp_*latest_ietf.*" -exec openssl sha256 {} \;
