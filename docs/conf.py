@@ -121,7 +121,6 @@ if RTD_BUILD:
 else:
     if sphinx_rtd_theme:
         html_theme = 'sphinx_rtd_theme'
-        html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
         # add custom CSS on top of Sphinx RTD standard CSS
         # https://docs.readthedocs.io/en/latest/guides/adding-custom-css.html
