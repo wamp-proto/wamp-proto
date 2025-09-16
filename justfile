@@ -355,10 +355,10 @@ build venv="": (clean) (install venv)
         VENV_NAME=$(just --quiet _get-system-venv-name)
     fi
     VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
-    
+
     export WAMP_BUILD_ID="${WAMP_BUILD_ID:-$(date -Iseconds)}"
     echo "==> Building with WAMP_BUILD_ID=${WAMP_BUILD_ID}"
-    
+
     just _build-images
     just _update-spec-date
     just _build-spec
@@ -369,15 +369,15 @@ clean:
     #!/usr/bin/env bash
     set -e
     echo "==> Cleaning build artifacts..."
-    
+
     OUTPUTDIR="./dist"
-    TMPBUILDDIR="./.build" 
+    TMPBUILDDIR="./.build"
     SITEBUILDDIR="./docs/_static/gen"
-    
+
     if [ -d "${OUTPUTDIR}" ]; then rm -rf "${OUTPUTDIR}"; fi
     if [ -d "${TMPBUILDDIR}" ]; then rm -rf "${TMPBUILDDIR}"; fi
     if [ -d "${SITEBUILDDIR}" ]; then rm -rf "${SITEBUILDDIR}"; fi
-    
+
     mkdir -p "${OUTPUTDIR}"
     mkdir -p "${TMPBUILDDIR}"
     mkdir -p "${SITEBUILDDIR}"
@@ -412,10 +412,10 @@ spellcheck-docs venv="": (install venv)
         VENV_NAME=$(just --quiet _get-system-venv-name)
     fi
     VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
-    
+
     TMPBUILDDIR="./.build"
     mkdir -p "${TMPBUILDDIR}"
-    
+
     echo "==> Spell checking documentation..."
     "${VENV_PATH}/bin/sphinx-build" -b spelling -d "${TMPBUILDDIR}/docs/doctrees" docs "${TMPBUILDDIR}/docs/spelling"
 
@@ -428,8 +428,7 @@ requirements-xml2rfc:
     #!/usr/bin/env bash
     set -e
     echo "==> Installing xml2rfc requirements..."
-    sudo apt install xml2rfc enscript
-    pip install 'pycairo>=1.18' 'weasyprint<=0.42.3'
+    sudo apt install libpango1.0-dev enscript
 
 # Install mmark on Linux locally
 requirements-mmark:
@@ -454,13 +453,13 @@ _build-images venv="": (install venv)
         VENV_NAME=$(just --quiet _get-system-venv-name)
     fi
     VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
-    
+
     SOURCEDIR="./docs/_graphics"
     SITEBUILDDIR="./docs/_static/gen"
-    
+
     echo "==> Building optimized SVG images..."
     mkdir -p "${SITEBUILDDIR}"
-    
+
     if [ -d "${SOURCEDIR}" ]; then
         find "${SOURCEDIR}" -name "*.svg" -type f | while read -r source_file; do
             filename=$(basename "${source_file}")
@@ -482,16 +481,16 @@ _update-spec-date:
     #!/usr/bin/env bash
     set -e
     echo "==> Updating spec dates..."
-    
+
     CURRENTDATE=$(TZ=UTC date -Iseconds)
-    
+
     # Determine sed arguments based on OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed_args="-i ''"
     else
         sed_args="-i"
     fi
-    
+
     sed ${sed_args} -e "s/^date = .*/date = ${CURRENTDATE}/g" ./rfc/wamp.md
     sed ${sed_args} -e "s/^date = .*/date = ${CURRENTDATE}/g" ./rfc/wamp-bp.md
     sed ${sed_args} -e "s/^date = .*/date = ${CURRENTDATE}/g" ./rfc/wamp-ap.md
@@ -501,17 +500,17 @@ _build-spec:
     #!/usr/bin/env bash
     set -e
     echo "==> Building RFC specifications..."
-    
+
     TMPBUILDDIR="./.build"
     OUTPUTDIR="./dist"
-    
+
     # Determine sed arguments based on OS
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed_args="-i ''"
     else
         sed_args="-i"
     fi
-    
+
     # Build main WAMP spec
     echo "  Building wamp.md..."
     mmark ./rfc/wamp.md > "${TMPBUILDDIR}/wamp.xml"
@@ -521,8 +520,8 @@ _build-spec:
     xml2rfc --v3 --text "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.txt"
     xml2rfc --v3 --html "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.html"
     xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.pdf"
-    
-    # Build WAMP-BP spec  
+
+    # Build WAMP-BP spec
     echo "  Building wamp-bp.md..."
     mmark ./rfc/wamp-bp.md > "${TMPBUILDDIR}/wamp-bp.xml"
     sed ${sed_args} 's/<sourcecode align="left"/<sourcecode/g' "${TMPBUILDDIR}/wamp-bp.xml"
@@ -531,7 +530,7 @@ _build-spec:
     xml2rfc --v3 --text "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.txt"
     xml2rfc --v3 --html "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.html"
     xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.pdf"
-    
+
     # Build WAMP-AP spec
     echo "  Building wamp-ap.md..."
     mmark ./rfc/wamp-ap.md > "${TMPBUILDDIR}/wamp-ap.xml"
@@ -551,21 +550,21 @@ _build-docs venv="": (install venv)
         VENV_NAME=$(just --quiet _get-system-venv-name)
     fi
     VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
-    
+
     TMPBUILDDIR="./.build"
     OUTPUTDIR="./dist"
-    
+
     echo "==> Building documentation..."
-    
+
     # First test with all warnings fatal
     "${VENV_PATH}/bin/sphinx-build" -nWT -b dummy ./docs "${TMPBUILDDIR}/docs"
-    
+
     # Run spell checker
     "${VENV_PATH}/bin/sphinx-build" -b spelling -d "${TMPBUILDDIR}/docs/.doctrees" ./docs "${TMPBUILDDIR}/docs/spelling"
-    
+
     # Generate HTML output
     "${VENV_PATH}/bin/sphinx-build" -b html ./docs "${TMPBUILDDIR}/site_build"
-    
+
     # Copy to output directory
     cp -R "${TMPBUILDDIR}/site_build"/* "${OUTPUTDIR}/"
     cp -R docs/_static "${OUTPUTDIR}/"
