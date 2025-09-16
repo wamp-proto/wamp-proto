@@ -331,3 +331,242 @@ docs-view venv="": (docs venv)
 docs-clean:
     echo "==> Cleaning documentation build artifacts..."
     rm -rf docs/_build
+
+# -----------------------------------------------------------------------------
+# -- Build system (migrated from Makefile)
+# -----------------------------------------------------------------------------
+
+# Show usage information
+usage:
+    @echo "Available build recipes:"
+    @echo "  just build           - build spec in all formats"
+    @echo "  just grep-options    - show places where *.Options are used"
+    @echo "  just clean           - clean all generated data"
+    @echo "  just authors         - show authors based on git log data"
+    @echo "  just run-docs        - run http server on 8010 port to serve docs"
+    @echo "  just spellcheck-docs - spell check the docs via sphinx-build"
+
+# Build spec in all formats (main build pipeline)
+build venv="": (clean) (install venv)
+    #!/usr/bin/env bash
+    set -e
+    VENV_NAME="{{ venv }}"
+    if [ -z "${VENV_NAME}" ]; then
+        VENV_NAME=$(just --quiet _get-system-venv-name)
+    fi
+    VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
+    
+    export WAMP_BUILD_ID="${WAMP_BUILD_ID:-$(date -Iseconds)}"
+    echo "==> Building with WAMP_BUILD_ID=${WAMP_BUILD_ID}"
+    
+    just _build-images
+    just _update-spec-date
+    just _build-spec
+    just _build-docs
+
+# Clean all generated data
+clean:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Cleaning build artifacts..."
+    
+    OUTPUTDIR="./dist"
+    TMPBUILDDIR="./.build" 
+    SITEBUILDDIR="./docs/_static/gen"
+    
+    if [ -d "${OUTPUTDIR}" ]; then rm -rf "${OUTPUTDIR}"; fi
+    if [ -d "${TMPBUILDDIR}" ]; then rm -rf "${TMPBUILDDIR}"; fi
+    if [ -d "${SITEBUILDDIR}" ]; then rm -rf "${SITEBUILDDIR}"; fi
+    
+    mkdir -p "${OUTPUTDIR}"
+    mkdir -p "${TMPBUILDDIR}"
+    mkdir -p "${SITEBUILDDIR}"
+
+# Find places where *.Options are used in the RFC files
+grep-options:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Searching for Options usage in RFC files..."
+    find rfc/ -name "*.md" -type f -exec grep -o "\`\w*\.Options\.[a-z_]*|.*\`" {} \;
+
+# Show authors based on git log data
+authors:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Authors from git log:"
+    git log --pretty=format:"%an <%ae> %x09" rfc | sort | uniq
+
+# Run HTTP server on port 8010 to serve documentation
+run-docs:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Starting HTTP server on port 8010..."
+    cd dist && python -m http.server 8010
+
+# Spell check the documentation via sphinx-build
+spellcheck-docs venv="": (install venv)
+    #!/usr/bin/env bash
+    set -e
+    VENV_NAME="{{ venv }}"
+    if [ -z "${VENV_NAME}" ]; then
+        VENV_NAME=$(just --quiet _get-system-venv-name)
+    fi
+    VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
+    
+    TMPBUILDDIR="./.build"
+    mkdir -p "${TMPBUILDDIR}"
+    
+    echo "==> Spell checking documentation..."
+    "${VENV_PATH}/bin/sphinx-build" -b spelling -d "${TMPBUILDDIR}/docs/doctrees" docs "${TMPBUILDDIR}/docs/spelling"
+
+# -----------------------------------------------------------------------------
+# -- Requirements installation (for build tools)
+# -----------------------------------------------------------------------------
+
+# Install xml2rfc (including PDF support) on Linux locally
+requirements-xml2rfc:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Installing xml2rfc requirements..."
+    sudo apt install xml2rfc enscript
+    pip install 'pycairo>=1.18' 'weasyprint<=0.42.3'
+
+# Install mmark on Linux locally
+requirements-mmark:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Installing mmark..."
+    wget https://github.com/mmarkdown/mmark/releases/download/v2.2.25/mmark_2.2.25_linux_amd64.tgz
+    tar xvzf mmark_2.2.25_linux_amd64.tgz
+    rm -f ./mmark*.tgz
+    sudo cp ./mmark /usr/local/bin/
+
+# -----------------------------------------------------------------------------
+# -- Internal build helpers
+# -----------------------------------------------------------------------------
+
+# Internal: Build optimized SVGs from docs/_graphics/*.svg using Scour
+_build-images venv="": (install venv)
+    #!/usr/bin/env bash
+    set -e
+    VENV_NAME="{{ venv }}"
+    if [ -z "${VENV_NAME}" ]; then
+        VENV_NAME=$(just --quiet _get-system-venv-name)
+    fi
+    VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
+    
+    SOURCEDIR="./docs/_graphics"
+    SITEBUILDDIR="./docs/_static/gen"
+    
+    echo "==> Building optimized SVG images..."
+    mkdir -p "${SITEBUILDDIR}"
+    
+    if [ -d "${SOURCEDIR}" ]; then
+        find "${SOURCEDIR}" -name "*.svg" -type f | while read -r source_file; do
+            filename=$(basename "${source_file}")
+            target_file="${SITEBUILDDIR}/${filename}"
+            echo "  Processing: ${filename}"
+            "${VENV_PATH}/bin/scour" \
+                --remove-descriptive-elements \
+                --enable-comment-stripping \
+                --enable-viewboxing \
+                --indent=none \
+                --no-line-breaks \
+                --shorten-ids \
+                "${source_file}" "${target_file}"
+        done
+    fi
+
+# Internal: Update spec date in RFC files
+_update-spec-date:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Updating spec dates..."
+    
+    CURRENTDATE=$(TZ=UTC date -Iseconds)
+    
+    # Determine sed arguments based on OS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed_args="-i ''"
+    else
+        sed_args="-i"
+    fi
+    
+    sed ${sed_args} -e "s/^date = .*/date = ${CURRENTDATE}/g" ./rfc/wamp.md
+    sed ${sed_args} -e "s/^date = .*/date = ${CURRENTDATE}/g" ./rfc/wamp-bp.md
+    sed ${sed_args} -e "s/^date = .*/date = ${CURRENTDATE}/g" ./rfc/wamp-ap.md
+
+# Internal: Build RFC specifications using mmark and xml2rfc
+_build-spec:
+    #!/usr/bin/env bash
+    set -e
+    echo "==> Building RFC specifications..."
+    
+    TMPBUILDDIR="./.build"
+    OUTPUTDIR="./dist"
+    
+    # Determine sed arguments based on OS
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed_args="-i ''"
+    else
+        sed_args="-i"
+    fi
+    
+    # Build main WAMP spec
+    echo "  Building wamp.md..."
+    mmark ./rfc/wamp.md > "${TMPBUILDDIR}/wamp.xml"
+    sed ${sed_args} 's/<sourcecode align="left"/<sourcecode/g' "${TMPBUILDDIR}/wamp.xml"
+    sed ${sed_args} 's/<t align="left"/<t/g' "${TMPBUILDDIR}/wamp.xml"
+    xmllint --noout "${TMPBUILDDIR}/wamp.xml"
+    xml2rfc --v3 --text "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.txt"
+    xml2rfc --v3 --html "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.html"
+    xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.pdf"
+    
+    # Build WAMP-BP spec  
+    echo "  Building wamp-bp.md..."
+    mmark ./rfc/wamp-bp.md > "${TMPBUILDDIR}/wamp-bp.xml"
+    sed ${sed_args} 's/<sourcecode align="left"/<sourcecode/g' "${TMPBUILDDIR}/wamp-bp.xml"
+    sed ${sed_args} 's/<t align="left"/<t/g' "${TMPBUILDDIR}/wamp-bp.xml"
+    xmllint --noout "${TMPBUILDDIR}/wamp-bp.xml"
+    xml2rfc --v3 --text "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.txt"
+    xml2rfc --v3 --html "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.html"
+    xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.pdf"
+    
+    # Build WAMP-AP spec
+    echo "  Building wamp-ap.md..."
+    mmark ./rfc/wamp-ap.md > "${TMPBUILDDIR}/wamp-ap.xml"
+    sed ${sed_args} 's/<sourcecode align="left"/<sourcecode/g' "${TMPBUILDDIR}/wamp-ap.xml"
+    sed ${sed_args} 's/<t align="left"/<t/g' "${TMPBUILDDIR}/wamp-ap.xml"
+    xmllint --noout "${TMPBUILDDIR}/wamp-ap.xml"
+    xml2rfc --v3 --text "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.txt"
+    xml2rfc --v3 --html "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.html"
+    xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.pdf"
+
+# Internal: Build documentation using Sphinx
+_build-docs venv="": (install venv)
+    #!/usr/bin/env bash
+    set -e
+    VENV_NAME="{{ venv }}"
+    if [ -z "${VENV_NAME}" ]; then
+        VENV_NAME=$(just --quiet _get-system-venv-name)
+    fi
+    VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
+    
+    TMPBUILDDIR="./.build"
+    OUTPUTDIR="./dist"
+    
+    echo "==> Building documentation..."
+    
+    # First test with all warnings fatal
+    "${VENV_PATH}/bin/sphinx-build" -nWT -b dummy ./docs "${TMPBUILDDIR}/docs"
+    
+    # Run spell checker
+    "${VENV_PATH}/bin/sphinx-build" -b spelling -d "${TMPBUILDDIR}/docs/.doctrees" ./docs "${TMPBUILDDIR}/docs/spelling"
+    
+    # Generate HTML output
+    "${VENV_PATH}/bin/sphinx-build" -b html ./docs "${TMPBUILDDIR}/site_build"
+    
+    # Copy to output directory
+    cp -R "${TMPBUILDDIR}/site_build"/* "${OUTPUTDIR}/"
+    cp -R docs/_static "${OUTPUTDIR}/"
+    cp -R docs/_graphics "${OUTPUTDIR}/"
