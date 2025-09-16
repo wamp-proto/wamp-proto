@@ -16,7 +16,7 @@ jobs:
         run: |
           echo "PATH=$HOME/.local/bin/:$PATH" >> $GITHUB_ENV
           echo "PATH=$HOME/.cargo/bin/:$PATH" >> $GITHUB_ENV
-          echo "WAMP_BUILD_ID=$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})" >> $GITHUB_ENV
+          echo 'WAMP_BUILD_ID="$(date -u "+%Y%m%d")-$(git rev-parse --short ${GITHUB_SHA})"' >> $GITHUB_ENV
 
       - name: Install OS Packages
         run: |

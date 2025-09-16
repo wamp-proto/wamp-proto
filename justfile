@@ -496,9 +496,15 @@ _update-spec-date:
     sed ${sed_args} -e "s/^date = .*/date = ${CURRENTDATE}/g" ./rfc/wamp-ap.md
 
 # Internal: Build RFC specifications using mmark and xml2rfc
-_build-spec:
+_build-spec venv="": (install venv)
     #!/usr/bin/env bash
     set -e
+    VENV_NAME="{{ venv }}"
+    if [ -z "${VENV_NAME}" ]; then
+        VENV_NAME=$(just --quiet _get-system-venv-name)
+    fi
+    VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
+
     echo "==> Building RFC specifications..."
 
     TMPBUILDDIR="./.build"
@@ -517,9 +523,9 @@ _build-spec:
     sed ${sed_args} 's/<sourcecode align="left"/<sourcecode/g' "${TMPBUILDDIR}/wamp.xml"
     sed ${sed_args} 's/<t align="left"/<t/g' "${TMPBUILDDIR}/wamp.xml"
     xmllint --noout "${TMPBUILDDIR}/wamp.xml"
-    xml2rfc --v3 --text "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.txt"
-    xml2rfc --v3 --html "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.html"
-    xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.pdf"
+    ${VENV_PATH}/bin/xml2rfc --v3 --text "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.txt"
+    ${VENV_PATH}/bin/xml2rfc --v3 --html "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.html"
+    ${VENV_PATH}/bin/xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp.xml" -o "${OUTPUTDIR}/wamp_latest_ietf.pdf"
 
     # Build WAMP-BP spec
     echo "  Building wamp-bp.md..."
@@ -527,9 +533,9 @@ _build-spec:
     sed ${sed_args} 's/<sourcecode align="left"/<sourcecode/g' "${TMPBUILDDIR}/wamp-bp.xml"
     sed ${sed_args} 's/<t align="left"/<t/g' "${TMPBUILDDIR}/wamp-bp.xml"
     xmllint --noout "${TMPBUILDDIR}/wamp-bp.xml"
-    xml2rfc --v3 --text "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.txt"
-    xml2rfc --v3 --html "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.html"
-    xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.pdf"
+    ${VENV_PATH}/bin/xml2rfc --v3 --text "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.txt"
+    ${VENV_PATH}/bin/xml2rfc --v3 --html "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.html"
+    ${VENV_PATH}/bin/xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp-bp.xml" -o "${OUTPUTDIR}/wamp_bp_latest_ietf.pdf"
 
     # Build WAMP-AP spec
     echo "  Building wamp-ap.md..."
@@ -537,9 +543,9 @@ _build-spec:
     sed ${sed_args} 's/<sourcecode align="left"/<sourcecode/g' "${TMPBUILDDIR}/wamp-ap.xml"
     sed ${sed_args} 's/<t align="left"/<t/g' "${TMPBUILDDIR}/wamp-ap.xml"
     xmllint --noout "${TMPBUILDDIR}/wamp-ap.xml"
-    xml2rfc --v3 --text "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.txt"
-    xml2rfc --v3 --html "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.html"
-    xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.pdf"
+    ${VENV_PATH}/bin/xml2rfc --v3 --text "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.txt"
+    ${VENV_PATH}/bin/xml2rfc --v3 --html "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.html"
+    ${VENV_PATH}/bin/xml2rfc --v3 --pdf "${TMPBUILDDIR}/wamp-ap.xml" -o "${OUTPUTDIR}/wamp_ap_latest_ietf.pdf"
 
 # Internal: Build documentation using Sphinx
 _build-docs venv="": (install venv)
