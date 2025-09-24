@@ -103,7 +103,7 @@ Fired when a session is added to a registration. The event payload consists of p
 
 #### wamp.registration.on_unregister
 
-Fired when a session is removed from a subscription. The event payload consists of positional arguments:
+Fired when a session is removed from a registration. The event payload consists of positional arguments:
 
 * `session|id`: The ID of the session being removed from a registration.
 * `registration|id`: The ID of the registration from which a session is being removed.
