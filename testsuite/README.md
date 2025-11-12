@@ -285,6 +285,174 @@ Tests router-to-router interactions (federation, clustering).
 }
 ```
 
+## Schema Design and Reasoning
+
+### Non-Bijective Serialization
+
+A fundamental principle underlying the test vector schema is that **serialization is not bijective** (except for bencode). This means:
+
+- **One abstract message → Many valid byte representations** (serialization is one-to-many)
+- **One byte sequence → One abstract message** (deserialization is one-to-one)
+
+**Example**: JSON serialization variations for the same PUBLISH message:
+
+```json
+[16, 239714735, {}, "com.myapp.mytopic1", ["Hello, world!"]]
+[16,239714735,{},"com.myapp.mytopic1",["Hello, world!"]]
+```
+
+Both are valid JSON representing the identical WAMP message. They differ only in whitespace formatting. Other variations include:
+
+- **JSON**: Whitespace (spaces, newlines, indentation), object key ordering
+- **MessagePack**: Integer encoding width (fixint vs uint8 vs uint16 vs uint32), map key ordering
+- **CBOR**: Integer encoding width, definite vs indefinite length arrays/maps, canonical ordering
+
+### Multiple Valid Byte Representations
+
+To handle non-bijective serialization, test vectors use **array-of-variants** for each serializer:
+
+```json
+{
+  "serializers": {
+    "json": [
+      {
+        "bytes": "[16, 239714735, {}, \"com.myapp.mytopic1\", [\"Hello, world!\"]]",
+        "bytes_hex": "5b31362c203233393731343733352c207b7d2c2022636f6d2e6d796170702e6d79746f70696331222c205b2248656c6c6f2c20776f726c6421225d5d",
+        "note": "With spaces after commas (readable)"
+      },
+      {
+        "bytes": "[16,239714735,{},\"com.myapp.mytopic1\",[\"Hello, world!\"]]",
+        "bytes_hex": "5b31362c3233393731343733352c7b7d2c22636f6d2e6d796170702e6d79746f70696331222c5b2248656c6c6f2c20776f726c6421225d5d",
+        "note": "Compact (no spaces) - autobahn-python"
+      }
+    ]
+  }
+}
+```
+
+This array structure allows documenting multiple canonical byte representations for the same abstract message.
+
+### "At Least One" Matching Semantics
+
+Implementations must follow **"at least one" matching semantics**:
+
+**For Serialization** (Message → Bytes):
+- An implementation's serialized bytes MUST match **at least one** of the byte variants in the test vector
+- Implementations MAY produce any of the documented variants
+- Implementations MAY produce other valid representations not yet documented (contributors should add these as new variants)
+
+**For Deserialization** (Bytes → Message):
+- An implementation MUST successfully deserialize **all** byte variants to the same abstract message
+- All variants MUST produce identical attribute values
+- Deserialized message MUST validate against **at least one** validation code block
+
+**Example Test Logic**:
+
+```python
+# Serialization: Check if output matches ANY variant
+def test_serialize(msg, serializer, expected_variants):
+    actual_bytes = serializer.serialize(msg)
+    assert any(actual_bytes == variant['bytes'] for variant in expected_variants)
+
+# Deserialization: Check that ALL variants deserialize successfully
+def test_deserialize(serializer, expected_variants, validation_codes):
+    for variant in expected_variants:
+        msg = serializer.deserialize(variant['bytes'])
+        # Must validate with at least one validation code
+        assert any(validate(msg, code) for code in validation_codes)
+```
+
+### Multiple Samples Per Test Vector
+
+Each test vector file can contain **multiple samples** demonstrating different variations of the message type:
+
+```json
+{
+  "description": "PUBLISH message variants",
+  "wamp_message_type": "PUBLISH",
+  "samples": [
+    {
+      "description": "PUBLISH with positional args only",
+      "serializers": { ... },
+      "expected_attributes": { ... }
+    },
+    {
+      "description": "PUBLISH with keyword args only",
+      "serializers": { ... },
+      "expected_attributes": { ... }
+    },
+    {
+      "description": "PUBLISH with both positional and keyword args",
+      "serializers": { ... },
+      "expected_attributes": { ... }
+    },
+    {
+      "description": "PUBLISH with transparent payload (passthru mode)",
+      "serializers": { ... },
+      "expected_attributes": { ... }
+    }
+  ]
+}
+```
+
+**Why Multiple Samples?**
+
+1. **Coverage**: Different code paths (args only vs kwargs only vs both vs payload)
+2. **Edge Cases**: Empty args, null values, nested structures
+3. **Features**: Basic vs advanced profile options
+4. **Modes**: Normal payload vs transparent payload
+5. **Pedagogy**: Examples for different use cases
+
+### Multiple WAMP Implementation Support
+
+Test vectors are **implementation-agnostic** but provide **implementation-specific** validation and construction code:
+
+```json
+{
+  "validation": {
+    "autobahn-python": [
+      "from autobahn.wamp.message import Publish\nassert isinstance(msg, Publish)\nassert msg.request == 239714735"
+    ],
+    "autobahn-js": [
+      "assert(msg instanceof wamp.Publish);\nassert(msg.request === 239714735);"
+    ],
+    "wampy": [
+      "from wampy.messages.publish import Publish\nassert isinstance(msg, Publish)\nassert msg.request_id == 239714735"
+    ]
+  },
+
+  "construction": {
+    "autobahn-python": "from autobahn.wamp.message import Publish\nmsg = Publish(request=239714735, topic='com.myapp.mytopic1', args=['Hello, world!'])",
+    "autobahn-js": "const msg = new wamp.Publish(239714735, {}, 'com.myapp.mytopic1', ['Hello, world!']);",
+    "wampy": "from wampy.messages.publish import Publish\nmsg = Publish(request_id=239714735, topic='com.myapp.mytopic1', args=['Hello, world!'])"
+  }
+}
+```
+
+**Why Implementation-Specific Code?**
+
+1. **Different APIs**: Each library has its own message class hierarchy and attribute names
+2. **Multiple Validation Approaches**: Different implementations may validate differently (all must be correct)
+3. **Runnable Tests**: Code blocks can be `exec()`'ed directly in test frameworks
+4. **Documentation**: Shows implementers exactly how to use their library correctly
+
+**Key**: Use implementation names (e.g., `autobahn-python`, `autobahn-js`, `wampy`, `nexus-go`), not language names (e.g., `python`, `javascript`), because:
+- Multiple implementations exist per language
+- APIs differ significantly between implementations
+- Version-specific behavior may need different code blocks
+
+### Design Principles Summary
+
+1. **Non-Bijective Reality**: Acknowledge that serialization produces multiple valid outputs
+2. **Array-of-Variants**: Document all known valid byte representations
+3. **At-Least-One Semantics**: Flexible matching for serialization, strict for deserialization
+4. **Multiple Samples**: Comprehensive coverage within each message type
+5. **Implementation-Specific**: Executable code blocks for each WAMP implementation
+6. **Machine-Readable**: JSON format enables automated test generation
+7. **Human-Readable**: Clear descriptions, notes, and spec references
+8. **Version-Controllable**: Git-friendly format for tracking changes
+9. **Extensible**: Easy to add new serializers, implementations, samples
+
 ## Usage
 
 ### For Client Library Developers
