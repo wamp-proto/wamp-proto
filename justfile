@@ -69,11 +69,8 @@ _get-system-venv-name:
 setup-githooks:
     #!/usr/bin/env bash
     set -e
-
-    # Configure Git to use the versioned hooks directory
-    git config core.hooksPath .githooks
-    echo "✔ Git hooks are now configured to use .githooks/"
-    echo "  (run 'git config core.hooksPath' to verify)"
+    # Git hooks now come via the submodule from .ai/.githooks!
+    cd .ai && just setup-repo
 
 # Setup bash tab completion for the current user (to activate: `source ~/.config/bash_completion`).
 setup-completion:
