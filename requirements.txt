@@ -5,6 +5,6 @@ sphinxcontrib_spelling
 sphinxcontrib_images
 pygments
 pyenchant
-xml2rfc>=3.9.1
+xml2rfc[pdf]>=3.30.2
 pycairo>=1.18
-weasyprint<=0.42.3
+weasyprint>=65.0
