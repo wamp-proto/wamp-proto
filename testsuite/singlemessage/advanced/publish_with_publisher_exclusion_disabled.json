@@ -1,0 +1,54 @@
+{
+  "description": "PUBLISH message with publisher exclusion explicitly disabled",
+  "wamp_message_type": "PUBLISH",
+  "wamp_message_code": 16,
+  "feature": "advanced.pubsub.publisher_exclusion",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-publisher-exclusion",
+
+  "serializers": {
+    "json": {
+      "bytes": "[16, 239714735, {\"exclude_me\": false}, \"com.myapp.mytopic1\", [\"Hello, world!\"]]",
+      "bytes_hex": "5b31362c203233393731343733352c207b226578636c7564655f6d65223a2066616c73657d2c2022636f6d2e6d796170702e6d79746f70696331222c205b2248656c6c6f2c20776f726c6421225d5d"
+    }
+  },
+
+  "expected_attributes": {
+    "message_type": 16,
+    "request_id": 239714735,
+    "options": {
+      "exclude_me": false
+    },
+    "topic": "com.myapp.mytopic1",
+    "args": ["Hello, world!"],
+    "kwargs": null
+  },
+
+  "validation": {
+    "python": {
+      "import": "from autobahn.wamp.message import Publish",
+      "assertions": [
+        "isinstance(msg, Publish)",
+        "msg.request == 239714735",
+        "msg.exclude_me == False",
+        "msg.topic == 'com.myapp.mytopic1'",
+        "msg.args == ['Hello, world!']"
+      ]
+    },
+    "javascript": {
+      "assertions": [
+        "msg.type === 16",
+        "msg.request === 239714735",
+        "msg.options.exclude_me === false",
+        "msg.topic === 'com.myapp.mytopic1'",
+        "msg.args[0] === 'Hello, world!'"
+      ]
+    }
+  },
+
+  "notes": [
+    "When exclude_me is false, the publisher WILL receive an EVENT if it is subscribed to the topic",
+    "Default behavior (when exclude_me is not specified) is true - publisher does NOT receive EVENT",
+    "This is an Advanced Profile feature that must be supported by the router",
+    "The exclude_me option is part of PUBLISH.Options dictionary"
+  ]
+}

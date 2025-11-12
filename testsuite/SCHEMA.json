@@ -1,0 +1,320 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://wamp-proto.org/testsuite/schema.json",
+  "title": "WAMP Test Vector Schema",
+  "description": "JSON Schema for WAMP protocol test vectors",
+  "oneOf": [
+    {
+      "$ref": "#/definitions/SingleMessageTestVector"
+    },
+    {
+      "$ref": "#/definitions/MultiMessageTestVector"
+    }
+  ],
+  "definitions": {
+    "SingleMessageTestVector": {
+      "type": "object",
+      "required": [
+        "description",
+        "wamp_message_type",
+        "wamp_message_code",
+        "serializers",
+        "expected_attributes"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this test vector"
+        },
+        "wamp_message_type": {
+          "type": "string",
+          "description": "WAMP message type name (e.g., 'EVENT', 'PUBLISH', 'CALL')",
+          "enum": [
+            "HELLO",
+            "WELCOME",
+            "ABORT",
+            "CHALLENGE",
+            "AUTHENTICATE",
+            "GOODBYE",
+            "ERROR",
+            "PUBLISH",
+            "PUBLISHED",
+            "SUBSCRIBE",
+            "SUBSCRIBED",
+            "UNSUBSCRIBE",
+            "UNSUBSCRIBED",
+            "EVENT",
+            "CALL",
+            "CANCEL",
+            "RESULT",
+            "REGISTER",
+            "REGISTERED",
+            "UNREGISTER",
+            "UNREGISTERED",
+            "INVOCATION",
+            "INTERRUPT",
+            "YIELD"
+          ]
+        },
+        "wamp_message_code": {
+          "type": "integer",
+          "description": "WAMP message type code (first element in message array)",
+          "minimum": 1,
+          "maximum": 255
+        },
+        "feature": {
+          "type": "string",
+          "description": "WAMP feature identifier (e.g., 'basic.pubsub', 'advanced.pubsub.publisher_identification')"
+        },
+        "spec_reference": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to relevant section in WAMP specification"
+        },
+        "serializers": {
+          "type": "object",
+          "description": "Serialized byte representations in different formats",
+          "minProperties": 1,
+          "properties": {
+            "json": {
+              "$ref": "#/definitions/SerializedBytes"
+            },
+            "msgpack": {
+              "$ref": "#/definitions/SerializedBytes"
+            },
+            "cbor": {
+              "$ref": "#/definitions/SerializedBytes"
+            },
+            "ubjson": {
+              "$ref": "#/definitions/SerializedBytes"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/SerializedBytes"
+          }
+        },
+        "expected_attributes": {
+          "type": "object",
+          "description": "Expected attributes after deserialization",
+          "required": ["message_type"],
+          "properties": {
+            "message_type": {
+              "type": "integer",
+              "description": "WAMP message type code"
+            }
+          },
+          "additionalProperties": true
+        },
+        "validation": {
+          "type": "object",
+          "description": "Language-specific validation assertions",
+          "properties": {
+            "python": {
+              "$ref": "#/definitions/LanguageValidation"
+            },
+            "javascript": {
+              "$ref": "#/definitions/LanguageValidation"
+            },
+            "java": {
+              "$ref": "#/definitions/LanguageValidation"
+            },
+            "cpp": {
+              "$ref": "#/definitions/LanguageValidation"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/definitions/LanguageValidation"
+          }
+        },
+        "notes": {
+          "type": "array",
+          "description": "Additional notes about this test vector",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "MultiMessageTestVector": {
+      "type": "object",
+      "required": [
+        "description",
+        "feature",
+        "sessions",
+        "sequence"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this test sequence"
+        },
+        "feature": {
+          "type": "string",
+          "description": "WAMP feature being tested"
+        },
+        "spec_reference": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to relevant section in WAMP specification"
+        },
+        "sessions": {
+          "type": "array",
+          "description": "Client sessions involved in this test",
+          "items": {
+            "$ref": "#/definitions/Session"
+          },
+          "minItems": 1
+        },
+        "sequence": {
+          "type": "array",
+          "description": "Ordered sequence of messages",
+          "items": {
+            "$ref": "#/definitions/MessageStep"
+          },
+          "minItems": 1
+        },
+        "expected_outcome": {
+          "type": "object",
+          "description": "Expected outcome of the message sequence",
+          "additionalProperties": true
+        },
+        "notes": {
+          "type": "array",
+          "description": "Additional notes about this test sequence",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "SerializedBytes": {
+      "type": "object",
+      "description": "Serialized message bytes in multiple representations",
+      "properties": {
+        "bytes": {
+          "type": "string",
+          "description": "String representation of bytes (e.g., JSON array string)"
+        },
+        "bytes_hex": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]*$",
+          "description": "Hexadecimal encoding of bytes"
+        },
+        "bytes_base64": {
+          "type": "string",
+          "description": "Base64 encoding of bytes"
+        }
+      },
+      "anyOf": [
+        {"required": ["bytes"]},
+        {"required": ["bytes_hex"]},
+        {"required": ["bytes_base64"]}
+      ]
+    },
+    "LanguageValidation": {
+      "type": "object",
+      "description": "Validation code for a specific programming language",
+      "properties": {
+        "import": {
+          "type": "string",
+          "description": "Import statements needed for validation"
+        },
+        "setup": {
+          "type": "string",
+          "description": "Setup code to run before assertions"
+        },
+        "assertions": {
+          "type": "array",
+          "description": "Assertion statements to validate message attributes",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Session": {
+      "type": "object",
+      "description": "A WAMP session participating in the test",
+      "required": ["session_id"],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "description": "Identifier for this session"
+        },
+        "roles": {
+          "type": "array",
+          "description": "WAMP roles this session will use",
+          "items": {
+            "type": "string",
+            "enum": [
+              "publisher",
+              "subscriber",
+              "caller",
+              "callee",
+              "dealer",
+              "broker"
+            ]
+          }
+        },
+        "realm": {
+          "type": "string",
+          "description": "WAMP realm for this session"
+        }
+      }
+    },
+    "MessageStep": {
+      "type": "object",
+      "description": "A single message in a sequence",
+      "required": ["step", "description", "from", "to", "message"],
+      "properties": {
+        "step": {
+          "type": "integer",
+          "description": "Step number in sequence",
+          "minimum": 1
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this step"
+        },
+        "from": {
+          "type": "string",
+          "description": "Sender (session_id or 'router')"
+        },
+        "to": {
+          "type": "string",
+          "description": "Recipient (session_id or 'router')"
+        },
+        "message": {
+          "type": "object",
+          "description": "WAMP message being sent",
+          "required": ["type"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "WAMP message type name"
+            }
+          },
+          "additionalProperties": true
+        },
+        "assertion": {
+          "type": "string",
+          "description": "Assertion about this step (what MUST happen)"
+        },
+        "timing": {
+          "type": "object",
+          "description": "Timing constraints for this step",
+          "properties": {
+            "delay_ms": {
+              "type": "integer",
+              "description": "Delay before this step (milliseconds)"
+            },
+            "timeout_ms": {
+              "type": "integer",
+              "description": "Maximum time to wait for this message (milliseconds)"
+            }
+          }
+        }
+      }
+    }
+  }
+}

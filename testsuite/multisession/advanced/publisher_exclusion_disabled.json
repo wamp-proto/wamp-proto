@@ -1,0 +1,84 @@
+{
+  "description": "Publisher exclusion disabled - publisher receives own EVENT",
+  "feature": "advanced.pubsub.publisher_exclusion",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-publisher-exclusion",
+
+  "sessions": [
+    {
+      "session_id": "session_1",
+      "roles": ["publisher", "subscriber"],
+      "realm": "realm1"
+    }
+  ],
+
+  "sequence": [
+    {
+      "step": 1,
+      "description": "Client subscribes to topic",
+      "from": "session_1",
+      "to": "router",
+      "message": {
+        "type": "SUBSCRIBE",
+        "request_id": 123,
+        "options": {},
+        "topic": "com.myapp.topic1"
+      }
+    },
+    {
+      "step": 2,
+      "description": "Router confirms subscription",
+      "from": "router",
+      "to": "session_1",
+      "message": {
+        "type": "SUBSCRIBED",
+        "request_id": 123,
+        "subscription_id": 456
+      },
+      "assertion": "Router MUST respond with SUBSCRIBED message containing subscription ID"
+    },
+    {
+      "step": 3,
+      "description": "Client publishes with exclude_me=false",
+      "from": "session_1",
+      "to": "router",
+      "message": {
+        "type": "PUBLISH",
+        "request_id": 789,
+        "options": {
+          "exclude_me": false
+        },
+        "topic": "com.myapp.topic1",
+        "args": ["Hello, world!"]
+      }
+    },
+    {
+      "step": 4,
+      "description": "Publisher receives EVENT because exclude_me=false",
+      "from": "router",
+      "to": "session_1",
+      "message": {
+        "type": "EVENT",
+        "subscription_id": 456,
+        "publication_id": 999,
+        "details": {},
+        "args": ["Hello, world!"]
+      },
+      "assertion": "Publisher MUST receive EVENT when exclude_me=false, even though it is the publisher"
+    }
+  ],
+
+  "expected_outcome": {
+    "session_1_receives_event": true,
+    "reason": "exclude_me option was explicitly set to false",
+    "event_count": 1,
+    "event_recipients": ["session_1"]
+  },
+
+  "notes": [
+    "This test validates that publisher exclusion can be explicitly disabled",
+    "Default behavior is exclude_me=true (publisher does NOT receive EVENT)",
+    "When exclude_me=false, the publisher WILL receive EVENT if subscribed",
+    "The publication_id in EVENT is assigned by the router and may vary",
+    "The args in EVENT must match the args in PUBLISH exactly"
+  ]
+}

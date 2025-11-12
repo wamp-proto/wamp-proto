@@ -1,0 +1,59 @@
+{
+  "description": "Basic EVENT message with application payload",
+  "wamp_message_type": "EVENT",
+  "wamp_message_code": 36,
+  "feature": "basic.pubsub",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-event-2",
+
+  "serializers": {
+    "json": {
+      "bytes": "[36, 5512315355, 4429313566, {}, [], {\"color\": \"orange\", \"sizes\": [23, 42, 7]}]",
+      "bytes_hex": "5b33362c20353531323331353335352c20343432393331333536362c207b7d2c205b5d2c207b22636f6c6f72223a20226f72616e6765222c202273697a6573223a205b32332c2034322c20375d7d5d"
+    }
+  },
+
+  "expected_attributes": {
+    "message_type": 36,
+    "subscription_id": 5512315355,
+    "publication_id": 4429313566,
+    "details": {},
+    "args": [],
+    "kwargs": {
+      "color": "orange",
+      "sizes": [23, 42, 7]
+    }
+  },
+
+  "validation": {
+    "python": {
+      "import": "from autobahn.wamp.message import Event",
+      "assertions": [
+        "isinstance(msg, Event)",
+        "msg.subscription == 5512315355",
+        "msg.publication == 4429313566",
+        "msg.details == {}",
+        "msg.args == []",
+        "msg.kwargs == {'color': 'orange', 'sizes': [23, 42, 7]}"
+      ]
+    },
+    "javascript": {
+      "assertions": [
+        "msg.type === 36",
+        "msg.subscription === 5512315355",
+        "msg.publication === 4429313566",
+        "Object.keys(msg.details).length === 0",
+        "msg.args.length === 0",
+        "msg.kwargs.color === 'orange'",
+        "Array.isArray(msg.kwargs.sizes)",
+        "msg.kwargs.sizes.length === 3"
+      ]
+    }
+  },
+
+  "notes": [
+    "This is a basic EVENT message from the WAMP specification example",
+    "The Details dictionary is empty (no advanced features)",
+    "Application payload is in kwargs only (args is empty)",
+    "Demonstrates nested array in kwargs (sizes field)"
+  ]
+}

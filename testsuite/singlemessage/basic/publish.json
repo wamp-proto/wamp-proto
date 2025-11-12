@@ -1,0 +1,54 @@
+{
+  "description": "Basic PUBLISH message with application payload",
+  "wamp_message_type": "PUBLISH",
+  "wamp_message_code": 16,
+  "feature": "basic.pubsub",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-publish-2",
+
+  "serializers": {
+    "json": {
+      "bytes": "[16, 239714735, {}, \"com.myapp.mytopic1\", [\"Hello, world!\"]]",
+      "bytes_hex": "5b31362c203233393731343733352c207b7d2c2022636f6d2e6d796170702e6d79746f70696331222c205b2248656c6c6f2c20776f726c6421225d5d"
+    }
+  },
+
+  "expected_attributes": {
+    "message_type": 16,
+    "request_id": 239714735,
+    "options": {},
+    "topic": "com.myapp.mytopic1",
+    "args": ["Hello, world!"],
+    "kwargs": null
+  },
+
+  "validation": {
+    "python": {
+      "import": "from autobahn.wamp.message import Publish",
+      "assertions": [
+        "isinstance(msg, Publish)",
+        "msg.request == 239714735",
+        "msg.options == {}",
+        "msg.topic == 'com.myapp.mytopic1'",
+        "msg.args == ['Hello, world!']",
+        "msg.kwargs is None or msg.kwargs == {}"
+      ]
+    },
+    "javascript": {
+      "assertions": [
+        "msg.type === 16",
+        "msg.request === 239714735",
+        "Object.keys(msg.options).length === 0",
+        "msg.topic === 'com.myapp.mytopic1'",
+        "msg.args.length === 1",
+        "msg.args[0] === 'Hello, world!'"
+      ]
+    }
+  },
+
+  "notes": [
+    "This is a basic PUBLISH message from the WAMP specification example",
+    "The Options dictionary is empty (no advanced features)",
+    "Application payload is in args (positional arguments)",
+    "kwargs is not present in the message (optional 6th element)"
+  ]
+}
