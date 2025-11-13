@@ -26,6 +26,16 @@
           {
             "bytes_hex": "9510ce0e49c1af80b2636f6d2e6d796170702e6d79746f7069633191ad48656c6c6f2c20776f726c6421"
           }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "85101a0e49c1afa072636f6d2e6d796170702e6d79746f70696331816d48656c6c6f2c20776f726c6421"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55106c0e49c1af7b7d535512636f6d2e6d796170702e6d79746f706963315b53550d48656c6c6f2c20776f726c64215d5d"
+          }
         ]
       },
 
@@ -50,14 +60,68 @@
       "construction": {
         "autobahn-python": "from autobahn.wamp.message import Publish\n\nmsg = Publish(\n    request=239714735,\n    topic='com.myapp.mytopic1',\n    args=['Hello, world!']\n)\n"
       }
+    },
+    {
+      "description": "PUBLISH with transparent payload (encrypted E2E)",
+
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[16,123456789,{\"enc_algo\":\"cryptobox\",\"enc_serializer\":\"msgpack\"},\"com.myapp.encrypted\",\"\\u0000gqVjb2xvcqZvcmFuZ2Wlc2l6ZXOTFwAqBw==\"]",
+            "bytes_hex": "5b31362c3132333435363738392c7b22656e635f616c676f223a2263727970746f626f78222c22656e635f73657269616c697a6572223a226d73677061636b227d2c22636f6d2e6d796170702e656e63727970746564222c225c75303030306771566a6232787663715a76636d46755a32576c63326c365a584f544677417142773d3d225d",
+            "note": "Transparent payload with encryption metadata"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9510ce075bcd1582a8656e635f616c676fa963727970746f626f78ae656e635f73657269616c697a6572a76d73677061636bb3636f6d2e6d796170702e656e63727970746564c41982a5636f6c6f72a66f72616e6765a573697a65739317002a07"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "85101a075bcd15a268656e635f616c676f6963727970746f626f786e656e635f73657269616c697a6572676d73677061636b73636f6d2e6d796170702e656e63727970746564581982a5636f6c6f72a66f72616e6765a573697a65739317002a07"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55106c075bcd157b5508656e635f616c676f53550963727970746f626f78550e656e635f73657269616c697a65725355076d73677061636b7d535513636f6d2e6d796170702e656e637279707465645b245523551982a5636f6c6f72a66f72616e6765a573697a65739317002a075d"
+          }
+        ]
+      },
+
+      "expected_attributes": {
+        "message_type": 16,
+        "request_id": 123456789,
+        "options": {
+          "enc_algo": "cryptobox",
+          "enc_serializer": "msgpack"
+        },
+        "topic": "com.myapp.encrypted",
+        "args": null,
+        "kwargs": null,
+        "payload": "82a5636f6c6f72a66f72616e6765a573697a65739317002a07"
+      },
+
+      "validation": {
+        "autobahn-python": [
+          "from autobahn.wamp.message import Publish\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Publish)\nassert msg.request == 123456789\nassert msg.topic == 'com.myapp.encrypted'\n\n# Transparent payload mode: args/kwargs are None, payload is bytes\nassert msg.args is None\nassert msg.kwargs is None\nassert msg.payload is not None\nassert isinstance(msg.payload, bytes)\nassert msg.payload.hex() == '82a5636f6c6f72a66f72616e6765a573697a65739317002a07'\n\n# E2E encryption metadata in options\nassert msg.enc_algo == 'cryptobox'\nassert msg.enc_serializer == 'msgpack'\n"
+        ]
+      },
+
+      "construction": {
+        "autobahn-python": "from autobahn.wamp.message import Publish\n\n# Simulated encrypted payload (opaque bytes)\npayload_bytes = bytes.fromhex('82a5636f6c6f72a66f72616e6765a573697a65739317002a07')\n\nmsg = Publish(\n    request=123456789,\n    topic='com.myapp.encrypted',\n    payload=payload_bytes,\n    enc_algo='cryptobox',\n    enc_serializer='msgpack'\n)\n"
+      }
     }
   ],
 
   "notes": [
-    "This is a basic PUBLISH message from the WAMP specification example",
-    "The Options dictionary is empty (no advanced features)",
-    "Application payload is in args (positional arguments)",
-    "kwargs is not present in the message (optional 6th element)",
+    "Sample 1: Basic PUBLISH with normal payload mode (args/kwargs)",
+    "Sample 2: PUBLISH with transparent payload mode (E2E encryption)",
+    "Normal mode: Application payload in args/kwargs (router deserializes)",
+    "Transparent mode: Application payload as opaque bytes (router does NOT deserialize)",
+    "Transparent mode enables E2E encryption: router cannot read encrypted payload",
+    "enc_algo and enc_serializer in Options indicate encryption/serialization used",
+    "Payload bytes must be preserved exactly through router (byte-for-byte)",
     "Serializers list contains valid byte representations (at least one must match)",
     "Validation blocks are executable code (at least one must pass)",
     "Construction creates a message instance for serialization tests"
