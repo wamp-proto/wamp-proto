@@ -5,55 +5,265 @@
   "feature": "basic.pubsub",
   "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-event-2",
 
-  "serializers": {
-    "json": {
-      "bytes": "[36, 5512315355, 4429313566, {}, [], {\"color\": \"orange\", \"sizes\": [23, 42, 7]}]",
-      "bytes_hex": "5b33362c20353531323331353335352c20343432393331333536362c207b7d2c205b5d2c207b22636f6c6f72223a20226f72616e6765222c202273697a6573223a205b32332c2034322c20375d7d5d"
-    }
-  },
+  "samples": [
+    {
+      "description": "EVENT with positional args only",
 
-  "expected_attributes": {
-    "message_type": 36,
-    "subscription_id": 5512315355,
-    "publication_id": 4429313566,
-    "details": {},
-    "args": [],
-    "kwargs": {
-      "color": "orange",
-      "sizes": [23, 42, 7]
-    }
-  },
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[36,9823526,112233445566,{},[\u0022Hello, event!\u0022]]",
+            "bytes_hex": "5b33362c393832333532362c3131323233333434353536362c7b7d2c5b2248656c6c6f2c206576656e7421225d5d",
+            "note": "Compact - basic event delivery"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9524ce0095e526cf0000001a21a278be8091ad48656c6c6f2c206576656e7421"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8518241a0095e5261b0000001a21a278bea0816d48656c6c6f2c206576656e7421"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55246c0095e5264c0000001a21a278be7b7d5b53550d48656c6c6f2c206576656e74215d5d"
+          }
+        ]
+      },
 
-  "validation": {
-    "python": {
-      "import": "from autobahn.wamp.message import Event",
-      "assertions": [
-        "isinstance(msg, Event)",
-        "msg.subscription == 5512315355",
-        "msg.publication == 4429313566",
-        "msg.details == {}",
-        "msg.args == []",
-        "msg.kwargs == {'color': 'orange', 'sizes': [23, 42, 7]}"
-      ]
+      "expected_attributes": {
+        "message_type": 36,
+        "subscription": 9823526,
+        "publication": 112233445566,
+        "details": {},
+        "args": ["Hello, event!"],
+        "kwargs": null
+      },
+
+      "validation": {
+        "autobahn-python": [
+          "from autobahn.wamp.message import Event\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Event)\nassert msg.subscription == 9823526\nassert msg.publication == 112233445566\nassert msg.args == ['Hello, event!']\nassert msg.kwargs is None or msg.kwargs == {}\n\n# Normal payload mode (not E2EE)\nassert msg.payload is None\nassert msg.enc_algo is None\nassert msg.enc_serializer is None\n\n# No router forwarding\nassert msg.forward_for is None\n"
+        ],
+        "autobahn-js": [
+          "// Test framework provides 'msg' with deserialized message\nassert(msg.type === 36);\nassert(msg.subscription === 9823526);\nassert(msg.publication === 112233445566);\nassert(Object.keys(msg.details).length === 0);\nassert(msg.args.length === 1);\nassert(msg.args[0] === 'Hello, event!');\n"
+        ]
+      },
+
+      "construction": {
+        "autobahn-python": "from autobahn.wamp.message import Event\n\nmsg = Event(\n    subscription=9823526,\n    publication=112233445566,\n    args=['Hello, event!']\n)\n"
+      }
     },
-    "javascript": {
-      "assertions": [
-        "msg.type === 36",
-        "msg.subscription === 5512315355",
-        "msg.publication === 4429313566",
-        "Object.keys(msg.details).length === 0",
-        "msg.args.length === 0",
-        "msg.kwargs.color === 'orange'",
-        "Array.isArray(msg.kwargs.sizes)",
-        "msg.kwargs.sizes.length === 3"
-      ]
+    {
+      "description": "EVENT with transparent payload (encrypted E2E)",
+
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[36,5647382910,998877665544,{\u0022enc_algo\u0022:\u0022cryptobox\u0022,\u0022enc_serializer\u0022:\u0022msgpack\u0022},\u0022\\u0000g6Vjb2xvcqRibHVlpHNpemWlbGFyZ2WlY291bnQe\u0022]",
+            "bytes_hex": "5b33362c353634373338323931302c3939383837373636353534342c7b22656e635f616c676f223a2263727970746f626f78222c22656e635f73657269616c697a6572223a226d73677061636b227d2c225c75303030306736566a62327876637152696248566c70484e70656d576c624746795a32576c59323931626e5165225d",
+            "note": "Transparent payload with encryption metadata"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9524cf00000001509c397ecf000000e891bf990882a8656e635f616c676fa963727970746f626f78ae656e635f73657269616c697a6572a76d73677061636bc41e83a5636f6c6f72a4626c7565a473697a65a56c61726765a5636f756e741e"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8518241b00000001509c397e1b000000e891bf9908a268656e635f616c676f6963727970746f626f786e656e635f73657269616c697a6572676d73677061636b581e83a5636f6c6f72a4626c7565a473697a65a56c61726765a5636f756e741e"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55244c00000001509c397e4c000000e891bf99087b5508656e635f616c676f53550963727970746f626f78550e656e635f73657269616c697a65725355076d73677061636b7d5b245523551e83a5636f6c6f72a4626c7565a473697a65a56c61726765a5636f756e741e5d"
+          }
+        ]
+      },
+
+      "expected_attributes": {
+        "message_type": 36,
+        "subscription": 5647382910,
+        "publication": 998877665544,
+        "details": {
+          "enc_algo": "cryptobox",
+          "enc_serializer": "msgpack"
+        },
+        "args": null,
+        "kwargs": null,
+        "payload": "83a5636f6c6f72a4626c7565a473697a65a56c61726765a5636f756e741e"
+      },
+
+      "validation": {
+        "autobahn-python": [
+          "from autobahn.wamp.message import Event\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Event)\nassert msg.subscription == 5647382910\nassert msg.publication == 998877665544\n\n# Transparent payload mode: args/kwargs are None, payload is bytes\nassert msg.args is None\nassert msg.kwargs is None\nassert msg.payload is not None\nassert isinstance(msg.payload, bytes)\nassert msg.payload.hex() == '83a5636f6c6f72a4626c7565a473697a65a56c61726765a5636f756e741e'\n\n# E2E encryption metadata in details\nassert msg.enc_algo == 'cryptobox'\nassert msg.enc_serializer == 'msgpack'\n\n# No router forwarding\nassert msg.forward_for is None\n"
+        ]
+      },
+
+      "construction": {
+        "autobahn-python": "from autobahn.wamp.message import Event\n\n# Simulated encrypted payload (opaque bytes)\npayload_bytes = bytes.fromhex('83a5636f6c6f72a4626c7565a473697a65a56c61726765a5636f756e741e')\n\nmsg = Event(\n    subscription=5647382910,\n    publication=998877665544,\n    payload=payload_bytes,\n    enc_algo='cryptobox',\n    enc_serializer='msgpack'\n)\n"
+      }
+    },
+    {
+      "description": "EVENT with forward_for (router-to-router link)",
+
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[36,7418529630,556677889900,{\u0022forward_for\u0022:[{\u0022session\u0022:2468013579,\u0022authid\u0022:\u0022frontend1\u0022,\u0022authrole\u0022:\u0022user\u0022}]},[100,\u0022data\u0022]]",
+            "bytes_hex": "5b33362c373431383532393633302c3535363637373838393930302c7b22666f72776172645f666f72223a5b7b2273657373696f6e223a323436383031333537392c22617574686964223a2266726f6e74656e6431222c2261757468726f6c65223a2275736572227d5d7d2c5b3130302c2264617461225d5d",
+            "note": "Compact - Router-to-Router with forward_for"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9524cf00000001ba2dc75ecf000000819c967f6c81ab666f72776172645f666f729183a773657373696f6ece931ae60ba6617574686964a966726f6e74656e6431a861757468726f6c65a4757365729264a464617461"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8518241b00000001ba2dc75e1b000000819c967f6ca16b666f72776172645f666f7281a36773657373696f6e1a931ae60b666175746869646966726f6e74656e64316861757468726f6c6564757365728218646464617461"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55244c00000001ba2dc75e4c000000819c967f6c7b550b666f72776172645f666f725b7b550773657373696f6e4c00000000931ae60b550661757468696453550966726f6e74656e6431550861757468726f6c65535504757365727d5d7d5b5564535504646174615d5d"
+          }
+        ]
+      },
+
+      "expected_attributes": {
+        "message_type": 36,
+        "subscription": 7418529630,
+        "publication": 556677889900,
+        "details": {
+          "forward_for": [
+            {
+              "session": 2468013579,
+              "authid": "frontend1",
+              "authrole": "user"
+            }
+          ]
+        },
+        "args": [100, "data"],
+        "kwargs": null
+      },
+
+      "validation": {
+        "autobahn-python": [
+          "from autobahn.wamp.message import Event\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Event)\nassert msg.subscription == 7418529630\nassert msg.publication == 556677889900\nassert msg.args == [100, 'data']\nassert msg.kwargs is None or msg.kwargs == {}\n\n# Check forward_for (router-to-router link)\nassert msg.forward_for is not None\nassert isinstance(msg.forward_for, list)\nassert len(msg.forward_for) == 1\n\nff = msg.forward_for[0]\nassert isinstance(ff, dict)\nassert ff['session'] == 2468013579\nassert ff['authid'] == 'frontend1'\nassert ff['authrole'] == 'user'\n\n# Normal payload mode (not E2EE)\nassert msg.payload is None\nassert msg.enc_algo is None\nassert msg.enc_serializer is None\n"
+        ]
+      },
+
+      "construction": {
+        "autobahn-python": "from autobahn.wamp.message import Event\n\nmsg = Event(\n    subscription=7418529630,\n    publication=556677889900,\n    args=[100, 'data'],\n    forward_for=[\n        {\n            'session': 2468013579,\n            'authid': 'frontend1',\n            'authrole': 'user'\n        }\n    ]\n)\n"
+      }
+    },
+    {
+      "description": "EVENT with both forward_for and E2EE (advanced R-Link + encryption)",
+
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[36,1357924680,987654321098,{\u0022forward_for\u0022:[{\u0022session\u0022:3692581470,\u0022authid\u0022:\u0022router2\u0022,\u0022authrole\u0022:\u0022router\u0022}],\u0022enc_algo\u0022:\u0022cryptobox\u0022,\u0022enc_serializer\u0022:\u0022cbor\u0022},\u0022\\u0000omZzdGF0dXNpZm9yd2FyZGVkZGhvcHMC\u0022]",
+            "bytes_hex": "5b33362c313335373932343638302c3938373635343332313039382c7b22666f72776172645f666f72223a5b7b2273657373696f6e223a333639323538313437302c22617574686964223a22726f7574657232222c2261757468726f6c65223a22726f75746572227d5d2c22656e635f616c676f223a2263727970746f626f78222c22656e635f73657269616c697a6572223a2263626f72227d2c225c75303030306f6d5a7a6447463064584e705a6d3979643246795a47566b5a47687663484d43225d",
+            "note": "Router-forwarded with E2EE payload"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9524ce50f04948cf000000e5f4c8f3ca83ab666f72776172645f666f729183a773657373696f6ecedc18525ea6617574686964a7726f7574657232a861757468726f6c65a6726f75746572a8656e635f616c676fa963727970746f626f78ae656e635f73657269616c697a6572a463626f72c418a26673746174757369666f7277617264656464686f707302"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8518241a50f049481b000000e5f4c8f3caa36b666f72776172645f666f7281a36773657373696f6e1adc18525e6661757468696467726f75746572326861757468726f6c6566726f7574657268656e635f616c676f6963727970746f626f786e656e635f73657269616c697a65726463626f725818a26673746174757369666f7277617264656464686f707302"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55246c50f049484c000000e5f4c8f3ca7b550b666f72776172645f666f725b7b550773657373696f6e4c00000000dc18525e5506617574686964535507726f7574657232550861757468726f6c65535506726f757465727d5d5508656e635f616c676f53550963727970746f626f78550e656e635f73657269616c697a657253550463626f727d5b2455235518a26673746174757369666f7277617264656464686f7073025d"
+          }
+        ]
+      },
+
+      "expected_attributes": {
+        "message_type": 36,
+        "subscription": 1357924680,
+        "publication": 987654321098,
+        "details": {
+          "enc_algo": "cryptobox",
+          "enc_serializer": "cbor",
+          "forward_for": [
+            {
+              "session": 3692581470,
+              "authid": "router2",
+              "authrole": "router"
+            }
+          ]
+        },
+        "args": null,
+        "kwargs": null,
+        "payload": "a26673746174757369666f7277617264656464686f707302"
+      },
+
+      "validation": {
+        "autobahn-python": [
+          "from autobahn.wamp.message import Event\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Event)\nassert msg.subscription == 1357924680\nassert msg.publication == 987654321098\n\n# Transparent payload mode (E2EE)\nassert msg.args is None\nassert msg.kwargs is None\nassert msg.payload is not None\nassert isinstance(msg.payload, bytes)\nassert msg.payload.hex() == 'a26673746174757369666f7277617264656464686f707302'\n\n# E2EE metadata\nassert msg.enc_algo == 'cryptobox'\nassert msg.enc_serializer == 'cbor'\n\n# Router-to-router forwarding\nassert msg.forward_for is not None\nassert isinstance(msg.forward_for, list)\nassert len(msg.forward_for) == 1\n\nff = msg.forward_for[0]\nassert isinstance(ff, dict)\nassert ff['session'] == 3692581470\nassert ff['authid'] == 'router2'\nassert ff['authrole'] == 'router'\n"
+        ]
+      },
+
+      "construction": {
+        "autobahn-python": "from autobahn.wamp.message import Event\n\n# Simulated encrypted payload forwarded from another router\npayload_bytes = bytes.fromhex('a26673746174757369666f7277617264656464686f707302')\n\nmsg = Event(\n    subscription=1357924680,\n    publication=987654321098,\n    payload=payload_bytes,\n    enc_algo='cryptobox',\n    enc_serializer='cbor',\n    forward_for=[\n        {\n            'session': 3692581470,\n            'authid': 'router2',\n            'authrole': 'router'\n        }\n    ]\n)\n"
+      }
     }
-  },
+  ],
 
   "notes": [
-    "This is a basic EVENT message from the WAMP specification example",
-    "The Details dictionary is empty (no advanced features)",
-    "Application payload is in kwargs only (args is empty)",
-    "Demonstrates nested array in kwargs (sizes field)"
+    "Sample 1: Basic EVENT with normal payload mode (args/kwargs)",
+    "Sample 2: EVENT with transparent payload mode (E2E encryption)",
+    "Sample 3: EVENT with forward_for (router-to-router link, normal payload)",
+    "Sample 4: EVENT with both forward_for and E2EE (most advanced deployment)",
+    "",
+    "ATTRIBUTE NAMING: Autobahn Implementation vs WAMP Spec 14.1 (Draft)",
+    "┌────────────────────┬────────────────────┐",
+    "│ Autobahn:          │ WAMP Spec 14.1:    │",
+    "├────────────────────┼────────────────────┤",
+    "│ enc_algo           │ ppt_scheme         │",
+    "│ enc_serializer     │ ppt_serializer     │",
+    "│ enc_key            │ ppt_keyid          │",
+    "│ (N/A)              │ ppt_cipher         │",
+    "└────────────────────┴────────────────────┘",
+    "NOTE: WAMP spec section 14.1 (Payload Transparency) text not yet finalized.",
+    "      Test vectors use Autobahn implementation attribute names above.",
+    "      See: https://github.com/wamp-proto/wamp-proto/blob/master/wep/WIP_E2EE_AND_RLINKS.md",
+    "",
+    "Valid enc_algo values: 'null', 'cryptobox', 'mqtt', 'xbr'",
+    "Valid enc_serializer values: 'null', 'json', 'msgpack', 'cbor', 'ubjson', 'opaque', 'flatbuffers'",
+    "ppt_cipher is hardcoded for 'cryptobox': xsalsa20poly1305 or aes256gcm",
+    "",
+    "Normal mode: Application payload in args/kwargs (router deserializes)",
+    "Transparent mode: Application payload as opaque bytes (router does NOT deserialize)",
+    "Transparent mode enables E2E encryption: router cannot read encrypted payload",
+    "enc_algo and enc_serializer in Details indicate encryption/serialization used",
+    "Payload bytes must be preserved exactly through router (byte-for-byte)",
+    "",
+    "forward_for: Router-to-router link forwarding chain",
+    "  - List of dicts tracking message forwarding across multiple routers",
+    "  - Each dict has: session (int), authid (str), authrole (str)",
+    "  - Enables distributed WAMP router fabrics (R-Links)",
+    "  - Can be combined with E2EE for encrypted multi-router deployments",
+    "",
+    "EVENT vs PUBLISH: EVENT flows from router to subscriber (opposite of PUBLISH)",
+    "  - PUBLISH: publisher → router (upstream)",
+    "  - EVENT: router → subscriber (downstream)",
+    "  - Both support identical E2EE and R-Link capabilities",
+    "",
+    "Serializers list contains valid byte representations (at least one must match)",
+    "Validation blocks are executable code (at least one must pass)",
+    "Construction creates a message instance for serialization tests"
   ]
 }
