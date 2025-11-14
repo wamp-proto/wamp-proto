@@ -358,9 +358,247 @@
       "construction": {
         "autobahn-python": "from autobahn.wamp.message import Publish\n\nmsg = Publish(\n    request=444555666,\n    topic='com.myapp.important',\n    args=[100, 'critical'],\n    kwargs={'priority': 'high', 'count': 5},\n    acknowledge=True\n)\n"
       }
+    },
+    {
+      "description": "PUBLISH.Options.acknowledge with value true (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"acknowledge": true}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.acknowledge with value false (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"acknowledge": false}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.acknowledge with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"acknowledge": "hello"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "acknowledge"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.acknowledge with invalid type int",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"acknowledge": 1}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "acknowledge"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.exclude_me with value true (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_me": true}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.exclude_me with value false (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_me": false}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.exclude_me with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_me": "hello"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "exclude_me"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.exclude empty list (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude": []}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.exclude with session IDs (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude": [123, 456, 789]}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.exclude with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude": "hello"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "exclude"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.exclude with invalid item type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude": ["hello"]}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "exclude"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.exclude_authid empty list (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_authid": []}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.exclude_authid with authids (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_authid": ["alice", "bob"]}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.exclude_authid with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_authid": "hello"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "exclude_authid"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.exclude_authid with invalid item type int",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_authid": [123]}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "exclude_authid"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.exclude_authrole with roles (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_authrole": ["manager", "staff"]}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.exclude_authrole with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"exclude_authrole": "manager"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "exclude_authrole"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.eligible empty list (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"eligible": []}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.eligible with session IDs (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"eligible": [123, 456]}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.eligible with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"eligible": "hello"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "eligible"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.eligible_authid with authids (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"eligible_authid": ["alice"]}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.eligible_authid with invalid type int",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"eligible_authid": 123}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "eligible_authid"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.eligible_authrole with roles (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"eligible_authrole": ["manager"]}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.eligible_authrole with invalid item type int",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"eligible_authrole": [123]}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "eligible_authrole"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.retain with value true (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"retain": true}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.retain with value false (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"retain": false}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.retain with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"retain": "hello"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "retain"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.transaction_hash with value (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"transaction_hash": "abc123"}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.transaction_hash with invalid type int",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"transaction_hash": 123}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "transaction_hash"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.forward_for empty list (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"forward_for": []}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.forward_for with router info (valid)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"forward_for": [{"session": 123, "authid": "router1", "authrole": "router"}]}, "com.example.topic"]
+    },
+    {
+      "description": "PUBLISH.Options.forward_for with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"forward_for": "hello"}, "com.example.topic"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "forward_for"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.enc_algo cryptobox (valid with payload)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"enc_algo": "cryptobox"}, "com.example.topic", "a1666e6f74696365"]
+    },
+    {
+      "description": "PUBLISH.Options.enc_algo with invalid value",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"enc_algo": "invalid"}, "com.example.topic", "a1666e6f74696365"],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "enc_algo"
+      }
+    },
+    {
+      "description": "PUBLISH.Options.enc_serializer cbor (valid with payload)",
+      "test_category": "options_validation",
+      "wmsg": [16, 123, {"enc_algo": "cryptobox", "enc_serializer": "cbor"}, "com.example.topic", "a1666e6f74696365"]
     }
   ],
   "notes": [
+    "Sample 1-7: Serialization samples with roundtrip tests",
+    "Sample 8+: Options validation samples (wmsg-level, language-agnostic)",
+    "",
     "Sample 1: Basic PUBLISH with args only (normal payload mode)",
     "Sample 2: PUBLISH with transparent payload mode (E2E encryption)",
     "Sample 3: PUBLISH with forward_for (router-to-router link, normal payload)",

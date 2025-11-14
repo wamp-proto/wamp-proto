@@ -219,6 +219,120 @@
       "construction": {
         "autobahn-python": "from autobahn.wamp.message import Event\n\n# Simulated encrypted payload forwarded from another router\npayload_bytes = bytes.fromhex('a26673746174757369666f7277617264656464686f707302')\n\nmsg = Event(\n    subscription=1357924680,\n    publication=987654321098,\n    payload=payload_bytes,\n    enc_algo='cryptobox',\n    enc_serializer='cbor',\n    forward_for=[\n        {\n            'session': 3692581470,\n            'authid': 'router2',\n            'authrole': 'router'\n        }\n    ]\n)\n"
       }
+    },
+    {
+      "description": "EVENT.Details.publisher with session ID (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"publisher": 789}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.publisher with invalid type string",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"publisher": "hello"}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "publisher"}
+    },
+    {
+      "description": "EVENT.Details.publisher_authid with authid (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"publisher_authid": "alice"}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.publisher_authid with invalid type int",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"publisher_authid": 123}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "publisher_authid"}
+    },
+    {
+      "description": "EVENT.Details.publisher_authrole with role (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"publisher_authrole": "manager"}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.publisher_authrole with invalid type int",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"publisher_authrole": 123}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "publisher_authrole"}
+    },
+    {
+      "description": "EVENT.Details.topic with URI (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"topic": "com.example.topic"}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.topic with invalid type int",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"topic": 123}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "topic"}
+    },
+    {
+      "description": "EVENT.Details.retained with value true (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"retained": true}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.retained with value false (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"retained": false}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.retained with invalid type string",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"retained": "hello"}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "retained"}
+    },
+    {
+      "description": "EVENT.Details.transaction_hash with value (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"transaction_hash": "abc123"}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.transaction_hash with invalid type int",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"transaction_hash": 123}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "transaction_hash"}
+    },
+    {
+      "description": "EVENT.Details.x_acknowledged_delivery with value true (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"x_acknowledged_delivery": true}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.x_acknowledged_delivery with invalid type string",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"x_acknowledged_delivery": "hello"}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "x_acknowledged_delivery"}
+    },
+    {
+      "description": "EVENT.Details.forward_for empty list (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"forward_for": []}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.forward_for with router info (valid)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"forward_for": [{"session": 789, "authid": "router1", "authrole": "router"}]}, ["args"]]
+    },
+    {
+      "description": "EVENT.Details.forward_for with invalid type string",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"forward_for": "hello"}, ["args"]],
+      "expected_error": {"type": "protocol_violation", "contains": "forward_for"}
+    },
+    {
+      "description": "EVENT.Details.enc_algo cryptobox (valid with payload)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"enc_algo": "cryptobox"}, "a1666e6f74696365"]
+    },
+    {
+      "description": "EVENT.Details.enc_algo with invalid value",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"enc_algo": "invalid"}, "a1666e6f74696365"],
+      "expected_error": {"type": "protocol_violation", "contains": "enc_algo"}
+    },
+    {
+      "description": "EVENT.Details.enc_serializer cbor (valid with payload)",
+      "test_category": "details_validation",
+      "wmsg": [36, 123, 456, {"enc_algo": "cryptobox", "enc_serializer": "cbor"}, "a1666e6f74696365"]
     }
   ],
 
