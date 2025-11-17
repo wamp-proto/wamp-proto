@@ -1,0 +1,47 @@
+{
+  "description": "Basic SUBSCRIBED message - subscription acknowledgment",
+  "wamp_message_type": "SUBSCRIBED",
+  "wamp_message_code": 33,
+  "feature": "basic.pubsub",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-subscribed-2",
+  "samples": [
+    {
+      "description": "SUBSCRIBED acknowledgment",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[33, 713845233, 5512315355]",
+            "bytes_hex": "5b33332c203731333834353233332c20353531323331353335355d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[33,713845233,5512315355]",
+            "bytes_hex": "5b33332c3731333834353233332c353531323331353335355d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9321ce2a8c69f1cf00000001488f41db"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8318211a2a8c69f11b00000001488f41db"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55216c2a8c69f14c00000001488f41db5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 33,
+        "request_id": 713845233,
+        "subscription_id": 5512315355
+      }
+    }
+  ],
+  "notes": "SUBSCRIBED is sent by Broker to Subscriber to acknowledge a subscription. Message format: [SUBSCRIBED, SUBSCRIBE.Request|id, Subscription|id]"
+}
