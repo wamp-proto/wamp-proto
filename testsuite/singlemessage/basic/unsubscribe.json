@@ -1,0 +1,47 @@
+{
+  "description": "Basic UNSUBSCRIBE message - unsubscribe from topic",
+  "wamp_message_type": "UNSUBSCRIBE",
+  "wamp_message_code": 34,
+  "feature": "basic.pubsub",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-unsubscribe-2",
+  "samples": [
+    {
+      "description": "UNSUBSCRIBE without Options",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[34, 85346237, 5512315355]",
+            "bytes_hex": "5b33342c2038353334363233372c20353531323331353335355d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[34,85346237,5512315355]",
+            "bytes_hex": "5b33342c38353334363233372c353531323331353335355d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9322ce051647bdcf00000001488f41db"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8318221a051647bd1b00000001488f41db"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55226c051647bd4c00000001488f41db5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 34,
+        "request_id": 85346237,
+        "subscription_id": 5512315355
+      }
+    }
+  ],
+  "notes": "UNSUBSCRIBE is sent by Subscriber to Broker to unsubscribe from a topic. Message format: [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id] or [UNSUBSCRIBE, Request|id, SUBSCRIBED.Subscription|id, Options|dict]"
+}
