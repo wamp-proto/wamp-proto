@@ -1,0 +1,46 @@
+{
+  "description": "Basic UNREGISTERED message - unregistration acknowledgment",
+  "wamp_message_type": "UNREGISTERED",
+  "wamp_message_code": 67,
+  "feature": "basic.rpc",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-unregistered-2",
+  "samples": [
+    {
+      "description": "UNREGISTERED acknowledgment",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[67, 788923562]",
+            "bytes_hex": "5b36372c203738383932333536325d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[67,788923562]",
+            "bytes_hex": "5b36372c3738383932333536325d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9243ce2f0604aa"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8218431a2f0604aa"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55436c2f0604aa5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 67,
+        "request_id": 788923562
+      }
+    }
+  ],
+  "notes": "UNREGISTERED is sent by Dealer to Callee to acknowledge an unregistration. Basic profile format: [UNREGISTERED, UNREGISTER.Request|id]. Advanced profile (registration_revocation) extends this with Details for router-initiated revocation: [UNREGISTERED, 0, Details|dict] where Details.registration and Details.reason may be present."
+}
