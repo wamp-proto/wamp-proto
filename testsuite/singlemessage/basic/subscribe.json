@@ -1,0 +1,202 @@
+{
+  "description": "Basic SUBSCRIBE message for topic subscription",
+  "wamp_message_type": "SUBSCRIBE",
+  "wamp_message_code": 32,
+  "feature": "basic.pubsub",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-subscribe-2",
+  "samples": [
+    {
+      "description": "SUBSCRIBE to topic with empty options",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[32, 713845233, {}, \"com.myapp.mytopic1\"]",
+            "bytes_hex": "5b33322c203731333834353233332c207b7d2c2022636f6d2e6d796170702e6d79746f70696331225d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[32,713845233,{},\"com.myapp.mytopic1\"]",
+            "bytes_hex": "5b33322c3731333834353233332c7b7d2c22636f6d2e6d796170702e6d79746f70696331225d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9420ce2a8c69f180b2636f6d2e6d796170702e6d79746f70696331"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8418201a2a8c69f1a072636f6d2e6d796170702e6d79746f70696331"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55206c2a8c69f17b7d535512636f6d2e6d796170702e6d79746f706963315d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 32,
+        "request_id": 713845233,
+        "options": {},
+        "topic": "com.myapp.mytopic1"
+      }
+    },
+    {
+      "description": "SUBSCRIBE.Options.match exact (valid)",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "match": "exact"
+        },
+        "com.example.topic"
+      ]
+    },
+    {
+      "description": "SUBSCRIBE.Options.match prefix (valid)",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "match": "prefix"
+        },
+        "com.example.topic"
+      ]
+    },
+    {
+      "description": "SUBSCRIBE.Options.match wildcard (valid)",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "match": "wildcard"
+        },
+        "com.example.topic"
+      ]
+    },
+    {
+      "description": "SUBSCRIBE.Options.match with invalid value",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "match": "invalid"
+        },
+        "com.example.topic"
+      ],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "match"
+      }
+    },
+    {
+      "description": "SUBSCRIBE.Options.match with invalid type int",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "match": 123
+        },
+        "com.example.topic"
+      ],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "match"
+      }
+    },
+    {
+      "description": "SUBSCRIBE.Options.get_retained with value true (valid)",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "get_retained": true
+        },
+        "com.example.topic"
+      ]
+    },
+    {
+      "description": "SUBSCRIBE.Options.get_retained with value false (valid)",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "get_retained": false
+        },
+        "com.example.topic"
+      ]
+    },
+    {
+      "description": "SUBSCRIBE.Options.get_retained with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "get_retained": "hello"
+        },
+        "com.example.topic"
+      ],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "get_retained"
+      }
+    },
+    {
+      "description": "SUBSCRIBE.Options.forward_for empty list (valid)",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "forward_for": []
+        },
+        "com.example.topic"
+      ]
+    },
+    {
+      "description": "SUBSCRIBE.Options.forward_for with router info (valid)",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "forward_for": [
+            {
+              "session": 123,
+              "authid": "router1",
+              "authrole": "router"
+            }
+          ]
+        },
+        "com.example.topic"
+      ]
+    },
+    {
+      "description": "SUBSCRIBE.Options.forward_for with invalid type string",
+      "test_category": "options_validation",
+      "wmsg": [
+        32,
+        123,
+        {
+          "forward_for": "hello"
+        },
+        "com.example.topic"
+      ],
+      "expected_error": {
+        "type": "protocol_violation",
+        "contains": "forward_for"
+      }
+    }
+  ],
+  "notes": "SUBSCRIBE message is sent by Subscriber to Broker to subscribe to a topic. Message format: [SUBSCRIBE, Request|id, Options|dict, Topic|uri]"
+}

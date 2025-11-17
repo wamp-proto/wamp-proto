@@ -180,6 +180,84 @@ def generate_publish_options_samples():
     return samples
 
 
+def generate_subscribe_options_samples():
+    """Generate all SUBSCRIBE.Options validation samples"""
+    samples = []
+
+    # match
+    samples.extend([
+        {
+            "description": "SUBSCRIBE.Options.match exact (valid)",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"match": "exact"}, "com.example.topic"]
+        },
+        {
+            "description": "SUBSCRIBE.Options.match prefix (valid)",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"match": "prefix"}, "com.example.topic"]
+        },
+        {
+            "description": "SUBSCRIBE.Options.match wildcard (valid)",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"match": "wildcard"}, "com.example.topic"]
+        },
+        {
+            "description": "SUBSCRIBE.Options.match with invalid value",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"match": "invalid"}, "com.example.topic"],
+            "expected_error": {"type": "protocol_violation", "contains": "match"}
+        },
+        {
+            "description": "SUBSCRIBE.Options.match with invalid type int",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"match": 123}, "com.example.topic"],
+            "expected_error": {"type": "protocol_violation", "contains": "match"}
+        },
+    ])
+
+    # get_retained
+    samples.extend([
+        {
+            "description": "SUBSCRIBE.Options.get_retained with value true (valid)",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"get_retained": True}, "com.example.topic"]
+        },
+        {
+            "description": "SUBSCRIBE.Options.get_retained with value false (valid)",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"get_retained": False}, "com.example.topic"]
+        },
+        {
+            "description": "SUBSCRIBE.Options.get_retained with invalid type string",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"get_retained": "hello"}, "com.example.topic"],
+            "expected_error": {"type": "protocol_violation", "contains": "get_retained"}
+        },
+    ])
+
+    # forward_for
+    samples.extend([
+        {
+            "description": "SUBSCRIBE.Options.forward_for empty list (valid)",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"forward_for": []}, "com.example.topic"]
+        },
+        {
+            "description": "SUBSCRIBE.Options.forward_for with router info (valid)",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"forward_for": [{"session": 123, "authid": "router1", "authrole": "router"}]}, "com.example.topic"]
+        },
+        {
+            "description": "SUBSCRIBE.Options.forward_for with invalid type string",
+            "test_category": "options_validation",
+            "wmsg": [32, 123, {"forward_for": "hello"}, "com.example.topic"],
+            "expected_error": {"type": "protocol_violation", "contains": "forward_for"}
+        },
+    ])
+
+    return samples
+
+
 def generate_event_details_samples():
     """Generate all EVENT.Details validation samples"""
     samples = []
@@ -339,10 +417,19 @@ def generate_event_details_samples():
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "event":
-        samples = generate_event_details_samples()
-        print(json.dumps(samples, indent=2))
-        print(f"\n# Generated {len(samples)} EVENT.Details validation samples")
+    if len(sys.argv) > 1:
+        msg_type = sys.argv[1]
+        if msg_type == "event":
+            samples = generate_event_details_samples()
+            print(json.dumps(samples, indent=2))
+            print(f"\n# Generated {len(samples)} EVENT.Details validation samples")
+        elif msg_type == "subscribe":
+            samples = generate_subscribe_options_samples()
+            print(json.dumps(samples, indent=2))
+            print(f"\n# Generated {len(samples)} SUBSCRIBE.Options validation samples")
+        else:
+            print(f"Unknown message type: {msg_type}")
+            print("Usage: gen_validation_samples.py [publish|event|subscribe]")
     else:
         samples = generate_publish_options_samples()
         print(json.dumps(samples, indent=2))
