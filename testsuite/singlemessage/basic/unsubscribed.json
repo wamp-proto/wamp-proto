@@ -1,0 +1,46 @@
+{
+  "description": "Basic UNSUBSCRIBED message - unsubscription acknowledgment",
+  "wamp_message_type": "UNSUBSCRIBED",
+  "wamp_message_code": 35,
+  "feature": "basic.pubsub",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-unsubscribed-2",
+  "samples": [
+    {
+      "description": "UNSUBSCRIBED acknowledgment",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[35, 85346237]",
+            "bytes_hex": "5b33352c2038353334363233375d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[35,85346237]",
+            "bytes_hex": "5b33352c38353334363233375d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9223ce051647bd"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8218231a051647bd"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55236c051647bd5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 35,
+        "request_id": 85346237
+      }
+    }
+  ],
+  "notes": "UNSUBSCRIBED is sent by Broker to Subscriber to acknowledge an unsubscription. Message format: [UNSUBSCRIBED, UNSUBSCRIBE.Request|id] or [UNSUBSCRIBED, UNSUBSCRIBE.Request|id, Details|dict]"
+}
