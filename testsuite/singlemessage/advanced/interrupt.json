@@ -1,0 +1,47 @@
+{
+  "description": "Advanced INTERRUPT message - interrupts a pending INVOCATION",
+  "wamp_message_type": "INTERRUPT",
+  "wamp_message_code": 69,
+  "feature": "advanced.rpc.call_canceling",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-interrupt-2",
+  "samples": [
+    {
+      "description": "INTERRUPT with empty Options (basic interruption)",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[69, 6131533, {}]",
+            "bytes_hex": "5b36392c20363133313533332c207b7d5d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[69,6131533,{}]",
+            "bytes_hex": "5b36392c363133313533332c7b7d5d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9345ce005d8f4d80"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8318451a005d8f4da0"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55456c005d8f4d7b7d5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 69,
+        "request_id": 6131533,
+        "options": {}
+      }
+    }
+  ],
+  "notes": "INTERRUPT is sent by Dealer to Callee to interrupt a pending INVOCATION. Message format: [INTERRUPT, INVOCATION.Request|id, Options|dict]. Options.mode can be 'kill' or 'killnowait' to control interruption behavior. This is an Advanced Profile feature for progressive call results and call canceling."
+}
