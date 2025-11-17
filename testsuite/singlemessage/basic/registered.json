@@ -1,0 +1,47 @@
+{
+  "description": "Basic REGISTERED message - registration acknowledgment",
+  "wamp_message_type": "REGISTERED",
+  "wamp_message_code": 65,
+  "feature": "basic.rpc",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-registered-2",
+  "samples": [
+    {
+      "description": "REGISTERED acknowledgment",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[65, 25349185, 2103333224]",
+            "bytes_hex": "5b36352c2032353334393138352c20323130333333333232345d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[65,25349185,2103333224]",
+            "bytes_hex": "5b36352c32353334393138352c323130333333333232345d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9341ce0182cc41ce7d5e5168"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8318411a0182cc411a7d5e5168"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55416c0182cc416c7d5e51685d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 65,
+        "request_id": 25349185,
+        "registration_id": 2103333224
+      }
+    }
+  ],
+  "notes": "REGISTERED is sent by Dealer to Callee to acknowledge a registration. Message format: [REGISTERED, REGISTER.Request|id, Registration|id]"
+}
