@@ -1,0 +1,50 @@
+{
+  "description": "Basic WELCOME message - Router accepts Client session",
+  "wamp_message_type": "WELCOME",
+  "wamp_message_code": 2,
+  "feature": "basic",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-welcome-2",
+  "samples": [
+    {
+      "description": "WELCOME with minimal roles (basic profile)",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[2, 9129137332, {\"roles\": {\"broker\": {}, \"dealer\": {}}}]",
+            "bytes_hex": "5b322c20393132393133373333322c207b22726f6c6573223a207b2262726f6b6572223a207b7d2c20226465616c6572223a207b7d7d7d5d",
+            "note": "With spaces after commas and colons"
+          },
+          {
+            "bytes": "[2,9129137332,{\"roles\":{\"broker\":{},\"dealer\":{}}}]",
+            "bytes_hex": "5b322c393132393133373333322c7b22726f6c6573223a7b2262726f6b6572223a7b7d2c226465616c6572223a7b7d7d7d5d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9302cf00000002202394b481a5726f6c657382a662726f6b657280a66465616c657280"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "83021b00000002202394b4a165726f6c6573a26662726f6b6572a0666465616c6572a0"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55024c00000002202394b47b5505726f6c65737b550662726f6b65727b7d55066465616c65727b7d7d7d5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 2,
+        "session_id": 9129137332,
+        "roles": {
+          "broker": {},
+          "dealer": {}
+        }
+      }
+    }
+  ],
+  "notes": "WELCOME is sent by a Router to accept a Client. The WAMP session is now open. Message format: [WELCOME, Session|id, Details|dict]. The Details dict must contain 'roles' with at least one router role (broker, dealer). This test uses the minimal set of roles for basic profile."
+}

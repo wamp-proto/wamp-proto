@@ -1,0 +1,47 @@
+{
+  "description": "Basic GOODBYE message - closes WAMP session",
+  "wamp_message_type": "GOODBYE",
+  "wamp_message_code": 6,
+  "feature": "basic",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-goodbye-2",
+  "samples": [
+    {
+      "description": "GOODBYE with empty Details (basic profile)",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[6, {}, \"wamp.close.normal\"]",
+            "bytes_hex": "5b362c207b7d2c202277616d702e636c6f73652e6e6f726d616c225d",
+            "note": "With spaces after commas"
+          },
+          {
+            "bytes": "[6,{},\"wamp.close.normal\"]",
+            "bytes_hex": "5b362c7b7d2c2277616d702e636c6f73652e6e6f726d616c225d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "930680b177616d702e636c6f73652e6e6f726d616c"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "8306a07177616d702e636c6f73652e6e6f726d616c"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b55067b7d53551177616d702e636c6f73652e6e6f726d616c5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 6,
+        "details": {},
+        "reason": "wamp.close.normal"
+      }
+    }
+  ],
+  "notes": "GOODBYE is sent by a Peer to close a previously opened WAMP session. Must be echo'ed by the receiving Peer. Message format: [GOODBYE, Details|dict, Reason|uri]. Common reasons include 'wamp.close.normal' (normal close), 'wamp.close.system_shutdown' (system is shutting down), etc."
+}

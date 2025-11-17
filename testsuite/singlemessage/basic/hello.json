@@ -1,0 +1,50 @@
+{
+  "description": "Basic HELLO message - initiates WAMP session opening",
+  "wamp_message_type": "HELLO",
+  "wamp_message_code": 1,
+  "feature": "basic",
+  "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-hello-2",
+  "samples": [
+    {
+      "description": "HELLO with minimal roles (basic profile)",
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[1, \"com.example.realm\", {\"roles\": {\"subscriber\": {}, \"publisher\": {}}}]",
+            "bytes_hex": "5b312c2022636f6d2e6578616d706c652e7265616c6d222c207b22726f6c6573223a207b2273756273637269626572223a207b7d2c20227075626c6973686572223a207b7d7d7d5d",
+            "note": "With spaces after commas and colons"
+          },
+          {
+            "bytes": "[1,\"com.example.realm\",{\"roles\":{\"subscriber\":{},\"publisher\":{}}}]",
+            "bytes_hex": "5b312c22636f6d2e6578616d706c652e7265616c6d222c7b22726f6c6573223a7b2273756273637269626572223a7b7d2c227075626c6973686572223a7b7d7d7d5d",
+            "note": "Compact (no spaces) - produced by autobahn-python"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "9301b1636f6d2e6578616d706c652e7265616c6d81a5726f6c657382aa7375627363726962657280a97075626c697368657280"
+          }
+        ],
+        "cbor": [
+          {
+            "bytes_hex": "830171636f6d2e6578616d706c652e7265616c6da165726f6c6573a26a73756273637269626572a0697075626c6973686572a0"
+          }
+        ],
+        "ubjson": [
+          {
+            "bytes_hex": "5b5501535511636f6d2e6578616d706c652e7265616c6d7b5505726f6c65737b550a737562736372696265727b7d55097075626c69736865727b7d7d7d5d"
+          }
+        ]
+      },
+      "expected_attributes": {
+        "message_type": 1,
+        "realm": "com.example.realm",
+        "roles": {
+          "subscriber": {},
+          "publisher": {}
+        }
+      }
+    }
+  ],
+  "notes": "HELLO is sent by a Client to initiate opening of a WAMP session to a Router attaching to a Realm. Message format: [HELLO, Realm|uri, Details|dict]. The Details dict must contain 'roles' with at least one role (subscriber, publisher, caller, or callee). This test uses the minimal set of roles for basic profile."
+}
