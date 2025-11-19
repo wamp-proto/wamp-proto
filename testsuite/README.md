@@ -182,23 +182,19 @@ Tests router-to-router interactions (federation, clustering).
   },
 
   "validation": {
-    "python": {
-      "import": "from autobahn.wamp.message import Event",
-      "assertions": [
-        "msg.subscription == 5512315355",
-        "msg.publication == 4429313566",
-        "msg.publisher == 1234",
-        "msg.kwargs['color'] == 'orange'"
-      ]
-    },
-    "javascript": {
-      "assertions": [
-        "msg.subscription === 5512315355",
-        "msg.publication === 4429313566",
-        "msg.publisher === 1234",
-        "msg.kwargs.color === 'orange'"
-      ]
-    }
+    "autobahn-python": [
+      "from autobahn.wamp.message import Event\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Event)\nassert msg.subscription == 5512315355\nassert msg.publication == 4429313566\nassert msg.publisher == 1234\nassert msg.kwargs['color'] == 'orange'\n"
+    ],
+    "autobahn-js": [
+      "// Test framework provides 'msg' with deserialized message\nassert(msg.type === 36);\nassert(msg.subscription === 5512315355);\nassert(msg.publication === 4429313566);\nassert(msg.details.publisher === 1234);\nassert(msg.kwargs.color === 'orange');\n"
+    ],
+    "wampy": [
+      "// Wampy.js uses different message structure\nassert(msg.options.subscription === 5512315355);\nassert(msg.options.publication === 4429313566);\nassert(msg.options.publisher === 1234);\nassert(msg.color === 'orange');\n"
+    ]
+  },
+
+  "construction": {
+    "autobahn-python": "from autobahn.wamp.message import Event\n\nmsg = Event(\n    subscription=5512315355,\n    publication=4429313566,\n    publisher=1234,\n    kwargs={'color': 'orange'}\n)\n"
   },
 
   "notes": [
