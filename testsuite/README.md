@@ -158,44 +158,54 @@ Tests router-to-router interactions (federation, clustering).
   "feature": "advanced.pubsub.publisher_identification",
   "spec_reference": "https://wamp-proto.org/wamp_latest_ietf.html#name-publisher-identification",
 
-  "serializers": {
-    "json": {
-      "bytes": "[36, 5512315355, 4429313566, {\"publisher\": 1234}, [], {\"color\": \"orange\"}]",
-      "bytes_hex": "5b33362c20353531323331353335352c20343432393331333536362c207b227075626c6973686572223a20313233347d2c205b5d2c207b22636f6c6f72223a20226f72616e6765227d5d"
-    },
-    "msgpack": {
-      "bytes_hex": "96241a208f8165214a0036e1be81a97075626c697368657219cd04d280a5636f6c6f72a66f72616e6765"
+  "samples": [
+    {
+      "description": "EVENT with publisher identification in Details",
+
+      "serializers": {
+        "json": [
+          {
+            "bytes": "[36, 5512315355, 4429313566, {\"publisher\": 1234}, [], {\"color\": \"orange\"}]",
+            "bytes_hex": "5b33362c20353531323331353335352c20343432393331333536362c207b227075626c6973686572223a20313233347d2c205b5d2c207b22636f6c6f72223a20226f72616e6765227d5d"
+          }
+        ],
+        "msgpack": [
+          {
+            "bytes_hex": "96241a208f8165214a0036e1be81a97075626c697368657219cd04d280a5636f6c6f72a66f72616e6765"
+          }
+        ]
+      },
+
+      "expected_attributes": {
+        "message_type": 36,
+        "subscription_id": 5512315355,
+        "publication_id": 4429313566,
+        "details": {
+          "publisher": 1234
+        },
+        "args": [],
+        "kwargs": {
+          "color": "orange"
+        }
+      },
+
+      "validation": {
+        "autobahn-python": [
+          "from autobahn.wamp.message import Event\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Event)\nassert msg.subscription == 5512315355\nassert msg.publication == 4429313566\nassert msg.publisher == 1234\nassert msg.kwargs['color'] == 'orange'\n"
+        ],
+        "autobahn-js": [
+          "// Test framework provides 'msg' with deserialized message\nassert(msg.type === 36);\nassert(msg.subscription === 5512315355);\nassert(msg.publication === 4429313566);\nassert(msg.details.publisher === 1234);\nassert(msg.kwargs.color === 'orange');\n"
+        ],
+        "wampy": [
+          "// Wampy.js uses different message structure\nassert(msg.options.subscription === 5512315355);\nassert(msg.options.publication === 4429313566);\nassert(msg.options.publisher === 1234);\nassert(msg.color === 'orange');\n"
+        ]
+      },
+
+      "construction": {
+        "autobahn-python": "from autobahn.wamp.message import Event\n\nmsg = Event(\n    subscription=5512315355,\n    publication=4429313566,\n    publisher=1234,\n    kwargs={'color': 'orange'}\n)\n"
+      }
     }
-  },
-
-  "expected_attributes": {
-    "message_type": 36,
-    "subscription_id": 5512315355,
-    "publication_id": 4429313566,
-    "details": {
-      "publisher": 1234
-    },
-    "args": [],
-    "kwargs": {
-      "color": "orange"
-    }
-  },
-
-  "validation": {
-    "autobahn-python": [
-      "from autobahn.wamp.message import Event\n\n# Test framework provides 'msg' with deserialized message\nassert isinstance(msg, Event)\nassert msg.subscription == 5512315355\nassert msg.publication == 4429313566\nassert msg.publisher == 1234\nassert msg.kwargs['color'] == 'orange'\n"
-    ],
-    "autobahn-js": [
-      "// Test framework provides 'msg' with deserialized message\nassert(msg.type === 36);\nassert(msg.subscription === 5512315355);\nassert(msg.publication === 4429313566);\nassert(msg.details.publisher === 1234);\nassert(msg.kwargs.color === 'orange');\n"
-    ],
-    "wampy": [
-      "// Wampy.js uses different message structure\nassert(msg.options.subscription === 5512315355);\nassert(msg.options.publication === 4429313566);\nassert(msg.options.publisher === 1234);\nassert(msg.color === 'orange');\n"
-    ]
-  },
-
-  "construction": {
-    "autobahn-python": "from autobahn.wamp.message import Event\n\nmsg = Event(\n    subscription=5512315355,\n    publication=4429313566,\n    publisher=1234,\n    kwargs={'color': 'orange'}\n)\n"
-  },
+  ],
 
   "notes": [
     "Publisher identification must be explicitly enabled in subscription options",
