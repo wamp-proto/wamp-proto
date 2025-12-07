@@ -441,7 +441,7 @@ requirements-mmark:
 # -- Internal build helpers
 # -----------------------------------------------------------------------------
 
-# Build optimized SVGs from docs/_graphics/*.svg using Scour
+# Build optimized SVGs from docs/_graphics/*.svg using Scour and generate favicon.ico
 optimize-images venv="": (install venv)
     #!/usr/bin/env bash
     set -e
@@ -471,6 +471,19 @@ optimize-images venv="": (install venv)
                 --shorten-ids \
                 "${source_file}" "${target_file}"
         done
+    fi
+
+    # Generate favicon.ico from favicon.svg using ImageMagick
+    FAVICON_SVG="${TARGETDIR}/favicon.svg"
+    FAVICON_ICO="${TARGETDIR}/favicon.ico"
+    if [ -f "${FAVICON_SVG}" ]; then
+        echo "  Generating: favicon.ico from favicon.svg"
+        convert -background none -density 256 "${FAVICON_SVG}" \
+            -resize 48x48 -gravity center -extent 48x48 \
+            -define icon:auto-resize=48,32,16 \
+            "${FAVICON_ICO}"
+    else
+        echo "  Warning: ${FAVICON_SVG} not found, skipping favicon.ico generation"
     fi
 
 # Internal: Update spec date in RFC files
