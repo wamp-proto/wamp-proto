@@ -356,7 +356,7 @@ build venv="": (clean) (install venv)
     export WAMP_BUILD_ID="${WAMP_BUILD_ID:-$(date -Iseconds)}"
     echo "==> Building with WAMP_BUILD_ID=${WAMP_BUILD_ID}"
 
-    just _build-images
+    just optimize-images
     just _update-spec-date
     just _build-spec
     just _build-docs
@@ -441,8 +441,8 @@ requirements-mmark:
 # -- Internal build helpers
 # -----------------------------------------------------------------------------
 
-# Internal: Build optimized SVGs from docs/_graphics/*.svg using Scour
-_build-images venv="": (install venv)
+# Build optimized SVGs from docs/_graphics/*.svg using Scour
+optimize-images venv="": (install venv)
     #!/usr/bin/env bash
     set -e
     VENV_NAME="{{ venv }}"
@@ -452,15 +452,15 @@ _build-images venv="": (install venv)
     VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
 
     SOURCEDIR="./docs/_graphics"
-    SITEBUILDDIR="./docs/_static/gen"
+    TARGETDIR="./docs/_static/img"
 
     echo "==> Building optimized SVG images..."
-    mkdir -p "${SITEBUILDDIR}"
+    mkdir -p "${TARGETDIR}"
 
     if [ -d "${SOURCEDIR}" ]; then
         find "${SOURCEDIR}" -name "*.svg" -type f | while read -r source_file; do
             filename=$(basename "${source_file}")
-            target_file="${SITEBUILDDIR}/${filename}"
+            target_file="${TARGETDIR}/${filename}"
             echo "  Processing: ${filename}"
             "${VENV_PATH}/bin/scour" \
                 --remove-descriptive-elements \
