@@ -8,5 +8,6 @@ Besides the WebSocket transport, the following WAMP transports are currently spe
 * [Batched WebSocket Transport](#batchedwebsocket)
 * [LongPoll Transport](#longpoll)
 * [Multiplexed Transport](#multiplexed)
+* [WebRTC Transport](#webrtc)
 
 > Other transports such as HTTP 2.0 ("SPDY") or UDP might be defined in the future.
