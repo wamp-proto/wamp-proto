@@ -39,28 +39,28 @@ The Treasury Multisig owns all assets of the DAO, which includes:
 * DAO governance tokens (ERC20)
 * DAO NFTs (ERC1155)
 
-### Gnosis Safe
+### Safe (formerly Gnosis Safe)
 
-The DAO uses [Gnosis Safe](https://gnosis-safe.io/) based Multisig [Contract Accounts](https://docs.gnosis-safe.io/introduction/the-programmable-account/eoas-vs.-contract-accounts).
+The DAO uses [Safe (formerly Gnosis Safe)](https://safe.global/) based Multisig [Contract Accounts](https://docs.safe.global/advanced/smart-account-overview).
 
-Multisigs allow [safe management](https://blog.gnosis.pm/how-to-securely-manage-company-crypto-funds-with-gnosis-safe-multisig-8b3f67485985
+Multisigs allow [safe management](https://safe.global/blog
 ) of DAO assets and actions until the DAO becomes fully decentralized, that is managed via on-chain governance with direct on-chain execution.
 
-One can easily [send digital assets to a Safe](https://help.gnosis-safe.io/en/articles/3922053-how-can-i-receive-funds), this includes:
+One can easily [send digital assets to a Safe](https://help.safe.global/), this includes:
 
 * Ether (ETH)
 * ERC-20 Tokens (DAI, USDC, UNI, ..)
 * ERC-721 Tokens (NFT's)
 
-> Important: Make sure to only send ETH, ERC-20 tokens and ERC-721 tokens to a Safe. See [here](https://help.gnosis-safe.io/en/articles/4970832-supported-asset-types) and [here](https://help.gnosis-safe.io/en/articles/3964868-erc-721-nfts).
+> Important: Make sure to only send ETH, ERC-20 tokens and ERC-721 tokens to a Safe. See [here](https://help.safe.global/) and [here](https://help.safe.global/).
 
 **References**
 
 * [Gnosis Safe - Make dealing with crypto a less scary thing](https://www.youtube.com/watch?v=9gyZRq162A8)
-* [What are Safe Apps?](https://help.gnosis-safe.io/en/articles/4022022-what-are-safe-apps)
-* [Introducing Gnosis Safe Apps](https://blog.gnosis.pm/introducing-gnosis-safe-apps-faef908f69c6)
-* [Gnosis Safe Spending Limits](https://blog.gnosis.pm/gnosis-safe-spending-limits-f05b775d06b3)
-* [Set up and use Spending Limits](https://help.gnosis-safe.io/en/articles/4667979-set-up-and-use-spending-limits)
+* [What are Safe Apps?](https://docs.safe.global/safe-mobile/safe-apps/safe-apps-overview)
+* [Introducing Gnosis Safe Apps](https://safe.global/blog)
+* [Gnosis Safe Spending Limits](https://safe.global/blog)
+* [Set up and use Spending Limits](https://help.safe.global/)
 * [CSV Airdrop as Gnosis Safe App](https://github.com/bh2smith/safe-airdrop)
 
 ### Admin Multisig
