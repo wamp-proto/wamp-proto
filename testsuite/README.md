@@ -298,7 +298,7 @@ Tests router-to-router interactions (federation, clustering).
 A fundamental principle underlying the test vector schema is that **serialization is not bijective** (except for bencode). This means:
 
 - **One abstract message → Many valid byte representations** (serialization is one-to-many)
-- **One byte sequence → One abstract message** (deserialization is one-to-one)
+- **One byte sequence → One abstract message** (deserialization is one-to-one, within a given encoding; note that a serializer's variant list may include more than one encoding — see below)
 
 **Example**: JSON serialization variations for the same PUBLISH message:
 
@@ -338,6 +338,29 @@ To handle non-bijective serialization, test vectors use **array-of-variants** fo
 
 This array structure allows documenting multiple canonical byte representations for the same abstract message.
 
+#### Variants may be mutually incompatible across implementations/versions
+
+Most variants are merely *cosmetic* (e.g. JSON whitespace, integer encoding
+width) and every implementation can decode all of them. But the array may also
+hold variants that are **not mutually decodable** — a variant produced by one
+implementation or library version that a different one cannot parse. These
+should carry a `note` identifying the producing backend.
+
+A concrete example is the WAMP `ubjson` serializer. autobahn-python switched its
+backend from `py-ubjson` (plain UBJSON, big-endian integers, `[$U` byte arrays)
+to `bjdata` (BJData, a UBJSON superset with little-endian integers and `[$B`
+byte arrays). The two encodings are **not** byte-compatible and cannot decode
+each other, so the `ubjson` array carries both:
+
+```json
+"ubjson": [
+  { "bytes_hex": "...", "note": "UBJSON encoding (autobahn-python <= 25.12.2, py-ubjson 0.16.1 backend)" },
+  { "bytes_hex": "...", "note": "BJData encoding, a UBJSON superset (autobahn-python >= 26.6.1, bjdata 0.6.x backend)" }
+]
+```
+
+This is why the deserialization rule below is **"at least one"**, not "all".
+
 ### "At Least One" Matching Semantics
 
 Implementations must follow **"at least one" matching semantics**:
@@ -348,9 +371,10 @@ Implementations must follow **"at least one" matching semantics**:
 - Implementations MAY produce other valid representations not yet documented (contributors should add these as new variants)
 
 **For Deserialization** (Bytes → Message):
-- An implementation MUST successfully deserialize **all** byte variants to the same abstract message
-- All variants MUST produce identical attribute values
-- Deserialized message MUST validate against **at least one** validation code block
+- An implementation MUST successfully deserialize **at least one** byte variant to the abstract message
+- Variants the implementation *cannot* decode (e.g. an alternative encoding produced by a different implementation or library version — see the `ubjson` example above) are **skipped**, not treated as failures
+- Every variant the implementation *can* decode MUST produce identical attribute values
+- Each successfully deserialized message MUST validate against **at least one** validation code block
 
 **Example Test Logic**:
 
@@ -360,12 +384,18 @@ def test_serialize(msg, serializer, expected_variants):
     actual_bytes = serializer.serialize(msg)
     assert any(actual_bytes == variant['bytes'] for variant in expected_variants)
 
-# Deserialization: Check that ALL variants deserialize successfully
+# Deserialization: at least one variant must decode AND validate; variants this
+# implementation cannot decode (a different backend's encoding) are skipped.
 def test_deserialize(serializer, expected_variants, validation_codes):
+    decoded_any = False
     for variant in expected_variants:
-        msg = serializer.deserialize(variant['bytes'])
-        # Must validate with at least one validation code
+        try:
+            msg = serializer.deserialize(variant['bytes'])
+        except Exception:
+            continue  # not this implementation's encoding - skip
+        decoded_any = True
         assert any(validate(msg, code) for code in validation_codes)
+    assert decoded_any, "no byte variant could be deserialized by this implementation"
 ```
 
 ### Multiple Samples Per Test Vector
