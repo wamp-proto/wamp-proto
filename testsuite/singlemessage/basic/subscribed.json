@@ -32,7 +32,12 @@
         ],
         "ubjson": [
           {
-            "bytes_hex": "5b55216c2a8c69f14c00000001488f41db5d"
+            "bytes_hex": "5b55216c2a8c69f14c00000001488f41db5d",
+            "note": "UBJSON encoding (autobahn-python <= 25.12.2, py-ubjson 0.16.1 backend)"
+          },
+          {
+            "bytes_hex": "5b55216df1698c2a4ddb418f48010000005d",
+            "note": "BJData encoding, a UBJSON superset (autobahn-python >= 26.6.1, bjdata 0.6.x backend)"
           }
         ],
         "flatbuffers": [

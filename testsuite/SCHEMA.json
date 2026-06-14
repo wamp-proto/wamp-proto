@@ -203,6 +203,10 @@
         "bytes_base64": {
           "type": "string",
           "description": "Base64 encoding of bytes"
+        },
+        "note": {
+          "type": "string",
+          "description": "Human-readable note about this particular encoding (e.g., which serializer library/version produced these bytes when a serializer has multiple valid representations)"
         }
       },
       "anyOf": [

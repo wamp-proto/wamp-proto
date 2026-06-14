@@ -32,7 +32,12 @@
         ],
         "ubjson": [
           {
-            "bytes_hex": "5b5501535511636f6d2e6578616d706c652e7265616c6d7b5505726f6c65737b550a737562736372696265727b7d55097075626c69736865727b7d7d7d5d"
+            "bytes_hex": "5b5501535511636f6d2e6578616d706c652e7265616c6d7b5505726f6c65737b550a737562736372696265727b7d55097075626c69736865727b7d7d7d5d",
+            "note": "UBJSON encoding (autobahn-python <= 25.12.2, py-ubjson 0.16.1 backend)"
+          },
+          {
+            "bytes_hex": "5b5501535511636f6d2e6578616d706c652e7265616c6d7b5505726f6c65737b550a737562736372696265727b7d55097075626c69736865727b7d7d7d5d",
+            "note": "BJData encoding, a UBJSON superset (autobahn-python >= 26.6.1, bjdata 0.6.x backend)"
           }
         ],
         "flatbuffers": [
