@@ -301,6 +301,20 @@ check-format venv="": (install venv)
     echo "==> Linting code with ${VENV_NAME}..."
     "${VENV_PATH}/bin/ruff" check ./docs
 
+# Validate all test vectors under testsuite/ against testsuite/SCHEMA.json
+validate-vectors venv="": (install venv)
+    #!/usr/bin/env bash
+    set -e
+    VENV_NAME="{{ venv }}"
+    if [ -z "${VENV_NAME}" ]; then
+        echo "==> No venv name specified. Auto-detecting from system Python..."
+        VENV_NAME=$(just --quiet _get-system-venv-name)
+        echo "==> Defaulting to venv: '${VENV_NAME}'"
+    fi
+    VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
+    echo "==> Validating test vectors against testsuite/SCHEMA.json with ${VENV_NAME}..."
+    "${VENV_PATH}/bin/python" testsuite/validate_vectors.py
+
 # -----------------------------------------------------------------------------
 # -- Documentation
 # -----------------------------------------------------------------------------
@@ -356,7 +370,7 @@ build venv="": (clean) (install venv)
     export WAMP_BUILD_ID="${WAMP_BUILD_ID:-$(date -Iseconds)}"
     echo "==> Building with WAMP_BUILD_ID=${WAMP_BUILD_ID}"
 
-    just _build-images
+    just optimize-images
     just _update-spec-date
     just _build-spec
     just _build-docs
@@ -441,8 +455,8 @@ requirements-mmark:
 # -- Internal build helpers
 # -----------------------------------------------------------------------------
 
-# Internal: Build optimized SVGs from docs/_graphics/*.svg using Scour
-_build-images venv="": (install venv)
+# Build optimized SVGs from docs/_graphics/*.svg using Scour and generate favicon.ico
+optimize-images venv="": (install venv)
     #!/usr/bin/env bash
     set -e
     VENV_NAME="{{ venv }}"
@@ -452,15 +466,15 @@ _build-images venv="": (install venv)
     VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
 
     SOURCEDIR="./docs/_graphics"
-    SITEBUILDDIR="./docs/_static/gen"
+    TARGETDIR="./docs/_static/img"
 
     echo "==> Building optimized SVG images..."
-    mkdir -p "${SITEBUILDDIR}"
+    mkdir -p "${TARGETDIR}"
 
     if [ -d "${SOURCEDIR}" ]; then
         find "${SOURCEDIR}" -name "*.svg" -type f | while read -r source_file; do
             filename=$(basename "${source_file}")
-            target_file="${SITEBUILDDIR}/${filename}"
+            target_file="${TARGETDIR}/${filename}"
             echo "  Processing: ${filename}"
             "${VENV_PATH}/bin/scour" \
                 --remove-descriptive-elements \
@@ -471,6 +485,19 @@ _build-images venv="": (install venv)
                 --shorten-ids \
                 "${source_file}" "${target_file}"
         done
+    fi
+
+    # Generate favicon.ico from favicon.svg using ImageMagick
+    FAVICON_SVG="${TARGETDIR}/favicon.svg"
+    FAVICON_ICO="${TARGETDIR}/favicon.ico"
+    if [ -f "${FAVICON_SVG}" ]; then
+        echo "  Generating: favicon.ico from favicon.svg"
+        convert -background none -density 256 "${FAVICON_SVG}" \
+            -resize 48x48 -gravity center -extent 48x48 \
+            -define icon:auto-resize=48,32,16 \
+            "${FAVICON_ICO}"
+    else
+        echo "  Warning: ${FAVICON_SVG} not found, skipping favicon.ico generation"
     fi
 
 # Internal: Update spec date in RFC files
