@@ -23,6 +23,9 @@ jobs:
           sudo apt update
           sudo apt install -y libcairo2-dev libenchant-2-2 libharfbuzz0b libpango1.0-dev libpangoft2-1.0-0 libxml2-utils
           sudo apt install -y enscript mmark weasyprint
+          # imagemagick provides `convert`, used by `just optimize-images` to
+          # generate docs/_static/img/favicon.ico from favicon.svg
+          sudo apt install -y imagemagick
 
       - name: Setup Toolchain I (Just, UV)
         run: |
