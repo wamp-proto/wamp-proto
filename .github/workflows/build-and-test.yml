@@ -47,6 +47,11 @@ jobs:
           # Install tools (Python dependencies)
           just install
 
+      - name: Validate Test Vectors
+        run: |
+          # Validate testsuite/ vectors against testsuite/SCHEMA.json
+          just validate-vectors
+
       - name: Build Spec and Website
         run: |
           echo "START: Building with WAMP_BUILD_ID=$(WAMP_BUILD_ID)"

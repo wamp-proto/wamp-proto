@@ -14,13 +14,14 @@
   "definitions": {
     "SingleMessageTestVector": {
       "type": "object",
+      "description": "A single WAMP message test vector file. Holds a list of samples, each either a serialization sample (canonical bytes + expected attributes) or a validation sample (a raw wire message exercising a specific validation rule).",
       "required": [
         "description",
         "wamp_message_type",
         "wamp_message_code",
-        "serializers",
-        "expected_attributes"
+        "samples"
       ],
+      "additionalProperties": false,
       "properties": {
         "description": {
           "type": "string",
@@ -44,6 +45,7 @@
             "UNSUBSCRIBE",
             "UNSUBSCRIBED",
             "EVENT",
+            "EVENT_RECEIVED",
             "CALL",
             "CANCEL",
             "RESULT",
@@ -58,9 +60,9 @@
         },
         "wamp_message_code": {
           "type": "integer",
-          "description": "WAMP message type code (first element in message array)",
+          "description": "WAMP message type code (first element in message array). Standard codes are small (<= ~70); larger values are used for provisional/experimental message types (e.g. EVENT_RECEIVED = 337 pending ratification).",
           "minimum": 1,
-          "maximum": 255
+          "maximum": 1023
         },
         "feature": {
           "type": "string",
@@ -71,68 +73,141 @@
           "format": "uri",
           "description": "URL to relevant section in WAMP specification"
         },
-        "serializers": {
-          "type": "object",
-          "description": "Serialized byte representations in different formats",
-          "minProperties": 1,
-          "properties": {
-            "json": {
-              "$ref": "#/definitions/SerializedBytes"
-            },
-            "msgpack": {
-              "$ref": "#/definitions/SerializedBytes"
-            },
-            "cbor": {
-              "$ref": "#/definitions/SerializedBytes"
-            },
-            "ubjson": {
-              "$ref": "#/definitions/SerializedBytes"
-            }
-          },
-          "additionalProperties": {
-            "$ref": "#/definitions/SerializedBytes"
+        "samples": {
+          "type": "array",
+          "description": "List of test samples for this message type",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/SerializationSample"
+              },
+              {
+                "$ref": "#/definitions/ValidationSample"
+              }
+            ]
           }
+        },
+        "notes": {
+          "description": "Additional notes about this test vector (a single string, or a list of strings)",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "SerializationSample": {
+      "type": "object",
+      "description": "A sample with canonical serialized byte representations and the expected deserialized attributes.",
+      "required": [
+        "description",
+        "serializers",
+        "expected_attributes"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this sample"
+        },
+        "serializers": {
+          "$ref": "#/definitions/Serializers"
         },
         "expected_attributes": {
           "type": "object",
           "description": "Expected attributes after deserialization",
-          "required": ["message_type"],
+          "required": [
+            "message_type"
+          ],
+          "additionalProperties": true,
           "properties": {
             "message_type": {
               "type": "integer",
               "description": "WAMP message type code"
             }
-          },
-          "additionalProperties": true
+          }
         },
         "validation": {
-          "type": "object",
-          "description": "Language-specific validation assertions",
-          "properties": {
-            "python": {
-              "$ref": "#/definitions/LanguageValidation"
-            },
-            "javascript": {
-              "$ref": "#/definitions/LanguageValidation"
-            },
-            "java": {
-              "$ref": "#/definitions/LanguageValidation"
-            },
-            "cpp": {
-              "$ref": "#/definitions/LanguageValidation"
-            }
-          },
-          "additionalProperties": {
-            "$ref": "#/definitions/LanguageValidation"
-          }
+          "$ref": "#/definitions/CodeByImplementation"
         },
-        "notes": {
+        "construction": {
+          "$ref": "#/definitions/CodeStringByImplementation"
+        }
+      }
+    },
+    "ValidationSample": {
+      "type": "object",
+      "description": "A sample exercising a validation rule: a raw WAMP wire message (wmsg) that is either valid or must be rejected with a protocol violation.",
+      "required": [
+        "description",
+        "wmsg"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Human-readable description of this sample"
+        },
+        "test_category": {
+          "type": "string",
+          "description": "Category of validation being exercised (e.g., 'options_validation', 'details_validation')"
+        },
+        "wmsg": {
           "type": "array",
-          "description": "Additional notes about this test vector",
-          "items": {
-            "type": "string"
+          "description": "Raw WAMP message as a list (the on-the-wire array representation)"
+        },
+        "expected_error": {
+          "type": "object",
+          "description": "If present, the wmsg MUST be rejected with this error",
+          "additionalProperties": true,
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "Error type (e.g., 'protocol_violation')"
+            },
+            "contains": {
+              "type": "string",
+              "description": "Substring the error message/context is expected to contain"
+            }
           }
         }
+      }
+    },
+    "Serializers": {
+      "type": "object",
+      "description": "Maps a serializer id (json, msgpack, cbor, ubjson, flatbuffers, ...) to a list of valid byte representations. A single serializer may list more than one representation (e.g. encodings produced by different implementations or library versions); conformance uses 'at least one must match' semantics in both the serialize and deserialize directions.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/definitions/SerializedBytes"
+        }
+      }
+    },
+    "CodeByImplementation": {
+      "type": "object",
+      "description": "Maps a WAMP implementation id (e.g. 'autobahn-python', 'autobahn-js', 'wampy') to a list of executable validation code blocks. At least one block must pass for the implementation to be considered conformant.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "CodeStringByImplementation": {
+      "type": "object",
+      "description": "Maps a WAMP implementation id (e.g. 'autobahn-python') to construction code that creates the message instance to be serialized.",
+      "additionalProperties": {
+        "type": "string"
       }
     },
     "MultiMessageTestVector": {
@@ -179,17 +254,24 @@
           "additionalProperties": true
         },
         "notes": {
-          "type": "array",
-          "description": "Additional notes about this test sequence",
-          "items": {
-            "type": "string"
-          }
+          "description": "Additional notes about this test sequence (a single string, or a list of strings)",
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
         }
       }
     },
     "SerializedBytes": {
       "type": "object",
-      "description": "Serialized message bytes in multiple representations",
+      "description": "Serialized message bytes in one or more representations",
       "properties": {
         "bytes": {
           "type": "string",
@@ -210,36 +292,29 @@
         }
       },
       "anyOf": [
-        {"required": ["bytes"]},
-        {"required": ["bytes_hex"]},
-        {"required": ["bytes_base64"]}
-      ]
-    },
-    "LanguageValidation": {
-      "type": "object",
-      "description": "Validation code for a specific programming language",
-      "properties": {
-        "import": {
-          "type": "string",
-          "description": "Import statements needed for validation"
+        {
+          "required": [
+            "bytes"
+          ]
         },
-        "setup": {
-          "type": "string",
-          "description": "Setup code to run before assertions"
+        {
+          "required": [
+            "bytes_hex"
+          ]
         },
-        "assertions": {
-          "type": "array",
-          "description": "Assertion statements to validate message attributes",
-          "items": {
-            "type": "string"
-          }
+        {
+          "required": [
+            "bytes_base64"
+          ]
         }
-      }
+      ]
     },
     "Session": {
       "type": "object",
       "description": "A WAMP session participating in the test",
-      "required": ["session_id"],
+      "required": [
+        "session_id"
+      ],
       "properties": {
         "session_id": {
           "type": "string",
@@ -269,7 +344,13 @@
     "MessageStep": {
       "type": "object",
       "description": "A single message in a sequence",
-      "required": ["step", "description", "from", "to", "message"],
+      "required": [
+        "step",
+        "description",
+        "from",
+        "to",
+        "message"
+      ],
       "properties": {
         "step": {
           "type": "integer",
@@ -291,14 +372,16 @@
         "message": {
           "type": "object",
           "description": "WAMP message being sent",
-          "required": ["type"],
+          "required": [
+            "type"
+          ],
+          "additionalProperties": true,
           "properties": {
             "type": {
               "type": "string",
               "description": "WAMP message type name"
             }
-          },
-          "additionalProperties": true
+          }
         },
         "assertion": {
           "type": "string",

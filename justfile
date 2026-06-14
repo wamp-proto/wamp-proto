@@ -301,6 +301,20 @@ check-format venv="": (install venv)
     echo "==> Linting code with ${VENV_NAME}..."
     "${VENV_PATH}/bin/ruff" check ./docs
 
+# Validate all test vectors under testsuite/ against testsuite/SCHEMA.json
+validate-vectors venv="": (install venv)
+    #!/usr/bin/env bash
+    set -e
+    VENV_NAME="{{ venv }}"
+    if [ -z "${VENV_NAME}" ]; then
+        echo "==> No venv name specified. Auto-detecting from system Python..."
+        VENV_NAME=$(just --quiet _get-system-venv-name)
+        echo "==> Defaulting to venv: '${VENV_NAME}'"
+    fi
+    VENV_PATH="{{ VENV_DIR }}/${VENV_NAME}"
+    echo "==> Validating test vectors against testsuite/SCHEMA.json with ${VENV_NAME}..."
+    "${VENV_PATH}/bin/python" testsuite/validate_vectors.py
+
 # -----------------------------------------------------------------------------
 # -- Documentation
 # -----------------------------------------------------------------------------
