@@ -38,6 +38,7 @@ AutobahnJS_         Javascript, HTML5 and NodeJS        WAMP client library for 
 AutobahnPython_     Python 2/3, Twisted and asyncio     WAMP client library + WebSocket client/server impl. for Python 2 and 3, on `Twisted <https://twistedmatrix.com>`_ and `asyncio <https://docs.python.org/3/library/asyncio.html>`_.
 awre_               Erlang                              awre is a WAMP V2 implementation in `Erlang <http://www.erlang.org/>`_ with client roles.
 Backbone.wamp_      JavaScript                          Allows two-way synchronisation of Backbone models & collections between frontends and backends.
+battler-wamprat_    Rust                                Client library implemented for async Rust (tokio), supporting strongly-typed RPCs/events and automatic reconnection.
 connectanum_        Java, Netty                         A Java WAMP implementation based on Netty. Both Client and Router roles.
 connectanum-dart_   Dart, Flutter                       A WAMP client implementation for the `dart language <https://dart.dev/>`_ and `flutter <https://flutter.dev/>`_ projects.
 CppWAMP_            C++ 11                              CppWAMP is a WAMP V2 implementation in C++11.
@@ -87,6 +88,7 @@ The following table lists WAMP compliant **router implementations**.
 Name                Language/Run-time                   Description
 ==================  ==================================  =====================
 akka-wamp_          Scala, Java 8 and Akka              A Scala implementation of a basic WAMP router.
+battler-wamp_       Rust                                Router (and client) implementation for async Rust (tokio). Implements all of basic and most of advanced profile.
 Bonefish_           C++, Boost/ASIO                     WAMP router based on C++11 and Boost.Asio. Also usable as a library, Apache 2.0 licensed.
 connectanum_        Java, Netty                         A Java WAMP implementation based on Netty. Both Client and Router roles.
 Crossbar_           Python (PyPy), Twisted              Crossbar.io WAMP router and microservice middleware. By the creators of WAMP and Autobahn.
@@ -134,6 +136,8 @@ wick-ui_            Dart, Flutter                       Web tool for testing WAM
 .. _AutobahnPython: https://github.com/crossbario/autobahn-python
 .. _awre: https://github.com/bwegh/awre
 .. _Backbone.wamp: https://github.com/darrrk/backbone.wamp
+.. _battler-wamp: https://crates.io/crates/battler-wamp
+.. _battler-wamprat: https://crates.io/crates/battler-wamprat
 .. _Bondy: https://bondy.io
 .. _Bonefish: https://github.com/tplgy/bonefish
 .. _Cargotube: https://github.com/CargoTube/cargotube

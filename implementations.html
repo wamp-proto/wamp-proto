@@ -1,99 +1,276 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Implementations" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://wamp-proto.org/implementations.html" />
+<meta property="og:site_name" content="WAMP" />
+<meta property="og:description" content="Get started with WAMP by choosing client libraries and a router: To write application components in your favorite language, you will need a WAMP client library, To actually run your application con..." />
+<meta name="description" content="Get started with WAMP by choosing client libraries and a router: To write application components in your favorite language, you will need a WAMP client library, To actually run your application con..." />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Users and Resources" href="users.html"><link rel="prev" title="WAMP compared" href="comparison.html">
+        <link rel="prefetch" href="static/wamp_logo.svg" as="image">
+
+    <link rel="shortcut icon" href="static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Implementations - WAMP version 2</title>
+      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
+    <link rel="stylesheet" type="text/css" href="static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
+    <link rel="stylesheet" type="text/css" href="static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Mono:wght@400;500&display=swap" />
+    
+    
 
 
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Implementations &mdash; Web Application Messaging Protocol version 2 documentation</title>
-      <link rel="stylesheet" type="text/css" href="static/pygments.css?v=d75fae25" />
-      <link rel="stylesheet" type="text/css" href="static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="static/css/custom.css?v=0f874806" />
-      <link rel="stylesheet" type="text/css" href="static/sphinxcontrib-images/LightBox2/lightbox2/dist/css/lightbox.min.css?v=6e7d0de0" />
-      <link rel="stylesheet" type="text/css" href="static/sphinxcontrib-images/LightBox2/lightbox2-customize/pointer.css?v=c97663ff" />
-
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  --font-stack: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-stack--monospace: 'Noto Sans Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --color-brand-primary: #1a1a1a;
+  --color-brand-content: #1a1a1a;
   
-    <link rel="canonical" href="https://wamp-proto.org/implementations.html"/>
-      <script src="static/jquery.js?v=5d32c60e"></script>
-      <script src="static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="static/documentation_options.js?v=df7f5f1a"></script>
-      <script src="static/doctools.js?v=9bcbadda"></script>
-      <script src="static/sphinx_highlight.js?v=dc90522c"></script>
-      <script src="static/js/custom.js?v=bf22cb0c"></script>
-      <script src="static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
-      <script src="static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
-    <script src="static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Users and Resources" href="users.html" />
-    <link rel="prev" title="WAMP compared" href="comparison.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --font-stack: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-stack--monospace: 'Noto Sans Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --color-brand-primary: #e0e0e0;
+  --color-brand-content: #e0e0e0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --font-stack: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-stack--monospace: 'Noto Sans Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  --color-brand-primary: #e0e0e0;
+  --color-brand-content: #e0e0e0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            Web Application Messaging Protocol
-              <img src="static/wamp_logo_white.png" class="logo" alt="Logo"/>
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">WAMP version 2</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="static/wamp_logo.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">WAMP version 2</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="routing.html">Message Routing in WAMP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spec.html">Protocol Specification</a></li>
 <li class="toctree-l1"><a class="reference internal" href="comparison.html">WAMP compared</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Implementations</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#libraries">Libraries</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#routers">Routers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Implementations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="users.html">Users and Resources</a></li>
 <li class="toctree-l1"><a class="reference internal" href="roadmap.html">Roadmap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impressum.html">Impressum</a></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Web Application Messaging Protocol</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Implementations</li>
-      <li class="wy-breadcrumbs-aside">
-              <!-- User defined GitHub URL -->
-              <a href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/implementations.rst" class="fa fa-github"> Edit on GitHub</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="implementations">
-<span id="id1"></span><h1>Implementations<a class="headerlink" href="#implementations" title="Link to this heading"></a></h1>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="https://github.com/wamp-proto/wamp-proto/blob/master/docs/implementations.rst?plain=true" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div><div class="edit-this-page">
+  <a class="muted-link" href="https://github.com/wamp-proto/wamp-proto/edit/master/docs/implementations.rst" rel="edit" title="Edit this page">
+    <svg><use href="#svg-pencil"></use></svg>
+    <span class="visually-hidden">Edit this page</span>
+  </a>
+</div><div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="implementations">
+<span id="id1"></span><h1>Implementations<a class="headerlink" href="#implementations" title="Link to this heading">¶</a></h1>
 <p>Get started with WAMP by choosing <strong>client libraries</strong> and a <strong>router</strong>:</p>
 <ul class="simple">
 <li><p>To <em>write application components</em> in your favorite language, you will need a <strong>WAMP client library</strong></p></li>
@@ -112,8 +289,9 @@ on github and introduce your project or even create a pull request with addition
 </ul>
 </div>
 <section id="libraries">
-<h2>Libraries<a class="headerlink" href="#libraries" title="Link to this heading"></a></h2>
+<h2>Libraries<a class="headerlink" href="#libraries" title="Link to this heading">¶</a></h2>
 <p>The following table lists WAMP compliant <strong>client library implementations</strong>.</p>
+<div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
@@ -154,160 +332,166 @@ on github and introduce your project or even create a pull request with addition
 <td><p>JavaScript</p></td>
 <td><p>Allows two-way synchronisation of Backbone models &amp; collections between frontends and backends.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.connectanum.com/">connectanum</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://crates.io/crates/battler-wamprat">battler-wamprat</a></p></td>
+<td><p>Rust</p></td>
+<td><p>Client library implemented for async Rust (tokio), supporting strongly-typed RPCs/events and automatic reconnection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.connectanum.com/">connectanum</a></p></td>
 <td><p>Java, Netty</p></td>
 <td><p>A Java WAMP implementation based on Netty. Both Client and Router roles.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://pub.dev/packages/connectanum/">connectanum-dart</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://pub.dev/packages/connectanum/">connectanum-dart</a></p></td>
 <td><p>Dart, Flutter</p></td>
 <td><p>A WAMP client implementation for the <a class="reference external" href="https://dart.dev/">dart language</a> and <a class="reference external" href="https://flutter.dev/">flutter</a> projects.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/ecorm/cppwamp">CppWAMP</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/ecorm/cppwamp">CppWAMP</a></p></td>
 <td><p>C++ 11</p></td>
 <td><p>CppWAMP is a WAMP V2 implementation in C++11.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/mulderr/haskell-wamp">haskell-wamp</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/mulderr/haskell-wamp">haskell-wamp</a></p></td>
 <td><p>Haskell</p></td>
 <td><p>An experimental Haskell implementation of WAMP Basic Profile.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Verkehrsministerium/kraftfahrstrasse">kraftfahrstrasse</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Verkehrsministerium/kraftfahrstrasse">kraftfahrstrasse</a></p></td>
 <td><p>TypeScript</p></td>
 <td><p>Modern WAMP Client library for browsers and node utilizing native ES6+.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/LaurenceGA/kwamp">KWAMP</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/LaurenceGA/kwamp">KWAMP</a></p></td>
 <td><p>Kotlin</p></td>
 <td><p>A Kotlin WAMP client (aims for basic profile).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Matthias247/jawampa">jawampa</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Matthias247/jawampa">jawampa</a></p></td>
 <td><p>Java + RxJava, Netty</p></td>
 <td><p>A Java WAMP implementation based on <a class="reference external" href="http://netty.io/">Netty</a> and <a class="reference external" href="https://github.com/ReactiveX/RxJava">RxJava</a>. Both Client and Router roles.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/KSDaemon/Loowy">Loowy</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/KSDaemon/Loowy">Loowy</a></p></td>
 <td><p>Lua, lib-ev</p></td>
 <td><p>Lua WAMP client implementation on top of lua-websockets and lib-ev.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/mogui/MDWamp">MDWamp</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/mogui/MDWamp">MDWamp</a></p></td>
 <td><p>Objective-C</p></td>
 <td><p>Client library for iOS apps built on <a class="reference external" href="https://github.com/square/SocketRocket">SocketRocket</a> for WebSocket.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Vinelab/minion">Minion</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Vinelab/minion">Minion</a></p></td>
 <td><p>PHP</p></td>
 <td><p>Client library and command line tool with <a class="reference external" href="http://laravel.com/">Laravel</a> support. Based on <a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/gammazero/nexus">Nexus</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/gammazero/nexus">Nexus</a></p></td>
 <td><p>Go</p></td>
 <td><p>A full-feature WAMP client written in Go (also a Router).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/FGasper/p5-Net-WAMP">p5-Net-WAMP</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/FGasper/p5-Net-WAMP">p5-Net-WAMP</a></p></td>
 <td><p>Perl 5</p></td>
 <td><p>A WAMP implementation in Perl. See the <a class="reference external" href="https://metacpan.org/pod/Net::WAMP">docs</a> for details.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/ericchapman/ruby_wamp_client">ruby_wamp_client</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/ericchapman/ruby_wamp_client">ruby_wamp_client</a></p></td>
 <td><p>Ruby</p></td>
 <td><p>A WAMP client for Ruby</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/paulpdaniels/rx.wamp">rx-wamp</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/paulpdaniels/rx.wamp">rx-wamp</a></p></td>
 <td><p>JavaScript</p></td>
 <td><p>A <a class="reference external" href="https://github.com/Reactive-Extensions/RxJS">RxJS</a> wrapper library for WAMP. Built on AutobahnJS, running in the browser and NodeJS.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a></p></td>
 <td><p>PHP</p></td>
 <td><p>Thruway is a WAMP library built in PHP that provides both Client and Router roles.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/cydrickn/octamp-client">Octamp</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/cydrickn/octamp-client">Octamp</a></p></td>
 <td><p>PHP</p></td>
 <td><p>A Wamp client written in PHP using extension Swoole / Open Swoole</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/jcelliott/turnpike">Turnpike</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/jcelliott/turnpike">Turnpike</a></p></td>
 <td><p>Go</p></td>
 <td><p>A Go implementation of WAMP V2</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/MyMedsAndMe/spell">Spell</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/MyMedsAndMe/spell">Spell</a></p></td>
 <td><p>Elixir/Erlang</p></td>
 <td><p>Spell is a WAMP library built using Elixir, running on the Erlang VM.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/iscriptology/swamp">Swamp</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/iscriptology/swamp">Swamp</a></p></td>
 <td><p>Swift</p></td>
 <td><p>WAMP client library in pure Swift using Starscream and SwiftyJSON.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/darrenjs/wampcc">wampcc</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/darrenjs/wampcc">wampcc</a></p></td>
 <td><p>C++</p></td>
 <td><p>A C++ WAMP library that aims to depend only on C libraries. Includes a basic router.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/rafzi/WAMP_POCO">WAMP_POCO</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/rafzi/WAMP_POCO">WAMP_POCO</a></p></td>
 <td><p>C++</p></td>
 <td><p>A fork of AutobahnCpp that is using <a class="reference external" href="http://pocoproject.org/">POCO</a> instead of Boost.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/alvistar/wamped">wamped</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/alvistar/wamped">wamped</a></p></td>
 <td><p>C++</p></td>
 <td><p>Intended for running on <a class="reference external" href="https://www.mbed.com/en/">ARM mbed OS</a>. Experimental.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://gitlab.com/entropealabs/wampex_client">WAMPexClient</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://gitlab.com/entropealabs/wampex_client">WAMPexClient</a></p></td>
 <td><p>Elixir</p></td>
 <td><p>Elixir client library that implements the complete client Basic Profile and much of the Advanced Profile.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/samangh/wamplv">wamplv</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/samangh/wamplv">wamplv</a></p></td>
 <td><p>LabVIEW / G</p></td>
 <td><p>A WAMP client written in National Instrument’s <a class="reference external" href="https://en.wikipedia.org/wiki/LabVIEW">LabVIEW</a>, also available as a <a class="reference external" href="https://www.vipm.io/package/samangh_lib_wamplv_wamp_client/">VIPM package</a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/jszczypk/WampSyncClient">WampSyncClient</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/jszczypk/WampSyncClient">WampSyncClient</a></p></td>
 <td><p>PHP</p></td>
 <td><p>Synchronous (blocking) PHP client implementing Caller and Publisher roles</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Jopie64/wamprx.js">wamprx.js</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Jopie64/wamprx.js">wamprx.js</a></p></td>
 <td><p>TypeScript</p></td>
 <td><p>Simple WAMP TypeScript client-side implementation (of course also usable in JavaScript). It heavily relies on RxJS.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Code-Sharp/WampSharp">WampSharp</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Code-Sharp/WampSharp">WampSharp</a></p></td>
 <td><p>C#</p></td>
 <td><p>C# implementation of WAMP: both client and router roles, both JSON and <a class="reference external" href="http://msgpack.org/">MessagePack</a> support.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/noisyboiler/wampy">wampy</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/noisyboiler/wampy">wampy</a></p></td>
 <td><p>Python</p></td>
 <td><p>Python implementation for classic blocking Python applications.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/KSDaemon/wampy.js">wampy.js</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/KSDaemon/wampy.js">wampy.js</a></p></td>
 <td><p>JavaScript</p></td>
 <td><p>Feature-rich lightweight WAMP Javascript implementation for browsers and node.js.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/elast0ny/wamp_async">wamp_async</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/elast0ny/wamp_async">wamp_async</a></p></td>
 <td><p>Rust</p></td>
 <td><p>Rust client library. It features ergonomic async API</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-dart">xconn-dart</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-dart">xconn-dart</a></p></td>
 <td><p>Dart, Flutter</p></td>
 <td><p>A Dart WAMP client library with full Flutter support, featuring async APIs and cross-platform compatibility.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-go">xconn-go</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-go">xconn-go</a></p></td>
 <td><p>Go</p></td>
 <td><p>WAMP v2 Router and Client for Go.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-kotlin">xconn-kotlin</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-kotlin">xconn-kotlin</a></p></td>
 <td><p>Kotlin</p></td>
 <td><p>WAMP client for Kotlin.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-python">xconn-python</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-python">xconn-python</a></p></td>
 <td><p>Python</p></td>
 <td><p>A Python WAMP client library with both synchronous and asynchronous support.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-rust">xconn-rust</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-rust">xconn-rust</a></p></td>
 <td><p>Rust</p></td>
 <td><p>WAMP client in Rust. It includes two implementations one is sync and the other async.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-swift">xconn-swift</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-swift">xconn-swift</a></p></td>
 <td><p>Swift</p></td>
 <td><p>A Swift WAMP client library designed for iOS and macOS, with async/await support.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-ts">xconn-ts</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-ts">xconn-ts</a></p></td>
 <td><p>TypeScript</p></td>
 <td><p>A TypeScript WAMP client library built for both browser and Node.js environments.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="routers">
-<h2>Routers<a class="headerlink" href="#routers" title="Link to this heading"></a></h2>
+<h2>Routers<a class="headerlink" href="#routers" title="Link to this heading">¶</a></h2>
 <p>The following table lists WAMP compliant <strong>router implementations</strong>.</p>
+<div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
@@ -320,96 +504,102 @@ on github and introduce your project or even create a pull request with addition
 <td><p>Scala, Java 8 and Akka</p></td>
 <td><p>A Scala implementation of a basic WAMP router.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/tplgy/bonefish">Bonefish</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://crates.io/crates/battler-wamp">battler-wamp</a></p></td>
+<td><p>Rust</p></td>
+<td><p>Router (and client) implementation for async Rust (tokio). Implements all of basic and most of advanced profile.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/tplgy/bonefish">Bonefish</a></p></td>
 <td><p>C++, Boost/ASIO</p></td>
 <td><p>WAMP router based on C++11 and Boost.Asio. Also usable as a library, Apache 2.0 licensed.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://www.connectanum.com/">connectanum</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://www.connectanum.com/">connectanum</a></p></td>
 <td><p>Java, Netty</p></td>
 <td><p>A Java WAMP implementation based on Netty. Both Client and Router roles.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://crossbar.io">Crossbar</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://crossbar.io">Crossbar</a></p></td>
 <td><p>Python (PyPy), Twisted</p></td>
 <td><p>Crossbar.io WAMP router and microservice middleware. By the creators of WAMP and Autobahn.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://crossbario.com">CrossbarFX</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://crossbario.com">CrossbarFX</a></p></td>
 <td><p>Python (PyPy), Twisted</p></td>
 <td><p>CrossbarFX enterprise WAMP router with central management, edge device platform and clustering.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/CargoTube/cargotube">Cargotube</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/CargoTube/cargotube">Cargotube</a></p></td>
 <td><p>Erlang</p></td>
 <td><p>A software router in Erlang implementing the wamp.ws protcol (successor of Erwa).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://bondy.io">Bondy</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://bondy.io">Bondy</a></p></td>
 <td><p>Erlang</p></td>
 <td><p>Leapsight Bondy is an open source distributed API Gateway, WAMP Router and networking platform for microservices and IoT applications written in Erlang. It provides scaleable clustering capabilities via TCP/IP using Partisan, Plumtree Epidemic Broadcast Trees and an eventually consistent data store.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/bwegh/erwa">Erwa</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/bwegh/erwa">Erwa</a></p></td>
 <td><p>Erlang</p></td>
 <td><p>Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/kalmyk/fox-wamp">fox-wamp</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/kalmyk/fox-wamp">fox-wamp</a></p></td>
 <td><p>JavaScript, NodeJS</p></td>
 <td><p>Customizable WAMP Router.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Matthias247/jawampa">jawampa</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Matthias247/jawampa">jawampa</a></p></td>
 <td><p>Java + RxJava, Netty</p></td>
 <td><p>A Java WAMP implementation based on <a class="reference external" href="http://netty.io/">Netty</a> and <a class="reference external" href="https://github.com/ReactiveX/RxJava">RxJava</a>. Both Client and Router roles.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/LaurenceGA/kwamp">KWAMP</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/LaurenceGA/kwamp">KWAMP</a></p></td>
 <td><p>Kotlin</p></td>
 <td><p>A Kotlin WAMP router (aims for basic profile).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/gammazero/nexus">Nexus</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/gammazero/nexus">Nexus</a></p></td>
 <td><p>Go</p></td>
 <td><p>Router implementation for Go. (also includes a client implementation)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/christian-raedel/nightlife-rabbit">NighlifeRabbit</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/christian-raedel/nightlife-rabbit">NighlifeRabbit</a></p></td>
 <td><p>JavaScript, NodeJS</p></td>
 <td><p>Router implementation for <a class="reference external" href="http://nodejs.org/">NodeJS</a>, MIT licensed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/octamp/wamp">OctampWamp</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/octamp/wamp">OctampWamp</a></p></td>
 <td><p>PHP, OpenSwoole</p></td>
 <td><p>Octamp WAMP is Router implementation of WAMP Protocol using PHP and OpenSwoole that is scalable, it uses Redis Pub/Sub to connect with other server.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/voryx/Thruway">Thruway</a></p></td>
 <td><p>PHP</p></td>
 <td><p>Thruway is a WAMP library built in PHP that provides both Client and Router roles.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/jcelliott/turnpike">Turnpike</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/jcelliott/turnpike">Turnpike</a></p></td>
 <td><p>Go</p></td>
 <td><p>turnpike is a WAMP v2 router implemented in Go.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/ralscha/wamp2spring">wamp2spring</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/ralscha/wamp2spring">wamp2spring</a></p></td>
 <td><p>Java, Spring</p></td>
 <td><p>A Java implementation built on top of the Spring 5 WebSocket support.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/darrenjs/wampcc">wampcc</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/darrenjs/wampcc">wampcc</a></p></td>
 <td><p>C++</p></td>
 <td><p>A C++ WAMP library that aims to depend only on C libraries, making it easier to work and build on a range of platforms.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Orange-OpenSource/wamp.rt">wamprt</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Orange-OpenSource/wamp.rt">wamprt</a></p></td>
 <td><p>JavaScript, NodeJS</p></td>
 <td><p>Router only implementation for <a class="reference external" href="http://nodejs.org/">NodeJS</a> created by <a class="reference external" href="http://opensource.orange.com/home">Orange</a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/Code-Sharp/WampSharp">WampSharp</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/Code-Sharp/WampSharp">WampSharp</a></p></td>
 <td><p>C#</p></td>
 <td><p>C# router implementation of WAMP v2, both JSON and <a class="reference external" href="http://msgpack.org/">MessagePack</a> support.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference external" href="http://ksdaemon.github.io/wiola/">Wiola</a></p></td>
+<tr class="row-odd"><td><p><a class="reference external" href="http://ksdaemon.github.io/wiola/">Wiola</a></p></td>
 <td><p>Lua</p></td>
 <td><p>Router implementation in <a class="reference external" href="http://www.lua.org/">Lua</a>, using the power of Lua/Nginx, WebSocket and <a class="reference external" href="http://redis.io/">Redis</a> as cache store.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-go">xconn-go</a></p></td>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/xconnio/xconn-go">xconn-go</a></p></td>
 <td><p>Go</p></td>
 <td><p>WAMP v2 Router and Client for Go.</p></td>
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="utilities">
-<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading"></a></h2>
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
 <p>The following table lists WAMP compliant utilities.</p>
+<div class="table-wrapper docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head"><p>Name</p></th>
@@ -436,38 +626,88 @@ on github and introduce your project or even create a pull request with addition
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 </section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="users.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Users and Resources</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="comparison.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">WAMP compared</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2012-2026, typedef int GmbH (Germany)
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="comparison.html" class="btn btn-neutral float-left" title="WAMP compared" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="users.html" class="btn btn-neutral float-right" title="Users and Resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Implementations</a><ul>
+<li><a class="reference internal" href="#libraries">Libraries</a></li>
+<li><a class="reference internal" href="#routers">Routers</a></li>
+<li><a class="reference internal" href="#utilities">Utilities</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2012-2025, typedef int GmbH.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script src="static/documentation_options.js?v=df7f5f1a"></script>
+    <script src="static/doctools.js?v=fd6eb6e6"></script>
+    <script src="static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="static/copybutton.js?v=f281be69"></script>
+    <script src="static/design-tabs.js?v=f930bc37"></script>
+    <script src="static/sphinxcontrib-images/LightBox2/lightbox2/dist/js/lightbox-plus-jquery.min.js?v=f0ca4bb6"></script>
+    <script src="static/sphinxcontrib-images/LightBox2/lightbox2-customize/jquery-noconflict.js?v=12818e64"></script>
+    </body>
 </html>
