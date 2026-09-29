@@ -43,6 +43,10 @@ jobs:
     steps:
       - name: Checkout Repo/Branch
         uses: actions/checkout@v4
+        with:
+          # The justfile imports .cicd/workflow.just: without the submodule, `just` refuses
+          # to run at all ("could not find source file for import").
+          submodules: recursive
 
       # The spec+website build was migrated from `make` to `just`+`uv` in #553; the
       # steps below mirror the proven-green PR workflow `build-and-test.yml` so the
