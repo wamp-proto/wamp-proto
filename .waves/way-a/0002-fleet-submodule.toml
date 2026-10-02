@@ -1,0 +1,6 @@
+rollout = "way-a/0002-fleet-submodule"
+fleet   = "https://github.com/wamp-proto/wamp-fleet@90610f3f5b71c8f2b7dd5a3b3d16b1b6da1908a5"
+script  = "sha256:2bd81de711617fe15ed75e507ea28ea4a3142c17a6767c2fa7012fdf63355b18"
+cicd    = "1378b0ba2d22b6f5d688f6e11294d183c1c047bc"
+issue   = 577
+applied = 2026-10-02T03:21:58Z

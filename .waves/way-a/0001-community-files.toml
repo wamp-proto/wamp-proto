@@ -1,0 +1,6 @@
+rollout = "way-a/0001-community-files"
+fleet   = "https://github.com/wamp-proto/wamp-fleet@90610f3f5b71c8f2b7dd5a3b3d16b1b6da1908a5"
+adopted = true   # already in the desired state (check.sh); apply.sh did not run
+cicd    = "38ded6a15062348f180cf31a09370c3e63cbf5d0"
+issue   = 577
+applied = 2026-10-02T03:21:58Z

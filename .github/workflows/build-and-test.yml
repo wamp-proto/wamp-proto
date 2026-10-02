@@ -19,6 +19,11 @@ jobs:
       - name: Community files in sync with .cicd/templates/
         run: bash .cicd/scripts/community-files.sh check .
 
+      # Every rollout of this repository's cohorts in the pinned fleet definition has its
+      # marker in .waves/: the repository is not behind the definition it pins.
+      - name: Fleet rollouts applied (the pinned definition against .waves/)
+        run: bash .cicd/fleet/lag-check.sh --slug wamp-proto/wamp-proto
+
       - name: Set Environment Variables
         run: |
           echo "PATH=$HOME/.local/bin/:$PATH" >> $GITHUB_ENV
