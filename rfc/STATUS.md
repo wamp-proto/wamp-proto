@@ -83,6 +83,7 @@ final          | The section does not require any more attention.
 |       Batched WebSocket           | sketch        |               | [advanced/ap_transport_batched_websocket.md](text/advanced/ap_transport_batched_websocket.md) |  |
 |       HTTP Longpoll               | beta          |               | [advanced/ap_transport_http_longpoll.md](text/advanced/ap_transport_http_longpoll.md) |  |
 |       Multiplexed                 | sketch        |               | [advanced/ap_transport_multiplexed.md](text/advanced/ap_transport_multiplexed.md) |  | |  |
+|       WebRTC                      | beta          |               | [advanced/ap_transport_webrtc.md](text/advanced/ap_transport_webrtc.md)           |  | |  |
 | Binary Conversion of JSON Strings | stable        | polish        | [basic/bp_binary_conversion_of_json.md](text/basic/bp_binary_conversion_of_json.md) |  |
 | Security Considerations           | -             | missing       | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |
 | Contributors                      | -             |               | [main doc](draft-oberstet-hybi-crossbar-wamp.md) |  |

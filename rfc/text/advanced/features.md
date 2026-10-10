@@ -48,6 +48,7 @@ Support for advanced features must be announced by the peers which implement the
 | [RawSocket transport](#rawsocket)                | stable |
 | [Batched WebSocket transport](#batchedwebsocket) | sketch |
 | [HTTP Longpoll transport](#longpoll)             | beta   |
+| [WebRTC transport](#webrtc)                      | beta   |
 | [Session Meta API](#session-metapi)              | beta   |
 | [Call Rerouting](#rpc-call-rerouting)            | sketch |
 | [Payload Passthru Mode](#payload-passthru-mode)  | sketch |
