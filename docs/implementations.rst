@@ -84,33 +84,53 @@ Routers
 
 The following table lists WAMP compliant **router implementations**.
 
+==================  ==================================  =====================
+Name                Language/Run-time                   Description
+==================  ==================================  =====================
+akka-wamp_          Scala, Java 8 and Akka              A Scala implementation of a basic WAMP router.
+battler-wamp_       Rust                                Router (and client) implementation for async Rust (tokio). Implements all of basic and most of advanced profile.
+Bonefish_           C++, Boost/ASIO                     WAMP router based on C++11 and Boost.Asio. Also usable as a library, Apache 2.0 licensed.
+connectanum_        Java, Netty                         A Java WAMP implementation based on Netty. Both Client and Router roles.
+Crossbar_           Python (PyPy), Twisted              Crossbar.io WAMP router and microservice middleware. By the creators of WAMP and Autobahn.
+CrossbarFX_         Python (PyPy), Twisted              CrossbarFX enterprise WAMP router with central management, edge device platform and clustering.
+Cargotube_          Erlang                              A software router in Erlang implementing the wamp.ws protcol (successor of Erwa).
+Bondy_              Erlang                              Leapsight Bondy is an open source distributed API Gateway, WAMP Router and networking platform for microservices and IoT applications written in Erlang. It provides scaleable clustering capabilities via TCP/IP using Partisan, Plumtree Epidemic Broadcast Trees and an eventually consistent data store.
+Erwa_               Erlang                              Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.
+fox-wamp_           JavaScript, NodeJS                  Customizable WAMP Router.
+jawampa_            Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
+KWAMP_              Kotlin                              A Kotlin WAMP router (aims for basic profile).
+Nexus_              Go                                  Router implementation for Go. (also includes a client implementation)
+NighlifeRabbit_     JavaScript, NodeJS                  Router implementation for `NodeJS <http://nodejs.org/>`_, MIT licensed.
+OctampWamp_         PHP, OpenSwoole                     Octamp WAMP is Router implementation of WAMP Protocol using PHP and OpenSwoole that is scalable, it uses Redis Pub/Sub to connect with other server.
+Thruway_            PHP                                 Thruway is a WAMP library built in PHP that provides both Client and Router roles.
+Turnpike_           Go                                  turnpike is a WAMP v2 router implemented in Go.
+wamp2spring_        Java, Spring                        A Java implementation built on top of the Spring 5 WebSocket support.
+wampcc_             C++                                 A C++ WAMP library that aims to depend only on C libraries, making it easier to work and build on a range of platforms.
+wamprt_             JavaScript, NodeJS                  Router only implementation for `NodeJS <http://nodejs.org/>`_ created by `Orange <http://opensource.orange.com/home>`_.
+WampSharp_          C#                                  C# router implementation of WAMP v2, both JSON and `MessagePack <http://msgpack.org/>`_ support.
+Wiola_              Lua                                 Router implementation in `Lua <http://www.lua.org/>`_, using the power of Lua/Nginx, WebSocket and `Redis <http://redis.io/>`_ as cache store.
+xconn-go_            Go                                  WAMP v2 Router and Client for Go.
+==================  ==================================  =====================
+
+
+Router-less implementations
+---------------------------
+
+The following table lists **router-less implementations**: the application backend itself terminates WAMP sessions,
+so clients speak plain WAMP to it without a separate router.
+
+This lets a project use WAMP from day one: clients work with standard WAMP client libraries, and there is no extra
+router process to deploy and operate early on. When the project needs real routing, a full WAMP router can be put in
+place later, with changes mostly on the backend side.
+
+The trade-off is scope: each client session is isolated and talks only to the backend. Clients cannot call each
+other's procedures, client publishes reach only the backend, and procedures registered by different clients do not
+conflict. Behind a router these behave differently, so check the implementation's documentation before switching.
+
 ========================  ==================================  =====================
 Name                      Language/Run-time                   Description
 ========================  ==================================  =====================
-akka-wamp_                Scala, Java 8 and Akka              A Scala implementation of a basic WAMP router.
-battler-wamp_             Rust                                Router (and client) implementation for async Rust (tokio). Implements all of basic and most of advanced profile.
-Bonefish_                 C++, Boost/ASIO                     WAMP router based on C++11 and Boost.Asio. Also usable as a library, Apache 2.0 licensed.
-connectanum_              Java, Netty                         A Java WAMP implementation based on Netty. Both Client and Router roles.
-Crossbar_                 Python (PyPy), Twisted              Crossbar.io WAMP router and microservice middleware. By the creators of WAMP and Autobahn.
-CrossbarFX_               Python (PyPy), Twisted              CrossbarFX enterprise WAMP router with central management, edge device platform and clustering.
-Cargotube_                Erlang                              A software router in Erlang implementing the wamp.ws protcol (successor of Erwa).
-Bondy_                    Erlang                              Leapsight Bondy is an open source distributed API Gateway, WAMP Router and networking platform for microservices and IoT applications written in Erlang. It provides scaleable clustering capabilities via TCP/IP using Partisan, Plumtree Epidemic Broadcast Trees and an eventually consistent data store.
-Erwa_                     Erlang                              Erwa is a WAMP V2 implementation: Erwa will be archived soon, please consider using CargoTube.
-fastapi-headless-wamp_    Python, FastAPI                     Server-side WAMP for `FastAPI <https://fastapi.tiangolo.com/>`_ with no separate router: each WebSocket client gets a direct session with the backend (RPC and PubSub in both directions). Lets a project start with WAMP from day one and switch to a full router later.
-fox-wamp_                 JavaScript, NodeJS                  Customizable WAMP Router.
-jawampa_                  Java + RxJava, Netty                A Java WAMP implementation based on `Netty <http://netty.io/>`_ and `RxJava <https://github.com/ReactiveX/RxJava>`_. Both Client and Router roles.
-KWAMP_                    Kotlin                              A Kotlin WAMP router (aims for basic profile).
-Nexus_                    Go                                  Router implementation for Go. (also includes a client implementation)
-NighlifeRabbit_           JavaScript, NodeJS                  Router implementation for `NodeJS <http://nodejs.org/>`_, MIT licensed.
-OctampWamp_               PHP, OpenSwoole                     Octamp WAMP is Router implementation of WAMP Protocol using PHP and OpenSwoole that is scalable, it uses Redis Pub/Sub to connect with other server.
-Thruway_                  PHP                                 Thruway is a WAMP library built in PHP that provides both Client and Router roles.
-Turnpike_                 Go                                  turnpike is a WAMP v2 router implemented in Go.
-wamp2spring_              Java, Spring                        A Java implementation built on top of the Spring 5 WebSocket support.
-wampcc_                   C++                                 A C++ WAMP library that aims to depend only on C libraries, making it easier to work and build on a range of platforms.
-wamprt_                   JavaScript, NodeJS                  Router only implementation for `NodeJS <http://nodejs.org/>`_ created by `Orange <http://opensource.orange.com/home>`_.
-WampSharp_                C#                                  C# router implementation of WAMP v2, both JSON and `MessagePack <http://msgpack.org/>`_ support.
-Wiola_                    Lua                                 Router implementation in `Lua <http://www.lua.org/>`_, using the power of Lua/Nginx, WebSocket and `Redis <http://redis.io/>`_ as cache store.
-xconn-go_                 Go                                  WAMP v2 Router and Client for Go.
+fastapi-routerless-wamp_  Python, FastAPI                     Start using WAMP from day one in `FastAPI <https://fastapi.tiangolo.com/>`_ backends, without deploying and operating a separate router. Clients connect over WebSocket with any standard WAMP client and get RPC and PubSub in both directions with the backend. When the project grows, a full WAMP router can be put in place later.
 ========================  ==================================  =====================
 
 
@@ -148,7 +168,7 @@ wick-ui_            Dart, Flutter                       Web tool for testing WAM
 .. _Crossbar: https://crossbar.io
 .. _CrossbarFX: https://crossbario.com
 .. _Erwa: https://github.com/bwegh/erwa
-.. _fastapi-headless-wamp: https://github.com/KSDaemon/fastapi-headless-wamp
+.. _fastapi-routerless-wamp: https://github.com/KSDaemon/fastapi-routerless-wamp
 .. _fox-wamp: https://github.com/kalmyk/fox-wamp
 .. _haskell-wamp: https://github.com/mulderr/haskell-wamp
 .. _jawampa: https://github.com/Matthias247/jawampa
