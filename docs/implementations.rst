@@ -113,6 +113,27 @@ xconn-go_            Go                                  WAMP v2 Router and Clie
 ==================  ==================================  =====================
 
 
+Router-less implementations
+---------------------------
+
+The following table lists **router-less implementations**: the application backend itself terminates WAMP sessions,
+so clients speak plain WAMP to it without a separate router.
+
+This lets a project use WAMP from day one: clients work with standard WAMP client libraries, and there is no extra
+router process to deploy and operate early on. When the project needs real routing, a full WAMP router can be put in
+place later, with changes mostly on the backend side.
+
+The trade-off is scope: each client session is isolated and talks only to the backend. Clients cannot call each
+other's procedures, client publishes reach only the backend, and procedures registered by different clients do not
+conflict. Behind a router these behave differently, so check the implementation's documentation before switching.
+
+========================  ==================================  =====================
+Name                      Language/Run-time                   Description
+========================  ==================================  =====================
+fastapi-routerless-wamp_  Python, FastAPI                     Start using WAMP from day one in `FastAPI <https://fastapi.tiangolo.com/>`_ backends, without deploying and operating a separate router. Clients connect over WebSocket with any standard WAMP client and get RPC and PubSub in both directions with the backend. When the project grows, a full WAMP router can be put in place later.
+========================  ==================================  =====================
+
+
 Utilities
 ---------
 
@@ -147,6 +168,7 @@ wick-ui_            Dart, Flutter                       Web tool for testing WAM
 .. _Crossbar: https://crossbar.io
 .. _CrossbarFX: https://crossbario.com
 .. _Erwa: https://github.com/bwegh/erwa
+.. _fastapi-routerless-wamp: https://github.com/KSDaemon/fastapi-routerless-wamp
 .. _fox-wamp: https://github.com/kalmyk/fox-wamp
 .. _haskell-wamp: https://github.com/mulderr/haskell-wamp
 .. _jawampa: https://github.com/Matthias247/jawampa
