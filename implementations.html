@@ -12,7 +12,7 @@
 <link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Users and Resources" href="users.html"><link rel="prev" title="WAMP compared" href="comparison.html">
         <link rel="prefetch" href="static/wamp_logo.svg" as="image">
 
-    <link rel="shortcut icon" href="static/favicon.ico"><!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+    <link rel="shortcut icon" href="static/favicon.ico"><!-- Generated with Sphinx 9.2.0 and Furo 2025.12.19 -->
         <title>Implementations - WAMP version 2</title>
       <link rel="stylesheet" type="text/css" href="static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="static/styles/furo.css?v=7bdb33bb" />
@@ -596,6 +596,33 @@ on github and introduce your project or even create a pull request with addition
 </table>
 </div>
 </section>
+<section id="router-less-implementations">
+<h2>Router-less implementations<a class="headerlink" href="#router-less-implementations" title="Link to this heading">¶</a></h2>
+<p>The following table lists <strong>router-less implementations</strong>: the application backend itself terminates WAMP sessions,
+so clients speak plain WAMP to it without a separate router.</p>
+<p>This lets a project use WAMP from day one: clients work with standard WAMP client libraries, and there is no extra
+router process to deploy and operate early on. When the project needs real routing, a full WAMP router can be put in
+place later, with changes mostly on the backend side.</p>
+<p>The trade-off is scope: each client session is isolated and talks only to the backend. Clients cannot call each
+other’s procedures, client publishes reach only the backend, and procedures registered by different clients do not
+conflict. Behind a router these behave differently, so check the implementation’s documentation before switching.</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Language/Run-time</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference external" href="https://github.com/KSDaemon/fastapi-routerless-wamp">fastapi-routerless-wamp</a></p></td>
+<td><p>Python, FastAPI</p></td>
+<td><p>Start using WAMP from day one in <a class="reference external" href="https://fastapi.tiangolo.com/">FastAPI</a> backends, without deploying and operating a separate router. Clients connect over WebSocket with any standard WAMP client and get RPC and PubSub in both directions with the backend. When the project grows, a full WAMP router can be put in place later.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="utilities">
 <h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">¶</a></h2>
 <p>The following table lists WAMP compliant utilities.</p>
@@ -688,6 +715,7 @@ on github and introduce your project or even create a pull request with addition
 <li><a class="reference internal" href="#">Implementations</a><ul>
 <li><a class="reference internal" href="#libraries">Libraries</a></li>
 <li><a class="reference internal" href="#routers">Routers</a></li>
+<li><a class="reference internal" href="#router-less-implementations">Router-less implementations</a></li>
 <li><a class="reference internal" href="#utilities">Utilities</a></li>
 </ul>
 </li>
