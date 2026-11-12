@@ -42,7 +42,7 @@ jobs:
     environment: github-pages
     steps:
       - name: Checkout Repo/Branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           # The justfile imports .cicd/workflow.just: without the submodule, `just` refuses
           # to run at all ("could not find source file for import").
@@ -100,7 +100,7 @@ jobs:
       - run: find dist -type f \( -name "*.html" -or -name "*.txt" \) -print -exec sed -i 's/_sources\//sources\//g' {} \;
       - run: find dist -type f \( -name "*.html" -or -name "*.txt" \) -print -exec sed -i 's/_static\//static\//g' {} \;
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: dist # The folder the action should deploy.
